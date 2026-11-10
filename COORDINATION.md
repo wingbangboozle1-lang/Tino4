@@ -166,7 +166,8 @@ Every table row on the site links to one or more of these IDs.
 | Model integrity | 30 projection years; every money value divisible by $10; scenario/snapshot year keys match; exemption and thresholds consistent | PASS |
 | Root mirror | Byte-identical comparison of root vs `docs/` for index, 13 pages, 2 assets, 7 JSON files | PASS |
 | Prior-session work preserved | `archive-v2/` and three `internal/prior-sessions/` trees present | PASS |
-| Overall | `python3 tools/verify.py` on the merged tree | **5208 checks, 0 failures** |
+| Table column integrity | Every `<tbody>` row has exactly as many `<td>` as the table has `<th>` (Status/Source columns included) | PASS |
+| Overall | `python3 tools/verify.py` on the merged tree after the table-structure fix | **5958 checks, 0 failures** |
 
 Full machine-readable log: `internal/verification-log.md`.
 
@@ -197,7 +198,15 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 
 ## Deployment log
 
-_(completed after the PR is merged — see final entry in Change log)_
+| Item | Result |
+| --- | --- |
+| Pull request #6 | https://github.com/wingbangboozle1-lang/Tino4/pull/6 — "Integrate anonymized, source-verified inheritance decision dashboard (2040–2050 trust)" |
+| Merge result | `gh pr merge 6 --merge` → **MERGED**, merge commit `f936c6c780139e72a311e9d2516d8a5f2c17ea50` at 2026-11-10T10:31:20Z |
+| GitHub Pages build (PR #6) | `built` at 2026-11-10T10:32:37Z, no error, https://wingbangboozle1-lang.github.io/Tino4/ |
+| Live-site spot check | `pages/executive-summary.html` served the new dashboard; a rendering-column defect was found in the generated tables, fixed, and redeployed via the follow-up PR recorded below |
+| Follow-up fix | Table-structure fix (nested/duplicated `<td>`) + column-count verification; see the final Change log entry and the follow-up PR link below |
+| Follow-up PR | https://github.com/wingbangboozle1-lang/Tino4/pull/7 — "Fix table column structure and add column-count verification (follow-up to #6)" |
+| Final verification | `python3 tools/verify.py` on the regenerated tree: 5,958 checks, 0 failures; 750/750 table rows source-linked; column counts consistent |
 
 ## Change log
 
@@ -212,4 +221,7 @@ _(completed after the PR is merged — see final entry in Change log)_
 - 2026-11-10 — `s-0837be92`: T7 done — root mirror added (IR-017), `main` and three other
   session branches merged without discarding their work, prior sites archived, combined data
   re-verified line by line.
-- 2026-11-10 — `s-0837be92`: T8 in progress — opening PR, merging, confirming Pages deployment.
+- 2026-11-10 — `s-0837be92`: T8 done — PR #6 opened, merged without approval, GitHub Pages build
+  confirmed `built`. Live-site check found a table column defect; `tools/build.py` and
+  `tools/verify.py` were fixed (column-count check added) and the site regenerated with
+  5,958 checks / 0 failures. Follow-up PR recorded in Deployment log.

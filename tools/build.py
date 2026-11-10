@@ -291,7 +291,7 @@ def table(headers, rows, caption="", note=""):
         }.get(status, "model")
         tds = "".join("<td>{}</td>".format(c) for c in cells)
         body.append(
-            '<tr class="{}"><td>{}</td><td><span class="status {}">{}</span></td>'
+            '<tr class="{}">{}<td><span class="status {}">{}</span></td>'
             '<td class="srccell">{}</td></tr>'.format(
                 row.get("cls", ""), tds, status_cls, status, src_links(srcs)
             )
@@ -1196,7 +1196,7 @@ watch = [
     ("H.Res.206 (introduced 03/10/2025)", "supports preserving stepped-up basis; referred to Ways and Means", "PROPOSED", ["S13"]),
     ("California Proposition 40 (11/03/2026)", "one-time 5% tax on covered assets > $1B; real property excluded; results unofficial until 12/11/2026", "NEEDS REVIEW", ["S37", "S38", "S39"]),
 ]
-b.append(table(["Measure", "Effect", "Status"],
+b.append(table(["Measure", "Effect"],
                [{"cells": [x, y], "srcs": s, "status": st} for x, y, st, s in watch],
                caption="Threshold-related law changes (official status)",
                note="No projection uses a proposed measure. See the Law Change Watchlist for the full list."))
@@ -1373,7 +1373,7 @@ watch = [
     ("Regulatory", "CPUC Net Billing Tariff (D.22-12-056)", "Effective for interconnection applications from 04/15/2023; export credits usually below retail; 9-year legacy; adder for applications before end of 2027.", "ENACTED", ["S41", "S42"]),
     ("Regulatory", "CPUC San Jose Water GRC (D.24-12-027)", "Rates adopted for test year 2025 and attrition years 2026–2027.", "ENACTED", ["S43"]),
 ]
-b.append(table(["Level", "Measure", "What it does", "Status"],
+b.append(table(["Level", "Measure", "What it does"],
                [{"cells": [l, m, w], "srcs": s, "status": st} for l, m, w, st, s in watch],
                caption="Law and rate changes — official status",
                note="Status values reflect the official source on 2026-11-10. Proposed measures are never used "
@@ -1491,7 +1491,7 @@ bl = [
     ("Future county tax rates and Prop 19 biennial cap adjustments", ["S31", "S22"], "IR-008"),
     ("Cash inheritance amount (withheld for privacy)", ["S01"], "IR-004"),
 ]
-b.append(table(["Value left blank", "Flag"],
+b.append(table(["Value left blank", "Official value", "Flag"],
                [{"cells": [esc(x), blank(), flagref(f)], "srcs": s, "status": "UNVERIFIED"}
                 for x, s, f in bl],
                caption="Blank cells — never inferred",
