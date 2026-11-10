@@ -205,7 +205,8 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | GitHub Pages build (PR #6) | `built` at 2026-11-10T10:32:37Z, no error, https://wingbangboozle1-lang.github.io/Tino4/ |
 | Live-site spot check | `pages/executive-summary.html` served the new dashboard; a rendering-column defect was found in the generated tables, fixed, and redeployed via the follow-up PR recorded below |
 | Follow-up fix | Table-structure fix (nested/duplicated `<td>`) + column-count verification; see the final Change log entry and the follow-up PR link below |
-| Follow-up PR | _(link recorded after creation)_ |
+| Follow-up PR | https://github.com/wingbangboozle1-lang/Tino4/pull/7 — "Fix table column structure and add column-count verification (follow-up to #6)" |
+| Final verification | `python3 tools/verify.py` on the regenerated tree: 5,958 checks, 0 failures; 750/750 table rows source-linked; column counts consistent |
 
 ## Change log
 
