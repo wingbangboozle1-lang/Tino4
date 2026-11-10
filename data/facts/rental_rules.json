@@ -1,0 +1,153 @@
+[
+  {
+    "id": "RR-01",
+    "topic": "San Francisco Rent Ordinance: which units are covered",
+    "value": "Many residential units built on or before June 13, 1979 have both rent control and eviction protection. A unit built before June 14, 1979 that is not used as a single-family dwelling may have both.",
+    "quote": "Many residential units built on or before June 13, 1979 have both rent control and eviction protection. ... If your unit was built before June 14, 1979, and is not used as a single family dwelling, it may have both: Rent control; Eviction protection",
+    "source_name": "City and County of San Francisco, Rent Board, Learn about San Francisco rental laws",
+    "source_url": "https://www.sf.gov/learn-about-san-francisco-rental-laws",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-02",
+    "topic": "San Francisco: allowable annual rent increase for rent-controlled units",
+    "value": "1.6% for March 1, 2026 through February 28, 2027 (1.4% the year before; 1.7% the year before that). Set at 60% of the Bay Area CPI increase.",
+    "quote": "Effective March 1, 2026, the allowed rent increase percentage is 1.6%. The percentage is effective through February 28, 2027. This amount is based on 60% of the increase in the Consumer Price Index for All Urban Consumers in the Bay Area.",
+    "source_name": "City and County of San Francisco, Rent Board, Learn about rent increases in San Francisco",
+    "source_url": "https://www.sf.gov/learn-about-rent-increases-san-francisco",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-03",
+    "topic": "San Francisco: history of allowable annual increases",
+    "value": "Last 10 periods (March 2017 to February 2027): 2.2, 1.6, 2.6, 1.8, 0.7, 2.3, 3.6, 1.7, 1.4, 1.6 percent. Full list back to 1982 is in the source.",
+    "quote": "3/1/26 – 2/28/27 1.6%; 3/1/25 – 2/28/26 1.4%; 3/1/24 – 2/28/25 1.7%; 3/1/23 – 2/29/24 3.6%; 3/1/22 – 2/28/23 2.3%; 3/1/21 – 2/28/22 0.7%; 3/1/20 – 2/28/21 1.8%; 3/1/19 – 2/29/20 2.6%; 3/1/18 – 2/28/19 1.6%; 3/1/17 – 2/28/18 2.2%",
+    "source_name": "City and County of San Francisco, Rent Board, Document 571: Allowable Annual Increases",
+    "source_url": "https://www.sf.gov/documents/34344/571_Allowable_Annual_Increases_26-27_1.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-04",
+    "topic": "San Francisco: rent on a vacant rent-controlled unit",
+    "value": "No limit on the initial rent for a new tenant; the cap applies to later increases.",
+    "quote": "There is no limit on how much rent a landlord may first charge a tenant when renting an empty unit that is covered by rent control.",
+    "source_name": "City and County of San Francisco, Rent Board, Learn about rent increases in San Francisco",
+    "source_url": "https://www.sf.gov/learn-about-rent-increases-san-francisco",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-05",
+    "topic": "San Francisco: rent increase license",
+    "value": "A landlord must report into the Rent Board Housing Inventory and hold a rent increase license before imposing annual or banked increases.",
+    "quote": "A landlord must get a rent increase license before imposing annual allowable and/or banked rent increases on a tenant. To get a rent increase license, a landlord must first report into the Rent Board Housing Inventory.",
+    "source_name": "City and County of San Francisco, Rent Board, Learn about rent increases in San Francisco",
+    "source_url": "https://www.sf.gov/learn-about-rent-increases-san-francisco",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-06",
+    "topic": "San Francisco: Rent Board fee",
+    "value": "$59 per unit per year, half of which ($29.50) may be recovered from the tenant.",
+    "quote": "Rent Board Fees that can be banked: Tax Year 2024-2025 (3/1/25): Tenant's Amount $29.50; Landlord's Amount $29.50",
+    "source_name": "City and County of San Francisco, Rent Board, Current Rates",
+    "source_url": "https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-07",
+    "topic": "San Francisco: taking back an occupied unit to live in (owner or relative move-in)",
+    "value": "Allowed only for use as a principal residence for at least 36 continuous months, by an owner with at least a 25% interest (10% if recorded on or before Feb 21, 1991), generally one unit per building, and not against long-term elderly, disabled or catastrophically ill tenants.",
+    "quote": "A landlord may recover possession of a rental unit for the occupancy of the owner or a relative of the owner for use as their principal residence for a period of at least 36 continuous months. ... An owner who wishes to evict a tenant for owner or relative occupancy must have at least a 25% interest in the property, if the ownership interest was recorded after February 21, 1991.",
+    "source_name": "City and County of San Francisco, Rent Board, Evictions Based on Owner or Relative Move-In",
+    "source_url": "https://www.sf.gov/information--evictions-based-owner-or-relative-move",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-08",
+    "topic": "San Francisco: relocation payments for an owner move-in eviction",
+    "value": "$8,245 per tenant, up to $24,733 per unit, plus $5,497 for each elderly or disabled tenant or household with minor children (notices served March 1, 2026 to February 28, 2027).",
+    "quote": "3/01/26 – 2/28/27: $8,245.00; $24,733.00; $5,497.00",
+    "source_name": "City and County of San Francisco, Rent Board, Current Rates",
+    "source_url": "https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-09",
+    "topic": "San Francisco Empty Homes Tax (vacancy tax on units in buildings with three or more units)",
+    "value": "Not in force. The Superior Court struck it down on October 31, 2024 and the Court of Appeal affirmed on September 11, 2026. Owners are not required to file or pay unless that decision is reversed.",
+    "quote": "On September 11, 2026, the California Court of Appeal affirmed the trial court ruling, holding that the Empty Homes Tax is preempted by state law (Case Number: A172067). ... Property owners impacted by the tax will not be required to file or pay unless and until the appeals court's decision is reversed.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Empty Homes Tax (EHT)",
+    "source_url": "https://sftreasurer.org/business/taxes-fees/empty-homes-tax-eht",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-10",
+    "topic": "California Tenant Protection Act (AB 1482): statewide rent cap",
+    "value": "Rent cannot rise more than 5% plus the change in the cost of living, or 10%, whichever is lower, in 12 months. For increases starting August 1, 2026 to July 31, 2027: 8.8% in the San Francisco area counties and 8.6% in all other counties (which includes Santa Clara County).",
+    "quote": "Annual rent increases are capped at \"5% plus the percentage change in the cost of living,\" up to a maximum of 10%. ... San Francisco Area: Alameda County, Contra Costa County, Marin County, San Francisco County, San Mateo County 6.3% 8.8%; All Other Counties 7.7% 8.6%",
+    "source_name": "California Department of Justice, Office of the Attorney General, Limits on Rent Increases",
+    "source_url": "https://oag.ca.gov/rentcaps",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-11",
+    "topic": "State rent cap and just-cause rules: single-family home exemption",
+    "value": "A single-family home is exempt if it is not owned or controlled by a corporation or real estate investment trust, and the tenant is given the written exemption notice set out in the statute (in the rental agreement for tenancies started or renewed on or after July 1, 2020).",
+    "quote": "The tenants have been provided written notice that the residential real property is exempt from this section using the following statement: \"This property is not subject to the rent limits imposed by Section 1947.12 of the Civil Code and is not subject to the just cause requirements of Section 1946.2 of the Civil Code. ...\"",
+    "source_name": "California Legislative Information, Civil Code section 1947.12(d)(5)",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1947.12",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-12",
+    "topic": "State rent cap: scheduled expiry",
+    "value": "Civil Code section 1947.12 is repealed by its own terms on January 1, 2030 unless the Legislature extends it.",
+    "quote": "This section shall remain in effect until January 1, 2030, and as of that date is repealed.",
+    "source_name": "California Legislative Information, Civil Code section 1947.12(o)",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1947.12",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-13",
+    "topic": "Local rent caps and single-family homes",
+    "value": "Local rent-increase caps do not apply to most single-family homes or condos, or to buildings with a certificate of occupancy issued after February 1, 1995. A landlord may set the initial rent for a new tenant.",
+    "quote": "Local rent increase caps do not apply to buildings that have a certificate of occupancy issued after February 1, 1995, or to most single-family homes or condos. As with the statewide caps, if the tenants of a unit move out and new tenants move in, the landlord may establish the initial rent to charge. (Civ. Code § 1954.53.)",
+    "source_name": "California Department of Justice, Office of the Attorney General, Limits on Rent Increases",
+    "source_url": "https://oag.ca.gov/rentcaps",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-14",
+    "topic": "State just-cause rule: owner move-in",
+    "value": "Since April 1, 2024 the owner or relative must move in within 90 days and live there as a primary residence for at least 12 consecutive months, or the unit must be offered back at the old rent.",
+    "quote": "Effective April 1, 2024, the owner or relative must move in within 90 days after the tenant leaves and live there as their primary residence for at least 12 consecutive months.",
+    "source_name": "California Department of Justice, Office of the Attorney General, Landlord-Tenant Issues",
+    "source_url": "https://oag.ca.gov/consumers/general/landlord-tenant-issues",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "RR-15",
+    "topic": "Property B: is it covered by San Francisco rent control, and how many legal units does it have?",
+    "value": "",
+    "note": "Not verified. Coverage depends on the building's construction date and legal unit count, which require the address (deliberately not collected). The model assumes the rented units are rent-controlled. The owner can check on the City's Property Information Map or with a Rent Board counselor.",
+    "source_name": "City and County of San Francisco, Rent Board, Learn about San Francisco rental laws",
+    "source_url": "https://www.sf.gov/learn-about-san-francisco-rental-laws",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  }
+]
