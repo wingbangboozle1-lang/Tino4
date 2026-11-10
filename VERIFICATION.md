@@ -39,6 +39,9 @@ published on `pages/flagged.html`.
 | CDI-SURVEY | https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20 | Landing page | Official premium comparison tool |
 | FAIR-PLAN | https://www.cfpnet.com/ | Home page | Insurer of last resort; dwelling-fire base policy; DIC needed for HO-3 equivalent |
 | LEG-SB974 | https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260SB974 | Status | Chaptered 09/27/2026, Chapter 665, Statutes of 2026 |
+| FTB-INHERIT | https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html | "Gifts and inheritance" | "do not include it in your income"; later income is taxable |
+| RTC-13302 | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13302 | §13302 and Part 8 heading | "Prohibition of Gift and Death Taxes"; state tax limited to the federal state-death-tax credit |
+| BOE-PROP19 | https://www.boe.ca.gov/prop19/ | Prop 19 comparison charts | "Principal residence of transferor and transferee"; value limit = taxable value + $1,000,000; exemption 1 yr / claim 3 yrs |
 | CA-PROBATE-CODE | https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16000 | Trustee duties | §16000 duty of loyalty/prudence |
 
 ## B. Values that could NOT be verified (published on Flagged for Review)
@@ -59,12 +62,12 @@ published on `pages/flagged.html`.
 
 | Check | Computation | Result |
 |---|---|---|
-| Cupertino effective rate, 2025 | $7,207 ÷ $539,743 | 1.335% — stable average 1.345% over 2014–2025 |
-| SF effective rate, 2025 | $2,439 ÷ $114,248 | 2.135% vs. published secured rate 1.18162182% |
-| Cupertino 2026 tax | 1.20% × $550,537 + $730 | $7,340 (projected; the 2026 bill does not exist yet) |
-| SF 2026 assessed value | $114,248 × 1.02 | $116,533 |
-| SF 2026 tax | 1.18162182% × $116,533 + $1,089 | $2,470 |
-| Prop 19 at 2045 | $550,537 × 1.02¹⁹ = $802,030; value $3.1M × 1.035¹⁹ = $5,959,750; cap $1,044,586 × 1.025¹⁹ = $1,669,930 | Excluded ceiling $2,471,960; taxable if claimed $4,289,830 vs $5,959,750 if not |
+| Cupertino effective rate, 2025 | ~$7,200 ÷ ~$540,000 (rounded) | ≈1.33% — stable across 2014–2025 |
+| SF effective rate, 2025 | ~$2,400 ÷ ~$114,000 (rounded) | ≈2.11% vs. published secured rate 1.18162182% |
+| Cupertino 2026 tax | 1.20% × $551,000 + $720 | $7,330 (projected; the 2026 bill does not exist yet) |
+| SF 2026 assessed value | $114,000 × 1.02 | $116,280 |
+| SF 2026 tax | 1.18162182% × $116,280 + $1,050 | $2,420 |
+| Prop 19 at 2045 | $551,000 × 1.02¹⁹ = $802,700; value $3.1M × 1.035¹⁹ = $5,959,750; cap $1,044,586 × 1.025¹⁹ = $1,669,930 | Excluded ceiling ≈$2,472,600; taxable if claimed ≈$4,290,000 vs $5,959,750 if not |
 | SF water sanity check | SFPUC average single-family ≈$171/mo × 3 units | ≈$513/mo vs owner's $330–$400 — owner figure is not implausible once sewer is included |
 
 ## D. Irregularities that remain open
@@ -78,12 +81,20 @@ published on `pages/flagged.html`.
 
 All six are published on `pages/flagged.html` with the action needed to close them.
 
+## D2. Privacy handling of the parcel figures
+
+The series is published at reduced precision: assessed values to the nearest $1,000, tax bills to the nearest
+$100. The exact figures supplied by the owner are **not** stored in this repository. This was a deliberate
+change after the parallel session (`9dcf1e9f`) flagged that exact assessed values plus a ZIP code can be
+re-identified against a county's public roll. Residual re-identification risk is disclosed on
+`pages/properties.html`; the recommended fix if that matters is a private repository.
+
 ## E. Site integrity checks run before publish
 
 ```
-python3 tools/validate_data.py   -> 36 sources, 41 facts (36 verified, 2 reported, 3 flagged); OK
+python3 tools/validate_data.py   -> 39 sources, 42 facts (37 verified, 2 reported, 3 flagged); OK
 python3 tools/build.py           -> 9 pages, no unresolved template placeholders
-python3 tools/check_links.py     -> 9 HTML files, 34 distinct external URLs; all internal links and anchors resolve
+python3 tools/check_links.py     -> 18 HTML files (9 current + 9 archived), 47 external URLs; all internal links and anchors resolve
 ```
 
 External URLs could not be probed from the build sandbox (outbound access is restricted), so each one was

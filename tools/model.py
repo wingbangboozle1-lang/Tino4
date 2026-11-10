@@ -33,9 +33,9 @@ END = A["horizon_end"]
 START = 2026
 
 CUP_V0 = 3_100_000
-CUP_AV0 = 550_537
+CUP_AV0 = 551_000
 SF_V0 = 1_800_000
-SF_AV0_2025 = 114_248
+SF_AV0_2025 = 114_000
 SF_AV0 = SF_AV0_2025 * 1.02  # 2026-27 roll: 2% factor (BOE LTA 2026/002)
 
 PT = A["property_tax"]

@@ -118,7 +118,7 @@ The liquidation view (selling costs and capital gains tax deducted) ranks the sa
   <li><strong>Living in it and renting it out are effectively tied.</strong> The $63,350 difference over 20 years means the
   occupancy decision can be made on lifestyle grounds rather than tax grounds.</li>
   <li><strong>Keep the San Francisco building.</strong> Selling it as well drops 2065 net worth by $7.2M: its rent-controlled
-  income on a $114,248 base is the best-yielding asset in the file.</li>
+  income on a $114,000 base is the best-yielding asset in the file.</li>
   <li><strong>Caveat on the whole analysis.</strong> The ranking is a bet on appreciation versus portfolio returns. The house wins
   if Cupertino compounds above 7.4% while the portfolio earns 5.5% — or above 5.5% if the portfolio earns only 4%.</li>
 </ol>
@@ -163,12 +163,12 @@ def properties():
         ["ZIP code", c["zip"], s["zip"], "Owner-reported"],
         ["Estimated market value, Nov 2026", ("num", money(c["estimated_value_nov_2026"])),
          ("num", money(s["estimated_value_nov_2026"])), "Owner estimate — <em>unverified</em>"],
-        ["Assessed (net taxable) value, 2026 roll", ("num", money(550537)), ("num", money(116533)),
+        ["Assessed (net taxable) value, 2026 roll", ("num", money(551000)), ("num", money(116280)),
          "Owner series; SF 2026 = 2025 × 1.02"],
-        ["Property tax, 2025 actual", ("num", money(7207)), ("num", money(2439)), "Owner series"],
-        ["Implied effective rate, 2025", ("num", pct(7207/539743, 2)), ("num", pct(2439/114248, 2)),
+        ["Property tax, 2025 actual", ("num", money(7200)), ("num", money(2400)), "Owner series"],
+        ["Implied effective rate, 2025", ("num", pct(7200/540000, 2)), ("num", pct(2400/114000, 2)),
          "Computed: tax ÷ assessed value"],
-        ["Tax as % of market value", ("num", pct(7207/3100000, 2)), ("num", pct(2439/1800000, 2)),
+        ["Tax as % of market value", ("num", pct(7200/3100000, 2)), ("num", pct(2400/1800000, 2)),
          "Computed: tax ÷ November 2026 estimate"],
         ["Structure / use", "Single-family house, solar PV", "3-unit building; 2 units rented",
          "Owner-reported"],
@@ -180,7 +180,7 @@ def properties():
          "See <a class='src' href='https://asr.santaclaracounty.gov/tax-savings/exemptions/homeowners' target='_blank' rel='noopener'>SCC Assessor</a>"],
     ]
     snap = table("Snapshot of both properties", ["Attribute", "Cupertino (95014)", "San Francisco (94122)", "Basis"],
-                 snap_rows, "Values in this table are the only parcel-level figures in the file. No address, assessor's parcel number, owner name or trust name is stored anywhere in the repository.")
+                 snap_rows, "Values are rounded for privacy: assessed values to the nearest $1,000 and tax bills to the nearest $100. No address, assessor's parcel number, owner name or trust name is stored anywhere in the repository.")
 
     # Cupertino history
     rows = []
@@ -229,7 +229,7 @@ def properties():
 
 <div class="callout info">
   <div class="h">The single most important number on this page</div>
-  <p>Cupertino assessed value is about <strong>{pct(550537/3100000, 1)}</strong> of market value. Everything the family can do
+  <p>Cupertino assessed value is about <strong>{pct(551000/3100000, 1)}</strong> of market value. Everything the family can do
   between now and 2045 should be evaluated on whether it protects that gap — and the gap is protected only if the property stays in
   the family, is the parent's principal residence at death, and the heir occupies it.</p>
 </div>
@@ -263,8 +263,12 @@ def properties():
   <li>The two properties are identified only by ZIP code and county, which is the minimum needed to attach the correct tax rules.</li>
   <li>The value that will be inherited as cash is carried as a redacted placeholder (<code>[AMOUNT REDACTED]</code>) — see
   <a href="laws.html#estate">Law Tracker</a> for how the exemption applies to any amount.</li>
-  <li>Every figure that could identify a specific household (assessed values, tax bills) is presented as an index of the past,
-  not linked to an address.</li>
+  <li>Parcel-level figures are published at reduced precision — assessed values rounded to the nearest $1,000, tax bills to the
+  nearest $100 — and the exact underlying figures are not stored in this repository.</li>
+  <li><strong>Residual risk, stated plainly:</strong> a year-by-year assessed-value series for one ZIP code is unusual even after
+  rounding, and a determined searcher could narrow it to a small set of parcels in the county's public roll. If that matters,
+  the correct fix is to make this repository private (GitHub Pages for a private repository requires a paid plan) or to remove the
+  Properties and Taxes tables. That trade-off is yours, not the model's.</li>
 </ul>
 """
     return layout("properties", "Properties", body, prefix="../")
@@ -273,10 +277,10 @@ def properties():
 def taxes():
     # reconciliation rows
     rec_rows = [
-        ["Cupertino", "2025", ("num", money(539743)), ("num", pct(0.0120, 4)), ("num", money(6477)),
-         ("num", money(7207)), ("num", money(730)), "1.20% county planning rate <span class='small'>(SCC-FAQ)</span>"],
-        ["San Francisco", "2025", ("num", money(114248)), ("num", "1.18162182%"), ("num", money(1350)),
-         ("num", money(2439)), ("num", money(1089)), "SF secured rate <span class='small'>(SF-TREAS)</span>"],
+        ["Cupertino", "2025", ("num", money(540000)), ("num", pct(0.0120, 4)), ("num", money(6480)),
+         ("num", money(7200)), ("num", money(720)), "1.20% county planning rate <span class='small'>(SCC-FAQ)</span>"],
+        ["San Francisco", "2025", ("num", money(114000)), ("num", "1.18162182%"), ("num", money(1350)),
+         ("num", money(2400)), ("num", money(1050)), "SF secured rate <span class='small'>(SF-TREAS)</span>"],
     ]
     rec = table("Reconciling the bill: ad valorem component vs. everything else",
                 ["Property", "Year", "Assessed value", "Statutory rate", "Rate × value", "Reported total tax",

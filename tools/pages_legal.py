@@ -155,8 +155,10 @@ def laws():
     ca = [
         ["California inheritance tax", "None", "SCC-COURTS-PROBATE", "verified",
          "Confirmed in the Santa Clara County Superior Court probate self-help page."],
-        ["California state estate tax", "None", "SCC-COURTS-PROBATE", "verified",
-         "The historic 'pick-up' tax tracked a federal credit that no longer exists. Confirm for the year of death."],
+        ["California state estate tax", "No separate tax is collected", "RTC-13302", "verified",
+         "Part 8 of Division 2 of the R&TC is titled 'Prohibition of Gift and Death Taxes'. §13302 imposes a tax only equal to the allowable federal credit for state death taxes, which no longer exists."],
+        ["California tax on the inheritance itself", "Not included in income", "FTB-INHERIT", "verified",
+         "FTB: \"If you received a gift or inheritance, do not include it in your income.\" Later rent, interest or gain is taxable."],
         ["Prop 13 levy", "1% plus voter-approved debt", "CA-XIIIA", "verified",
          "The county rate does the work: 1.2% planning rate in Santa Clara, 1.18162182% in San Francisco."],
         ["Prop 13 assessment cap", "2% per year", "RTC-51", "verified",
@@ -187,8 +189,8 @@ def laws():
         ["Santa Clara County planning rate", "1.2% of assessed value", "SCC-FAQ", "verified", "Cupertino base rate in the model."],
         ["San Francisco secured rate 2026-27", "1.18162182%", "SF-TREAS", "verified", "San Francisco base rate in the model."],
         ["San Francisco transfer tax, $1M–$5M", "0.75% of consideration", "SF-ASSESSOR-TT", "verified", "≈$13,500 on a $1.8M sale; not triggered by an inheritance."],
-        ["Cupertino direct charges", "≈$730/yr implied from the tax series", "", "flagged", "Residual after the 1.2% ad valorem component; confirm on the bill."],
-        ["San Francisco direct charges / parcel taxes", "≈$1,089/yr implied from the tax series", "", "flagged", "Residual after the 1.18162182% component; unusually large — confirm on the bill."],
+        ["Cupertino direct charges", "≈$720/yr implied from the tax series", "", "flagged", "Residual after the 1.2% ad valorem component; confirm on the bill."],
+        ["San Francisco direct charges / parcel taxes", "≈$1,050/yr implied from the tax series", "", "flagged", "Residual after the 1.18162182% component; unusually large — confirm on the bill."],
     ]
     loc_tbl = table("Local rules and rates", ["Item", "Current position", "Source", "Status", "Note"],
                     [[r[0], r[1], src_link(r[2]) if r[2] else "<span class='small'>no official source</span>", badge(r[3]), r[4]] for r in local])
@@ -298,7 +300,7 @@ def sources():
         ["Cupertino ad valorem rate", pct(A['property_tax']['cupertino_advalorem_base'],2),
          "Santa Clara County planning guidance (1.2%). Observed effective rate is 1.33%; see flagged items."],
         ["San Francisco ad valorem rate", "1.18162182%", "Published FY 2026-27 secured rate."],
-        ["Direct charges", "$730/yr Cupertino, $1,089/yr SF, grown at CPI", "Residual between the reported bill and the statutory rate."],
+        ["Direct charges", "$720/yr Cupertino, $1,050/yr SF, grown at CPI", "Residual between the reported bill and the statutory rate."],
         ["Prop 19 cap indexation", pct(A['prop19_cap_growth'],1), "The $1,044,586 cap is re-indexed every two years; future factors are unknown."],
         ["Estate exemption indexation", pct(A['estate_indexing'],1), "Statute indexes the $15M after 2026; the 2027+ figures are not yet published."],
         ["Selling costs", pct(A['selling_cost_pct'],1)+" of price", "Commission, escrow, title, transfer taxes other than SF's."],
@@ -367,7 +369,7 @@ def flagged():
 <div class="callout bad">
   <div class="h">Three irregularities worth your attention first</div>
   <p><strong>1. San Francisco's effective tax rate is ~2.1% of assessed value</strong>, against a published secured rate of
-  1.18162182%. That is a ~96 basis point gap — about $1,089 a year. It is plausibly parcel taxes and direct assessments, but it has
+  1.18162182%. That is a ~93 basis point gap — about $1,050 a year. It is plausibly parcel taxes and direct assessments, but it has
   not been reconciled to a bill.</p>
   <p><strong>2. Cupertino's effective rate is ~1.33%</strong>, above the county's 1.2% planning guidance. The 12-year series is
   internally consistent, so the rate is probably real; the split between ad valorem tax and charges is not.</p>
@@ -382,7 +384,7 @@ def flagged():
 <thead><tr><th>#</th><th>Observation</th><th>Why it is irregular</th><th>How it is handled</th></tr></thead>
 <tbody>
 <tr><td>1</td><td>Cupertino 2026 property tax is blank in the supplied series</td>
-<td>No 2026-27 bill has been issued yet</td><td>2026 tax is projected at 1.20% × $550,537 + $730, labelled projected</td></tr>
+<td>No 2026-27 bill has been issued yet</td><td>2026 tax is projected at 1.20% × $551,000 + $720, labelled projected</td></tr>
 <tr><td>2</td><td>San Francisco 2025 tax rose 5.3% while assessed value rose 2%</td>
 <td>Growth above the Prop 13 cap must come from rate or charge changes</td><td>Carried as reported; the residual is modelled as a charge line</td></tr>
 <tr><td>3</td><td>San Francisco 2018 tax jumped 18.4%</td><td>Far above the 2% assessment cap</td><td>Flagged; no explanation available without the bill</td></tr>

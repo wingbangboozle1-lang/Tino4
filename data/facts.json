@@ -114,9 +114,9 @@
    "group": "California inheritance",
    "metric": "California state estate tax",
    "value": "None",
-   "source": "SCC-COURTS-PROBATE",
+   "source": "RTC-13302",
    "status": "verified",
-   "note": "No separate California estate tax is collected; the historic 'pick-up' tax tracked a federal credit that no longer exists. Confirm with FTB/counsel for the year of death."
+   "note": "Part 8 of Division 2 of the Revenue & Taxation Code is titled 'Prohibition of Gift and Death Taxes'. \u00a713302 imposes a California estate tax only equal to the allowable federal credit for state death taxes, which no longer exists. Practically: no separate California estate tax is collected."
   },
   {
    "id": "F-014",
@@ -152,7 +152,7 @@
    "value": "Parent's principal residence + child occupies within 1 year + homeowners'/disabled veterans' exemption filed within 1 year",
    "source": "RTC-63.2",
    "status": "verified",
-   "note": "R&TC \u00a763.2(a)(1)(A)-(B); restated by Santa Clara County Assessor."
+   "note": "R&TC \u00a763.2(a)(1)(A)-(B); restated by the Santa Clara County Assessor and by the BOE Prop 19 comparison chart ('Principal residence of transferor and transferee; value limit of current taxable value plus $1,000,000')."
   },
   {
    "id": "F-018",
@@ -257,10 +257,10 @@
    "id": "F-029",
    "group": "California income tax",
    "metric": "California treatment of inherited assets",
-   "value": "Not taxable income to the recipient; later rent and gain are taxable",
-   "source": "SCC-COURTS-PROBATE",
+   "value": "Not taxable income to the recipient: \"If you received a gift or inheritance, do not include it in your income\"",
+   "source": "FTB-INHERIT",
    "status": "verified",
-   "note": "Consistent with FTB guidance on fiduciary returns; confirm with a CPA."
+   "note": "FTB states it directly; later interest, dividends, rent or gain on sale are taxable."
   },
   {
    "id": "F-030",
@@ -338,19 +338,19 @@
    "id": "F-038",
    "group": "Projection",
    "metric": "Cupertino implied effective tax rate from the supplied 2014-2025 series",
-   "value": "1.33% of assessed value (2025: $7,207 / $539,743)",
+   "value": "1.33% of assessed value (2025: about $7,200 / $540,000)",
    "source": "",
    "status": "flagged",
-   "note": "Roughly 13 bp above the county's 1.2% planning rate; the difference is attributed to voter-approved debt or direct charges. Verify against the annual bill."
+   "note": "Roughly 13 bp above the county's 1.2% planning rate; the difference is attributed to voter-approved debt or direct charges. Figures rounded to $1,000/$100 for privacy. Verify against the annual bill."
   },
   {
    "id": "F-039",
    "group": "Projection",
    "metric": "San Francisco implied effective tax rate from the supplied 2016-2025 series",
-   "value": "2.14% of assessed value (2025: $2,439 / $114,248)",
+   "value": "2.11% of assessed value (2025: about $2,400 / $114,000)",
    "source": "",
    "status": "flagged",
-   "note": "About 96 bp above the 1.18162182% secured rate. Residual (~$1,089/yr) modelled as direct charges/parcel taxes; unverified."
+   "note": "About 93 bp above the 1.18162182% secured rate. Residual (~$1,050/yr) modelled as direct charges/parcel taxes; unverified. Figures rounded for privacy."
   },
   {
    "id": "F-040",
@@ -369,6 +369,15 @@
    "source": "CDI-SURVEY",
    "status": "verified",
    "note": "Use this to replace the owner's $1,500 estimate with a comparable survey median before relying on the cash-flow projections."
+  },
+  {
+   "id": "F-042",
+   "group": "California property tax",
+   "metric": "Prop 19 filing periods (BOE summary)",
+   "value": "Homeowners' exemption within 1 year of transfer; claim for exclusion within 3 years or before transfer to a third party",
+   "source": "BOE-PROP19",
+   "status": "verified",
+   "note": "Matches R&TC \u00a763.2 and the county assessor's instructions."
   }
  ]
 }

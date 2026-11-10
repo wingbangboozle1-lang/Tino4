@@ -253,6 +253,27 @@
    "title": "Homeowners Premium Survey (interactive, by coverage and ZIP)",
    "url": "https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20",
    "covers": "Official tool for comparing homeowners premiums; no single published parcel premium"
+  },
+  {
+   "id": "FTB-INHERIT",
+   "publisher": "California Franchise Tax Board",
+   "title": "Gifts and inheritance \u2014 personal income types",
+   "url": "https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html",
+   "covers": "Inherited assets are not California income; later interest, rent or gain is taxable"
+  },
+  {
+   "id": "RTC-13302",
+   "publisher": "California Legislative Information",
+   "title": "Revenue & Taxation Code \u00a713302 \u2014 California estate tax (Part 8: Prohibition of Gift and Death Taxes)",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13302",
+   "covers": "California imposes an estate tax only equal to the federal credit for state death taxes"
+  },
+  {
+   "id": "BOE-PROP19",
+   "publisher": "California State Board of Equalization",
+   "title": "Proposition 19 \u2014 principal residence, transferor and transferee, value limit, filing periods",
+   "url": "https://www.boe.ca.gov/prop19/",
+   "covers": "Comparison charts: value limit of taxable value plus $1,000,000 (biennially adjusted); exemption within 1 year; claim within 3 years"
   }
  ]
 }

@@ -247,8 +247,26 @@
 <td><a href='https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20' target='_blank' rel='noopener'>Homeowners Premium Survey (interactive, by coverage and ZIP)</a></td>
 <td>Official tool for comparing homeowners premiums; no single published parcel premium</td>
 </tr>
+<tr>
+<td>FTB-INHERIT</td>
+<td>California Franchise Tax Board</td>
+<td><a href='https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html' target='_blank' rel='noopener'>Gifts and inheritance — personal income types</a></td>
+<td>Inherited assets are not California income; later interest, rent or gain is taxable</td>
+</tr>
+<tr>
+<td>RTC-13302</td>
+<td>California Legislative Information</td>
+<td><a href='https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13302' target='_blank' rel='noopener'>Revenue &amp; Taxation Code §13302 — California estate tax (Part 8: Prohibition of Gift and Death Taxes)</a></td>
+<td>California imposes an estate tax only equal to the federal credit for state death taxes</td>
+</tr>
+<tr>
+<td>BOE-PROP19</td>
+<td>California State Board of Equalization</td>
+<td><a href='https://www.boe.ca.gov/prop19/' target='_blank' rel='noopener'>Proposition 19 — principal residence, transferor and transferee, value limit, filing periods</a></td>
+<td>Comparison charts: value limit of taxable value plus $1,000,000 (biennially adjusted); exemption within 1 year; claim within 3 years</td>
+</tr>
 </tbody></table></div>
-<p class="tnote">36 primary sources, all retrieved 2026-11-10. Each was opened and read; links are checked automatically by <code>tools/check_links.py</code> before every publish.</p>
+<p class="tnote">39 primary sources, all retrieved 2026-11-10. Each was opened and read; links are checked automatically by <code>tools/check_links.py</code> before every publish.</p>
 
 <h2 class="anchor" id="verification">Verification record</h2>
 <div class="tablewrap"><table class="">
@@ -362,7 +380,7 @@
 <td>California inheritance</td>
 <td>California state estate tax</td>
 <td>None</td>
-<td><a class="src" href="https://santaclara.courts.ca.gov/self-help/self-help-topics/self-help-probate/self-help-probate-property-transfers/administering-probate-estate-after-appointment" target="_blank" rel="noopener">Superior Court of California, County of Santa Clara</a></td>
+<td><a class="src" href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13302" target="_blank" rel="noopener">California Legislative Information</a></td>
 <td><span class="badge b-ok">Verified</span></td>
 </tr>
 <tr>
@@ -489,8 +507,8 @@
 <td>F-029</td>
 <td>California income tax</td>
 <td>California treatment of inherited assets</td>
-<td>Not taxable income to the recipient; later rent and gain are taxable</td>
-<td><a class="src" href="https://santaclara.courts.ca.gov/self-help/self-help-topics/self-help-probate/self-help-probate-property-transfers/administering-probate-estate-after-appointment" target="_blank" rel="noopener">Superior Court of California, County of Santa Clara</a></td>
+<td>Not taxable income to the recipient: &quot;If you received a gift or inheritance, do not include it in your income&quot;</td>
+<td><a class="src" href="https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html" target="_blank" rel="noopener">California Franchise Tax Board</a></td>
 <td><span class="badge b-ok">Verified</span></td>
 </tr>
 <tr>
@@ -561,7 +579,7 @@
 <td>F-038</td>
 <td>Projection</td>
 <td>Cupertino implied effective tax rate from the supplied 2014-2025 series</td>
-<td>1.33% of assessed value (2025: $7,207 / $539,743)</td>
+<td>1.33% of assessed value (2025: about $7,200 / $540,000)</td>
 <td><span class="small">no official source</span></td>
 <td><span class="badge b-bad">Flagged</span></td>
 </tr>
@@ -569,7 +587,7 @@
 <td>F-039</td>
 <td>Projection</td>
 <td>San Francisco implied effective tax rate from the supplied 2016-2025 series</td>
-<td>2.14% of assessed value (2025: $2,439 / $114,248)</td>
+<td>2.11% of assessed value (2025: about $2,400 / $114,000)</td>
 <td><span class="small">no official source</span></td>
 <td><span class="badge b-bad">Flagged</span></td>
 </tr>
@@ -587,6 +605,14 @@
 <td>Official tool for homeowners premiums</td>
 <td>CDI Homeowners Premium Survey, by coverage level and ZIP code</td>
 <td><a class="src" href="https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20" target="_blank" rel="noopener">California Department of Insurance</a></td>
+<td><span class="badge b-ok">Verified</span></td>
+</tr>
+<tr>
+<td>F-042</td>
+<td>California property tax</td>
+<td>Prop 19 filing periods (BOE summary)</td>
+<td>Homeowners&#x27; exemption within 1 year of transfer; claim for exclusion within 3 years or before transfer to a third party</td>
+<td><a class="src" href="https://www.boe.ca.gov/prop19/" target="_blank" rel="noopener">California State Board of Equalization</a></td>
 <td><span class="badge b-ok">Verified</span></td>
 </tr>
 </tbody></table></div>
@@ -632,7 +658,7 @@
 </tr>
 <tr>
 <td>Direct charges</td>
-<td>$730/yr Cupertino, $1,089/yr SF, grown at CPI</td>
+<td>$720/yr Cupertino, $1,050/yr SF, grown at CPI</td>
 <td>Residual between the reported bill and the statutory rate.</td>
 </tr>
 <tr>
@@ -710,7 +736,8 @@
 
 </main>
 <footer><div class="wrap">
-  <div><strong>Internal decision analysis.</strong> No names, addresses, parcel numbers or trust identifiers appear on this site.</div>
+  <div><strong>Internal decision analysis.</strong> No names, addresses, parcel numbers or trust identifiers appear on this site.
+  Parcel figures are rounded for privacy. <a href="../archive-v1/index.html">Earlier rules-only analysis (archived)</a>.</div>
   <div>Sources retrieved 2026-11-10. Figures rounded to the nearest $10. Not legal, tax or investment advice.</div>
 </div></footer>
 <script src="../assets/js/app.js"></script>

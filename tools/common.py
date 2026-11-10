@@ -139,7 +139,8 @@ def layout(slug, title, body, prefix="", description=None):
 {body}
 </main>
 <footer><div class="wrap">
-  <div><strong>Internal decision analysis.</strong> No names, addresses, parcel numbers or trust identifiers appear on this site.</div>
+  <div><strong>Internal decision analysis.</strong> No names, addresses, parcel numbers or trust identifiers appear on this site.
+  Parcel figures are rounded for privacy. <a href="{prefix}archive-v1/index.html">Earlier rules-only analysis (archived)</a>.</div>
   <div>Sources retrieved {RETRIEVED}. Figures rounded to the nearest $10. Not legal, tax or investment advice.</div>
 </div></footer>
 <script src="{prefix}assets/js/app.js"></script>

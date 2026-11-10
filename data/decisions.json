@@ -3,7 +3,7 @@
   {
    "key": "C",
    "name": "Sell Cupertino and invest",
-   "net_worth": 28032100
+   "net_worth": 28034740
   },
   {
    "key": "D",
@@ -13,15 +13,15 @@
   {
    "key": "A",
    "name": "Live in the Cupertino house",
-   "net_worth": 20736950
+   "net_worth": 20740020
   },
   {
    "key": "B",
    "name": "Rent the Cupertino house",
-   "net_worth": 20673600
+   "net_worth": 20677090
   }
  ],
- "delta_A_minus_B": 63350,
- "delta_A_minus_C": -7295150,
+ "delta_A_minus_B": 62930,
+ "delta_A_minus_C": -7294720,
  "prop19_value_20yr": 288580
 }
