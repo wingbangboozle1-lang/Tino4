@@ -1,0 +1,204 @@
+[
+  {
+    "id": "PT-01",
+    "topic": "Proposition 13 annual cap on assessed-value growth",
+    "value": "Base year value is compounded annually by an inflation factor not to exceed 2 percent (factor = change in the California CPI, capped at 2%).",
+    "quote": "Revenue and Taxation Code section 51 provides that base year values determined under section 110.1 shall be compounded annually by an inflation factor, not to exceed 2 percent.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/002 (Jan 13, 2026)",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-02",
+    "topic": "Inflation factor for the 2026 assessment roll (fiscal year 2026-27)",
+    "value": "1.02 (California CPI rose 3.307%; increase limited to 2%)",
+    "quote": "Accordingly, please prepare your 2026 assessment roll using an inflation factor of 1.02.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/002 (Jan 13, 2026)",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-03",
+    "topic": "Inflation factor for the 2027 assessment roll (fiscal year 2027-28)",
+    "value": "",
+    "quote": "",
+    "note": "Not yet published as of 2026-11-10. The Board of Equalization normally announces the next factor in a Letter to Assessors around December or January.",
+    "source_name": "California State Board of Equalization, Letters to Assessors index",
+    "source_url": "https://www.boe.ca.gov/proptaxes/ltacont.htm",
+    "status": "unverified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-04",
+    "topic": "Proposition 19: which parent-to-child transfers avoid reassessment",
+    "value": "Only a family home that is the principal residence of the parent AND becomes the principal residence of the child (or a family farm). The former exclusion for other real property was eliminated. Operative February 16, 2021.",
+    "quote": "Principal residence of transferor and transferee; Value limit of current taxable value plus $1,000,000 (as biennially adjusted) ... Eliminates exclusion for other real property other than the principal residence",
+    "source_name": "California State Board of Equalization, Proposition 19 page (comparison chart)",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-05",
+    "topic": "Proposition 19: child must move in within one year; no exceptions",
+    "value": "The home must become the child's principal residence within one year of the transfer (date of death). The Board states there are no exceptions.",
+    "quote": "Yes, the transfer is required to be of a principal residence of the transferor that qualifies as the principal residence of the transferee within one year after the transfer under section 63.2(a)(1)(A). There are no exceptions to this rule.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 7",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-06",
+    "topic": "Proposition 19: statute text",
+    "value": "Revenue and Taxation Code section 63.2: transfer must be of a principal residence of the transferor and become the principal residence of the transferee within one year; transferee must file for the homeowners' exemption within a year.",
+    "quote": "The transfer is required to be of a principal residence of the transferor, and become the principal residence of the transferee within one year of the transfer.",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 63.2",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-07",
+    "topic": "Proposition 19: value limit and how the new taxable value is calculated",
+    "value": "Value limit = factored base year value + $1 million (as adjusted). If market value exceeds the limit, the excess is added to the factored base year value.",
+    "quote": "The value limit under Proposition 19 is the sum of the factored base year value plus $1 million. If the market value exceeds this limit, the amount exceeding the value limit will be added to the factored base year value.",
+    "source_name": "California State Board of Equalization, Proposition 19 page, Parent-Child FAQ 6",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-08",
+    "topic": "Proposition 19: current '$1 million' amount",
+    "value": "$1,044,586 for transfers from February 16, 2025 through February 15, 2027 (previously $1,022,600 for Feb 16, 2023 - Feb 15, 2025; $1,000,000 for Feb 16, 2021 - Feb 15, 2023).",
+    "quote": "for transfers that occur February 16, 2025 through February 15, 2027, the value cap will be the sum of the property's factored base year value plus $1,044,586.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2025/009 (Mar 7, 2025)",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-09",
+    "topic": "Proposition 19: how the '$1 million' amount is adjusted",
+    "value": "Every other February 16, by the percentage change in the FHFA House Price Index for California for the prior calendar year only (2.15% for 2024). Next adjustment: February 2027.",
+    "quote": "Beginning on February 16, 2023, and every other February 16 thereafter, the State Board of Equalization shall adjust the one million dollar ($1,000,000) amount ... to reflect the percentage change in the House Price Index for California for the prior calendar year, as determined by the Federal Housing Finance Agency. ... The next adjustment of the $1 million amount will occur in February 2027.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2025/009 (Mar 7, 2025)",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-10",
+    "topic": "Proposition 19: '$1 million' amount effective February 16, 2027",
+    "value": "",
+    "quote": "",
+    "note": "Not yet published as of 2026-11-10. It depends on the FHFA California House Price Index change for calendar year 2026, which is released in early 2027.",
+    "source_name": "California State Board of Equalization, Proposition 19 page ($1 Million Amount Adjustments table)",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "unverified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-11",
+    "topic": "Proposition 19: a rental home does not qualify",
+    "value": "A transfer of a rental home between parent and child does not qualify for the exclusion; it is reassessed to market value.",
+    "quote": "No, Proposition 19 limits the parent-child transfer exclusion to a transfer of (1) a family home that is the principal residence of the transferor and becomes the principal residence of the transferee, or (2) a family farm. Thus, the transfer of a rental home between parents and children would not qualify for the exclusion.",
+    "source_name": "California State Board of Equalization, Proposition 19 page, Parent-Child FAQ 4",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-12",
+    "topic": "Proposition 19: multi-unit property",
+    "value": "Only the unit the parent occupied as a principal residence can qualify. The rest of the building is reassessed at full market value as of the date of transfer.",
+    "quote": "No, only the unit occupied as the principal residence qualifies as the principal residence of the transferor. The remainder of the apartment complex would be ineligible for the intergenerational transfer exclusion and would be reassessed at its full cash value as of the date of transfer.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 5",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-13",
+    "topic": "Proposition 19: two homes inherited by the same child",
+    "value": "Only one home can be the child's principal residence, so only one can qualify. The other is reassessed to full market value as of the transfer date.",
+    "quote": "If, however, the parent transferred both principal residences to the same child, and that child retained both residences, only one can qualify as the child's principal residence and thus qualify for the intergenerational transfer exclusion.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 2",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-14",
+    "topic": "Proposition 19: what happens if the child later moves out",
+    "value": "The exclusion is removed. The market value on the date of inheritance, increased by the annual inflation factor since then, is enrolled as of the next January 1 lien date.",
+    "quote": "The new taxable value will be the fair market value of the home on the date you inherited it, adjusted each year after for the inflation factor, and enrolled as of the lien date following the date you moved out.",
+    "source_name": "California State Board of Equalization, Proposition 19 page, Parent-Child FAQ 3",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-15",
+    "topic": "Proposition 19: parent living in a care facility before death",
+    "value": "The home can still count as the parent's principal residence if the parent would occupy it if not confined, intends to return, and the home is not rented to anyone other than an immediate family member.",
+    "quote": "If a person receiving the exemption is not occupying the dwelling because they are confined to a hospital or other care facility, the person is deemed to occupy that dwelling as their principal place of residence, provided all the following are met ... The dwelling is not rented or leased to anyone other than an immediate family member.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 11",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-16",
+    "topic": "Proposition 19: property held in a trust",
+    "value": "Transfers through a trust are eligible. The change in ownership date is the date of death (when the revocable trust becomes irrevocable).",
+    "quote": "Yes, for property tax purposes, the trust must be looked through to determine who has present beneficial ownership. ... If the requirements of section 63.2 are otherwise satisfied, transfers of property held in a trust are eligible for the exclusion.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 39",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-17",
+    "topic": "Proposition 19: property held in an LLC or other legal entity",
+    "value": "Not eligible. Moving an inherited home into an LLC also removes the exclusion and the homeowners' exemption.",
+    "quote": "No, this exclusion applies only to transfers of real property interests between eligible parents and children ... This exclusion does not apply to transfers to or from legal entities",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Questions 32 and 35",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-18",
+    "topic": "Proposition 19: filing deadlines",
+    "value": "Homeowners' exemption claim (BOE-266): within 1 year of the date of death. Exclusion claim (BOE-19-P): within 3 years of the date of death or before transfer to a third party, whichever is earlier (or within 6 months of a supplemental or escape assessment notice). Late claims get prospective relief only.",
+    "quote": "the transferee must file for the Homeowners' or Disabled Veterans' Exemption within one year of the date of purchase or transfer to be considered timely. The transferee must also file for the appropriate intergenerational transfer exclusion within three years of the date of purchase or transfer, or before a transfer to a third party, whichever is earlier.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Filing Requirements",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-19",
+    "topic": "Proposition 19: home sold shortly after death",
+    "value": "The exclusion can still cover the period between death and sale, but only if the child actually met the one-year residency requirement and filed the homeowners' exemption within one year of death and the exclusion claim on time.",
+    "quote": "As long as the eligible transferee met the one-year residency requirement, they may still receive the exclusion if the Homeowners' Exemption claim was filed within one year of the date of death (regardless of a subsequent sale) and the intergenerational transfer exclusion claim form was also timely filed.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 13",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-20",
+    "topic": "Proposition 19: growth of the new taxable value after inheritance",
+    "value": "The excess value gets a new base year as of the transfer date; the excluded factored base year value is unchanged. The combined new taxable value is then adjusted each year by the inflation factor (maximum 2%).",
+    "quote": "Any excess value receives a new base year and base year value as of the date of transfer. No changes would be made to the factored base year value that was excluded. The combination of these two values is the new taxable value.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 49",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  }
+]
