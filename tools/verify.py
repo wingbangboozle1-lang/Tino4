@@ -116,6 +116,18 @@ for path in html_files:
 
     check(p.rows == p.rows_with_src, "source link on every table row: " + rel,
           "%d/%d rows have an official source link" % (p.rows_with_src, p.rows))
+    # Column-count integrity: every tbody row must have exactly as many <td> as the
+    # table has <th>. Catches nested/duplicated cells that shift table columns.
+    for tbl in re.findall(r"<table class=\"data\">.*?</table>", raw, re.S):
+        head = re.search(r"<thead>(.*?)</thead>", tbl, re.S)
+        if not head:
+            continue
+        ncol = len(re.findall(r"<th>", head.group(1)))
+        for i, tr in enumerate(re.findall(r"<tbody>(.*?)</tbody>", tbl, re.S), 1):
+            for j, rowhtml in enumerate(re.findall(r"<tr[^>]*>(.*?)</tr>", tr, re.S), 1):
+                ntd = len(re.findall(r"<td", rowhtml))
+                check(ntd == ncol, "table column count: " + rel,
+                      "table %d row %d has %d <td>, header has %d <th>" % (i, j, ntd, ncol))
     check("@@FLAGHREF@@" not in raw, "no unresolved template tokens: " + rel)
     check(bool(p.title.strip()), "page has a title: " + rel)
 
