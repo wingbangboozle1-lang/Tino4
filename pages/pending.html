@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Pending legislation · Property A inheritance decision</title>
+<link rel="stylesheet" href="../assets/style.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Property A inheritance decision</span>
+    </div>
+    <p class="privacy">Anonymised · no addresses, no parcel numbers, no names</p>
+  </div>
+</header>
+<nav class="nav" aria-label="Sections"><div class="wrap"><a href="../index.html">Dashboard</a><a href="../pages/executive-summary.html">Executive summary</a><a href="../pages/properties.html">Properties</a><a href="../pages/projections.html">Projections</a><a href="../pages/decisions.html">Decision analysis</a><a href="../pages/inheritance-process.html">Inheritance process</a><a href="../pages/laws.html">Laws &amp; taxes</a><a href="../pages/costs.html">Operating costs</a><a href="../pages/estate-tax.html">Estate &amp; inheritance tax</a><a href="../pages/pending.html" class="active" aria-current="page">Pending legislation</a><a href="../pages/flagged.html">Flagged for review</a><a href="../pages/sources.html">Sources</a></div></nav>
+<main id="main" class="wrap">
+  <div class="pagehead">
+    <h1>Pending legislation</h1>
+    <p class="lede">What is being discussed, what it would change, and why none of it touches a single computed number.</p>
+  </div>
+  
+<section class="card">
+  <h2>Nothing on this page is in any projection</h2>
+  <p>The request asked to look at changes in the law currently being discussed and how they would affect
+  the decision. This page is that, kept strictly separate. A projection that mixes enacted and proposed law
+  is not a projection — it is a guess with a decimal point. Every number elsewhere on this site uses only
+  enacted law.</p>
+  <div class="tablewrap"><table class="wide"><thead><tr><th>Item</th><th>Jurisdiction</th><th>Status</th><th>What it would do</th><th>How it changes the decision</th><th>Source</th><th>In model</th></tr></thead><tbody><tr>
+    <td><strong>San Francisco Board of Supervisors File No. 261020 — temporary cap on banked and capital-improvement rent increases</strong></td>
+    <td>City and County of San Francisco</td>
+    <td><span class="badge asm">Proposed</span><br><span class="muted">proposed — not enacted</span></td>
+    <td>Would temporarily limit the combined amount of banked rent increases and capital-improvement passthroughs on rent-controlled units to 10% per year.</td>
+    <td>Caps upside on Property B's two rented units. Reduces the rent-growth assumption used for Property B, which lowers every scenario's terminal value roughly equally because Property B is held in all three — so it does not by itself change which scenario wins.</td>
+    <td><a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener">City and County of San Francisco</a></td>
+    <td>No</td>
+  </tr><tr>
+    <td><strong>AB 1482 statewide rent cap sunset on January 1, 2030</strong></td>
+    <td>State of California</td>
+    <td><span class="badge ok">Verified</span><br><span class="muted">enacted with a sunset — future extension unknown</span></td>
+    <td>Civil Code §1947.12 states the section remains in effect only until January 1, 2030 and is repealed as of that date.</td>
+    <td>If the Legislature does not extend it, statewide rent caps on Property A (if rented out) disappear after 2029, which is upside to the rent-out scenario and neutral to the others. If it is extended or expanded, the rent-out case weakens. Modelled at a flat 2%/yr rent growth across the whole horizon precisely because this is unresolved.</td>
+    <td><a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=1947.12" target="_blank" rel="noopener">California Legislative Information</a></td>
+    <td>No</td>
+  </tr><tr>
+    <td><strong>Biennial re-indexation of the Prop 19 $1M amount</strong></td>
+    <td>State of California</td>
+    <td><span class="badge ok">Verified</span><br><span class="muted">enacted mechanism — next adjustment February 2027, amount not yet published</span></td>
+    <td>The $1,000,000 figure is adjusted every other February 16 to the FHFA California House Price Index. Current published value is $1,044,586 for transfers 2/16/2025–2/15/2027.</td>
+    <td>If California house prices rise, the excluded amount rises and the heir keeps more of the parent's low base. Modelled by holding the 2026-published cap flat, so the model is conservative against the heir on this one point.</td>
+    <td><a href="https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf" target="_blank" rel="noopener">California State Board of Equalization</a></td>
+    <td>No</td>
+  </tr><tr>
+    <td><strong>Federal estate-tax exclusion indexation after 2026</strong></td>
+    <td>Federal</td>
+    <td><span class="badge ok">Verified</span><br><span class="muted">enacted mechanism — forward amounts not yet published</span></td>
+    <td>The basic exclusion is $15,000,000 for 2026 and is indexed for inflation from 2027. The IRS has not published 2027+ figures.</td>
+    <td>Every future-year exclusion will be higher than $15,000,000, so the estate-tax exposure modelled here is an upper bound (a floor on the exclusion is a ceiling on the tax).</td>
+    <td><a href="https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax" target="_blank" rel="noopener">Internal Revenue Service</a></td>
+    <td>No</td>
+  </tr><tr>
+    <td><strong>California wealth-tax proposals</strong></td>
+    <td>State of California</td>
+    <td><span class="badge asm">Proposed</span><br><span class="muted">proposed — not enacted</span></td>
+    <td>Recurring proposals to tax extremely large holdings annually. None is enacted law as of the research date.</td>
+    <td>Would only bite at holdings far above the figures in this plan. Not modelled. Listed so the decision maker knows it is on the radar, NOT as a projection input.</td>
+    <td><span class="unv">Unverified — blank</span></td>
+    <td>No</td>
+  </tr><tr>
+    <td><strong>California estate tax reintroduction proposals</strong></td>
+    <td>State of California</td>
+    <td><span class="badge asm">Proposed</span><br><span class="muted">proposed — not enacted</span></td>
+    <td>Periodic legislative proposals to create a California estate tax. California currently has none (State Controller's Office confirms no California estate tax return is required for deaths on or after 1/1/2005).</td>
+    <td>Would add a state-level tax on the estate itself, on top of the federal tax. Not modelled because nothing is enacted.</td>
+    <td><a href="https://www.sco.ca.gov/ardtax_estate_tax.html" target="_blank" rel="noopener">California State Controller's Office</a></td>
+    <td>No</td>
+  </tr><tr>
+    <td><strong>Net Energy Metering grandfathering for existing solar</strong></td>
+    <td>State of California / CPUC</td>
+    <td><span class="badge ok">Verified</span><br><span class="muted">enacted — the applicable tariff depends on a date not supplied</span></td>
+    <td>NEM tariffs are closed to new enrollments; interconnections applied for on or after 4/15/2023 take the Net Billing Tariff at avoided-cost export values. Existing systems keep the tariff in force when they interconnected.</td>
+    <td>Determines whether Property A's solar continues to generate a retail-rate credit or drops to a much smaller export credit. Modelled as a −$15/month credit with a $0 floor sensitivity because the interconnection date is unknown.</td>
+    <td><a href="https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/net-energy-metering" target="_blank" rel="noopener">California Public Utilities Commission</a></td>
+    <td>No</td>
+  </tr></tbody></table></div>
+</section>
+
+<section class="card">
+  <h2>The two that actually matter here</h2>
+  <div class="grid2">
+    <div>
+      <h3>AB 1482 disappears on January 1, 2030 — as written</h3>
+      <p>Civil Code §1947.12 says, in terms, that the section "shall remain in effect until January 1, 2030,
+      and as of that date is repealed" <a href="https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&amp;sectionNum=1947.12" target="_blank" rel="noopener">California Legislative Information</a>. That is not a proposal; it is the current
+      statute. What is unknown is whether the Legislature extends it.</p>
+      <p>Why it matters: if the cap lapses, rent on a rented-out Property A could reset to market. If it is
+      extended or tightened, the rent-out case gets worse. The model uses a flat 2%/yr across the entire
+      horizon precisely so it does not quietly assume either outcome. Flagged F17.</p>
+    </div>
+    <div>
+      <h3>San Francisco may cap banked increases</h3>
+      <p>Board of Supervisors File No. 261020, posted November 9 2026, would temporarily limit combined
+      banked and capital-improvement increases on rent-controlled units to 10% a year
+      <a href="https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit" target="_blank" rel="noopener">City and County of San Francisco</a>. The Rent Board's own page states clearly that it "has not been enacted
+      and is subject to change."</p>
+      <p>Why it matters: it caps upside on Property B's two rented units. Because Property B is held in all
+      three strategies, a change there moves all three terminal values roughly together and is unlikely to
+      change which strategy wins — but it would lower every number on the site.</p>
+    </div>
+  </div>
+</section>
+
+<section class="card warncard">
+  <h2>Also worth watching, but unsourced and therefore excluded</h2>
+  <p>Recurring California proposals for a state estate tax and for annual wealth taxes were considered. In
+  this research pass <strong>no enacted law and no confirmable pending bill text</strong> was found to cite,
+  so they are listed on the Flagged page as unverified rather than described here as if they were concrete.
+  If they ever pass, they would add a state-level layer on top of the federal one and would change the
+  estate analysis — but nothing on this site pretends to predict that.</p>
+</section>
+
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <p><strong>Planning document, not tax or legal advice.</strong> Every statutory figure is cited to a
+    government source; every planning input is labelled as an assumption with a range. Dollar amounts are
+    rounded to the nearest $10. Personal information is deliberately excluded.</p>
+    <p>Research and verification date: 2026-11-10. Data files: <code>data/*.json</code>. Verification log:
+    <a href="../VERIFICATION.md">VERIFICATION.md</a>. Coordination: <a href="../COORDINATION.md">COORDINATION.md</a>.</p>
+  </div>
+</footer>
+</body>
+</html>

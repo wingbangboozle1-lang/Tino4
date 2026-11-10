@@ -1,0 +1,263 @@
+{
+  "meta": {
+    "as_of": "2026-11-10",
+    "scope": "Federal, California, Santa Clara County and City/County of San Francisco rules that govern what happens when Property A is inherited through the trust and what happens afterwards under each of the three strategies.",
+    "rule": "Only enacted law is used in the computed projections. Proposed or pending legislation is kept in pending.json and never feeds a number."
+  },
+  "categories": [
+    {
+      "id": "CAT-ESTATE",
+      "name": "Estate and inheritance tax",
+      "items": [
+        {
+          "id": "L-FED-EXCLUSION",
+          "name": "Federal estate tax basic exclusion amount",
+          "amount": 15000000,
+          "units": "USD per decedent, 2026",
+          "status": "verified_official",
+          "source_id": "S-IRS-ESTATE",
+          "detail": "Estates below the exclusion owe no federal estate tax; tax above it is 40% top rate. Spouses may elect portability on a timely Form 706, effectively doubling the amount available to a couple.",
+          "applies_to": "The parent's estate as a whole, not to the individual assets."
+        },
+        {
+          "id": "L-FED-ANNUAL-GIFT",
+          "name": "Annual gift tax exclusion",
+          "amount": 19000,
+          "units": "USD per recipient per donor, 2026",
+          "status": "verified_official",
+          "source_id": "S-IRS-IR2025-103",
+          "detail": "Unchanged from 2025. A married couple that splits gifts can give $38,000 per recipient without touching the lifetime exclusion.",
+          "applies_to": "Lifetime planning ahead of the inheritance."
+        },
+        {
+          "id": "L-CA-ESTATE",
+          "name": "California state estate tax / inheritance tax",
+          "amount": 0,
+          "units": "USD",
+          "status": "verified_official",
+          "source_id": "S-SCO-ESTATE",
+          "detail": "No California estate tax return is required for decedents dying on or after January 1, 2005. California has no inheritance tax and no state generation-skipping transfer tax after 2004. A beneficiary owes nothing to the state merely for receiving the assets.",
+          "applies_to": "All California assets, including both properties."
+        },
+        {
+          "id": "L-CA-RECEIPT",
+          "name": "California income treatment of inherited assets",
+          "amount": 0,
+          "units": "USD tax at receipt",
+          "status": "verified_official",
+          "source_id": "S-FTB-GIFTS",
+          "detail": "Inherited cash and property are excluded from California income. Any income the inherited assets later produce (interest, dividends, rent, gain on sale) is taxable in the normal way.",
+          "applies_to": "The cash and both properties."
+        }
+      ]
+    },
+    {
+      "id": "CAT-BASIS",
+      "name": "Basis (what the sale tax is actually computed on)",
+      "items": [
+        {
+          "id": "L-STEPUP",
+          "name": "Step-up (date-of-death) basis, IRC §1014",
+          "amount": null,
+          "units": "basis = fair market value at date of death",
+          "status": "verified_official",
+          "source_id": "S-IRS-PUB551",
+          "detail": "The heir's basis in inherited property is generally its fair market value on the date of death. Sale immediately after inheritance therefore produces little or no taxable gain. This is the single most valuable federal rule in this decision.",
+          "applies_to": "Both properties, and any appreciated securities in the inheritance."
+        },
+        {
+          "id": "L-COMMUNITY-PROP",
+          "name": "Community property full step-up",
+          "amount": null,
+          "units": "n/a",
+          "status": "verified_official",
+          "source_id": "S-IRS-PUB551",
+          "detail": "In California, when the first spouse dies the entire community property interest generally takes a new basis, including the survivor's half. Matters if both parents are on title.",
+          "applies_to": "Depends on how title is held, which is not recorded here (privacy)."
+        },
+        {
+          "id": "L-SEC121",
+          "name": "Principal-residence gain exclusion, IRC §121",
+          "amount": 500000,
+          "units": "USD of gain excluded (married filing jointly); $250,000 single",
+          "status": "verified_official",
+          "source_id": "S-IRS-TOPIC701",
+          "detail": "Requires ownership for 2 of the last 5 years and use as a principal residence for 2 of the last 5 years. The combination of step-up basis plus §121 can make a sale of Property A almost entirely free of federal capital-gains tax if the heir lives in it long enough.",
+          "applies_to": "Only if Property A is actually used as the heir's principal residence."
+        },
+        {
+          "id": "L-CA-CAPGAIN",
+          "name": "California capital-gains treatment",
+          "amount": null,
+          "units": "ordinary income rates, 1%–13.3%",
+          "status": "verified_official",
+          "source_id": "S-FTB-CAPGAIN",
+          "detail": "California has no preferential capital-gains rate; gains are taxed as ordinary income under the California brackets. California does not conform to the federal §121 exclusion in full, so a large gain can still carry California tax even when the federal gain is excluded. Confirm with a CPA before relying on this.",
+          "applies_to": "Any sale of Property A or B."
+        },
+        {
+          "id": "L-FED-LTCG",
+          "name": "Federal long-term capital-gains rates, 2026",
+          "amount": null,
+          "units": "0% / 15% / 20%",
+          "status": "verified_official",
+          "source_id": "S-IRS-RP2532",
+          "detail": "0% up to $98,900 of taxable income (joint) / $49,450 (single); 15% up to $613,700 (joint) / $545,500 (single); 20% above. A 3.8% net investment income tax under IRC §1411 can stack on top above $250,000 joint / $200,000 single MAGI.",
+          "applies_to": "Sale of Property A, or of reinvested securities."
+        },
+        {
+          "id": "L-CA-WITHHOLD",
+          "name": "California real-estate withholding on sale",
+          "amount": 0.0333,
+          "units": "fraction of sales price (or an alternative gain-based calculation)",
+          "status": "verified_official",
+          "source_id": "S-FTB-593",
+          "detail": "3 1/3% of the sales price is withheld at close. This is a prepayment, not an extra tax — it is credited on the California return. The alternative gain-based election on Form 593 usually reduces the cash held back.",
+          "applies_to": "Any sale of Property A or B."
+        }
+      ]
+    },
+    {
+      "id": "CAT-PROPERTY-TAX",
+      "name": "Property tax on inheritance (the biggest recurring number)",
+      "items": [
+        {
+          "id": "L-PROP13",
+          "name": "Proposition 13 base levy and 2% cap",
+          "amount": 0.01,
+          "units": "fraction of net taxable value, plus voter-approved debt",
+          "status": "verified_official",
+          "source_id": "S-SCC-ASSESSOR-ANNUAL2025",
+          "detail": "The statutory minimum ad valorem rate is 1% of net taxable value; the total rate is higher where voters approved bonds. Assessed value may rise no more than 2% per year absent a change in ownership or new construction. For the 2026-27 roll the BOE set the inflation factor at 1.02.",
+          "applies_to": "Both properties."
+        },
+        {
+          "id": "L-PROP19-EXCL",
+          "name": "Proposition 19 parent-child exclusion",
+          "amount": 1044586,
+          "units": "USD added to the factored base year value (transfers 2/16/2025–2/15/2027)",
+          "status": "verified_official",
+          "source_id": "S-BOE-LTA25009",
+          "detail": "An inherited family home keeps the parent's low factored base year value, plus any amount by which market value exceeds (factored base year value + $1,044,586). Only a principal residence qualifies, the child must occupy it as a principal residence, and a homeowners' or disabled-veterans' exemption must be claimed within one year. The claim (BOE-19-P) must be filed within three years of the transfer or before sale to a third party.",
+          "applies_to": "Property A only if it is the parents' principal residence AND the heir moves in."
+        },
+        {
+          "id": "L-PROP19-RENTAL",
+          "name": "Proposition 19 does not apply to a rental home",
+          "amount": null,
+          "units": "n/a",
+          "status": "verified_official",
+          "source_id": "S-BOE-PROP19",
+          "detail": "The BOE states plainly that the parent-child exclusion is limited to a family home that is the transferor's principal residence and becomes the transferee's principal residence, or a family farm. A rental home transferred between parents and children does not qualify and is reassessed to market value.",
+          "applies_to": "Property B as currently operated (two units rented) — this is why Property B is not the property to inherit and rent."
+        },
+        {
+          "id": "L-PROP19-OCCUPANCY",
+          "name": "Prop 19 continuous-occupancy condition",
+          "amount": null,
+          "units": "n/a",
+          "status": "verified_official",
+          "source_id": "S-BOE-PROP19",
+          "detail": "Once the property stops being the heir's principal residence, it is reassessed to the fair market value on the date of inheritance, factored forward to the lien date following the move-out. Living in Property A for a few years and then renting it out therefore does not preserve the low base — the deferred reassessment catches up.",
+          "applies_to": "Property A under any live-then-rent plan."
+        },
+        {
+          "id": "L-PROP19-DEADLINE",
+          "name": "Prop 19 claim and exemption deadlines",
+          "amount": null,
+          "units": "1 year for the exemption; 3 years for the exclusion claim",
+          "status": "verified_official",
+          "source_id": "S-BOE-PROP19",
+          "detail": "Claim the homeowners' or disabled-veterans' exemption within one year of the transfer, and file the exclusion claim within three years or before transfer to a third party, whichever comes first. Missing the exemption deadline loses the exclusion.",
+          "applies_to": "Property A."
+        },
+        {
+          "id": "L-HOMEEX",
+          "name": "Homeowners' exemption",
+          "amount": 7000,
+          "units": "USD reduction in taxable value",
+          "status": "verified_official",
+          "source_id": "S-BOE-HOMEEX",
+          "detail": "One-time filing (BOE-266) with the county assessor; the home must be the owner's principal residence on January 1. Worth roughly $70–$85 per year at prevailing rates.",
+          "applies_to": "Property A only while occupied as a principal residence."
+        },
+        {
+          "id": "L-SUPPLEMENTAL",
+          "name": "Supplemental assessment after change in ownership",
+          "amount": null,
+          "units": "prorated difference between new and old value",
+          "status": "verified_official",
+          "source_id": "S-SF-TREAS-SECURED",
+          "detail": "A change in ownership triggers reappraisal and a supplemental bill for the difference, prorated to the part of the fiscal year remaining. Expect one or two supplemental bills in the first 12–18 months after the transfer.",
+          "applies_to": "Property A under the sell or rent scenarios; and Property B if it is sold."
+        },
+        {
+          "id": "L-TRANSFER-TAX-SF",
+          "name": "San Francisco documentary transfer tax",
+          "amount": 0.0075,
+          "units": "fraction of consideration ($3.75 per $500 for $1M–<$5M)",
+          "status": "verified_official",
+          "source_id": "S-SF-TRANSFERTAX",
+          "detail": "SF uses the whole-value bracket, not a marginal rate: the rate for the bracket applies to the entire consideration. Tiers: $2.50/$500 up to $250k; $3.40/$500 to $1M; $3.75/$500 to $5M; $11.25/$500 to $10M; $27.50/$500 to $25M; $30.00/$500 above.",
+          "applies_to": "A sale of Property B."
+        },
+        {
+          "id": "L-TRANSFER-TAX-SCC",
+          "name": "Santa Clara County documentary transfer tax",
+          "amount": 0.0011,
+          "units": "fraction of value ($0.55 per $500)",
+          "status": "verified_official",
+          "source_id": "S-SCC-RECORDER",
+          "detail": "$0.55 per $500 of real property value, excluding recorded liens and encumbrances. Properties inside San Jose, Palo Alto and Mountain View pay $1.65 per $500; Cupertino is not one of those three cities.",
+          "applies_to": "A sale of Property A."
+        }
+      ]
+    },
+    {
+      "id": "CAT-RENT",
+      "name": "Rent regulation (needed to project what the properties can earn)",
+      "items": [
+        {
+          "id": "L-SF-RENTBOARD",
+          "name": "San Francisco allowable annual rent increase",
+          "amount": 0.016,
+          "units": "fraction, effective 3/1/2026–2/28/2027",
+          "status": "verified_official",
+          "source_id": "S-SF-RENTBOARD",
+          "detail": "1.6% for the current period (1.4% the prior period). Applies to units covered by the SF Rent Ordinance, generally buildings with a certificate of occupancy before June 13, 1979.",
+          "applies_to": "Property B's two rented units if the building is pre-1979, which is typical for the Outer Sunset."
+        },
+        {
+          "id": "L-AB1482",
+          "name": "Statewide rent cap (AB 1482 / Civil Code §1947.12)",
+          "amount": null,
+          "units": "5% + regional CPI, absolute maximum 10%",
+          "status": "verified_official",
+          "source_id": "S-CIV-1947.12",
+          "detail": "The statute caps increases at the lower of 5% plus the applicable CPI change or 10%. The applicable CPI for San Francisco is the CPI-U for the San Francisco-Oakland-Hayward area. For areas with no metro index the statute falls back to the California CPI. The section is repealed as of January 1, 2030 unless extended.",
+          "applies_to": "Property A if rented to a tenant, and as a backstop for Property B."
+        },
+        {
+          "id": "L-AB1482-DUPLEX",
+          "name": "AB 1482 owner-occupied two-unit exemption",
+          "amount": null,
+          "units": "n/a",
+          "status": "verified_official",
+          "source_id": "S-CIV-1947.12",
+          "detail": "§1947.12(d)(6) exempts a property containing two separate dwelling units in a single structure where the owner occupied one unit as a principal residence at the beginning of the tenancy and remains in occupancy. Property B has three units, so this exemption does not fit Property B as described.",
+          "applies_to": "Property B — and it is why the three-unit configuration matters."
+        },
+        {
+          "id": "L-AB1482-SUNSET",
+          "name": "AB 1482 statutory sunset",
+          "amount": null,
+          "units": "repealed as of January 1, 2030",
+          "status": "verified_official",
+          "source_id": "S-CIV-1947.12",
+          "detail": "The statute says it remains in effect until January 1, 2030 and is repealed as of that date. Any projection past 2030 therefore depends on legislative action that has not happened.",
+          "applies_to": "Rent growth assumptions after 2030. Flagged."
+        }
+      ]
+    }
+  ]
+}
