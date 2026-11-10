@@ -39,7 +39,7 @@ analysis.
 | T5 | Site pages: executive summary, property tax, projections, operating costs, inheritance law, thresholds, decision analysis, process, watchlist, methodology, sources, flagged, privacy | done | `s-0837be92` | `docs/pages/*.html`, `docs/assets/**` | 2026-11-10 |
 | T6 | Line-by-line verification pass, link check, privacy scan, build check | done | `s-0837be92` | `internal/verification-log.md`, `tools/verify.py` | 2026-11-10 |
 | T7 | Final integration: shared table data, `docs/index.html` + navigation, root mirror, merge branches, re-verify combined data, no broken links, publish to GitHub Pages | done | `s-0837be92` | `docs/index.html`, `docs/data/**`, root mirror | 2026-11-10 |
-| T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
+| T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
 
 ## Session registry
 
@@ -206,6 +206,8 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | Live-site spot check | `pages/executive-summary.html` served the new dashboard; a rendering-column defect was found in the generated tables, fixed, and redeployed via the follow-up PR recorded below |
 | Follow-up fix | Table-structure fix (nested/duplicated `<td>`) + column-count verification; see the final Change log entry and the follow-up PR link below |
 | Follow-up PR | https://github.com/wingbangboozle1-lang/Tino4/pull/7 — "Fix table column structure and add column-count verification (follow-up to #6)" |
+| Follow-up merge result | `gh pr merge 7 --merge` → **MERGED**, merge commit `bf5bc946a6e8d137cef665d2ccc937c23d1d8d2e` at 2026-11-10T10:37:31Z |
+| Final Pages deployment | Build `built` at 2026-11-10T10:37:53Z with no error; live root dashboard and `pages/executive-summary.html` fetched from https://wingbangboozle1-lang.github.io/Tino4/ and verified: correct content, aligned table columns, official source links present |
 | Final verification | `python3 tools/verify.py` on the regenerated tree: 5,958 checks, 0 failures; 750/750 table rows source-linked; column counts consistent |
 
 ## Change log
@@ -225,3 +227,7 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   confirmed `built`. Live-site check found a table column defect; `tools/build.py` and
   `tools/verify.py` were fixed (column-count check added) and the site regenerated with
   5,958 checks / 0 failures. Follow-up PR recorded in Deployment log.
+
+- 2026-11-10 — `s-0837be92`: follow-up PR #7 merged at `bf5bc94`; GitHub Pages build confirmed
+  `built` with no error; live dashboard and executive-summary page fetched and verified. All
+  tasks T1–T8 done. Final live site: https://wingbangboozle1-lang.github.io/Tino4/
