@@ -1,0 +1,726 @@
+{
+  "verified_on": "2026-11-10",
+  "note": "MODEL OUTPUTS, not official facts. Rules used: Prop 13 2% cap (S20/S29), county rates (S30/S31), CBO CPI (S50), CDI statewide average (S46).",
+  "rows": [
+    {
+      "year": 2026,
+      "A": {
+        "market": 3100000,
+        "assessed_pre": 550540,
+        "tax_pre": 6320,
+        "water": 1500,
+        "electric": -180,
+        "insurance": 1570,
+        "maintenance": 31000,
+        "total_operating_pre": 33890
+      },
+      "B": {
+        "market": 1800000,
+        "assessed": 116530,
+        "tax": 1380,
+        "water": 4380,
+        "electric": 600,
+        "insurance": 1570,
+        "maintenance": 18000,
+        "rent": 85800
+      },
+      "exemption": 15000000
+    },
+    {
+      "year": 2027,
+      "A": {
+        "market": 3193000,
+        "assessed_pre": 561550,
+        "tax_pre": 6450,
+        "water": 1540,
+        "electric": -180,
+        "insurance": 1610,
+        "maintenance": 31930,
+        "total_operating_pre": 34900
+      },
+      "B": {
+        "market": 1854000,
+        "assessed": 118860,
+        "tax": 1410,
+        "water": 4500,
+        "electric": 620,
+        "insurance": 1610,
+        "maintenance": 18540,
+        "rent": 88120
+      },
+      "exemption": 15330000
+    },
+    {
+      "year": 2028,
+      "A": {
+        "market": 3288790,
+        "assessed_pre": 572780,
+        "tax_pre": 6580,
+        "water": 1570,
+        "electric": -190,
+        "insurance": 1650,
+        "maintenance": 32890,
+        "total_operating_pre": 35920
+      },
+      "B": {
+        "market": 1909620,
+        "assessed": 121240,
+        "tax": 1430,
+        "water": 4600,
+        "electric": 630,
+        "insurance": 1650,
+        "maintenance": 19100,
+        "rent": 90060
+      },
+      "exemption": 15667260
+    },
+    {
+      "year": 2029,
+      "A": {
+        "market": 3387450,
+        "assessed_pre": 584230,
+        "tax_pre": 6710,
+        "water": 1610,
+        "electric": -190,
+        "insurance": 1690,
+        "maintenance": 33870,
+        "total_operating_pre": 36980
+      },
+      "B": {
+        "market": 1966910,
+        "assessed": 123670,
+        "tax": 1460,
+        "water": 4700,
+        "electric": 640,
+        "insurance": 1690,
+        "maintenance": 19670,
+        "rent": 92040
+      },
+      "exemption": 16011940
+    },
+    {
+      "year": 2030,
+      "A": {
+        "market": 3489080,
+        "assessed_pre": 595920,
+        "tax_pre": 6850,
+        "water": 1640,
+        "electric": -200,
+        "insurance": 1720,
+        "maintenance": 34890,
+        "total_operating_pre": 38060
+      },
+      "B": {
+        "market": 2025920,
+        "assessed": 126140,
+        "tax": 1490,
+        "water": 4800,
+        "electric": 660,
+        "insurance": 1720,
+        "maintenance": 20260,
+        "rent": 94060
+      },
+      "exemption": 16364200
+    },
+    {
+      "year": 2031,
+      "A": {
+        "market": 3593750,
+        "assessed_pre": 607840,
+        "tax_pre": 6980,
+        "water": 1680,
+        "electric": -200,
+        "insurance": 1760,
+        "maintenance": 35940,
+        "total_operating_pre": 39180
+      },
+      "B": {
+        "market": 2086690,
+        "assessed": 128660,
+        "tax": 1520,
+        "water": 4910,
+        "electric": 670,
+        "insurance": 1760,
+        "maintenance": 20870,
+        "rent": 96130
+      },
+      "exemption": 16724210
+    },
+    {
+      "year": 2032,
+      "A": {
+        "market": 3701560,
+        "assessed_pre": 619990,
+        "tax_pre": 7120,
+        "water": 1720,
+        "electric": -210,
+        "insurance": 1800,
+        "maintenance": 37020,
+        "total_operating_pre": 40330
+      },
+      "B": {
+        "market": 2149290,
+        "assessed": 131240,
+        "tax": 1550,
+        "water": 5020,
+        "electric": 690,
+        "insurance": 1800,
+        "maintenance": 21490,
+        "rent": 98250
+      },
+      "exemption": 17092150
+    },
+    {
+      "year": 2033,
+      "A": {
+        "market": 3812610,
+        "assessed_pre": 632390,
+        "tax_pre": 7260,
+        "water": 1760,
+        "electric": -210,
+        "insurance": 1840,
+        "maintenance": 38130,
+        "total_operating_pre": 41510
+      },
+      "B": {
+        "market": 2213770,
+        "assessed": 133860,
+        "tax": 1580,
+        "water": 5130,
+        "electric": 700,
+        "insurance": 1840,
+        "maintenance": 22140,
+        "rent": 100410
+      },
+      "exemption": 17468170
+    },
+    {
+      "year": 2034,
+      "A": {
+        "market": 3926990,
+        "assessed_pre": 645040,
+        "tax_pre": 7410,
+        "water": 1790,
+        "electric": -220,
+        "insurance": 1880,
+        "maintenance": 39270,
+        "total_operating_pre": 42730
+      },
+      "B": {
+        "market": 2280190,
+        "assessed": 136540,
+        "tax": 1610,
+        "water": 5240,
+        "electric": 720,
+        "insurance": 1880,
+        "maintenance": 22800,
+        "rent": 102620
+      },
+      "exemption": 17852470
+    },
+    {
+      "year": 2035,
+      "A": {
+        "market": 4044800,
+        "assessed_pre": 657940,
+        "tax_pre": 7560,
+        "water": 1830,
+        "electric": -220,
+        "insurance": 1920,
+        "maintenance": 40450,
+        "total_operating_pre": 43980
+      },
+      "B": {
+        "market": 2348590,
+        "assessed": 139270,
+        "tax": 1650,
+        "water": 5350,
+        "electric": 730,
+        "insurance": 1920,
+        "maintenance": 23490,
+        "rent": 104870
+      },
+      "exemption": 18245230
+    },
+    {
+      "year": 2036,
+      "A": {
+        "market": 4166140,
+        "assessed_pre": 671100,
+        "tax_pre": 7710,
+        "water": 1870,
+        "electric": -220,
+        "insurance": 1960,
+        "maintenance": 41660,
+        "total_operating_pre": 45270
+      },
+      "B": {
+        "market": 2419050,
+        "assessed": 142050,
+        "tax": 1680,
+        "water": 5470,
+        "electric": 750,
+        "insurance": 1960,
+        "maintenance": 24190,
+        "rent": 107180
+      },
+      "exemption": 18646620
+    },
+    {
+      "year": 2037,
+      "A": {
+        "market": 4291120,
+        "assessed_pre": 684520,
+        "tax_pre": 7860,
+        "water": 1920,
+        "electric": -230,
+        "insurance": 2010,
+        "maintenance": 42910,
+        "total_operating_pre": 46600
+      },
+      "B": {
+        "market": 2491620,
+        "assessed": 144890,
+        "tax": 1710,
+        "water": 5590,
+        "electric": 770,
+        "insurance": 2010,
+        "maintenance": 24920,
+        "rent": 109540
+      },
+      "exemption": 19056850
+    },
+    {
+      "year": 2038,
+      "A": {
+        "market": 4419860,
+        "assessed_pre": 698210,
+        "tax_pre": 8020,
+        "water": 1960,
+        "electric": -230,
+        "insurance": 2050,
+        "maintenance": 44200,
+        "total_operating_pre": 47970
+      },
+      "B": {
+        "market": 2566370,
+        "assessed": 147790,
+        "tax": 1750,
+        "water": 5710,
+        "electric": 780,
+        "insurance": 2050,
+        "maintenance": 25660,
+        "rent": 111950
+      },
+      "exemption": 19476100
+    },
+    {
+      "year": 2039,
+      "A": {
+        "market": 4552450,
+        "assessed_pre": 712180,
+        "tax_pre": 8180,
+        "water": 2000,
+        "electric": -240,
+        "insurance": 2090,
+        "maintenance": 45520,
+        "total_operating_pre": 49380
+      },
+      "B": {
+        "market": 2643360,
+        "assessed": 150750,
+        "tax": 1780,
+        "water": 5840,
+        "electric": 800,
+        "insurance": 2090,
+        "maintenance": 26430,
+        "rent": 114410
+      },
+      "exemption": 19904570
+    },
+    {
+      "year": 2040,
+      "A": {
+        "market": 4689030,
+        "assessed_pre": 726420,
+        "tax_pre": 8350,
+        "water": 2040,
+        "electric": -250,
+        "insurance": 2140,
+        "maintenance": 46890,
+        "total_operating_pre": 50830
+      },
+      "B": {
+        "market": 2722660,
+        "assessed": 153760,
+        "tax": 1820,
+        "water": 5970,
+        "electric": 820,
+        "insurance": 2140,
+        "maintenance": 27230,
+        "rent": 116930
+      },
+      "exemption": 20342480
+    },
+    {
+      "year": 2041,
+      "A": {
+        "market": 4829700,
+        "assessed_pre": 740950,
+        "tax_pre": 8510,
+        "water": 2090,
+        "electric": -250,
+        "insurance": 2190,
+        "maintenance": 48300,
+        "total_operating_pre": 52320
+      },
+      "B": {
+        "market": 2804340,
+        "assessed": 156840,
+        "tax": 1850,
+        "water": 6100,
+        "electric": 840,
+        "insurance": 2190,
+        "maintenance": 28040,
+        "rent": 119500
+      },
+      "exemption": 20790010
+    },
+    {
+      "year": 2042,
+      "A": {
+        "market": 4974590,
+        "assessed_pre": 755770,
+        "tax_pre": 8680,
+        "water": 2140,
+        "electric": -260,
+        "insurance": 2240,
+        "maintenance": 49750,
+        "total_operating_pre": 53860
+      },
+      "B": {
+        "market": 2888470,
+        "assessed": 159970,
+        "tax": 1890,
+        "water": 6230,
+        "electric": 850,
+        "insurance": 2240,
+        "maintenance": 28880,
+        "rent": 122130
+      },
+      "exemption": 21247390
+    },
+    {
+      "year": 2043,
+      "A": {
+        "market": 5123830,
+        "assessed_pre": 770880,
+        "tax_pre": 8860,
+        "water": 2180,
+        "electric": -260,
+        "insurance": 2290,
+        "maintenance": 51240,
+        "total_operating_pre": 55440
+      },
+      "B": {
+        "market": 2975130,
+        "assessed": 163170,
+        "tax": 1930,
+        "water": 6370,
+        "electric": 870,
+        "insurance": 2290,
+        "maintenance": 29750,
+        "rent": 124820
+      },
+      "exemption": 21714830
+    },
+    {
+      "year": 2044,
+      "A": {
+        "market": 5277540,
+        "assessed_pre": 786300,
+        "tax_pre": 9030,
+        "water": 2230,
+        "electric": -270,
+        "insurance": 2340,
+        "maintenance": 52780,
+        "total_operating_pre": 57070
+      },
+      "B": {
+        "market": 3064380,
+        "assessed": 166440,
+        "tax": 1970,
+        "water": 6510,
+        "electric": 890,
+        "insurance": 2340,
+        "maintenance": 30640,
+        "rent": 127560
+      },
+      "exemption": 22192560
+    },
+    {
+      "year": 2045,
+      "A": {
+        "market": 5435870,
+        "assessed_pre": 802030,
+        "tax_pre": 9210,
+        "water": 2280,
+        "electric": -270,
+        "insurance": 2390,
+        "maintenance": 54360,
+        "total_operating_pre": 58750
+      },
+      "B": {
+        "market": 3156310,
+        "assessed": 169770,
+        "tax": 2010,
+        "water": 6660,
+        "electric": 910,
+        "insurance": 2390,
+        "maintenance": 31560,
+        "rent": 130370
+      },
+      "exemption": 22680800
+    },
+    {
+      "year": 2046,
+      "A": {
+        "market": 5598940,
+        "assessed_pre": 818070,
+        "tax_pre": 9400,
+        "water": 2330,
+        "electric": -280,
+        "insurance": 2440,
+        "maintenance": 55990,
+        "total_operating_pre": 60480
+      },
+      "B": {
+        "market": 3251000,
+        "assessed": 173160,
+        "tax": 2050,
+        "water": 6800,
+        "electric": 930,
+        "insurance": 2440,
+        "maintenance": 32510,
+        "rent": 133240
+      },
+      "exemption": 23179770
+    },
+    {
+      "year": 2047,
+      "A": {
+        "market": 5766910,
+        "assessed_pre": 834430,
+        "tax_pre": 9590,
+        "water": 2380,
+        "electric": -290,
+        "insurance": 2490,
+        "maintenance": 57670,
+        "total_operating_pre": 62260
+      },
+      "B": {
+        "market": 3348530,
+        "assessed": 176630,
+        "tax": 2090,
+        "water": 6950,
+        "electric": 950,
+        "insurance": 2490,
+        "maintenance": 33490,
+        "rent": 136170
+      },
+      "exemption": 23689730
+    },
+    {
+      "year": 2048,
+      "A": {
+        "market": 5939920,
+        "assessed_pre": 851120,
+        "tax_pre": 9780,
+        "water": 2430,
+        "electric": -290,
+        "insurance": 2550,
+        "maintenance": 59400,
+        "total_operating_pre": 64090
+      },
+      "B": {
+        "market": 3448990,
+        "assessed": 180160,
+        "tax": 2130,
+        "water": 7100,
+        "electric": 970,
+        "insurance": 2550,
+        "maintenance": 34490,
+        "rent": 139160
+      },
+      "exemption": 24210900
+    },
+    {
+      "year": 2049,
+      "A": {
+        "market": 6118120,
+        "assessed_pre": 868140,
+        "tax_pre": 9970,
+        "water": 2490,
+        "electric": -300,
+        "insurance": 2600,
+        "maintenance": 61180,
+        "total_operating_pre": 65970
+      },
+      "B": {
+        "market": 3552460,
+        "assessed": 183760,
+        "tax": 2170,
+        "water": 7260,
+        "electric": 990,
+        "insurance": 2600,
+        "maintenance": 35520,
+        "rent": 142230
+      },
+      "exemption": 24743540
+    },
+    {
+      "year": 2050,
+      "A": {
+        "market": 6301660,
+        "assessed_pre": 885500,
+        "tax_pre": 10170,
+        "water": 2540,
+        "electric": -300,
+        "insurance": 2660,
+        "maintenance": 63020,
+        "total_operating_pre": 67910
+      },
+      "B": {
+        "market": 3659030,
+        "assessed": 187440,
+        "tax": 2220,
+        "water": 7420,
+        "electric": 1020,
+        "insurance": 2660,
+        "maintenance": 36590,
+        "rent": 145350
+      },
+      "exemption": 25287900
+    },
+    {
+      "year": 2051,
+      "A": {
+        "market": 6490710,
+        "assessed_pre": 903210,
+        "tax_pre": 10380,
+        "water": 2600,
+        "electric": -310,
+        "insurance": 2720,
+        "maintenance": 64910,
+        "total_operating_pre": 69910
+      },
+      "B": {
+        "market": 3768800,
+        "assessed": 191180,
+        "tax": 2260,
+        "water": 7580,
+        "electric": 1040,
+        "insurance": 2720,
+        "maintenance": 37690,
+        "rent": 148550
+      },
+      "exemption": 25844230
+    },
+    {
+      "year": 2052,
+      "A": {
+        "market": 6685430,
+        "assessed_pre": 921280,
+        "tax_pre": 10580,
+        "water": 2650,
+        "electric": -320,
+        "insurance": 2780,
+        "maintenance": 66850,
+        "total_operating_pre": 71970
+      },
+      "B": {
+        "market": 3881860,
+        "assessed": 195010,
+        "tax": 2310,
+        "water": 7750,
+        "electric": 1060,
+        "insurance": 2780,
+        "maintenance": 38820,
+        "rent": 151820
+      },
+      "exemption": 26412810
+    },
+    {
+      "year": 2053,
+      "A": {
+        "market": 6886000,
+        "assessed_pre": 939700,
+        "tax_pre": 10800,
+        "water": 2710,
+        "electric": -330,
+        "insurance": 2840,
+        "maintenance": 68860,
+        "total_operating_pre": 74090
+      },
+      "B": {
+        "market": 3998320,
+        "assessed": 198910,
+        "tax": 2350,
+        "water": 7920,
+        "electric": 1090,
+        "insurance": 2840,
+        "maintenance": 39980,
+        "rent": 155160
+      },
+      "exemption": 26993890
+    },
+    {
+      "year": 2054,
+      "A": {
+        "market": 7092580,
+        "assessed_pre": 958500,
+        "tax_pre": 11010,
+        "water": 2770,
+        "electric": -330,
+        "insurance": 2900,
+        "maintenance": 70930,
+        "total_operating_pre": 76270
+      },
+      "B": {
+        "market": 4118270,
+        "assessed": 202890,
+        "tax": 2400,
+        "water": 8100,
+        "electric": 1110,
+        "insurance": 2900,
+        "maintenance": 41180,
+        "rent": 158570
+      },
+      "exemption": 27587750
+    },
+    {
+      "year": 2055,
+      "A": {
+        "market": 7305350,
+        "assessed_pre": 977670,
+        "tax_pre": 11230,
+        "water": 2830,
+        "electric": -340,
+        "insurance": 2970,
+        "maintenance": 73050,
+        "total_operating_pre": 78510
+      },
+      "B": {
+        "market": 4241820,
+        "assessed": 206940,
+        "tax": 2450,
+        "water": 8270,
+        "electric": 1130,
+        "insurance": 2970,
+        "maintenance": 42420,
+        "rent": 162060
+      },
+      "exemption": 28194680
+    }
+  ]
+}

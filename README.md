@@ -22,7 +22,9 @@ treated as **unverified user-provided inputs** and are published only on the
 | Path | Purpose |
 | --- | --- |
 | `COORDINATION.md` | Shared task board: claims, statuses, sources, verification, irregularities, PR log |
-| `docs/` | Published GitHub Pages site (landing dashboard + category subpages) |
+| `docs/` | Canonical GitHub Pages site (landing dashboard + category subpages) |
+| `index.html`, `pages/`, `assets/`, `data/` | Byte-identical root mirror, because this repository's Pages source is `main` `/` and the Pages admin API was not reachable (IR-017) |
+| `_config.yml` | Excludes `internal/`, `tools/`, `docs/` and repo metadata from the published Jekyll build |
 | `docs/data/` | Machine-readable facts, model inputs, projections, decision outputs, source register |
 | `tools/build.py` | Deterministic generator: builds all JSON and all static HTML from verified sources |
 | `tools/verify.py` | Line-by-line verification: source links per row, internal links, privacy scan |

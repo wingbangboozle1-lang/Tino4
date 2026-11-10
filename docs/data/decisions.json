@@ -1,0 +1,125 @@
+{
+  "verified_on": "2026-11-10",
+  "recommendation": "Sell and reinvest",
+  "break_even_equity_return_2045": 0.03921,
+  "note": "All values are rounded to nearest $10 model outputs; see methodology page.",
+  "snapshots": {
+    "2040": {
+      "year": 2040,
+      "market": 4689030,
+      "fbyv": 726420,
+      "tax_pre": 8350,
+      "assessed_full": 4689030,
+      "tax_full": 53870,
+      "assessed_p19": 3644440,
+      "tax_p19_live": 41790,
+      "jump": 45520,
+      "p19_saving": 12000,
+      "exemption": 20342480,
+      "headroom": 15653450
+    },
+    "2045": {
+      "year": 2045,
+      "market": 5435870,
+      "fbyv": 802030,
+      "tax_pre": 9210,
+      "assessed_full": 5435870,
+      "tax_full": 62450,
+      "assessed_p19": 4391280,
+      "tax_p19_live": 50370,
+      "jump": 53230,
+      "p19_saving": 12000,
+      "exemption": 22680800,
+      "headroom": 17244930
+    },
+    "2050": {
+      "year": 2050,
+      "market": 6301660,
+      "fbyv": 885500,
+      "tax_pre": 10170,
+      "assessed_full": 6301660,
+      "tax_full": 72390,
+      "assessed_p19": 5257080,
+      "tax_p19_live": 60310,
+      "jump": 62220,
+      "p19_saving": 12000,
+      "exemption": 25287900,
+      "headroom": 18986240
+    }
+  },
+  "scenarios": {
+    "2040": {
+      "year": 2040,
+      "market": 4689030,
+      "market_end": 6301660,
+      "sell_proceeds": 4407690,
+      "sell_equity": 7656020,
+      "sell_bond": 6165950,
+      "live_cf1": -92620,
+      "rent_cf1": 35970,
+      "cum_live": -1038710,
+      "cum_rent": 441720,
+      "liquid_live": 5658760,
+      "liquid_rent": 5539760,
+      "live_terminal": 4620040,
+      "rent_terminal": 5981470,
+      "sell_terminal": 7656020
+    },
+    "2045": {
+      "year": 2045,
+      "market": 5435870,
+      "market_end": 7305350,
+      "sell_proceeds": 5109720,
+      "sell_equity": 8875420,
+      "sell_bond": 7148030,
+      "live_cf1": -109120,
+      "rent_cf1": 41880,
+      "cum_live": -1223280,
+      "cum_rent": 514000,
+      "liquid_live": 6541090,
+      "liquid_rent": 6422090,
+      "live_terminal": 5317810,
+      "rent_terminal": 6936100,
+      "sell_terminal": 8875420
+    },
+    "2050": {
+      "year": 2050,
+      "market": 6301660,
+      "market_end": 8468910,
+      "sell_proceeds": 5923560,
+      "sell_equity": 10289050,
+      "sell_bond": 8286520,
+      "live_cf1": -128230,
+      "rent_cf1": 48740,
+      "cum_live": -1437020,
+      "cum_rent": 598020,
+      "liquid_live": 7563970,
+      "liquid_rent": 7444970,
+      "live_terminal": 6126950,
+      "rent_terminal": 8042990,
+      "sell_terminal": 10289050
+    }
+  },
+  "sensitivity": [
+    {
+      "equity": 0.04,
+      "sell_terminal": 6979600
+    },
+    {
+      "equity": 0.06,
+      "sell_terminal": 8188960
+    },
+    {
+      "equity": 0.07,
+      "sell_terminal": 8875420
+    },
+    {
+      "equity": 0.09,
+      "sell_terminal": 10433690
+    },
+    {
+      "equity": 0.1,
+      "sell_terminal": 11315120
+    }
+  ]
+}

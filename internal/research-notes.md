@@ -217,9 +217,10 @@ what the official page actually says; nothing below is inferred.
 - **CPUC Decision 24-12-027 (San Jose Water GRC)** —
   https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M551/K128/551128522.PDF —
   "adopts rates for San Jose Water Company … for Test Year 2025 and two subsequent
-  attrition years, 2026 and 2027"; revenue requirements $566,477,943 (2025),
-  $581,481,224 (2026), $599,712,746 (2027). NOTE: percentage figures found in the
-  *application* (11.11% / 3.99% / 4.49%) were not used as facts.
+  attrition years, 2026 and 2027". NOTE: revenue-requirement and percentage figures found
+  in the *proposed decision* and the *application* (11.11% / 3.99% / 4.49%) were not
+  used as facts on the site because they were not confirmed in the final decision text
+  read in this pass.
 - **SFPUC Proposition 218 notice (current page)** —
   https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposition-218-notice-proposed-water-and-sewer-rates —
   "proposed … combined monthly bill increase for the average San Francisco residential

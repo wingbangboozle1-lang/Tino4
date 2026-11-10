@@ -1,0 +1,10 @@
+# GitHub Pages legacy (Jekyll) build: the site is static HTML, copied verbatim.
+# Internal-only material must never be published on the website.
+exclude:
+  - internal
+  - tools
+  - docs
+  - COORDINATION.md
+  - README.md
+  - .gitignore
+  - "*.py"
