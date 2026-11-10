@@ -1,383 +1,291 @@
 {
- "note": "Line-by-line verification record rendered on the site. status values: verified = confirmed on the cited official page; reported = supplied by the owner, not independently verifiable; flagged = inconsistent or unverifiable, published on Flagged for Review.",
- "facts": [
-  {
-   "id": "F-001",
-   "group": "Federal inheritance / estate",
-   "metric": "Federal estate & gift tax basic exclusion amount, 2026 deaths",
-   "value": "$15,000,000 per person",
-   "source": "IRS-ESTATE",
-   "status": "verified",
-   "note": "Also confirmed in Rev. Proc. 2025-32 \u00a72.14 and Form 706 instructions. Married couple with portability: $30,000,000."
-  },
-  {
-   "id": "F-002",
-   "group": "Federal inheritance / estate",
-   "metric": "Federal estate exclusion, 2025 deaths (prior year comparison)",
-   "value": "$13,990,000 per person",
-   "source": "IRS-ESTATE",
-   "status": "verified",
-   "note": "Context for the 2026 increase enacted by P.L. 119-21."
-  },
-  {
-   "id": "F-003",
-   "group": "Federal inheritance / estate",
-   "metric": "Top federal estate tax rate above the exclusion",
-   "value": "40%",
-   "source": "IRS-I706",
-   "status": "verified",
-   "note": "IRC \u00a72001(c) rate table reproduced in Form 706 instructions."
-  },
-  {
-   "id": "F-004",
-   "group": "Federal inheritance / estate",
-   "metric": "Indexation of the exclusion after 2026",
-   "value": "Indexed for inflation for years after 2026",
-   "source": "IRS-RP2532",
-   "status": "verified",
-   "note": "\"The basic exclusion amount will be adjusted for inflation for calendar year 2027 and future years.\" No sunset date."
-  },
-  {
-   "id": "F-005",
-   "group": "Federal inheritance / estate",
-   "metric": "Is there a federal inheritance tax on the recipient?",
-   "value": "No federal inheritance tax exists",
-   "source": "IRS-ESTATE",
-   "status": "verified",
-   "note": "The federal transfer tax is an estate tax on the decedent's estate, not a tax on the beneficiary."
-  },
-  {
-   "id": "F-006",
-   "group": "Federal income tax",
-   "metric": "Basis of inherited property",
-   "value": "Fair market value at date of death (step-up)",
-   "source": "IRS-P551",
-   "status": "verified",
-   "note": "IRS Publication 551 restates 26 U.S.C. \u00a71014: basis is fair market value at date of death. Alternative valuation date available under \u00a72032."
-  },
-  {
-   "id": "F-007",
-   "group": "Federal income tax",
-   "metric": "2026 long-term capital gain breakpoints, married filing jointly",
-   "value": "0% up to $98,900 taxable income; 15% up to $613,700; 20% above",
-   "source": "IRS-RP2532",
-   "status": "verified",
-   "note": "\u00a74.03 of Rev. Proc. 2025-32. Single filer: $49,450 / $545,500."
-  },
-  {
-   "id": "F-008",
-   "group": "Federal income tax",
-   "metric": "Net investment income tax",
-   "value": "3.8% on net investment income above $250,000 MFJ / $200,000 single MAGI",
-   "source": "IRS-NIIT",
-   "status": "verified",
-   "note": "Applies to rents and capital gains; excluded gain on a principal residence is also excluded from NIIT."
-  },
-  {
-   "id": "F-009",
-   "group": "Federal income tax",
-   "metric": "Depreciation life, residential rental property",
-   "value": "27.5 years, straight line",
-   "source": "IRS-P527",
-   "status": "verified",
-   "note": "Only the building is depreciable; land is not."
-  },
-  {
-   "id": "F-010",
-   "group": "Federal income tax",
-   "metric": "\u00a7121 exclusion on sale of a principal residence",
-   "value": "$250,000 single / $500,000 MFJ",
-   "source": "IRS-P523",
-   "status": "verified",
-   "note": "Requires 2 of 5 years of use and ownership."
-  },
-  {
-   "id": "F-011",
-   "group": "Federal income tax",
-   "metric": "Like-kind exchange deferral",
-   "value": "Available for real property held for productive use or investment",
-   "source": "IRS-1031",
-   "status": "verified",
-   "note": "Does not apply to a principal residence."
-  },
-  {
-   "id": "F-012",
-   "group": "California inheritance",
-   "metric": "California inheritance tax",
-   "value": "None",
-   "source": "SCC-COURTS-PROBATE",
-   "status": "verified",
-   "note": "Superior Court of California, County of Santa Clara probate self-help: \"California does not have an inheritance tax.\""
-  },
-  {
-   "id": "F-013",
-   "group": "California inheritance",
-   "metric": "California state estate tax",
-   "value": "None",
-   "source": "RTC-13302",
-   "status": "verified",
-   "note": "Part 8 of Division 2 of the Revenue & Taxation Code is titled 'Prohibition of Gift and Death Taxes'. \u00a713302 imposes a California estate tax only equal to the allowable federal credit for state death taxes, which no longer exists. Practically: no separate California estate tax is collected."
-  },
-  {
-   "id": "F-014",
-   "group": "California property tax",
-   "metric": "Base property tax levy",
-   "value": "1% of assessed value plus voter-approved debt",
-   "source": "SCC-PROP13",
-   "status": "verified",
-   "note": "Article XIII A, \u00a71 of the California Constitution."
-  },
-  {
-   "id": "F-015",
-   "group": "California property tax",
-   "metric": "Annual increase in assessed value (Prop 13 cap)",
-   "value": "2% maximum",
-   "source": "RTC-51",
-   "status": "verified",
-   "note": "CPI-based; 2% is a ceiling, not a guarantee."
-  },
-  {
-   "id": "F-016",
-   "group": "California property tax",
-   "metric": "2026-27 inflation factor applied to base year values",
-   "value": "1.02 (2.000%)",
-   "source": "BOE-LTA26002",
-   "status": "verified",
-   "note": "CCPI rose 3.307%; statutory cap applied. Ninth consecutive year at the cap."
-  },
-  {
-   "id": "F-017",
-   "group": "California property tax",
-   "metric": "Prop 19 parent-child exclusion \u2014 eligibility conditions",
-   "value": "Parent's principal residence + child occupies within 1 year + homeowners'/disabled veterans' exemption filed within 1 year",
-   "source": "RTC-63.2",
-   "status": "verified",
-   "note": "R&TC \u00a763.2(a)(1)(A)-(B); restated by the Santa Clara County Assessor and by the BOE Prop 19 comparison chart ('Principal residence of transferor and transferee; value limit of current taxable value plus $1,000,000')."
-  },
-  {
-   "id": "F-018",
-   "group": "California property tax",
-   "metric": "Prop 19 value cap (excluded amount)",
-   "value": "Factored base year value + $1,044,586 (transfers 2/16/2025 - 2/15/2027)",
-   "source": "BOE-LTA25015",
-   "status": "verified",
-   "note": "The $1,000,000 statutory amount is adjusted every other year."
-  },
-  {
-   "id": "F-019",
-   "group": "California property tax",
-   "metric": "Prop 19 claim window (form BOE-19-P)",
-   "value": "Within 3 years of the transfer, or before transfer to a third party",
-   "source": "SCC-PROP19",
-   "status": "verified",
-   "note": "Late homeowners'-exemption filing gives prospective relief only, per Property Tax Rule 462.520."
-  },
-  {
-   "id": "F-020",
-   "group": "California property tax",
-   "metric": "Prop 19 exclusion removed if heir stops occupying",
-   "value": "Exclusion ends; base year value re-enrolled at market value as of the transfer date, grown by up to 2%/yr",
-   "source": "RTC-63.2",
-   "status": "verified",
-   "note": "R&TC \u00a763.2(a)(1)(B)-(C). Renting the inherited home out forfeits the exclusion."
-  },
-  {
-   "id": "F-021",
-   "group": "California property tax",
-   "metric": "Homeowners' exemption",
-   "value": "$7,000 off assessed value (~$70-$80/yr)",
-   "source": "SCC-HOE",
-   "status": "verified",
-   "note": "Owner-occupancy required; claim by Feb 15 for full amount, 80% if filed Feb 16-Dec 10."
-  },
-  {
-   "id": "F-022",
-   "group": "California property tax",
-   "metric": "Santa Clara County property tax rate guidance",
-   "value": "\"Generally, using a rate of 1.2% will give a conservative estimate\"",
-   "source": "SCC-FAQ",
-   "status": "verified",
-   "note": "The exact rate depends on the parcel's tax rate area (TRA)."
-  },
-  {
-   "id": "F-023",
-   "group": "California property tax",
-   "metric": "San Francisco secured property tax rate, FY 2026-27",
-   "value": "1.18162182% of net taxable assessed value",
-   "source": "SF-TREAS",
-   "status": "verified",
-   "note": "Direct charges and special assessments are added to this rate on the bill."
-  },
-  {
-   "id": "F-024",
-   "group": "California property tax",
-   "metric": "San Francisco transfer tax, $1,000,000-$4,999,999 consideration",
-   "value": "$3.75 per $500 (0.75%)",
-   "source": "SF-ASSESSOR-TT",
-   "status": "verified",
-   "note": "Rate applies to the entire consideration in the tier."
-  },
-  {
-   "id": "F-025",
-   "group": "Rental law",
-   "metric": "Statewide rent cap (AB 1482)",
-   "value": "5% + percentage change in cost of living, or 10%, whichever is lower",
-   "source": "CIV-1947.12",
-   "status": "verified",
-   "note": "Applies to covered units; single-family homes owned by an individual are generally exempt if properly noticed."
-  },
-  {
-   "id": "F-026",
-   "group": "Rental law",
-   "metric": "Costa-Hawkins vacancy decontrol",
-   "value": "Local rent control may not cap the initial rent on a new tenancy",
-   "source": "CIV-1954.52",
-   "status": "verified",
-   "note": "Allows a vacant unit's rent to reset to market."
-  },
-  {
-   "id": "F-027",
-   "group": "Rental law",
-   "metric": "San Francisco allowable annual rent increase",
-   "value": "1.6% (effective March 1, 2026 - February 28, 2027)",
-   "source": "SF-RENT",
-   "status": "verified",
-   "note": "Set annually at 60% of the Bay Area CPI change; applies to rent-controlled units."
-  },
-  {
-   "id": "F-028",
-   "group": "California income tax",
-   "metric": "California personal income tax top marginal rate",
-   "value": "12.3% plus 1% Mental Health Services Tax above $1,000,000 = 13.3%",
-   "source": "RTC-17043",
-   "status": "verified",
-   "note": "Rate schedule in R&TC \u00a717041; the 1% surtax in \u00a717043."
-  },
-  {
-   "id": "F-029",
-   "group": "California income tax",
-   "metric": "California treatment of inherited assets",
-   "value": "Not taxable income to the recipient: \"If you received a gift or inheritance, do not include it in your income\"",
-   "source": "FTB-INHERIT",
-   "status": "verified",
-   "note": "FTB states it directly; later interest, dividends, rent or gain on sale are taxable."
-  },
-  {
-   "id": "F-030",
-   "group": "Enacted legislation",
-   "metric": "SB 974 (2026) \u2014 Prop 19 and special needs trusts",
-   "value": "Chapter 665, Statutes of 2026; amends R&TC \u00a763.2",
-   "source": "LEG-SB974",
-   "status": "verified",
-   "note": "Chaptered 09/27/2026. Narrow amendment; does not change the principal-residence or value-cap rules."
-  },
-  {
-   "id": "F-031",
-   "group": "Utilities",
-   "metric": "SFPUC residential water volumetric rate, FY 2025-26",
-   "value": "$11.40 per unit (first 4 units/month)",
-   "source": "SFPUC-RATES",
-   "status": "verified",
-   "note": "Proposed $12.20 for FY 2026-27. 1 unit = 748 gallons."
-  },
-  {
-   "id": "F-032",
-   "group": "Utilities",
-   "metric": "SFPUC average single-family combined water + sewer bill",
-   "value": "About $171/month (2026), rising to about $189 after July 1, 2026",
-   "source": "SFPUC-RATES",
-   "status": "verified",
-   "note": "Average household, not this parcel. Used to sanity-check the reported $330-$400 for three units."
-  },
-  {
-   "id": "F-033",
-   "group": "Insurance",
-   "metric": "California homeowners insurance \u2014 consumer guidance",
-   "value": "Policy forms and coverage guidance; no parcel-level premium published",
-   "source": "CDI-HOME",
-   "status": "verified",
-   "note": "CDI publishes no official premium for a specific ZIP or parcel; premiums are individually rated."
-  },
-  {
-   "id": "F-034",
-   "group": "Insurance",
-   "metric": "California FAIR Plan",
-   "value": "Insurer of last resort; dwelling-fire coverage; separate DIC policy needed for full HO-3 coverage",
-   "source": "FAIR-PLAN",
-   "status": "verified",
-   "note": "Relevant if admitted carriers decline a 1960s-era Cupertino or Sunset property."
-  },
-  {
-   "id": "F-035",
-   "group": "Owner-reported",
-   "metric": "Cupertino property \u2014 water and electricity",
-   "value": "$100-$150/month water; solar produces credit of about $10-$20/month net",
-   "source": "",
-   "status": "reported",
-   "note": "Owner-reported. San Jose Water publishes tariffs but they were not retrievable for this window; see Flagged for Review."
-  },
-  {
-   "id": "F-036",
-   "group": "Owner-reported",
-   "metric": "San Francisco property \u2014 water and electricity",
-   "value": "$330-$400/month water; $30-$70/month electricity (whole 3-unit building)",
-   "source": "",
-   "status": "reported",
-   "note": "Owner-reported. The water figure is consistent with SFPUC's ~$171/month single-family average times three units."
-  },
-  {
-   "id": "F-037",
-   "group": "Owner-reported",
-   "metric": "Homeowners insurance, both properties",
-   "value": "About $1,500/year each (owner estimate)",
-   "source": "",
-   "status": "flagged",
-   "note": "Not verified. No official parcel-level premium exists; ranges are shown on Operating Costs."
-  },
-  {
-   "id": "F-038",
-   "group": "Projection",
-   "metric": "Cupertino implied effective tax rate from the supplied 2014-2025 series",
-   "value": "1.33% of assessed value (2025: about $7,200 / $540,000)",
-   "source": "",
-   "status": "flagged",
-   "note": "Roughly 13 bp above the county's 1.2% planning rate; the difference is attributed to voter-approved debt or direct charges. Figures rounded to $1,000/$100 for privacy. Verify against the annual bill."
-  },
-  {
-   "id": "F-039",
-   "group": "Projection",
-   "metric": "San Francisco implied effective tax rate from the supplied 2016-2025 series",
-   "value": "2.11% of assessed value (2025: about $2,400 / $114,000)",
-   "source": "",
-   "status": "flagged",
-   "note": "About 93 bp above the 1.18162182% secured rate. Residual (~$1,050/yr) modelled as direct charges/parcel taxes; unverified. Figures rounded for privacy."
-  },
-  {
-   "id": "F-040",
-   "group": "Utilities",
-   "metric": "PG&E Schedule E-1 residential electric rates, effective June 1, 2026",
-   "value": "Tier 1 $0.32561/kWh; Tier 2 $0.40702/kWh; base services charge $0.79343/day (income tier 3)",
-   "source": "PG&E-E1",
-   "status": "verified",
-   "note": "A $30-$70/month bill therefore implies very low usage (roughly 30-140 kWh above the base charge) - consistent with common-area-only metering."
-  },
-  {
-   "id": "F-041",
-   "group": "Insurance",
-   "metric": "Official tool for homeowners premiums",
-   "value": "CDI Homeowners Premium Survey, by coverage level and ZIP code",
-   "source": "CDI-SURVEY",
-   "status": "verified",
-   "note": "Use this to replace the owner's $1,500 estimate with a comparable survey median before relying on the cash-flow projections."
-  },
-  {
-   "id": "F-042",
-   "group": "California property tax",
-   "metric": "Prop 19 filing periods (BOE summary)",
-   "value": "Homeowners' exemption within 1 year of transfer; claim for exclusion within 3 years or before transfer to a third party",
-   "source": "BOE-PROP19",
-   "status": "verified",
-   "note": "Matches R&TC \u00a763.2 and the county assessor's instructions."
-  }
- ]
+  "verified_on": "2026-11-10",
+  "facts": [
+    {
+      "item": "Federal estate tax basic exclusion, 2026",
+      "value": "$15,000,000",
+      "sources": [
+        "S01",
+        "S03"
+      ],
+      "note": "Per decedent; $30,000,000 for a married couple with a timely portability election."
+    },
+    {
+      "item": "Federal estate tax basic credit, 2026",
+      "value": "$5,945,800",
+      "sources": [
+        "S01"
+      ],
+      "note": "Unified credit offsetting the tax on the exclusion amount."
+    },
+    {
+      "item": "Form 706 filing threshold, 2026",
+      "value": "gross estate + adjusted taxable gifts > $15,000,000",
+      "sources": [
+        "S01"
+      ],
+      "note": "Due 9 months after death; Form 4768 gives an automatic 6-month filing extension."
+    },
+    {
+      "item": "Top federal estate/gift/GST tax rate",
+      "value": "40%",
+      "sources": [
+        "S17",
+        "S04"
+      ],
+      "note": "Rate on transfers above the exemption."
+    },
+    {
+      "item": "Annual federal gift exclusion, 2026",
+      "value": "$19,000 per recipient",
+      "sources": [
+        "S03",
+        "S04"
+      ],
+      "note": "Does not use the lifetime exemption."
+    },
+    {
+      "item": "GST tax exemption, 2026",
+      "value": "$15,000,000",
+      "sources": [
+        "S04"
+      ],
+      "note": "Matches the estate/gift basic exclusion amount."
+    },
+    {
+      "item": "Estate exemption indexing",
+      "value": "permanent after 2025; inflation-indexed from 2027",
+      "sources": [
+        "S10",
+        "S11",
+        "S03"
+      ],
+      "note": "P.L. 119-21 \u00a770106 removed the scheduled sunset."
+    },
+    {
+      "item": "California estate / inheritance tax",
+      "value": "$0 (state pick-up tax is zero)",
+      "sources": [
+        "S17"
+      ],
+      "note": "California does not conform to the federal estate/GST tax; beneficiary pays no tax on the inheritance itself."
+    },
+    {
+      "item": "Inheritance as beneficiary income",
+      "value": "not included in income",
+      "sources": [
+        "S15"
+      ],
+      "note": "Income produced later by the inherited asset is taxable."
+    },
+    {
+      "item": "California capital gains treatment",
+      "value": "taxed as ordinary income (no lower rate)",
+      "sources": [
+        "S16"
+      ],
+      "note": "Differs from federal 0%/15%/20% rates."
+    },
+    {
+      "item": "Federal capital gains rates",
+      "value": "0% / 15% / 20%",
+      "sources": [
+        "S07",
+        "S03"
+      ],
+      "note": "2026 15% ceiling: $613,700 MFJ; $545,500 all other individuals."
+    },
+    {
+      "item": "Net Investment Income Tax",
+      "value": "3.8%",
+      "sources": [
+        "S08"
+      ],
+      "note": "Applies to rents and gains above $250,000 MFJ / $200,000 single MAGI."
+    },
+    {
+      "item": "Section 121 home-sale exclusion",
+      "value": "$250,000 single / $500,000 joint",
+      "sources": [
+        "S06"
+      ],
+      "note": "Requires ownership and use 24 of the last 60 months."
+    },
+    {
+      "item": "Inherited property basis",
+      "value": "FMV at date of death (step-up)",
+      "sources": [
+        "S05",
+        "S14"
+      ],
+      "note": "Gain on a prompt sale after inheritance is normally near zero."
+    },
+    {
+      "item": "Residential rental depreciation",
+      "value": "27.5 years, straight line",
+      "sources": [
+        "S09"
+      ],
+      "note": "MACRS GDS, mid-month convention."
+    },
+    {
+      "item": "Proposition 13 base rate",
+      "value": "1% + voter-approved bonded indebtedness",
+      "sources": [
+        "S20",
+        "S30"
+      ],
+      "note": "California Constitution Article XIII A."
+    },
+    {
+      "item": "Proposition 13 assessed-value cap",
+      "value": "2% per year",
+      "sources": [
+        "S20",
+        "S29",
+        "S54",
+        "S30"
+      ],
+      "note": "Applies to the factored base year value until a change of ownership."
+    },
+    {
+      "item": "Santa Clara County typical tax rate area",
+      "value": "1.1488% of assessed value",
+      "sources": [
+        "S30"
+      ],
+      "note": "County example: $1,000,000 assessed \u2192 $11,488 before exemptions."
+    },
+    {
+      "item": "San Francisco FY2025-26 combined secured rate",
+      "value": "1.18268325% of assessed value",
+      "sources": [
+        "S31"
+      ],
+      "note": "Set annually by Board of Supervisors resolution."
+    },
+    {
+      "item": "Homeowners' Exemption",
+      "value": "$7,000 of assessed value",
+      "sources": [
+        "S25",
+        "S30"
+      ],
+      "note": "Principal residence only; ~$70\u2013$80/yr; does not apply to rented property."
+    },
+    {
+      "item": "Prop 19 intergenerational exclusion cap",
+      "value": "FBYV + $1,044,586",
+      "sources": [
+        "S22"
+      ],
+      "note": "For transfers 2/16/2025 \u2013 2/15/2027; adjusted biennially by FHFA HPI."
+    },
+    {
+      "item": "Prop 19 occupancy / filing deadline",
+      "value": "occupy within 1 year; file homeowners' exemption within 1 year",
+      "sources": [
+        "S21",
+        "S23",
+        "S24"
+      ],
+      "note": "Claim form BOE-19-P within 3 years of transfer."
+    },
+    {
+      "item": "Date of change of ownership for trust property",
+      "value": "date of death",
+      "sources": [
+        "S24",
+        "S30",
+        "S25"
+      ],
+      "note": "Applies even when the property stays in the trust after death."
+    },
+    {
+      "item": "Revocable trust transfer into trust",
+      "value": "not a change of ownership (R&T \u00a762(d))",
+      "sources": [
+        "S28"
+      ],
+      "note": "Vesting in other beneficiaries when the trust becomes irrevocable IS a change of ownership."
+    },
+    {
+      "item": "Change of ownership statement on death",
+      "value": "within 150 days after date of death",
+      "sources": [
+        "S26",
+        "S27"
+      ],
+      "note": "BOE-502-AH / BOE-502-D; trustee files for trust-held property."
+    },
+    {
+      "item": "Trustee notification to beneficiaries",
+      "value": "within 60 days",
+      "sources": [
+        "S32"
+      ],
+      "note": "California Probate Code \u00a716061.7; 120-day contest window."
+    },
+    {
+      "item": "California fiduciary income tax return",
+      "value": "Form 541, due 15th day of 4th month",
+      "sources": [
+        "S18",
+        "S19"
+      ],
+      "note": "Federal equivalent is Form 1041."
+    },
+    {
+      "item": "California statewide average homeowner premium",
+      "value": "$1,571 / year",
+      "sources": [
+        "S46"
+      ],
+      "note": "Statewide average, not a ZIP-level or parcel-level quote."
+    },
+    {
+      "item": "Net Billing Tariff (NEM 3.0)",
+      "value": "effective for interconnection applications from 04/15/2023",
+      "sources": [
+        "S41",
+        "S42"
+      ],
+      "note": "Export credits usually lower than the retail rate; 9-year legacy period."
+    },
+    {
+      "item": "SF allowable rent increase 3/1/2026\u20132/28/2027",
+      "value": "1.6%",
+      "sources": [
+        "S34",
+        "S56"
+      ],
+      "note": "Based on 60% of Bay Area CPI-U increase."
+    },
+    {
+      "item": "Statewide rent cap (AB 1482)",
+      "value": "5% + CPI, max 10%, until 01/01/2030",
+      "sources": [
+        "S33"
+      ],
+      "note": "Applies to covered units; local rules may be stricter."
+    },
+    {
+      "item": "CBO inflation projection",
+      "value": "2.7% (2026) \u2192 2.0% (2030 and later)",
+      "sources": [
+        "S50",
+        "S53"
+      ],
+      "note": "PCE inflation; CPI-U ~2.2\u20132.3%/yr 2027\u20132035."
+    },
+    {
+      "item": "CBO 10-year Treasury forecast",
+      "value": "4.3% average, 2026\u20132036",
+      "sources": [
+        "S52",
+        "S50"
+      ],
+      "note": "Official anchor used for the savings/bond scenario."
+    }
+  ]
 }

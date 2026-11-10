@@ -1,0 +1,286 @@
+{
+  "verified_on": "2026-11-10",
+  "policy": "Only official government domains are used as verified facts. Every table row links one.",
+  "sources": {
+    "S01": {
+      "title": "IRS \u2014 Instructions for Form 706 (Rev. July 2026)",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/pub/irs-pdf/i706.pdf"
+    },
+    "S02": {
+      "title": "IRS \u2014 Internal Revenue Manual 3.12.263, Estate and Gift Tax Returns",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/irm/part3/irm_03-012-263r"
+    },
+    "S03": {
+      "title": "IRS \u2014 Revenue Procedure 2025-32 (2026 inflation adjustments)",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf"
+    },
+    "S04": {
+      "title": "IRS \u2014 2026 Instructions for Form 709 (early-release draft)",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/pub/irs-dft/i709--dft.pdf"
+    },
+    "S05": {
+      "title": "IRS \u2014 Publication 551 (12/2025), Basis of Assets",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/publications/p551"
+    },
+    "S06": {
+      "title": "IRS \u2014 Topic no. 701, Sale of Your Home",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/taxtopics/tc701"
+    },
+    "S07": {
+      "title": "IRS \u2014 Topic no. 409, Capital Gains and Losses",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/taxtopics/tc409"
+    },
+    "S08": {
+      "title": "IRS \u2014 Topic no. 559, Net Investment Income Tax",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/taxtopics/tc559"
+    },
+    "S09": {
+      "title": "IRS \u2014 Publication 527 (2025), Residential Rental Property",
+      "agency": "IRS",
+      "url": "https://www.irs.gov/publications/p527"
+    },
+    "S10": {
+      "title": "Congress.gov \u2014 Public Law 119-21 (H.R.1), \u00a770106, 07/04/2025",
+      "agency": "U.S. Congress",
+      "url": "https://www.congress.gov/119/plaws/publ21/PLAW-119publ21.pdf"
+    },
+    "S11": {
+      "title": "Congress.gov \u2014 H.R.1 (119th Congress), all information",
+      "agency": "U.S. Congress",
+      "url": "https://www.congress.gov/bill/119th-congress/house-bill/1/all-info"
+    },
+    "S12": {
+      "title": "Congress.gov \u2014 H.R.5336, Equal Tax Act (introduced 09/11/2025), text",
+      "agency": "U.S. Congress",
+      "url": "https://www.congress.gov/bill/119th-congress/house-bill/5336/text"
+    },
+    "S13": {
+      "title": "Congress.gov \u2014 H.Res.206, stepped-up basis resolution",
+      "agency": "U.S. Congress",
+      "url": "https://www.congress.gov/bill/119th-congress/house-resolution/206/all-info"
+    },
+    "S14": {
+      "title": "Congress.gov \u2014 CRS IF12846, The Estate and Gift Tax",
+      "agency": "U.S. Congress / CRS",
+      "url": "https://www.congress.gov/crs_external_products/IF/HTML/IF12846.html"
+    },
+    "S15": {
+      "title": "California FTB \u2014 Gifts and inheritance",
+      "agency": "CA FTB",
+      "url": "https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html"
+    },
+    "S16": {
+      "title": "California FTB \u2014 Capital gains and losses",
+      "agency": "CA FTB",
+      "url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html"
+    },
+    "S17": {
+      "title": "California FTB \u2014 Analysis of SB 726 (03/23/2017): estate pick-up tax is zero",
+      "agency": "CA FTB",
+      "url": "https://www.ftb.ca.gov/tax-pros/law/legislation/2017-2018/sb726-032317.pdf"
+    },
+    "S18": {
+      "title": "California FTB \u2014 Estates and trusts (Form 541)",
+      "agency": "CA FTB",
+      "url": "https://www.ftb.ca.gov/file/personal/filing-situations/estates-and-trusts/index.html"
+    },
+    "S19": {
+      "title": "California FTB \u2014 2025 Form 541 Fiduciary Income booklet",
+      "agency": "CA FTB",
+      "url": "https://www.ftb.ca.gov/forms/2025/2025-541-booklet.html"
+    },
+    "S20": {
+      "title": "California BOE \u2014 Publication 29, California Property Tax: An Overview (March 2025)",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/pub29.pdf"
+    },
+    "S21": {
+      "title": "California BOE \u2014 LTA 2025/015, Proposition 19 information sheets",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/lta25015.pdf"
+    },
+    "S22": {
+      "title": "California BOE \u2014 News Release 25-02, Prop 19 $1,044,586 exclusion adjustment",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/news/2025/nr-25-02.htm"
+    },
+    "S23": {
+      "title": "California BOE \u2014 Introduction to Proposition 19 (April 2023)",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/pdf/Introduction-to-Prop-19-042023.pdf"
+    },
+    "S24": {
+      "title": "California BOE \u2014 Sample BOE-19-P, parent-child reassessment exclusion claim",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/sample-boe19p.pdf"
+    },
+    "S25": {
+      "title": "California BOE \u2014 Publication 800-6, Homeowners' Exemption",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/pdf/pub800-6.pdf"
+    },
+    "S26": {
+      "title": "California BOE \u2014 Sample BOE-502-AH, Change of Ownership Statement",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/proptaxes/pdf/sample-boe502ah.pdf"
+    },
+    "S27": {
+      "title": "California BOE \u2014 Board Meeting May 2026, Property Tax Forms (R&T \u00a7480(b))",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/meetings/pdf/2026/202605-PT-Forms.pdf"
+    },
+    "S28": {
+      "title": "California BOE \u2014 Property Tax Annotation 220.0760, Trusts (R&T \u00a762(d))",
+      "agency": "CA BOE",
+      "url": "https://www.boe.ca.gov/lawguides/property/current/ptlg/annt/220-0760.html"
+    },
+    "S29": {
+      "title": "California BOE \u2014 Publication 800-10, How Property Is Assessed (2% cap)",
+      "agency": "CA BOE",
+      "url": "https://boe.ca.gov/pdf/pub800-10.pdf"
+    },
+    "S30": {
+      "title": "Santa Clara County Assessor \u2014 Assessment Information 2026 booklet",
+      "agency": "Santa Clara County",
+      "url": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf"
+    },
+    "S31": {
+      "title": "San Francisco Board of Supervisors \u2014 File 250876, FY2025-26 tax rate resolution",
+      "agency": "City & County of SF",
+      "url": "https://sfbos.archive.sf.gov/sites/default/files/r0447-25.pdf"
+    },
+    "S32": {
+      "title": "California Probate Code \u00a716061.7 \u2014 Notification by trustee (60 days)",
+      "agency": "CA Legislature",
+      "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB"
+    },
+    "S33": {
+      "title": "California AB 1482 \u2014 Tenant Protection Act of 2019 (rent cap through 01/01/2030)",
+      "agency": "CA Legislature",
+      "url": "https://www.leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=201920200AB1482"
+    },
+    "S34": {
+      "title": "SF.gov \u2014 Rent Board Current Rates (1.6% for 3/1/26\u20132/28/27; File 261020 notice)",
+      "agency": "City & County of SF",
+      "url": "https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit"
+    },
+    "S35": {
+      "title": "California SB 293 (2025\u20132026) \u2014 generational transfer exclusions",
+      "agency": "CA Legislature",
+      "url": "https://leginfo.legislature.ca.gov/faces/billNavClient.xhtml?bill_id=202520260SB293"
+    },
+    "S36": {
+      "title": "California AB 1516 (Chapter 72, 2025) \u2014 three-year claim filing, operative 01/01/2027",
+      "agency": "CA Legislature",
+      "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260AB1516"
+    },
+    "S37": {
+      "title": "California Secretary of State \u2014 PR26-85, 2026 wealth-tax initiative eligible",
+      "agency": "CA SOS",
+      "url": "https://www.sos.ca.gov/administration/news-releases-and-advisories/2026-news-releases-and-advisories/california-secretary-state-shirley-n-weber-phd-announces-new-measure-eligible-november-2026-general-election-ballot-imposes-one"
+    },
+    "S38": {
+      "title": "California Secretary of State \u2014 Official Voter Information Guide, Proposition 40",
+      "agency": "CA SOS",
+      "url": "https://voterguide.sos.ca.gov/propositions/40/"
+    },
+    "S39": {
+      "title": "California Secretary of State \u2014 2026 General Election results (unofficial; certified by 12/11/2026)",
+      "agency": "CA SOS",
+      "url": "https://electionresults.sos.ca.gov/"
+    },
+    "S40": {
+      "title": "California Secretary of State \u2014 Qualified statewide ballot measures, 11/03/2026",
+      "agency": "CA SOS",
+      "url": "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures"
+    },
+    "S41": {
+      "title": "CPUC \u2014 Net Energy Metering and Net Billing (NBT / D.22-12-056)",
+      "agency": "CA PUC",
+      "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing"
+    },
+    "S42": {
+      "title": "CPUC \u2014 Decision 22-12-056, Net Billing Tariff",
+      "agency": "CA PUC",
+      "url": "https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M500/K043/500043682.PDF"
+    },
+    "S43": {
+      "title": "CPUC \u2014 Decision 24-12-027, San Jose Water Company 2025\u20132027 GRC",
+      "agency": "CA PUC",
+      "url": "https://docs.cpuc.ca.gov/PublishedDocs/Published/G000/M551/K128/551128522.PDF"
+    },
+    "S44": {
+      "title": "SFPUC \u2014 Proposition 218 notice, proposed FY2027\u2013FY2028 water/sewer rates",
+      "agency": "SFPUC",
+      "url": "https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposition-218-notice-proposed-water-and-sewer-rates"
+    },
+    "S45": {
+      "title": "SFPUC \u2014 Power Rates 2025-26 (Hetch Hetchy Power +10%)",
+      "agency": "SFPUC",
+      "url": "https://sfpuc.org/accounts-services/water-power-sewer-rates/proposed-power-rates-2024"
+    },
+    "S46": {
+      "title": "California Department of Insurance \u2014 Sustainable Insurance Strategy (avg premium $1,571)",
+      "agency": "CA DOI",
+      "url": "https://www.insurance.ca.gov/01-consumers/180-climate-change/sustainable-insurance-strategy.Cfm"
+    },
+    "S47": {
+      "title": "California Department of Insurance \u2014 Residential Property Insurance Report (ZIP-level data)",
+      "agency": "CA DOI",
+      "url": "https://www.insurance.ca.gov/0400-news/0200-studies-reports/0250-homeowners-study/"
+    },
+    "S48": {
+      "title": "HUD \u2014 FY2026 Small Area Fair Market Rent Schedule",
+      "agency": "HUD",
+      "url": "https://www.huduser.gov/portal/datasets/fmr/fmr2026/FY2026_Small_Area_FMR_Schedule.pdf"
+    },
+    "S49": {
+      "title": "HUD \u2014 Small Area Fair Market Rents data page",
+      "agency": "HUD",
+      "url": "https://www.huduser.gov/portal/datasets/fmr/smallarea/index.html"
+    },
+    "S50": {
+      "title": "CBO \u2014 Testimony on The Budget and Economic Outlook: 2026 to 2036 (03/11/2026)",
+      "agency": "CBO",
+      "url": "https://www.cbo.gov/publication/62207"
+    },
+    "S51": {
+      "title": "CBO \u2014 The Budget and Economic Outlook: 2026 to 2036 (02/11/2026)",
+      "agency": "CBO",
+      "url": "https://www.cbo.gov/publication/62105"
+    },
+    "S52": {
+      "title": "CBO \u2014 Projections of Deficits and Debt Under Two Scenarios With Higher Interest Rates (10/08/2026)",
+      "agency": "CBO",
+      "url": "https://www.cbo.gov/publication/62809"
+    },
+    "S53": {
+      "title": "CBO \u2014 The Budget and Economic Outlook: 2026 to 2036, Executive Summary (PDF)",
+      "agency": "CBO",
+      "url": "https://www.cbo.gov/system/files/2026-02/61882-Executive-Summary.pdf"
+    },
+    "S54": {
+      "title": "California BOE \u2014 LTA 2025/023, assessed value / 2% annual cap",
+      "agency": "CA BOE",
+      "url": "https://boe.ca.gov/proptaxes/pdf/lta25023.pdf"
+    },
+    "S55": {
+      "title": "California Secretary of State \u2014 2026 General Election Official Voter Information Guide",
+      "agency": "CA SOS",
+      "url": "https://vig.cdn.sos.ca.gov/2026/general/pdf/complete-vig.pdf"
+    },
+    "S56": {
+      "title": "SF.gov \u2014 Annual Rent Increase for 3/1/26\u20132/28/27 Announced (1.6%)",
+      "agency": "City & County of SF",
+      "url": "https://www.sf.gov/news--annual-rent-increase-3126-22827-announced"
+    }
+  }
+}

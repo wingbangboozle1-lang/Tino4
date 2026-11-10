@@ -1,0 +1,3336 @@
+{
+  "generated": "2026-11-10T10:20:27.453Z",
+  "modelDate": "2026-11-10",
+  "rounding": "nearest $10",
+  "privacy": "All identifiers removed. Properties are referred to only as 'Property A' (Cupertino, ZIP 95014) and 'Property B' (San Francisco, ZIP 94122). No street addresses, assessor parcel numbers, owner names, heir names, trust names, loan numbers or account numbers appear in this repository or on the published site.",
+  "centralInheritanceYear": 2045,
+  "horizonYears": 20,
+  "firstOperatingYear": 2046,
+  "projection": [
+    {
+      "year": 2026,
+      "A": {
+        "marketValue": 3100000,
+        "assessedValue": 550540,
+        "propertyTaxOwnerOccupied": 7330,
+        "propertyTaxRental": 7430,
+        "assessedAsPctOfMarket": 17.76
+      },
+      "B": {
+        "marketValue": 1800000,
+        "assessedValue": 116530,
+        "propertyTaxRental": 2490,
+        "assessedAsPctOfMarket": 6.47
+      }
+    },
+    {
+      "year": 2027,
+      "A": {
+        "marketValue": 3208500,
+        "assessedValue": 561550,
+        "propertyTaxOwnerOccupied": 7480,
+        "propertyTaxRental": 7580,
+        "assessedAsPctOfMarket": 17.5
+      },
+      "B": {
+        "marketValue": 1863000,
+        "assessedValue": 118860,
+        "propertyTaxRental": 2540,
+        "assessedAsPctOfMarket": 6.38
+      }
+    },
+    {
+      "year": 2028,
+      "A": {
+        "marketValue": 3320800,
+        "assessedValue": 572780,
+        "propertyTaxOwnerOccupied": 7630,
+        "propertyTaxRental": 7730,
+        "assessedAsPctOfMarket": 17.25
+      },
+      "B": {
+        "marketValue": 1928200,
+        "assessedValue": 121240,
+        "propertyTaxRental": 2590,
+        "assessedAsPctOfMarket": 6.29
+      }
+    },
+    {
+      "year": 2029,
+      "A": {
+        "marketValue": 3437030,
+        "assessedValue": 584230,
+        "propertyTaxOwnerOccupied": 7790,
+        "propertyTaxRental": 7880,
+        "assessedAsPctOfMarket": 17
+      },
+      "B": {
+        "marketValue": 1995690,
+        "assessedValue": 123670,
+        "propertyTaxRental": 2640,
+        "assessedAsPctOfMarket": 6.2
+      }
+    },
+    {
+      "year": 2030,
+      "A": {
+        "marketValue": 3557320,
+        "assessedValue": 595920,
+        "propertyTaxOwnerOccupied": 7940,
+        "propertyTaxRental": 8040,
+        "assessedAsPctOfMarket": 16.75
+      },
+      "B": {
+        "marketValue": 2065540,
+        "assessedValue": 126140,
+        "propertyTaxRental": 2690,
+        "assessedAsPctOfMarket": 6.11
+      }
+    },
+    {
+      "year": 2031,
+      "A": {
+        "marketValue": 3681830,
+        "assessedValue": 607840,
+        "propertyTaxOwnerOccupied": 8110,
+        "propertyTaxRental": 8200,
+        "assessedAsPctOfMarket": 16.51
+      },
+      "B": {
+        "marketValue": 2137840,
+        "assessedValue": 128660,
+        "propertyTaxRental": 2750,
+        "assessedAsPctOfMarket": 6.02
+      }
+    },
+    {
+      "year": 2032,
+      "A": {
+        "marketValue": 3810690,
+        "assessedValue": 619990,
+        "propertyTaxOwnerOccupied": 8270,
+        "propertyTaxRental": 8360,
+        "assessedAsPctOfMarket": 16.27
+      },
+      "B": {
+        "marketValue": 2212660,
+        "assessedValue": 131240,
+        "propertyTaxRental": 2800,
+        "assessedAsPctOfMarket": 5.93
+      }
+    },
+    {
+      "year": 2033,
+      "A": {
+        "marketValue": 3944070,
+        "assessedValue": 632390,
+        "propertyTaxOwnerOccupied": 8440,
+        "propertyTaxRental": 8530,
+        "assessedAsPctOfMarket": 16.03
+      },
+      "B": {
+        "marketValue": 2290100,
+        "assessedValue": 133860,
+        "propertyTaxRental": 2860,
+        "assessedAsPctOfMarket": 5.85
+      }
+    },
+    {
+      "year": 2034,
+      "A": {
+        "marketValue": 4082110,
+        "assessedValue": 645040,
+        "propertyTaxOwnerOccupied": 8610,
+        "propertyTaxRental": 8700,
+        "assessedAsPctOfMarket": 15.8
+      },
+      "B": {
+        "marketValue": 2370260,
+        "assessedValue": 136540,
+        "propertyTaxRental": 2920,
+        "assessedAsPctOfMarket": 5.76
+      }
+    },
+    {
+      "year": 2035,
+      "A": {
+        "marketValue": 4224980,
+        "assessedValue": 657940,
+        "propertyTaxOwnerOccupied": 8780,
+        "propertyTaxRental": 8880,
+        "assessedAsPctOfMarket": 15.57
+      },
+      "B": {
+        "marketValue": 2453220,
+        "assessedValue": 139270,
+        "propertyTaxRental": 2970,
+        "assessedAsPctOfMarket": 5.68
+      }
+    },
+    {
+      "year": 2036,
+      "A": {
+        "marketValue": 4372860,
+        "assessedValue": 671100,
+        "propertyTaxOwnerOccupied": 8960,
+        "propertyTaxRental": 9050,
+        "assessedAsPctOfMarket": 15.35
+      },
+      "B": {
+        "marketValue": 2539080,
+        "assessedValue": 142050,
+        "propertyTaxRental": 3030,
+        "assessedAsPctOfMarket": 5.59
+      }
+    },
+    {
+      "year": 2037,
+      "A": {
+        "marketValue": 4525910,
+        "assessedValue": 684520,
+        "propertyTaxOwnerOccupied": 9140,
+        "propertyTaxRental": 9230,
+        "assessedAsPctOfMarket": 15.12
+      },
+      "B": {
+        "marketValue": 2627950,
+        "assessedValue": 144890,
+        "propertyTaxRental": 3090,
+        "assessedAsPctOfMarket": 5.51
+      }
+    },
+    {
+      "year": 2038,
+      "A": {
+        "marketValue": 4684310,
+        "assessedValue": 698210,
+        "propertyTaxOwnerOccupied": 9320,
+        "propertyTaxRental": 9420,
+        "assessedAsPctOfMarket": 14.91
+      },
+      "B": {
+        "marketValue": 2719920,
+        "assessedValue": 147790,
+        "propertyTaxRental": 3160,
+        "assessedAsPctOfMarket": 5.43
+      }
+    },
+    {
+      "year": 2039,
+      "A": {
+        "marketValue": 4848260,
+        "assessedValue": 712180,
+        "propertyTaxOwnerOccupied": 9510,
+        "propertyTaxRental": 9610,
+        "assessedAsPctOfMarket": 14.69
+      },
+      "B": {
+        "marketValue": 2815120,
+        "assessedValue": 150750,
+        "propertyTaxRental": 3220,
+        "assessedAsPctOfMarket": 5.35
+      }
+    },
+    {
+      "year": 2040,
+      "A": {
+        "marketValue": 5017950,
+        "assessedValue": 726420,
+        "propertyTaxOwnerOccupied": 9710,
+        "propertyTaxRental": 9800,
+        "assessedAsPctOfMarket": 14.48
+      },
+      "B": {
+        "marketValue": 2913650,
+        "assessedValue": 153760,
+        "propertyTaxRental": 3280,
+        "assessedAsPctOfMarket": 5.28
+      }
+    },
+    {
+      "year": 2041,
+      "A": {
+        "marketValue": 5193580,
+        "assessedValue": 740950,
+        "propertyTaxOwnerOccupied": 9900,
+        "propertyTaxRental": 10000,
+        "assessedAsPctOfMarket": 14.27
+      },
+      "B": {
+        "marketValue": 3015630,
+        "assessedValue": 156840,
+        "propertyTaxRental": 3350,
+        "assessedAsPctOfMarket": 5.2
+      }
+    },
+    {
+      "year": 2042,
+      "A": {
+        "marketValue": 5375360,
+        "assessedValue": 755770,
+        "propertyTaxOwnerOccupied": 10100,
+        "propertyTaxRental": 10200,
+        "assessedAsPctOfMarket": 14.06
+      },
+      "B": {
+        "marketValue": 3121170,
+        "assessedValue": 159970,
+        "propertyTaxRental": 3420,
+        "assessedAsPctOfMarket": 5.13
+      }
+    },
+    {
+      "year": 2043,
+      "A": {
+        "marketValue": 5563490,
+        "assessedValue": 770880,
+        "propertyTaxOwnerOccupied": 10300,
+        "propertyTaxRental": 10400,
+        "assessedAsPctOfMarket": 13.86
+      },
+      "B": {
+        "marketValue": 3230420,
+        "assessedValue": 163170,
+        "propertyTaxRental": 3480,
+        "assessedAsPctOfMarket": 5.05
+      }
+    },
+    {
+      "year": 2044,
+      "A": {
+        "marketValue": 5758220,
+        "assessedValue": 786300,
+        "propertyTaxOwnerOccupied": 10510,
+        "propertyTaxRental": 10610,
+        "assessedAsPctOfMarket": 13.66
+      },
+      "B": {
+        "marketValue": 3343480,
+        "assessedValue": 166440,
+        "propertyTaxRental": 3550,
+        "assessedAsPctOfMarket": 4.98
+      }
+    },
+    {
+      "year": 2045,
+      "A": {
+        "marketValue": 5959750,
+        "assessedValue": 802030,
+        "propertyTaxOwnerOccupied": 10720,
+        "propertyTaxRental": 10820,
+        "assessedAsPctOfMarket": 13.46
+      },
+      "B": {
+        "marketValue": 3460500,
+        "assessedValue": 169770,
+        "propertyTaxRental": 3620,
+        "assessedAsPctOfMarket": 4.91
+      }
+    },
+    {
+      "year": 2046,
+      "A": {
+        "marketValue": 6168350,
+        "assessedValue": 818070,
+        "propertyTaxOwnerOccupied": 10940,
+        "propertyTaxRental": 11040,
+        "assessedAsPctOfMarket": 13.26
+      },
+      "B": {
+        "marketValue": 3581620,
+        "assessedValue": 173160,
+        "propertyTaxRental": 3700,
+        "assessedAsPctOfMarket": 4.83
+      }
+    },
+    {
+      "year": 2047,
+      "A": {
+        "marketValue": 6384240,
+        "assessedValue": 834430,
+        "propertyTaxOwnerOccupied": 11160,
+        "propertyTaxRental": 11260,
+        "assessedAsPctOfMarket": 13.07
+      },
+      "B": {
+        "marketValue": 3706980,
+        "assessedValue": 176630,
+        "propertyTaxRental": 3770,
+        "assessedAsPctOfMarket": 4.76
+      }
+    },
+    {
+      "year": 2048,
+      "A": {
+        "marketValue": 6607690,
+        "assessedValue": 851120,
+        "propertyTaxOwnerOccupied": 11390,
+        "propertyTaxRental": 11480,
+        "assessedAsPctOfMarket": 12.88
+      },
+      "B": {
+        "marketValue": 3836720,
+        "assessedValue": 180160,
+        "propertyTaxRental": 3850,
+        "assessedAsPctOfMarket": 4.7
+      }
+    },
+    {
+      "year": 2049,
+      "A": {
+        "marketValue": 6838950,
+        "assessedValue": 868140,
+        "propertyTaxOwnerOccupied": 11620,
+        "propertyTaxRental": 11710,
+        "assessedAsPctOfMarket": 12.69
+      },
+      "B": {
+        "marketValue": 3971010,
+        "assessedValue": 183760,
+        "propertyTaxRental": 3920,
+        "assessedAsPctOfMarket": 4.63
+      }
+    },
+    {
+      "year": 2050,
+      "A": {
+        "marketValue": 7078320,
+        "assessedValue": 885500,
+        "propertyTaxOwnerOccupied": 11850,
+        "propertyTaxRental": 11950,
+        "assessedAsPctOfMarket": 12.51
+      },
+      "B": {
+        "marketValue": 4109990,
+        "assessedValue": 187440,
+        "propertyTaxRental": 4000,
+        "assessedAsPctOfMarket": 4.56
+      }
+    },
+    {
+      "year": 2051,
+      "A": {
+        "marketValue": 7326060,
+        "assessedValue": 903210,
+        "propertyTaxOwnerOccupied": 12090,
+        "propertyTaxRental": 12180,
+        "assessedAsPctOfMarket": 12.33
+      },
+      "B": {
+        "marketValue": 4253840,
+        "assessedValue": 191180,
+        "propertyTaxRental": 4080,
+        "assessedAsPctOfMarket": 4.49
+      }
+    },
+    {
+      "year": 2052,
+      "A": {
+        "marketValue": 7582470,
+        "assessedValue": 921280,
+        "propertyTaxOwnerOccupied": 12330,
+        "propertyTaxRental": 12430,
+        "assessedAsPctOfMarket": 12.15
+      },
+      "B": {
+        "marketValue": 4402730,
+        "assessedValue": 195010,
+        "propertyTaxRental": 4160,
+        "assessedAsPctOfMarket": 4.43
+      }
+    },
+    {
+      "year": 2053,
+      "A": {
+        "marketValue": 7847860,
+        "assessedValue": 939700,
+        "propertyTaxOwnerOccupied": 12580,
+        "propertyTaxRental": 12680,
+        "assessedAsPctOfMarket": 11.97
+      },
+      "B": {
+        "marketValue": 4556820,
+        "assessedValue": 198910,
+        "propertyTaxRental": 4250,
+        "assessedAsPctOfMarket": 4.37
+      }
+    },
+    {
+      "year": 2054,
+      "A": {
+        "marketValue": 8122530,
+        "assessedValue": 958500,
+        "propertyTaxOwnerOccupied": 12840,
+        "propertyTaxRental": 12930,
+        "assessedAsPctOfMarket": 11.8
+      },
+      "B": {
+        "marketValue": 4716310,
+        "assessedValue": 202890,
+        "propertyTaxRental": 4330,
+        "assessedAsPctOfMarket": 4.3
+      }
+    },
+    {
+      "year": 2055,
+      "A": {
+        "marketValue": 8406820,
+        "assessedValue": 977670,
+        "propertyTaxOwnerOccupied": 13090,
+        "propertyTaxRental": 13190,
+        "assessedAsPctOfMarket": 11.63
+      },
+      "B": {
+        "marketValue": 4881380,
+        "assessedValue": 206940,
+        "propertyTaxRental": 4420,
+        "assessedAsPctOfMarket": 4.24
+      }
+    },
+    {
+      "year": 2056,
+      "A": {
+        "marketValue": 8701060,
+        "assessedValue": 997220,
+        "propertyTaxOwnerOccupied": 13360,
+        "propertyTaxRental": 13450,
+        "assessedAsPctOfMarket": 11.46
+      },
+      "B": {
+        "marketValue": 5052230,
+        "assessedValue": 211080,
+        "propertyTaxRental": 4510,
+        "assessedAsPctOfMarket": 4.18
+      }
+    },
+    {
+      "year": 2057,
+      "A": {
+        "marketValue": 9005600,
+        "assessedValue": 1017170,
+        "propertyTaxOwnerOccupied": 13630,
+        "propertyTaxRental": 13720,
+        "assessedAsPctOfMarket": 11.29
+      },
+      "B": {
+        "marketValue": 5229060,
+        "assessedValue": 215300,
+        "propertyTaxRental": 4600,
+        "assessedAsPctOfMarket": 4.12
+      }
+    },
+    {
+      "year": 2058,
+      "A": {
+        "marketValue": 9320790,
+        "assessedValue": 1037510,
+        "propertyTaxOwnerOccupied": 13900,
+        "propertyTaxRental": 14000,
+        "assessedAsPctOfMarket": 11.13
+      },
+      "B": {
+        "marketValue": 5412070,
+        "assessedValue": 219610,
+        "propertyTaxRental": 4690,
+        "assessedAsPctOfMarket": 4.06
+      }
+    },
+    {
+      "year": 2059,
+      "A": {
+        "marketValue": 9647020,
+        "assessedValue": 1058260,
+        "propertyTaxOwnerOccupied": 14180,
+        "propertyTaxRental": 14280,
+        "assessedAsPctOfMarket": 10.97
+      },
+      "B": {
+        "marketValue": 5601500,
+        "assessedValue": 224000,
+        "propertyTaxRental": 4780,
+        "assessedAsPctOfMarket": 4
+      }
+    },
+    {
+      "year": 2060,
+      "A": {
+        "marketValue": 9984670,
+        "assessedValue": 1079420,
+        "propertyTaxOwnerOccupied": 14470,
+        "propertyTaxRental": 14560,
+        "assessedAsPctOfMarket": 10.81
+      },
+      "B": {
+        "marketValue": 5797550,
+        "assessedValue": 228480,
+        "propertyTaxRental": 4880,
+        "assessedAsPctOfMarket": 3.94
+      }
+    },
+    {
+      "year": 2061,
+      "A": {
+        "marketValue": 10334130,
+        "assessedValue": 1101010,
+        "propertyTaxOwnerOccupied": 14760,
+        "propertyTaxRental": 14850,
+        "assessedAsPctOfMarket": 10.65
+      },
+      "B": {
+        "marketValue": 6000460,
+        "assessedValue": 233050,
+        "propertyTaxRental": 4980,
+        "assessedAsPctOfMarket": 3.88
+      }
+    },
+    {
+      "year": 2062,
+      "A": {
+        "marketValue": 10695820,
+        "assessedValue": 1123030,
+        "propertyTaxOwnerOccupied": 15060,
+        "propertyTaxRental": 15150,
+        "assessedAsPctOfMarket": 10.5
+      },
+      "B": {
+        "marketValue": 6210480,
+        "assessedValue": 237710,
+        "propertyTaxRental": 5080,
+        "assessedAsPctOfMarket": 3.83
+      }
+    },
+    {
+      "year": 2063,
+      "A": {
+        "marketValue": 11070180,
+        "assessedValue": 1145490,
+        "propertyTaxOwnerOccupied": 15360,
+        "propertyTaxRental": 15450,
+        "assessedAsPctOfMarket": 10.35
+      },
+      "B": {
+        "marketValue": 6427850,
+        "assessedValue": 242470,
+        "propertyTaxRental": 5180,
+        "assessedAsPctOfMarket": 3.77
+      }
+    },
+    {
+      "year": 2064,
+      "A": {
+        "marketValue": 11457640,
+        "assessedValue": 1168400,
+        "propertyTaxOwnerOccupied": 15670,
+        "propertyTaxRental": 15760,
+        "assessedAsPctOfMarket": 10.2
+      },
+      "B": {
+        "marketValue": 6652820,
+        "assessedValue": 247320,
+        "propertyTaxRental": 5280,
+        "assessedAsPctOfMarket": 3.72
+      }
+    },
+    {
+      "year": 2065,
+      "A": {
+        "marketValue": 11858650,
+        "assessedValue": 1191770,
+        "propertyTaxOwnerOccupied": 15980,
+        "propertyTaxRental": 16080,
+        "assessedAsPctOfMarket": 10.05
+      },
+      "B": {
+        "marketValue": 6885670,
+        "assessedValue": 252260,
+        "propertyTaxRental": 5390,
+        "assessedAsPctOfMarket": 3.66
+      }
+    }
+  ],
+  "prop19AtTransfer": {
+    "inheritanceYear": 2045,
+    "cushion": 1669930,
+    "A_ifHeirOccupies": {
+      "prop": "A",
+      "mode": "live",
+      "eligible": true,
+      "occupancyShare": 1,
+      "fbyv": 802028.4524899367,
+      "fmv": 5959754.083810738,
+      "cap": 2471956.0553164557,
+      "excess": 3487798.0284942826,
+      "excludedBase": 4289826.480984219,
+      "marketBase": 0,
+      "newTaxableValue": 4289826.480984219,
+      "firstYearTax": 57775.32922847712,
+      "rationale": "Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+    },
+    "A_ifNotOccupied": {
+      "prop": "A",
+      "mode": "rent",
+      "eligible": false,
+      "occupancyShare": 0,
+      "fbyv": 802028.4524899367,
+      "fmv": 5959754.083810738,
+      "cap": 2471956.0553164557,
+      "excess": null,
+      "newTaxableValue": 5959754.083810738,
+      "firstYearTax": 80397.08259060686,
+      "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+    },
+    "B_ifHeirOccupiesOneUnit": {
+      "prop": "B",
+      "mode": "live",
+      "eligible": true,
+      "occupancyShare": 0.3333333333333333,
+      "fbyv": 169766.51809573508,
+      "fmv": 3460502.3712449446,
+      "cap": 1839694.120922254,
+      "excess": 540269.4167742303,
+      "excludedBase": 596858.2561394754,
+      "marketBase": 2307001.5808299636,
+      "newTaxableValue": 2903859.836969439,
+      "firstYearTax": 61997.40751929752,
+      "rationale": "Only the unit occupied as the principal residence qualifies; the other 200 units are reassessed at full cash value (BOE LTA 2026/026 Q5). Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+    },
+    "B_ifFullyRented": {
+      "prop": "B",
+      "mode": "rent",
+      "eligible": false,
+      "occupancyShare": 0,
+      "fbyv": 169766.51809573508,
+      "fmv": 3460502.3712449446,
+      "cap": 1839694.120922254,
+      "excess": null,
+      "newTaxableValue": 3460502.3712449446,
+      "firstYearTax": 73881.72562607957,
+      "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+    }
+  },
+  "prop19AtTransfer_byYear": [
+    {
+      "inheritanceYear": 2040,
+      "cushion": 1475970,
+      "A_marketValue": 5017950,
+      "A_taxableValueAtDeath": 726420,
+      "A_ifOccupied": {
+        "prop": "A",
+        "mode": "live",
+        "eligible": true,
+        "occupancyShare": 1,
+        "fbyv": 726421.8797803445,
+        "fmv": 5017953.019644149,
+        "cap": 2202394.5515360464,
+        "excess": 2815558.468108102,
+        "excludedBase": 3541980.347888447,
+        "marketBase": 0,
+        "newTaxableValue": 3541980.347888447,
+        "firstYearTax": 47686.88489301515,
+        "rationale": "Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+      },
+      "A_ifNotOccupied": {
+        "prop": "A",
+        "mode": "rent",
+        "eligible": false,
+        "occupancyShare": 0,
+        "fbyv": 726421.8797803445,
+        "fmv": 5017953.019644149,
+        "cap": 2202394.5515360464,
+        "excess": null,
+        "newTaxableValue": 5017953.019644149,
+        "firstYearTax": 67692.18623499956,
+        "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+      }
+    },
+    {
+      "inheritanceYear": 2045,
+      "cushion": 1669930,
+      "A_marketValue": 5959750,
+      "A_taxableValueAtDeath": 802030,
+      "A_ifOccupied": {
+        "prop": "A",
+        "mode": "live",
+        "eligible": true,
+        "occupancyShare": 1,
+        "fbyv": 802028.4524899367,
+        "fmv": 5959754.083810738,
+        "cap": 2471956.0553164557,
+        "excess": 3487798.0284942826,
+        "excludedBase": 4289826.480984219,
+        "marketBase": 0,
+        "newTaxableValue": 4289826.480984219,
+        "firstYearTax": 57775.32922847712,
+        "rationale": "Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+      },
+      "A_ifNotOccupied": {
+        "prop": "A",
+        "mode": "rent",
+        "eligible": false,
+        "occupancyShare": 0,
+        "fbyv": 802028.4524899367,
+        "fmv": 5959754.083810738,
+        "cap": 2471956.0553164557,
+        "excess": null,
+        "newTaxableValue": 5959754.083810738,
+        "firstYearTax": 80397.08259060686,
+        "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+      }
+    },
+    {
+      "inheritanceYear": 2050,
+      "cushion": 1889370,
+      "A_marketValue": 7078320,
+      "A_taxableValueAtDeath": 885500,
+      "A_ifOccupied": {
+        "prop": "A",
+        "mode": "live",
+        "eligible": true,
+        "occupancyShare": 1,
+        "fbyv": 885504.2180143426,
+        "fmv": 7078318.310365049,
+        "cap": 2774874.022785019,
+        "excess": 4303444.28758003,
+        "excludedBase": 5188948.505594373,
+        "marketBase": 0,
+        "newTaxableValue": 5188948.505594373,
+        "firstYearTax": 69904.48534046809,
+        "rationale": "Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+      },
+      "A_ifNotOccupied": {
+        "prop": "A",
+        "mode": "rent",
+        "eligible": false,
+        "occupancyShare": 0,
+        "fbyv": 885504.2180143426,
+        "fmv": 7078318.310365049,
+        "cap": 2774874.022785019,
+        "excess": null,
+        "newTaxableValue": 7078318.310365049,
+        "firstYearTax": 95486.51400682451,
+        "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+      }
+    }
+  ],
+  "strategies": [
+    {
+      "name": "S1 — Move into Property A, keep Property B fully rented",
+      "note": "The heir occupies A (so A can use the Prop 19 exclusion) and both existing B tenancies continue; the third unit stays vacant.",
+      "housing": "rentA",
+      "imputedHousingBenefit": 2585730,
+      "rentPaid": 0,
+      "economicTerminalWealth": 13839010,
+      "inheritanceYear": 2045,
+      "horizonYears": 20,
+      "construction": {
+        "A": {
+          "prop": "A",
+          "mode": "live",
+          "eligible": true,
+          "occupancyShare": 1,
+          "fbyv": 802028.4524899367,
+          "fmv": 5959754.083810738,
+          "cap": 2471956.0553164557,
+          "excess": 3487798.0284942826,
+          "excludedBase": 4289826.480984219,
+          "marketBase": 0,
+          "newTaxableValue": 4289826.480984219,
+          "firstYearTax": 57775.32922847712,
+          "rationale": "Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+        },
+        "B": {
+          "prop": "B",
+          "mode": "rent",
+          "eligible": false,
+          "occupancyShare": 0,
+          "fbyv": 169766.51809573508,
+          "fmv": 3460502.3712449446,
+          "cap": 1839694.120922254,
+          "excess": null,
+          "newTaxableValue": 3460502.3712449446,
+          "firstYearTax": 73881.72562607957,
+          "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+        }
+      },
+      "earlySales": [],
+      "firstYear": {
+        "year": 2046,
+        "lines": [
+          {
+            "prop": "A",
+            "mode": "live",
+            "year": 2046,
+            "propertyTax": 58932.724413046664,
+            "water": 3286.684714550131,
+            "electricity": -394.4021657460157,
+            "insurance": 4810.703208319272,
+            "maintenance": 37010.07286046468,
+            "grossRent": 0,
+            "vacancyLoss": 0,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -103645.78303063472
+          },
+          {
+            "prop": "B",
+            "mode": "rent",
+            "year": 2046,
+            "propertyTax": 75359.36013860116,
+            "water": 9597.119366486384,
+            "electricity": 1314.6738858200524,
+            "insurance": 4810.703208319272,
+            "maintenance": 35816.19954238517,
+            "grossRent": 117858.64582112465,
+            "vacancyLoss": 4714.345832844986,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -13753.756153332375
+          }
+        ],
+        "netCashFlow": -117399.53918396709,
+        "cumulative": -117399.53918396709
+      },
+      "lastYear": {
+        "year": 2065,
+        "lines": [
+          {
+            "prop": "A",
+            "mode": "live",
+            "year": 2065,
+            "propertyTax": 85896.98803144996,
+            "water": 6924.548982600947,
+            "electricity": -830.9458779121137,
+            "insurance": 14555.261231781971,
+            "maintenance": 71151.9138297701,
+            "grossRent": 0,
+            "vacancyLoss": 0,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -177697.76619769086
+          },
+          {
+            "prop": "B",
+            "mode": "rent",
+            "year": 2065,
+            "propertyTax": 109784.35780446023,
+            "water": 20219.683029194766,
+            "electricity": 2769.819593040379,
+            "insurance": 14555.261231781971,
+            "maintenance": 68856.69080300332,
+            "grossRent": 159346.2685010611,
+            "vacancyLoss": 6373.850740042444,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -63213.39470046203
+          }
+        ],
+        "netCashFlow": -240911.16089815288,
+        "cumulative": -3445612.249811755
+      },
+      "cumulativeOperatingCashFlow": -3445610,
+      "terminalSales": [
+        {
+          "prop": "A",
+          "salePrice": 11858650,
+          "costOfSale": 711520,
+          "incomeTaxBasis": 5959750,
+          "gain": 5898900,
+          "section121Exclusion": 500000,
+          "taxableGain": 5398900,
+          "capitalGainsTax": 1787040,
+          "netProceeds": 9360100
+        },
+        {
+          "prop": "B",
+          "salePrice": 6885670,
+          "costOfSale": 413140,
+          "incomeTaxBasis": 3460500,
+          "gain": 3425170,
+          "section121Exclusion": 0,
+          "taxableGain": 3425170,
+          "capitalGainsTax": 1133730,
+          "netProceeds": 5338800
+        }
+      ],
+      "terminalCapitalGainsTax": 2920770,
+      "reinvestedPortfolioAtEnd": 0,
+      "terminalWealth": 11253280,
+      "totalPropertyTaxOverHorizon": 3263350,
+      "totalMaintenanceOverHorizon": 2059500,
+      "totalInsuranceOverHorizon": 353930,
+      "totalUtilitiesOverHorizon": 422800,
+      "totalGrossRent": 2752320,
+      "totalRentalIncomeTax": 0
+    },
+    {
+      "name": "S2 — Rent both houses out, live elsewhere",
+      "note": "Nobody occupies either home, so the Prop 19 exclusion is forfeited on both: both reassess to full market value. B's vacant unit is leased at the FY2026 HUD 94122 one-bedroom benchmark.",
+      "housing": "payRent",
+      "imputedHousingBenefit": 0,
+      "rentPaid": 2585730,
+      "economicTerminalWealth": 11421270,
+      "inheritanceYear": 2045,
+      "horizonYears": 20,
+      "construction": {
+        "A": {
+          "prop": "A",
+          "mode": "rent",
+          "eligible": false,
+          "occupancyShare": 0,
+          "fbyv": 802028.4524899367,
+          "fmv": 5959754.083810738,
+          "cap": 2471956.0553164557,
+          "excess": null,
+          "newTaxableValue": 5959754.083810738,
+          "firstYearTax": 80397.08259060686,
+          "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+        },
+        "B": {
+          "prop": "B",
+          "mode": "rent",
+          "eligible": false,
+          "occupancyShare": 0,
+          "fbyv": 169766.51809573508,
+          "fmv": 3460502.3712449446,
+          "cap": 1839694.120922254,
+          "excess": null,
+          "newTaxableValue": 3460502.3712449446,
+          "firstYearTax": 73881.72562607957,
+          "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+        }
+      },
+      "earlySales": [],
+      "firstYear": {
+        "year": 2046,
+        "lines": [
+          {
+            "prop": "A",
+            "mode": "rent",
+            "year": 2046,
+            "propertyTax": 82005.02424241901,
+            "water": 3286.684714550131,
+            "electricity": -394.4021657460157,
+            "insurance": 4810.703208319272,
+            "maintenance": 37010.07286046468,
+            "grossRent": 96229.60658318643,
+            "vacancyLoss": 3849.1842633274573,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -34732.06270589412
+          },
+          {
+            "prop": "B",
+            "mode": "rent",
+            "year": 2046,
+            "propertyTax": 75359.36013860116,
+            "water": 9597.119366486384,
+            "electricity": 1314.6738858200524,
+            "insurance": 4810.703208319272,
+            "maintenance": 35816.19954238517,
+            "grossRent": 162859.21968009952,
+            "vacancyLoss": 6514.368787203981,
+            "depreciationShelter": 29446.79475128351,
+            "rentalIncomeTax": 0,
+            "netCashFlow": 29446.79475128351
+          }
+        ],
+        "netCashFlow": -5285.267954610608,
+        "cumulative": -5285.267954610608
+      },
+      "lastYear": {
+        "year": 2065,
+        "lines": [
+          {
+            "prop": "A",
+            "mode": "rent",
+            "year": 2065,
+            "propertyTax": 119465.835519769,
+            "water": 6924.548982600947,
+            "electricity": -830.9458779121137,
+            "insurance": 14555.261231781971,
+            "maintenance": 71151.9138297701,
+            "grossRent": 168739.1976288455,
+            "vacancyLoss": 6749.56790515382,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -50107.929840230325
+          },
+          {
+            "prop": "B",
+            "mode": "rent",
+            "year": 2065,
+            "propertyTax": 109784.35780446023,
+            "water": 20219.683029194766,
+            "electricity": 2769.819593040379,
+            "insurance": 14555.261231781971,
+            "maintenance": 68856.69080300332,
+            "grossRent": 220187.57101964808,
+            "vacancyLoss": 8807.502840785923,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -4805.744282618514
+          }
+        ],
+        "netCashFlow": -54913.67412284884,
+        "cumulative": -526399.2757501248
+      },
+      "cumulativeOperatingCashFlow": -526400,
+      "terminalSales": [
+        {
+          "prop": "A",
+          "salePrice": 11858650,
+          "costOfSale": 711520,
+          "incomeTaxBasis": 5959750,
+          "gain": 5898900,
+          "section121Exclusion": 0,
+          "taxableGain": 5898900,
+          "capitalGainsTax": 1952540,
+          "netProceeds": 9194600
+        },
+        {
+          "prop": "B",
+          "salePrice": 6885670,
+          "costOfSale": 413140,
+          "incomeTaxBasis": 3460500,
+          "gain": 3425170,
+          "section121Exclusion": 0,
+          "taxableGain": 3425170,
+          "capitalGainsTax": 1133730,
+          "netProceeds": 5338800
+        }
+      ],
+      "terminalCapitalGainsTax": 3086270,
+      "reinvestedPortfolioAtEnd": 0,
+      "terminalWealth": 14007000,
+      "totalPropertyTaxOverHorizon": 3823540,
+      "totalMaintenanceOverHorizon": 2059500,
+      "totalInsuranceOverHorizon": 353930,
+      "totalUtilitiesOverHorizon": 422800,
+      "totalGrossRent": 6388940,
+      "totalRentalIncomeTax": 0
+    },
+    {
+      "name": "S3 — Sell Property A, move into B while both tenancies continue",
+      "note": "A is sold right after death; the step-up under IRC 1014 means the sale realises essentially no capital gain, only the cost of sale. The heir occupies B's vacant third unit, so B still produces two rents and the occupied third of B can use the Prop 19 exclusion.",
+      "housing": "rentB",
+      "imputedHousingBenefit": 1050890,
+      "rentPaid": 0,
+      "economicTerminalWealth": 24002730,
+      "inheritanceYear": 2045,
+      "horizonYears": 20,
+      "construction": {
+        "A": null,
+        "B": {
+          "prop": "B",
+          "mode": "live",
+          "eligible": true,
+          "occupancyShare": 0.3333333333333333,
+          "fbyv": 169766.51809573508,
+          "fmv": 3460502.3712449446,
+          "cap": 1839694.120922254,
+          "excess": 540269.4167742303,
+          "excludedBase": 596858.2561394754,
+          "marketBase": 2307001.5808299636,
+          "newTaxableValue": 2903859.836969439,
+          "firstYearTax": 61997.40751929752,
+          "rationale": "Only the unit occupied as the principal residence qualifies; the other 200 units are reassessed at full cash value (BOE LTA 2026/026 Q5). Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+        }
+      },
+      "earlySales": [
+        {
+          "prop": "A",
+          "salePrice": 5959750,
+          "costOfSale": 357590,
+          "incomeTaxBasis": 5959750,
+          "gain": 0,
+          "section121Exclusion": 0,
+          "taxableGain": 0,
+          "capitalGainsTax": 0,
+          "netProceeds": 5602170
+        }
+      ],
+      "firstYear": {
+        "year": 2046,
+        "lines": [
+          {
+            "prop": "B",
+            "mode": "live",
+            "year": 2046,
+            "propertyTax": 63237.35566968347,
+            "water": 9597.119366486384,
+            "electricity": 1314.6738858200524,
+            "insurance": 4810.703208319272,
+            "maintenance": 35816.19954238517,
+            "grossRent": 117858.64582112465,
+            "vacancyLoss": 4714.345832844986,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -1631.751684414703
+          }
+        ],
+        "netCashFlow": -1631.751684414703,
+        "cumulative": -1631.751684414703
+      },
+      "lastYear": {
+        "year": 2065,
+        "lines": [
+          {
+            "prop": "B",
+            "mode": "live",
+            "year": 2065,
+            "propertyTax": 92124.88626070904,
+            "water": 20219.683029194766,
+            "electricity": 2769.819593040379,
+            "insurance": 14555.261231781971,
+            "maintenance": 68856.69080300332,
+            "grossRent": 159346.2685010611,
+            "vacancyLoss": 6373.850740042444,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -45553.923156710836
+          }
+        ],
+        "netCashFlow": -45553.923156710836,
+        "cumulative": -409039.1625687269
+      },
+      "cumulativeOperatingCashFlow": -409040,
+      "terminalSales": [
+        {
+          "prop": "B",
+          "salePrice": 6885670,
+          "costOfSale": 413140,
+          "incomeTaxBasis": 3460500,
+          "gain": 3425170,
+          "section121Exclusion": 166670,
+          "taxableGain": 3258500,
+          "capitalGainsTax": 1078560,
+          "netProceeds": 5393970
+        }
+      ],
+      "terminalCapitalGainsTax": 1078560,
+      "reinvestedPortfolioAtEnd": 17966910,
+      "terminalWealth": 22951840,
+      "totalPropertyTaxOverHorizon": 1536500,
+      "totalMaintenanceOverHorizon": 1012870,
+      "totalInsuranceOverHorizon": 176960,
+      "totalUtilitiesOverHorizon": 324930,
+      "totalGrossRent": 2752320,
+      "totalRentalIncomeTax": 0
+    },
+    {
+      "name": "S4 — Sell Property A, invest the proceeds, keep B fully rented",
+      "note": "A is sold at inheritance and the net proceeds compound at the assumed after-tax portfolio return for the whole horizon; B stays a pure rental and is sold at the end.",
+      "housing": "rentFreeElsewhere",
+      "imputedHousingBenefit": 0,
+      "rentPaid": 0,
+      "economicTerminalWealth": 22602140,
+      "inheritanceYear": 2045,
+      "horizonYears": 20,
+      "construction": {
+        "A": null,
+        "B": {
+          "prop": "B",
+          "mode": "rent",
+          "eligible": false,
+          "occupancyShare": 0,
+          "fbyv": 169766.51809573508,
+          "fmv": 3460502.3712449446,
+          "cap": 1839694.120922254,
+          "excess": null,
+          "newTaxableValue": 3460502.3712449446,
+          "firstYearTax": 73881.72562607957,
+          "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+        }
+      },
+      "earlySales": [
+        {
+          "prop": "A",
+          "salePrice": 5959750,
+          "costOfSale": 357590,
+          "incomeTaxBasis": 5959750,
+          "gain": 0,
+          "section121Exclusion": 0,
+          "taxableGain": 0,
+          "capitalGainsTax": 0,
+          "netProceeds": 5602170
+        }
+      ],
+      "firstYear": {
+        "year": 2046,
+        "lines": [
+          {
+            "prop": "B",
+            "mode": "rent",
+            "year": 2046,
+            "propertyTax": 75359.36013860116,
+            "water": 9597.119366486384,
+            "electricity": 1314.6738858200524,
+            "insurance": 4810.703208319272,
+            "maintenance": 35816.19954238517,
+            "grossRent": 117858.64582112465,
+            "vacancyLoss": 4714.345832844986,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -13753.756153332375
+          }
+        ],
+        "netCashFlow": -13753.756153332375,
+        "cumulative": -13753.756153332375
+      },
+      "lastYear": {
+        "year": 2065,
+        "lines": [
+          {
+            "prop": "B",
+            "mode": "rent",
+            "year": 2065,
+            "propertyTax": 109784.35780446023,
+            "water": 20219.683029194766,
+            "electricity": 2769.819593040379,
+            "insurance": 14555.261231781971,
+            "maintenance": 68856.69080300332,
+            "grossRent": 159346.2685010611,
+            "vacancyLoss": 6373.850740042444,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -63213.39470046203
+          }
+        ],
+        "netCashFlow": -63213.39470046203,
+        "cumulative": -703571.987854153
+      },
+      "cumulativeOperatingCashFlow": -703570,
+      "terminalSales": [
+        {
+          "prop": "B",
+          "salePrice": 6885670,
+          "costOfSale": 413140,
+          "incomeTaxBasis": 3460500,
+          "gain": 3425170,
+          "section121Exclusion": 0,
+          "taxableGain": 3425170,
+          "capitalGainsTax": 1133730,
+          "netProceeds": 5338800
+        }
+      ],
+      "terminalCapitalGainsTax": 1133730,
+      "reinvestedPortfolioAtEnd": 17966910,
+      "terminalWealth": 22602140,
+      "totalPropertyTaxOverHorizon": 1831030,
+      "totalMaintenanceOverHorizon": 1012870,
+      "totalInsuranceOverHorizon": 176960,
+      "totalUtilitiesOverHorizon": 324930,
+      "totalGrossRent": 2752320,
+      "totalRentalIncomeTax": 0
+    },
+    {
+      "name": "S5 — Sell both properties at inheritance and rent a home",
+      "note": "Both houses sold immediately (≈zero gain because of the step-up), proceeds invested, and the heir rents. This is the clean liquid benchmark.",
+      "housing": "payRent",
+      "imputedHousingBenefit": 0,
+      "rentPaid": 2585730,
+      "economicTerminalWealth": 25813590,
+      "inheritanceYear": 2045,
+      "horizonYears": 20,
+      "construction": {
+        "A": null,
+        "B": null
+      },
+      "earlySales": [
+        {
+          "prop": "A",
+          "salePrice": 5959750,
+          "costOfSale": 357590,
+          "incomeTaxBasis": 5959750,
+          "gain": 0,
+          "section121Exclusion": 0,
+          "taxableGain": 0,
+          "capitalGainsTax": 0,
+          "netProceeds": 5602170
+        },
+        {
+          "prop": "B",
+          "salePrice": 3460500,
+          "costOfSale": 207630,
+          "incomeTaxBasis": 3460500,
+          "gain": 0,
+          "section121Exclusion": 0,
+          "taxableGain": 0,
+          "capitalGainsTax": 0,
+          "netProceeds": 3252870
+        }
+      ],
+      "firstYear": {
+        "year": 2046,
+        "lines": [],
+        "netCashFlow": 0,
+        "cumulative": 0
+      },
+      "lastYear": {
+        "year": 2065,
+        "lines": [],
+        "netCashFlow": 0,
+        "cumulative": 0
+      },
+      "cumulativeOperatingCashFlow": 0,
+      "terminalSales": [],
+      "terminalCapitalGainsTax": 0,
+      "reinvestedPortfolioAtEnd": 28399320,
+      "terminalWealth": 28399320,
+      "totalPropertyTaxOverHorizon": 0,
+      "totalMaintenanceOverHorizon": 0,
+      "totalInsuranceOverHorizon": 0,
+      "totalUtilitiesOverHorizon": 0,
+      "totalGrossRent": 0,
+      "totalRentalIncomeTax": 0
+    },
+    {
+      "name": "S6 — Move into Property B's vacant unit, rent Property A out",
+      "note": "The heir takes B's empty third unit (so one third of B can use the Prop 19 exclusion and both rents continue) and leases A at the 95014 market benchmark. This keeps the Cupertino house as an income asset instead of converting it to personal use.",
+      "housing": "rentB",
+      "imputedHousingBenefit": 1050890,
+      "rentPaid": 0,
+      "economicTerminalWealth": 14398730,
+      "inheritanceYear": 2045,
+      "horizonYears": 20,
+      "construction": {
+        "A": {
+          "prop": "A",
+          "mode": "rent",
+          "eligible": false,
+          "occupancyShare": 0,
+          "fbyv": 802028.4524899367,
+          "fmv": 5959754.083810738,
+          "cap": 2471956.0553164557,
+          "excess": null,
+          "newTaxableValue": 5959754.083810738,
+          "firstYearTax": 80397.08259060686,
+          "rationale": "No eligible transferee occupies the home as a principal residence within one year, so the intergenerational exclusion is unavailable and the property is reassessed to full market value (RTC 63.2(a)(1)(A); BOE LTA 2026/026 Q7 \"There are no exceptions to this rule\")."
+        },
+        "B": {
+          "prop": "B",
+          "mode": "live",
+          "eligible": true,
+          "occupancyShare": 0.3333333333333333,
+          "fbyv": 169766.51809573508,
+          "fmv": 3460502.3712449446,
+          "cap": 1839694.120922254,
+          "excess": 540269.4167742303,
+          "excludedBase": 596858.2561394754,
+          "marketBase": 2307001.5808299636,
+          "newTaxableValue": 2903859.836969439,
+          "firstYearTax": 61997.40751929752,
+          "rationale": "Only the unit occupied as the principal residence qualifies; the other 200 units are reassessed at full cash value (BOE LTA 2026/026 Q5). Market value exceeds taxable value plus the adjusted $1M cushion, so the excess is added to the taxable value (RTC 63.2(d))."
+        }
+      },
+      "earlySales": [],
+      "firstYear": {
+        "year": 2046,
+        "lines": [
+          {
+            "prop": "A",
+            "mode": "rent",
+            "year": 2046,
+            "propertyTax": 82005.02424241901,
+            "water": 3286.684714550131,
+            "electricity": -394.4021657460157,
+            "insurance": 4810.703208319272,
+            "maintenance": 37010.07286046468,
+            "grossRent": 96229.60658318643,
+            "vacancyLoss": 3849.1842633274573,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -34732.06270589412
+          },
+          {
+            "prop": "B",
+            "mode": "live",
+            "year": 2046,
+            "propertyTax": 63237.35566968347,
+            "water": 9597.119366486384,
+            "electricity": 1314.6738858200524,
+            "insurance": 4810.703208319272,
+            "maintenance": 35816.19954238517,
+            "grossRent": 117858.64582112465,
+            "vacancyLoss": 4714.345832844986,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -1631.751684414703
+          }
+        ],
+        "netCashFlow": -36363.81439030882,
+        "cumulative": -36363.81439030882
+      },
+      "lastYear": {
+        "year": 2065,
+        "lines": [
+          {
+            "prop": "A",
+            "mode": "rent",
+            "year": 2065,
+            "propertyTax": 119465.835519769,
+            "water": 6924.548982600947,
+            "electricity": -830.9458779121137,
+            "insurance": 14555.261231781971,
+            "maintenance": 71151.9138297701,
+            "grossRent": 168739.1976288455,
+            "vacancyLoss": 6749.56790515382,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -50107.929840230325
+          },
+          {
+            "prop": "B",
+            "mode": "live",
+            "year": 2065,
+            "propertyTax": 92124.88626070904,
+            "water": 20219.683029194766,
+            "electricity": 2769.819593040379,
+            "insurance": 14555.261231781971,
+            "maintenance": 68856.69080300332,
+            "grossRent": 159346.2685010611,
+            "vacancyLoss": 6373.850740042444,
+            "depreciationShelter": 0,
+            "rentalIncomeTax": 0,
+            "netCashFlow": -45553.923156710836
+          }
+        ],
+        "netCashFlow": -95661.85299694116,
+        "cumulative": -1240717.8204592678
+      },
+      "cumulativeOperatingCashFlow": -1240720,
+      "terminalSales": [
+        {
+          "prop": "A",
+          "salePrice": 11858650,
+          "costOfSale": 711520,
+          "incomeTaxBasis": 5959750,
+          "gain": 5898900,
+          "section121Exclusion": 0,
+          "taxableGain": 5898900,
+          "capitalGainsTax": 1952540,
+          "netProceeds": 9194600
+        },
+        {
+          "prop": "B",
+          "salePrice": 6885670,
+          "costOfSale": 413140,
+          "incomeTaxBasis": 3460500,
+          "gain": 3425170,
+          "section121Exclusion": 166670,
+          "taxableGain": 3258500,
+          "capitalGainsTax": 1078560,
+          "netProceeds": 5393970
+        }
+      ],
+      "terminalCapitalGainsTax": 3031100,
+      "reinvestedPortfolioAtEnd": 0,
+      "terminalWealth": 13347850,
+      "totalPropertyTaxOverHorizon": 3529010,
+      "totalMaintenanceOverHorizon": 2059500,
+      "totalInsuranceOverHorizon": 353930,
+      "totalUtilitiesOverHorizon": 422800,
+      "totalGrossRent": 5338050,
+      "totalRentalIncomeTax": 0
+    }
+  ],
+  "estateTest": [
+    {
+      "year": 2040,
+      "propertyA": 5017950,
+      "propertyB": 2913650,
+      "cashAndSecurities": 4000000,
+      "grossEstate": 11931600,
+      "exemptionPerPerson": 21194610,
+      "exemptionMarriedWithPortability": 42389210,
+      "headroomSingle": 9263000,
+      "federalEstateTaxSingle": 0,
+      "federalEstateTaxMarried": 0,
+      "californiaEstateOrInheritanceTax": 0
+    },
+    {
+      "year": 2045,
+      "propertyA": 5959750,
+      "propertyB": 3460500,
+      "cashAndSecurities": 4000000,
+      "grossEstate": 13420260,
+      "exemptionPerPerson": 23979750,
+      "exemptionMarriedWithPortability": 47959510,
+      "headroomSingle": 10559500,
+      "federalEstateTaxSingle": 0,
+      "federalEstateTaxMarried": 0,
+      "californiaEstateOrInheritanceTax": 0
+    },
+    {
+      "year": 2050,
+      "propertyA": 7078320,
+      "propertyB": 4109990,
+      "cashAndSecurities": 4000000,
+      "grossEstate": 15188310,
+      "exemptionPerPerson": 27130890,
+      "exemptionMarriedWithPortability": 54261780,
+      "headroomSingle": 11942580,
+      "federalEstateTaxSingle": 0,
+      "federalEstateTaxMarried": 0,
+      "californiaEstateOrInheritanceTax": 0
+    }
+  ],
+  "estateStress": {
+    "note": "The estate test is highly sensitive to the one number nobody supplied: the size of the cash/securities inheritance. These rows show how far the placeholder can move before federal estate tax appears.",
+    "rows": [
+      {
+        "cashLegacy": 0,
+        "year": 2050,
+        "propertyA": 7078320,
+        "propertyB": 4109990,
+        "cashAndSecurities": 0,
+        "grossEstate": 11188310,
+        "exemptionPerPerson": 27130890,
+        "exemptionMarriedWithPortability": 54261780,
+        "headroomSingle": 15942580,
+        "federalEstateTaxSingle": 0,
+        "federalEstateTaxMarried": 0,
+        "californiaEstateOrInheritanceTax": 0
+      },
+      {
+        "cashLegacy": 4000000,
+        "year": 2050,
+        "propertyA": 7078320,
+        "propertyB": 4109990,
+        "cashAndSecurities": 4000000,
+        "grossEstate": 15188310,
+        "exemptionPerPerson": 27130890,
+        "exemptionMarriedWithPortability": 54261780,
+        "headroomSingle": 11942580,
+        "federalEstateTaxSingle": 0,
+        "federalEstateTaxMarried": 0,
+        "californiaEstateOrInheritanceTax": 0
+      },
+      {
+        "cashLegacy": 8000000,
+        "year": 2050,
+        "propertyA": 7078320,
+        "propertyB": 4109990,
+        "cashAndSecurities": 8000000,
+        "grossEstate": 19188310,
+        "exemptionPerPerson": 27130890,
+        "exemptionMarriedWithPortability": 54261780,
+        "headroomSingle": 7942580,
+        "federalEstateTaxSingle": 0,
+        "federalEstateTaxMarried": 0,
+        "californiaEstateOrInheritanceTax": 0
+      },
+      {
+        "cashLegacy": 12000000,
+        "year": 2050,
+        "propertyA": 7078320,
+        "propertyB": 4109990,
+        "cashAndSecurities": 12000000,
+        "grossEstate": 23188310,
+        "exemptionPerPerson": 27130890,
+        "exemptionMarriedWithPortability": 54261780,
+        "headroomSingle": 3942580,
+        "federalEstateTaxSingle": 0,
+        "federalEstateTaxMarried": 0,
+        "californiaEstateOrInheritanceTax": 0
+      },
+      {
+        "cashLegacy": 20000000,
+        "year": 2050,
+        "propertyA": 7078320,
+        "propertyB": 4109990,
+        "cashAndSecurities": 20000000,
+        "grossEstate": 31188310,
+        "exemptionPerPerson": 27130890,
+        "exemptionMarriedWithPortability": 54261780,
+        "headroomSingle": -4057420,
+        "federalEstateTaxSingle": 1622970,
+        "federalEstateTaxMarried": 0,
+        "californiaEstateOrInheritanceTax": 0
+      }
+    ]
+  },
+  "exemptionFreezeStress": {
+    "note": "If the federal exclusion were frozen at $15,000,000 (no indexation) rather than indexed after 2026.",
+    "rows": [
+      {
+        "year": 2040,
+        "grossEstate": 11931600,
+        "exemptionFrozen": 15000000,
+        "federalEstateTaxSingle": 0
+      },
+      {
+        "year": 2045,
+        "grossEstate": 13420260,
+        "exemptionFrozen": 15000000,
+        "federalEstateTaxSingle": 0
+      },
+      {
+        "year": 2050,
+        "grossEstate": 15188310,
+        "exemptionFrozen": 15000000,
+        "federalEstateTaxSingle": 75320
+      }
+    ]
+  },
+  "sensitivity": [
+    {
+      "appreciationPct": 2,
+      "portfolioReturnPct": 4,
+      "economicTerminal": {
+        "S1": 9792490,
+        "S2": 7372390,
+        "S3": 14046140,
+        "S4": 12645550,
+        "S5": 12116870,
+        "S6": 10352210
+      },
+      "winner": "S3",
+      "winnerEconomic": 14046140,
+      "runnerUp": "S4",
+      "gap": 1400590,
+      "s1_vs_s4": 2853060
+    },
+    {
+      "appreciationPct": 2,
+      "portfolioReturnPct": 6,
+      "economicTerminal": {
+        "S1": 9792490,
+        "S2": 7372390,
+        "S3": 18359260,
+        "S4": 16958670,
+        "S5": 18934390,
+        "S6": 10352210
+      },
+      "winner": "S5",
+      "winnerEconomic": 18934390,
+      "runnerUp": "S3",
+      "gap": 575130,
+      "s1_vs_s4": 7166180
+    },
+    {
+      "appreciationPct": 2,
+      "portfolioReturnPct": 8,
+      "economicTerminal": {
+        "S1": 9792490,
+        "S2": 7372390,
+        "S3": 24530950,
+        "S4": 23130360,
+        "S5": 28689630,
+        "S6": 10352210
+      },
+      "winner": "S5",
+      "winnerEconomic": 28689630,
+      "runnerUp": "S3",
+      "gap": 4158680,
+      "s1_vs_s4": 13337870
+    },
+    {
+      "appreciationPct": 3.5,
+      "portfolioReturnPct": 4,
+      "economicTerminal": {
+        "S1": 13839010,
+        "S2": 11421270,
+        "S3": 18310850,
+        "S4": 16910270,
+        "S5": 16816760,
+        "S6": 14398730
+      },
+      "winner": "S3",
+      "winnerEconomic": 18310850,
+      "runnerUp": "S4",
+      "gap": 1400580,
+      "s1_vs_s4": 3071260
+    },
+    {
+      "appreciationPct": 3.5,
+      "portfolioReturnPct": 6,
+      "economicTerminal": {
+        "S1": 13839010,
+        "S2": 11421270,
+        "S3": 24002730,
+        "S4": 22602140,
+        "S5": 25813590,
+        "S6": 14398730
+      },
+      "winner": "S5",
+      "winnerEconomic": 25813590,
+      "runnerUp": "S3",
+      "gap": 1810860,
+      "s1_vs_s4": 8763130
+    },
+    {
+      "appreciationPct": 3.5,
+      "portfolioReturnPct": 8,
+      "economicTerminal": {
+        "S1": 13839010,
+        "S2": 11421270,
+        "S3": 32147280,
+        "S4": 30746700,
+        "S5": 38687240,
+        "S6": 14398730
+      },
+      "winner": "S5",
+      "winnerEconomic": 38687240,
+      "runnerUp": "S3",
+      "gap": 6539960,
+      "s1_vs_s4": 16907690
+    },
+    {
+      "appreciationPct": 5,
+      "portfolioReturnPct": 4,
+      "economicTerminal": {
+        "S1": 21058020,
+        "S2": 18640280,
+        "S3": 24544700,
+        "S4": 23144110,
+        "S5": 22917050,
+        "S6": 21617740
+      },
+      "winner": "S3",
+      "winnerEconomic": 24544700,
+      "runnerUp": "S4",
+      "gap": 1400590,
+      "s1_vs_s4": 2086090
+    },
+    {
+      "appreciationPct": 5,
+      "portfolioReturnPct": 6,
+      "economicTerminal": {
+        "S1": 21058020,
+        "S2": 18640280,
+        "S3": 32026140,
+        "S4": 30625550,
+        "S5": 34742550,
+        "S6": 21617740
+      },
+      "winner": "S5",
+      "winnerEconomic": 34742550,
+      "runnerUp": "S3",
+      "gap": 2716410,
+      "s1_vs_s4": 9567530
+    },
+    {
+      "appreciationPct": 5,
+      "portfolioReturnPct": 8,
+      "economicTerminal": {
+        "S1": 21058020,
+        "S2": 18640280,
+        "S3": 42731400,
+        "S4": 41330820,
+        "S5": 51663770,
+        "S6": 21617740
+      },
+      "winner": "S5",
+      "winnerEconomic": 51663770,
+      "runnerUp": "S3",
+      "gap": 8932370,
+      "s1_vs_s4": 20272800
+    }
+  ],
+  "stepUpRepealStress": {
+    "note": "If the step-up in basis were replaced by carryover basis (the STEP Act proposal, not enacted), a sale would be taxed on the parents' original low basis instead of the date-of-death value. Quantified for Property A, assumed original basis of $440,305 (the 2014 assessed value in the client's own table) and Property B at $96,557 (2016).",
+    "rows": [
+      {
+        "property": "A",
+        "valueAtInheritance": 5959750,
+        "carryoverBasis": 440310,
+        "taxWithStepUpIfSoldNow": 0,
+        "taxWithCarryoverIfSoldNow": 1826940,
+        "difference": 1826940
+      },
+      {
+        "property": "B",
+        "valueAtInheritance": 3460500,
+        "carryoverBasis": 96560,
+        "taxWithStepUpIfSoldNow": 0,
+        "taxWithCarryoverIfSoldNow": 1113470,
+        "difference": 1113470
+      }
+    ]
+  },
+  "flaggedAssumptions": [
+    {
+      "id": "prop19CushionGrowth",
+      "label": "Growth of the Prop 19 cushion between biennial adjustments",
+      "value": 0.025,
+      "range": [
+        0.02,
+        0.035
+      ],
+      "note": "Indexed to FHFA California HPI. The 2025 adjustment was +2.15% (S03); the long-run CA HPI CAGR from S32 is 4.18%. 2.5% is the midpoint."
+    },
+    {
+      "id": "appreciation",
+      "label": "Long-run home appreciation, Properties A and B",
+      "value": 0.035,
+      "range": [
+        0.02,
+        0.05
+      ],
+      "note": "Anchored on FHFA California HPI (S32): 4.18%/yr from 1991Q1 to 2026Q2, 1.97%/yr over the last 20 years, 5.82%/yr over the last 10. 3.5% sits between the long-run and 20-year figures and is used for both houses."
+    },
+    {
+      "id": "cpi",
+      "label": "General inflation applied to maintenance and fees",
+      "value": 0.025,
+      "range": [
+        0.02,
+        0.03
+      ],
+      "note": "Recent CCPI change was 3.307% (S04); the 10-year average is lower."
+    },
+    {
+      "id": "utilityInflation",
+      "label": "Water and electricity rate inflation",
+      "value": 0.04,
+      "range": [
+        0.03,
+        0.06
+      ],
+      "note": "Utility tariffs are repriced by CPUC/SFPUC proceedings independently of CPI; SFPUC and PG&E schedules are republished each year (S26, S29)."
+    },
+    {
+      "id": "insuranceInflation",
+      "label": "Property-insurance premium inflation",
+      "value": 0.06,
+      "range": [
+        0.04,
+        0.09
+      ],
+      "note": "Post-2025 repricing environment; the FAIR Plan's approved average increase of 29.1% effective 2026‑10‑15 is far above CPI. CDI data (S33/S34) is the only official premium series and it ends in 2017."
+    },
+    {
+      "id": "maintenanceA",
+      "label": "Property A maintenance & repair reserve, per year of market value",
+      "value": 0.006,
+      "range": [
+        0.004,
+        0.01
+      ],
+      "note": "No official figure exists. Client states A needs less than B; 0.6% of a $3.1M house is ~$18,600/yr, consistent with roof/HVAC/paint/landscape cycles on a well-kept single-family home."
+    },
+    {
+      "id": "maintenanceB",
+      "label": "Property B maintenance & repair reserve, per year of market value",
+      "value": 0.01,
+      "range": [
+        0.008,
+        0.015
+      ],
+      "note": "Three-unit pre-1979 building: more roof, plumbing, paint and turnover work."
+    },
+    {
+      "id": "rentGrowthA",
+      "label": "Property A rent growth (single-family home, not rent-capped)",
+      "value": 0.03,
+      "range": [
+        0.02,
+        0.04
+      ],
+      "note": "Civ. Code §1947.12(d)(5) exempts separately-alienable single-family homes owned by a natural person from the AB 1482 cap (S07), so A can track market rent."
+    },
+    {
+      "id": "vacancyLoss",
+      "label": "Vacancy and credit loss on rented units",
+      "value": 0.04,
+      "range": [
+        0.03,
+        0.08
+      ],
+      "note": "SF rent-controlled tenancies are long, so losses are low, but turnover and bad debt are real."
+    },
+    {
+      "id": "portfolioReturn",
+      "label": "After-tax return on a reinvested portfolio",
+      "value": 0.06,
+      "range": [
+        0.045,
+        0.08
+      ],
+      "note": "Nominal, after federal and California tax drag on a balanced equity/fixed-income portfolio, before advisory fees. Not an official figure; it is the discount-rate challenger to real estate. A 6.0% central case is deliberately below the long-run US equity return."
+    },
+    {
+      "id": "discountRate",
+      "label": "Discount rate for net present value",
+      "value": 0.05,
+      "range": [
+        0.04,
+        0.06
+      ]
+    },
+    {
+      "id": "sellingCosts",
+      "label": "Cost of sale (commission, escrow, title, transfer tax)",
+      "value": 0.06,
+      "range": [
+        0.05,
+        0.08
+      ],
+      "note": "Commissions are negotiable, so no official rate exists. Includes the county documentary transfer tax of 0.11% (S06) and, for San Francisco, the 0.75% city tier for $1M-$5M sales."
+    },
+    {
+      "id": "marginalRateFed",
+      "label": "Assumed federal marginal rate on net rental income",
+      "value": 0.24,
+      "note": "Depends entirely on the heir's other income, which is unknown. See IRS 2026 brackets (S10)."
+    },
+    {
+      "id": "marginalRateCA",
+      "label": "Assumed California marginal rate on net rental income",
+      "value": 0.093,
+      "note": "9.3% bracket from the FTB 2025 Schedule X/Y/Z."
+    },
+    {
+      "id": "buildingShare",
+      "label": "Share of value treated as depreciable improvement",
+      "value": 0.55,
+      "note": "Assessor allocation is not available. Used only to size depreciation shelter."
+    },
+    {
+      "id": "estateExemptionIndex",
+      "label": "Assumed indexation of the federal exclusion after 2026",
+      "value": 0.025,
+      "range": [
+        0.02,
+        0.03
+      ],
+      "note": "P.L. 119-21 indexes the $15M from 2027 (S09). The rate is an assumption, not a published figure."
+    },
+    {
+      "id": "cashLegacy",
+      "label": "Cash and securities included in the inheritance (placeholder)",
+      "value": 4000000,
+      "range": [
+        0,
+        8000000
+      ],
+      "note": "The client says the inheritance includes 'a considerable amount of money' without a number. $4,000,000 is a modelling placeholder so the estate-tax threshold test can run at all. It is NOT a fact. Replace it and every estate-tax figure changes."
+    }
+  ],
+  "unverifiedInputs": [
+    {
+      "id": "rateA_billed",
+      "label": "Property A effective rate back-solved from the client's own bills (2026: 7,207 / 539,743 for 2025)",
+      "value": 0.01349,
+      "note": "Arithmetic on client-supplied rows. Used as the cost basis of the projection because it reproduces what is actually paid."
+    },
+    {
+      "id": "rateB_billed",
+      "label": "Property B effective rate back-solved from the client's own bills (2025: 2,439 / 114,248)",
+      "value": 0.02135,
+      "note": "~1.8x the official SF rate. Flagged I1. Used for cost realism; official-rate variant in sensitivity."
+    },
+    {
+      "id": "waterA",
+      "label": "Property A water",
+      "value": 125,
+      "note": "Client supplied."
+    },
+    {
+      "id": "electricA",
+      "label": "Property A electricity (net solar credit)",
+      "value": -15,
+      "note": "Client supplied: solar routinely produces a credit. Treated as a negative cost."
+    },
+    {
+      "id": "waterB",
+      "label": "Property B water & sewer, all three units",
+      "value": 365
+    },
+    {
+      "id": "electricB",
+      "label": "Property B electricity, all three units",
+      "value": 50
+    },
+    {
+      "id": "insuranceA",
+      "label": "Property A homeowners premium",
+      "value": 1500,
+      "note": "Client estimate, explicitly uncertain. Could not be confirmed for ZIP 95014: CDI's official series is statewide only ($1,074 average written premium for owner-occupied homeowners multi-peril in 2017) and the ZIP-level workbook could not be retrieved. Flagged I7. Treated as a floor because the dwelling limit needed for a $3.1M house exceeds the CDI average coverage of ~$528k."
+    },
+    {
+      "id": "insuranceB",
+      "label": "Property B rental-dwelling (landlord) premium, 3 units",
+      "value": 1500,
+      "note": "Client estimate, explicitly uncertain. CDI statewide average written premium for rental dwellings was $519 in 2017. A three-unit Outer Sunset building needs a landlord policy well above that. Flagged I7."
+    },
+    {
+      "id": "rentB",
+      "label": "Property B existing rent, two units",
+      "value": 7150
+    },
+    {
+      "id": "inheritanceYear",
+      "label": "Central inheritance year",
+      "value": 2045,
+      "note": "Client states the house is expected to pass by trust around 2040-2050; the midpoint is used."
+    }
+  ],
+  "sourcesUsed": [
+    "S03",
+    "S04",
+    "S06",
+    "S08",
+    "S14",
+    "S19",
+    "S22",
+    "S23",
+    "S30",
+    "S31",
+    "S32",
+    "S33",
+    "S34",
+    "S43",
+    "S45"
+  ],
+  "repealCounterfactual": {
+    "note": "What strategy S1 would look like if the intergenerational exclusion had no value cap — i.e. the pre-Proposition-19 rule that the failed 2026 rollback initiative would have restored. The difference is the current cost of Proposition 19 to this household.",
+    "withProp19Cap": {
+      "firstYearPropertyTaxA": 57780,
+      "terminalWealth": 11253280,
+      "economicTerminalWealth": 13839010
+    },
+    "withUncappedExclusion": {
+      "firstYearPropertyTaxA": 10720,
+      "terminalWealth": 12419350,
+      "economicTerminalWealth": 15005070
+    },
+    "costOfProp19Cap": {
+      "firstYearPropertyTax": 47050,
+      "terminalWealth": -1166070,
+      "economicTerminalWealth": -1166060
+    },
+    "caveat": "The rollback initiative failed to qualify for the 2026 ballot (S39), so the capped rule is current law and is the base case."
+  },
+  "delayCost": {
+    "note": "Property tax on Property A in the first full year of ownership, depending on when the transfer happens. Later transfers mean a higher market value and therefore a bigger reassessment, but also more years of the parents paying the low Prop 13 bill.",
+    "rows": [
+      {
+        "transferYear": 2040,
+        "marketValue": 5017950,
+        "taxableValueAtDeath": 726420,
+        "cushion": 1475970,
+        "newTaxableValueIfOccupied": 3541980,
+        "firstFullYearPropertyTaxIfOccupied": 47690,
+        "firstFullYearPropertyTaxIfVacantOrRented": 67690,
+        "valueOfOccupying": 20010
+      },
+      {
+        "transferYear": 2042,
+        "marketValue": 5375360,
+        "taxableValueAtDeath": 755770,
+        "cushion": 1550690,
+        "newTaxableValueIfOccupied": 3824660,
+        "firstFullYearPropertyTaxIfOccupied": 51500,
+        "firstFullYearPropertyTaxIfVacantOrRented": 72510,
+        "valueOfOccupying": 21010
+      },
+      {
+        "transferYear": 2044,
+        "marketValue": 5758220,
+        "taxableValueAtDeath": 786300,
+        "cushion": 1629200,
+        "newTaxableValueIfOccupied": 4129020,
+        "firstFullYearPropertyTaxIfOccupied": 55610,
+        "firstFullYearPropertyTaxIfVacantOrRented": 77680,
+        "valueOfOccupying": 22070
+      },
+      {
+        "transferYear": 2046,
+        "marketValue": 6168350,
+        "taxableValueAtDeath": 818070,
+        "cushion": 1711680,
+        "newTaxableValueIfOccupied": 4456670,
+        "firstFullYearPropertyTaxIfOccupied": 60030,
+        "firstFullYearPropertyTaxIfVacantOrRented": 83210,
+        "valueOfOccupying": 23180
+      },
+      {
+        "transferYear": 2048,
+        "marketValue": 6607690,
+        "taxableValueAtDeath": 851120,
+        "cushion": 1798330,
+        "newTaxableValueIfOccupied": 4809360,
+        "firstFullYearPropertyTaxIfOccupied": 64780,
+        "firstFullYearPropertyTaxIfVacantOrRented": 89140,
+        "valueOfOccupying": 24350
+      },
+      {
+        "transferYear": 2050,
+        "marketValue": 7078320,
+        "taxableValueAtDeath": 885500,
+        "cushion": 1889370,
+        "newTaxableValueIfOccupied": 5188950,
+        "firstFullYearPropertyTaxIfOccupied": 69900,
+        "firstFullYearPropertyTaxIfVacantOrRented": 95490,
+        "valueOfOccupying": 25580
+      }
+    ]
+  },
+  "breakEven": {
+    "note": "Portfolio return at which selling everything (S5) overtakes keeping Property B and living in its vacant unit (S3), at the central 3.5% appreciation.",
+    "s5_overtakes_s3_atPortfolioReturn": {
+      "solve": {
+        "rate": 20
+      },
+      "interpretation": "Even at a 20% portfolio return, selling both houses does not overtake living in B and renting out A. The dominant reason is that S3 keeps both properties for 20 years and pays almost no tax on the gains through the step-up, while S5 converts everything to taxable investments on day one."
+    },
+    "s4_overtakes_s1_atPortfolioReturn": {
+      "solve": {
+        "rate": 20
+      },
+      "interpretation": "Selling A and reinvesting (S4) overtakes occupying A (S1) at this portfolio return, holding housing cost equal (S4 assumes the household already has a place to live)."
+    },
+    "costOfLivingInA_vs_B": {
+      "note": "S6 (live in B's vacant unit, rent out A) minus S1 (live in A, rent out B), over 20 years. This is the price of choosing the Cupertino house as the family home.",
+      "over20Years": 559720,
+      "perYear": 27990
+    }
+  },
+  "annualOperating": {
+    "propertyA_ownerOccupied": [
+      {
+        "year": 2026,
+        "marketValue": 3100000,
+        "taxableValue": 550540,
+        "propertyTax": 7330,
+        "insurance": 1500,
+        "water": 1500,
+        "electricity": -180,
+        "maintenance": 18600,
+        "grossRent": null,
+        "totalCosts": 28930
+      },
+      {
+        "year": 2027,
+        "marketValue": 3208500,
+        "taxableValue": 561550,
+        "propertyTax": 7480,
+        "insurance": 1590,
+        "water": 1560,
+        "electricity": -190,
+        "maintenance": 19250,
+        "grossRent": null,
+        "totalCosts": 29880
+      },
+      {
+        "year": 2028,
+        "marketValue": 3320800,
+        "taxableValue": 572780,
+        "propertyTax": 7630,
+        "insurance": 1690,
+        "water": 1620,
+        "electricity": -190,
+        "maintenance": 19920,
+        "grossRent": null,
+        "totalCosts": 30860
+      },
+      {
+        "year": 2029,
+        "marketValue": 3437030,
+        "taxableValue": 584230,
+        "propertyTax": 7790,
+        "insurance": 1790,
+        "water": 1690,
+        "electricity": -200,
+        "maintenance": 20620,
+        "grossRent": null,
+        "totalCosts": 31890
+      },
+      {
+        "year": 2030,
+        "marketValue": 3557320,
+        "taxableValue": 595920,
+        "propertyTax": 7940,
+        "insurance": 1890,
+        "water": 1750,
+        "electricity": -210,
+        "maintenance": 21340,
+        "grossRent": null,
+        "totalCosts": 32920
+      },
+      {
+        "year": 2031,
+        "marketValue": 3681830,
+        "taxableValue": 607840,
+        "propertyTax": 8110,
+        "insurance": 2010,
+        "water": 1820,
+        "electricity": -220,
+        "maintenance": 22090,
+        "grossRent": null,
+        "totalCosts": 34030
+      },
+      {
+        "year": 2032,
+        "marketValue": 3810690,
+        "taxableValue": 619990,
+        "propertyTax": 8270,
+        "insurance": 2130,
+        "water": 1900,
+        "electricity": -230,
+        "maintenance": 22860,
+        "grossRent": null,
+        "totalCosts": 35160
+      },
+      {
+        "year": 2033,
+        "marketValue": 3944070,
+        "taxableValue": 632390,
+        "propertyTax": 8440,
+        "insurance": 2260,
+        "water": 1970,
+        "electricity": -240,
+        "maintenance": 23660,
+        "grossRent": null,
+        "totalCosts": 36330
+      },
+      {
+        "year": 2034,
+        "marketValue": 4082110,
+        "taxableValue": 645040,
+        "propertyTax": 8610,
+        "insurance": 2390,
+        "water": 2050,
+        "electricity": -250,
+        "maintenance": 24490,
+        "grossRent": null,
+        "totalCosts": 37540
+      },
+      {
+        "year": 2035,
+        "marketValue": 4224980,
+        "taxableValue": 657940,
+        "propertyTax": 8780,
+        "insurance": 2530,
+        "water": 2130,
+        "electricity": -260,
+        "maintenance": 25350,
+        "grossRent": null,
+        "totalCosts": 38790
+      },
+      {
+        "year": 2036,
+        "marketValue": 4372860,
+        "taxableValue": 671100,
+        "propertyTax": 8960,
+        "insurance": 2690,
+        "water": 2220,
+        "electricity": -270,
+        "maintenance": 26240,
+        "grossRent": null,
+        "totalCosts": 40110
+      },
+      {
+        "year": 2037,
+        "marketValue": 4525910,
+        "taxableValue": 684520,
+        "propertyTax": 9140,
+        "insurance": 2850,
+        "water": 2310,
+        "electricity": -280,
+        "maintenance": 27160,
+        "grossRent": null,
+        "totalCosts": 41460
+      },
+      {
+        "year": 2038,
+        "marketValue": 4684310,
+        "taxableValue": 698210,
+        "propertyTax": 9320,
+        "insurance": 3020,
+        "water": 2400,
+        "electricity": -290,
+        "maintenance": 28110,
+        "grossRent": null,
+        "totalCosts": 42850
+      },
+      {
+        "year": 2039,
+        "marketValue": 4848260,
+        "taxableValue": 712180,
+        "propertyTax": 9510,
+        "insurance": 3200,
+        "water": 2500,
+        "electricity": -300,
+        "maintenance": 29090,
+        "grossRent": null,
+        "totalCosts": 44300
+      },
+      {
+        "year": 2040,
+        "marketValue": 5017950,
+        "taxableValue": 726420,
+        "propertyTax": 9710,
+        "insurance": 3390,
+        "water": 2600,
+        "electricity": -310,
+        "maintenance": 30110,
+        "grossRent": null,
+        "totalCosts": 45810
+      },
+      {
+        "year": 2041,
+        "marketValue": 5193580,
+        "taxableValue": 740950,
+        "propertyTax": 9900,
+        "insurance": 3590,
+        "water": 2700,
+        "electricity": -320,
+        "maintenance": 31160,
+        "grossRent": null,
+        "totalCosts": 47350
+      },
+      {
+        "year": 2042,
+        "marketValue": 5375360,
+        "taxableValue": 755770,
+        "propertyTax": 10100,
+        "insurance": 3810,
+        "water": 2810,
+        "electricity": -340,
+        "maintenance": 32250,
+        "grossRent": null,
+        "totalCosts": 48970
+      },
+      {
+        "year": 2043,
+        "marketValue": 5563490,
+        "taxableValue": 770880,
+        "propertyTax": 10300,
+        "insurance": 4040,
+        "water": 2920,
+        "electricity": -350,
+        "maintenance": 33380,
+        "grossRent": null,
+        "totalCosts": 50640
+      },
+      {
+        "year": 2044,
+        "marketValue": 5758220,
+        "taxableValue": 786300,
+        "propertyTax": 10510,
+        "insurance": 4280,
+        "water": 3040,
+        "electricity": -360,
+        "maintenance": 34550,
+        "grossRent": null,
+        "totalCosts": 52380
+      },
+      {
+        "year": 2045,
+        "marketValue": 5959750,
+        "taxableValue": 802030,
+        "propertyTax": 10720,
+        "insurance": 4540,
+        "water": 3160,
+        "electricity": -380,
+        "maintenance": 35760,
+        "grossRent": null,
+        "totalCosts": 54180
+      },
+      {
+        "year": 2046,
+        "marketValue": 6168350,
+        "taxableValue": 818070,
+        "propertyTax": 10940,
+        "insurance": 4810,
+        "water": 3290,
+        "electricity": -390,
+        "maintenance": 37010,
+        "grossRent": null,
+        "totalCosts": 56050
+      },
+      {
+        "year": 2047,
+        "marketValue": 6384240,
+        "taxableValue": 834430,
+        "propertyTax": 11160,
+        "insurance": 5100,
+        "water": 3420,
+        "electricity": -410,
+        "maintenance": 38310,
+        "grossRent": null,
+        "totalCosts": 57990
+      },
+      {
+        "year": 2048,
+        "marketValue": 6607690,
+        "taxableValue": 851120,
+        "propertyTax": 11390,
+        "insurance": 5410,
+        "water": 3550,
+        "electricity": -430,
+        "maintenance": 39650,
+        "grossRent": null,
+        "totalCosts": 60000
+      },
+      {
+        "year": 2049,
+        "marketValue": 6838950,
+        "taxableValue": 868140,
+        "propertyTax": 11620,
+        "insurance": 5730,
+        "water": 3700,
+        "electricity": -440,
+        "maintenance": 41030,
+        "grossRent": null,
+        "totalCosts": 62080
+      },
+      {
+        "year": 2050,
+        "marketValue": 7078320,
+        "taxableValue": 885500,
+        "propertyTax": 11850,
+        "insurance": 6070,
+        "water": 3840,
+        "electricity": -460,
+        "maintenance": 42470,
+        "grossRent": null,
+        "totalCosts": 64230
+      },
+      {
+        "year": 2051,
+        "marketValue": 7326060,
+        "taxableValue": 903210,
+        "propertyTax": 12090,
+        "insurance": 6440,
+        "water": 4000,
+        "electricity": -480,
+        "maintenance": 43960,
+        "grossRent": null,
+        "totalCosts": 66490
+      },
+      {
+        "year": 2052,
+        "marketValue": 7582470,
+        "taxableValue": 921280,
+        "propertyTax": 12330,
+        "insurance": 6820,
+        "water": 4160,
+        "electricity": -500,
+        "maintenance": 45490,
+        "grossRent": null,
+        "totalCosts": 68800
+      },
+      {
+        "year": 2053,
+        "marketValue": 7847860,
+        "taxableValue": 939700,
+        "propertyTax": 12580,
+        "insurance": 7230,
+        "water": 4330,
+        "electricity": -520,
+        "maintenance": 47090,
+        "grossRent": null,
+        "totalCosts": 71230
+      },
+      {
+        "year": 2054,
+        "marketValue": 8122530,
+        "taxableValue": 958500,
+        "propertyTax": 12840,
+        "insurance": 7670,
+        "water": 4500,
+        "electricity": -540,
+        "maintenance": 48740,
+        "grossRent": null,
+        "totalCosts": 73750
+      },
+      {
+        "year": 2055,
+        "marketValue": 8406820,
+        "taxableValue": 977670,
+        "propertyTax": 13090,
+        "insurance": 8130,
+        "water": 4680,
+        "electricity": -560,
+        "maintenance": 50440,
+        "grossRent": null,
+        "totalCosts": 76340
+      }
+    ],
+    "propertyA_rented": [
+      {
+        "year": 2026,
+        "marketValue": 3100000,
+        "taxableValue": 550540,
+        "propertyTax": 7430,
+        "insurance": 1500,
+        "water": 1500,
+        "electricity": -180,
+        "maintenance": 18600,
+        "grossRent": 53280,
+        "totalCosts": 29030
+      },
+      {
+        "year": 2027,
+        "marketValue": 3208500,
+        "taxableValue": 561550,
+        "propertyTax": 7580,
+        "insurance": 1590,
+        "water": 1560,
+        "electricity": -190,
+        "maintenance": 19250,
+        "grossRent": 54880,
+        "totalCosts": 29980
+      },
+      {
+        "year": 2028,
+        "marketValue": 3320800,
+        "taxableValue": 572780,
+        "propertyTax": 7730,
+        "insurance": 1690,
+        "water": 1620,
+        "electricity": -190,
+        "maintenance": 19920,
+        "grossRent": 56520,
+        "totalCosts": 30960
+      },
+      {
+        "year": 2029,
+        "marketValue": 3437030,
+        "taxableValue": 584230,
+        "propertyTax": 7880,
+        "insurance": 1790,
+        "water": 1690,
+        "electricity": -200,
+        "maintenance": 20620,
+        "grossRent": 58220,
+        "totalCosts": 31980
+      },
+      {
+        "year": 2030,
+        "marketValue": 3557320,
+        "taxableValue": 595920,
+        "propertyTax": 8040,
+        "insurance": 1890,
+        "water": 1750,
+        "electricity": -210,
+        "maintenance": 21340,
+        "grossRent": 59970,
+        "totalCosts": 33020
+      },
+      {
+        "year": 2031,
+        "marketValue": 3681830,
+        "taxableValue": 607840,
+        "propertyTax": 8200,
+        "insurance": 2010,
+        "water": 1820,
+        "electricity": -220,
+        "maintenance": 22090,
+        "grossRent": 61770,
+        "totalCosts": 34120
+      },
+      {
+        "year": 2032,
+        "marketValue": 3810690,
+        "taxableValue": 619990,
+        "propertyTax": 8360,
+        "insurance": 2130,
+        "water": 1900,
+        "electricity": -230,
+        "maintenance": 22860,
+        "grossRent": 63620,
+        "totalCosts": 35250
+      },
+      {
+        "year": 2033,
+        "marketValue": 3944070,
+        "taxableValue": 632390,
+        "propertyTax": 8530,
+        "insurance": 2260,
+        "water": 1970,
+        "electricity": -240,
+        "maintenance": 23660,
+        "grossRent": 65530,
+        "totalCosts": 36420
+      },
+      {
+        "year": 2034,
+        "marketValue": 4082110,
+        "taxableValue": 645040,
+        "propertyTax": 8700,
+        "insurance": 2390,
+        "water": 2050,
+        "electricity": -250,
+        "maintenance": 24490,
+        "grossRent": 67490,
+        "totalCosts": 37630
+      },
+      {
+        "year": 2035,
+        "marketValue": 4224980,
+        "taxableValue": 657940,
+        "propertyTax": 8880,
+        "insurance": 2530,
+        "water": 2130,
+        "electricity": -260,
+        "maintenance": 25350,
+        "grossRent": 69520,
+        "totalCosts": 38890
+      },
+      {
+        "year": 2036,
+        "marketValue": 4372860,
+        "taxableValue": 671100,
+        "propertyTax": 9050,
+        "insurance": 2690,
+        "water": 2220,
+        "electricity": -270,
+        "maintenance": 26240,
+        "grossRent": 71600,
+        "totalCosts": 40200
+      },
+      {
+        "year": 2037,
+        "marketValue": 4525910,
+        "taxableValue": 684520,
+        "propertyTax": 9230,
+        "insurance": 2850,
+        "water": 2310,
+        "electricity": -280,
+        "maintenance": 27160,
+        "grossRent": 73750,
+        "totalCosts": 41550
+      },
+      {
+        "year": 2038,
+        "marketValue": 4684310,
+        "taxableValue": 698210,
+        "propertyTax": 9420,
+        "insurance": 3020,
+        "water": 2400,
+        "electricity": -290,
+        "maintenance": 28110,
+        "grossRent": 75960,
+        "totalCosts": 42950
+      },
+      {
+        "year": 2039,
+        "marketValue": 4848260,
+        "taxableValue": 712180,
+        "propertyTax": 9610,
+        "insurance": 3200,
+        "water": 2500,
+        "electricity": -300,
+        "maintenance": 29090,
+        "grossRent": 78240,
+        "totalCosts": 44400
+      },
+      {
+        "year": 2040,
+        "marketValue": 5017950,
+        "taxableValue": 726420,
+        "propertyTax": 9800,
+        "insurance": 3390,
+        "water": 2600,
+        "electricity": -310,
+        "maintenance": 30110,
+        "grossRent": 80590,
+        "totalCosts": 45900
+      },
+      {
+        "year": 2041,
+        "marketValue": 5193580,
+        "taxableValue": 740950,
+        "propertyTax": 10000,
+        "insurance": 3590,
+        "water": 2700,
+        "electricity": -320,
+        "maintenance": 31160,
+        "grossRent": 83010,
+        "totalCosts": 47450
+      },
+      {
+        "year": 2042,
+        "marketValue": 5375360,
+        "taxableValue": 755770,
+        "propertyTax": 10200,
+        "insurance": 3810,
+        "water": 2810,
+        "electricity": -340,
+        "maintenance": 32250,
+        "grossRent": 85500,
+        "totalCosts": 49070
+      },
+      {
+        "year": 2043,
+        "marketValue": 5563490,
+        "taxableValue": 770880,
+        "propertyTax": 10400,
+        "insurance": 4040,
+        "water": 2920,
+        "electricity": -350,
+        "maintenance": 33380,
+        "grossRent": 88060,
+        "totalCosts": 50740
+      },
+      {
+        "year": 2044,
+        "marketValue": 5758220,
+        "taxableValue": 786300,
+        "propertyTax": 10610,
+        "insurance": 4280,
+        "water": 3040,
+        "electricity": -360,
+        "maintenance": 34550,
+        "grossRent": 90710,
+        "totalCosts": 52480
+      },
+      {
+        "year": 2045,
+        "marketValue": 5959750,
+        "taxableValue": 802030,
+        "propertyTax": 10820,
+        "insurance": 4540,
+        "water": 3160,
+        "electricity": -380,
+        "maintenance": 35760,
+        "grossRent": 93430,
+        "totalCosts": 54280
+      },
+      {
+        "year": 2046,
+        "marketValue": 6168350,
+        "taxableValue": 818070,
+        "propertyTax": 11040,
+        "insurance": 4810,
+        "water": 3290,
+        "electricity": -390,
+        "maintenance": 37010,
+        "grossRent": 96230,
+        "totalCosts": 56150
+      },
+      {
+        "year": 2047,
+        "marketValue": 6384240,
+        "taxableValue": 834430,
+        "propertyTax": 11260,
+        "insurance": 5100,
+        "water": 3420,
+        "electricity": -410,
+        "maintenance": 38310,
+        "grossRent": 99120,
+        "totalCosts": 58090
+      },
+      {
+        "year": 2048,
+        "marketValue": 6607690,
+        "taxableValue": 851120,
+        "propertyTax": 11480,
+        "insurance": 5410,
+        "water": 3550,
+        "electricity": -430,
+        "maintenance": 39650,
+        "grossRent": 102090,
+        "totalCosts": 60090
+      },
+      {
+        "year": 2049,
+        "marketValue": 6838950,
+        "taxableValue": 868140,
+        "propertyTax": 11710,
+        "insurance": 5730,
+        "water": 3700,
+        "electricity": -440,
+        "maintenance": 41030,
+        "grossRent": 105150,
+        "totalCosts": 62170
+      },
+      {
+        "year": 2050,
+        "marketValue": 7078320,
+        "taxableValue": 885500,
+        "propertyTax": 11950,
+        "insurance": 6070,
+        "water": 3840,
+        "electricity": -460,
+        "maintenance": 42470,
+        "grossRent": 108310,
+        "totalCosts": 64330
+      },
+      {
+        "year": 2051,
+        "marketValue": 7326060,
+        "taxableValue": 903210,
+        "propertyTax": 12180,
+        "insurance": 6440,
+        "water": 4000,
+        "electricity": -480,
+        "maintenance": 43960,
+        "grossRent": 111560,
+        "totalCosts": 66580
+      },
+      {
+        "year": 2052,
+        "marketValue": 7582470,
+        "taxableValue": 921280,
+        "propertyTax": 12430,
+        "insurance": 6820,
+        "water": 4160,
+        "electricity": -500,
+        "maintenance": 45490,
+        "grossRent": 114900,
+        "totalCosts": 68900
+      },
+      {
+        "year": 2053,
+        "marketValue": 7847860,
+        "taxableValue": 939700,
+        "propertyTax": 12680,
+        "insurance": 7230,
+        "water": 4330,
+        "electricity": -520,
+        "maintenance": 47090,
+        "grossRent": 118350,
+        "totalCosts": 71330
+      },
+      {
+        "year": 2054,
+        "marketValue": 8122530,
+        "taxableValue": 958500,
+        "propertyTax": 12930,
+        "insurance": 7670,
+        "water": 4500,
+        "electricity": -540,
+        "maintenance": 48740,
+        "grossRent": 121900,
+        "totalCosts": 73840
+      },
+      {
+        "year": 2055,
+        "marketValue": 8406820,
+        "taxableValue": 977670,
+        "propertyTax": 13190,
+        "insurance": 8130,
+        "water": 4680,
+        "electricity": -560,
+        "maintenance": 50440,
+        "grossRent": 125560,
+        "totalCosts": 76440
+      }
+    ],
+    "propertyB_rented": [
+      {
+        "year": 2026,
+        "marketValue": 1800000,
+        "taxableValue": 116530,
+        "propertyTax": 2490,
+        "insurance": 1500,
+        "water": 4380,
+        "electricity": 600,
+        "maintenance": 18000,
+        "grossRent": 85800,
+        "totalCosts": 26970
+      },
+      {
+        "year": 2027,
+        "marketValue": 1863000,
+        "taxableValue": 118860,
+        "propertyTax": 2540,
+        "insurance": 1590,
+        "water": 4560,
+        "electricity": 620,
+        "maintenance": 18630,
+        "grossRent": 87170,
+        "totalCosts": 27940
+      },
+      {
+        "year": 2028,
+        "marketValue": 1928200,
+        "taxableValue": 121240,
+        "propertyTax": 2590,
+        "insurance": 1690,
+        "water": 4740,
+        "electricity": 650,
+        "maintenance": 19280,
+        "grossRent": 88570,
+        "totalCosts": 28950
+      },
+      {
+        "year": 2029,
+        "marketValue": 1995690,
+        "taxableValue": 123670,
+        "propertyTax": 2640,
+        "insurance": 1790,
+        "water": 4930,
+        "electricity": 670,
+        "maintenance": 19960,
+        "grossRent": 89980,
+        "totalCosts": 29990
+      },
+      {
+        "year": 2030,
+        "marketValue": 2065540,
+        "taxableValue": 126140,
+        "propertyTax": 2690,
+        "insurance": 1890,
+        "water": 5120,
+        "electricity": 700,
+        "maintenance": 20660,
+        "grossRent": 91420,
+        "totalCosts": 31060
+      },
+      {
+        "year": 2031,
+        "marketValue": 2137840,
+        "taxableValue": 128660,
+        "propertyTax": 2750,
+        "insurance": 2010,
+        "water": 5330,
+        "electricity": 730,
+        "maintenance": 21380,
+        "grossRent": 92890,
+        "totalCosts": 32200
+      },
+      {
+        "year": 2032,
+        "marketValue": 2212660,
+        "taxableValue": 131240,
+        "propertyTax": 2800,
+        "insurance": 2130,
+        "water": 5540,
+        "electricity": 760,
+        "maintenance": 22130,
+        "grossRent": 94370,
+        "totalCosts": 33360
+      },
+      {
+        "year": 2033,
+        "marketValue": 2290100,
+        "taxableValue": 133860,
+        "propertyTax": 2860,
+        "insurance": 2260,
+        "water": 5760,
+        "electricity": 790,
+        "maintenance": 22900,
+        "grossRent": 95880,
+        "totalCosts": 34570
+      },
+      {
+        "year": 2034,
+        "marketValue": 2370260,
+        "taxableValue": 136540,
+        "propertyTax": 2920,
+        "insurance": 2390,
+        "water": 5990,
+        "electricity": 820,
+        "maintenance": 23700,
+        "grossRent": 97420,
+        "totalCosts": 35820
+      },
+      {
+        "year": 2035,
+        "marketValue": 2453220,
+        "taxableValue": 139270,
+        "propertyTax": 2970,
+        "insurance": 2530,
+        "water": 6230,
+        "electricity": 850,
+        "maintenance": 24530,
+        "grossRent": 98980,
+        "totalCosts": 37110
+      },
+      {
+        "year": 2036,
+        "marketValue": 2539080,
+        "taxableValue": 142050,
+        "propertyTax": 3030,
+        "insurance": 2690,
+        "water": 6480,
+        "electricity": 890,
+        "maintenance": 25390,
+        "grossRent": 100560,
+        "totalCosts": 38480
+      },
+      {
+        "year": 2037,
+        "marketValue": 2627950,
+        "taxableValue": 144890,
+        "propertyTax": 3090,
+        "insurance": 2850,
+        "water": 6740,
+        "electricity": 920,
+        "maintenance": 26280,
+        "grossRent": 102170,
+        "totalCosts": 39880
+      },
+      {
+        "year": 2038,
+        "marketValue": 2719920,
+        "taxableValue": 147790,
+        "propertyTax": 3160,
+        "insurance": 3020,
+        "water": 7010,
+        "electricity": 960,
+        "maintenance": 27200,
+        "grossRent": 103800,
+        "totalCosts": 41350
+      },
+      {
+        "year": 2039,
+        "marketValue": 2815120,
+        "taxableValue": 150750,
+        "propertyTax": 3220,
+        "insurance": 3200,
+        "water": 7290,
+        "electricity": 1000,
+        "maintenance": 28150,
+        "grossRent": 105460,
+        "totalCosts": 42860
+      },
+      {
+        "year": 2040,
+        "marketValue": 2913650,
+        "taxableValue": 153760,
+        "propertyTax": 3280,
+        "insurance": 3390,
+        "water": 7580,
+        "electricity": 1040,
+        "maintenance": 29140,
+        "grossRent": 107150,
+        "totalCosts": 44430
+      },
+      {
+        "year": 2041,
+        "marketValue": 3015630,
+        "taxableValue": 156840,
+        "propertyTax": 3350,
+        "insurance": 3590,
+        "water": 7890,
+        "electricity": 1080,
+        "maintenance": 30160,
+        "grossRent": 108870,
+        "totalCosts": 46070
+      },
+      {
+        "year": 2042,
+        "marketValue": 3121170,
+        "taxableValue": 159970,
+        "propertyTax": 3420,
+        "insurance": 3810,
+        "water": 8200,
+        "electricity": 1120,
+        "maintenance": 31210,
+        "grossRent": 110610,
+        "totalCosts": 47760
+      },
+      {
+        "year": 2043,
+        "marketValue": 3230420,
+        "taxableValue": 163170,
+        "propertyTax": 3480,
+        "insurance": 4040,
+        "water": 8530,
+        "electricity": 1170,
+        "maintenance": 32300,
+        "grossRent": 112380,
+        "totalCosts": 49520
+      },
+      {
+        "year": 2044,
+        "marketValue": 3343480,
+        "taxableValue": 166440,
+        "propertyTax": 3550,
+        "insurance": 4280,
+        "water": 8870,
+        "electricity": 1220,
+        "maintenance": 33430,
+        "grossRent": 114180,
+        "totalCosts": 51350
+      },
+      {
+        "year": 2045,
+        "marketValue": 3460500,
+        "taxableValue": 169770,
+        "propertyTax": 3620,
+        "insurance": 4540,
+        "water": 9230,
+        "electricity": 1260,
+        "maintenance": 34610,
+        "grossRent": 116000,
+        "totalCosts": 53260
+      },
+      {
+        "year": 2046,
+        "marketValue": 3581620,
+        "taxableValue": 173160,
+        "propertyTax": 3700,
+        "insurance": 4810,
+        "water": 9600,
+        "electricity": 1310,
+        "maintenance": 35820,
+        "grossRent": 117860,
+        "totalCosts": 55240
+      },
+      {
+        "year": 2047,
+        "marketValue": 3706980,
+        "taxableValue": 176630,
+        "propertyTax": 3770,
+        "insurance": 5100,
+        "water": 9980,
+        "electricity": 1370,
+        "maintenance": 37070,
+        "grossRent": 119740,
+        "totalCosts": 57290
+      },
+      {
+        "year": 2048,
+        "marketValue": 3836720,
+        "taxableValue": 180160,
+        "propertyTax": 3850,
+        "insurance": 5410,
+        "water": 10380,
+        "electricity": 1420,
+        "maintenance": 38370,
+        "grossRent": 121660,
+        "totalCosts": 59430
+      },
+      {
+        "year": 2049,
+        "marketValue": 3971010,
+        "taxableValue": 183760,
+        "propertyTax": 3920,
+        "insurance": 5730,
+        "water": 10800,
+        "electricity": 1480,
+        "maintenance": 39710,
+        "grossRent": 123610,
+        "totalCosts": 61640
+      },
+      {
+        "year": 2050,
+        "marketValue": 4109990,
+        "taxableValue": 187440,
+        "propertyTax": 4000,
+        "insurance": 6070,
+        "water": 11230,
+        "electricity": 1540,
+        "maintenance": 41100,
+        "grossRent": 125580,
+        "totalCosts": 63940
+      },
+      {
+        "year": 2051,
+        "marketValue": 4253840,
+        "taxableValue": 191180,
+        "propertyTax": 4080,
+        "insurance": 6440,
+        "water": 11680,
+        "electricity": 1600,
+        "maintenance": 42540,
+        "grossRent": 127590,
+        "totalCosts": 66340
+      },
+      {
+        "year": 2052,
+        "marketValue": 4402730,
+        "taxableValue": 195010,
+        "propertyTax": 4160,
+        "insurance": 6820,
+        "water": 12140,
+        "electricity": 1660,
+        "maintenance": 44030,
+        "grossRent": 129640,
+        "totalCosts": 68810
+      },
+      {
+        "year": 2053,
+        "marketValue": 4556820,
+        "taxableValue": 198910,
+        "propertyTax": 4250,
+        "insurance": 7230,
+        "water": 12630,
+        "electricity": 1730,
+        "maintenance": 45570,
+        "grossRent": 131710,
+        "totalCosts": 71410
+      },
+      {
+        "year": 2054,
+        "marketValue": 4716310,
+        "taxableValue": 202890,
+        "propertyTax": 4330,
+        "insurance": 7670,
+        "water": 13130,
+        "electricity": 1800,
+        "maintenance": 47160,
+        "grossRent": 133820,
+        "totalCosts": 74090
+      },
+      {
+        "year": 2055,
+        "marketValue": 4881380,
+        "taxableValue": 206940,
+        "propertyTax": 4420,
+        "insurance": 8130,
+        "water": 13660,
+        "electricity": 1870,
+        "maintenance": 48810,
+        "grossRent": 135960,
+        "totalCosts": 76890
+      }
+    ],
+    "note": "2026-2055. These are the parents' current Prop 13 assessment carried forward at the 2% cap, so they show the parents' current tax bill until the transfer; after a transfer the taxable value resets as shown in the Proposition 19 tables. Insurance, water, electricity and maintenance are projected from the client's stated figures at the inflation assumptions in Assumptions."
+  },
+  "audit": [
+    {
+      "strategy": "S1 — Move into Property A, keep Property B fully rented",
+      "terminalWealth": 11253280,
+      "recomputedTerminal": 11253290,
+      "reconciles": true,
+      "capitalGainsTaxInSales": 2920770,
+      "capitalGainsTaxReported": 2920770,
+      "cgtReconciles": true
+    },
+    {
+      "strategy": "S2 — Rent both houses out, live elsewhere",
+      "terminalWealth": 14007000,
+      "recomputedTerminal": 14007000,
+      "reconciles": true,
+      "capitalGainsTaxInSales": 3086270,
+      "capitalGainsTaxReported": 3086270,
+      "cgtReconciles": true
+    },
+    {
+      "strategy": "S3 — Sell Property A, move into B while both tenancies continue",
+      "terminalWealth": 22951840,
+      "recomputedTerminal": 22951840,
+      "reconciles": true,
+      "capitalGainsTaxInSales": 1078560,
+      "capitalGainsTaxReported": 1078560,
+      "cgtReconciles": true
+    },
+    {
+      "strategy": "S4 — Sell Property A, invest the proceeds, keep B fully rented",
+      "terminalWealth": 22602140,
+      "recomputedTerminal": 22602140,
+      "reconciles": true,
+      "capitalGainsTaxInSales": 1133730,
+      "capitalGainsTaxReported": 1133730,
+      "cgtReconciles": true
+    },
+    {
+      "strategy": "S5 — Sell both properties at inheritance and rent a home",
+      "terminalWealth": 28399320,
+      "recomputedTerminal": 28399320,
+      "reconciles": true,
+      "capitalGainsTaxInSales": 0,
+      "capitalGainsTaxReported": 0,
+      "cgtReconciles": true
+    },
+    {
+      "strategy": "S6 — Move into Property B's vacant unit, rent Property A out",
+      "terminalWealth": 13347850,
+      "recomputedTerminal": 13347850,
+      "reconciles": true,
+      "capitalGainsTaxInSales": 3031100,
+      "capitalGainsTaxReported": 3031100,
+      "cgtReconciles": true
+    }
+  ]
+}

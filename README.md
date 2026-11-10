@@ -1,56 +1,47 @@
-# Bay Area Inheritance Decision File
+# Tino4 — Inheritance Decision Dashboard
 
-A source-verified analysis of whether to **live in, rent, or sell** a Cupertino house (95014, ≈$3,100,000)
-that is expected to pass through a family trust between 2040 and 2050, while a three-unit San Francisco
-building (94122, ≈$1,800,000) stays in the family.
+A static, privacy-first decision dashboard for a planned **2040–2050 trust inheritance** of
+a residential property (`Property A — Cupertino 95014`), with a second property
+(`Property B — San Francisco Outer Sunset 94122`) held as the household's residence and
+rental-income context.
 
-Live site: **https://wingbangboozle1-lang.github.io/Tino4/**
+**Live site:** https://wingbangboozle1-lang.github.io/Tino4/
 
-## What is in here
+## Privacy rule (highest priority)
 
-```
-index.html                  Executive summary and dashboard
-pages/properties.html       Snapshot + 12-year assessment and tax history
-pages/taxes.html            Prop 13 mechanics, 2026-2065 projections, Prop 19 outcomes, estate tax thresholds
-pages/costs.html            Insurance, water, electricity, maintenance — with what is and is not verifiable
-pages/decisions.html        Four strategies to 2065, after-tax, with sensitivity and break-even
-pages/process.html          14-step inheritance process with deadlines and forms
-pages/laws.html             Federal / California / local rules, enacted changes, things being discussed
-pages/sources.html          Full source registry, line-by-line verification record, model assumptions
-pages/flagged.html          Everything unverified or irregular, and what would resolve it
-data/sources.json           The 36 official sources (IRS, BOE, FTB, SCC Assessor, SF Treasurer, SFPUC, PG&E, CDI, ...)
-data/facts.json             41 factual claims, each with a source id and a status badge
-data/history.json           Owner-supplied assessment and tax series (verbatim)
-data/assumptions.json       Every model input
-data/projections.json       Generated output (do not edit by hand)
-data/decisions.json         Generated ranking summary
-tools/model.py              Projection + decision engine
-tools/build.py              Static site generator
-tools/validate_data.py      Data gate: sources, statuses, no personal identifiers
-tools/check_links.py        Link gate: internal links and anchors
-COORDINATION.md             Shared task board for parallel agent sessions
-VERIFICATION.md             The audit trail: what was checked, against what, and what was not
-```
+No personal information appears anywhere in this repository or on the website. All
+personally identifying details are replaced with placeholders (`[DECEDENT]`,
+`[BENEFICIARY]`, `[TRUST]`, `[TRUSTEE]`, `[CASH AMOUNT]`). Properties are referred to only
+by placeholder label and ZIP code — no street addresses, parcel/APN numbers, account
+numbers, trustee names, or household composition. Figures supplied in the request are
+treated as **unverified user-provided inputs** and are published only on the
+**Flagged for Review** page as placeholders/model inputs, never as verified facts.
 
-## Rebuild
+## Contents
 
-```bash
-python3 tools/model.py        # regenerate data/projections.json + data/decisions.json
-python3 tools/build.py        # render index.html and pages/*.html
-python3 tools/validate_data.py
-python3 tools/check_links.py
-```
+| Path | Purpose |
+| --- | --- |
+| `COORDINATION.md` | Shared task board: claims, statuses, sources, verification, irregularities, PR log |
+| `docs/` | Canonical GitHub Pages site (landing dashboard + category subpages) |
+| `index.html`, `pages/`, `assets/`, `data/` | Byte-identical root mirror, because this repository's Pages source is `main` `/` and the Pages admin API was not reachable (IR-017) |
+| `.nojekyll` / `_config.yml` | Root `.nojekyll` keeps the legacy Pages build a pure static copy; `_config.yml` is a fallback exclusion list if Jekyll is re-enabled. Internal notes are never linked from the site and contain no personal information. |
+| `archive-v2/` | Prior session's merged site, preserved intact during final integration |
+| `internal/prior-sessions/` | Trees of the other parallel-session branches, preserved intact during final integration |
+| `docs/data/` | Machine-readable facts, model inputs, projections, decision outputs, source register |
+| `tools/build.py` | Deterministic generator: builds all JSON and all static HTML from verified sources |
+| `tools/verify.py` | Line-by-line verification: source links per row, internal links, privacy scan |
+| `internal/` | Internal-only working notes (not published by GitHub Pages) |
 
-No dependencies beyond the Python 3 standard library. No build step, no external CSS or JS, so the
-output runs directly on GitHub Pages.
+## Method
 
-## Privacy
+- Only official sources (`.gov` and state/local government domains) are used as facts.
+  Every table row carries a link to the official source.
+- Where a value cannot be confirmed from an official source, the **Official value** cell is
+  left blank and the item is flagged as `UNVERIFIED` on the Flagged for Review page.
+- Model projections are explicitly labelled as model outputs (not facts); each row cites the
+  official rule used in the derivation. All currency is rounded to the nearest **$10**.
+- Reproduce with `python3 tools/build.py && python3 tools/verify.py`. No manual input is
+  required.
 
-This repository contains **no** street address, assessor's parcel number, owner, trustee or beneficiary
-name, or account number. Properties are identified only by ZIP code. `tools/validate_data.py` fails the
-build if a pattern resembling an APN, SSN or street address appears in the data.
-
-## Standing
-
-This is an internal planning document, not legal, tax or investment advice. Rules change; every rule
-carries a link so it can be re-checked. Figures are rounded to the nearest $10.
+> This is an informational analysis, not legal or tax advice. Confirm all parcel-specific
+> facts with the county assessor and a licensed tax professional before acting.
