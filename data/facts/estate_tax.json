@@ -1,0 +1,102 @@
+[
+  {
+    "id": "ET-01",
+    "topic": "Federal estate tax: basic exclusion amount for deaths in 2026",
+    "value": "$15,000,000 per person",
+    "quote": "Section 70106 of the OBBBA amends § 2010(c)(3) by increasing the basic exclusion amount to $15,000,000 for calendar year 2026.",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2025-32, section 2.14",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-02",
+    "topic": "Federal estate tax: basic exclusion amount for deaths in 2027",
+    "value": "$15,480,000 per person",
+    "quote": "For calendar year 2027, the basic exclusion amount under § 2010(c)(3) is $15,480,000.",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2026-35, section 3.44",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-03",
+    "topic": "Federal estate tax: is the exclusion indexed after 2026?",
+    "value": "Yes. It is adjusted for inflation for 2027 and later years. There is no scheduled sunset in current law.",
+    "quote": "The basic exclusion amount will be adjusted for inflation for calendar year 2027 and future years.",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2025-32, section 2.14",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-04",
+    "topic": "Federal estate tax: top rate on the amount above the exclusion",
+    "value": "40%",
+    "quote": "Over $1,000,000: $345,800, plus 40 percent of the excess of such amount over $1,000,000.",
+    "source_name": "U.S. Government Publishing Office, United States Code (2024 edition), 26 U.S.C. § 2001(c)",
+    "source_url": "https://www.govinfo.gov/content/pkg/USCODE-2024-title26/html/USCODE-2024-title26-subtitleB-chap11-subchapA-partI-sec2001.htm",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-05",
+    "topic": "Federal estate tax return (Form 706): who must file",
+    "value": "Required when the gross estate plus adjusted taxable gifts exceeds the filing threshold for the year of death ($15,000,000 for 2026). Also required, at any estate size, to elect portability for a surviving spouse.",
+    "quote": "An estate tax return also must be filed if the estate elects to transfer any deceased spousal unused exclusion (DSUE) amount to a surviving spouse, regardless of the size of the gross estate",
+    "source_name": "Internal Revenue Service, Frequently asked questions on estate taxes",
+    "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-06",
+    "topic": "Federal estate tax return (Form 706): due date",
+    "value": "Nine months after the date of death. An automatic six-month extension is available by filing Form 4768 on or before the due date.",
+    "quote": "The due date of the estate tax return is nine months after the decedent's date of death, however, the estate's representative may request an extension of time to file the return for up to six months.",
+    "source_name": "Internal Revenue Service, Frequently asked questions on estate taxes",
+    "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-07",
+    "topic": "Portability: a surviving spouse can use the first spouse's unused exclusion",
+    "value": "Available since 2011, but only if a timely Form 706 is filed for the first spouse to die. If the estate is under the filing threshold, a simplified late election is allowed up to the fifth anniversary of the death (Rev. Proc. 2022-32).",
+    "quote": "Beginning January 1, 2011, estates of decedents survived by a spouse may elect to pass any of the decedent's unused exemption to the surviving spouse. This election is made on a timely filed estate tax return for the decedent with a surviving spouse.",
+    "source_name": "Internal Revenue Service, Estate tax",
+    "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-08",
+    "topic": "What counts toward the federal gross estate",
+    "value": "Everything owned at death at fair market value: cash and securities, real estate, insurance, trusts, annuities, business interests and other assets.",
+    "quote": "The fair market value of these items is used, not necessarily what you paid for them ... The includible property may consist of cash and securities, real estate, insurance, trusts, annuities, business interests and other assets.",
+    "source_name": "Internal Revenue Service, Estate tax",
+    "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-09",
+    "topic": "Federal gift tax: annual exclusion per recipient",
+    "value": "$20,000 for 2027 (first $20,000 of gifts to any person is not a taxable gift).",
+    "quote": "For calendar year 2027, the first $20,000 of gifts to any person (other than gifts of future interests in property) are not included in the total amount of taxable gifts under § 2503 made during that year.",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2026-35, section 3.46(1)",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-10",
+    "topic": "Federal estate tax filing thresholds, history 2011 to 2026",
+    "value": "2011 $5,000,000; 2017 $5,490,000; 2018 $11,180,000; 2024 $13,610,000; 2025 $13,990,000; 2026 $15,000,000",
+    "quote": "Filing threshold for year of death ... 2025 $13,990,000; 2026 $15,000,000",
+    "source_name": "Internal Revenue Service, Estate tax",
+    "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  }
+]
