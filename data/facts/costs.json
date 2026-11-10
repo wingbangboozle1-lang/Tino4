@@ -1,0 +1,44 @@
+[
+  {
+    "id": "CO-01",
+    "topic": "Homeowners insurance, Cupertino: what owner-occupants report paying per year (2020-2024 survey)",
+    "value": "Median falls in the $1,000 to $1,499 bracket. Of 12,741 owner-occupied homes: 4,055 pay under $1,000; 3,519 pay $1,000-$1,499; 2,003 pay $1,500-$1,999; 2,480 pay $2,000-$3,999; 684 pay $4,000 or more.",
+    "quote": "Homeowners Insurance Costs by Mortgage Status (Yearly) ... Cupertino city, California ... Total: 12,741",
+    "source_name": "U.S. Census Bureau, American Community Survey 2024 5-Year Estimates, Table B25141",
+    "source_url": "https://data.census.gov/table/ACSDT5Y2024.B25141?g=160XX00US0617610,0667000",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-02",
+    "topic": "Homeowners insurance, San Francisco: what owner-occupants report paying per year (2020-2024 survey)",
+    "value": "Median falls in the $1,000 to $1,499 bracket (near its top). Of 139,057 owner-occupied homes: 38,410 pay under $1,000; 31,551 pay $1,000-$1,499; 20,630 pay $1,500-$1,999; 32,647 pay $2,000-$3,999; 15,819 pay $4,000 or more.",
+    "quote": "Homeowners Insurance Costs by Mortgage Status (Yearly) ... San Francisco city, California ... Total: 139,057",
+    "source_name": "U.S. Census Bureau, American Community Survey 2024 5-Year Estimates, Table B25141",
+    "source_url": "https://data.census.gov/table/ACSDT5Y2024.B25141?g=160XX00US0617610,0667000",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-03",
+    "topic": "Official premium quotes for a specific home (California Department of Insurance comparison tool)",
+    "value": "",
+    "note": "The Department publishes a 2026 Homeowners Insurance Comparison Tool with insurer-by-insurer annual premiums for hypothetical homes by ZIP code. It is an interactive form that could not be operated from this session, so no premium was read from it. The tool states that wildfire surcharges of 15% to over 300% are not reflected in its premiums.",
+    "source_name": "California Department of Insurance, 2026 Homeowners Insurance Comparison Tool",
+    "source_url": "https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-04",
+    "topic": "Insurance premium for a tenant-occupied (rental) multi-unit building in San Francisco",
+    "value": "",
+    "note": "No official source publishing a local premium for rental-dwelling (landlord) policies was found. The national regulators' report (NAIC, data for 2023, published July 2026) has California averages by policy form in its Table 4, but that table lies beyond the pages that could be read in this session. The model uses the owner's own estimate.",
+    "source_name": "National Association of Insurance Commissioners, Dwelling Fire and Homeowners Insurance Report: Data for 2023",
+    "source_url": "https://content.naic.org/sites/default/files/publication-hmr-zu-homeowners-report.pdf",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  }
+]
