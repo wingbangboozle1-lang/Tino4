@@ -40,14 +40,14 @@ on the Flagged for Review page. This does not change the deliverable.
 
 | Task ID | Task | Status | Owner session | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| T1 | Repo scaffolding, coordination board, privacy/anonymization policy, README, `.gitignore`, Pages settings | in progress | `s-0837be92` | `COORDINATION.md`, `README.md`, `.gitignore` | 2026-11-10 |
-| T2 | Research & official source register (federal/state/local tax law, thresholds, proposed law changes, insurance, utilities, inflation) | in progress | `s-0837be92` | `internal/research-notes.md`, `internal/source-register.md` | 2026-11-10 |
-| T3 | Verified-facts table data (every row links an official source) | unclaimed | | `docs/data/facts.json` | |
-| T4 | Projection & scenario model data (property tax, value, operating costs, inheritance thresholds, 2026–2055) | unclaimed | | `docs/data/projections.json`, `docs/data/model-inputs.json` | |
-| T5 | Site pages: executive summary, property tax, operating costs, inheritance law, decision analysis, step-by-step process, sources, flagged for review, privacy | unclaimed | | `docs/*.html`, `docs/pages/*.html`, `docs/assets/**` (excluding shared index/nav) | |
-| T6 | Line-by-line verification pass, link check, build check | unclaimed | | `internal/verification-log.md` | |
-| T7 | Final integration: shared table data, `docs/index.html` + navigation, merge branches (n/a – single branch), re-verify combined data, build with no broken links, publish to GitHub Pages | unclaimed | | `docs/index.html`, `docs/data/**` (integration only) | |
-| T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | unclaimed | | `COORDINATION.md` (final log only) | |
+| T1 | Repo scaffolding, coordination board, privacy/anonymization policy, README, `.gitignore`, Pages settings | done | `s-0837be92` | `COORDINATION.md`, `README.md`, `.gitignore` | 2026-11-10 |
+| T2 | Research & official source register (federal/state/local tax law, thresholds, proposed law changes, insurance, utilities, inflation) | done | `s-0837be92` | `internal/research-notes.md`, `internal/source-register.md` (generated) | 2026-11-10 |
+| T3 | Verified-facts table data (every row links an official source) | in progress | `s-0837be92` | `docs/data/facts.json`, `docs/data/sources.json` | 2026-11-10 |
+| T4 | Projection & scenario model data (property tax, value, operating costs, inheritance thresholds, 2026–2055), generator | in progress | `s-0837be92` | `tools/*.py`, `docs/data/projections.json`, `docs/data/model-inputs.json`, `docs/data/decisions.json` | 2026-11-10 |
+| T5 | Site pages: executive summary, property tax, operating costs, inheritance law, decision analysis, step-by-step process, sources, flagged for review, privacy | in progress | `s-0837be92` | `docs/pages/*.html`, `docs/assets/**` | 2026-11-10 |
+| T6 | Line-by-line verification pass, link check, build check | unclaimed | `s-0837be92` | `internal/verification-log.md` | |
+| T7 | Final integration: shared table data, `docs/index.html` + navigation, merge branches (n/a – single branch), re-verify combined data, build with no broken links, publish to GitHub Pages | unclaimed | `s-0837be92` | `docs/index.html`, `docs/data/**` (integration only) | |
+| T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | unclaimed | `s-0837be92` | `COORDINATION.md` (final log only) | |
 
 ## Session registry
 
@@ -83,6 +83,26 @@ _(Register is extended as each task completes.)_
 | IR-002 | User-supplied San Francisco property-tax figures imply an effective rate of ~2.14% of the stated tax assessment, materially above the official FY 2025-26 secured rate of 1.18268325%; the tax figures also rise ~2.9–6.2%/yr while the stated assessment rises only 2%/yr. Cause cannot be confirmed from an official source. | needs review (published) |
 | IR-003 | User-supplied utility, insurance, market-value, and rental-income figures have no official source; they are treated as unverified model inputs, not as sourced facts. | needs review (published) |
 
+## Parallel-session audit (2026-11-10, 10:06 UTC)
+
+`git ls-remote --heads origin` showed five other session branches:
+`arena/5e491e8f-tino4` (`f1faa6a`), `arena/6acab13a-tino4` (`f57dfde`),
+`arena/9dcf1e9f-tino4` (`a158b1c`), `arena/ce2391b3-tino4` (`0a0b17c`),
+`arena/fd984e93-tino4` (`08e2b69`). Each was fetched and inspected with
+`git ls-tree -r --name-only`: **each contains only `COORDINATION.md` + `README.md`** —
+no site, data, model, or source artifacts. Several of those boards claim research/site/PR
+work "done", but no artifacts exist on their branches and `main` was still at `f195ee6`.
+Per the >60-minute-stale-claim handoff rule and to avoid duplicate work, this session
+proceeded with the full build. No other session's work was discarded (none exists).
+Useful *flagged-irregularity* ideas from those boards were independently re-derived and
+re-verified against official sources here; nothing was copied as fact. Their boards also
+contained personal-detail handling rules consistent with our privacy policy.
+
 ## Change log
 
 - 2026-11-10 — `s-0837be92`: created board (repo had no board). Claimed T1 and T2 with exclusive scopes. Recorded IR-001/002/003. Committed and pushed claim.
+- 2026-11-10 — `s-0837be92`: T1 done (README, `.gitignore`, privacy policy). T2 done: 50+
+  official URLs fetched and read line by line; verified quotes recorded in
+  `internal/research-notes.md`; unverified items listed in section H. Audited all five
+  other session branches (above). Claimed T3–T5 with exclusive scopes; T6–T8 reserved for
+  the same session acting as integration session (IR-001).
