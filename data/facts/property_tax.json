@@ -362,5 +362,36 @@
     "status": "unverified",
     "quote": "",
     "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-37",
+    "topic": "Documentary transfer tax when a property is sold",
+    "value": "A county may charge $0.55 per $500 of price ($1.10 per $1,000); a city in that county may take half of it, credited against the county tax.",
+    "quote": "a tax at the rate of fifty-five cents ($0.55) for each five hundred dollars ($500) or fractional part thereof. ... a tax at the rate of one-half the amount specified in subdivision (a) ... A credit shall be allowed against the tax imposed by a county ordinance",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 11911",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11911",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-38",
+    "topic": "Documentary transfer tax on the inheritance itself",
+    "value": "None. Transfers by gift or by reason of death, outright or in trust, are exempt.",
+    "quote": "Any tax imposed pursuant to this part shall not apply to any deed, instrument, or other writing ... if by reason of such inter vivos gift or by reason of the death of any person, such lands, tenements, realty, or interests therein are transferred outright to, or in trust for the benefit of, any person or entity.",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 11930",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11930",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-39",
+    "topic": "Transfer tax rate actually charged in Cupertino, and who customarily pays it",
+    "value": "",
+    "note": "Whether the City of Cupertino charges only the standard conforming rate was not confirmed on a county or city page in this session. The model uses the state-law rate of $1.10 per $1,000 and treats it as a seller cost.",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 11911",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11911",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
   }
 ]

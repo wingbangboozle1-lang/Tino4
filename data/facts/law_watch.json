@@ -1,0 +1,145 @@
+[
+  {
+    "id": "LW-01",
+    "topic": "Ballot initiative to repeal Proposition 19's inheritance rules (2026 cycle)",
+    "value": "Failed to qualify. The Secretary of State notified counties on May 18, 2026 that the petition did not have enough signatures. Proposition 19 stays as it is.",
+    "quote": "the total number of signatures for the hereinafter named initiative filed with all county elections officials is less than 100 percent of the number of qualified voters required to find the petition sufficient; therefore, the petition has failed. TITLE: REPEALS VOTER-ENACTED CHANGES TO PROPERTY TAX RULES FOR TRANSFERS BETWEEN FAMILY MEMBERS.",
+    "source_name": "California Secretary of State, County Clerk/Registrar of Voters Memorandum #26138 (May 18, 2026)",
+    "source_url": "https://elections.cdn.sos.ca.gov/ccrov/2026/may/26138jh.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-02",
+    "topic": "November 3, 2026 statewide ballot: any measure changing Proposition 13 or Proposition 19?",
+    "value": "No. The 14 qualified measures were Propositions 1, 2, 3, 4, 5 and 37 through 45; none addresses property-tax assessment or parent-child transfers.",
+    "quote": "November 3, 2026, Statewide Ballot Measures: Proposition 1 ... Proposition 2 ... Proposition 3 ... Proposition 4 ... Proposition 5 ... Proposition 37 ... Proposition 45",
+    "source_name": "California Secretary of State, Qualified Statewide Ballot Measures",
+    "source_url": "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-03",
+    "topic": "Proposition 3 (Nov 2026): makes the existing extra tax on high incomes permanent",
+    "value": "Leading 60.6% yes to 39.4% no in the Secretary of State's unofficial count as of November 9, 2026. Results are certified by December 11, 2026. If it stands, California's 10.3% to 12.3% brackets no longer expire.",
+    "quote": "Yes | 3 | Provides Permanent Funding For Schools And Health Care By Extending Existing Tax On High Incomes. Initiative Constitutional Amendment. | 6,733,849 | 60.6% | 4,380,460 | 39.4%",
+    "source_name": "California Secretary of State, 2026 General Election, State Ballot Measures, Statewide Results (unofficial)",
+    "source_url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-04",
+    "topic": "Proposition 42 (Nov 2026): prohibits new state taxes on personal property and certain retroactive state taxes",
+    "value": "Leading 51.6% yes to 48.4% no in the unofficial count as of November 9, 2026; a close contest, not yet certified.",
+    "quote": "Yes | 42 | Prohibits New State Personal Property Taxes And Certain Retroactive State Taxes. Initiative Constitutional Amendment. | 5,733,734 | 51.6% | 5,371,123 | 48.4%",
+    "source_name": "California Secretary of State, 2026 General Election, State Ballot Measures, Statewide Results (unofficial)",
+    "source_url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-05",
+    "topic": "Proposition 43 (Nov 2026): two-thirds vote for voter-proposed local special taxes",
+    "value": "Trailing 42.7% yes to 57.3% no in the unofficial count as of November 9, 2026. If it fails, citizen-initiated local parcel and transfer taxes can still pass by simple majority.",
+    "quote": "No | 43 | Limits Voters' Ability To Raise Revenues For Local Government Services. Legislative Constitutional Amendment. | 4,667,905 | 42.7% | 6,257,179 | 57.3%",
+    "source_name": "California Secretary of State, 2026 General Election, State Ballot Measures, Statewide Results (unofficial)",
+    "source_url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-06",
+    "topic": "Proposition 40 (Nov 2026): one-time tax on certain (very high net worth) taxpayers",
+    "value": "Trailing 47.2% yes to 52.8% no in the unofficial count as of November 9, 2026.",
+    "quote": "No | 40 | Imposes One-Time Tax On Certain Taxpayers. Initiative Constitutional Amendment And Statute. | 5,288,424 | 47.2% | 5,909,899 | 52.8%",
+    "source_name": "California Secretary of State, 2026 General Election, State Ballot Measures, Statewide Results (unofficial)",
+    "source_url": "https://electionresults.sos.ca.gov/returns/ballot-measures",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-07",
+    "topic": "San Francisco Measure H (Nov 2026): new annual parcel tax to fund Muni",
+    "value": "Passing 74.35% yes in the Department of Elections' preliminary count (updated November 9, 2026; needs 50%+1). Rates range from $129 per parcel up to $400,000 depending on property type and size, adjusted for inflation, for 15 years.",
+    "quote": "Shall the City fund Muni service through a new annual parcel tax on real estate at rates ranging from $129 per parcel up to a maximum of $400,000 per parcel, depending on the type of property and its size and adjusted annually for inflation, for estimated revenue of $177 million a year for 15 years? ... YES 242,339 74.35%",
+    "source_name": "San Francisco Department of Elections, November 3, 2026 Consolidated General Election Results (Preliminary)",
+    "source_url": "https://www.sfelections.org/results/20261103w/index.html",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-08",
+    "topic": "San Francisco Measure H: exact annual amount for Property B",
+    "value": "",
+    "note": "The official ballot question gives only the range ($129 to $400,000). News reports put the base rate for multi-family parcels at $249, but that figure was not read from the official measure text in this session. The model does not include this tax; expect at least $129 a year once it takes effect.",
+    "source_name": "San Francisco Department of Elections, November 3, 2026 Consolidated General Election Results (Preliminary)",
+    "source_url": "https://www.sfelections.org/results/20261103w/index.html",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-09",
+    "topic": "San Francisco: proposed cap on banked and capital-improvement rent increases",
+    "value": "Pending, not enacted. Board of Supervisors File No. 261020 would temporarily limit combined banked and capital-improvement increases on rent-controlled units to 10% per year.",
+    "quote": "The San Francisco Board of Supervisors is considering legislation (File No. 261020) that would temporarily limit the combined amount of banked rent increases and capital improvement rent increases that may be imposed on rent-controlled units to 10% per year. ... This legislation has not been enacted and is subject to change.",
+    "source_name": "City and County of San Francisco, Rent Board, Current Rates (notice posted November 9, 2026)",
+    "source_url": "https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-10",
+    "topic": "Federal bill to repeal the estate tax (Death Tax Repeal Act, H.R. 1301, 119th Congress)",
+    "value": "Introduced February 13, 2025 and referred to the House Ways and Means Committee; no further action recorded. Not law.",
+    "quote": "Latest Action: House - 02/13/2025 Referred to the House Committee on Ways and Means. ... This bill has the status Introduced",
+    "source_name": "Library of Congress, Congress.gov, H.R.1301 - Death Tax Repeal Act",
+    "source_url": "https://www.congress.gov/bill/119th-congress/house-bill/1301",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-11",
+    "topic": "Federal proposals to lower the estate tax exemption or to end the step-up in basis",
+    "value": "",
+    "note": "No bill of this kind was checked on Congress.gov in this session. The step-up rule and the $15 million indexed exemption are current law with no scheduled expiry, but either could be changed by a future Congress.",
+    "source_name": "Library of Congress, Congress.gov",
+    "source_url": "https://www.congress.gov/",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-12",
+    "topic": "California bill AB 942 (2025-2026): solar net-metering customers",
+    "value": "Not enacted. Amended on July 17, 2025 to concern electricity climate credits only; last action August 29, 2025 (re-referred to the Senate Rules Committee).",
+    "quote": "AB-942 Electricity: climate credits.(2025-2026) ... 08/29/25 From committee: Do pass and re-refer to Com. on RLS. (Ayes 5. Noes 2.) (August 29). Re-referred to Com. on RLS.",
+    "source_name": "California Legislative Information, AB-942 bill status",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260AB942",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-13",
+    "topic": "Insurance market: recent emergency rate action",
+    "value": "On May 13, 2025 the Insurance Commissioner approved a 17% interim rate increase for State Farm's homeowners line (the company had also requested 38% for rental dwellings), effective June 1, 2025, pending a full hearing.",
+    "quote": "February 3: State Farm requested emergency rate increases of 22% for Non-Tenant homeowners, 15% for Tenants (Renters), 15% for Tenants (Condominium Unitowners), and 38% for Rental Dwelling. ... the order approves a 17% interim rate increase for State Farm's homeowners line",
+    "source_name": "California Department of Insurance, press release, May 13, 2025",
+    "source_url": "https://www.insurance.ca.gov/0400-news/0100-press-releases/2025/release038-2025.cfm",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "LW-14",
+    "topic": "Legislative proposals in the 2025-2026 California session to amend Proposition 19",
+    "value": "",
+    "note": "No specific 2025-2026 bill was confirmed on the Legislature's site in this session. The Board of Equalization's Proposition 19 legislation list shows earlier attempts (for example SCA 4 of 2023-24 and ACA 9 of 2021-22), none of which became law.",
+    "source_name": "California State Board of Equalization, Proposition 19 page (legislation tab)",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  }
+]

@@ -40,5 +40,119 @@
     "status": "unverified",
     "quote": "",
     "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-05",
+    "topic": "Solar net energy metering: how long the legacy tariff lasts",
+    "value": "Customers on the NEM 2.0 tariff may stay on it for 20 years from the date they interconnected. After that the account moves to the current net billing tariff, where exported power is usually credited below the retail rate.",
+    "quote": "Pursuant to D.14-03-041, customer-generators are allowed to remain on the NEM 2.0 tariff for 20 years from the date they interconnected, or they are permitted to switch to the current tariff.",
+    "source_name": "California Public Utilities Commission, Net Energy Metering and Net Billing",
+    "source_url": "https://www.cpuc.ca.gov/nem",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-06",
+    "topic": "Solar: value of surplus generation at the annual true-up",
+    "value": "About $0.02 to $0.03 per kWh (net surplus compensation).",
+    "quote": "The NSC rate is approximately $0.02 to $0.03 per kWh",
+    "source_name": "California Public Utilities Commission, Net Energy Metering and Net Billing",
+    "source_url": "https://www.cpuc.ca.gov/nem",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-07",
+    "topic": "Property A: solar interconnection date and electricity cost after the legacy period ends",
+    "value": "",
+    "note": "The interconnection date was not provided, so the year the 20-year legacy period ends is unknown. A system connected before 2030 loses legacy treatment before 2050. The model carries the owner's current small credit forward and flags it as optimistic; the later bill cannot be estimated without usage data.",
+    "source_name": "California Public Utilities Commission, Net Energy Metering and Net Billing",
+    "source_url": "https://www.cpuc.ca.gov/nem",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-08",
+    "topic": "Water and sewer price trend (U.S. city average index for water, sewer and trash collection)",
+    "value": "2005: 130.333; 2015: 213.972; 2025: 316.943. Compound annual growth: 20 years 4.5%, 10 years 4.0%.",
+    "quote": "2005-01-01,130.333 ... 2015-01-01,213.972 ... 2025-01-01,316.943",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series CUSR0000SEHG, source: U.S. Bureau of Labor Statistics",
+    "source_url": "https://fred.stlouisfed.org/series/CUSR0000SEHG",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-09",
+    "topic": "Electricity price trend (U.S. city average index)",
+    "value": "1995: 129.550; 2005: 150.825; 2015: 209.177; 2025: 291.928. Compound annual growth: 30 years 2.7%, 20 years 3.4%, 10 years 3.4%.",
+    "quote": "1995-01-01,129.550 ... 2005-01-01,150.825 ... 2015-01-01,209.177 ... 2025-01-01,291.928",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series CUSR0000SEHF01, source: U.S. Bureau of Labor Statistics",
+    "source_url": "https://fred.stlouisfed.org/series/CUSR0000SEHF01",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-10",
+    "topic": "Residential rent trend, San Francisco-Oakland-Hayward (rent of primary residence index)",
+    "value": "1995: 169.950; 2005: 262.967; 2015: 371.075; 2025: 519.667. Compound annual growth: 30 years 3.8%, 20 years 3.5%, 10 years 3.4%.",
+    "quote": "1995-01-01,169.950 ... 2005-01-01,262.967 ... 2015-01-01,371.075 ... 2025-01-01,519.667",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series CUURA422SEHA, source: U.S. Bureau of Labor Statistics",
+    "source_url": "https://fred.stlouisfed.org/series/CUURA422SEHA",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-11",
+    "topic": "San Francisco water and sewer rates: increases proposed for July 2026 and July 2027",
+    "value": "Water +7.0% each year; sewer +15.0% (July 1, 2026) and +14.5% (July 1, 2027), per the utility's presentation to its Rate Fairness Board.",
+    "quote": "Water: Flat 7.0% increase to all rate schedule line items ... FYE 2027 (July 1, 2026) 7.0% 15.0% ... (July 1, 2027) 7.0% 14.5%",
+    "source_name": "San Francisco Public Utilities Commission, Proposed Water and Sewer Rate Adjustments, Rate Fairness Board, March 19, 2026",
+    "source_url": "https://www.sfpuc.gov/sites/default/files/agendas-minutes-rate-fairness-board/6a-Rates-Presentation.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-12",
+    "topic": "San Francisco water and sewer rates: final adoption of the 2026 and 2027 increases",
+    "value": "",
+    "note": "News media report the Commission approved the increases in April 2026 and that the first took effect July 1, 2026. The adoption was not confirmed on an official utility page in this session.",
+    "source_name": "San Francisco Public Utilities Commission, Water Power & Sewer Rates",
+    "source_url": "https://www.sfpuc.gov/accounts-services/water-power-sewer-rates",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-13",
+    "topic": "Cupertino water rates (retail water utility tariffs)",
+    "value": "",
+    "note": "The water provider for Property A is not known (it depends on the address), and no utility tariff was opened in this session. The model uses the owner's bill range and the national water and sewer price trend.",
+    "source_name": "California Public Utilities Commission, Water Division",
+    "source_url": "https://www.cpuc.ca.gov/industries-and-topics/water",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-14",
+    "topic": "Regular maintenance and repair cost for either property",
+    "value": "",
+    "note": "No amount was provided and no official source gives a figure for a specific house. The site reports results before maintenance and shows what each $1,000 a year of maintenance does to the totals.",
+    "source_name": "Internal Revenue Service, Topic no. 414, Rental income and expenses (repairs are deductible for rentals)",
+    "source_url": "https://www.irs.gov/taxtopics/tc414",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "CO-15",
+    "topic": "Cost of selling a home: real estate commissions",
+    "value": "Negotiable, not set by law. Federal Reserve staff describe the traditional model as each agent being paid as much as 3 percent of the home value, with most sellers offering 2.5 or 3 percent to each side, and a downward trend over two decades.",
+    "quote": "the traditional model of residential real estate broker compensation, in which the buyer's and seller's agents were each paid as much as 3 percent of the home value by the seller ... the conventional wisdom is that most sellers offer 2.5 or 3 percent commissions to both their own agent and the buyer's agent",
+    "source_name": "Board of Governors of the Federal Reserve System, FEDS Notes, Commissions and Omissions: Trends in Real Estate Broker Compensation (May 12, 2025)",
+    "source_url": "https://www.federalreserve.gov/econres/notes/feds-notes/commissions-and-omissions-trends-in-real-estate-broker-compensation-20250512.html",
+    "status": "verified",
+    "verified_on": "2026-11-10"
   }
 ]
