@@ -98,5 +98,47 @@
     "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
     "status": "verified",
     "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-11",
+    "topic": "California estate tax",
+    "value": "None for deaths on or after January 1, 2005. No California estate tax return is required.",
+    "quote": "For decedents that die on or after January 1, 2005, there is no longer a requirement to file a California Estate Tax Return.",
+    "source_name": "California State Controller's Office, California Estate Tax",
+    "source_url": "https://www.sco.ca.gov/ardtax_estate_tax.html",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-12",
+    "topic": "California and local inheritance, gift or estate taxes",
+    "value": "Prohibited. Neither the state nor any city or county may impose a gift, inheritance or estate tax (voter initiative, June 8, 1982).",
+    "quote": "Neither the state nor any political subdivision of the state shall impose any gift, inheritance, succession, legacy, income, or estate tax, or any other tax, on gifts or on the estate or inheritance of any person or on or by reason of any transfer occurring by reason of a death.",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 13301",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13301",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-13",
+    "topic": "Size of the cash and other assets to be inherited",
+    "value": "",
+    "note": "Not provided. The site shows how much cash and other assets could be inherited before federal estate tax applies, for each year, rather than assuming an amount.",
+    "source_name": "Internal Revenue Service, Estate tax",
+    "source_url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "ET-14",
+    "topic": "Official wording irregularity in the 2027 inflation-adjustment document",
+    "value": "",
+    "note": "The posted Revenue Procedure 2026-35 still contains an unfilled drafting placeholder: 'as in effect on [Release Date, 2026]'. The dollar amounts are stated clearly, but the document should be re-checked once it is published in the Internal Revenue Bulletin.",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2026-35, section 1",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
   }
 ]

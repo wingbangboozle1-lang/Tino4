@@ -1,0 +1,174 @@
+[
+  {
+    "id": "IT-01",
+    "topic": "Basis of inherited property (the 'step-up')",
+    "value": "Generally the fair market value on the date of death (or the alternate valuation date if the estate elects it), not the decedent's original cost.",
+    "quote": "Generally, the basis of property inherited from a decedent is one of the following. 1. The FMV of the property at the date of the individual's death. 2. The FMV on the alternate valuation date if the personal representative for the estate chooses to use alternate valuation.",
+    "source_name": "Internal Revenue Service, Publication 551 (12/2025), Basis of Assets, Inherited Property",
+    "source_url": "https://www.irs.gov/publications/p551",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-02",
+    "topic": "Basis of property received as a lifetime gift",
+    "value": "The donor's adjusted basis carries over (when fair market value is at least the donor's basis), so the built-in gain is not erased.",
+    "quote": "If the FMV of the property is equal to or greater than the donor's adjusted basis, your basis is the donor's adjusted basis at the time you received the gift.",
+    "source_name": "Internal Revenue Service, Publication 551 (12/2025), Basis of Assets, Property Received as a Gift",
+    "source_url": "https://www.irs.gov/publications/p551",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-03",
+    "topic": "Community property: basis when the first spouse dies",
+    "value": "In community property states, including California, the whole community property generally takes a new basis equal to its total value when either spouse dies, including the survivor's half, if at least half is includible in the decedent's gross estate.",
+    "quote": "When either spouse dies, the total value of the community property, even the part belonging to the surviving spouse, generally becomes the basis of the entire property. For this rule to apply, at least half the value of the community property interest must be includible in the decedent's gross estate",
+    "source_name": "Internal Revenue Service, Publication 551 (12/2025), Basis of Assets, Community Property",
+    "source_url": "https://www.irs.gov/publications/p551",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-04",
+    "topic": "Property distributed from a trust: basis",
+    "value": "For trust property included in the settlor's gross estate, the trust takes the inherited-property basis (date-of-death value); a beneficiary receiving it from the trust generally takes the trust's basis.",
+    "quote": "If property is distributed to you from a non-grantor trust you will generally take a carryover basis in the property under IRC section 643. ... For a trust's basis in inherited property included in the trust settlor's gross estate, see Inherited Property, earlier.",
+    "source_name": "Internal Revenue Service, Publication 551 (12/2025), Basis of Assets, Property Received from a Trust",
+    "source_url": "https://www.irs.gov/publications/p551",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-05",
+    "topic": "Selling inherited property: is the gain taxable?",
+    "value": "Yes, to the extent the sale price exceeds the date-of-death basis. Reported on Schedule D and Form 8949.",
+    "quote": "To determine if the sale of inherited property is taxable, you must first determine your basis in the property. ... If you sell the property for more than your basis, you have a taxable gain.",
+    "source_name": "Internal Revenue Service, Frequently Asked Questions: Gifts & inheritances",
+    "source_url": "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-06",
+    "topic": "Federal long-term capital gains rates and thresholds for 2027",
+    "value": "0% up to $51,050 taxable income (single) or $102,100 (joint); 15% up to $563,200 (single) or $633,600 (joint); 20% above that.",
+    "quote": "Married Individuals Filing Joint Returns and Surviving Spouse: $102,100; $633,600 ... All Other Individuals: $51,050; $563,200",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2026-35, section 3.03",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-07",
+    "topic": "Federal ordinary income tax brackets for 2027 (single filer)",
+    "value": "10% to $12,800; 12% to $52,025; 22% to $109,125; 24% to $208,325; 32% to $264,550; 35% to $661,375; 37% above.",
+    "quote": "Over $109,125 but not over $208,325: $18,549.00 plus 24% of the excess over $109,125 ... Over $661,375: $199,237.75 plus 37% of the excess over $661,375",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2026-35, section 3.01, Table 3",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-08",
+    "topic": "Federal ordinary income tax brackets for 2027 (married filing jointly)",
+    "value": "10% to $25,600; 12% to $104,050; 22% to $218,250; 24% to $416,650; 32% to $529,100; 35% to $793,650; 37% above.",
+    "quote": "Over $218,250 but not over $416,650: $37,098.00 plus 24% of the excess over $218,250 ... Over $793,650: $213,290.50 plus 37% of the excess over $793,650",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2026-35, section 3.01, Table 1",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-09",
+    "topic": "Are the federal income tax rates scheduled to expire?",
+    "value": "No. The 2025 law made the seven-rate schedule (10% to 37%) permanent.",
+    "quote": "Section 70101 of the OBBBA amends § 1(j) to make the tax rate tables that were effective for taxable years beginning after December 31, 2017, and before January 1, 2026, permanent.",
+    "source_name": "Internal Revenue Service, Revenue Procedure 2025-32, section 2.01",
+    "source_url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-10",
+    "topic": "Net investment income tax",
+    "value": "3.8% on the lesser of net investment income (interest, dividends, rents, capital gains) or the amount by which modified adjusted gross income exceeds $200,000 (single) or $250,000 (joint). Excluded home-sale gain is not subject to it.",
+    "quote": "In the case of an individual, the NIIT is 3.8 percent on the lesser of: the net investment income, or the excess of modified adjusted gross income (MAGI) over the following threshold amounts: $250,000 for married filing jointly or qualifying surviving spouse ... $200,000 for single or head of household",
+    "source_name": "Internal Revenue Service, Topic no. 559, Net investment income tax",
+    "source_url": "https://www.irs.gov/taxtopics/tc559",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-11",
+    "topic": "California tax on capital gains",
+    "value": "No preferential rate. All capital gains are taxed as ordinary income.",
+    "quote": "California does not have a lower rate for capital gains. All capital gains are taxed as ordinary income.",
+    "source_name": "California Franchise Tax Board, Capital gains and losses",
+    "source_url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-12",
+    "topic": "Home-sale exclusion for a main home",
+    "value": "Up to $250,000 of gain ($500,000 on a joint return) is excluded if the seller owned and lived in the home for at least 2 of the 5 years before the sale.",
+    "quote": "you may qualify to exclude up to $250,000 of that gain from your income, or up to $500,000 of that gain if you file a joint return with your spouse. ... If you or your spouse owned the home for at least 24 months (2 years) out of the last 5 years leading up to the date of the sale, you meet the ownership test.",
+    "source_name": "Internal Revenue Service, Topic no. 701, Sale of your home",
+    "source_url": "https://www.irs.gov/taxtopics/tc701",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-13",
+    "topic": "Rental income: how it is taxed",
+    "value": "Rent is taxable income; expenses including depreciation, repairs and operating costs are deductible. Gain attributable to depreciation on real property is taxed at up to 25% when sold.",
+    "quote": "Cash or the fair market value of property or services you receive for the use of real estate or personal property is taxable to you as rental income. In general, you can deduct expenses of renting property from your rental income.",
+    "source_name": "Internal Revenue Service, Topic no. 414, Rental income and expenses",
+    "source_url": "https://www.irs.gov/taxtopics/tc414",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-14",
+    "topic": "Unrecaptured depreciation on real property",
+    "value": "Taxed at a maximum 25% federal rate when the property is sold.",
+    "quote": "The portion of any unrecaptured section 1250 gain from selling section 1250 real property is taxed at a maximum 25% rate.",
+    "source_name": "Internal Revenue Service, Topic no. 409, Capital gains and losses",
+    "source_url": "https://www.irs.gov/taxtopics/tc409",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-15",
+    "topic": "Is an inheritance itself taxable income in California?",
+    "value": "No. An inheritance is not included in income; income it later produces (interest, dividends, rent, gain on sale) is taxable.",
+    "quote": "If you received a gift or inheritance, do not include it in your income. However, if the gift or inheritance later produces income, you will need to pay tax on that income.",
+    "source_name": "California Franchise Tax Board, Gifts and inheritance",
+    "source_url": "https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-16",
+    "topic": "California personal income tax rate schedule (current brackets)",
+    "value": "",
+    "note": "The Franchise Tax Board rate schedule page was not opened in this session, so California bracket amounts are not shown. The model's illustrative California rate is labelled as an assumption.",
+    "source_name": "California Franchise Tax Board, Tax calculator, tables, rates",
+    "source_url": "https://www.ftb.ca.gov/file/personal/tax-calculator-tables-rates.asp",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "IT-17",
+    "topic": "Depreciation period for residential rental buildings",
+    "value": "",
+    "note": "The 27.5-year recovery period is stated in IRS Publication 527, which was not opened in this session. The model does not compute a depreciation deduction; it reports rental results before income tax and flags this.",
+    "source_name": "Internal Revenue Service, About Publication 527, Residential Rental Property",
+    "source_url": "https://www.irs.gov/forms-pubs/about-publication-527",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  }
+]
