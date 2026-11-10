@@ -200,5 +200,167 @@
     "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
     "status": "verified",
     "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-21",
+    "topic": "San Francisco secured property tax rate, fiscal year 2026-27",
+    "value": "1.18162182% of assessed value (one citywide rate)",
+    "quote": "The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Secured Property Taxes",
+    "source_url": "https://sftreasurer.org/property/secured-property-taxes",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-22",
+    "topic": "San Francisco: how the annual bill is built",
+    "value": "(Net assessed value x tax rate) + direct charges and special assessments, split into two equal installments.",
+    "quote": "(Net Assessed Taxable Value * Tax Rate = Total Tax) + (Total Direct Charges and Special Assessments). The total due is divided into two equal installments.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Secured Property Taxes",
+    "source_url": "https://sftreasurer.org/property/secured-property-taxes",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-23",
+    "topic": "San Francisco flat parcel tax: School Parcel Tax of 2020",
+    "value": "$334.38 per parcel in FY 2025-26, adjusted for inflation annually",
+    "quote": "School Parcel Tax of 2020 - $334.38 parcel tax in FY 2025–26 and adjusted for inflation annually.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Parcel Tax Exemptions and Special Assessments",
+    "source_url": "https://sftreasurer.org/property/parcel-tax-exemptions-and-special-assessments",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-24",
+    "topic": "San Francisco flat parcel tax: SFUSD Teacher Support",
+    "value": "$319.34 per parcel in FY 2025-26, adjusted for inflation annually",
+    "quote": "SFUSD Teacher Support - $319.34 parcel tax in FY 2025-26 and adjusted for inflation annually.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Parcel Tax Exemptions and Special Assessments",
+    "source_url": "https://sftreasurer.org/property/parcel-tax-exemptions-and-special-assessments",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-25",
+    "topic": "San Francisco flat parcel tax: SFUSD Facilities District",
+    "value": "$43.00 per single-family parcel, or $21.50 per dwelling unit on multi-family parcels, in FY 2025-26, adjusted for inflation annually",
+    "quote": "SFUSD Facilities District - $43.00 per single family residential parcels and $21.50 per dwelling unit on multi-family residential parcels in FY 2025-26 and adjusted for inflation annually.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Parcel Tax Exemptions and Special Assessments",
+    "source_url": "https://sftreasurer.org/property/parcel-tax-exemptions-and-special-assessments",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-26",
+    "topic": "San Francisco flat parcel tax: City College Parcel Tax 2012",
+    "value": "$99 per year",
+    "quote": "City College of San Francisco Parcel Tax 2012- $99 per year and adjusted for inflation annually.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Parcel Tax Exemptions and Special Assessments",
+    "source_url": "https://sftreasurer.org/property/parcel-tax-exemptions-and-special-assessments",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-27",
+    "topic": "San Francisco flat parcel tax: Bay Restoration Authority",
+    "value": "$12 per year",
+    "quote": "San Francisco Bay Restoration Authority- $12 per year and funds shoreline projects that protect and restore San Francisco Bay.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Parcel Tax Exemptions and Special Assessments",
+    "source_url": "https://sftreasurer.org/property/parcel-tax-exemptions-and-special-assessments",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-28",
+    "topic": "San Francisco: what happens to the tax bill after a change in ownership",
+    "value": "The Assessor-Recorder reappraises the property and issues a supplemental bill for the difference between the new and old value, prorated for the rest of the fiscal year.",
+    "quote": "After a change in ownership or when new construction is completed, state law requires the Office of the Assessor-Recorder to reappraise the property. If the property is reassessed at a higher value, a supplemental assessment will be issued calculated on the difference between the new value and the old or prior value.",
+    "source_name": "San Francisco Treasurer & Tax Collector, Secured Property Taxes",
+    "source_url": "https://sftreasurer.org/property/secured-property-taxes",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-29",
+    "topic": "Santa Clara County: how the tax rate is built",
+    "value": "1% of assessed value plus voter-approved bond rates, which differ by tax rate area (816 tax rate areas in FY 2025-26).",
+    "quote": "By law the tax rate is limited to 1% of the assessed value plus amounts required for the payment of principal and interest on voter approved bond indebtedness.",
+    "source_name": "County of Santa Clara, Compilation of Tax Rates & Information, Fiscal Year 2025-2026",
+    "source_url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-30",
+    "topic": "Santa Clara County component rates, FY 2025-26: countywide",
+    "value": "1% levy 1.00000; County Retirement Levy 0.03880; County Housing Bond 2016 0.00560; VMC 2008 0.00520; County Library Retirement Levy 0.00240 (per $100 of value)",
+    "quote": "1% Maximum Tax Levy 1.00000 ... County Housing Bond 2016 0.00560; County Retirement Levy 0.03880 ... VMC 2008 0.00520 ... County Library Retirement Levy 0.00240",
+    "source_name": "County of Santa Clara, Compilation of Tax Rates & Information, Fiscal Year 2025-2026, page A-4",
+    "source_url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-31",
+    "topic": "Santa Clara County component rates, FY 2025-26: Cupertino elementary school bonds",
+    "value": "Cupertino Elem 2001 0.01650; Cupertino Elem 2012 0.01690; Cupertino Elem 2024 0.00010 (total 0.03350 per $100)",
+    "quote": "11222 CUPERTINO ELEM 2001 0.01650; 11223 Cupertino Elem 2012 0.01690; 11224 Cupertino Elem 2024 0.00010",
+    "source_name": "County of Santa Clara, Compilation of Tax Rates & Information, Fiscal Year 2025-2026, section B",
+    "source_url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-32",
+    "topic": "Santa Clara County component rates, FY 2025-26: Fremont Union High School District bonds",
+    "value": "Fremont High 2022 0.01040; Fremont Union High 2008 0.00880; 2014 0.01070; 2018 0.01180 (total 0.04170 per $100)",
+    "quote": "Fremont High 2022 0.01040; Fremont Union High 2008 0.00880; Fremont Union High 2014 GO Bond 0.01070; Fremont Union High 2018 0.01180",
+    "source_name": "County of Santa Clara, Compilation of Tax Rates & Information, Fiscal Year 2025-2026, page A-6",
+    "source_url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-33",
+    "topic": "Santa Clara County component rates, FY 2025-26: Foothill-De Anza Community College District bonds",
+    "value": "Foothill College 2006 0.01010; Foothill-De Anza CCD 2020 0.01350; Foothill-De Anza College 1999 0.00750 (total 0.03110 per $100)",
+    "quote": "Foothill College 2006 0.01010; Foothill-De Anza CCD 2020 0.01350; Foothill-DeAnza College 1999 0.00750",
+    "source_name": "County of Santa Clara, Compilation of Tax Rates & Information, Fiscal Year 2025-2026, page A-6",
+    "source_url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-34",
+    "topic": "Santa Clara County component rates, FY 2025-26: special districts",
+    "value": "Mid Peninsula Open Space 2014 0.00140; Santa Clara Valley Water District State Water Project 0.00390 (applies to land and improvements); El Camino Hospital 2003 0.00200 (only in some areas)",
+    "quote": "State Water Project 0.00390 L & I ... El Camino Hospital 2003 0.00200 ... Mid Peninsula Open Space 2014 0.00140",
+    "source_name": "County of Santa Clara, Compilation of Tax Rates & Information, Fiscal Year 2025-2026, page A-4",
+    "source_url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-35",
+    "topic": "Property A: exact total tax rate for its tax rate area",
+    "value": "",
+    "note": "The parcel's tax rate area is not known because parcel identifiers are deliberately not collected. The model uses the sum of the official FY 2025-26 component rates above for a Cupertino elementary / Fremont Union High / Foothill-De Anza area (1.16360%). The tax rate area and total rate are printed on the owner's tax bill.",
+    "source_name": "County of Santa Clara, Property Tax Rate Book index",
+    "source_url": "https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PT-36",
+    "topic": "Santa Clara County tax rates for fiscal year 2026-27",
+    "value": "",
+    "note": "The FY 2026-27 Tax Rate Book was not yet listed on the county page on 2026-11-10 (latest listed: FY 2025-26).",
+    "source_name": "County of Santa Clara, Property Tax Rate Book index",
+    "source_url": "https://controller.santaclaracounty.gov/property-tax-distribution/property-tax-rate-book",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
   }
 ]
