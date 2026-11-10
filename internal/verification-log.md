@@ -5187,10 +5187,37 @@ Verified 2026-11-10 (UTC). This log is internal and contains no personal informa
 | 5179 | PASS | decisions.json: recommendation recorded |  |
 | 5180 | PASS | sources.json: complete registry |  |
 | 5181 | PASS | sources.json: every URL is an official domain |  |
+| 5182 | PASS | root mirror byte-identical to docs/: index.html |  |
+| 5183 | PASS | root mirror byte-identical to docs/: assets/style.css |  |
+| 5184 | PASS | root mirror byte-identical to docs/: assets/app.js |  |
+| 5185 | PASS | root mirror byte-identical to docs/: data/sources.json |  |
+| 5186 | PASS | root mirror byte-identical to docs/: data/facts.json |  |
+| 5187 | PASS | root mirror byte-identical to docs/: data/flags.json |  |
+| 5188 | PASS | root mirror byte-identical to docs/: data/projections.json |  |
+| 5189 | PASS | root mirror byte-identical to docs/: data/decisions.json |  |
+| 5190 | PASS | root mirror byte-identical to docs/: data/model-inputs.json |  |
+| 5191 | PASS | root mirror byte-identical: pages/decision-analysis.html |  |
+| 5192 | PASS | root mirror byte-identical: pages/estate-thresholds.html |  |
+| 5193 | PASS | root mirror byte-identical: pages/executive-summary.html |  |
+| 5194 | PASS | root mirror byte-identical: pages/flagged-for-review.html |  |
+| 5195 | PASS | root mirror byte-identical: pages/inheritance-law.html |  |
+| 5196 | PASS | root mirror byte-identical: pages/inheritance-process.html |  |
+| 5197 | PASS | root mirror byte-identical: pages/law-watchlist.html |  |
+| 5198 | PASS | root mirror byte-identical: pages/methodology.html |  |
+| 5199 | PASS | root mirror byte-identical: pages/operating-costs.html |  |
+| 5200 | PASS | root mirror byte-identical: pages/privacy.html |  |
+| 5201 | PASS | root mirror byte-identical: pages/projections.html |  |
+| 5202 | PASS | root mirror byte-identical: pages/property-tax.html |  |
+| 5203 | PASS | root mirror byte-identical: pages/sources.html |  |
+| 5204 | PASS | prior merged site preserved in archive-v2/ |  |
+| 5205 | PASS | parallel session tree preserved: arena-6acab13a |  |
+| 5206 | PASS | parallel session tree preserved: arena-ce2391b3 |  |
+| 5207 | PASS | parallel session tree preserved: arena-fd984e93 |  |
+| 5208 | PASS | root .nojekyll present for static Pages build |  |
 
 ## Summary
 
-- 5181 checks, 0 failures.
+- 5208 checks, 0 failures.
 - 28 HTML pages, 750 table rows; 750 rows carry an official source link.
 - 56 official sources, all on government domains.
 - Internal links resolved against the published `docs/` tree; no broken links.

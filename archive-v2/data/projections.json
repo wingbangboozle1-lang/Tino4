@@ -1,0 +1,1356 @@
+{
+ "breakeven": [
+  {
+   "investment": 0.04,
+   "appreciation": 5.46
+  },
+  {
+   "investment": 0.055,
+   "appreciation": 7.44
+  },
+  {
+   "investment": 0.07,
+   "appreciation": 9.31
+  }
+ ],
+ "rent_sensitivity": [
+  {
+   "rent": 5000,
+   "A": 19714900,
+   "C": 28034740
+  },
+  {
+   "rent": 6000,
+   "A": 20740020,
+   "C": 28034740
+  },
+  {
+   "rent": 7000,
+   "A": 21765140,
+   "C": 28034740
+  },
+  {
+   "rent": 8000,
+   "A": 22790260,
+   "C": 28034740
+  }
+ ],
+ "meta": {
+  "start": 2026,
+  "inheritance": 2045,
+  "end": 2065,
+  "cpi": 0.03,
+  "appreciation": 0.035,
+  "investment_return": 0.055,
+  "retrieved": "2026-11-10"
+ },
+ "cupertino_series": [
+  {
+   "year": 2026,
+   "market_value": 3100000,
+   "assessed": 551000,
+   "tax": 7330,
+   "insurance": 1500,
+   "water": 1500,
+   "electric": -180,
+   "maintenance": 6000,
+   "effective_rate_of_market": 0.24
+  },
+  {
+   "year": 2027,
+   "market_value": 3208500,
+   "assessed": 562020,
+   "tax": 7490,
+   "insurance": 1580,
+   "water": 1590,
+   "electric": -190,
+   "maintenance": 6240,
+   "effective_rate_of_market": 0.23
+  },
+  {
+   "year": 2028,
+   "market_value": 3320800,
+   "assessed": 573260,
+   "tax": 7640,
+   "insurance": 1650,
+   "water": 1690,
+   "electric": -190,
+   "maintenance": 6490,
+   "effective_rate_of_market": 0.23
+  },
+  {
+   "year": 2029,
+   "market_value": 3437030,
+   "assessed": 584730,
+   "tax": 7800,
+   "insurance": 1740,
+   "water": 1790,
+   "electric": -200,
+   "maintenance": 6750,
+   "effective_rate_of_market": 0.23
+  },
+  {
+   "year": 2030,
+   "market_value": 3557320,
+   "assessed": 596420,
+   "tax": 7970,
+   "insurance": 1820,
+   "water": 1890,
+   "electric": -210,
+   "maintenance": 7020,
+   "effective_rate_of_market": 0.22
+  },
+  {
+   "year": 2031,
+   "market_value": 3681830,
+   "assessed": 608350,
+   "tax": 8130,
+   "insurance": 1910,
+   "water": 2010,
+   "electric": -220,
+   "maintenance": 7300,
+   "effective_rate_of_market": 0.22
+  },
+  {
+   "year": 2032,
+   "market_value": 3810690,
+   "assessed": 620520,
+   "tax": 8310,
+   "insurance": 2010,
+   "water": 2130,
+   "electric": -230,
+   "maintenance": 7590,
+   "effective_rate_of_market": 0.22
+  },
+  {
+   "year": 2033,
+   "market_value": 3944070,
+   "assessed": 632930,
+   "tax": 8480,
+   "insurance": 2110,
+   "water": 2260,
+   "electric": -240,
+   "maintenance": 7900,
+   "effective_rate_of_market": 0.22
+  },
+  {
+   "year": 2034,
+   "market_value": 4082110,
+   "assessed": 645580,
+   "tax": 8660,
+   "insurance": 2220,
+   "water": 2390,
+   "electric": -250,
+   "maintenance": 8210,
+   "effective_rate_of_market": 0.21
+  },
+  {
+   "year": 2035,
+   "market_value": 4224980,
+   "assessed": 658500,
+   "tax": 8840,
+   "insurance": 2330,
+   "water": 2530,
+   "electric": -260,
+   "maintenance": 8540,
+   "effective_rate_of_market": 0.21
+  },
+  {
+   "year": 2036,
+   "market_value": 4372860,
+   "assessed": 671670,
+   "tax": 9030,
+   "insurance": 2440,
+   "water": 2690,
+   "electric": -270,
+   "maintenance": 8880,
+   "effective_rate_of_market": 0.21
+  },
+  {
+   "year": 2037,
+   "market_value": 4525910,
+   "assessed": 685100,
+   "tax": 9220,
+   "insurance": 2570,
+   "water": 2850,
+   "electric": -280,
+   "maintenance": 9240,
+   "effective_rate_of_market": 0.2
+  },
+  {
+   "year": 2038,
+   "market_value": 4684310,
+   "assessed": 698800,
+   "tax": 9410,
+   "insurance": 2690,
+   "water": 3020,
+   "electric": -290,
+   "maintenance": 9610,
+   "effective_rate_of_market": 0.2
+  },
+  {
+   "year": 2039,
+   "market_value": 4848260,
+   "assessed": 712780,
+   "tax": 9610,
+   "insurance": 2830,
+   "water": 3200,
+   "electric": -300,
+   "maintenance": 9990,
+   "effective_rate_of_market": 0.2
+  },
+  {
+   "year": 2040,
+   "market_value": 5017950,
+   "assessed": 727030,
+   "tax": 9810,
+   "insurance": 2970,
+   "water": 3390,
+   "electric": -310,
+   "maintenance": 10390,
+   "effective_rate_of_market": 0.2
+  },
+  {
+   "year": 2041,
+   "market_value": 5193580,
+   "assessed": 741570,
+   "tax": 10020,
+   "insurance": 3120,
+   "water": 3590,
+   "electric": -320,
+   "maintenance": 10810,
+   "effective_rate_of_market": 0.19
+  },
+  {
+   "year": 2042,
+   "market_value": 5375360,
+   "assessed": 756400,
+   "tax": 10230,
+   "insurance": 3270,
+   "water": 3810,
+   "electric": -340,
+   "maintenance": 11240,
+   "effective_rate_of_market": 0.19
+  },
+  {
+   "year": 2043,
+   "market_value": 5563490,
+   "assessed": 771530,
+   "tax": 10450,
+   "insurance": 3440,
+   "water": 4040,
+   "electric": -350,
+   "maintenance": 11690,
+   "effective_rate_of_market": 0.19
+  },
+  {
+   "year": 2044,
+   "market_value": 5758220,
+   "assessed": 786960,
+   "tax": 10670,
+   "insurance": 3610,
+   "water": 4280,
+   "electric": -360,
+   "maintenance": 12150,
+   "effective_rate_of_market": 0.19
+  },
+  {
+   "year": 2045,
+   "market_value": 5959750,
+   "assessed": 802700,
+   "tax": 10890,
+   "insurance": 3790,
+   "water": 4540,
+   "electric": -380,
+   "maintenance": 12640,
+   "effective_rate_of_market": 0.18
+  },
+  {
+   "year": 2046,
+   "market_value": 6168350,
+   "assessed": 818760,
+   "tax": 11130,
+   "insurance": 3980,
+   "water": 4810,
+   "electric": -390,
+   "maintenance": 13150,
+   "effective_rate_of_market": 0.18
+  },
+  {
+   "year": 2047,
+   "market_value": 6384240,
+   "assessed": 835130,
+   "tax": 11360,
+   "insurance": 4180,
+   "water": 5100,
+   "electric": -410,
+   "maintenance": 13670,
+   "effective_rate_of_market": 0.18
+  },
+  {
+   "year": 2048,
+   "market_value": 6607690,
+   "assessed": 851830,
+   "tax": 11600,
+   "insurance": 4390,
+   "water": 5410,
+   "electric": -430,
+   "maintenance": 14220,
+   "effective_rate_of_market": 0.18
+  },
+  {
+   "year": 2049,
+   "market_value": 6838950,
+   "assessed": 868870,
+   "tax": 11850,
+   "insurance": 4610,
+   "water": 5730,
+   "electric": -440,
+   "maintenance": 14790,
+   "effective_rate_of_market": 0.17
+  },
+  {
+   "year": 2050,
+   "market_value": 7078320,
+   "assessed": 886250,
+   "tax": 12100,
+   "insurance": 4840,
+   "water": 6070,
+   "electric": -460,
+   "maintenance": 15380,
+   "effective_rate_of_market": 0.17
+  },
+  {
+   "year": 2051,
+   "market_value": 7326060,
+   "assessed": 903970,
+   "tax": 12360,
+   "insurance": 5080,
+   "water": 6440,
+   "electric": -480,
+   "maintenance": 16000,
+   "effective_rate_of_market": 0.17
+  },
+  {
+   "year": 2052,
+   "market_value": 7582470,
+   "assessed": 922050,
+   "tax": 12620,
+   "insurance": 5330,
+   "water": 6820,
+   "electric": -500,
+   "maintenance": 16630,
+   "effective_rate_of_market": 0.17
+  },
+  {
+   "year": 2053,
+   "market_value": 7847860,
+   "assessed": 940490,
+   "tax": 12890,
+   "insurance": 5600,
+   "water": 7230,
+   "electric": -520,
+   "maintenance": 17300,
+   "effective_rate_of_market": 0.16
+  },
+  {
+   "year": 2054,
+   "market_value": 8122530,
+   "assessed": 959300,
+   "tax": 13160,
+   "insurance": 5880,
+   "water": 7670,
+   "electric": -540,
+   "maintenance": 17990,
+   "effective_rate_of_market": 0.16
+  },
+  {
+   "year": 2055,
+   "market_value": 8406820,
+   "assessed": 978490,
+   "tax": 13440,
+   "insurance": 6170,
+   "water": 8130,
+   "electric": -560,
+   "maintenance": 18710,
+   "effective_rate_of_market": 0.16
+  },
+  {
+   "year": 2056,
+   "market_value": 8701060,
+   "assessed": 998060,
+   "tax": 13720,
+   "insurance": 6480,
+   "water": 8620,
+   "electric": -580,
+   "maintenance": 19460,
+   "effective_rate_of_market": 0.16
+  },
+  {
+   "year": 2057,
+   "market_value": 9005600,
+   "assessed": 1018020,
+   "tax": 14020,
+   "insurance": 6810,
+   "water": 9130,
+   "electric": -610,
+   "maintenance": 20240,
+   "effective_rate_of_market": 0.16
+  },
+  {
+   "year": 2058,
+   "market_value": 9320790,
+   "assessed": 1038380,
+   "tax": 14310,
+   "insurance": 7150,
+   "water": 9680,
+   "electric": -630,
+   "maintenance": 21050,
+   "effective_rate_of_market": 0.15
+  },
+  {
+   "year": 2059,
+   "market_value": 9647020,
+   "assessed": 1059150,
+   "tax": 14620,
+   "insurance": 7500,
+   "water": 10260,
+   "electric": -660,
+   "maintenance": 21890,
+   "effective_rate_of_market": 0.15
+  },
+  {
+   "year": 2060,
+   "market_value": 9984670,
+   "assessed": 1080330,
+   "tax": 14930,
+   "insurance": 7880,
+   "water": 10880,
+   "electric": -680,
+   "maintenance": 22770,
+   "effective_rate_of_market": 0.15
+  },
+  {
+   "year": 2061,
+   "market_value": 10334130,
+   "assessed": 1101940,
+   "tax": 15250,
+   "insurance": 8270,
+   "water": 11530,
+   "electric": -710,
+   "maintenance": 23680,
+   "effective_rate_of_market": 0.15
+  },
+  {
+   "year": 2062,
+   "market_value": 10695820,
+   "assessed": 1123980,
+   "tax": 15570,
+   "insurance": 8690,
+   "water": 12220,
+   "electric": -740,
+   "maintenance": 24620,
+   "effective_rate_of_market": 0.15
+  },
+  {
+   "year": 2063,
+   "market_value": 11070180,
+   "assessed": 1146460,
+   "tax": 15910,
+   "insurance": 9120,
+   "water": 12950,
+   "electric": -770,
+   "maintenance": 25610,
+   "effective_rate_of_market": 0.14
+  },
+  {
+   "year": 2064,
+   "market_value": 11457640,
+   "assessed": 1169390,
+   "tax": 16250,
+   "insurance": 9580,
+   "water": 13730,
+   "electric": -800,
+   "maintenance": 26630,
+   "effective_rate_of_market": 0.14
+  },
+  {
+   "year": 2065,
+   "market_value": 11858650,
+   "assessed": 1192770,
+   "tax": 16590,
+   "insurance": 10060,
+   "water": 14560,
+   "electric": -830,
+   "maintenance": 27700,
+   "effective_rate_of_market": 0.14
+  }
+ ],
+ "sf_series": [
+  {
+   "year": 2026,
+   "market_value": 1800000,
+   "assessed": 116280,
+   "tax": 2420,
+   "insurance": 1500,
+   "water": 4380,
+   "electric": 600,
+   "maintenance": 9000,
+   "rent_two_units": 85800,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2027,
+   "market_value": 1863000,
+   "assessed": 118610,
+   "tax": 2480,
+   "insurance": 1580,
+   "water": 4640,
+   "electric": 620,
+   "maintenance": 9360,
+   "rent_two_units": 87170,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2028,
+   "market_value": 1928200,
+   "assessed": 120980,
+   "tax": 2540,
+   "insurance": 1650,
+   "water": 4920,
+   "electric": 650,
+   "maintenance": 9730,
+   "rent_two_units": 88570,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2029,
+   "market_value": 1995690,
+   "assessed": 123400,
+   "tax": 2610,
+   "insurance": 1740,
+   "water": 5220,
+   "electric": 670,
+   "maintenance": 10120,
+   "rent_two_units": 89980,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2030,
+   "market_value": 2065540,
+   "assessed": 125870,
+   "tax": 2670,
+   "insurance": 1820,
+   "water": 5530,
+   "electric": 700,
+   "maintenance": 10530,
+   "rent_two_units": 91420,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2031,
+   "market_value": 2137840,
+   "assessed": 128380,
+   "tax": 2730,
+   "insurance": 1910,
+   "water": 5860,
+   "electric": 730,
+   "maintenance": 10950,
+   "rent_two_units": 92890,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2032,
+   "market_value": 2212660,
+   "assessed": 130950,
+   "tax": 2800,
+   "insurance": 2010,
+   "water": 6210,
+   "electric": 760,
+   "maintenance": 11390,
+   "rent_two_units": 94370,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2033,
+   "market_value": 2290100,
+   "assessed": 133570,
+   "tax": 2870,
+   "insurance": 2110,
+   "water": 6590,
+   "electric": 790,
+   "maintenance": 11840,
+   "rent_two_units": 95880,
+   "effective_rate_of_market": 0.13
+  },
+  {
+   "year": 2034,
+   "market_value": 2370260,
+   "assessed": 136240,
+   "tax": 2940,
+   "insurance": 2220,
+   "water": 6980,
+   "electric": 820,
+   "maintenance": 12320,
+   "rent_two_units": 97420,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2035,
+   "market_value": 2453220,
+   "assessed": 138970,
+   "tax": 3010,
+   "insurance": 2330,
+   "water": 7400,
+   "electric": 850,
+   "maintenance": 12810,
+   "rent_two_units": 98980,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2036,
+   "market_value": 2539080,
+   "assessed": 141740,
+   "tax": 3090,
+   "insurance": 2440,
+   "water": 7840,
+   "electric": 890,
+   "maintenance": 13320,
+   "rent_two_units": 100560,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2037,
+   "market_value": 2627950,
+   "assessed": 144580,
+   "tax": 3160,
+   "insurance": 2570,
+   "water": 8310,
+   "electric": 920,
+   "maintenance": 13860,
+   "rent_two_units": 102170,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2038,
+   "market_value": 2719920,
+   "assessed": 147470,
+   "tax": 3240,
+   "insurance": 2690,
+   "water": 8810,
+   "electric": 960,
+   "maintenance": 14410,
+   "rent_two_units": 103800,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2039,
+   "market_value": 2815120,
+   "assessed": 150420,
+   "tax": 3320,
+   "insurance": 2830,
+   "water": 9340,
+   "electric": 1000,
+   "maintenance": 14990,
+   "rent_two_units": 105460,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2040,
+   "market_value": 2913650,
+   "assessed": 153430,
+   "tax": 3400,
+   "insurance": 2970,
+   "water": 9900,
+   "electric": 1040,
+   "maintenance": 15590,
+   "rent_two_units": 107150,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2041,
+   "market_value": 3015630,
+   "assessed": 156500,
+   "tax": 3490,
+   "insurance": 3120,
+   "water": 10500,
+   "electric": 1080,
+   "maintenance": 16210,
+   "rent_two_units": 108870,
+   "effective_rate_of_market": 0.12
+  },
+  {
+   "year": 2042,
+   "market_value": 3121170,
+   "assessed": 159630,
+   "tax": 3570,
+   "insurance": 3270,
+   "water": 11130,
+   "electric": 1120,
+   "maintenance": 16860,
+   "rent_two_units": 110610,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2043,
+   "market_value": 3230420,
+   "assessed": 162820,
+   "tax": 3660,
+   "insurance": 3440,
+   "water": 11790,
+   "electric": 1170,
+   "maintenance": 17530,
+   "rent_two_units": 112380,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2044,
+   "market_value": 3343480,
+   "assessed": 166080,
+   "tax": 3750,
+   "insurance": 3610,
+   "water": 12500,
+   "electric": 1220,
+   "maintenance": 18230,
+   "rent_two_units": 114180,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2045,
+   "market_value": 3460500,
+   "assessed": 169400,
+   "tax": 3840,
+   "insurance": 3790,
+   "water": 13250,
+   "electric": 1260,
+   "maintenance": 18960,
+   "rent_two_units": 116000,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2046,
+   "market_value": 3581620,
+   "assessed": 172790,
+   "tax": 3940,
+   "insurance": 3980,
+   "water": 14050,
+   "electric": 1310,
+   "maintenance": 19720,
+   "rent_two_units": 117860,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2047,
+   "market_value": 3706980,
+   "assessed": 176240,
+   "tax": 4040,
+   "insurance": 4180,
+   "water": 14890,
+   "electric": 1370,
+   "maintenance": 20510,
+   "rent_two_units": 119740,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2048,
+   "market_value": 3836720,
+   "assessed": 179770,
+   "tax": 4140,
+   "insurance": 4390,
+   "water": 15780,
+   "electric": 1420,
+   "maintenance": 21330,
+   "rent_two_units": 121660,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2049,
+   "market_value": 3971010,
+   "assessed": 183360,
+   "tax": 4240,
+   "insurance": 4610,
+   "water": 16730,
+   "electric": 1480,
+   "maintenance": 22180,
+   "rent_two_units": 123610,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2050,
+   "market_value": 4109990,
+   "assessed": 187030,
+   "tax": 4340,
+   "insurance": 4840,
+   "water": 17730,
+   "electric": 1540,
+   "maintenance": 23070,
+   "rent_two_units": 125580,
+   "effective_rate_of_market": 0.11
+  },
+  {
+   "year": 2051,
+   "market_value": 4253840,
+   "assessed": 190770,
+   "tax": 4450,
+   "insurance": 5080,
+   "water": 18800,
+   "electric": 1600,
+   "maintenance": 23990,
+   "rent_two_units": 127590,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2052,
+   "market_value": 4402730,
+   "assessed": 194590,
+   "tax": 4560,
+   "insurance": 5330,
+   "water": 19930,
+   "electric": 1660,
+   "maintenance": 24950,
+   "rent_two_units": 129640,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2053,
+   "market_value": 4556820,
+   "assessed": 198480,
+   "tax": 4680,
+   "insurance": 5600,
+   "water": 21120,
+   "electric": 1730,
+   "maintenance": 25950,
+   "rent_two_units": 131710,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2054,
+   "market_value": 4716310,
+   "assessed": 202450,
+   "tax": 4790,
+   "insurance": 5880,
+   "water": 22390,
+   "electric": 1800,
+   "maintenance": 26990,
+   "rent_two_units": 133820,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2055,
+   "market_value": 4881380,
+   "assessed": 206500,
+   "tax": 4910,
+   "insurance": 6170,
+   "water": 23730,
+   "electric": 1870,
+   "maintenance": 28070,
+   "rent_two_units": 135960,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2056,
+   "market_value": 5052230,
+   "assessed": 210630,
+   "tax": 5040,
+   "insurance": 6480,
+   "water": 25160,
+   "electric": 1950,
+   "maintenance": 29190,
+   "rent_two_units": 138130,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2057,
+   "market_value": 5229060,
+   "assessed": 214840,
+   "tax": 5160,
+   "insurance": 6810,
+   "water": 26670,
+   "electric": 2020,
+   "maintenance": 30360,
+   "rent_two_units": 140340,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2058,
+   "market_value": 5412070,
+   "assessed": 219130,
+   "tax": 5290,
+   "insurance": 7150,
+   "water": 28270,
+   "electric": 2100,
+   "maintenance": 31570,
+   "rent_two_units": 142590,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2059,
+   "market_value": 5601500,
+   "assessed": 223520,
+   "tax": 5430,
+   "insurance": 7500,
+   "water": 29960,
+   "electric": 2190,
+   "maintenance": 32840,
+   "rent_two_units": 144870,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2060,
+   "market_value": 5797550,
+   "assessed": 227990,
+   "tax": 5560,
+   "insurance": 7880,
+   "water": 31760,
+   "electric": 2280,
+   "maintenance": 34150,
+   "rent_two_units": 147190,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2061,
+   "market_value": 6000460,
+   "assessed": 232550,
+   "tax": 5700,
+   "insurance": 8270,
+   "water": 33670,
+   "electric": 2370,
+   "maintenance": 35510,
+   "rent_two_units": 149540,
+   "effective_rate_of_market": 0.1
+  },
+  {
+   "year": 2062,
+   "market_value": 6210480,
+   "assessed": 237200,
+   "tax": 5850,
+   "insurance": 8690,
+   "water": 35680,
+   "electric": 2460,
+   "maintenance": 36940,
+   "rent_two_units": 151940,
+   "effective_rate_of_market": 0.09
+  },
+  {
+   "year": 2063,
+   "market_value": 6427850,
+   "assessed": 241940,
+   "tax": 5990,
+   "insurance": 9120,
+   "water": 37830,
+   "electric": 2560,
+   "maintenance": 38410,
+   "rent_two_units": 154370,
+   "effective_rate_of_market": 0.09
+  },
+  {
+   "year": 2064,
+   "market_value": 6652820,
+   "assessed": 246780,
+   "tax": 6140,
+   "insurance": 9580,
+   "water": 40100,
+   "electric": 2660,
+   "maintenance": 39950,
+   "rent_two_units": 156840,
+   "effective_rate_of_market": 0.09
+  },
+  {
+   "year": 2065,
+   "market_value": 6885670,
+   "assessed": 251720,
+   "tax": 6300,
+   "insurance": 10060,
+   "water": 42500,
+   "electric": 2770,
+   "maintenance": 41550,
+   "rent_two_units": 159350,
+   "effective_rate_of_market": 0.09
+  }
+ ],
+ "prop19": {
+  "year": 2045,
+  "factored_base_year_value": 802700,
+  "market_value": 5959750,
+  "cap_amount": 1669930,
+  "excluded_value_cap": 2472630,
+  "excess_above_cap": 3487120,
+  "taxable_if_claimed": 4289830,
+  "taxable_if_not_claimed": 5959750,
+  "tax_if_claimed": 52740,
+  "tax_if_not_claimed": 72780,
+  "first_year_saving": 20040
+ },
+ "scenarios": [
+  {
+   "net_worth_hold_2065": 25388590,
+   "net_worth_hold_2065_today": 8016540,
+   "deferred_capital_gains_tax": 3459230,
+   "gross_property_2065": 18744320,
+   "key": "A",
+   "net_worth_2065": 20740020,
+   "net_worth_2065_today": 6548730,
+   "portfolio_2065": 6644270,
+   "property_net_2065": 14095750,
+   "cumulative_cash_flow": 3820410,
+   "name": "Live in the Cupertino house",
+   "sub": "Preserve the Prop 19 base; rent all three Sunset units",
+   "eligibility": "Requires the exclusion to be preserved (parent used it as a principal residence; heir moves in within 1 year and files the exemption + BOE-19-P)."
+  },
+  {
+   "net_worth_hold_2065": 25325660,
+   "net_worth_hold_2065_today": 7996670,
+   "deferred_capital_gains_tax": 3459230,
+   "gross_property_2065": 18744320,
+   "key": "B",
+   "net_worth_2065": 20677090,
+   "net_worth_2065_today": 6528860,
+   "portfolio_2065": 6581340,
+   "property_net_2065": 14095750,
+   "cumulative_cash_flow": 3785800,
+   "name": "Rent the Cupertino house",
+   "sub": "Exclusion lost, reassessed to market; live in the vacant Sunset unit",
+   "eligibility": "No occupancy requirement. Property tax resets to full market value."
+  },
+  {
+   "net_worth_hold_2065": 29770260,
+   "net_worth_hold_2065_today": 9400060,
+   "deferred_capital_gains_tax": 1270740,
+   "gross_property_2065": 6885670,
+   "key": "C",
+   "net_worth_2065": 28034740,
+   "net_worth_2065_today": 8852070,
+   "portfolio_2065": 22884590,
+   "property_net_2065": 5150150,
+   "cumulative_cash_flow": 3230860,
+   "name": "Sell Cupertino and invest",
+   "sub": "Net proceeds into a diversified portfolio; live in the Sunset unit",
+   "eligibility": "Step-up basis means little or no capital gain if sold soon after death."
+  },
+  {
+   "net_worth_hold_2065": 22544780,
+   "net_worth_hold_2065_today": 7118590,
+   "deferred_capital_gains_tax": 0,
+   "gross_property_2065": 0,
+   "key": "D",
+   "net_worth_2065": 22544780,
+   "net_worth_2065_today": 7118590,
+   "portfolio_2065": 22544780,
+   "property_net_2065": 0,
+   "cumulative_cash_flow": -2715360,
+   "name": "Sell both houses and invest",
+   "sub": "Full liquidity; rent housing at market",
+   "eligibility": "Largest tax-free (basis-stepped) liquidity event, but gives up both low tax bases and rent control income."
+  }
+ ],
+ "detail_A": [
+  {
+   "year": 2045,
+   "cash_flow": 151150,
+   "portfolio": 151150,
+   "property_value": 9420260,
+   "cup_tax": 52740,
+   "cup_opex": 73330,
+   "sf_gross": 182170,
+   "sf_opex": 55680,
+   "sf_tax": 28250,
+   "cup_rent": 0
+  },
+  {
+   "year": 2050,
+   "cash_flow": 165810,
+   "portfolio": 1088020,
+   "property_value": 11188310,
+   "cup_tax": 58300,
+   "cup_opex": 84130,
+   "sf_gross": 202730,
+   "sf_opex": 67740,
+   "sf_tax": 31410,
+   "cup_rent": 0
+  },
+  {
+   "year": 2055,
+   "cash_flow": 181420,
+   "portfolio": 2397440,
+   "property_value": 13288200,
+   "cup_tax": 64450,
+   "cup_opex": 96900,
+   "sf_gross": 225870,
+   "sf_opex": 82830,
+   "sf_tax": 34400,
+   "cup_rent": 0
+  },
+  {
+   "year": 2060,
+   "cash_flow": 197730,
+   "portfolio": 4198310,
+   "property_value": 15782220,
+   "cup_tax": 71250,
+   "cup_opex": 112090,
+   "sf_gross": 251950,
+   "sf_opex": 101780,
+   "sf_tax": 37040,
+   "cup_rent": 0
+  },
+  {
+   "year": 2065,
+   "cash_flow": 214360,
+   "portfolio": 6644270,
+   "property_value": 18744320,
+   "cup_tax": 78770,
+   "cup_opex": 130250,
+   "sf_gross": 281350,
+   "sf_opex": 125680,
+   "sf_tax": 39080,
+   "cup_rent": 0
+  }
+ ],
+ "detail_B": [
+  {
+   "year": 2045,
+   "cash_flow": 148740,
+   "portfolio": 148740,
+   "property_value": 9420260,
+   "cup_tax": 72780,
+   "cup_opex": 103530,
+   "sf_gross": 110200,
+   "sf_opex": 49930,
+   "sf_tax": 3690,
+   "cup_rent": 119940
+  },
+  {
+   "year": 2050,
+   "cash_flow": 164060,
+   "portfolio": 1073470,
+   "property_value": 11188310,
+   "cup_tax": 80420,
+   "cup_opex": 118100,
+   "sf_gross": 119310,
+   "sf_opex": 61070,
+   "sf_tax": 2930,
+   "cup_rent": 139040
+  },
+  {
+   "year": 2055,
+   "cash_flow": 180530,
+   "portfolio": 2371310,
+   "property_value": 13288200,
+   "cup_tax": 88880,
+   "cup_opex": 135150,
+   "sf_gross": 129160,
+   "sf_opex": 75090,
+   "sf_tax": 1380,
+   "cup_rent": 161190
+  },
+  {
+   "year": 2060,
+   "cash_flow": 196710,
+   "portfolio": 4160680,
+   "property_value": 15782220,
+   "cup_tax": 98220,
+   "cup_opex": 155190,
+   "sf_gross": 139830,
+   "sf_opex": 92810,
+   "sf_tax": 0,
+   "cup_rent": 186860
+  },
+  {
+   "year": 2065,
+   "cash_flow": 210660,
+   "portfolio": 6581340,
+   "property_value": 18744320,
+   "cup_tax": 108550,
+   "cup_opex": 178870,
+   "sf_gross": 151380,
+   "sf_opex": 115290,
+   "sf_tax": 0,
+   "cup_rent": 216620
+  }
+ ],
+ "estate": [
+  {
+   "year": 2026,
+   "exclusion": 15000000,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 2000000,
+   "tax_on_25m": 4000000,
+   "tax_on_30m": 6000000
+  },
+  {
+   "year": 2030,
+   "exclusion": 16557190,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 1377120,
+   "tax_on_25m": 3377120,
+   "tax_on_30m": 5377120
+  },
+  {
+   "year": 2035,
+   "exclusion": 18732940,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 506820,
+   "tax_on_25m": 2506820,
+   "tax_on_30m": 4506820
+  },
+  {
+   "year": 2040,
+   "exclusion": 21194610,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 0,
+   "tax_on_25m": 1522160,
+   "tax_on_30m": 3522160
+  },
+  {
+   "year": 2045,
+   "exclusion": 23979750,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 0,
+   "tax_on_25m": 408100,
+   "tax_on_30m": 2408100
+  },
+  {
+   "year": 2050,
+   "exclusion": 27130890,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 0,
+   "tax_on_25m": 0,
+   "tax_on_30m": 1147640
+  },
+  {
+   "year": 2055,
+   "exclusion": 30696110,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 0,
+   "tax_on_25m": 0,
+   "tax_on_30m": 0
+  },
+  {
+   "year": 2060,
+   "exclusion": 34729830,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 0,
+   "tax_on_25m": 0,
+   "tax_on_30m": 0
+  },
+  {
+   "year": 2065,
+   "exclusion": 39293620,
+   "tax_on_10m": 0,
+   "tax_on_15m": 0,
+   "tax_on_20m": 0,
+   "tax_on_25m": 0,
+   "tax_on_30m": 0
+  }
+ ],
+ "sensitivity": [
+  {
+   "appreciation": 0.025,
+   "investment": 0.04,
+   "best": "C",
+   "A": 15736930,
+   "B": 15701390,
+   "C": 19057760,
+   "D": 12755340
+  },
+  {
+   "appreciation": 0.025,
+   "investment": 0.055,
+   "best": "C",
+   "A": 16690930,
+   "B": 16645950,
+   "C": 23597320,
+   "D": 17969970
+  },
+  {
+   "appreciation": 0.025,
+   "investment": 0.07,
+   "best": "C",
+   "A": 17845870,
+   "B": 17789070,
+   "C": 29533410,
+   "D": 24978690
+  },
+  {
+   "appreciation": 0.035,
+   "investment": 0.04,
+   "best": "C",
+   "A": 19767730,
+   "B": 19714830,
+   "C": 22723900,
+   "D": 16142010
+  },
+  {
+   "appreciation": 0.035,
+   "investment": 0.055,
+   "best": "C",
+   "A": 20740020,
+   "B": 20677090,
+   "C": 28034740,
+   "D": 22544780
+  },
+  {
+   "appreciation": 0.035,
+   "investment": 0.07,
+   "best": "C",
+   "A": 21917230,
+   "B": 21841870,
+   "C": 34993830,
+   "D": 31132320
+  },
+  {
+   "appreciation": 0.045,
+   "investment": 0.04,
+   "best": "C",
+   "A": 25411260,
+   "B": 25297860,
+   "C": 27355470,
+   "D": 20171890
+  },
+  {
+   "appreciation": 0.045,
+   "investment": 0.055,
+   "best": "C",
+   "A": 26405330,
+   "B": 26275330,
+   "C": 33578220,
+   "D": 27988480
+  },
+  {
+   "appreciation": 0.045,
+   "investment": 0.07,
+   "best": "C",
+   "A": 27609040,
+   "B": 27459110,
+   "C": 41747850,
+   "D": 38454680
+  }
+ ],
+ "timing": [
+  {
+   "inheritance_year": 2040,
+   "live": 22752440,
+   "sell_invest": 31581500,
+   "advantage_live": -8829060
+  },
+  {
+   "inheritance_year": 2045,
+   "live": 20740020,
+   "sell_invest": 28034740,
+   "advantage_live": -7294720
+  },
+  {
+   "inheritance_year": 2050,
+   "live": 19271050,
+   "sell_invest": 24940150,
+   "advantage_live": -5669100
+  }
+ ]
+}

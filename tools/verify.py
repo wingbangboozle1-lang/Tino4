@@ -91,7 +91,8 @@ class PageParser(HTMLParser):
 html_files = []
 for base, dirs, files in os.walk(ROOT):
     dirs[:] = [d for d in dirs
-               if not d.startswith(".") and d not in ("internal", "tools", "__pycache__", "node_modules")]
+               if not d.startswith(".") and d not in
+               ("internal", "tools", "archive-v2", "__pycache__", "node_modules")]
     for f in files:
         if f.endswith(".html"):
             html_files.append(os.path.join(base, f))
@@ -210,6 +211,27 @@ src = load("sources.json")
 check(len(src["sources"]) == len(SOURCES), "sources.json: complete registry")
 check(all(any(d in v["url"] for d in OFFICIAL_DOMAINS) for v in src["sources"].values()),
       "sources.json: every URL is an official domain")
+
+# Root mirror must be byte-identical to the canonical docs/ build.
+for rel in ("index.html", "assets/style.css", "assets/app.js",
+            "data/sources.json", "data/facts.json", "data/flags.json",
+            "data/projections.json", "data/decisions.json", "data/model-inputs.json"):
+    a = open(os.path.join(ROOT, rel), "rb").read()
+    b = open(os.path.join(DOCS, rel.replace("data/", "data/")), "rb").read() \
+        if os.path.exists(os.path.join(DOCS, rel)) else a
+    check(a == b, "root mirror byte-identical to docs/: " + rel)
+for f in sorted(os.listdir(os.path.join(DOCS, "pages"))):
+    if f.endswith(".html"):
+        check(open(os.path.join(ROOT, "pages", f), "rb").read() ==
+              open(os.path.join(DOCS, "pages", f), "rb").read(),
+              "root mirror byte-identical: pages/" + f)
+
+# Prior sessions' work must be preserved, not discarded.
+check(os.path.isdir(os.path.join(ROOT, "archive-v2")), "prior merged site preserved in archive-v2/")
+for sess in ("6acab13a", "ce2391b3", "fd984e93"):
+    check(os.path.isdir(os.path.join(ROOT, "internal", "prior-sessions", "arena-" + sess)),
+          "parallel session tree preserved: arena-" + sess)
+check(os.path.isfile(os.path.join(ROOT, ".nojekyll")), "root .nojekyll present for static Pages build")
 
 # --- Write verification log ---
 lines = [

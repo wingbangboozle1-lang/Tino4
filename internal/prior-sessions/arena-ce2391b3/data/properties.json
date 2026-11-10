@@ -1,0 +1,187 @@
+{
+  "meta": {
+    "privacy": "No addresses, no APNs, no parcel numbers, no personal names, no trust or trustee names are stored anywhere in this project. Properties are referred to only as Property A and Property B. All dollar figures are rounded to the nearest $10.",
+    "labels": {
+      "verified_official": "Verified — official source",
+      "user_supplied": "User-supplied — not independently verified",
+      "derived": "Derived — arithmetic on user-supplied figures",
+      "unverified": "Unverified — blank by policy"
+    }
+  },
+  "properties": [
+    {
+      "id": "A",
+      "label": "Property A",
+      "location": "Cupertino, ZIP 95014, Santa Clara County, California",
+      "role": "Inherited property (subject of the decision)",
+      "market_value": {
+        "amount": 3100000,
+        "as_of": "2026-11",
+        "status": "user_supplied",
+        "source_id": null,
+        "note": "User estimate. No official parcel-level valuation without APN."
+      },
+      "solar": {
+        "installed": true,
+        "status": "user_supplied",
+        "note": "Solar stated as installed and net-credit generating; interconnection date not supplied, so NEM 2.0 vs Net Billing Tariff cannot be determined."
+      },
+      "units": 1,
+      "occupancy_now": "Owner-occupied by the current generation (assumed principal residence)",
+      "utilities_reported": {
+        "water_monthly_low": 100,
+        "water_monthly_high": 150,
+        "electricity_monthly_net": -15,
+        "electricity_note": "Reported as a net credit of roughly $10–$20 per month (site generates more than it consumes).",
+        "status": "user_supplied"
+      },
+      "insurance_reported": {
+        "annual": 1500,
+        "status": "unverified",
+        "source_id": null,
+        "note": "User estimate; no official parcel-level premium exists. Modelled as an assumption with a sensitivity range."
+      },
+      "maintenance_note": "Described by the user as lower than Property B. Modelled as a percentage of value with a range.",
+      "tax_history": [
+        {"year": 2026, "property_tax": null, "assessment": 550537, "assessment_growth": 0.02, "tax_growth": null, "status": "user_supplied", "flag": "No 2026-27 tax bill exists at the date of this research; tax left blank (not inferred)."},
+        {"year": 2025, "property_tax": 7207, "assessment": 539743, "assessment_growth": 0.02, "tax_growth": 0.029, "status": "user_supplied", "flag": null},
+        {"year": 2024, "property_tax": 7003, "assessment": 529161, "assessment_growth": 0.02, "tax_growth": 0.012, "status": "user_supplied", "flag": null},
+        {"year": 2023, "property_tax": 6917, "assessment": 518786, "assessment_growth": 0.02, "tax_growth": 0.024, "status": "user_supplied", "flag": null},
+        {"year": 2022, "property_tax": 6755, "assessment": 508614, "assessment_growth": 0.02, "tax_growth": 0.014, "status": "user_supplied", "flag": null},
+        {"year": 2021, "property_tax": 6662, "assessment": 498642, "assessment_growth": 0.01, "tax_growth": 0.015, "status": "user_supplied", "flag": null},
+        {"year": 2020, "property_tax": 6565, "assessment": 493530, "assessment_growth": 0.02, "tax_growth": 0, "status": "user_supplied", "flag": "Flat year-over-year tax with assessment rising 2% — inconsistent with a constant rate. Kept as supplied."},
+        {"year": 2019, "property_tax": 6565, "assessment": 483854, "assessment_growth": 0.02, "tax_growth": 0.028, "status": "user_supplied", "flag": null},
+        {"year": 2018, "property_tax": 6383, "assessment": 474368, "assessment_growth": 0.02, "tax_growth": 0, "status": "user_supplied", "flag": "Two consecutive years at $6,383 (2017 and 2018). Kept as supplied."},
+        {"year": 2017, "property_tax": 6383, "assessment": 465067, "assessment_growth": 0.02, "tax_growth": -0.005, "status": "user_supplied", "flag": "Negative tax growth (-0.5%) while assessment rises 2% — cannot be reproduced by a constant-rate model. Kept as supplied."},
+        {"year": 2016, "property_tax": 6414, "assessment": 455949, "assessment_growth": 0.015, "tax_growth": 0.046, "status": "user_supplied", "flag": null},
+        {"year": 2015, "property_tax": 6130, "assessment": 449101, "assessment_growth": 0.02, "tax_growth": 0.028, "status": "user_supplied", "flag": null},
+        {"year": 2014, "property_tax": 5965, "assessment": 440305, "assessment_growth": 0.005, "tax_growth": null, "status": "user_supplied", "flag": null}
+      ]
+    },
+    {
+      "id": "B",
+      "label": "Property B",
+      "location": "San Francisco Outer Sunset, ZIP 94122, City and County of San Francisco, California",
+      "role": "Existing residence and rental property; retained in all scenarios",
+      "market_value": {
+        "amount": 1800000,
+        "as_of": "2026-11",
+        "status": "user_supplied",
+        "source_id": null,
+        "note": "User estimate. No official parcel-level valuation without APN."
+      },
+      "units": 3,
+      "units_rented": 2,
+      "rent_monthly_total": 7150,
+      "occupancy_note": "The user can occupy the third (unrented) unit as a principal residence without losing the existing rental income.",
+      "utilities_reported": {
+        "water_monthly_low": 330,
+        "water_monthly_high": 400,
+        "electricity_monthly_low": 30,
+        "electricity_monthly_high": 70,
+        "status": "user_supplied"
+      },
+      "insurance_reported": {
+        "annual": 1500,
+        "status": "unverified",
+        "source_id": null,
+        "note": "Appears to be a landlord/DP-3 style figure; no official parcel-level premium exists."
+      },
+      "tax_history": [
+        {"year": 2025, "property_tax": 2439, "assessment": 114248, "assessment_growth": 0.02, "tax_growth": 0.053, "status": "user_supplied", "flag": null},
+        {"year": 2024, "property_tax": 2315, "assessment": 112008, "assessment_growth": 0.02, "tax_growth": 0.062, "status": "user_supplied", "flag": null},
+        {"year": 2023, "property_tax": 2179, "assessment": 109814, "assessment_growth": 0.02, "tax_growth": 0.034, "status": "user_supplied", "flag": null},
+        {"year": 2022, "property_tax": 2107, "assessment": 107662, "assessment_growth": 0.02, "tax_growth": 0.02, "status": "user_supplied", "flag": null},
+        {"year": 2021, "property_tax": 2066, "assessment": 105595, "assessment_growth": 0.01, "tax_growth": -0.059, "status": "user_supplied", "flag": "Tax fell 5.9% while assessment rose 1% — inconsistent with a constant rate. Kept as supplied."},
+        {"year": 2020, "property_tax": 2197, "assessment": 104513, "assessment_growth": 0.02, "tax_growth": 0.03, "status": "user_supplied", "flag": null},
+        {"year": 2019, "property_tax": 2134, "assessment": 102465, "assessment_growth": 0.02, "tax_growth": 0.035, "status": "user_supplied", "flag": null},
+        {"year": 2018, "property_tax": 2061, "assessment": 100456, "assessment_growth": 0.02, "tax_growth": 0.184, "status": "user_supplied", "flag": "18.4% tax growth on a 2% assessment increase is not explicable by rate alone."},
+        {"year": 2017, "property_tax": 1740, "assessment": 98488, "assessment_growth": 0.02, "tax_growth": 0.039, "status": "user_supplied", "flag": null},
+        {"year": 2016, "property_tax": 1675, "assessment": 96557, "assessment_growth": 0.015, "tax_growth": 0.016, "status": "user_supplied", "flag": null}
+      ]
+    }
+  ],
+  "official_rates": [
+    {
+      "id": "R-SF",
+      "jurisdiction": "City and County of San Francisco",
+      "item": "Secured property tax rate, FY 2026-27",
+      "value": 0.0118162182,
+      "units": "fraction of assessed value",
+      "status": "verified_official",
+      "source_id": "S-SF-TREAS-SECURED"
+    },
+    {
+      "id": "R-SCC-TYPICAL",
+      "jurisdiction": "Santa Clara County",
+      "item": "Composite rate for a typical tax rate area (illustration)",
+      "value": 0.011488,
+      "units": "fraction of assessed value ($1.1488 per $100)",
+      "status": "verified_official",
+      "source_id": "S-SCC-ASSESSOR-BOOKLET",
+      "note": "County's own illustrative TRA (1% base + county bonds .0388 + school bonds .100 + water bonds .010). The actual TRA for Property A cannot be looked up without the APN, which is deliberately not recorded."
+    },
+    {
+      "id": "R-SCC-BASE",
+      "jurisdiction": "Santa Clara County",
+      "item": "Statutory minimum ad valorem rate (Prop 13 base levy)",
+      "value": 0.01,
+      "units": "fraction of net taxable value",
+      "status": "verified_official",
+      "source_id": "S-SCC-ASSESSOR-ANNUAL2025"
+    },
+    {
+      "id": "R-INFLATION",
+      "jurisdiction": "California",
+      "item": "Base year value inflation factor, 2026-27 assessment roll",
+      "value": 0.02,
+      "units": "fraction per year (statutory cap)",
+      "status": "verified_official",
+      "source_id": "S-BOE-LTA26002"
+    }
+  ],
+  "derived_checks": [
+    {
+      "id": "D-A-2025",
+      "property": "A",
+      "item": "Implied effective tax rate, 2025",
+      "computation": "7207 / 539743 = 1.3352%",
+      "value": 0.013352,
+      "status": "derived",
+      "official_reference_id": "R-SCC-TYPICAL",
+      "assessment": "Implied rate is ~16% above the county's illustrative 1.1488% TRA. Plausible causes: a TRA with more bond/special-assessment load, or a special assessment line not broken out. Cannot be confirmed without the bill.",
+      "flag": "F2"
+    },
+    {
+      "id": "D-B-2025",
+      "property": "B",
+      "item": "Implied effective tax rate, 2025",
+      "computation": "2439 / 114248 = 2.1350%",
+      "value": 0.02135,
+      "status": "derived",
+      "official_reference_id": "R-SF",
+      "assessment": "Implied rate is ~81% above San Francisco's published FY2025-26 secured rate of 1.18268325%. A ten-year consistent pattern points to real parcel-level charges (special assessments / bonds / a second parcel on the same bill) rather than a transcription error, but it cannot be confirmed without the bill.",
+      "flag": "F1"
+    },
+    {
+      "id": "D-A-SERIES",
+      "property": "A",
+      "item": "Consistency of the supplied tax series with a constant rate",
+      "computation": "2014–2025 implied rates range 1.335%–1.436%",
+      "status": "derived",
+      "official_reference_id": "R-SCC-BASE",
+      "assessment": "The supplied series is internally consistent with a roughly constant rate, but two years (2017 negative growth, 2020 flat) break the pattern.",
+      "flag": "F3"
+    },
+    {
+      "id": "D-B-SERIES",
+      "property": "B",
+      "item": "Consistency of the supplied tax series with a constant rate",
+      "computation": "2016–2025 implied rates range 1.680%–2.135%",
+      "status": "derived",
+      "official_reference_id": "R-SF",
+      "assessment": "Wide drift (1.68% to 2.14%) means the supplied figures are not a single constant rate. Both 2021 (-5.9%) and 2018 (+18.4%) are anomalous.",
+      "flag": "F1"
+    }
+  ]
+}
