@@ -32,8 +32,8 @@
   {
     "id": "EC-04",
     "topic": "Chained consumer price index (C-CPI-U, annual averages), the index family used to adjust federal tax amounts",
-    "value": "2005: 113.692; 2015: 135.362; 2025: 178.697. Compound annual growth: 20 years 2.3%, 10 years 2.8%.",
-    "quote": "2005-01-01,113.692 ... 2015-01-01,135.362 ... 2025-01-01,178.697",
+    "value": "2000: 101.992; 2005: 113.692; 2015: 135.362; 2025: 178.697. Compound annual growth: 25 years 2.3%, 20 years 2.3%, 10 years 2.8%.",
+    "quote": "2000-01-01,101.992 ... 2005-01-01,113.692 ... 2015-01-01,135.362 ... 2025-01-01,178.697",
     "source_name": "Federal Reserve Bank of St. Louis (FRED), series SUUR0000SA0, source: U.S. Bureau of Labor Statistics",
     "source_url": "https://fred.stlouisfed.org/series/SUUR0000SA0",
     "status": "verified",

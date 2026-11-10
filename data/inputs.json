@@ -1,0 +1,212 @@
+{
+  "meta": {
+    "base_year": 2026,
+    "prepared_on": "2026-11-10",
+    "inheritance_years": [
+      2040,
+      2041,
+      2042,
+      2043,
+      2044,
+      2045,
+      2046,
+      2047,
+      2048,
+      2049,
+      2050
+    ],
+    "headline_year": 2045,
+    "horizon_years": 10,
+    "privacy_note": "Owner-provided assessed values and tax bills are published only in generalized form (assessed values to the nearest $5,000, tax bills to the nearest $100). No names, addresses, parcel numbers, ZIP codes or neighborhood names are stored in this repository."
+  },
+  "properties": {
+    "A": {
+      "label": "Property A",
+      "place": "Cupertino, Santa Clara County",
+      "type": "Single-family home with rooftop solar; assumed to be the trustor's principal residence",
+      "market_value": 3100000,
+      "assessed_value": 550000,
+      "latest_tax_bill": 7200,
+      "ad_valorem_rate": 0.011636,
+      "water_monthly_low": 100,
+      "water_monthly_high": 150,
+      "electricity_monthly_low": -20,
+      "electricity_monthly_high": -10,
+      "insurance_annual": 1500,
+      "rent_benchmark_monthly_4br": 6390,
+      "rent_benchmark_monthly_3br": 5870
+    },
+    "B": {
+      "label": "Property B",
+      "place": "San Francisco",
+      "type": "Residential building with three livable units; two rented, one available to live in",
+      "market_value": 1800000,
+      "assessed_value": 115000,
+      "latest_tax_bill": 2400,
+      "ad_valorem_rate": 0.0118162182,
+      "units": 3,
+      "units_rented": 2,
+      "rent_monthly": 7150,
+      "water_monthly_low": 330,
+      "water_monthly_high": 400,
+      "electricity_monthly_low": 30,
+      "electricity_monthly_high": 70,
+      "insurance_annual": 1500
+    }
+  },
+  "rules": {
+    "prop13_cap": 0.02,
+    "prop19_excluded_amount_2026": 1044586,
+    "prop19_adjustment_years": "odd",
+    "estate_exemption": {
+      "2026": 15000000,
+      "2027": 15480000
+    },
+    "estate_tax_rate": 0.4,
+    "transfer_tax_rate": 0.0011,
+    "selling_commission": 0.05
+  },
+  "series": {
+    "home_A": {
+      "label": "Home prices, San Jose-Sunnyvale-Santa Clara metro (FHFA index)",
+      "fact": "EC-01",
+      "points": {
+        "1995": 102.45,
+        "2005": 309.48,
+        "2015": 353.92,
+        "2025": 560.05
+      }
+    },
+    "home_B": {
+      "label": "Home prices, San Francisco-San Mateo-Redwood City metro division (FHFA index)",
+      "fact": "EC-02",
+      "points": {
+        "1995": 100.94,
+        "2005": 301.62,
+        "2015": 374.38,
+        "2025": 512.99
+      }
+    },
+    "cpi": {
+      "label": "Consumer prices (CPI-U, U.S.)",
+      "fact": "EC-03",
+      "points": {
+        "1995": 152.383,
+        "2005": 195.267,
+        "2015": 237.002,
+        "2025": 321.962
+      }
+    },
+    "ccpi": {
+      "label": "Chained consumer prices (C-CPI-U, U.S.)",
+      "fact": "EC-04",
+      "points": {
+        "2000": 101.992,
+        "2005": 113.692,
+        "2015": 135.362,
+        "2025": 178.697
+      }
+    },
+    "rent": {
+      "label": "Residential rents, San Francisco-Oakland-Hayward (CPI rent index)",
+      "fact": "CO-10",
+      "points": {
+        "1995": 169.95,
+        "2005": 262.967,
+        "2015": 371.075,
+        "2025": 519.667
+      }
+    },
+    "water": {
+      "label": "Water, sewer and trash prices (CPI, U.S.)",
+      "fact": "CO-08",
+      "points": {
+        "1998": 101.65,
+        "2005": 130.333,
+        "2015": 213.972,
+        "2025": 316.943
+      }
+    },
+    "electricity": {
+      "label": "Electricity prices (CPI, U.S.)",
+      "fact": "CO-09",
+      "points": {
+        "1995": 129.55,
+        "2005": 150.825,
+        "2015": 209.177,
+        "2025": 291.928
+      }
+    }
+  },
+  "sf_allowable_increases": {
+    "fact": "RR-03",
+    "note": "Annual allowable increase, percent, for periods beginning March 1 of each year (official Rent Board list).",
+    "by_start_year": {
+      "1997": 1.8,
+      "1998": 2.2,
+      "1999": 1.7,
+      "2000": 2.9,
+      "2001": 2.8,
+      "2002": 2.7,
+      "2003": 0.8,
+      "2004": 0.6,
+      "2005": 1.2,
+      "2006": 1.7,
+      "2007": 1.5,
+      "2008": 2.0,
+      "2009": 2.2,
+      "2010": 0.1,
+      "2011": 0.5,
+      "2012": 1.9,
+      "2013": 1.9,
+      "2014": 1.0,
+      "2015": 1.9,
+      "2016": 1.6,
+      "2017": 2.2,
+      "2018": 1.6,
+      "2019": 2.6,
+      "2020": 1.8,
+      "2021": 0.7,
+      "2022": 2.3,
+      "2023": 3.6,
+      "2024": 1.7,
+      "2025": 1.4,
+      "2026": 1.6
+    }
+  },
+  "investment_cases": [
+    {
+      "key": "treasury",
+      "label": "Treasury bonds",
+      "rate": 0.0529,
+      "basis": "20-year U.S. Treasury yield on November 9, 2026",
+      "fact": "EC-07",
+      "income_share": 1.0
+    },
+    {
+      "key": "balanced",
+      "label": "60% stocks / 40% bonds",
+      "rate": 0.08924,
+      "basis": "60% x 11.34% + 40% x 5.30% (index-fund returns since January 1988)",
+      "fact": "EC-05",
+      "income_share": 0.2376
+    },
+    {
+      "key": "stocks",
+      "label": "U.S. stock index fund",
+      "rate": 0.1134,
+      "basis": "S&P 500 index fund return since January 1988",
+      "fact": "EC-05",
+      "income_share": 0.0
+    }
+  ],
+  "illustrative_tax": {
+    "ordinary_federal": 0.24,
+    "ordinary_california": 0.093,
+    "capital_gain_federal": 0.2,
+    "niit": 0.038,
+    "capital_gain_california": 0.123,
+    "home_sale_exclusion": 250000,
+    "note": "Illustrative rates from the official schedules: yearly income at the federal 24% and California 9.3% brackets; a large one-time gain at the top federal capital-gain rate (20%) plus the 3.8% net investment income tax and California's 12.3% bracket. The beneficiary's actual bracket is unknown."
+  }
+}

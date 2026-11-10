@@ -75,8 +75,8 @@
   {
     "id": "CO-08",
     "topic": "Water and sewer price trend (U.S. city average index for water, sewer and trash collection)",
-    "value": "2005: 130.333; 2015: 213.972; 2025: 316.943. Compound annual growth: 20 years 4.5%, 10 years 4.0%.",
-    "quote": "2005-01-01,130.333 ... 2015-01-01,213.972 ... 2025-01-01,316.943",
+    "value": "1998: 101.650; 2005: 130.333; 2015: 213.972; 2025: 316.943. Compound annual growth: 27 years 4.3%, 20 years 4.5%, 10 years 4.0%.",
+    "quote": "1998-01-01,101.650 ... 2005-01-01,130.333 ... 2015-01-01,213.972 ... 2025-01-01,316.943",
     "source_name": "Federal Reserve Bank of St. Louis (FRED), series CUSR0000SEHG, source: U.S. Bureau of Labor Statistics",
     "source_url": "https://fred.stlouisfed.org/series/CUSR0000SEHG",
     "status": "verified",
