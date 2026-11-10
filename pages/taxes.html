@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Taxes &amp; Projections · Bay Area Inheritance Analysis</title>
+<meta name="description" content="Internal decision analysis for two Bay Area residential properties. No personal identifiers.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-inner">
+  <div class="brand"><span class="dot"></span> Bay Area Inheritance Analysis</div>
+  <nav class="main"><a href="../index.html">Overview</a><a href="../pages/properties.html">Properties</a><a class="active" href="../pages/taxes.html">Taxes & Projections</a><a href="../pages/costs.html">Operating Costs</a><a href="../pages/decisions.html">Decision Analysis</a><a href="../pages/process.html">Inheritance Process</a><a href="../pages/laws.html">Law Tracker</a><a href="../pages/sources.html">Sources</a><a href="../pages/flagged.html">Flagged for Review</a></nav>
+</div></header>
+<main class="wrap">
+
+<section class="hero">
+  <div class="eyebrow">Taxes &amp; projections</div>
+  <h1>The property tax mechanics, and 40 years of them</h1>
+  <p class="lede">California property tax is assessed value × tax rate, plus direct charges. Assessed value is the Prop 13 base
+  value grown by an inflation factor that cannot exceed 2% a year — until a change of ownership resets it to market value. That reset is
+  the whole inheritance question.</p>
+</section>
+
+<h2 class="anchor" id="mechanics">How the bill is built</h2>
+<ol class="steps">
+  <li><h4>Start with the base year value</h4><p class="why">Set at the last change of ownership (or 1975–76 roll value).</p>
+    <p>Source: <a class="src" href="https://asr.santaclaracounty.gov/faq/understanding-proposition-13" target="_blank" rel="noopener">Santa Clara County Assessor — Understanding Prop 13</a>.</p></li>
+  <li><h4>Grow it by the annual inflation factor, maximum 2%</h4><p class="why">2026-27 factor: 1.02, the ninth consecutive year at the cap.</p>
+    <p>Source: <a class="src" href="https://boe.ca.gov/proptaxes/pdf/lta26002.pdf" target="_blank" rel="noopener">BOE Letter to Assessors 2026/002</a>.</p></li>
+  <li><h4>Multiply by the tax rate area's rate</h4><p class="why">1% constitutional levy plus voter-approved debt. Santa Clara County guidance: plan on 1.2%; San Francisco's FY 2026-27 secured rate is 1.18162182%.</p>
+    <p>Sources: <a class="src" href="https://asr.santaclaracounty.gov/faq/general-questions" target="_blank" rel="noopener">SCC Assessor FAQ</a>,
+    <a class="src" href="https://sftreasurer.org/property/secured-property-taxes" target="_blank" rel="noopener">SF Treasurer</a>.</p></li>
+  <li><h4>Add direct charges and subtract exemptions</h4><p class="why">Parcel taxes and special assessments are flat or per-unit amounts, not percentages.</p>
+    <p>Source: <a class="src" href="https://sftreasurer.org/property/parcel-tax-exemptions-and-special-assessments" target="_blank" rel="noopener">SF Treasurer — parcel tax exemptions</a>.</p></li>
+</ol>
+
+<h2 class="anchor" id="reconcile">Does the model reproduce the real bills?</h2>
+<div class="tablewrap"><table class="">
+<caption>Reconciling the bill: ad valorem component vs. everything else</caption>
+<thead><tr>
+<th>Property</th>
+<th>Year</th>
+<th>Assessed value</th>
+<th>Statutory rate</th>
+<th>Rate × value</th>
+<th>Reported total tax</th>
+<th>Residual (charges)</th>
+<th>Rate used</th>
+</tr></thead><tbody>
+<tr>
+<td>Cupertino</td>
+<td>2025</td>
+<td class="num">$539,743</td>
+<td class="num">1.2000%</td>
+<td class="num">$6,477</td>
+<td class="num">$7,207</td>
+<td class="num">$730</td>
+<td>1.20% county planning rate <span class='small'>(SCC-FAQ)</span></td>
+</tr>
+<tr>
+<td>San Francisco</td>
+<td>2025</td>
+<td class="num">$114,248</td>
+<td class="num">1.18162182%</td>
+<td class="num">$1,350</td>
+<td class="num">$2,439</td>
+<td class="num">$1,089</td>
+<td>SF secured rate <span class='small'>(SF-TREAS)</span></td>
+</tr>
+</tbody></table></div>
+<p class="tnote">The residual is the part of the bill the statutory rate does not explain: voter-approved debt, parcel taxes and direct assessments. The split cannot be confirmed without the annual bill itself, so the model carries the residual as a separate, CPI-grown line. Cupertino's residual is small and stable; San Francisco's is not — flagged.</p>
+
+<h2 class="anchor" id="cupertino-projection">Cupertino projection</h2>
+<div class="tablewrap"><table class="">
+<caption>Cupertino — projected value, Prop 13 assessed value and tax, 2026–2065</caption>
+<thead><tr>
+<th>Year</th>
+<th>Market value @ 3.5%/yr</th>
+<th>Assessed value @ 2% cap</th>
+<th>Annual tax @ 1.20% + charges</th>
+<th>Tax as % of value</th>
+<th>Other carrying costs</th>
+</tr></thead><tbody>
+<tr>
+<td>2026</td>
+<td class="num">$3,100,000</td>
+<td class="num">$550,540</td>
+<td class="num">$7,340</td>
+<td class="num">0.24%</td>
+<td class="num">$8,820</td>
+</tr>
+<tr>
+<td>2027</td>
+<td class="num">$3,208,500</td>
+<td class="num">$561,550</td>
+<td class="num">$7,490</td>
+<td class="num">0.23%</td>
+<td class="num">$9,220</td>
+</tr>
+<tr>
+<td>2028</td>
+<td class="num">$3,320,800</td>
+<td class="num">$572,780</td>
+<td class="num">$7,650</td>
+<td class="num">0.23%</td>
+<td class="num">$9,640</td>
+</tr>
+<tr>
+<td>2029</td>
+<td class="num">$3,437,030</td>
+<td class="num">$584,230</td>
+<td class="num">$7,810</td>
+<td class="num">0.23%</td>
+<td class="num">$10,080</td>
+</tr>
+<tr>
+<td>2030</td>
+<td class="num">$3,557,320</td>
+<td class="num">$595,920</td>
+<td class="num">$7,970</td>
+<td class="num">0.22%</td>
+<td class="num">$10,520</td>
+</tr>
+<tr>
+<td>2031</td>
+<td class="num">$3,681,830</td>
+<td class="num">$607,840</td>
+<td class="num">$8,140</td>
+<td class="num">0.22%</td>
+<td class="num">$11,000</td>
+</tr>
+<tr>
+<td>2032</td>
+<td class="num">$3,810,690</td>
+<td class="num">$619,990</td>
+<td class="num">$8,310</td>
+<td class="num">0.22%</td>
+<td class="num">$11,500</td>
+</tr>
+<tr>
+<td>2033</td>
+<td class="num">$3,944,070</td>
+<td class="num">$632,390</td>
+<td class="num">$8,490</td>
+<td class="num">0.22%</td>
+<td class="num">$12,030</td>
+</tr>
+<tr>
+<td>2034</td>
+<td class="num">$4,082,110</td>
+<td class="num">$645,040</td>
+<td class="num">$8,670</td>
+<td class="num">0.21%</td>
+<td class="num">$12,570</td>
+</tr>
+<tr>
+<td>2035</td>
+<td class="num">$4,224,980</td>
+<td class="num">$657,940</td>
+<td class="num">$8,850</td>
+<td class="num">0.21%</td>
+<td class="num">$13,140</td>
+</tr>
+<tr>
+<td>2036</td>
+<td class="num">$4,372,860</td>
+<td class="num">$671,100</td>
+<td class="num">$9,030</td>
+<td class="num">0.21%</td>
+<td class="num">$13,740</td>
+</tr>
+<tr>
+<td>2037</td>
+<td class="num">$4,525,910</td>
+<td class="num">$684,520</td>
+<td class="num">$9,220</td>
+<td class="num">0.20%</td>
+<td class="num">$14,380</td>
+</tr>
+<tr>
+<td>2038</td>
+<td class="num">$4,684,310</td>
+<td class="num">$698,210</td>
+<td class="num">$9,420</td>
+<td class="num">0.20%</td>
+<td class="num">$15,030</td>
+</tr>
+<tr>
+<td>2039</td>
+<td class="num">$4,848,260</td>
+<td class="num">$712,180</td>
+<td class="num">$9,620</td>
+<td class="num">0.20%</td>
+<td class="num">$15,720</td>
+</tr>
+<tr>
+<td>2040</td>
+<td class="num">$5,017,950</td>
+<td class="num">$726,420</td>
+<td class="num">$9,820</td>
+<td class="num">0.20%</td>
+<td class="num">$16,440</td>
+</tr>
+<tr>
+<td>2041</td>
+<td class="num">$5,193,580</td>
+<td class="num">$740,950</td>
+<td class="num">$10,030</td>
+<td class="num">0.19%</td>
+<td class="num">$17,200</td>
+</tr>
+<tr>
+<td>2042</td>
+<td class="num">$5,375,360</td>
+<td class="num">$755,770</td>
+<td class="num">$10,240</td>
+<td class="num">0.19%</td>
+<td class="num">$17,980</td>
+</tr>
+<tr>
+<td>2043</td>
+<td class="num">$5,563,490</td>
+<td class="num">$770,880</td>
+<td class="num">$10,460</td>
+<td class="num">0.19%</td>
+<td class="num">$18,820</td>
+</tr>
+<tr>
+<td>2044</td>
+<td class="num">$5,758,220</td>
+<td class="num">$786,300</td>
+<td class="num">$10,680</td>
+<td class="num">0.19%</td>
+<td class="num">$19,680</td>
+</tr>
+<tr>
+<td>2045</td>
+<td class="num">$5,959,750</td>
+<td class="num">$802,030</td>
+<td class="num">$10,900</td>
+<td class="num">0.18%</td>
+<td class="num">$20,590</td>
+</tr>
+<tr>
+<td>2046</td>
+<td class="num">$6,168,350</td>
+<td class="num">$818,070</td>
+<td class="num">$11,140</td>
+<td class="num">0.18%</td>
+<td class="num">$21,550</td>
+</tr>
+<tr>
+<td>2047</td>
+<td class="num">$6,384,240</td>
+<td class="num">$834,430</td>
+<td class="num">$11,370</td>
+<td class="num">0.18%</td>
+<td class="num">$22,540</td>
+</tr>
+<tr>
+<td>2048</td>
+<td class="num">$6,607,690</td>
+<td class="num">$851,120</td>
+<td class="num">$11,610</td>
+<td class="num">0.18%</td>
+<td class="num">$23,590</td>
+</tr>
+<tr>
+<td>2049</td>
+<td class="num">$6,838,950</td>
+<td class="num">$868,140</td>
+<td class="num">$11,860</td>
+<td class="num">0.17%</td>
+<td class="num">$24,690</td>
+</tr>
+<tr>
+<td>2050</td>
+<td class="num">$7,078,320</td>
+<td class="num">$885,500</td>
+<td class="num">$12,110</td>
+<td class="num">0.17%</td>
+<td class="num">$25,830</td>
+</tr>
+<tr>
+<td>2051</td>
+<td class="num">$7,326,060</td>
+<td class="num">$903,210</td>
+<td class="num">$12,370</td>
+<td class="num">0.17%</td>
+<td class="num">$27,040</td>
+</tr>
+<tr>
+<td>2052</td>
+<td class="num">$7,582,470</td>
+<td class="num">$921,280</td>
+<td class="num">$12,630</td>
+<td class="num">0.17%</td>
+<td class="num">$28,280</td>
+</tr>
+<tr>
+<td>2053</td>
+<td class="num">$7,847,860</td>
+<td class="num">$939,700</td>
+<td class="num">$12,900</td>
+<td class="num">0.16%</td>
+<td class="num">$29,610</td>
+</tr>
+<tr>
+<td>2054</td>
+<td class="num">$8,122,530</td>
+<td class="num">$958,500</td>
+<td class="num">$13,170</td>
+<td class="num">0.16%</td>
+<td class="num">$31,000</td>
+</tr>
+<tr>
+<td>2055</td>
+<td class="num">$8,406,820</td>
+<td class="num">$977,670</td>
+<td class="num">$13,450</td>
+<td class="num">0.16%</td>
+<td class="num">$32,450</td>
+</tr>
+<tr>
+<td>2056</td>
+<td class="num">$8,701,060</td>
+<td class="num">$997,220</td>
+<td class="num">$13,740</td>
+<td class="num">0.16%</td>
+<td class="num">$33,980</td>
+</tr>
+<tr>
+<td>2057</td>
+<td class="num">$9,005,600</td>
+<td class="num">$1,017,170</td>
+<td class="num">$14,030</td>
+<td class="num">0.16%</td>
+<td class="num">$35,570</td>
+</tr>
+<tr>
+<td>2058</td>
+<td class="num">$9,320,790</td>
+<td class="num">$1,037,510</td>
+<td class="num">$14,330</td>
+<td class="num">0.15%</td>
+<td class="num">$37,250</td>
+</tr>
+<tr>
+<td>2059</td>
+<td class="num">$9,647,020</td>
+<td class="num">$1,058,260</td>
+<td class="num">$14,640</td>
+<td class="num">0.15%</td>
+<td class="num">$38,990</td>
+</tr>
+<tr>
+<td>2060</td>
+<td class="num">$9,984,670</td>
+<td class="num">$1,079,420</td>
+<td class="num">$14,950</td>
+<td class="num">0.15%</td>
+<td class="num">$40,850</td>
+</tr>
+<tr>
+<td>2061</td>
+<td class="num">$10,334,130</td>
+<td class="num">$1,101,010</td>
+<td class="num">$15,270</td>
+<td class="num">0.15%</td>
+<td class="num">$42,770</td>
+</tr>
+<tr>
+<td>2062</td>
+<td class="num">$10,695,820</td>
+<td class="num">$1,123,030</td>
+<td class="num">$15,590</td>
+<td class="num">0.15%</td>
+<td class="num">$44,790</td>
+</tr>
+<tr>
+<td>2063</td>
+<td class="num">$11,070,180</td>
+<td class="num">$1,145,490</td>
+<td class="num">$15,930</td>
+<td class="num">0.14%</td>
+<td class="num">$46,910</td>
+</tr>
+<tr>
+<td>2064</td>
+<td class="num">$11,457,640</td>
+<td class="num">$1,168,400</td>
+<td class="num">$16,270</td>
+<td class="num">0.14%</td>
+<td class="num">$49,140</td>
+</tr>
+<tr>
+<td>2065</td>
+<td class="num">$11,858,650</td>
+<td class="num">$1,191,770</td>
+<td class="num">$16,610</td>
+<td class="num">0.14%</td>
+<td class="num">$51,490</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Assessed value compounds at the statutory 2% ceiling every year. Market value compounds at the model's 3.5% base case. Both are projections, not predictions; the assumption set is on the <a href='sources.html#assumptions'>Sources</a> page. 'Other carrying costs' = insurance + water + electricity + maintenance.</p>
+
+<h2 class="anchor" id="sf-projection">San Francisco projection</h2>
+<div class="tablewrap"><table class="">
+<caption>San Francisco — projected value, assessed value, tax and rent, 2026–2065</caption>
+<thead><tr>
+<th>Year</th>
+<th>Market value @ 3.5%/yr</th>
+<th>Assessed value @ 2% cap</th>
+<th>Annual tax @ 1.18162182% + charges</th>
+<th>Tax as % of value</th>
+<th>Rent, two rent-controlled units</th>
+</tr></thead><tbody>
+<tr>
+<td>2026</td>
+<td class="num">$1,800,000</td>
+<td class="num">$116,530</td>
+<td class="num">$2,470</td>
+<td class="num">0.14%</td>
+<td class="num">$85,800</td>
+</tr>
+<tr>
+<td>2027</td>
+<td class="num">$1,863,000</td>
+<td class="num">$118,860</td>
+<td class="num">$2,530</td>
+<td class="num">0.14%</td>
+<td class="num">$87,170</td>
+</tr>
+<tr>
+<td>2028</td>
+<td class="num">$1,928,200</td>
+<td class="num">$121,240</td>
+<td class="num">$2,590</td>
+<td class="num">0.13%</td>
+<td class="num">$88,570</td>
+</tr>
+<tr>
+<td>2029</td>
+<td class="num">$1,995,690</td>
+<td class="num">$123,670</td>
+<td class="num">$2,650</td>
+<td class="num">0.13%</td>
+<td class="num">$89,980</td>
+</tr>
+<tr>
+<td>2030</td>
+<td class="num">$2,065,540</td>
+<td class="num">$126,140</td>
+<td class="num">$2,720</td>
+<td class="num">0.13%</td>
+<td class="num">$91,420</td>
+</tr>
+<tr>
+<td>2031</td>
+<td class="num">$2,137,840</td>
+<td class="num">$128,660</td>
+<td class="num">$2,780</td>
+<td class="num">0.13%</td>
+<td class="num">$92,890</td>
+</tr>
+<tr>
+<td>2032</td>
+<td class="num">$2,212,660</td>
+<td class="num">$131,240</td>
+<td class="num">$2,850</td>
+<td class="num">0.13%</td>
+<td class="num">$94,370</td>
+</tr>
+<tr>
+<td>2033</td>
+<td class="num">$2,290,100</td>
+<td class="num">$133,860</td>
+<td class="num">$2,920</td>
+<td class="num">0.13%</td>
+<td class="num">$95,880</td>
+</tr>
+<tr>
+<td>2034</td>
+<td class="num">$2,370,260</td>
+<td class="num">$136,540</td>
+<td class="num">$2,990</td>
+<td class="num">0.13%</td>
+<td class="num">$97,420</td>
+</tr>
+<tr>
+<td>2035</td>
+<td class="num">$2,453,220</td>
+<td class="num">$139,270</td>
+<td class="num">$3,070</td>
+<td class="num">0.13%</td>
+<td class="num">$98,980</td>
+</tr>
+<tr>
+<td>2036</td>
+<td class="num">$2,539,080</td>
+<td class="num">$142,050</td>
+<td class="num">$3,140</td>
+<td class="num">0.12%</td>
+<td class="num">$100,560</td>
+</tr>
+<tr>
+<td>2037</td>
+<td class="num">$2,627,950</td>
+<td class="num">$144,890</td>
+<td class="num">$3,220</td>
+<td class="num">0.12%</td>
+<td class="num">$102,170</td>
+</tr>
+<tr>
+<td>2038</td>
+<td class="num">$2,719,920</td>
+<td class="num">$147,790</td>
+<td class="num">$3,300</td>
+<td class="num">0.12%</td>
+<td class="num">$103,800</td>
+</tr>
+<tr>
+<td>2039</td>
+<td class="num">$2,815,120</td>
+<td class="num">$150,750</td>
+<td class="num">$3,380</td>
+<td class="num">0.12%</td>
+<td class="num">$105,460</td>
+</tr>
+<tr>
+<td>2040</td>
+<td class="num">$2,913,650</td>
+<td class="num">$153,760</td>
+<td class="num">$3,460</td>
+<td class="num">0.12%</td>
+<td class="num">$107,150</td>
+</tr>
+<tr>
+<td>2041</td>
+<td class="num">$3,015,630</td>
+<td class="num">$156,840</td>
+<td class="num">$3,550</td>
+<td class="num">0.12%</td>
+<td class="num">$108,870</td>
+</tr>
+<tr>
+<td>2042</td>
+<td class="num">$3,121,170</td>
+<td class="num">$159,970</td>
+<td class="num">$3,640</td>
+<td class="num">0.12%</td>
+<td class="num">$110,610</td>
+</tr>
+<tr>
+<td>2043</td>
+<td class="num">$3,230,420</td>
+<td class="num">$163,170</td>
+<td class="num">$3,730</td>
+<td class="num">0.12%</td>
+<td class="num">$112,380</td>
+</tr>
+<tr>
+<td>2044</td>
+<td class="num">$3,343,480</td>
+<td class="num">$166,440</td>
+<td class="num">$3,820</td>
+<td class="num">0.11%</td>
+<td class="num">$114,180</td>
+</tr>
+<tr>
+<td>2045</td>
+<td class="num">$3,460,500</td>
+<td class="num">$169,770</td>
+<td class="num">$3,920</td>
+<td class="num">0.11%</td>
+<td class="num">$116,000</td>
+</tr>
+<tr>
+<td>2046</td>
+<td class="num">$3,581,620</td>
+<td class="num">$173,160</td>
+<td class="num">$4,010</td>
+<td class="num">0.11%</td>
+<td class="num">$117,860</td>
+</tr>
+<tr>
+<td>2047</td>
+<td class="num">$3,706,980</td>
+<td class="num">$176,630</td>
+<td class="num">$4,110</td>
+<td class="num">0.11%</td>
+<td class="num">$119,740</td>
+</tr>
+<tr>
+<td>2048</td>
+<td class="num">$3,836,720</td>
+<td class="num">$180,160</td>
+<td class="num">$4,220</td>
+<td class="num">0.11%</td>
+<td class="num">$121,660</td>
+</tr>
+<tr>
+<td>2049</td>
+<td class="num">$3,971,010</td>
+<td class="num">$183,760</td>
+<td class="num">$4,320</td>
+<td class="num">0.11%</td>
+<td class="num">$123,610</td>
+</tr>
+<tr>
+<td>2050</td>
+<td class="num">$4,109,990</td>
+<td class="num">$187,440</td>
+<td class="num">$4,430</td>
+<td class="num">0.11%</td>
+<td class="num">$125,580</td>
+</tr>
+<tr>
+<td>2051</td>
+<td class="num">$4,253,840</td>
+<td class="num">$191,180</td>
+<td class="num">$4,540</td>
+<td class="num">0.11%</td>
+<td class="num">$127,590</td>
+</tr>
+<tr>
+<td>2052</td>
+<td class="num">$4,402,730</td>
+<td class="num">$195,010</td>
+<td class="num">$4,650</td>
+<td class="num">0.11%</td>
+<td class="num">$129,640</td>
+</tr>
+<tr>
+<td>2053</td>
+<td class="num">$4,556,820</td>
+<td class="num">$198,910</td>
+<td class="num">$4,770</td>
+<td class="num">0.10%</td>
+<td class="num">$131,710</td>
+</tr>
+<tr>
+<td>2054</td>
+<td class="num">$4,716,310</td>
+<td class="num">$202,890</td>
+<td class="num">$4,890</td>
+<td class="num">0.10%</td>
+<td class="num">$133,820</td>
+</tr>
+<tr>
+<td>2055</td>
+<td class="num">$4,881,380</td>
+<td class="num">$206,940</td>
+<td class="num">$5,010</td>
+<td class="num">0.10%</td>
+<td class="num">$135,960</td>
+</tr>
+<tr>
+<td>2056</td>
+<td class="num">$5,052,230</td>
+<td class="num">$211,080</td>
+<td class="num">$5,140</td>
+<td class="num">0.10%</td>
+<td class="num">$138,130</td>
+</tr>
+<tr>
+<td>2057</td>
+<td class="num">$5,229,060</td>
+<td class="num">$215,300</td>
+<td class="num">$5,270</td>
+<td class="num">0.10%</td>
+<td class="num">$140,340</td>
+</tr>
+<tr>
+<td>2058</td>
+<td class="num">$5,412,070</td>
+<td class="num">$219,610</td>
+<td class="num">$5,400</td>
+<td class="num">0.10%</td>
+<td class="num">$142,590</td>
+</tr>
+<tr>
+<td>2059</td>
+<td class="num">$5,601,500</td>
+<td class="num">$224,000</td>
+<td class="num">$5,540</td>
+<td class="num">0.10%</td>
+<td class="num">$144,870</td>
+</tr>
+<tr>
+<td>2060</td>
+<td class="num">$5,797,550</td>
+<td class="num">$228,480</td>
+<td class="num">$5,670</td>
+<td class="num">0.10%</td>
+<td class="num">$147,190</td>
+</tr>
+<tr>
+<td>2061</td>
+<td class="num">$6,000,460</td>
+<td class="num">$233,050</td>
+<td class="num">$5,820</td>
+<td class="num">0.10%</td>
+<td class="num">$149,540</td>
+</tr>
+<tr>
+<td>2062</td>
+<td class="num">$6,210,480</td>
+<td class="num">$237,710</td>
+<td class="num">$5,970</td>
+<td class="num">0.10%</td>
+<td class="num">$151,940</td>
+</tr>
+<tr>
+<td>2063</td>
+<td class="num">$6,427,850</td>
+<td class="num">$242,470</td>
+<td class="num">$6,120</td>
+<td class="num">0.10%</td>
+<td class="num">$154,370</td>
+</tr>
+<tr>
+<td>2064</td>
+<td class="num">$6,652,820</td>
+<td class="num">$247,320</td>
+<td class="num">$6,270</td>
+<td class="num">0.09%</td>
+<td class="num">$156,840</td>
+</tr>
+<tr>
+<td>2065</td>
+<td class="num">$6,885,670</td>
+<td class="num">$252,260</td>
+<td class="num">$6,430</td>
+<td class="num">0.09%</td>
+<td class="num">$159,350</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Rent on the two existing tenancies grows at 1.6% a year, the maximum allowed for the March 2026–February 2027 period under the San Francisco Rent Ordinance. That cap is reset annually, so 1.6% is a conservative constant rather than a forecast.</p>
+
+<h2 class="anchor" id="prop19">What Prop 19 does to the Cupertino bill</h2>
+<p>If the transfer qualifies, the heir's taxable value is the parent's factored base plus any value above the
+indexed $1,000,000 cap. Because the base is only about $802,030 against a
+$5,959,750 value at 2045, most of the value is still reassessed — the exclusion is real but partial.
+If the transfer does not qualify, the entire market value is enrolled.</p>
+<div class="tablewrap"><table class="">
+<caption>Prop 19 at three possible inheritance dates</caption>
+<thead><tr>
+<th>Year</th>
+<th>Parent's factored base</th>
+<th>Market value at death</th>
+<th>Cap (indexed $1M)</th>
+<th>Excluded ceiling (base + cap)</th>
+<th>Taxable if claimed &amp; occupied</th>
+<th>Taxable if not claimed</th>
+<th>Tax if claimed</th>
+<th>Tax if not claimed</th>
+</tr></thead><tbody>
+<tr>
+<td>2040</td>
+<td class="num">$726,420</td>
+<td class="num">$5,017,950</td>
+<td class="num">$1,475,970</td>
+<td class="num">$2,202,390</td>
+<td class="num">$3,541,980</td>
+<td class="num">$5,017,950</td>
+<td class="num">$43,610</td>
+<td class="num">$61,320</td>
+</tr>
+<tr>
+<td>2045</td>
+<td class="num">$802,030</td>
+<td class="num">$5,959,750</td>
+<td class="num">$1,669,930</td>
+<td class="num">$2,471,960</td>
+<td class="num">$4,289,830</td>
+<td class="num">$5,959,750</td>
+<td class="num">$52,760</td>
+<td class="num">$72,800</td>
+</tr>
+<tr>
+<td>2050</td>
+<td class="num">$885,500</td>
+<td class="num">$7,078,320</td>
+<td class="num">$1,889,370</td>
+<td class="num">$2,774,870</td>
+<td class="num">$5,188,950</td>
+<td class="num">$7,078,320</td>
+<td class="num">$63,750</td>
+<td class="num">$86,420</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Formula from <a class='src' href='https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2' target='_blank' rel='noopener'>R&amp;TC §63.2(d)</a>: new taxable value = parent's factored base + (market value − (base + indexed $1M)), floored at the base. The indexed cap grows at an assumed 2.5%/yr — the BOE re-indexes the $1M amount every two years and has not published a 2040s figure.</p>
+
+<div class="callout warn">
+  <div class="h">The eligibility trap</div>
+  <p>The exclusion requires the property to have been the <strong>transferor's</strong> principal residence, and then the
+  <strong>transferee's</strong> principal residence within one year, with a homeowners' (or disabled veterans') exemption filed within
+  that same year. Source:
+  <a class="src" href="https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2" target="_blank" rel="noopener">Santa Clara County Assessor</a>,
+  <a class="src" href="https://boe.ca.gov/proptaxes/pdf/lta25015.pdf" target="_blank" rel="noopener">BOE LTA 2025/015</a>.
+  A trust alone does not create the exclusion, and renting the house out after moving in ends it.</p>
+</div>
+
+<h2 class="anchor" id="estate">Federal estate tax exposure over time</h2>
+<p>The federal exclusion is $15,000,000 for 2026 deaths and indexed thereafter. California has no estate or inheritance tax.
+Whatever the cash inheritance turns out to be (<code>[AMOUNT REDACTED]</code>), the only death-tax question is whether the total
+estate exceeds the indexed federal exclusion.</p>
+<div class="tablewrap"><table class="">
+<caption>Federal estate tax: exemption and tax by estate size, 2026–2065</caption>
+<thead><tr>
+<th>Year of death</th>
+<th>Exclusion (indexed)</th>
+<th>Estate $10M</th>
+<th>Estate $15M</th>
+<th>Estate $20M</th>
+<th>Estate $25M</th>
+<th>Estate $30M</th>
+</tr></thead><tbody>
+<tr>
+<td>2026</td>
+<td class="num">$15,000,000</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$2,000,000</td>
+<td class="num">$4,000,000</td>
+<td class="num">$6,000,000</td>
+</tr>
+<tr>
+<td>2030</td>
+<td class="num">$16,557,190</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$1,377,120</td>
+<td class="num">$3,377,120</td>
+<td class="num">$5,377,120</td>
+</tr>
+<tr>
+<td>2035</td>
+<td class="num">$18,732,940</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$506,820</td>
+<td class="num">$2,506,820</td>
+<td class="num">$4,506,820</td>
+</tr>
+<tr>
+<td>2040</td>
+<td class="num">$21,194,610</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$1,522,160</td>
+<td class="num">$3,522,160</td>
+</tr>
+<tr>
+<td>2045</td>
+<td class="num">$23,979,750</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$408,100</td>
+<td class="num">$2,408,100</td>
+</tr>
+<tr>
+<td>2050</td>
+<td class="num">$27,130,890</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$1,147,640</td>
+</tr>
+<tr>
+<td>2055</td>
+<td class="num">$30,696,110</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+</tr>
+<tr>
+<td>2060</td>
+<td class="num">$34,729,830</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+</tr>
+<tr>
+<td>2065</td>
+<td class="num">$39,293,620</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+<td class="num">$0</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">2026 exclusion of $15,000,000 is verified (IRS). Later years assume 2.5%/yr indexing from 2026 — an assumption, flagged. California adds nothing on top: there is no state estate or inheritance tax.</p>
+
+</main>
+<footer><div class="wrap">
+  <div><strong>Internal decision analysis.</strong> No names, addresses, parcel numbers or trust identifiers appear on this site.</div>
+  <div>Sources retrieved 2026-11-10. Figures rounded to the nearest $10. Not legal, tax or investment advice.</div>
+</div></footer>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operating Costs · Bay Area Inheritance Analysis</title>
+<meta name="description" content="Internal decision analysis for two Bay Area residential properties. No personal identifiers.">
+<meta name="robots" content="noindex">
+<link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+<header class="top"><div class="wrap top-inner">
+  <div class="brand"><span class="dot"></span> Bay Area Inheritance Analysis</div>
+  <nav class="main"><a href="../index.html">Overview</a><a href="../pages/properties.html">Properties</a><a href="../pages/taxes.html">Taxes & Projections</a><a class="active" href="../pages/costs.html">Operating Costs</a><a href="../pages/decisions.html">Decision Analysis</a><a href="../pages/process.html">Inheritance Process</a><a href="../pages/laws.html">Law Tracker</a><a href="../pages/sources.html">Sources</a><a href="../pages/flagged.html">Flagged for Review</a></nav>
+</div></header>
+<main class="wrap">
+
+<section class="hero">
+  <div class="eyebrow">Operating costs</div>
+  <h1>Insurance, water, power and upkeep</h1>
+  <p class="lede">These are the numbers that quietly decide whether keeping a house is a good idea. Two of the four categories
+  are owner-reported, one is an estimate that no agency publishes at parcel level, and one is a modelling assumption — each is
+  labelled.</p>
+</section>
+
+<h2 class="anchor" id="build">2026 build-up</h2>
+<div class="tablewrap"><table class="">
+<caption>2026 operating cost build-up</caption>
+<thead><tr>
+<th>Line item</th>
+<th>Cupertino / yr</th>
+<th>Cupertino / mo</th>
+<th>San Francisco / yr</th>
+<th>San Francisco / mo</th>
+<th>Basis</th>
+<th>Status</th>
+</tr></thead><tbody>
+<tr>
+<td>Home insurance</td>
+<td class="num">$1,500</td>
+<td class="num">$125</td>
+<td class="num">$1,500</td>
+<td class="num">$125</td>
+<td>Owner estimate, trailing 12 months</td>
+<td><span class="badge b-bad">Flagged</span></td>
+</tr>
+<tr>
+<td>Water</td>
+<td class="num">$1,500</td>
+<td class="num">$125</td>
+<td class="num">$4,380</td>
+<td class="num">$365</td>
+<td>Owner-reported; Cupertino $100–$150/mo, SF $330–$400/mo for three units</td>
+<td><span class="badge b-warn">Owner-reported</span></td>
+</tr>
+<tr>
+<td>Electricity</td>
+<td class="num">-$180</td>
+<td class="num">-$15</td>
+<td class="num">$600</td>
+<td class="num">$50</td>
+<td>Owner-reported; Cupertino net credit from rooftop solar</td>
+<td><span class="badge b-warn">Owner-reported</span></td>
+</tr>
+<tr>
+<td>Maintenance & repairs</td>
+<td class="num">$6,000</td>
+<td class="num">$500</td>
+<td class="num">$9,000</td>
+<td class="num">$750</td>
+<td>Model assumption: ≈0.2% of value (Cupertino, newer systems) and ≈0.5% (SF, three units, 1920s-era)</td>
+<td><span class="badge b-warn">Assumption</span></td>
+</tr>
+<tr>
+<td>Property management</td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td class="num">8% of collected rent</td>
+<td class="num">≈$572</td>
+<td>Model assumption; self-management would remove it</td>
+<td><span class="badge b-warn">Assumption</span></td>
+</tr>
+<tr>
+<td>Vacancy allowance</td>
+<td class="num">—</td>
+<td class="num">—</td>
+<td class="num">5% of gross rent</td>
+<td class="num">≈$358</td>
+<td>Model assumption; covers turnover and unpaid rent</td>
+<td><span class="badge b-warn">Assumption</span></td>
+</tr>
+<tr>
+<td><strong>Property tax (2026)</strong></td>
+<td class="num">$7,340</td>
+<td class="num">$612</td>
+<td class="num">$2,470</td>
+<td class="num">$206</td>
+<td>Rate × assessed value + charges; see Taxes</td>
+<td><span class="badge b-blue">Projected</span></td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Negative electricity is a credit: the rooftop solar system generates more than the house uses. Totals below include property tax; the four cost items alone are ≈$8,800 (Cupertino) and ≈$15,500 (SF) a year.</p>
+<div class="tablewrap"><table class="">
+<caption>Total annual carrying cost, 2026</caption>
+<thead><tr>
+<th>Property</th>
+<th>Property tax</th>
+<th>Insurance</th>
+<th>Water</th>
+<th>Electric</th>
+<th>Maintenance</th>
+<th>Management + vacancy</th>
+<th>Total</th>
+<th>% of value</th>
+</tr></thead><tbody>
+<tr>
+<td>Cupertino</td>
+<td class="num">$7,340</td>
+<td class="num">$1,500</td>
+<td class="num">$1,500</td>
+<td class="num">-$180</td>
+<td class="num">$6,000</td>
+<td class="num">—</td>
+<td class="num">$16,160</td>
+<td class="num">0.52%</td>
+</tr>
+<tr>
+<td>San Francisco</td>
+<td class="num">$2,470</td>
+<td class="num">$1,500</td>
+<td class="num">$4,380</td>
+<td class="num">$600</td>
+<td class="num">$9,000</td>
+<td class="num">$11,154</td>
+<td class="num">$29,104</td>
+<td class="num">1.62%</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Cupertino is the cheaper property to hold: about 0.5% of value a year all-in, against about 1.6% for the three-unit building. The gap is management, vacancy, water and maintenance on three tenancies.</p>
+
+<h2 class="anchor" id="insurance">Insurance: what can and cannot be verified</h2>
+<p>The California Department of Insurance publishes policy forms, coverage guidance and complaint data, but <strong>no
+official premium for a given ZIP code or parcel</strong>. Premiums are individually rated on dwelling value, roof age, claims
+history and fire-score. The $1,500 figure for each property is therefore an owner estimate and is flagged as unverified.</p>
+<ul class="tight">
+  <li><a class="src" href="https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/" target="_blank" rel="noopener">CDI homeowners guide</a> — coverage and shopping guidance (verified).</li>
+  <li><a class="src" href="https://www.cfpnet.com/" target="_blank" rel="noopener">California FAIR Plan</a> — insurer of last resort. The FAIR Plan writes fire-only dwelling coverage; a separate difference-in-conditions policy is normally needed for full HO-3 coverage, so a FAIR Plan quote is not a like-for-like replacement for a $1,500 homeowners policy.</li>
+</ul>
+
+<div class="callout warn">
+  <div class="h">Planning caution</div>
+  <p>A three-unit 1920s building in the Sunset with two tenancies is a landlord policy, not a homeowners policy, and a
+  Cupertino house with solar and a $3.1M replacement cost is unlikely to be insured for $1,500 at today's construction costs. Both
+  figures are carried as reported because no official source exists, but the model's 5%/yr growth from a $1,500 base is more
+  likely to understate than overstate. Resolve this with two actual quotes before relying on the cash-flow projections.</p>
+</div>
+
+<h2 class="anchor" id="water">Water and power</h2>
+<ul class="tight">
+  <li><strong>San Francisco water.</strong> SFPUC's residential volumetric rate was $11.40 per unit (748 gallons) for the first four
+  units a month in FY 2025-26, proposed to rise to $12.20 in FY 2026-27. The average single-family combined water-and-sewer bill is
+  about $171 a month. Three units at $330–$400 a month is consistent with that average once sewer and common-area use are included —
+  the owner-reported figure passes a sanity check.
+  <a class="src" href="https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice" target="_blank" rel="noopener">SFPUC Prop 218 notice</a>.</li>
+  <li><strong>Cupertino water.</strong> Supplied by San Jose Water, whose tariff is filed with the CPUC. The published tariff could not
+  be retrieved in this window, so $100–$150 a month stands as owner-reported only.</li>
+  <li><strong>Electricity.</strong> PG&amp;E Schedule E-1 is the applicable residential tariff
+  (<a class="src" href="https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-1.pdf" target="_blank" rel="noopener">PG&amp;E E-1</a>).
+  The Cupertino house is net-negative because of rooftop solar; the model credits $180 a year and grows the credit at 4%. The
+  San Francisco building's $30–$70 a month is common-area power only if tenants pay their own accounts; if the owner pays all three
+  units, this line is understated.</li>
+</ul>
+
+<h2 class="anchor" id="projections">Projected costs</h2>
+<div class="tablewrap"><table class="">
+<caption>Cupertino — projected carrying costs (5-year steps)</caption>
+<thead><tr>
+<th>Year</th>
+<th>Property tax</th>
+<th>Insurance</th>
+<th>Water</th>
+<th>Electric</th>
+<th>Maintenance</th>
+</tr></thead><tbody>
+<tr>
+<td>2026</td>
+<td class="num">$7,340</td>
+<td class="num">$1,500</td>
+<td class="num">$1,500</td>
+<td class="num">-$180</td>
+<td class="num">$6,000</td>
+</tr>
+<tr>
+<td>2031</td>
+<td class="num">$8,140</td>
+<td class="num">$1,910</td>
+<td class="num">$2,010</td>
+<td class="num">-$220</td>
+<td class="num">$7,300</td>
+</tr>
+<tr>
+<td>2036</td>
+<td class="num">$9,030</td>
+<td class="num">$2,440</td>
+<td class="num">$2,690</td>
+<td class="num">-$270</td>
+<td class="num">$8,880</td>
+</tr>
+<tr>
+<td>2041</td>
+<td class="num">$10,030</td>
+<td class="num">$3,120</td>
+<td class="num">$3,590</td>
+<td class="num">-$320</td>
+<td class="num">$10,810</td>
+</tr>
+<tr>
+<td>2046</td>
+<td class="num">$11,140</td>
+<td class="num">$3,980</td>
+<td class="num">$4,810</td>
+<td class="num">-$390</td>
+<td class="num">$13,150</td>
+</tr>
+<tr>
+<td>2051</td>
+<td class="num">$12,370</td>
+<td class="num">$5,080</td>
+<td class="num">$6,440</td>
+<td class="num">-$480</td>
+<td class="num">$16,000</td>
+</tr>
+<tr>
+<td>2056</td>
+<td class="num">$13,740</td>
+<td class="num">$6,480</td>
+<td class="num">$8,620</td>
+<td class="num">-$580</td>
+<td class="num">$19,460</td>
+</tr>
+<tr>
+<td>2061</td>
+<td class="num">$15,270</td>
+<td class="num">$8,270</td>
+<td class="num">$11,530</td>
+<td class="num">-$710</td>
+<td class="num">$23,680</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Insurance grows at 5%/yr, water at 6%/yr, electricity at 4%/yr, maintenance at CPI + 1%. These growth rates are assumptions; the 2026 base values are the sources listed above.</p>
+<div class="tablewrap"><table class="">
+<caption>San Francisco — projected carrying costs (5-year steps)</caption>
+<thead><tr>
+<th>Year</th>
+<th>Property tax</th>
+<th>Insurance</th>
+<th>Water</th>
+<th>Electric</th>
+<th>Maintenance</th>
+</tr></thead><tbody>
+<tr>
+<td>2026</td>
+<td class="num">$2,470</td>
+<td class="num">$1,500</td>
+<td class="num">$4,380</td>
+<td class="num">$600</td>
+<td class="num">$9,000</td>
+</tr>
+<tr>
+<td>2031</td>
+<td class="num">$2,780</td>
+<td class="num">$1,910</td>
+<td class="num">$5,860</td>
+<td class="num">$730</td>
+<td class="num">$10,950</td>
+</tr>
+<tr>
+<td>2036</td>
+<td class="num">$3,140</td>
+<td class="num">$2,440</td>
+<td class="num">$7,840</td>
+<td class="num">$890</td>
+<td class="num">$13,320</td>
+</tr>
+<tr>
+<td>2041</td>
+<td class="num">$3,550</td>
+<td class="num">$3,120</td>
+<td class="num">$10,500</td>
+<td class="num">$1,080</td>
+<td class="num">$16,210</td>
+</tr>
+<tr>
+<td>2046</td>
+<td class="num">$4,010</td>
+<td class="num">$3,980</td>
+<td class="num">$14,050</td>
+<td class="num">$1,310</td>
+<td class="num">$19,720</td>
+</tr>
+<tr>
+<td>2051</td>
+<td class="num">$4,540</td>
+<td class="num">$5,080</td>
+<td class="num">$18,800</td>
+<td class="num">$1,600</td>
+<td class="num">$23,990</td>
+</tr>
+<tr>
+<td>2056</td>
+<td class="num">$5,140</td>
+<td class="num">$6,480</td>
+<td class="num">$25,160</td>
+<td class="num">$1,950</td>
+<td class="num">$29,190</td>
+</tr>
+<tr>
+<td>2061</td>
+<td class="num">$5,820</td>
+<td class="num">$8,270</td>
+<td class="num">$33,670</td>
+<td class="num">$2,370</td>
+<td class="num">$35,510</td>
+</tr>
+</tbody></table></div>
+<p class="tnote">Same growth assumptions. Water is the fastest-growing line in San Francisco: SFPUC approved a 23% two-year increase in 2026 (10.5% from 1 July 2026, 12.5% from 1 July 2027).</p>
+
+<h2 class="anchor" id="why">Why maintenance is a percentage, not a guess</h2>
+<p>There is no official source for "maintenance on a Bay Area house", so the model anchors to replacement-cost logic:
+roughly 0.2% of value a year for a single house with solar and recent systems, and 0.5% for a three-unit building. Deferred
+maintenance is the risk: a roof, a sewer lateral or a foundation on a 1920s Sunset building can be a $50,000–$100,000 event that
+averages out to far more in the year it happens. The Scenario Analysis does not model a capital event; treat the 0.5% as a floor.</p>
+
+</main>
+<footer><div class="wrap">
+  <div><strong>Internal decision analysis.</strong> No names, addresses, parcel numbers or trust identifiers appear on this site.</div>
+  <div>Sources retrieved 2026-11-10. Figures rounded to the nearest $10. Not legal, tax or investment advice.</div>
+</div></footer>
+<script src="../assets/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+{
+ "retrieved": "2026-11-10",
+ "note": "Only primary/agency sources are registered here. Every row in the site carries a source_id that resolves to this file.",
+ "sources": [
+  {
+   "id": "IRS-ESTATE",
+   "publisher": "Internal Revenue Service",
+   "title": "Estate tax \u2014 filing threshold by year of death",
+   "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+   "covers": "Federal estate tax filing thresholds 2011-2026 ($15,000,000 for 2026)"
+  },
+  {
+   "id": "IRS-RP2532",
+   "publisher": "Internal Revenue Service",
+   "title": "Rev. Proc. 2025-32 \u2014 2026 inflation adjustments (incl. \u00a72010(c)(3) basic exclusion amount and \u00a71(j)(5) capital gain breakpoints)",
+   "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+   "covers": "2026 estate exclusion $15,000,000; 2026 capital gains 0%/15% breakpoints; ordinary rate tables"
+  },
+  {
+   "id": "IRS-IR25103",
+   "publisher": "Internal Revenue Service",
+   "title": "IR-2025-103 \u2014 IRS releases tax inflation adjustments for tax year 2026",
+   "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2026-including-amendments-from-the-one-big-beautiful-bill",
+   "covers": "2026 marginal rates and estate tax credit"
+  },
+  {
+   "id": "IRS-I706",
+   "publisher": "Internal Revenue Service",
+   "title": "Instructions for Form 706 (Rev. July 2026)",
+   "url": "https://www.irs.gov/instructions/i706",
+   "covers": "Basic exclusion amount $15,000,000; filing requirement; GST exemption"
+  },
+  {
+   "id": "IRS-P551",
+   "publisher": "Internal Revenue Service",
+   "title": "Publication 551 \u2014 Basis of Assets",
+   "url": "https://www.irs.gov/publications/p551",
+   "covers": "Basis of inherited property (fair market value at date of death); 26 U.S.C. \u00a71014 rule explained"
+  },
+  {
+   "id": "IRS-1031",
+   "publisher": "Internal Revenue Service",
+   "title": "Like-kind exchanges \u2014 real estate tax tips",
+   "url": "https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips",
+   "covers": "\u00a71031 deferral for real property held for business or investment"
+  },
+  {
+   "id": "IRS-NIIT",
+   "publisher": "Internal Revenue Service",
+   "title": "Net Investment Income Tax",
+   "url": "https://www.irs.gov/individuals/net-investment-income-tax",
+   "covers": "3.8% NIIT and MAGI thresholds ($250,000 MFJ / $200,000 single)"
+  },
+  {
+   "id": "IRS-P527",
+   "publisher": "Internal Revenue Service",
+   "title": "Publication 527 \u2014 Residential Rental Property",
+   "url": "https://www.irs.gov/publications/p527",
+   "covers": "27.5-year straight-line depreciation of residential rental property"
+  },
+  {
+   "id": "IRS-P523",
+   "publisher": "Internal Revenue Service",
+   "title": "Publication 523 \u2014 Selling Your Home",
+   "url": "https://www.irs.gov/publications/p523",
+   "covers": "\u00a7121 exclusion of gain on sale of principal residence ($250,000 / $500,000)"
+  },
+  {
+   "id": "IRS-P559",
+   "publisher": "Internal Revenue Service",
+   "title": "Publication 559 \u2014 Survivors, Executors and Administrators",
+   "url": "https://www.irs.gov/publications/p559",
+   "covers": "Estate/trust income tax filing and decedent final return"
+  },
+  {
+   "id": "CA-XIIIA",
+   "publisher": "California Legislative Information",
+   "title": "California Constitution, Article XIII A (Proposition 13)",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displayText.xhtml?lawCode=CONS&article=XIII%20A",
+   "covers": "1% levy limit, 2% annual assessment cap, change-in-ownership reassessment"
+  },
+  {
+   "id": "RTC-51",
+   "publisher": "California Legislative Information",
+   "title": "Revenue & Taxation Code \u00a751 \u2014 inflation factor",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=51",
+   "covers": "Annual CPI-based factor, capped at 2%"
+  },
+  {
+   "id": "RTC-63.2",
+   "publisher": "California Legislative Information",
+   "title": "Revenue & Taxation Code \u00a763.2 \u2014 intergenerational transfer exclusion (Prop 19)",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=63.2",
+   "covers": "Parent-child exclusion conditions, value cap, claim requirement, removal on move-out"
+  },
+  {
+   "id": "BOE-LTA25015",
+   "publisher": "California State Board of Equalization",
+   "title": "LTA 2025/015 \u2014 Prop 19 information sheets (Publication 800-1)",
+   "url": "https://boe.ca.gov/proptaxes/pdf/lta25015.pdf",
+   "covers": "$1,000,000 cap adjusted to $1,044,586 (Feb 2025 transfer window); 1-year occupancy / 1-year exemption filing rules"
+  },
+  {
+   "id": "BOE-LTA26002",
+   "publisher": "California State Board of Equalization",
+   "title": "LTA 2026/002 \u2014 2026-27 California Consumer Price Index / inflation factor",
+   "url": "https://boe.ca.gov/proptaxes/pdf/lta26002.pdf",
+   "covers": "2026-27 inflation factor 1.02; CCPI 3.307% (Aug 2024 to Aug 2025)"
+  },
+  {
+   "id": "SCC-PROP19",
+   "publisher": "Santa Clara County Assessor",
+   "title": "Parent-Child Transfer (Proposition 19)",
+   "url": "https://asr.santaclaracounty.gov/tax-savings/transferring-your-assessed-value/parent-to-child-2",
+   "covers": "Parent AND child principal-residence requirement; BOE-19-P; three-year claim window"
+  },
+  {
+   "id": "SCC-PROP13",
+   "publisher": "Santa Clara County Assessor",
+   "title": "Understanding Proposition 13",
+   "url": "https://asr.santaclaracounty.gov/faq/understanding-proposition-13",
+   "covers": "1% limit plus voter-approved debt; 2% cap; reassessment on change of ownership"
+  },
+  {
+   "id": "SCC-HOE",
+   "publisher": "Santa Clara County Assessor",
+   "title": "Homeowners' Exemption",
+   "url": "https://asr.santaclaracounty.gov/tax-savings/exemptions/homeowners",
+   "covers": "$7,000 assessed-value exemption; filing deadlines; owner-occupancy requirement"
+  },
+  {
+   "id": "SCC-FAQ",
+   "publisher": "Santa Clara County Assessor",
+   "title": "General Questions (tax rate planning guidance)",
+   "url": "https://asr.santaclaracounty.gov/faq/general-questions",
+   "covers": "\"Generally, using a rate of 1.2% will give a conservative estimate\""
+  },
+  {
+   "id": "SCC-TAXPORTAL",
+   "publisher": "County of Santa Clara \u2014 Department of Tax and Collections",
+   "title": "Property tax payment portal / tax rate area distribution",
+   "url": "https://payments.sccgov.org/propertytax",
+   "covers": "Parcel-level tax distribution by tax rate area"
+  },
+  {
+   "id": "SF-TREAS",
+   "publisher": "San Francisco Office of the Treasurer & Tax Collector",
+   "title": "Secured Property Taxes",
+   "url": "https://sftreasurer.org/property/secured-property-taxes",
+   "covers": "FY 2026-27 secured rate 1.18162182%; due dates and penalties"
+  },
+  {
+   "id": "SF-ASSESSOR-TT",
+   "publisher": "San Francisco Office of the Assessor-Recorder",
+   "title": "Transfer tax",
+   "url": "https://www.sfassessor.org/recorder-information/recording-document/transfer-tax",
+   "covers": "Transfer tax $3.75 per $500 for $1M-$5M consideration (0.75%)"
+  },
+  {
+   "id": "CIV-1947.12",
+   "publisher": "California Legislative Information",
+   "title": "Civil Code \u00a71947.12 \u2014 rent increase limits (AB 1482)",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1947.12",
+   "covers": "5% + CPI, capped at 10%; exemptions"
+  },
+  {
+   "id": "CIV-1954.52",
+   "publisher": "California Legislative Information",
+   "title": "Civil Code \u00a71954.52 \u2014 Costa-Hawkins Rental Housing Act",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=CIV&sectionNum=1954.52",
+   "covers": "Vacancy decontrol; local rent control limits"
+  },
+  {
+   "id": "SF-RENT",
+   "publisher": "City and County of San Francisco",
+   "title": "Learn about rent increases in San Francisco",
+   "url": "https://www.sf.gov/learn-about-rent-increases-san-francisco",
+   "covers": "Allowable increase 1.6% effective March 1, 2026 - February 28, 2027"
+  },
+  {
+   "id": "RTC-17041",
+   "publisher": "California Legislative Information",
+   "title": "Revenue & Taxation Code \u00a717041 \u2014 personal income tax rates",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17041",
+   "covers": "California PIT rate schedule"
+  },
+  {
+   "id": "RTC-17043",
+   "publisher": "California Legislative Information",
+   "title": "Revenue & Taxation Code \u00a717043 \u2014 1% Mental Health Services Tax",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=17043",
+   "covers": "Additional 1% on taxable income above $1,000,000"
+  },
+  {
+   "id": "SCC-COURTS-PROBATE",
+   "publisher": "Superior Court of California, County of Santa Clara",
+   "title": "Administering the Probate Estate (After Appointment)",
+   "url": "https://santaclara.courts.ca.gov/self-help/self-help-topics/self-help-probate/self-help-probate-property-transfers/administering-probate-estate-after-appointment",
+   "covers": "Probate administration steps; \"California does not have an inheritance tax\"; BOE-19-P referenced in probate checklist"
+  },
+  {
+   "id": "SFPUC-RATES",
+   "publisher": "San Francisco Public Utilities Commission",
+   "title": "Proposition 218 notice \u2014 proposed water and sewer rates (2026)",
+   "url": "https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice",
+   "covers": "Water/sewer volumetric rates and average single-family bill increases"
+  },
+  {
+   "id": "PG&E-E1",
+   "publisher": "Pacific Gas and Electric Company",
+   "title": "Electric Schedule E-1 \u2014 residential service tariff",
+   "url": "https://www.pge.com/tariffs/assets/pdf/tariffbook/ELEC_SCHEDS_E-1.pdf",
+   "covers": "Residential electric rates and baseline quantities"
+  },
+  {
+   "id": "CDI-HOME",
+   "publisher": "California Department of Insurance",
+   "title": "Homeowners insurance consumer guide",
+   "url": "https://www.insurance.ca.gov/01-consumers/105-type/95-guides/03-res/",
+   "covers": "Homeowners policy forms, coverage and shopping guidance"
+  },
+  {
+   "id": "FAIR-PLAN",
+   "publisher": "California FAIR Plan Association",
+   "title": "California FAIR Plan \u2014 residential property insurance",
+   "url": "https://www.cfpnet.com/",
+   "covers": "Insurer-of-last-resort coverage and rates"
+  },
+  {
+   "id": "LEG-SB974",
+   "publisher": "California Legislative Information",
+   "title": "SB-974 (2025-2026) \u2014 Property taxation: change in ownership: generational transfers: special needs trusts (Chapter 665, Statutes of 2026)",
+   "url": "https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260SB974",
+   "covers": "Enacted amendment to R&TC \u00a763.2 effective 2026"
+  },
+  {
+   "id": "CA-PROBATE-CODE",
+   "publisher": "California Legislative Information",
+   "title": "Probate Code \u00a716000 \u2014 trustee duties",
+   "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16000",
+   "covers": "Trustee duties on administration of a trust"
+  },
+  {
+   "id": "IRS-706-FILING",
+   "publisher": "Internal Revenue Service",
+   "title": "Filing estate and gift tax returns",
+   "url": "https://www.irs.gov/businesses/small-businesses-self-employed/filing-estate-and-gift-tax-returns",
+   "covers": "Form 706 due date (9 months) and extension"
+  },
+  {
+   "id": "CDI-SURVEY",
+   "publisher": "California Department of Insurance",
+   "title": "Homeowners Premium Survey (interactive, by coverage and ZIP)",
+   "url": "https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20",
+   "covers": "Official tool for comparing homeowners premiums; no single published parcel premium"
+  }
+ ]
+}

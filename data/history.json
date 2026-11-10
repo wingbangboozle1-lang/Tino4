@@ -1,0 +1,43 @@
+{
+  "note": "Owner-supplied assessment and tax history, reproduced verbatim. These are the only parcel-level figures in the project; no address, APN, owner or trust name is stored.",
+  "cupertino": {
+    "zip": "95014",
+    "label": "Cupertino property (95014)",
+    "estimated_value_nov_2026": 3100000,
+    "rows": [
+      {"year": 2026, "tax": null, "tax_change": null, "assessed": 550537, "assessed_change": 0.02},
+      {"year": 2025, "tax": 7207, "tax_change": 0.029, "assessed": 539743, "assessed_change": 0.02},
+      {"year": 2024, "tax": 7003, "tax_change": 0.012, "assessed": 529161, "assessed_change": 0.02},
+      {"year": 2023, "tax": 6917, "tax_change": 0.024, "assessed": 518786, "assessed_change": 0.02},
+      {"year": 2022, "tax": 6755, "tax_change": 0.014, "assessed": 508614, "assessed_change": 0.02},
+      {"year": 2021, "tax": 6662, "tax_change": 0.015, "assessed": 498642, "assessed_change": 0.01},
+      {"year": 2020, "tax": 6565, "tax_change": null, "assessed": 493530, "assessed_change": 0.02},
+      {"year": 2019, "tax": 6565, "tax_change": 0.028, "assessed": 483854, "assessed_change": 0.02},
+      {"year": 2018, "tax": 6383, "tax_change": null, "assessed": 474368, "assessed_change": 0.02},
+      {"year": 2017, "tax": 6383, "tax_change": -0.005, "assessed": 465067, "assessed_change": 0.02},
+      {"year": 2016, "tax": 6414, "tax_change": 0.046, "assessed": 455949, "assessed_change": 0.015},
+      {"year": 2015, "tax": 6130, "tax_change": 0.028, "assessed": 449101, "assessed_change": 0.02},
+      {"year": 2014, "tax": 5965, "tax_change": null, "assessed": 440305, "assessed_change": 0.005}
+    ]
+  },
+  "san_francisco": {
+    "zip": "94122",
+    "label": "San Francisco property (94122)",
+    "estimated_value_nov_2026": 1800000,
+    "units_total": 3,
+    "units_rented": 2,
+    "monthly_rent_two_units": 7150,
+    "rows": [
+      {"year": 2025, "tax": 2439, "tax_change": 0.053, "assessed": 114248, "assessed_change": 0.02},
+      {"year": 2024, "tax": 2315, "tax_change": 0.062, "assessed": 112008, "assessed_change": 0.02},
+      {"year": 2023, "tax": 2179, "tax_change": 0.034, "assessed": 109814, "assessed_change": 0.02},
+      {"year": 2022, "tax": 2107, "tax_change": 0.020, "assessed": 107662, "assessed_change": 0.02},
+      {"year": 2021, "tax": 2066, "tax_change": -0.059, "assessed": 105595, "assessed_change": 0.01},
+      {"year": 2020, "tax": 2197, "tax_change": 0.030, "assessed": 104513, "assessed_change": 0.02},
+      {"year": 2019, "tax": 2134, "tax_change": 0.035, "assessed": 102465, "assessed_change": 0.02},
+      {"year": 2018, "tax": 2061, "tax_change": 0.184, "assessed": 100456, "assessed_change": 0.02},
+      {"year": 2017, "tax": 1740, "tax_change": 0.039, "assessed": 98488, "assessed_change": 0.02},
+      {"year": 2016, "tax": 1675, "tax_change": 0.016, "assessed": 96557, "assessed_change": 0.015}
+    ]
+  }
+}
