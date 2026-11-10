@@ -1,0 +1,114 @@
+[
+  {
+    "id": "EC-01",
+    "topic": "Home price index, San Jose-Sunnyvale-Santa Clara metro (FHFA all-transactions index, fourth-quarter values)",
+    "value": "1995: 102.45; 2005: 309.48; 2015: 353.92; 2025: 560.05. Compound annual growth: 30 years 5.8%, 20 years 3.0%, 10 years 4.7%.",
+    "quote": "1995-01-01,102.45 ... 2005-01-01,309.48 ... 2015-01-01,353.92 ... 2025-01-01,560.05",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series ATNHPIUS41940Q, source: U.S. Federal Housing Finance Agency",
+    "source_url": "https://fred.stlouisfed.org/series/ATNHPIUS41940Q",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-02",
+    "topic": "Home price index, San Francisco-San Mateo-Redwood City metro division (FHFA all-transactions index, fourth-quarter values)",
+    "value": "1995: 100.94; 2005: 301.62; 2015: 374.38; 2025: 512.99. Compound annual growth: 30 years 5.6%, 20 years 2.7%, 10 years 3.2%.",
+    "quote": "1995-01-01,100.94 ... 2005-01-01,301.62 ... 2015-01-01,374.38 ... 2025-01-01,512.99",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series ATNHPIUS41884Q, source: U.S. Federal Housing Finance Agency",
+    "source_url": "https://fred.stlouisfed.org/series/ATNHPIUS41884Q",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-03",
+    "topic": "Consumer price inflation (CPI-U, U.S. city average, annual averages)",
+    "value": "1995: 152.383; 2005: 195.267; 2015: 237.002; 2025: 321.962. Compound annual growth: 30 years 2.5%, 20 years 2.5%, 10 years 3.1%.",
+    "quote": "1995-01-01,152.383 ... 2005-01-01,195.267 ... 2015-01-01,237.002 ... 2025-01-01,321.962",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series CPIAUCSL, source: U.S. Bureau of Labor Statistics",
+    "source_url": "https://fred.stlouisfed.org/series/CPIAUCSL",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-04",
+    "topic": "Chained consumer price index (C-CPI-U, annual averages), the index family used to adjust federal tax amounts",
+    "value": "2005: 113.692; 2015: 135.362; 2025: 178.697. Compound annual growth: 20 years 2.3%, 10 years 2.8%.",
+    "quote": "2005-01-01,113.692 ... 2015-01-01,135.362 ... 2025-01-01,178.697",
+    "source_name": "Federal Reserve Bank of St. Louis (FRED), series SUUR0000SA0, source: U.S. Bureau of Labor Statistics",
+    "source_url": "https://fred.stlouisfed.org/series/SUUR0000SA0",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-05",
+    "topic": "U.S. large-company stock index fund (S&P 500): long-run return after expenses",
+    "value": "11.34% per year since inception (January 29, 1988 to December 31, 2025); 14.79% per year over the last 10 years. Calendar years 2016-2025 ranged from -18% to +32%.",
+    "quote": "C Fund: 1-Year 17.85%; 3-Year 22.96%; 5-Year 14.39%; 10-Year 14.79%; Since Inception January 29, 1988 11.34%",
+    "source_name": "Federal Retirement Thrift Investment Board, Thrift Savings Plan Fund Information (May 2026), C Fund",
+    "source_url": "https://www.tsp.gov/publications/tsplf14.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-06",
+    "topic": "U.S. investment-grade bond index fund: long-run return after expenses",
+    "value": "5.30% per year since inception (January 29, 1988 to December 31, 2025); 2.11% per year over the last 10 years.",
+    "quote": "F Fund: 1-Year 7.21%; 3-Year 4.67%; 5-Year -0.30%; 10-Year 2.11%; Since Inception January 29, 1988 5.30%",
+    "source_name": "Federal Retirement Thrift Investment Board, Thrift Savings Plan Fund Information (May 2026), F Fund",
+    "source_url": "https://www.tsp.gov/publications/tsplf14.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-07",
+    "topic": "U.S. Treasury yields on November 9, 2026 (par yield curve)",
+    "value": "3-month 4.24%; 1-year 4.38%; 5-year 4.67%; 10-year 4.88%; 20-year 5.29%; 30-year 5.26%",
+    "quote": "11/09/2026 ... 3 Mo 4.24 ... 1 Yr 4.38 ... 5 Yr 4.67 ... 10 Yr 4.88; 20 Yr 5.29; 30 Yr 5.26",
+    "source_name": "U.S. Department of the Treasury, Daily Treasury Par Yield Curve Rates (November 2026)",
+    "source_url": "https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve&field_tdr_date_value_month=202611",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-08",
+    "topic": "Official rent benchmark, Cupertino ZIP code area (HUD Small Area Fair Market Rent, fiscal year 2026; gross rent including utilities, 40th percentile)",
+    "value": "Two-bedroom $4,440; three-bedroom $5,870; four-bedroom $6,390 per month",
+    "quote": "FY 2026 SAFMR: Efficiency $3,340; One-Bedroom $3,800; Two-Bedroom $4,440; Three-Bedroom $5,870; Four-Bedroom $6,390",
+    "source_name": "U.S. Department of Housing and Urban Development, FY 2026 Small Area Fair Market Rent documentation",
+    "source_url": "https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026zip_code_calc.odn?zcta=95014&metro_code=METRO41940M41940&year=2026&hypo=hypo",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-09",
+    "topic": "Official rent benchmark, San Jose-Sunnyvale-Santa Clara metro (HUD Fair Market Rent, fiscal year 2026)",
+    "value": "Two-bedroom $3,483; three-bedroom $4,602; four-bedroom $5,010 per month (fiscal year 2025: $3,446; $4,477; $4,878)",
+    "quote": "FY 2026 FMR: $2,621; $2,982; $3,483; $4,602; $5,010. FY 2025 FMR: $2,608; $2,975; $3,446; $4,477; $4,878",
+    "source_name": "U.S. Department of Housing and Urban Development, FY 2026 Fair Market Rent documentation",
+    "source_url": "https://www.huduser.gov/portal/datasets/fmr/fmrs/FY2026_code/2026summary.odn?cbsasub=METRO41940M41940&year=2026&fmrtype=Final&dallas_sa_override=TRUE",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-10",
+    "topic": "HUD Fair Market Rents for fiscal year 2027 (effective October 1, 2026)",
+    "value": "",
+    "note": "The fiscal year 2027 documentation page could not be opened in this session (the address pattern used for 2026 returned 'not found' for 2027). Fiscal year 2026 values are used.",
+    "source_name": "U.S. Department of Housing and Urban Development, Fair Market Rents",
+    "source_url": "https://www.huduser.gov/portal/datasets/fmr.html",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "EC-11",
+    "topic": "Actual market rent for Property A, and its bedroom count",
+    "value": "",
+    "note": "Not provided by the owner and not verifiable without the address. The model uses the official HUD four-bedroom benchmark and shows the break-even rent, so the conclusion can be checked against any real rent quote.",
+    "source_name": "U.S. Department of Housing and Urban Development, Small Area Fair Market Rents",
+    "source_url": "https://www.huduser.gov/portal/datasets/fmr/smallarea/index.html",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  }
+]
