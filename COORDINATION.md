@@ -26,6 +26,6 @@ Integration session: `session-9dcf1e9f`; branch: `arena/9dcf1e9f-tino4` (session
 
 ## Integration status
 
-* Pull request: https://github.com/wingbangboozle1-lang/Tino4/pull/1 (merge pending).
+* Pull request: https://github.com/wingbangboozle1-lang/Tino4/pull/1 merged successfully on 2026-11-10 (merge commit `678e4a060bd2c391b397740d7029493003cc0584`).
 * `python3 tests/validate.py` passed for all local links and the official-source link in every data row; `git diff --check` passed. Static HTML/CSS requires no build step. Official research links were fetched or reviewed; no automated guarantee of future external availability.
-* Pages configured to publish from `main` root. Deployment confirmation pending merge.
+* Pages configured to publish from `main` root. Deployment confirmation pending: the first Pages build was observed in progress after the merge.
