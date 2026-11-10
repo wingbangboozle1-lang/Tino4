@@ -1,0 +1,123 @@
+[
+  {
+    "id": "PR-01",
+    "topic": "A funded living trust avoids probate court",
+    "value": "Assets placed in a living trust pass to the beneficiaries without a probate case. The courts say probate typically takes at least 9 months in California.",
+    "quote": "A living trust is part of an estate plan. It helps you make sure the home goes to the people you want after your death without them going to probate court and waiting for a judge to decide who gets your home. The fastest that can happen in California is typically 9 months",
+    "source_name": "Judicial Branch of California, Self-Help Guide: Wills, estates, and advance care planning",
+    "source_url": "https://selfhelp.courts.ca.gov/wills-estates-probate/legal-documents",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-02",
+    "topic": "Trustee's notice to beneficiaries and heirs",
+    "value": "When a revocable trust becomes irrevocable because a settlor died, the successor trustee must serve a written notification on every beneficiary and heir within 60 days.",
+    "quote": "The notification by trustee shall be served not later than 60 days following the occurrence of the event requiring service of the notification by trustee",
+    "source_name": "California Legislative Information, Probate Code section 16061.7",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-03",
+    "topic": "Change in ownership statement after a death (property held in trust)",
+    "value": "The trustee or the transferee must file a change in ownership statement with the county recorder or assessor in each county where the decedent owned real property, within 150 days after the date of death.",
+    "quote": "In all other cases in which an interest in real property is transferred by reason of death, including a transfer through the medium of a trust, the change in ownership statement or statements shall be filed by the trustee (if the property was held in trust) or the transferee with the county recorder or assessor in each county in which the decedent owned an interest in real property within 150 days after the date of death.",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 480(b)",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=480",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-04",
+    "topic": "Penalty for not filing the change in ownership statement",
+    "value": "If the statement is not filed within 90 days of a written request from the assessor: $100 or 10% of the taxes on the new base year value, whichever is greater, subject to a statutory maximum.",
+    "quote": "The failure to file a change in ownership statement within 90 days from the date a written request is mailed by the assessor results in a penalty of either: (1) one hundred dollars ($100), or (2) 10 percent of the taxes applicable to the new base year value reflecting the change in ownership of the real property",
+    "source_name": "California Legislative Information, Revenue and Taxation Code section 480(c)",
+    "source_url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=480",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-05",
+    "topic": "Date the ownership change takes effect for a trust",
+    "value": "The date of death, when the revocable trust becomes irrevocable. The assessor reassesses to market value as of that date unless an exclusion applies.",
+    "quote": "a change in ownership occurs when any interests in real property vest in persons other than the trustor or the trustor's spouse or registered domestic partner when a revocable trust becomes irrevocable ... This typically occurs upon the death of the trustor. Thus, the date of death is considered to be the date of change in ownership.",
+    "source_name": "California State Board of Equalization, Proposition 19 page, Parent-Child FAQ 9",
+    "source_url": "https://www.boe.ca.gov/prop19/",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-06",
+    "topic": "Transfer to a surviving spouse (first death)",
+    "value": "Automatically excluded from reassessment, including transfers on the death of a spouse and into or out of a trust for a spouse.",
+    "quote": "Transfers of real property between spouses, which include transfers in and out of a trust for the benefit of a spouse, the addition of a spouse on a deed, transfers upon the death of a spouse, and transfers pursuant to a divorce settlement or court order",
+    "source_name": "California State Board of Equalization, Change in Ownership Frequently Asked Questions",
+    "source_url": "https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-07",
+    "topic": "Supplemental tax bills after reassessment",
+    "value": "After a change in ownership the assessor reappraises to current market value as of the date ownership changed, and a supplemental bill is issued for the difference, in addition to the regular bill.",
+    "quote": "Once the county assessor has determined that a change in ownership has occurred, Proposition 13 requires the county assessor to reassess the property to its current fair market value as of the date ownership changed.",
+    "source_name": "California State Board of Equalization, Change in Ownership Frequently Asked Questions",
+    "source_url": "https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-08",
+    "topic": "Federal income tax return for the trust or estate after death",
+    "value": "Form 1041 is required if the estate generates more than $600 of gross income in a year. A separate tax identification number (EIN) is needed. Calendar-year returns are due April 15 of the following year.",
+    "quote": "If the estate generates more than $600 in annual gross income, you are required to file Form 1041, U.S. Income Tax Return for Estates and Trusts. ... Before you file an estate income tax return, you need a tax identification number for the estate.",
+    "source_name": "Internal Revenue Service, File an estate tax income tax return",
+    "source_url": "https://www.irs.gov/individuals/file-an-estate-tax-income-tax-return",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-09",
+    "topic": "California income tax return for the trust after death",
+    "value": "Form 541 may be required if the trust has gross income over $10,000 or net income over $100 and a California trustee, beneficiary or income source.",
+    "quote": "The trustee may have to file a return if the trust meets any of these: The trustee or beneficiary (non-contingent) is a California resident ... And the trust has: Gross income is over $10,000; Net income is over $100",
+    "source_name": "California Franchise Tax Board, Estates and trusts",
+    "source_url": "https://www.ftb.ca.gov/file/personal/filing-situations/estates-and-trusts/index.html",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-10",
+    "topic": "Cotenancy exclusion (alternative property tax exclusion on death)",
+    "value": "A transfer of a principal residence between two cotenants on the death of one is excluded if the two together owned 100%, both were owners of record and both lived there as their principal residence for the year before the death, and the survivor ends up with 100% and files an affidavit.",
+    "quote": "The two cotenants together owned 100 percent of the property as tenants in common or joint tenants. The two cotenants must be owners of record for the one-year period immediately preceding the death of one of the cotenants. The property must have been the principal residence of both cotenants for the one-year period immediately preceding the death of one of the cotenants.",
+    "source_name": "California State Board of Equalization, Change in Ownership Frequently Asked Questions",
+    "source_url": "https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-11",
+    "topic": "Cotenancy exclusion combined with Proposition 19",
+    "value": "Where a parent and child were cotenants living together, Proposition 19 is applied first; the cotenancy exclusion may then be applied to any assessed value above the Proposition 19 limit.",
+    "quote": "Since the transfer of Mother's interest in her principal residence is eligible for the intergenerational transfer exclusion under section 63.2, it must be applied first. The cotenancy exclusion provided by section 62.3 may be applied to any amount of assessed value exceeding the amount allowed under section 63.2.",
+    "source_name": "California State Board of Equalization, Letter to Assessors No. 2026/026 (Aug 3, 2026), Question 38",
+    "source_url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+    "status": "verified",
+    "verified_on": "2026-11-10"
+  },
+  {
+    "id": "PR-12",
+    "topic": "Recording an affidavit of death of trustee and new deed with the county recorder",
+    "value": "",
+    "note": "The exact recording documents and fees for each county were not confirmed from an official county recorder page in this session. A title company or the estate attorney normally prepares them.",
+    "source_name": "California State Board of Equalization, Change in Ownership Frequently Asked Questions (preliminary change of ownership report)",
+    "source_url": "https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm",
+    "status": "unverified",
+    "quote": "",
+    "verified_on": "2026-11-10"
+  }
+]
