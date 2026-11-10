@@ -1556,7 +1556,7 @@ for slug, (title, body, kicker, lead) in SUB.items():
 # to this session's token (403 "Resource not accessible by integration"), so the
 # published site must also exist at the repository root. `docs/` stays canonical;
 # the root copy is byte-identical, which keeps all relative links valid in both
-# locations. `_config.yml` excludes internal-only files from the Jekyll build.
+# locations. Root `.nojekyll` keeps the legacy build a pure static copy.
 # ---------------------------------------------------------------------------
 import shutil  # noqa: E402
 
@@ -1575,14 +1575,21 @@ for f in os.listdir(DATA):
     if f.endswith(".json"):
         shutil.copyfile(os.path.join(DATA, f), os.path.join(root_data, f))
 
-write(os.path.join(ROOT, "_config.yml"), """# GitHub Pages legacy (Jekyll) build: the site is static HTML, copied verbatim.
-# Internal-only material must never be published on the website.
+# `.nojekyll` keeps GitHub Pages from running Jekyll; the site is pure static HTML.
+# Internal-only working notes are never linked from the site and contain no personal
+# information. A `_config.yml` exclusion list is kept as a fallback for anyone who
+# later removes `.nojekyll` and re-enables the Jekyll build.
+write(os.path.join(ROOT, ".nojekyll"), "")
+write(os.path.join(ROOT, "_config.yml"), """# Fallback only: GitHub Pages currently uses root .nojekyll (pure static copy).
+# If .nojekyll is removed, these exclusions keep internal material off the site.
 exclude:
   - internal
   - tools
   - docs
+  - archive-v2
   - COORDINATION.md
   - README.md
+  - VERIFICATION.md
   - .gitignore
   - "*.py"
 """)

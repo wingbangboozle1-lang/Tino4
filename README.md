@@ -24,7 +24,9 @@ treated as **unverified user-provided inputs** and are published only on the
 | `COORDINATION.md` | Shared task board: claims, statuses, sources, verification, irregularities, PR log |
 | `docs/` | Canonical GitHub Pages site (landing dashboard + category subpages) |
 | `index.html`, `pages/`, `assets/`, `data/` | Byte-identical root mirror, because this repository's Pages source is `main` `/` and the Pages admin API was not reachable (IR-017) |
-| `_config.yml` | Excludes `internal/`, `tools/`, `docs/` and repo metadata from the published Jekyll build |
+| `.nojekyll` / `_config.yml` | Root `.nojekyll` keeps the legacy Pages build a pure static copy; `_config.yml` is a fallback exclusion list if Jekyll is re-enabled. Internal notes are never linked from the site and contain no personal information. |
+| `archive-v2/` | Prior session's merged site, preserved intact during final integration |
+| `internal/prior-sessions/` | Trees of the other parallel-session branches, preserved intact during final integration |
 | `docs/data/` | Machine-readable facts, model inputs, projections, decision outputs, source register |
 | `tools/build.py` | Deterministic generator: builds all JSON and all static HTML from verified sources |
 | `tools/verify.py` | Line-by-line verification: source links per row, internal links, privacy scan |

@@ -1,10 +1,12 @@
-# GitHub Pages legacy (Jekyll) build: the site is static HTML, copied verbatim.
-# Internal-only material must never be published on the website.
+# Fallback only: GitHub Pages currently uses root .nojekyll (pure static copy).
+# If .nojekyll is removed, these exclusions keep internal material off the site.
 exclude:
   - internal
   - tools
   - docs
+  - archive-v2
   - COORDINATION.md
   - README.md
+  - VERIFICATION.md
   - .gitignore
   - "*.py"
