@@ -14,10 +14,10 @@ verification performed, and irregularities here and mark it `done`. Never mark a
 anything. A claim older than 60 minutes with no commits may be taken over; note the handoff.
 
 - **Repository:** `wingbangboozle1-lang/Tino4`
-- **Working / integration branch:** `arena/0837be92-tino4` (platform-fixed; see IR-001)
+- **Working / integration branch:** `arena/accb6bba-tino4` (platform-fixed; see IR-001)
 - **Live site:** https://wingbangboozle1-lang.github.io/Tino4/ (GitHub Pages, `main`, root)
-- **Board last updated:** 2026-11-10 (UTC)
-- **Final integration session:** `s-0837be92`
+- **Board last updated:** 2026-11-11 (UTC)
+- **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11)
 
 ## Platform constraint (IR-001)
 
@@ -40,12 +40,16 @@ analysis.
 | T6 | Line-by-line verification pass, link check, privacy scan, build check | done | `s-0837be92` | `internal/verification-log.md`, `tools/verify.py` | 2026-11-10 |
 | T7 | Final integration: shared table data, `docs/index.html` + navigation, root mirror, merge branches, re-verify combined data, no broken links, publish to GitHub Pages | done | `s-0837be92` | `docs/index.html`, `docs/data/**`, root mirror | 2026-11-10 |
 | T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
+| T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | in progress | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
+| T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | unclaimed | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | — |
+| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | unclaimed | `s-accb6bba` | `COORDINATION.md` (final log only) | — |
 
 ## Session registry
 
 | Session ID | Branch | Role | Status |
 | --- | --- | --- | --- |
-| `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | active |
+| `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
+| `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | active |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
@@ -231,3 +235,8 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 - 2026-11-10 — `s-0837be92`: follow-up PR #7 merged at `bf5bc94`; GitHub Pages build confirmed
   `built` with no error; live dashboard and executive-summary page fetched and verified. All
   tasks T1–T8 done. Final live site: https://wingbangboozle1-lang.github.io/Tino4/
+- 2026-11-11 — `s-accb6bba`: audited merged site on `arena/accb6bba-tino4` (branched from `c4dbf8c`,
+  PR #8 merge); `tools/verify.py` passes (5,958 checks, 0 failures). Claimed T9–T11: add the
+  requested separate black-swan / 50-year stress-scenario section (historical episodes from
+  official sources + modelled stress paths), re-verify, PR → merge → deploy. No file scope
+  overlaps with any other active session.
