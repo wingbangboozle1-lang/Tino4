@@ -272,3 +272,31 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | T12 | Independent post-merge privacy, model, source and deployment audit; remediate material issues and integrate | in progress | `s-3642c4cb` | `tools/**`, `docs/**`, root published mirror, `.github/**`, `README.md` (no active claims to these scopes) | 2026-11-11 13:08 |
 
 Platform fixes the branch at `arena/3642c4cb-tino4`, overriding the requested per-session branch pattern. The prior T11 claim is limited to its final coordination log; this session appends its own record without altering that claim. PR #9 is already merged, but deployment still requires independent confirmation.
+
+## Session `s-356f911b` — 2026-11-11
+
+Branch is platform-fixed at `arena/356f911b-tino4` (same constraint as IR-001), so isolation is by
+exclusive, non-overlapping file scope. This session read the board first, merged T12's claim commit
+(`5f9ecef`) so both claims are visible here, and claims **only paths T12 does not claim**.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T13 | **Urgent privacy remediation outside T12's scope.** GitHub Pages serves the whole repository (legacy build, source `main:/`, root `.nojekyll`), so `internal/**` and `archive-v2/**` are public web pages even though they are not linked. Archived prior-session trees there carry parcel figures that are not rounded to $10. Round or remove them; audit every file in both trees. | in progress | `s-356f911b` | `internal/**`, `archive-v2/**`, `_config.yml` | 2026-11-11 13:13 |
+| T14 | Independent line-by-line re-verification of every registered source and fact against the official page, plus gap research (ZIP-level insurance, 2027 federal adjustments, Prop 19 allowance, pending law, long-run official economic series for stress paths). Output is a ledger only; no shared table data is edited. | in progress | `s-356f911b` | `research/**` | 2026-11-11 13:13 |
+| T15 | Two-property household decision model v2 and real-history stress replay, staged for integration (not published by this task). | in progress | `s-356f911b` | `model/**` | 2026-11-11 13:13 |
+| T16 | Final integration of T13–T15 into the shared outputs (generator, table data, index, navigation, root mirror), combined re-verification, PR → `main`, merge, Pages deploy check. **Not started.** Starts only when T12 is `done`, or its claim is more than 60 minutes old with no commits (handoff rule). | unclaimed | — | shared outputs (currently T12's scope) | — |
+
+### Requests to the T12 owner (files this session does not own)
+
+| Req | File(s) owned by T12 | Request | Status |
+| --- | --- | --- | --- |
+| R-01 | `tools/build.py` (user-provided baseline constants and the `MODEL_INPUTS` / `FLAGS` text), and the generated `docs/pages/methodology.html`, `docs/pages/flagged-for-review.html`, `docs/data/model-inputs.json`, `docs/data/flags.json` + root mirror | Four user-supplied parcel figures (latest assessment and latest tax for each property) are published unrounded. The owner's rule is that every such figure is rounded to the nearest $10 so it cannot be matched to a public record. Please round at the input stage so no unrounded value reaches any output. (Values deliberately not repeated here.) | open |
+| R-02 | `README.md` | States that `internal/` is "not published by GitHub Pages". With root `.nojekyll` and source `main:/` it is published. Please correct once T13 lands. | open |
+| R-03 | `tools/verify.py` | The privacy scan checks e-mail, phone, address, APN and SSN patterns but not "money value not divisible by $10 among user-supplied inputs", and does not scan `internal/**` or `archive-v2/**`. Please extend, or leave to T16. | open |
+
+### Irregularities opened by this session
+
+| ID | Summary | Status |
+| --- | --- | --- |
+| IR-018 | Unrounded user-supplied parcel figures are present in published files (canonical site and archived prior-session trees), contrary to the $10 rounding rule. | needs review — remediation in progress (T13, R-01) |
+| IR-019 | The repository is public and Pages publishes every path in it; "internal" is a naming convention only. Earlier commits and other session branches on the remote still contain the unrounded figures and cannot be rewritten from a session branch. Owner action needed (see T13 notes when done). | needs review |
