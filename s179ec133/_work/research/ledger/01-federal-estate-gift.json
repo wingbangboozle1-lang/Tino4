@@ -1,0 +1,79 @@
+[
+ {
+  "id": "IRS-ESTATE",
+  "agency": "Internal Revenue Service",
+  "title": "Estate tax (filing threshold table, portability)",
+  "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "A Form 706 filing is required when the gross estate plus adjusted taxable gifts and specific exemption exceeds the filing threshold for the year of death; the 2026 threshold is $15,000,000.",
+    "quote": "A filing is required if the gross estate of the decedent, increased by the decedent's adjusted taxable gifts and specific gift tax exemption, is valued at more than the filing threshold for the year of the decedent's death ... 2025 | $13,990,000 ... 2026 | $15,000,000"},
+   {"claim": "The gross estate uses fair market value at death and includes cash, securities, real estate, trusts and other assets.",
+    "quote": "The fair market value of these items is used, not necessarily what you paid for them ... The includible property may consist of cash and securities, real estate, insurance, trusts, annuities, business interests and other assets."},
+   {"claim": "A surviving spouse can receive the deceased spouse's unused exemption (portability) only through a timely filed estate tax return.",
+    "quote": "estates of decedents survived by a spouse may elect to pass any of the decedent's unused exemption to the surviving spouse. This election is made on a timely filed estate tax return for the decedent with a surviving spouse."}
+  ]
+ },
+ {
+  "id": "IRS-RP-2026-35",
+  "agency": "Internal Revenue Service",
+  "title": "Revenue Procedure 2026-35 — inflation-adjusted items for 2027",
+  "url": "https://www.irs.gov/pub/irs-drop/rp-26-35.pdf",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "The 2027 basic exclusion amount is $15,480,000.",
+    "quote": ".44 Basic Exclusion Amount for Estate Tax. For calendar year 2027, the basic exclusion amount under § 2010(c)(3) is $15,480,000."},
+   {"claim": "The same amount sets the gift-tax credit and the generation-skipping transfer exemption.",
+    "quote": "The basic exclusion amount is used in determining the applicable credit amount against estate tax described in section 2010(c)(1) and the applicable credit amount against gift tax described in section 2505(a)(1). The basic exclusion amount is also used in determining the generation-skipping transfer exemption amount under section 2631(c)."},
+   {"claim": "The 2027 annual gift exclusion is $20,000 per recipient.",
+    "quote": ".46 ... (1) For calendar year 2027, the first $20,000 of gifts to any person (other than gifts of future interests in property) are not included in the total amount of taxable gifts under § 2503 made during that year."},
+   {"claim": "2027 long-term capital gains: the 15% rate ends at $633,600 (joint) / $563,200 (single); the 0% rate ends at $102,100 (joint) / $51,050 (single).",
+    "quote": ".03 Maximum Capital Gains Rate ... Married Individuals Filing Joint Returns and Surviving Spouse | $102,100 | $633,600 ... All Other Individuals | $51,050 | $563,200"},
+   {"claim": "2027 ordinary-income brackets for joint filers: 24% starts above $218,250, 32% above $416,650, 35% above $529,100, 37% above $793,650.",
+    "quote": "Over $218,250 but not over $416,650 | $37,098.00 plus 24% of the excess over $218,250 ... Over $793,650 | $213,290.50 plus 37% of the excess over $793,650"},
+   {"claim": "2027 ordinary-income brackets for single filers: 24% starts above $109,125, 32% above $208,325, 35% above $264,550, 37% above $661,375.",
+    "quote": "Over $109,125 but not over $208,325 | $18,549.00 plus 24% of the excess over $109,125 ... Over $661,375 | $199,237.75 plus 37% of the excess over $661,375"},
+   {"claim": "2027 trust and estate income brackets reach the 37% rate above $16,500 of taxable income.",
+    "quote": "TABLE 5 - Section 1(j)(2)(E) – Estates and Trusts ... Over $16,500 | $3,968 plus 37% of the excess over $16,500"}
+  ]
+ },
+ {
+  "id": "IRS-EG-WHATSNEW",
+  "agency": "Internal Revenue Service",
+  "title": "What's new — Estate and gift tax",
+  "url": "https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "Public Law 119-21 (signed July 4, 2025) raised the basic exclusion amount to $15,000,000 for 2026.",
+    "quote": "The Working Families Tax Cuts Bill (WFTC) was signed into law on July 4, 2025 as Public Law 119-21. WFTC amends § 2010(c)(3) by increasing the basic exclusion amount to $15,000,000 for calendar year 2026."}
+  ]
+ },
+ {
+  "id": "IRS-ESTATE-FAQ",
+  "agency": "Internal Revenue Service",
+  "title": "Frequently asked questions on estate taxes",
+  "url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "Form 706 is due nine months after the date of death; Form 4768 gives an automatic six-month extension.",
+    "quote": "The due date of the estate tax return is nine months after the decedent's date of death, however, the estate's representative may request an extension of time to file the return for up to six months. An automatic six month extension of time to file the return is available to all estates ... by filing Form 4768 on or before the due date of the estate tax return."},
+   {"claim": "A Form 706 must also be filed to elect portability, whatever the size of the estate.",
+    "quote": "An estate tax return also must be filed if the estate elects to transfer any deceased spousal unused exclusion (DSUE) amount to a surviving spouse, regardless of the size of the gross estate or amount of adjusted taxable gifts."},
+   {"claim": "A late portability election is possible up to the fifth anniversary of death for estates under the filing threshold (Rev. Proc. 2022-32).",
+    "quote": "The simplified method under the revenue procedure to obtain an extension of time to make the portability election requires the filing of a complete and properly prepared estate tax return on or before the fifth annual anniversary of the decedent's date of death"}
+  ]
+ },
+ {
+  "id": "IRS-INHERIT-FAQ",
+  "agency": "Internal Revenue Service",
+  "title": "Gifts & inheritances — Is money received from the sale of inherited property considered taxable income?",
+  "url": "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "The basis of inherited property is generally its fair market value on the date of death (or on the alternate valuation date if elected on Form 706).",
+    "quote": "The basis of property inherited from a decedent is generally one of the following: The fair market value (FMV) of the property on the date of the decedent's death (whether or not the executor of the estate files an estate tax return ... The FMV of the property on the alternate valuation date, but only if the executor of the estate files an estate tax return (Form 706) and elects to use the alternate valuation on that return."},
+   {"claim": "A sale above that basis is a taxable gain, reported on Schedule D / Form 8949.",
+    "quote": "If you sell the property for more than your basis, you have a taxable gain."}
+  ]
+ }
+]

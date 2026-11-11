@@ -1,0 +1,114 @@
+[
+ {
+  "id": "BOE-LTA-2026-002",
+  "agency": "California State Board of Equalization",
+  "title": "Letter to Assessors 2026/002 — 2026-27 California Consumer Price Index (inflation factor table 1976-77 to 2026-27)",
+  "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf",
+  "verified": [
+   {
+    "claim": "Base year values rise each year by the California CPI change, capped at 2%.",
+    "quote": "Revenue and Taxation Code section 51 provides that base year values determined under section 110.1 shall be compounded annually by an inflation factor, not to exceed 2 percent."
+   },
+   {
+    "claim": "The 2026 roll factor is 1.02.",
+    "quote": "Accordingly, please prepare your 2026 assessment roll using an inflation factor of 1.02."
+   },
+   {
+    "claim": "The factor was below 2% in 11 of the 51 roll years listed (for example 2010-11: 0.99763; 2014-15: 1.00454; 2016-17: 1.01525; 2021-22: 1.01036).",
+    "quote": "2010-11 | -0.237 | -0.24% | 0.99763 ... 2014-15 | 0.454 | 0.45% | 1.00454 ... 2016-17 | 1.525 | 1.53% | 1.01525 ... 2021-22 | 1.036 | 1.04% | 1.01036"
+   }
+  ],
+  "fetched": "2026-11-11"
+ },
+ {
+  "id": "BOE-CIO-FAQ",
+  "agency": "California State Board of Equalization",
+  "title": "Change in Ownership — Frequently Asked Questions",
+  "url": "https://www.boe.ca.gov/proptaxes/faqs/changeinownership.htm",
+  "verified": [
+   {
+    "claim": "An inheritance or a transfer through a trust is a change in ownership.",
+    "quote": "A transfer can be a sale or purchase, but it also can be a gift or inheritance. Transfers that constitute a change in ownership may occur by any means, including ... transfers by grant, gift, devise, inheritance, trust"
+   },
+   {
+    "claim": "On a change in ownership the assessor resets the value to market value as of that date.",
+    "quote": "Once the county assessor has determined that a change in ownership has occurred, Proposition 13 requires the county assessor to reassess the property to its current fair market value as of the date ownership changed."
+   }
+  ],
+  "fetched": "2026-11-11"
+ },
+ {
+  "id": "BOE-HOX",
+  "agency": "California State Board of Equalization",
+  "title": "Homeowners' Exemption",
+  "url": "https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm",
+  "verified": [
+   {
+    "claim": "The homeowners' exemption removes $7,000 of taxable value for an owner-occupied principal residence on January 1; it is claimed once on form BOE-266.",
+    "quote": "The California Constitution provides a $7,000 reduction in the taxable value for a qualifying owner-occupied home. The home must have been the principal place of residence of the owner on the lien date, January 1st. ... The claim form, BOE-266, Claim for Homeowners' Property Tax Exemption, is available from the county assessor."
+   }
+  ],
+  "fetched": "2026-11-11"
+ },
+ {
+  "id": "BOE-PUB800-9",
+  "agency": "California State Board of Equalization",
+  "title": "Death of a Real Property Owner — Reporting Requirements",
+  "url": "https://www.boe.ca.gov/pdf/pub800-9.pdf",
+  "verified": [
+   {
+    "claim": "Form BOE-502-D must be filed with the assessor within 150 days of the date of death, including for property held in a trust.",
+    "quote": "BOE-502-D must be completed for each parcel of real property owned by the decedent at the time of death to report to the Assessor the transfer of property, including a transfer through the medium of a trust. ... File BOE-502-D, Change in Ownership Statement—Death of a Real Property Owner within 150 days after the date of death."
+   }
+  ],
+  "fetched": "2026-11-11"
+ },
+ {
+  "id": "SF-TTX-SECURED",
+  "agency": "City and County of San Francisco, Treasurer & Tax Collector",
+  "title": "Secured Property Taxes",
+  "url": "https://sftreasurer.org/property/secured-property-taxes",
+  "verified": [
+   {
+    "claim": "San Francisco's secured property tax rate for fiscal year 2026-27 is 1.18162182%.",
+    "quote": "The secured property tax rate for Fiscal Year 2026-27 is 1.18162182%."
+   },
+   {
+    "claim": "The bill is taxable value times the rate, plus direct charges and special assessments.",
+    "quote": "Total Due (Net Assessed Taxable Value * Tax Rate = Total Tax) + (Total Direct Charges and Special Assessments)."
+   }
+  ],
+  "fetched": "2026-11-11"
+ },
+ {
+  "id": "SCC-TAXRATEBOOK-2025",
+  "agency": "County of Santa Clara, Finance Agency",
+  "title": "Compilation of Tax Rates & Information, 2025-2026",
+  "url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+  "note": "Read through search excerpts of the official PDF, not page by page. The owner's exact tax rate area is not known to this session (and is deliberately not asked for).",
+  "verified": [
+   {
+    "claim": "Every tax rate area starts from the 1% maximum levy plus voter-approved debt rates; totals seen in the 2025-26 book range from about 1.147% to 1.241%.",
+    "quote": "00001 · 1% MAXIMUM LEVY · 1.00000 ... 00020 · CO RETIREMENT LEVY · 0.03880 ... 1.14670 ... 1.15215 ... 1.15600 ... 1.16710 ... 1.16910 ... 1.24090"
+   },
+   {
+    "claim": "Bond rates for the Cupertino elementary, Fremont Union high school and Foothill-De Anza college districts appear in the book.",
+    "quote": "11222 · CUPERTINO ELEM 2001 · 0.01650 11223 · Cupertino Elem 2012 · 0.01690 11224 · Cupertino Elem 2024 · 0.00010 ... 13101 · Fremont Union High 2008 · 0.00880 13103 · Fremont Union High 2014 · 0.01070 13104 · Fremont Union High 2018 · 0.01180 13105 · Fremont High 2022 · 0.01040 ... 15096 · Foothill-De Anza CCD 2020 · 0.01350"
+   }
+  ],
+  "fetched": "2026-11-11"
+ },
+ {
+  "id": "CA-RTC-11911",
+  "agency": "California Legislature (Legislative Counsel)",
+  "title": "Revenue and Taxation Code § 11911 — Documentary transfer tax",
+  "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=11911.",
+  "verified": [
+   {
+    "claim": "The county documentary transfer tax on a sale is $0.55 per $500 of value ($1.10 per $1,000, or 0.11%).",
+    "quote": "a tax at the rate of fifty-five cents ($0.55) for each five hundred dollars ($500) or fractional part thereof."
+   }
+  ],
+  "fetched": "2026-11-11"
+ }
+]
