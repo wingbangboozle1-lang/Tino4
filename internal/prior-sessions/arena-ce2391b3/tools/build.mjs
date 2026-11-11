@@ -536,7 +536,7 @@ const propsBody = `
 <section class="card warncard">
   <h2>Two things the supplied series cannot explain</h2>
   <h3>1. Property B's implied tax rate is 2.14%, but San Francisco publishes 1.1816%</h3>
-  <p>${money(2439)} ÷ ${money(114248)} = <strong>2.1350%</strong>. The published FY2026-27 secured rate is
+  <p>${money(2440)} ÷ ${money(114250)} = <strong>2.1350%</strong>. The published FY2026-27 secured rate is
   <strong>1.18162182%</strong> ${srcLink("S-SF-TREAS-SECURED")}. The gap is roughly $1,070 a year, and it has
   persisted for a decade — the implied rate ranges from 1.68% (2016) to 2.14% (2025). A ten-year consistent
   gap is more likely to be real parcel-level charges (special assessments, bond levies, a district charge
@@ -546,14 +546,14 @@ const propsBody = `
   <p><strong>Action:</strong> one actual tax bill settles it.</p>
 
   <h3>2. Property A's implied rate is 1.335%, against a county illustration of 1.1488%</h3>
-  <p>${money(7207)} ÷ ${money(539743)} = <strong>1.3352%</strong>. Santa Clara County's own illustration of a
+  <p>${money(7210)} ÷ ${money(539740)} = <strong>1.3352%</strong>. Santa Clara County's own illustration of a
   typical tax rate area is 1.1488% ${srcLink("S-SCC-ASSESSOR-BOOKLET")}. A 16% excess is explained easily by a
   tax rate area with more bond load, but it cannot be confirmed without the parcel number. The model uses
   the implied rate and runs the county figure as a sensitivity.</p>
 
   <h3>3. Two Property A years break the pattern</h3>
   <p>In 2017 the tax <em>fell</em> 0.5% while the assessment rose 2%. In 2020 the tax was identical to 2019
-  ($6,565) while the assessment rose 2%. Neither can be produced by a constant-rate model. They are kept
+  ($6,560) while the assessment rose 2%. Neither can be produced by a constant-rate model. They are kept
   exactly as supplied rather than corrected.</p>
 </section>
 `;

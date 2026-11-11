@@ -78,7 +78,7 @@ Full detail, with source links, on the site's **Flagged for Review** page and in
 | F1 | Property B tax ÷ assessment = 2.13% (2025) | User-supplied series implies ~2.0–2.1% effective rate for 2016–2025, vs. San Francisco's published secured-roll composite ~1.18%. Consistent across 10 years, so likely a real parcel-level add-on (special assessment / bonds) rather than a typo — but it cannot be confirmed without an APN. | needs review |
 | F2 | Property A tax ÷ assessment = 1.34% (2025) | vs. Santa Clara County published rate ~1.15–1.25% incl. TRA. Modest excess, plausibly bond/special assessments. | needs review |
 | F3 | Property A 2017 tax falls 0.5% while assessment rises 2% | Cannot be reproduced from a constant-rate model; kept as supplied. | needs review |
-| F4 | Property A 2020 tax is flat vs. 2019 | Also anomalous (2019–2020 both $6,565). Kept as supplied. | needs review |
+| F4 | Property A 2020 tax is flat vs. 2019 | Also anomalous (2019–2020 both $6,560). Kept as supplied. | needs review |
 | F5 | 2026 Property A tax = `--` | No 2026-27 tax bill exists yet at the date of this research. Model treats 2026 tax as projected on official rate, not as a bill. | needs review |
 | F6 | Which property is the parents' principal residence | Determines whether Prop 19's parent-child exclusion applies to Property A. Not stated; modelled as Property A = principal residence, with the alternative scenario shown. | needs review |
 | F7 | Insurance premiums | No official source publishes parcel-level HO-3 / DP-3 premiums. Registry-level (NAIC/CDI) benchmarks only; user's $1,500 figures shown as unverified. | needs review |

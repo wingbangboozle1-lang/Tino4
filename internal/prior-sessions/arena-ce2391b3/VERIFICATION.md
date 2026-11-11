@@ -74,8 +74,8 @@ That is answered per-year in the estate table on the site.
 | 3.7 | Supplemental assessment after a change in ownership | Issued for the difference between new and old value, prorated | **Verified** | Same SF Treasurer page — "If the property is reassessed at a higher value, a supplemental assessment will be issued calculated on the difference between the new value and the old or prior value" |
 | 3.8 | Homeowners' exemption | $7,000 of taxable value | **Verified** | BOE — "The California Constitution provides a $7,000 reduction in the taxable value for a qualifying owner-occupied home. The home must have been the principal place of residence of the owner on the lien date, January 1st." — https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm |
 | 3.9 | Homeowners' exemption filing | BOE-266, one-time, by February 15 for the full amount | **Verified** | Same BOE page |
-| 3.10 | Property A's rate used in the model | **1.3352%** | **Derived** | $7,207 ÷ $539,743 = 1.3352% from the user's own 2025 figures. Preferred over 1.1488% because it reproduces the actual bills. The county figure is run as a sensitivity. Flagged F2. |
-| 3.11 | Property B's rate used in the model | **2.1350%** | **Derived** | $2,439 ÷ $114,248 = 2.1350% from the user's own 2025 figures. **81% above SF's published 1.1816%** — the largest irregularity in the supplied data. Flagged F1. |
+| 3.10 | Property A's rate used in the model | **1.3352%** | **Derived** | $7,210 ÷ $539,740 = 1.3352% from the user's own 2025 figures. Preferred over 1.1488% because it reproduces the actual bills. The county figure is run as a sensitivity. Flagged F2. |
+| 3.11 | Property B's rate used in the model | **2.1350%** | **Derived** | $2,440 ÷ $114,250 = 2.1350% from the user's own 2025 figures. **81% above SF's published 1.1816%** — the largest irregularity in the supplied data. Flagged F1. |
 
 ### The two rate irregularities, stated plainly
 

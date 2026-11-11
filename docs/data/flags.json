@@ -15,7 +15,7 @@
     {
       "id": "IR-002",
       "title": "San Francisco property-tax figures imply a ~2.13% effective rate",
-      "detail": "The supplied 2025 tax of $2,439 on a stated assessment of $114,248 implies 2.135%, versus the official FY2025-26 combined secured rate of 1.18268325%. The supplied tax series also grows ~1.5\u20136.2%/yr while the stated assessment grows 2%/yr. Cause cannot be confirmed from an official source (possible special assessments, Mello-Roos, direct charges, a second parcel, or transcription error).",
+      "detail": "The supplied 2025 tax of $2,440 on a stated assessment of $114,250 implies 2.135%, versus the official FY2025-26 combined secured rate of 1.18268325%. The supplied tax series also grows ~1.5\u20136.2%/yr while the stated assessment grows 2%/yr. Cause cannot be confirmed from an official source (possible special assessments, Mello-Roos, direct charges, a second parcel, or transcription error).",
       "impact": "Official value left blank; figures retained only as user-supplied inputs. Confirm from the actual tax bill.",
       "sources": [
         "S31",
@@ -26,7 +26,7 @@
     {
       "id": "IR-003",
       "title": "Cupertino tax series inconsistencies",
-      "detail": "The supplied 2025 tax of $7,207 on $539,743 implies 1.335%, above the County's published typical 1.1488% rate. 2020 tax is flat versus 2019, and 2017 tax falls 0.5% while assessment rises 2% \u2014 arithmetically inconsistent with a constant rate. The 2026 tax cell is blank in the supplied table.",
+      "detail": "The supplied 2025 tax of $7,210 on $539,740 implies 1.336%, above the County's published typical 1.1488% rate. 2020 tax is flat versus 2019, and 2017 tax falls 0.5% while assessment rises 2% \u2014 arithmetically inconsistent with a constant rate. The 2026 tax cell is blank in the supplied table.",
       "impact": "Official value left blank; confirm the parcel's tax rate area and direct assessments.",
       "sources": [
         "S30",
@@ -181,6 +181,16 @@
         "S09",
         "S07",
         "S08"
+      ],
+      "status": "needs review"
+    },
+    {
+      "id": "IR-018",
+      "title": "Raw user-supplied figures were published unrounded \u2014 fixed",
+      "detail": "Line-by-line review found user-supplied parcel-specific figures (exact assessments and tax bills, to the dollar) published verbatim in the generated pages, the JSON data files, the generator source, the preserved prior-session archives, and internal working notes \u2014 contrary to the requirement that all figures be rounded to the nearest $10 so they cannot be traced to the source parcel. Every such figure in this repository has been rounded to the nearest $10.",
+      "impact": "Parcel-specific figures are no longer reconstructable from the published site or the repository. Model inputs moved by at most a few dollars; projections were re-derived and re-verified (tools/build.py && tools/verify.py).",
+      "sources": [
+        "S01"
       ],
       "status": "needs review"
     },

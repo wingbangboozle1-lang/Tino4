@@ -52,11 +52,11 @@ SF_RENT_ALLOWABLE = 0.016                # S34 / S56
 
 # User-provided baselines — UNVERIFIED. Never presented as verified facts.
 A_VALUE_2026 = 3_100_000
-A_ASSESSED_2026 = 550_537
-A_TAX_2025 = 7_207
+A_ASSESSED_2026 = 550_540  # user-supplied, rounded to nearest $10 (IR-018)
+A_TAX_2025 = 7_210          # user-supplied, rounded to nearest $10 (IR-018)
 B_VALUE_2026 = 1_800_000
-B_ASSESSED_2025 = 114_248
-B_TAX_2025 = 2_439
+B_ASSESSED_2025 = 114_250   # user-supplied, rounded to nearest $10 (IR-018)
+B_TAX_2025 = 2_440          # user-supplied, rounded to nearest $10 (IR-018)
 B_RENT_MONTHLY_2026 = 7_150
 WATER_A_MONTHLY = 125          # midpoint of user's $100–$150
 ELEC_A_NET_MONTHLY = -15       # midpoint of user's $10–$20 monthly credit (negative cost)
@@ -474,14 +474,14 @@ json_write("facts.json", {
 
 MODEL_INPUTS = [
     ("Property A — estimated market value, Nov 2026", "Property A / 95014", "user-provided", "$3,100,000", ["S30"], "IR-004"),
-    ("Property A — tax assessment, 2026", "Property A / 95014", "user-provided", "$550,537", ["S30"], "IR-004"),
-    ("Property A — property tax, 2025", "Property A / 95014", "user-provided", "$7,207", ["S30"], "IR-002"),
+    ("Property A — tax assessment, 2026", "Property A / 95014", "user-provided", "$550,540", ["S30"], "IR-004"),
+    ("Property A — property tax, 2025", "Property A / 95014", "user-provided", "$7,210", ["S30"], "IR-002"),
     ("Property A — water, monthly", "Property A / 95014", "user-provided midpoint of $100–$150", "$125 / month", ["S43"], "IR-004"),
     ("Property A — electricity net credit, monthly", "Property A / 95014", "user-provided midpoint of $10–$20 profit", "−$15 / month", ["S41"], "IR-006"),
     ("Property A — insurance guess, annual", "Property A / 95014", "user-provided estimate", "$1,500 / year", ["S46", "S47"], "IR-007"),
     ("Property B — estimated market value, Nov 2026", "Property B / 94122", "user-provided", "$1,800,000", ["S31"], "IR-004"),
-    ("Property B — tax assessment, 2025", "Property B / 94122", "user-provided", "$114,248", ["S31"], "IR-002"),
-    ("Property B — property tax, 2025", "Property B / 94122", "user-provided", "$2,439", ["S31"], "IR-002"),
+    ("Property B — tax assessment, 2025", "Property B / 94122", "user-provided", "$114,250", ["S31"], "IR-002"),
+    ("Property B — property tax, 2025", "Property B / 94122", "user-provided", "$2,440", ["S31"], "IR-002"),
     ("Property B — rent from two units, monthly", "Property B / 94122", "user-provided", "$7,150 / month", ["S34"], "IR-004"),
     ("Property B — water, monthly (3 units)", "Property B / 94122", "user-provided midpoint of $330–$400", "$365 / month", ["S44"], "IR-004"),
     ("Property B — electricity, monthly (3 units)", "Property B / 94122", "user-provided midpoint of $30–$70", "$50 / month", ["S45"], "IR-004"),
@@ -506,10 +506,10 @@ FLAGS = [
      "Arena pins this session to one branch, `arena/0837be92-tino4`; the requested `session-<id>/<task>` branches and git worktrees cannot be created. Isolation is implemented by exclusive file scopes on the shared task board instead. The PR is opened from the working branch to `main`.",
      "Process only; no effect on the analysis.", ["S11"]),
     ("IR-002", "San Francisco property-tax figures imply a ~2.13% effective rate",
-     "The supplied 2025 tax of $2,439 on a stated assessment of $114,248 implies 2.135%, versus the official FY2025-26 combined secured rate of 1.18268325%. The supplied tax series also grows ~1.5–6.2%/yr while the stated assessment grows 2%/yr. Cause cannot be confirmed from an official source (possible special assessments, Mello-Roos, direct charges, a second parcel, or transcription error).",
+     "The supplied 2025 tax of $2,440 on a stated assessment of $114,250 implies 2.135%, versus the official FY2025-26 combined secured rate of 1.18268325%. The supplied tax series also grows ~1.5–6.2%/yr while the stated assessment grows 2%/yr. Cause cannot be confirmed from an official source (possible special assessments, Mello-Roos, direct charges, a second parcel, or transcription error).",
      "Official value left blank; figures retained only as user-supplied inputs. Confirm from the actual tax bill.", ["S31", "S30"]),
     ("IR-003", "Cupertino tax series inconsistencies",
-     "The supplied 2025 tax of $7,207 on $539,743 implies 1.335%, above the County's published typical 1.1488% rate. 2020 tax is flat versus 2019, and 2017 tax falls 0.5% while assessment rises 2% — arithmetically inconsistent with a constant rate. The 2026 tax cell is blank in the supplied table.",
+     "The supplied 2025 tax of $7,210 on $539,740 implies 1.336%, above the County's published typical 1.1488% rate. 2020 tax is flat versus 2019, and 2017 tax falls 0.5% while assessment rises 2% — arithmetically inconsistent with a constant rate. The 2026 tax cell is blank in the supplied table.",
      "Official value left blank; confirm the parcel's tax rate area and direct assessments.", ["S30", "S20"]),
     ("IR-004", "User-supplied figures cannot be confirmed from an official source",
      "Estimated market values, assessment histories, rents, utility amounts, insurance estimates, the cash inheritance amount, and household arrangements are user-provided. No parcel identifiers are used (privacy), so county records cannot be matched.",
@@ -550,6 +550,9 @@ FLAGS = [
     ("IR-016", "Rental income taxation and depreciation recapture not fully modelled",
      "Rental income is ordinary income; depreciation (27.5 years) and unrecaptured §1250 gain at up to 25% were not fully modelled in the scenario comparison.",
      "Hold/rent options are shown pre-income-tax, which is generous to them; the sell option has federal gain tax deducted. This strengthens, rather than weakens, the recommendation.", ["S09", "S07", "S08"]),
+    ("IR-018", "Raw user-supplied figures were published unrounded — fixed",
+     "Line-by-line review found user-supplied parcel-specific figures (exact assessments and tax bills, to the dollar) published verbatim in the generated pages, the JSON data files, the generator source, the preserved prior-session archives, and internal working notes — contrary to the requirement that all figures be rounded to the nearest $10 so they cannot be traced to the source parcel. Every such figure in this repository has been rounded to the nearest $10.",
+     "Parcel-specific figures are no longer reconstructable from the published site or the repository. Model inputs moved by at most a few dollars; projections were re-derived and re-verified (tools/build.py && tools/verify.py).", ["S01"]),
     ("IR-017", "GitHub Pages source could not be changed to /docs",
      "The repository's Pages site is configured with build_type 'legacy' on main at the repository root. The Pages administration API returned 403 'Resource not accessible by integration' for this session's token, so the source path could not be switched to /docs.",
      "The site is mirrored byte-identically to the repository root and _config.yml excludes internal-only files from the Jekyll build. docs/ remains the canonical copy. Confirm the live URL after deployment.", ["S11"]),
@@ -910,17 +913,17 @@ b.append(table(["Rule", "Official statement"],
                     "rate area was not confirmed (privacy) and is flagged IR-003."))
 
 A_HIST = [
-    (2026, None, 550_537), (2025, 7_207, 539_743), (2024, 7_003, 529_161),
-    (2023, 6_917, 518_786), (2022, 6_755, 508_614), (2021, 6_662, 498_642),
-    (2020, 6_565, 493_530), (2019, 6_565, 483_854), (2018, 6_383, 474_368),
-    (2017, 6_383, 465_067), (2016, 6_414, 455_949), (2015, 6_130, 449_101),
-    (2014, 5_965, 440_305),
+    (2026, None, 550_540), (2025, 7_210, 539_740), (2024, 7_000, 529_160),
+    (2023, 6_920, 518_790), (2022, 6_760, 508_610), (2021, 6_660, 498_640),
+    (2020, 6_560, 493_530), (2019, 6_560, 483_850), (2018, 6_380, 474_370),
+    (2017, 6_380, 465_070), (2016, 6_410, 455_950), (2015, 6_130, 449_100),
+    (2014, 5_960, 440_300),
 ]
 B_HIST = [
-    (2025, 2_439, 114_248), (2024, 2_315, 112_008), (2023, 2_179, 109_814),
-    (2022, 2_107, 107_662), (2021, 2_066, 105_595), (2020, 2_197, 104_513),
-    (2019, 2_134, 102_465), (2018, 2_061, 100_456), (2017, 1_740, 98_488),
-    (2016, 1_675, 96_557),
+    (2025, 2_440, 114_250), (2024, 2_320, 112_010), (2023, 2_180, 109_810),
+    (2022, 2_110, 107_660), (2021, 2_070, 105_600), (2020, 2_200, 104_510),
+    (2019, 2_130, 102_460), (2018, 2_060, 100_460), (2017, 1_740, 98_490),
+    (2016, 1_680, 96_560),
 ]
 b.append('<h2>Supplied histories (as supplied — unverified)</h2>')
 b.append(callout("flag", "These are not verified facts",

@@ -55,9 +55,9 @@ Session currently active: **`arena-6acab13a`** (branch `arena/6acab13a-tino4`)
 
 | # | Item | What was found | Status |
 |---|------|----------------|--------|
-| I1 | SF (94122) property tax vs. assessed value implies a 2.13% effective rate for 2025 (2,439 / 114,248) | Consistent across 2016–2025 (~2.0%), roughly double Santa Clara County's shape. Either a second parcel, a special assessment, or a transcription issue. Reported figures shown as-supplied; model uses the official county rate. | **needs review** |
+| I1 | SF (94122) property tax vs. assessed value implies a 2.13% effective rate for 2025 (2,440 / 114,250) | Consistent across 2016–2025 (~2.0%), roughly double Santa Clara County's shape. Either a second parcel, a special assessment, or a transcription issue. Reported figures shown as-supplied; model uses the official county rate. | **needs review** |
 | I2 | Cupertino 2026 property tax | User table leaves 2026 blank; 2027 value cannot be projected from an official source because the 2026-27 roll is not yet published. | **needs review** |
-| I3 | 2020 property tax for Cupertino is flat vs. 2019 ($6,565 → $6,565) | Possible but unusual; left as-supplied. | **needs review** |
+| I3 | 2020 property tax for Cupertino is flat vs. 2019 ($6,560 → $6,560) | Possible but unusual; left as-supplied. | **needs review** |
 | I4 | 2017 Cupertino tax is negative growth (−0.5%) with assessed value +2% | Arithmetically inconsistent with a constant rate; flag only. | **needs review** |
 | I5 | Which property is the parents' principal residence | Prop 19's parent-child exclusion only applies to the transferor's **principal residence**. Not stated in the request. Modeled as Cupertino = principal residence (the usual reading) and the alternative is shown. | **needs review** |
 | I6 | SF solar / NEM grandfathering | Not stated whether the SF property has solar. Cupertino solar is stated; NEM 2.0 expiry date is unknown without the interconnection date. | **needs review** |
