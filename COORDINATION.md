@@ -45,7 +45,7 @@ analysis.
 | T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
 | T12 | Independent audit & line-by-line re-verification (read-only): build reproducibility, `verify.py`, HTTP 200 sweep, privacy scan, root-mirror check, live-site check. Distinct from `s-3642c4cb` T12 remediation (see log below); this session edits only `COORDINATION.md` | done | `arena-ef28fa90` | `COORDINATION.md` only | 2026-11-11 |
 | T13 | Official-source freshness spot-check (read-only): re-fetch key statutory values (IRS, BOE, county, CBO, CDI, FTB, CPUC, SF) and record unchanged/changed in `COORDINATION.md` log (not in `internal/`, which is inside `s-3642c4cb` T12 scope) | done | `arena-ef28fa90` | `COORDINATION.md` only | 2026-11-11 |
-| T14 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `arena-ef28fa90` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T14 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `arena-ef28fa90` | `COORDINATION.md` (final log only) | 2026-11-11 |
 
 ## Session registry
 
@@ -53,7 +53,7 @@ analysis.
 | --- | --- | --- | --- |
 | `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
 | `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | done (merged, PR #9) |
-| `arena-ef28fa90` | `arena/ef28fa90-tino4` | Independent audit, source freshness spot-check, PR → merge → deploy | active |
+| `arena-ef28fa90` | `arena/ef28fa90-tino4` | Independent audit, source freshness spot-check, PR → merge → deploy | done (merged, PR #10) |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
@@ -237,6 +237,9 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | Black-swan PR | https://github.com/wingbangboozle1-lang/Tino4/pull/9 — "Add 50-year black-swan economic stress scenarios" |
 | Black-swan merge result | `gh pr merge 9 --merge` → **MERGED**, merge commit `0bffb5909102bfafbc6b32d16d4a63ff38590618` at 2026-11-11T13:03:56Z (recorded by `arena-ef28fa90`; T11 was left `in progress` by `s-accb6bba`) |
 | Black-swan Pages build | `built` for commit `0bffb59` at 2026-11-11T13:04:09Z, no error; live overview, executive-summary, black-swan and flagged pages fetched and verified by `arena-ef28fa90` |
+| Audit PR | https://github.com/wingbangboozle1-lang/Tino4/pull/10 — "Independent audit, source freshness check, and IR-018 privacy confirmation (ef28fa90)" |
+| Audit merge result | `gh pr merge 10 --merge` → **MERGED**, merge commit `e766dc82262e868d1202d1306f5500dd53c75f4a` at 2026-11-11T13:11:54Z |
+| Audit Pages build | `built` for commit `e766dc8` at 2026-11-11T13:12:39Z, no error; live site re-confirmed |
 
 ## Change log
 
@@ -275,6 +278,8 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 - 2026-11-11 — `arena-ef28fa90`: claimed T12–T14 (audit/freshness/PR). T12/T13 done read-only;
   recorded PR #9 merge + Pages `built` (T11 close-out). Confirmed IR-018 independently (see log
   below); remediation deferred to `s-3642c4cb` T12 per scope protocol. T14 in progress.
+- 2026-11-11 — `arena-ef28fa90`: T14 done — PR #10 merged at `e766dc8`; Pages `built` at
+  2026-11-11T13:12:39Z. This follow-up records the merge (same pattern as PR #7/#8).
 
 ## Follow-up session `arena-ef28fa90` — 2026-11-11 (independent audit + freshness)
 
