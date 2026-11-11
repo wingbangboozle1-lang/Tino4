@@ -43,6 +43,9 @@ analysis.
 | T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
 | T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
 | T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T12 | Privacy hardening: round every published user-supplied figure to the nearest $10 (published JSON + Flagged page text), and add an automated check that no exact supplied figure is published | in progress | `s-a71eef30` | `tools/build.py`, `tools/verify.py`, `docs/data/*.json` | 2026-11-11 |
+| T13 | Corrections & rigor pass: fix the exemption-indexing text/calculation mismatch, correct the CBO report-title citation, add official offset rules (RTC §480 penalty, §121 policy limits, IRS NIIT/policy), add a Property A holding-cost risk section, resolve IR-010 against the official FTB source, add a new ownership-structure section with sources, regenerate and re-verify | in progress | `s-a71eef30` | `tools/build.py`, `tools/sources.py`, `tools/verify.py`, `docs/pages/*.html`, `docs/index.html`, root mirror | 2026-11-11 |
+| T14 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-a71eef30` | `COORDINATION.md` (final log only) | 2026-11-11 |
 
 ## Session registry
 
@@ -50,6 +53,7 @@ analysis.
 | --- | --- | --- | --- |
 | `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
 | `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | active |
+| `s-a71eef30` | `arena/a71eef30-tino4` | Follow-up: privacy rounding hardening, corrections/rigor pass, new ownership-structure section, re-verify, PR → merge → deploy | active |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
