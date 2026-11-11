@@ -14,10 +14,10 @@ verification performed, and irregularities here and mark it `done`. Never mark a
 anything. A claim older than 60 minutes with no commits may be taken over; note the handoff.
 
 - **Repository:** `wingbangboozle1-lang/Tino4`
-- **Working / integration branch:** `arena/0837be92-tino4` (platform-fixed; see IR-001)
+- **Working / integration branch:** `arena/accb6bba-tino4` (platform-fixed; see IR-001)
 - **Live site:** https://wingbangboozle1-lang.github.io/Tino4/ (GitHub Pages, `main`, root)
-- **Board last updated:** 2026-11-10 (UTC)
-- **Final integration session:** `s-0837be92`
+- **Board last updated:** 2026-11-11 (UTC)
+- **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11)
 
 ## Platform constraint (IR-001)
 
@@ -40,12 +40,16 @@ analysis.
 | T6 | Line-by-line verification pass, link check, privacy scan, build check | done | `s-0837be92` | `internal/verification-log.md`, `tools/verify.py` | 2026-11-10 |
 | T7 | Final integration: shared table data, `docs/index.html` + navigation, root mirror, merge branches, re-verify combined data, no broken links, publish to GitHub Pages | done | `s-0837be92` | `docs/index.html`, `docs/data/**`, root mirror | 2026-11-10 |
 | T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
+| T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
+| T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
+| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
 
 ## Session registry
 
 | Session ID | Branch | Role | Status |
 | --- | --- | --- | --- |
-| `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | active |
+| `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
+| `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | active |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
@@ -148,26 +152,42 @@ Every URL below was fetched and read line by line on 2026-11-10. Full machine-re
 | S54 | CA BOE | California BOE — LTA 2025/023, assessed value / 2% annual cap | https://boe.ca.gov/proptaxes/pdf/lta25023.pdf | 2026-11-10 |
 | S55 | CA SOS | California Secretary of State — 2026 General Election Official Voter Information Guide | https://vig.cdn.sos.ca.gov/2026/general/pdf/complete-vig.pdf | 2026-11-10 |
 | S56 | City & County of SF | SF.gov — Annual Rent Increase for 3/1/26–2/28/27 Announced (1.6%) | https://www.sf.gov/news--annual-rent-increase-3126-22827-announced | 2026-11-10 |
+| S57 | U.S. Bureau of Labor Statistics | BLS — Historical CPI-U, U.S. city average, all items (2024 archive) | https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202402.pdf | 2026-11-11 |
+| S58 | Federal Reserve Board | Federal Reserve — Evidence from the Survey of Consumer Finances: 2007–09 recession | https://www.federalreserve.gov/pubs/feds/2010/201006/201006pap.pdf | 2026-11-11 |
+| S59 | Federal Housing Finance Agency | FHFA — House Price Index: scope, repeat-sales method, and datasets | https://www.fhfa.gov/data/hpi | 2026-11-11 |
+| S60 | Congressional Budget Office | CBO — The Long-Term Budget Outlook: 2024 to 2054 | https://www.cbo.gov/publication/59711 | 2026-11-11 |
+| S61 | U.S. Bureau of Labor Statistics | BLS — CPI-U June 2022: 9.1% 12-month increase | https://www.bls.gov/news.release/archives/cpi_07132022.htm | 2026-11-11 |
+| S62 | Congressional Budget Office | CBO — The Long-Term Budget Outlook: 2025 to 2055 | https://www.cbo.gov/publication/61187 | 2026-11-11 |
 
-**Total: 56 official sources.** No commercial or third-party source is used as a fact.
+**Total: 62 official sources.** No commercial or third-party source is used as a fact.
 Every table row on the site links to one or more of these IDs.
+
+### T9 source findings and modeling boundaries (2026-11-11)
+
+- S57 BLS historical CPI-U monthly archive supports the qualitative fact that inflation moves unevenly over time; the scenario does not claim a precise 1970s replay.
+- S58 Federal Reserve Board staff working paper (explicitly preliminary; authors' views): estimates household home values fell 22% and corporate-equity values in household balance sheets fell 37% from December 2007 to June 2009. The page accurately labels these as the study's estimates, not official market-index returns.
+- S59 FHFA defines its HPI as a weighted repeat-sales measure of single-family house-price movement; it is not a property-specific forecast.
+- S60/S62 CBO long-term outlooks (2024 and 2025 editions) project inflation consistent with the Fed's 2% goal over 2026–2054 and 2027–2055, respectively; the 2075 endpoint is outside their horizon.
+- S61 BLS June 2022 release: CPI-U increased 9.1% over the 12 months ending June 2022.
+- The 2026–2075 annual path is explicitly synthetic: 3% home growth / 2.2% CPI / 7% equity is the smooth comparator; the stress years and returns are chosen stress inputs, not official data or a prediction. The 2045 assessment reset is a simplified assumption; Prop 19, future levies, and parcel charges are excluded. The page discloses that investor taxes/fees/withdrawals are excluded from its isolated portfolio path.
 
 ## Verification performed (line by line)
 
 | Check | Method | Result |
 | --- | --- | --- |
-| Official source verification | Each of the 56 URLs fetched from the official domain and read; verified quotes recorded in `internal/research-notes.md` | PASS |
-| Every table row has an official source link | `tools/verify.py` parses every `<tr>` in every `<tbody>` and requires `>=1` `<a class="src" href="http...">` | PASS — 750 / 750 rows across 28 HTML pages |
+| Official source verification | Each of the 62 URLs fetched from the official domain and read; verified quotes recorded in `internal/research-notes.md` and this follow-up entry | PASS |
+| Every table row has an official source link | `tools/verify.py` parses every `<tr>` in every `<tbody>` and requires `>=1` `<a class="src" href="http...">` | PASS — 984 / 984 rows across 30 HTML files |
 | Source URLs are official | Every source link must be in the registry and on a government domain | PASS |
 | No broken internal links | Every relative href resolved against the published tree; plus HTTP 200 check of 33 paths with a local static server | PASS — 0 failures |
-| Navigation consistency | All 14 nav entries present on all 14 pages | PASS |
+| Navigation consistency | All 15 nav entries present on all 15 canonical pages | PASS |
 | Unverified values left blank | `blank()` renders an empty official-value cell; `UNVERIFIED` status; published on Flagged for Review | PASS |
 | Privacy scan | Regex scan of all published HTML for emails, phone numbers, street addresses, APN/parcel IDs, SSNs; placeholders used for all persons and the cash amount | PASS — 0 matches |
 | Model integrity | 30 projection years; every money value divisible by $10; scenario/snapshot year keys match; exemption and thresholds consistent | PASS |
-| Root mirror | Byte-identical comparison of root vs `docs/` for index, 13 pages, 2 assets, 7 JSON files | PASS |
+| Root mirror | Byte-identical comparison of root vs `docs/` for index, 14 pages, 2 assets, 7 JSON files | PASS |
 | Prior-session work preserved | `archive-v2/` and three `internal/prior-sessions/` trees present | PASS |
 | Table column integrity | Every `<tbody>` row has exactly as many `<td>` as the table has `<th>` (Status/Source columns included) | PASS |
-| Overall | `python3 tools/verify.py` on the merged tree after the table-structure fix | **5958 checks, 0 failures** |
+| Black-swan model integrity | `tools/verify.py` validates 50 consecutive years, all scenario source IDs, $10-rounded money, 2045 investment start, and variable paths | PASS |
+| Overall | `python3 tools/verify.py` after the black-swan addition | **10,031 checks, 0 failures** |
 
 Full machine-readable log: `internal/verification-log.md`.
 
@@ -208,7 +228,7 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | Follow-up PR | https://github.com/wingbangboozle1-lang/Tino4/pull/7 — "Fix table column structure and add column-count verification (follow-up to #6)" |
 | Follow-up merge result | `gh pr merge 7 --merge` → **MERGED**, merge commit `bf5bc946a6e8d137cef665d2ccc937c23d1d8d2e` at 2026-11-10T10:37:31Z |
 | Final Pages deployment | Build `built` at 2026-11-10T10:37:53Z with no error; live root dashboard and `pages/executive-summary.html` fetched from https://wingbangboozle1-lang.github.io/Tino4/ and verified: correct content, aligned table columns, official source links present |
-| Final verification | `python3 tools/verify.py` on the regenerated tree: 5,958 checks, 0 failures; 750/750 table rows source-linked; column counts consistent |
+| Final verification (previous deployment) | `python3 tools/verify.py` on the regenerated tree: 5,958 checks, 0 failures; 750/750 table rows source-linked; column counts consistent |
 
 ## Change log
 
@@ -231,3 +251,16 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 - 2026-11-10 — `s-0837be92`: follow-up PR #7 merged at `bf5bc94`; GitHub Pages build confirmed
   `built` with no error; live dashboard and executive-summary page fetched and verified. All
   tasks T1–T8 done. Final live site: https://wingbangboozle1-lang.github.io/Tino4/
+- 2026-11-11 — `s-accb6bba`: audited merged site on `arena/accb6bba-tino4` (branched from `c4dbf8c`,
+  PR #8 merge); `tools/verify.py` passes (5,958 checks, 0 failures). Claimed T9–T11: add the
+  requested separate black-swan / 50-year stress-scenario section (historical episodes from
+  official sources + modelled stress paths), re-verify, PR → merge → deploy. No file scope
+  overlaps with any other active session.
+- 2026-11-11 — `s-accb6bba`: T9/T10 complete. Added S57–S62 (BLS historical CPI and 2022 CPI release;
+  Federal Reserve staff paper on 2008–09; FHFA HPI; CBO 2024/2025 long-term outlooks), an
+  anonymized 2026–2075 stress model (baseline/stress home values, assessments, property tax,
+  carrying-cost proxy, CPI index, and a 2045 sell-and-reinvest illustration), a historical
+  evidence/assumptions section and dedicated subpage. Stress years are explicitly scenario
+  choices, not forecasts. `python3 tools/build.py && python3 tools/verify.py`: 10,031 checks,
+  0 failures; 984/984 table rows source-linked; 30 HTML files; privacy and mirror checks pass.
+  Local `git diff --check` passes. No new personal data or unverified official values were added.

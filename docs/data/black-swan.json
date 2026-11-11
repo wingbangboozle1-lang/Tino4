@@ -1,0 +1,1584 @@
+{
+  "verified_on": "2026-11-11",
+  "status": "MODEL \u2014 synthetic scenario, not an official forecast",
+  "period": [
+    2026,
+    2075
+  ],
+  "central_inheritance_year": 2045,
+  "methods": {
+    "baseline_home_growth": 0.03,
+    "baseline_inflation": 0.022,
+    "baseline_equity_return": 0.07,
+    "stress_home_returns": {
+      "2029": 0.0,
+      "2030": -0.08,
+      "2031": -0.05,
+      "2032": 0.02,
+      "2040": -0.15,
+      "2041": -0.1,
+      "2042": 0.05,
+      "2043": 0.07,
+      "2055": -0.1,
+      "2056": -0.05,
+      "2057": 0.04,
+      "2058": 0.06,
+      "2068": -0.15,
+      "2069": -0.08,
+      "2070": 0.04,
+      "2071": 0.07
+    },
+    "stress_inflation_rates": {
+      "2029": 0.05,
+      "2030": 0.08,
+      "2031": 0.07,
+      "2032": 0.04,
+      "2040": 0.02,
+      "2041": 0.01,
+      "2042": 0.02,
+      "2043": 0.02,
+      "2055": 0.05,
+      "2056": 0.06,
+      "2057": 0.04,
+      "2058": 0.03,
+      "2068": 0.09,
+      "2069": 0.05,
+      "2070": 0.03
+    },
+    "stress_equity_returns": {
+      "2029": -0.2,
+      "2030": -0.25,
+      "2031": 0.25,
+      "2032": 0.12,
+      "2040": -0.35,
+      "2041": -0.15,
+      "2042": 0.25,
+      "2043": 0.15,
+      "2055": -0.3,
+      "2056": 0.15,
+      "2057": 0.15,
+      "2068": -0.4,
+      "2069": 0.25,
+      "2070": 0.15
+    },
+    "property_tax_rate": 0.011488,
+    "prop13_cap": 0.02,
+    "sale_cost": 0.06,
+    "maintenance_rate": 0.01,
+    "sources": [
+      "S20",
+      "S30",
+      "S46",
+      "S50",
+      "S51",
+      "S57",
+      "S58",
+      "S59",
+      "S60",
+      "S61",
+      "S62"
+    ]
+  },
+  "rows": [
+    {
+      "year": 2026,
+      "baseline": {
+        "home_market": 3100000,
+        "assessed": 550540,
+        "property_tax": 6320,
+        "annual_carrying_cost": 40220,
+        "cpi_index": 100.0,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3100000,
+        "assessed": 550540,
+        "property_tax": 6320,
+        "annual_carrying_cost": 40220,
+        "cpi_index": 100.0,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2027,
+      "baseline": {
+        "home_market": 3193000,
+        "assessed": 561550,
+        "property_tax": 6450,
+        "annual_carrying_cost": 41340,
+        "cpi_index": 102.2,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3193000,
+        "assessed": 561550,
+        "property_tax": 6450,
+        "annual_carrying_cost": 41340,
+        "cpi_index": 102.2,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2028,
+      "baseline": {
+        "home_market": 3288790,
+        "assessed": 572780,
+        "property_tax": 6580,
+        "annual_carrying_cost": 42490,
+        "cpi_index": 104.45,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3288790,
+        "assessed": 572780,
+        "property_tax": 6580,
+        "annual_carrying_cost": 42490,
+        "cpi_index": 104.45,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2029,
+      "baseline": {
+        "home_market": 3387450,
+        "assessed": 584240,
+        "property_tax": 6710,
+        "annual_carrying_cost": 43670,
+        "cpi_index": 106.75,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3288790,
+        "assessed": 584240,
+        "property_tax": 6710,
+        "annual_carrying_cost": 42770,
+        "cpi_index": 109.67,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2030,
+      "baseline": {
+        "home_market": 3489080,
+        "assessed": 595920,
+        "property_tax": 6850,
+        "annual_carrying_cost": 44890,
+        "cpi_index": 109.09,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3025690,
+        "assessed": 595920,
+        "property_tax": 6850,
+        "annual_carrying_cost": 40530,
+        "cpi_index": 118.44,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2031,
+      "baseline": {
+        "home_market": 3593750,
+        "assessed": 607840,
+        "property_tax": 6980,
+        "annual_carrying_cost": 46140,
+        "cpi_index": 111.49,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 2874400,
+        "assessed": 607840,
+        "property_tax": 6980,
+        "annual_carrying_cost": 39390,
+        "cpi_index": 126.74,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2032,
+      "baseline": {
+        "home_market": 3701560,
+        "assessed": 620000,
+        "property_tax": 7120,
+        "annual_carrying_cost": 47430,
+        "cpi_index": 113.95,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 2931890,
+        "assessed": 620000,
+        "property_tax": 7120,
+        "annual_carrying_cost": 40250,
+        "cpi_index": 131.81,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2033,
+      "baseline": {
+        "home_market": 3812610,
+        "assessed": 632400,
+        "property_tax": 7260,
+        "annual_carrying_cost": 48760,
+        "cpi_index": 116.45,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3019850,
+        "assessed": 632400,
+        "property_tax": 7260,
+        "annual_carrying_cost": 41360,
+        "cpi_index": 134.7,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2034,
+      "baseline": {
+        "home_market": 3926990,
+        "assessed": 645050,
+        "property_tax": 7410,
+        "annual_carrying_cost": 50120,
+        "cpi_index": 119.02,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3110440,
+        "assessed": 645050,
+        "property_tax": 7410,
+        "annual_carrying_cost": 42490,
+        "cpi_index": 137.67,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2035,
+      "baseline": {
+        "home_market": 4044800,
+        "assessed": 657950,
+        "property_tax": 7560,
+        "annual_carrying_cost": 51520,
+        "cpi_index": 121.63,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3203760,
+        "assessed": 657950,
+        "property_tax": 7560,
+        "annual_carrying_cost": 43660,
+        "cpi_index": 140.7,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2036,
+      "baseline": {
+        "home_market": 4166140,
+        "assessed": 671110,
+        "property_tax": 7710,
+        "annual_carrying_cost": 52960,
+        "cpi_index": 124.31,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3299870,
+        "assessed": 671110,
+        "property_tax": 7710,
+        "annual_carrying_cost": 44870,
+        "cpi_index": 143.79,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2037,
+      "baseline": {
+        "home_market": 4291120,
+        "assessed": 684530,
+        "property_tax": 7860,
+        "annual_carrying_cost": 54450,
+        "cpi_index": 127.05,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3398860,
+        "assessed": 684530,
+        "property_tax": 7860,
+        "annual_carrying_cost": 46100,
+        "cpi_index": 146.96,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2038,
+      "baseline": {
+        "home_market": 4419860,
+        "assessed": 698220,
+        "property_tax": 8020,
+        "annual_carrying_cost": 55970,
+        "cpi_index": 129.84,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3500830,
+        "assessed": 698220,
+        "property_tax": 8020,
+        "annual_carrying_cost": 47370,
+        "cpi_index": 150.19,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2039,
+      "baseline": {
+        "home_market": 4552450,
+        "assessed": 712180,
+        "property_tax": 8180,
+        "annual_carrying_cost": 57540,
+        "cpi_index": 132.7,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3605860,
+        "assessed": 712180,
+        "property_tax": 8180,
+        "annual_carrying_cost": 48680,
+        "cpi_index": 153.49,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2040,
+      "baseline": {
+        "home_market": 4689030,
+        "assessed": 726430,
+        "property_tax": 8350,
+        "annual_carrying_cost": 59160,
+        "cpi_index": 135.62,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3064980,
+        "assessed": 726430,
+        "property_tax": 8350,
+        "annual_carrying_cost": 43520,
+        "cpi_index": 156.56,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2041,
+      "baseline": {
+        "home_market": 4829700,
+        "assessed": 740950,
+        "property_tax": 8510,
+        "annual_carrying_cost": 60820,
+        "cpi_index": 138.6,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 2758480,
+        "assessed": 740950,
+        "property_tax": 8510,
+        "annual_carrying_cost": 40670,
+        "cpi_index": 158.13,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2042,
+      "baseline": {
+        "home_market": 4974590,
+        "assessed": 755770,
+        "property_tax": 8680,
+        "annual_carrying_cost": 62520,
+        "cpi_index": 141.65,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 2896400,
+        "assessed": 755770,
+        "property_tax": 8680,
+        "annual_carrying_cost": 42310,
+        "cpi_index": 161.29,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2043,
+      "baseline": {
+        "home_market": 5123830,
+        "assessed": 770890,
+        "property_tax": 8860,
+        "annual_carrying_cost": 64280,
+        "cpi_index": 144.77,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3099150,
+        "assessed": 770890,
+        "property_tax": 8860,
+        "annual_carrying_cost": 44600,
+        "cpi_index": 164.52,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2044,
+      "baseline": {
+        "home_market": 5277540,
+        "assessed": 786310,
+        "property_tax": 9030,
+        "annual_carrying_cost": 66090,
+        "cpi_index": 147.95,
+        "sell_in_2045_portfolio": null
+      },
+      "stress": {
+        "home_market": 3192130,
+        "assessed": 786310,
+        "property_tax": 9030,
+        "annual_carrying_cost": 45820,
+        "cpi_index": 168.14,
+        "sell_in_2045_portfolio": null
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2045,
+      "baseline": {
+        "home_market": 5435870,
+        "assessed": 5435870,
+        "property_tax": 62450,
+        "annual_carrying_cost": 121180,
+        "cpi_index": 151.21,
+        "sell_in_2045_portfolio": 5109720
+      },
+      "stress": {
+        "home_market": 3287890,
+        "assessed": 3287890,
+        "property_tax": 37770,
+        "annual_carrying_cost": 75620,
+        "cpi_index": 171.84,
+        "sell_in_2045_portfolio": 3090620
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2046,
+      "baseline": {
+        "home_market": 5598940,
+        "assessed": 5544590,
+        "property_tax": 63700,
+        "annual_carrying_cost": 124150,
+        "cpi_index": 154.53,
+        "sell_in_2045_portfolio": 5467400
+      },
+      "stress": {
+        "home_market": 3386530,
+        "assessed": 3353650,
+        "property_tax": 38530,
+        "annual_carrying_cost": 77470,
+        "cpi_index": 175.62,
+        "sell_in_2045_portfolio": 3306960
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2047,
+      "baseline": {
+        "home_market": 5766910,
+        "assessed": 5655480,
+        "property_tax": 64970,
+        "annual_carrying_cost": 127210,
+        "cpi_index": 157.93,
+        "sell_in_2045_portfolio": 5850110
+      },
+      "stress": {
+        "home_market": 3488120,
+        "assessed": 3420720,
+        "property_tax": 39300,
+        "annual_carrying_cost": 79370,
+        "cpi_index": 179.48,
+        "sell_in_2045_portfolio": 3538450
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2048,
+      "baseline": {
+        "home_market": 5939920,
+        "assessed": 5768590,
+        "property_tax": 66270,
+        "annual_carrying_cost": 130330,
+        "cpi_index": 161.41,
+        "sell_in_2045_portfolio": 6259620
+      },
+      "stress": {
+        "home_market": 3592770,
+        "assessed": 3489140,
+        "property_tax": 40080,
+        "annual_carrying_cost": 81310,
+        "cpi_index": 183.43,
+        "sell_in_2045_portfolio": 3786140
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2049,
+      "baseline": {
+        "home_market": 6118120,
+        "assessed": 5883960,
+        "property_tax": 67590,
+        "annual_carrying_cost": 133550,
+        "cpi_index": 164.96,
+        "sell_in_2045_portfolio": 6697800
+      },
+      "stress": {
+        "home_market": 3700550,
+        "assessed": 3558920,
+        "property_tax": 40880,
+        "annual_carrying_cost": 83310,
+        "cpi_index": 187.46,
+        "sell_in_2045_portfolio": 4051170
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2050,
+      "baseline": {
+        "home_market": 6301660,
+        "assessed": 6001640,
+        "property_tax": 68950,
+        "annual_carrying_cost": 136840,
+        "cpi_index": 168.59,
+        "sell_in_2045_portfolio": 7166640
+      },
+      "stress": {
+        "home_market": 3811570,
+        "assessed": 3630100,
+        "property_tax": 41700,
+        "annual_carrying_cost": 85360,
+        "cpi_index": 191.59,
+        "sell_in_2045_portfolio": 4334750
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2051,
+      "baseline": {
+        "home_market": 6490710,
+        "assessed": 6121670,
+        "property_tax": 70330,
+        "annual_carrying_cost": 140210,
+        "cpi_index": 172.29,
+        "sell_in_2045_portfolio": 7668310
+      },
+      "stress": {
+        "home_market": 3925910,
+        "assessed": 3702700,
+        "property_tax": 42540,
+        "annual_carrying_cost": 87460,
+        "cpi_index": 195.8,
+        "sell_in_2045_portfolio": 4638180
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2052,
+      "baseline": {
+        "home_market": 6685430,
+        "assessed": 6244100,
+        "property_tax": 71730,
+        "annual_carrying_cost": 143680,
+        "cpi_index": 176.09,
+        "sell_in_2045_portfolio": 8205090
+      },
+      "stress": {
+        "home_market": 4043690,
+        "assessed": 3776750,
+        "property_tax": 43390,
+        "annual_carrying_cost": 89610,
+        "cpi_index": 200.11,
+        "sell_in_2045_portfolio": 4962850
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2053,
+      "baseline": {
+        "home_market": 6886000,
+        "assessed": 6368990,
+        "property_tax": 73170,
+        "annual_carrying_cost": 147230,
+        "cpi_index": 179.96,
+        "sell_in_2045_portfolio": 8779440
+      },
+      "stress": {
+        "home_market": 4165000,
+        "assessed": 3852290,
+        "property_tax": 44260,
+        "annual_carrying_cost": 91820,
+        "cpi_index": 204.51,
+        "sell_in_2045_portfolio": 5310250
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2054,
+      "baseline": {
+        "home_market": 7092580,
+        "assessed": 6496370,
+        "property_tax": 74630,
+        "annual_carrying_cost": 150870,
+        "cpi_index": 183.92,
+        "sell_in_2045_portfolio": 9394010
+      },
+      "stress": {
+        "home_market": 4289950,
+        "assessed": 3929330,
+        "property_tax": 45140,
+        "annual_carrying_cost": 94080,
+        "cpi_index": 209.01,
+        "sell_in_2045_portfolio": 5681970
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2055,
+      "baseline": {
+        "home_market": 7305350,
+        "assessed": 6626290,
+        "property_tax": 76120,
+        "annual_carrying_cost": 154610,
+        "cpi_index": 187.96,
+        "sell_in_2045_portfolio": 10051590
+      },
+      "stress": {
+        "home_market": 3860960,
+        "assessed": 4007920,
+        "property_tax": 46040,
+        "annual_carrying_cost": 91000,
+        "cpi_index": 219.46,
+        "sell_in_2045_portfolio": 3977380
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2056,
+      "baseline": {
+        "home_market": 7524510,
+        "assessed": 6758820,
+        "property_tax": 77650,
+        "annual_carrying_cost": 158440,
+        "cpi_index": 192.1,
+        "sell_in_2045_portfolio": 10755200
+      },
+      "stress": {
+        "home_market": 3667910,
+        "assessed": 4088080,
+        "property_tax": 46960,
+        "annual_carrying_cost": 90370,
+        "cpi_index": 232.63,
+        "sell_in_2045_portfolio": 4573990
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2057,
+      "baseline": {
+        "home_market": 7750250,
+        "assessed": 6894000,
+        "property_tax": 79200,
+        "annual_carrying_cost": 162380,
+        "cpi_index": 196.33,
+        "sell_in_2045_portfolio": 11508060
+      },
+      "stress": {
+        "home_market": 3814620,
+        "assessed": 4169840,
+        "property_tax": 47900,
+        "annual_carrying_cost": 93040,
+        "cpi_index": 241.93,
+        "sell_in_2045_portfolio": 5260090
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2058,
+      "baseline": {
+        "home_market": 7982760,
+        "assessed": 7031880,
+        "property_tax": 80780,
+        "annual_carrying_cost": 166410,
+        "cpi_index": 200.65,
+        "sell_in_2045_portfolio": 12313630
+      },
+      "stress": {
+        "home_market": 4043500,
+        "assessed": 4253240,
+        "property_tax": 48860,
+        "annual_carrying_cost": 96500,
+        "cpi_index": 249.19,
+        "sell_in_2045_portfolio": 5628290
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2059,
+      "baseline": {
+        "home_market": 8222240,
+        "assessed": 7172510,
+        "property_tax": 82400,
+        "annual_carrying_cost": 170550,
+        "cpi_index": 205.06,
+        "sell_in_2045_portfolio": 13175580
+      },
+      "stress": {
+        "home_market": 4164810,
+        "assessed": 4338300,
+        "property_tax": 49840,
+        "annual_carrying_cost": 98850,
+        "cpi_index": 254.68,
+        "sell_in_2045_portfolio": 6022270
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2060,
+      "baseline": {
+        "home_market": 8468910,
+        "assessed": 7315960,
+        "property_tax": 84050,
+        "annual_carrying_cost": 174790,
+        "cpi_index": 209.57,
+        "sell_in_2045_portfolio": 14097870
+      },
+      "stress": {
+        "home_market": 4289750,
+        "assessed": 4425070,
+        "property_tax": 50840,
+        "annual_carrying_cost": 101260,
+        "cpi_index": 260.28,
+        "sell_in_2045_portfolio": 6443830
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2061,
+      "baseline": {
+        "home_market": 8722970,
+        "assessed": 7462280,
+        "property_tax": 85730,
+        "annual_carrying_cost": 179150,
+        "cpi_index": 214.18,
+        "sell_in_2045_portfolio": 15084720
+      },
+      "stress": {
+        "home_market": 4418440,
+        "assessed": 4513570,
+        "property_tax": 51850,
+        "annual_carrying_cost": 103730,
+        "cpi_index": 266.0,
+        "sell_in_2045_portfolio": 6894900
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2062,
+      "baseline": {
+        "home_market": 8984660,
+        "assessed": 7611530,
+        "property_tax": 87440,
+        "annual_carrying_cost": 183620,
+        "cpi_index": 218.89,
+        "sell_in_2045_portfolio": 16140650
+      },
+      "stress": {
+        "home_market": 4551000,
+        "assessed": 4603840,
+        "property_tax": 52890,
+        "annual_carrying_cost": 106260,
+        "cpi_index": 271.86,
+        "sell_in_2045_portfolio": 7377540
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2063,
+      "baseline": {
+        "home_market": 9254200,
+        "assessed": 7763760,
+        "property_tax": 89190,
+        "annual_carrying_cost": 188200,
+        "cpi_index": 223.71,
+        "sell_in_2045_portfolio": 17270500
+      },
+      "stress": {
+        "home_market": 4687530,
+        "assessed": 4695920,
+        "property_tax": 53950,
+        "annual_carrying_cost": 108850,
+        "cpi_index": 277.84,
+        "sell_in_2045_portfolio": 7893970
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2064,
+      "baseline": {
+        "home_market": 9531830,
+        "assessed": 7919030,
+        "property_tax": 90970,
+        "annual_carrying_cost": 192900,
+        "cpi_index": 228.63,
+        "sell_in_2045_portfolio": 18479430
+      },
+      "stress": {
+        "home_market": 4828150,
+        "assessed": 4789830,
+        "property_tax": 55030,
+        "annual_carrying_cost": 111520,
+        "cpi_index": 283.95,
+        "sell_in_2045_portfolio": 8446550
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2065,
+      "baseline": {
+        "home_market": 9817780,
+        "assessed": 8077420,
+        "property_tax": 92790,
+        "annual_carrying_cost": 197730,
+        "cpi_index": 233.66,
+        "sell_in_2045_portfolio": 19772990
+      },
+      "stress": {
+        "home_market": 4973000,
+        "assessed": 4885630,
+        "property_tax": 56130,
+        "annual_carrying_cost": 114250,
+        "cpi_index": 290.2,
+        "sell_in_2045_portfolio": 9037810
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2066,
+      "baseline": {
+        "home_market": 10112320,
+        "assessed": 8238960,
+        "property_tax": 94650,
+        "annual_carrying_cost": 202680,
+        "cpi_index": 238.8,
+        "sell_in_2045_portfolio": 21157100
+      },
+      "stress": {
+        "home_market": 5122190,
+        "assessed": 4983340,
+        "property_tax": 57250,
+        "annual_carrying_cost": 117040,
+        "cpi_index": 296.58,
+        "sell_in_2045_portfolio": 9670450
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2067,
+      "baseline": {
+        "home_market": 10415690,
+        "assessed": 8403740,
+        "property_tax": 96540,
+        "annual_carrying_cost": 207750,
+        "cpi_index": 244.05,
+        "sell_in_2045_portfolio": 22638100
+      },
+      "stress": {
+        "home_market": 5275850,
+        "assessed": 5083010,
+        "property_tax": 58390,
+        "annual_carrying_cost": 119910,
+        "cpi_index": 303.11,
+        "sell_in_2045_portfolio": 10347390
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2068,
+      "baseline": {
+        "home_market": 10728160,
+        "assessed": 8571820,
+        "property_tax": 98470,
+        "annual_carrying_cost": 212970,
+        "cpi_index": 249.42,
+        "sell_in_2045_portfolio": 24222760
+      },
+      "stress": {
+        "home_market": 4484470,
+        "assessed": 5184670,
+        "property_tax": 59560,
+        "annual_carrying_cost": 113960,
+        "cpi_index": 330.38,
+        "sell_in_2045_portfolio": 6208430
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2069,
+      "baseline": {
+        "home_market": 11050000,
+        "assessed": 8743250,
+        "property_tax": 100440,
+        "annual_carrying_cost": 218310,
+        "cpi_index": 254.91,
+        "sell_in_2045_portfolio": 25918360
+      },
+      "stress": {
+        "home_market": 4125720,
+        "assessed": 5288360,
+        "property_tax": 60750,
+        "annual_carrying_cost": 112040,
+        "cpi_index": 346.9,
+        "sell_in_2045_portfolio": 7760540
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2070,
+      "baseline": {
+        "home_market": 11381500,
+        "assessed": 8918120,
+        "property_tax": 102450,
+        "annual_carrying_cost": 223800,
+        "cpi_index": 260.52,
+        "sell_in_2045_portfolio": 27732640
+      },
+      "stress": {
+        "home_market": 4290750,
+        "assessed": 5394130,
+        "property_tax": 61970,
+        "annual_carrying_cost": 115210,
+        "cpi_index": 357.31,
+        "sell_in_2045_portfolio": 8924620
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2071,
+      "baseline": {
+        "home_market": 11722950,
+        "assessed": 9096480,
+        "property_tax": 104500,
+        "annual_carrying_cost": 229430,
+        "cpi_index": 266.25,
+        "sell_in_2045_portfolio": 29673930
+      },
+      "stress": {
+        "home_market": 4591100,
+        "assessed": 5502010,
+        "property_tax": 63210,
+        "annual_carrying_cost": 119680,
+        "cpi_index": 365.17,
+        "sell_in_2045_portfolio": 9549340
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2072,
+      "baseline": {
+        "home_market": 12074640,
+        "assessed": 9278410,
+        "property_tax": 106590,
+        "annual_carrying_cost": 235200,
+        "cpi_index": 272.11,
+        "sell_in_2045_portfolio": 31751100
+      },
+      "stress": {
+        "home_market": 4728830,
+        "assessed": 5612060,
+        "property_tax": 64470,
+        "annual_carrying_cost": 122550,
+        "cpi_index": 373.21,
+        "sell_in_2045_portfolio": 10217800
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2073,
+      "baseline": {
+        "home_market": 12436870,
+        "assessed": 9463980,
+        "property_tax": 108720,
+        "annual_carrying_cost": 241130,
+        "cpi_index": 278.09,
+        "sell_in_2045_portfolio": 33973680
+      },
+      "stress": {
+        "home_market": 4870700,
+        "assessed": 5724300,
+        "property_tax": 65760,
+        "annual_carrying_cost": 125490,
+        "cpi_index": 381.42,
+        "sell_in_2045_portfolio": 10933040
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2074,
+      "baseline": {
+        "home_market": 12809980,
+        "assessed": 9653260,
+        "property_tax": 110900,
+        "annual_carrying_cost": 247210,
+        "cpi_index": 284.21,
+        "sell_in_2045_portfolio": 36351840
+      },
+      "stress": {
+        "home_market": 5016820,
+        "assessed": 5838780,
+        "property_tax": 67080,
+        "annual_carrying_cost": 128510,
+        "cpi_index": 389.81,
+        "sell_in_2045_portfolio": 11698360
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    },
+    {
+      "year": 2075,
+      "baseline": {
+        "home_market": 13194280,
+        "assessed": 9846320,
+        "property_tax": 113110,
+        "annual_carrying_cost": 253450,
+        "cpi_index": 290.47,
+        "sell_in_2045_portfolio": 38896470
+      },
+      "stress": {
+        "home_market": 5167320,
+        "assessed": 5955560,
+        "property_tax": 68420,
+        "annual_carrying_cost": 131610,
+        "cpi_index": 398.38,
+        "sell_in_2045_portfolio": 12517240
+      },
+      "sources": [
+        "S20",
+        "S30",
+        "S46",
+        "S50",
+        "S51",
+        "S57",
+        "S59",
+        "S60",
+        "S62"
+      ]
+    }
+  ]
+}

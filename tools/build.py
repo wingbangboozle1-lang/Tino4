@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Deterministic generator for the Tino4 inheritance decision dashboard.
 
-No manual input is required. All facts come from tools/sources.py (official sources
-verified 2026-11-10). All model numbers are computed here and rounded to the nearest $10.
+No manual input is required. Facts come from the official source registry in tools/sources.py;
+S57–S61 were fetched and read on 2026-11-11. Model dollar outputs are rounded to the nearest $10.
 Run: python3 tools/build.py
 """
 import html
@@ -20,7 +20,7 @@ DATA = os.path.join(DOCS, "data")
 PAGES = os.path.join(DOCS, "pages")
 INTERNAL = os.path.join(ROOT, "internal")
 ASSETS = os.path.join(DOCS, "assets")
-TODAY = "2026-11-10"
+TODAY = "2026-11-11"
 
 for d in (DOCS, DATA, PAGES, INTERNAL, ASSETS):
     os.makedirs(d, exist_ok=True)
@@ -323,6 +323,7 @@ NAV = [
     ("inheritance-law", "Inheritance & Estate Tax Law"),
     ("estate-thresholds", "Tax Thresholds & Headroom"),
     ("decision-analysis", "Decision Analysis"),
+    ("black-swan-scenarios", "Black-Swan Economic Scenarios"),
     ("inheritance-process", "Step-by-Step Process"),
     ("law-watchlist", "Law Change Watchlist"),
     ("methodology", "Methodology & Assumptions"),
@@ -760,6 +761,7 @@ cats = [
     ("inheritance-law", "Inheritance & estate tax law", "Federal, state and local rules; basis, capital gains, NIIT, trusts."),
     ("estate-thresholds", "Tax thresholds & headroom", "Exemption projections to 2050 and cash headroom per $1,000,000."),
     ("decision-analysis", "Decision analysis", "Live in / rent / sell-and-reinvest, with clear numbers and sensitivity."),
+    ("black-swan-scenarios", "Black-swan economic scenarios", "A 50-year variable inflation, housing, and investment stress path."),
     ("inheritance-process", "Step-by-step process", "What actually happens when the trust transfers the property."),
     ("law-watchlist", "Law change watchlist", "Enacted and proposed changes, with official status."),
     ("methodology", "Methodology & assumptions", "Formulas, inputs, rounding, and what is deliberately excluded."),
@@ -1541,6 +1543,143 @@ b.append(callout("good", "Verification",
                  "cash-amount marker. See the <a href=\"sources.html\">Source Register</a> and "
                  "<a href=\"flagged-for-review.html\">Flagged for Review</a> pages for manual review."))
 subpage("privacy", "Privacy & Anonymization", "".join(b), kicker="Reference · privacy")
+
+# --- Black-swan / variable-economy stress model (2026–2075) ---
+# A transparent synthetic path, not a forecast or a claim about event timing.
+stress_home_returns = {
+    2029: 0.00, 2030: -0.08, 2031: -0.05, 2032: 0.02,
+    2040: -0.15, 2041: -0.10, 2042: 0.05, 2043: 0.07,
+    2055: -0.10, 2056: -0.05, 2057: 0.04, 2058: 0.06,
+    2068: -0.15, 2069: -0.08, 2070: 0.04, 2071: 0.07,
+}
+stress_cpi_rates = {
+    2029: 0.05, 2030: 0.08, 2031: 0.07, 2032: 0.04,
+    2040: 0.02, 2041: 0.01, 2042: 0.02, 2043: 0.02,
+    2055: 0.05, 2056: 0.06, 2057: 0.04, 2058: 0.03,
+    2068: 0.09, 2069: 0.05, 2070: 0.03,
+}
+stress_equity_returns = {
+    2029: -0.20, 2030: -0.25, 2031: 0.25, 2032: 0.12,
+    2040: -0.35, 2041: -0.15, 2042: 0.25, 2043: 0.15,
+    2055: -0.30, 2056: 0.15, 2057: 0.15,
+    2068: -0.40, 2069: 0.25, 2070: 0.15,
+}
+black_swan_rows = []
+baseline_market = stress_market = float(A_VALUE_2026)
+baseline_assessed = stress_assessed = float(r10(A_ASSESSED_2026))
+baseline_cpi = stress_cpi = 100.0
+baseline_portfolio = stress_portfolio = None
+for year in range(2026, 2076):
+    if year > 2026:
+        baseline_market *= 1 + GROWTH
+        stress_market *= 1 + stress_home_returns.get(year, GROWTH)
+        baseline_cpi *= 1 + CPI_LONG
+        stress_cpi *= 1 + stress_cpi_rates.get(year, CPI_LONG)
+        if year < CENTRAL:
+            baseline_assessed *= 1 + PROP13_CAP
+            stress_assessed *= 1 + PROP13_CAP
+        elif year == CENTRAL:
+            # Central case: inheritance and reassessment at 2045 market value.
+            baseline_assessed = baseline_market
+            stress_assessed = stress_market
+        else:
+            baseline_assessed *= 1 + PROP13_CAP
+            stress_assessed *= 1 + PROP13_CAP
+        if baseline_portfolio is not None:
+            baseline_portfolio *= 1 + EQUITY_RETURN
+            stress_portfolio *= 1 + stress_equity_returns.get(year, EQUITY_RETURN)
+    if year == CENTRAL:
+        # Hypothetical net sale proceeds reinvested at the central inheritance date.
+        baseline_portfolio = baseline_market * (1 - SELL_COST)
+        stress_portfolio = stress_market * (1 - SELL_COST)
+    b_cost = (baseline_assessed * SCC_TYPICAL_RATE
+              + (CDI_AVG_PREMIUM + WATER_A_MONTHLY * 12 + ELEC_A_NET_MONTHLY * 12) * baseline_cpi / 100
+              + baseline_market * MAINT_RATE)
+    s_cost = (stress_assessed * SCC_TYPICAL_RATE
+              + (CDI_AVG_PREMIUM + WATER_A_MONTHLY * 12 + ELEC_A_NET_MONTHLY * 12) * stress_cpi / 100
+              + stress_market * MAINT_RATE)
+    black_swan_rows.append({
+        "year": year,
+        "baseline": {
+            "home_market": r10(baseline_market), "assessed": r10(baseline_assessed),
+            "property_tax": r10(baseline_assessed * SCC_TYPICAL_RATE),
+            "annual_carrying_cost": r10(b_cost),
+            "cpi_index": round(baseline_cpi, 2),
+            "sell_in_2045_portfolio": r10(baseline_portfolio) if baseline_portfolio is not None else None,
+        },
+        "stress": {
+            "home_market": r10(stress_market), "assessed": r10(stress_assessed),
+            "property_tax": r10(stress_assessed * SCC_TYPICAL_RATE),
+            "annual_carrying_cost": r10(s_cost),
+            "cpi_index": round(stress_cpi, 2),
+            "sell_in_2045_portfolio": r10(stress_portfolio) if stress_portfolio is not None else None,
+        },
+        "sources": ["S20", "S30", "S46", "S50", "S51", "S57", "S59", "S60", "S62"],
+    })
+black_swan_data = {
+    "verified_on": TODAY,
+    "status": "MODEL — synthetic scenario, not an official forecast",
+    "period": [2026, 2075],
+    "central_inheritance_year": CENTRAL,
+    "methods": {
+        "baseline_home_growth": GROWTH, "baseline_inflation": CPI_LONG,
+        "baseline_equity_return": EQUITY_RETURN, "stress_home_returns": stress_home_returns,
+        "stress_inflation_rates": stress_cpi_rates,
+        "stress_equity_returns": stress_equity_returns,
+        "property_tax_rate": SCC_TYPICAL_RATE, "prop13_cap": PROP13_CAP,
+        "sale_cost": SELL_COST, "maintenance_rate": MAINT_RATE,
+        "sources": ["S20", "S30", "S46", "S50", "S51", "S57", "S58", "S59", "S60", "S61", "S62"],
+    },
+    "rows": black_swan_rows,
+}
+json_write("black-swan.json", black_swan_data)
+
+b = []
+b.append('<p class="lead">A separate 50-year stress view, through 2075, showing why a flat annual growth assumption can hide sequence risk. This is an illustrative model path, not a prediction, probability-weighted forecast, or official government projection.</p>')
+b.append(callout("warn", "Scenario, not certainty",
+    "Only the historical observations below are verified facts. The annual growth, inflation, and equity-return shocks are explicit model choices designed to explore uneven conditions; their future timing is invented for stress testing. The baseline uses the existing model's 3% nominal home growth, 2.2% inflation anchor, and 7% equity return. CBO's public long-term outlook runs to 2054, so the 2055–2075 extension is not a CBO forecast."))
+b.append('<h2>Historical anchors (official sources)</h2>')
+history = [
+    {"cells": ["1970s–early 1980s price instability", "BLS historical CPI-U publishes the monthly U.S. city-average series across this period; it documents that inflation was not constant.", "Used as qualitative context only; the scenario is not a direct replay."], "srcs": ["S57"], "status": "VERIFIED"},
+    {"cells": ["2007–2009 financial crisis", "A preliminary Federal Reserve staff working paper (authors' views, not necessarily the Board's) estimates household home values fell 22% and corporate-equity values in household balance sheets fell 37% from December 2007 to June 2009.", "Stress path includes a multi-year housing/equity drawdown; this is a synthetic echo, not a forecast."], "srcs": ["S58"], "status": "VERIFIED"},
+    {"cells": ["2022 inflation surge", "BLS reported CPI-U up 9.1% over the 12 months through June 2022.", "The inflation shock in this model is a separate scenario choice, not a forecast of recurrence."], "srcs": ["S61"], "status": "VERIFIED"},
+    {"cells": ["Long-run macro baseline", "CBO's 2024 and 2025 outlooks projected inflation consistent with the Federal Reserve's 2% goal over 2026–2054 and 2027–2055, respectively.", "National inflation outlook only; neither is a Cupertino house-price forecast. The 2026–2075 scenario beyond CBO's published horizon is not an official forecast."], "srcs": ["S60", "S62"], "status": "VERIFIED"},
+    {"cells": ["Housing index limits", "FHFA's HPI measures single-family price movement using a repeat-sales method and offers several geographic levels.", "It is a market index, not a future parcel-specific appraisal."], "srcs": ["S59"], "status": "VERIFIED"},
+]
+b.append(table(["Historical reference", "What the official source says", "How used here"], history,
+               caption="Historical evidence and modeling boundaries"))
+b.append('<h2>Scenario assumptions</h2>')
+assumptions = [
+    {"cells": ["Baseline", "3.00% nominal home growth; 2.20% annual CPI; 7.00% annual equity return.", "Smooth comparator only. The 3%/7% are model assumptions, not promised or official rates."], "srcs": ["S50", "S51", "S59", "S60", "S62"], "status": "MODEL"},
+    {"cells": ["Uneven-stress path", "Home values, inflation and equities vary year by year. A clustered inflation shock, a financial-crisis-style drawdown, and later shocks are imposed at selected years; recoveries are not guaranteed.", "Annual rates appear in the downloadable model data and are deliberately not probability-weighted."], "srcs": ["S57", "S58", "S61"], "status": "MODEL"},
+    {"cells": ["Tax assessment treatment", "Assessment grows at the current Prop 13 2% annual cap before assumed transfer in 2045; it resets to scenario market value in 2045 and grows at 2% thereafter.", "Simplification for scenario comparison. Transfer eligibility, Prop 19 occupancy, exemptions, levy changes and parcel charges are not modeled."], "srcs": ["S20", "S30"], "status": "MODEL"},
+    {"cells": ["Annual carrying-cost proxy", "Tax plus maintenance at 1% of scenario market value, plus 2026 insurance / water / net solar-credit inputs inflated by the scenario CPI index.", "Uses already-flagged user inputs and the statewide insurance benchmark; not a parcel quote or verified bill."], "srcs": ["S20", "S30", "S46", "S57"], "status": "MODEL"},
+    {"cells": ["Sell-and-reinvest illustration", "At 2045, 6% modeled selling cost is subtracted from scenario market value, then proceeds are compounded using the scenario's annual equity return path.", "Excludes income/capital-gains taxes on portfolio activity, fees, withdrawals and changes to tax law. It is not the recommendation model's after-tax outcome."], "srcs": ["S06", "S07", "S08"], "status": "MODEL"},
+]
+b.append(table(["Element", "Rule in this model", "Limit"], assumptions, caption="Transparent model assumptions"))
+b.append('<h2>Annual 2026–2075 comparison</h2>')
+property_rows, macro_rows = [], []
+for r in black_swan_rows:
+    y, base, stress = r["year"], r["baseline"], r["stress"]
+    property_rows.append({"cells": [str(y), usd(base["home_market"]), usd(stress["home_market"]),
+        usd(base["assessed"]), usd(stress["assessed"]), usd(base["property_tax"]), usd(stress["property_tax"]),
+        usd(base["annual_carrying_cost"]), usd(stress["annual_carrying_cost"])],
+        "srcs": r["sources"], "status": "MODEL"})
+    macro_rows.append({"cells": [str(y), "{:.2f}".format(base["cpi_index"]), "{:.2f}".format(stress["cpi_index"]),
+        usd(base["sell_in_2045_portfolio"]) if base["sell_in_2045_portfolio"] is not None else "—",
+        usd(stress["sell_in_2045_portfolio"]) if stress["sell_in_2045_portfolio"] is not None else "—"],
+        "srcs": r["sources"], "status": "MODEL"})
+b.append(table(["Year", "Home value baseline", "Home value stress", "Assessment baseline", "Assessment stress",
+    "Tax baseline", "Tax stress", "Annual cost baseline", "Annual cost stress"], property_rows,
+    caption="Property value, assessment, taxes and annual carrying-cost proxy · 2026–2075",
+    note="All dollar outputs rounded to $10. Assessment/tax use a 2045 inheritance assumption. Starting value, utilities and current assessed basis are user-supplied and unverified (IR-004); the future values are model outputs, not official values."))
+b.append(table(["Year", "CPI index baseline", "CPI index stress", "Sell in 2045 → portfolio baseline", "Sell in 2045 → portfolio stress"], macro_rows,
+    caption="Inflation index and hypothetical sale-proceeds investment · 2026–2075",
+    note="CPI index starts at 100.00 in 2026. Portfolio amounts begin in 2045; dashes before then mean the hypothetical property has not yet been sold and invested. Portfolio results exclude investment taxes, fees and withdrawals."))
+b.append(callout("flag", "Decision implication",
+    "Do not select a strategy based on a single terminal value. The stress path shows sequence risk: a sale immediately before an equity drawdown and a hold through a housing decline can produce very different outcomes. Re-run the decision analysis at actual transfer using verified appraisal, trustee advice, insurance quotes, current tax status, household plans, and then-current law. The SF property remains the existing residence/rental asset in the broader decision; this page models only the Cupertino inheritance property."))
+subpage("black-swan-scenarios", "Black-Swan Economic Scenarios", "".join(b),
+        kicker="Analysis · variable 50-year conditions")
 
 # ---------------------------------------------------------------------------
 # Write all subpages
