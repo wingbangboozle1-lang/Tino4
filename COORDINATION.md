@@ -264,3 +264,46 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   choices, not forecasts. `python3 tools/build.py && python3 tools/verify.py`: 10,031 checks,
   0 failures; 984/984 table rows source-linked; 30 HTML files; privacy and mirror checks pass.
   Local `git diff --check` passes. No new personal data or unverified official values were added.
+
+## Follow-up session `s-3642c4cb` — 2026-11-11 (copied verbatim from `origin/arena/3642c4cb-tino4` @ `5f9ecef` so both boards agree)
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T12 | Independent post-merge privacy, model, source and deployment audit; remediate material issues and integrate | in progress | `s-3642c4cb` | `tools/**`, `docs/**`, root published mirror, `.github/**`, `README.md` (no active claims to these scopes) | 2026-11-11 13:08 |
+
+## Follow-up session `s-2482744e` — 2026-11-11
+
+Platform fixes this session's branch at `arena/2482744e-tino4` (IR-001 applies; the requested
+`session-<id>/<task>` branch naming is unavailable). Before claiming, `git ls-remote --heads origin`
+was read at 13:08 UTC: `s-3642c4cb` holds T12 with scope `tools/**`, `docs/**`, the root published
+mirror (`index.html`, `pages/`, `assets/`, `data/`), `.github/**` and `README.md`. **This session
+does not edit any of those paths while T12 is `in progress`.** The scopes below are disjoint from T12.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T11 | (bookkeeping only) PR #9 merge + Pages deploy were completed by `s-accb6bba` but never recorded; this session records the observed result in its own log below without editing the T11 row | observed | `s-accb6bba` (recorded by `s-2482744e`) | none | 2026-11-11 13:12 |
+| T13 | Privacy remediation of scopes nobody has claimed: prior-session archives that still carry un-rounded user-supplied figures, and the publishing configuration | in progress | `s-2482744e` | `internal/**`, `archive-v2/**`, `_config.yml`, `.nojekyll`, `.gitignore` | 2026-11-11 13:12 |
+| T14 | Independent line-by-line re-verification of every published fact against the official source, plus new official-source research (2027 inflation adjustments, Nov-2026 election outcome, insurance, utilities, long-run economic history for the black-swan section) | in progress | `s-2482744e` | `research/**` (new) | 2026-11-11 13:12 |
+| T15 | Rebuilt analysis engine (year-by-year projections, own-vs-inherited property distinction, live/rent/sell decision model, black-swan paths drawn from official historical series) and candidate site build | in progress | `s-2482744e` | `engine/**` (new), `site/**` (new) | 2026-11-11 13:12 |
+| T16 | Final integration — only after T12 is `done`/merged or stale under the 60-minute rule: merge `main`, combine both sessions' work, switch the shared published outputs, re-verify line by line, PR → merge → confirm Pages deploy | blocked on T12 | `s-2482744e` | shared outputs (`docs/**`, root mirror, `tools/**`, `README.md`) **only once T12 releases them** | 2026-11-11 13:12 |
+
+### Requests to other sessions
+
+- **To `s-3642c4cb` (T12):** un-rounded user-supplied figures are currently published inside your
+  scope — `tools/build.py` (constants and flag text), `docs/data/flags.json`,
+  `docs/data/model-inputs.json`, `docs/pages/flagged-for-review.html`,
+  `docs/pages/methodology.html`, `docs/pages/property-tax.html` and their root mirrors. The owner's
+  rule is that every supplied figure is rounded to the nearest $10 so it cannot be traced. This
+  session is not editing those files; please round them in T12, or release the scope and T16 will.
+
+### Log (`s-2482744e`)
+
+- 2026-11-11 13:12 UTC — claimed T13–T16; recorded the observed T11 outcome: PR #9
+  (https://github.com/wingbangboozle1-lang/Tino4/pull/9) is `MERGED` (merge commit `0bffb59`), and
+  `GET /repos/wingbangboozle1-lang/Tino4/pages/builds` shows status `built`, no error, for commit
+  `0bffb59` at 2026-11-11T13:04:09Z.
+- 2026-11-11 13:12 UTC — irregularity logged as **IR-018 (privacy)**: the repository is public
+  (`visibility: public` from the GitHub API) and GitHub Pages serves the whole repository root
+  (`build_type: legacy`, `source: main:/`, with `.nojekyll`), so `internal/**`, `tools/**` and this
+  board are publicly reachable. Exact un-rounded supplied figures are present in the current tree
+  (see request above and T13) and in git history.
