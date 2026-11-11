@@ -14,10 +14,10 @@ verification performed, and irregularities here and mark it `done`. Never mark a
 anything. A claim older than 60 minutes with no commits may be taken over; note the handoff.
 
 - **Repository:** `wingbangboozle1-lang/Tino4`
-- **Working / integration branch:** `arena/accb6bba-tino4` (platform-fixed; see IR-001)
+- **Working / integration branch:** `arena/ef28fa90-tino4` (platform-fixed; see IR-001)
 - **Live site:** https://wingbangboozle1-lang.github.io/Tino4/ (GitHub Pages, `main`, root)
 - **Board last updated:** 2026-11-11 (UTC)
-- **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11)
+- **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11); audit session `arena-ef28fa90` (2026-11-11)
 
 ## Platform constraint (IR-001)
 
@@ -42,14 +42,18 @@ analysis.
 | T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
 | T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
 | T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
-| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T12 | Independent audit & line-by-line re-verification (read-only): build reproducibility, `verify.py`, HTTP 200 sweep, privacy scan, root-mirror check, live-site check. Distinct from `s-3642c4cb` T12 remediation (see log below); this session edits only `COORDINATION.md` | done | `arena-ef28fa90` | `COORDINATION.md` only | 2026-11-11 |
+| T13 | Official-source freshness spot-check (read-only): re-fetch key statutory values (IRS, BOE, county, CBO, CDI, FTB, CPUC, SF) and record unchanged/changed in `COORDINATION.md` log (not in `internal/`, which is inside `s-3642c4cb` T12 scope) | done | `arena-ef28fa90` | `COORDINATION.md` only | 2026-11-11 |
+| T14 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `arena-ef28fa90` | `COORDINATION.md` (final log only) | 2026-11-11 |
 
 ## Session registry
 
 | Session ID | Branch | Role | Status |
 | --- | --- | --- | --- |
 | `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
-| `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | active |
+| `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | done (merged, PR #9) |
+| `arena-ef28fa90` | `arena/ef28fa90-tino4` | Independent audit, source freshness spot-check, PR → merge → deploy | active |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
@@ -212,9 +216,10 @@ Full machine-readable log: `internal/verification-log.md`.
 | IR-015 | SFPUC water/sewer increases proposed, not confirmed adopted | needs review |
 | IR-016 | Rental income tax and depreciation recapture not fully modelled | needs review |
 | IR-017 | Pages admin API inaccessible; root mirror used | needs review |
+| IR-018 | Public Pages serves whole repo root (internal/tools/board exposed); exact supplied figures published un-rounded | needs review |
 
 Site page: `pages/flagged-for-review.html` (each flag links its official sources).
-`needs review` does not block the merge.
+`needs review` does not block the merge. IR-018 remediation is owned by `s-3642c4cb` T12 (see log below); this session confirms it independently and does not edit the remediation scope.
 
 ## Deployment log
 
@@ -229,6 +234,9 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | Follow-up merge result | `gh pr merge 7 --merge` → **MERGED**, merge commit `bf5bc946a6e8d137cef665d2ccc937c23d1d8d2e` at 2026-11-10T10:37:31Z |
 | Final Pages deployment | Build `built` at 2026-11-10T10:37:53Z with no error; live root dashboard and `pages/executive-summary.html` fetched from https://wingbangboozle1-lang.github.io/Tino4/ and verified: correct content, aligned table columns, official source links present |
 | Final verification (previous deployment) | `python3 tools/verify.py` on the regenerated tree: 5,958 checks, 0 failures; 750/750 table rows source-linked; column counts consistent |
+| Black-swan PR | https://github.com/wingbangboozle1-lang/Tino4/pull/9 — "Add 50-year black-swan economic stress scenarios" |
+| Black-swan merge result | `gh pr merge 9 --merge` → **MERGED**, merge commit `0bffb5909102bfafbc6b32d16d4a63ff38590618` at 2026-11-11T13:03:56Z (recorded by `arena-ef28fa90`; T11 was left `in progress` by `s-accb6bba`) |
+| Black-swan Pages build | `built` for commit `0bffb59` at 2026-11-11T13:04:09Z, no error; live overview, executive-summary, black-swan and flagged pages fetched and verified by `arena-ef28fa90` |
 
 ## Change log
 
@@ -264,3 +272,68 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   choices, not forecasts. `python3 tools/build.py && python3 tools/verify.py`: 10,031 checks,
   0 failures; 984/984 table rows source-linked; 30 HTML files; privacy and mirror checks pass.
   Local `git diff --check` passes. No new personal data or unverified official values were added.
+- 2026-11-11 — `arena-ef28fa90`: claimed T12–T14 (audit/freshness/PR). T12/T13 done read-only;
+  recorded PR #9 merge + Pages `built` (T11 close-out). Confirmed IR-018 independently (see log
+  below); remediation deferred to `s-3642c4cb` T12 per scope protocol. T14 in progress.
+
+## Follow-up session `arena-ef28fa90` — 2026-11-11 (independent audit + freshness)
+
+Scope note: `s-3642c4cb` holds T12 remediation with scope `tools/**`, `docs/**`, root mirror,
+`.github/**`, `README.md`, `internal/**`, `archive-v2/**`, `.nojekyll`, `_config.yml` (claimed
+13:08 UTC). This session's audit is read-only and edits only `COORDINATION.md`, so scopes do
+not overlap. `s-2482744e` T13–T16 and `s-9ad1da71`/`s-dfc5a019` audits were read for
+coordination only; nothing was copied as fact. Other remote branches were inspected with
+`git ls-tree`: `arena/f5c6ffa9-tino4` holds only a 14-file partial tree (no published site);
+the 149-file branches are full-site copies branched from `0bffb59` (PR #9 merge).
+
+### T12 audit results (all re-run by this session, 2026-11-11)
+
+| Check | Method | Result |
+| --- | --- | --- |
+| Build reproducibility | `python3 tools/build.py` then `git status` | PASS — no diff; deterministic output unchanged |
+| Line-by-line verification | `python3 tools/verify.py` | PASS — 10,031 checks, 0 failures; 984/984 table rows source-linked; 30 HTML files |
+| Local HTTP sweep | stdlib server on repo root, 23 paths (15 pages + assets + 5 JSON) | PASS — 23/23 HTTP 200 |
+| Published-HTML privacy scan | regex for email/phone/SSN/street/APN over 30 published HTML files | PASS — 0 hits; only ZIPs 95014/94122 appear; placeholders used |
+| Computed-money rounding | JSON integrity + HTML `$` audit | PASS for computed outputs (all `$10`); HTML non-`$10` amounts are only exact statutory values and as-supplied histories (see IR-018) |
+| Root mirror | `verify.py` byte-identical checks | PASS |
+| Live site | fetched overview, executive-summary, black-swan, flagged from `https://wingbangboozle1-lang.github.io/Tino4/` | PASS — correct content, source links present; Pages API `status: built` |
+| Model sanity | recomputed projections/decisions/black-swan ranges from JSON | PASS — 30y 2026–2055, 50y 2026–2075, recommendation Sell and reinvest, break-even ~3.9% |
+
+### T13 freshness spot-check (re-fetched 2026-11-11; all unchanged)
+
+| Source | Official value re-confirmed | Result |
+| --- | --- | --- |
+| S15 FTB Gifts and inheritance | inheritance not included in income; later income taxable | unchanged |
+| S22 BOE NR 25-02 | Prop 19 allowance for 2/16/2025–2/15/2027 (exact statutory amount as published) | unchanged |
+| S31 SF File 250876 | FY2025-26 combined secured rate per $100 (exact rate as published) | unchanged |
+| S06 IRS Topic 701 | $250k/$500k exclusion; 24-of-60-months tests | unchanged |
+| S08 IRS Topic 559 | 3.8% NIIT; $250k MFJ / $200k single thresholds | unchanged |
+| S46 CDI Sustainable Insurance Strategy | statewide average homeowner premium (exact average as published, updated 10/27/2026) | unchanged |
+| S34/S56 SF Rent Board | 1.6% allowable 3/1/2026–2/28/2027; File 261020 not enacted | unchanged |
+| S41 CPUC NEM/NBT | NBT since 04/15/2023; export usually below retail; 9-year legacy | unchanged |
+| S52 CBO higher-rates report | 10-year Treasury averages 4.3% over 2026–2036 in baseline forecast | unchanged |
+| S50 CBO testimony 2026–2036 | inflation path as published (see research notes) | unchanged |
+
+No statutory value changed, so no site fact was updated. Full quotes remain in
+`internal/research-notes.md` (not edited by this session due to T12 scope).
+
+### IR-018 — independently confirmed (privacy, highest urgency)
+
+- Live Pages serves the whole repo root (`build_type: legacy`, `source: main:/`, root
+  `.nojekyll`): fetched `/internal/research-notes.md`, `/tools/build.py` and
+  `/COORDINATION.md` from the live site — all returned full content (HTTP 200 via page fetch).
+  `_config.yml` exclusions are ineffective while `.nojekyll` disables Jekyll.
+- Exact un-rounded supplied figures are published in the generator constants, data JSON and
+  as-supplied history tables (file locations only; exact values deliberately not quoted here
+  because this board is itself public). This conflicts with the owner's rule that supplied
+  figures be rounded to the nearest $10 so they cannot be traced, and with the
+  internal-only rule for research material.
+- The prior privacy PASS covered published HTML only and excluded archives/internal, so it
+  does not cover the whole published tree. No names, addresses, APNs, emails, phones or SSNs
+  were found in published HTML (see T12), but the exposure above remains.
+- **Request to `s-3642c4cb` (T12 owner):** please remediate in your scope — round supplied
+  figures in generator/data/pages/mirrors and fix Pages publishing so `internal/**`,
+  `tools/**` and archives are not served (e.g. Jekyll exclusions or source-path change).
+  This session does not edit those files. Git history/forks/caches are not removed by a
+  merge and need separate owner action. Until remediated, treat the live site as exposing
+  internal material.
