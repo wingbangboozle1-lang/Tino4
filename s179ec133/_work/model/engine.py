@@ -54,7 +54,7 @@ PARAMS = [
     ("x19_2026", 1044586, "usd", "BOE-LTA-2025-009", "Proposition 19 allowance for transfers through February 15, 2027"),
     ("excl_2026", 15000000, "usd", "IRS-ESTATE", "Federal basic exclusion amount, 2026"),
     ("excl_2027", 15480000, "usd", "IRS-RP-2026-35", "Federal basic exclusion amount, 2027"),
-    ("excl_gap", 0.0025, "rate", "ASSUMPTION", "The exclusion is indexed to chained CPI, assumed to run 0.25 point below CPI-U"),
+    ("excl_gap", 0.0025, "rate", "ASSUMPTION", "The exclusion's yearly inflation adjustment is assumed to run 0.25 point below consumer price inflation (the published 2027 step was +3.2%)"),
     ("estate_rate", 0.40, "rate", "IRS-I706", "Top federal estate tax rate"),
     ("sell_comm", 0.05, "rate", "ASSUMPTION", "Agent commissions, escrow, title and preparation when selling. No official rate exists"),
     ("transfer_tax", 0.0011, "rate", "CA-RTC-11911", "County documentary transfer tax, $1.10 per $1,000"),
@@ -64,8 +64,8 @@ PARAMS = [
     ("dep_years", 27.5, "years", "IRS-P527", "Depreciation period for a rented house"),
     ("maint_a_pct", 0.005, "share", "CFPB-WORKSHEET", "Property A upkeep: half the CFPB 1% rule, because the owner reports it costs less than Property B. ASSUMPTION"),
     ("maint_b_pct", 0.01, "share", "CFPB-WORKSHEET", "Property B upkeep: CFPB rule of thumb, 1% of value a year"),
-    ("s121_mfj", 500000, "usd", "IRS-TC701", "Home-sale gain exclusion, joint return (not indexed)"),
-    ("s121_single", 250000, "usd", "IRS-TC701", "Home-sale gain exclusion, single (not indexed)"),
+    ("s121_mfj", 500000, "usd", "IRS-TC701", "Home-sale gain exclusion, joint return (held fixed in dollars)"),
+    ("s121_single", 250000, "usd", "IRS-TC701", "Home-sale gain exclusion, single (held fixed in dollars)"),
     ("wages_real", 150000, "usd", "ASSUMPTION", "Household's other taxable income in 2026 dollars. Not supplied; three levels are tested"),
 ]
 P = {k: v for k, v, *_ in PARAMS}

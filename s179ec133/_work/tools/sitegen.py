@@ -31,7 +31,7 @@ SHORT = {
     "CDI-SHOP": "California Dept. of Insurance: Shopping for residential insurance", "CA-COURTS-ESTATE-PLAN": "California Courts: Estate planning",
     "CA-COURTS-SIMPLE": "California Courts: When probate is not needed", "CA-PROB-16061-7": "California law: Probate Code 16061.7",
     "CA-PROB-16061-7-SB202": "California law: Probate Code 16061.7(f)", "CA-SOS-RESULTS-2026": "Secretary of State: 2026 ballot measure results",
-    "CA-SOS-QUALIFIED-2026": "Secretary of State: Qualified measures 2026", "US-S587": "Congress.gov: S.587", "CA-SB974-2026": "California law: SB 974 (2026)",
+    "CA-SOS-QUALIFIED-2026": "Secretary of State: Qualified measures 2026", "CA-SOS-PR26-96": "Secretary of State: News release PR26-96", "US-S587": "Congress.gov: S.587", "CA-SB974-2026": "California law: SB 974 (2026)",
     "CBO-OUTLOOK-2026": "CBO: Outlook 2026-2036", "CBO-61912": "CBO: Treasury yield projections", "FRED-SERIES": "St. Louis Fed (FRED): FHFA, BLS and Treasury series",
     "ERP-B55": "Economic Report of the President: Table B-55", "ERP-B56": "Economic Report of the President: Table B-56", "TSP-RETURNS": "Thrift Savings Plan: Rates of return",
 }

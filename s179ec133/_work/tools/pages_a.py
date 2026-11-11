@@ -91,7 +91,7 @@ A prompt sale turns about %s (projected for %d) into about %s after selling cost
         (["No relief if it is rented", "The exclusion for property other than a principal residence was eliminated."], ["BOE-PROP19"], "V"),
         (["Income-tax basis resets to market value", "The basis of inherited property is generally its fair market value on the date of death, so a prompt sale has little gain."], ["IRS-INHERIT-FAQ"], "V"),
         (["California taxes gains as ordinary income", "There is no lower state rate for capital gains — one reason selling Property B would be costly."], ["FTB-CAPGAINS"], "V"),
-        (["Federal estate tax starts above $15,000,000 per person (2026)", "It rises to $15,480,000 in 2027 and is indexed after that; the rate above it is 40%."], ["IRS-ESTATE", "IRS-RP-2026-35", "IRS-I706"], "V"),
+        (["Federal estate tax starts above $15,000,000 per person (2026)", "It rises to $15,480,000 in 2027; the rate above it is 40%."], ["IRS-ESTATE", "IRS-RP-2026-35", "IRS-I706"], "V"),
         (["California has no inheritance or estate tax", "State law bars the state and every city and county from imposing one."], ["CA-RTC-13301", "CA-SCO-ESTATE"], "V"),
         (["Property A's tax in %d" % T0, "%s before inheritance; %s if a child moves in; %s if rented or empty." % (money(o["ptax_before"]), money(o["ptax_live"]), money(o["ptax_rent"]))], ["BOE-LTA-2026-026", "SCC-TAXRATEBOOK-2025"], "P"),
         (["Wealth after %d years, in 2026 dollars" % H0, "Sell and hold stocks %s · rent out %s · live in %s. With Treasuries instead of stocks: sell %s · rent %s · live %s." % (
