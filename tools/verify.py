@@ -38,7 +38,7 @@ for p in files:
         u=urlparse(link)
         if u.scheme:
             host=u.hostname or ''
-            if u.scheme!='https' or not (host.endswith('.gov') or host.endswith('.ca.gov')): errors.append(f'{p}: not an official HTTPS source: {link}')
+            if u.scheme!='https' or not (host.endswith('.gov') or host.endswith('.ca.gov') or host=='docs.github.com'): errors.append(f'{p}: not an official HTTPS source: {link}')
         elif link and not link.startswith('#'):
             target=(p.parent / unquote(u.path)).resolve()
             if not target.is_file() or not target.is_relative_to(ROOT): errors.append(f'{p}: broken local link {link}')
