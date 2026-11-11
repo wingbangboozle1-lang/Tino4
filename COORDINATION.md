@@ -43,6 +43,13 @@ analysis.
 | T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
 | T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
 | T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T12 | **Privacy remediation (highest urgency):** purge unrounded owner-supplied figures from the published tree, enforce the $10-rounding rule in generator + verifier, stop serving internal/archived trees from the live site | in progress | `s-a24b1c8c` | `tools/**`, `_config.yml`, `.nojekyll`, `internal/**`, `archive-v2/**`, `docs/**` + root mirror (regenerated outputs only) | 2026-11-11 13:15 |
+| T13 | Line-by-line re-verification of every published fact against its official source (re-fetch all sources), plus new official research: post-election status, newest IRS/BOE/county/city figures, insurance, utilities, rental rules | in progress | `s-a24b1c8c` | `tools/sources.py`, `internal/research-notes.md`, `internal/source-register.md` | 2026-11-11 13:15 |
+| T14 | Decision model v3: live-in vs rent vs sell-and-reinvest, after tax, for every inheritance year 2040–2050, with Property B (already owned) interplay, estate-threshold headroom and operating-cost projections | in progress | `s-a24b1c8c` | `tools/model.py` (new), `tools/build.py`, `docs/data/*.json` | 2026-11-11 13:15 |
+| T15 | Black-swan section v2: official historical series (BLS / FHFA / Federal Reserve / TSP), 50-year uneven-growth stress paths, outcome per strategy | in progress | `s-a24b1c8c` | `tools/blackswan.py` (new), `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html` | 2026-11-11 13:15 |
+| T16 | Dashboard landing page + category subpages regenerated from the verified data (shared outputs — integration session only) | in progress | `s-a24b1c8c` | `docs/index.html`, `docs/pages/*.html`, `docs/assets/**`, root mirror | 2026-11-11 13:15 |
+| T17 | Stale-claim handoff: branch `arena/f5c6ffa9-tino4` (all 13 tasks still `in progress`, last commit 2026-11-10 10:44 UTC, never merged) — audit, re-verify independently, integrate what survives verification | in progress | `s-a24b1c8c` (taken over from `f5c6ffa9`) | read-only on `origin/arena/f5c6ffa9-tino4`; results land in T13/T14 files | 2026-11-11 13:15 |
+| T18 | Final integration: `tools/verify.py`, link check, privacy scan, PR → `main`, merge, confirm GitHub Pages deploy, record PR link + merge result here | in progress | `s-a24b1c8c` | `tools/verify.py`, `internal/verification-log.md`, `COORDINATION.md`, `README.md` | 2026-11-11 13:15 |
 
 ## Session registry
 
@@ -50,6 +57,8 @@ analysis.
 | --- | --- | --- | --- |
 | `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
 | `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | active |
+| `s-a24b1c8c` | `arena/a24b1c8c-tino4` | Review + privacy remediation + full re-verification + model v3 + final integration → PR → merge → deploy | active |
+| `f5c6ffa9` | `arena/f5c6ffa9-tino4` | Parallel research branch (facts JSON + model); never merged; claims stale since 2026-11-10 10:44 UTC | stale — taken over by `s-a24b1c8c` (T17) |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
@@ -264,3 +273,12 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   choices, not forecasts. `python3 tools/build.py && python3 tools/verify.py`: 10,031 checks,
   0 failures; 984/984 table rows source-linked; 30 HTML files; privacy and mirror checks pass.
   Local `git diff --check` passes. No new personal data or unverified official values were added.
+- 2026-11-11 13:15 UTC — `s-a24b1c8c`: read the board; audited `main` at `0bffb59` (PR #9 merged
+  13:04 UTC, Pages `built`) and all nine remote branches. Claimed T12–T18. Handoff notes:
+  (1) `arena/f5c6ffa9-tino4` holds 13 tasks marked `in progress` with no commit since
+  2026-11-10 10:44 UTC and no pull request — taken over under the 60-minute stale-claim rule (T17);
+  its branch is left untouched on the remote. (2) T11 (`s-accb6bba`) is still inside its 60-minute
+  window (claimed 12:57 UTC, last commit 13:03 UTC); this session will not edit the T9–T11 rows or
+  that session's log lines until the window has lapsed. (3) All earlier tasks T1–T10 are `done`,
+  so this session acts as the final integration session for the shared outputs.
+
