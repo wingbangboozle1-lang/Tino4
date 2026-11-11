@@ -264,3 +264,11 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   choices, not forecasts. `python3 tools/build.py && python3 tools/verify.py`: 10,031 checks,
   0 failures; 984/984 table rows source-linked; 30 HTML files; privacy and mirror checks pass.
   Local `git diff --check` passes. No new personal data or unverified official values were added.
+
+## Follow-up session `s-3642c4cb` — 2026-11-11
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T12 | Independent post-merge privacy, model, source and deployment audit; remediate material issues and integrate | in progress | `s-3642c4cb` | `tools/**`, `docs/**`, root published mirror, `.github/**`, `README.md` (no active claims to these scopes) | 2026-11-11 13:08 |
+
+Platform fixes the branch at `arena/3642c4cb-tino4`, overriding the requested per-session branch pattern. The prior T11 claim is limited to its final coordination log; this session appends its own record without altering that claim. PR #9 is already merged, but deployment still requires independent confirmation.
