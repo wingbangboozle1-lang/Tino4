@@ -219,7 +219,7 @@ def _decide(T, H, scn, ov):
             b_rent = s["b_unit_rent"] * cum(lambda j: O["sf_rent_share_of_cpi"] * max(scn.cpi(j), 0.0), k - 1) \
                 * (1 - F["vacancy"]) if rent_out_b else 0.0
             tax = inc_tax(year(k), scn.infl, ordinary=b_rent)
-            net = b_rent - tax - ptax - ins - water - maint
+            net = b_rent - tax - ptax - ins - water - maint - (ov.get("one_off", 0.0) if k == 1 else 0.0)
             pf.grow(year(k), scn.infl, scn.stockr(k), scn.cashr(k))
             pf.add(net)
             rows.append({"year": year(k), "ptax": ptax, "ins": ins, "water": water, "maint": maint,
@@ -238,6 +238,8 @@ def _decide(T, H, scn, ov):
     depr = F["building_share"] * s["fmv"] / O["depr_years"]
     for k in range(1, H + 1):
         gross = s["rent"] * cum(scn.rentg, k - 1) * (1 - F["vacancy"])
+        if k == 1 and ov.get("vacant_year1"):
+            gross = 0.0
         ptax = s["av_full"] * av_i(k) * O["rate_A"] + s["fixed"] * cpi_i(k)
         ins = s["ins"] * spread_i(k, F["spread_insurance"])
         maint = s["maint"] * cpi_i(k)
@@ -251,7 +253,7 @@ def _decide(T, H, scn, ov):
             taxable -= use
             susp -= use
         tax = inc_tax(year(k), scn.infl, ordinary=taxable)
-        net = gross - ptax - ins - maint - tax
+        net = gross - ptax - ins - maint - tax - (ov.get("one_off", 0.0) if k == 1 else 0.0)
         pf.grow(year(k), scn.infl, scn.stockr(k), scn.cashr(k))
         pf.add(net)
         rows.append({"year": year(k), "ptax": ptax, "ins": ins, "water": 0.0, "maint": maint,
@@ -470,6 +472,18 @@ def history_path(start, H):
         "stock": [_chg("shares_us", y) + add for y in yrs],
         "cash": [SERIES["tbill3m"]["values"][str(y)] / 100.0 for y in yrs],
     }
+
+
+def shock_path(H, home=None, stock=None):
+    """Central rates with one bad first year for homes and/or stocks."""
+    scn = Scn()
+    scn.post = {"home": [scn.gA] * H, "cpi": [scn.infl] * H, "rent": [scn.infl + F["spread_rent"]] * H,
+                "stock": [scn.stock] * H, "cash": [scn.cash] * H}
+    if home is not None:
+        scn.post["home"][0] = home
+    if stock is not None:
+        scn.post["stock"][0] = stock
+    return scn
 
 
 def replay(T=CENTRAL_T, H=CENTRAL_H):

@@ -7,7 +7,7 @@ from content import SOURCES, VERIFIED_ON
 from render import (ESC, table, cards, note, legend, money, mill, pct, link, srcs, badge, page,
                     line_chart, bar_chart, r10, NAV, STATUS_HELP)
 
-V, OI, MD, AS, UV = "Verified", "Owner input", "Model", "Assumption", "Unverified"
+V, OI, MD, AS, UV, GD = "Verified", "Owner input", "Model", "Assumption", "Unverified", "Guidance"
 OPT = ["live", "rent", "sell"]
 NAME = {"live": "Live in it", "rent": "Rent it out", "sell": "Sell and invest"}
 
@@ -479,7 +479,7 @@ def p_costs(C, out):
         (["What counts as residential in the regulator's data", "Policies on residences of four units or fewer, including dwelling-fire and landlord policies."], ["S33"], V),
         (["Used in the model", f"The owner's {money(A['insurance_year'])} for each property in 2026, rising {pct(C.base.infl + F['spread_insurance'])} a year; a test at three times the premium is on the Decision page"], ["S33", "S35"], AS),
     ]) + f"""
-<p><b>Reading:</b> a home valued at {money(A['value_2026'])} is likely to cost more to insure than the statewide average home, and a three-unit rental needs a landlord policy, which is priced differently from a homeowner policy. Both guesses should be replaced with written quotes. Tripling the premium changes the ten-year result by less than {money(abs(C.sens[2][3]['options']['rent']['liq_real'] - C.d['options']['rent']['liq_real']) + 10)} and does not change the ranking.</p>
+<p><b>Reading:</b> the guess of {money(A['insurance_year'])} is within a few percent of the statewide average for owner-occupied homes. That average covers homes of every value, so it is a floor rather than an estimate for a home valued at {money(A['value_2026'])}, and a three-unit rental needs a landlord policy, which is priced separately. Both guesses should be replaced with written quotes. In the model, tripling Property A's premium lowers the ten-year result of renting it out by about {money(C.d['options']['rent']['liq_real'] - C.sens[2][3]['options']['rent']['liq_real'])} in today's dollars and does not change the ranking.</p>
 <h2>Water</h2>
 """ + table(["Item", "Finding"], [
         (["Property A, owner's bills", f"{money(A['water_month'][0])} to {money(A['water_month'][1])} a month; the model uses {money(M.mid(A['water_month']) * 12)} a year"], ["S45"], OI),
@@ -519,3 +519,450 @@ def p_costs(C, out):
     ], cls="num")
     page("operating-costs", "Insurance, utilities and upkeep",
          "What official sources say about each running cost, what the owner supplied, and what remains unconfirmed.", body, out)
+
+
+# ====================================================================== cash inheritance & thresholds
+def p_estate(C, out):
+    e = {r["year"]: r for r in C.estate}
+    eT = e[C.T]
+    ex = eT["excl"]
+    ch = line_chart("Federal tax-free amount (one person) and Property A's projected value",
+                    [("Tax-free amount", [(r["year"], r["excl"]) for r in C.estate]),
+                     ("Property A, central", [(r["year"], r["home"]) for r in C.estate]),
+                     ("Property A, fast", [(r["year"], r["home_high"]) for r in C.estate])],
+                    "2026 and 2027 tax-free amounts are official; later years are projected with inflation.")
+    cash_rows = []
+    for cash in (5_000_000, 10_000_000, 15_000_000, 20_000_000, 30_000_000, 40_000_000):
+        tot = cash + eT["home"]
+        cash_rows.append(([money(cash), money(tot), money(M.estate_tax(tot, ex)), money(max(0, tot - M.estate_tax(tot, ex))),
+                           money(M.estate_tax(tot, 2 * ex))], ["S55", "S01", "S02"], MD))
+    half = ex / 2
+    body = f"""{legend()}
+<div class="answer"><h2>Short answer</h2>
+<p><b>Local and state:</b> nothing. California has no estate tax and its law bars the state, counties and cities from taxing gifts, inheritances or estates. The cash is not income to the person who inherits it.<br>
+<b>Federal:</b> the estate pays 40% on what exceeds the tax-free amount: {money(O['estate_excl'][2026])} per person for deaths in 2026 and {money(O['estate_excl'][2027])} in 2027, indexed to inflation after that.
+The house counts toward that amount at its market value. In {C.T}, with Property A at {money(eT['home'])}, about {money(eT['head1'])} of cash and other assets could pass under one person's limit, or about {money(eT['head2'])} if a spouse's unused limit was preserved.</p></div>
+""" + cards([
+        ("Tax-free amount, 2026", money(O["estate_excl"][2026]), "per person; official"),
+        ("Tax-free amount, 2027", money(O["estate_excl"][2027]), "per person; official, released 5 Nov 2026"),
+        (f"Projected for {C.T}", money(ex), f"at {pct(C.base.infl - F['chained_gap'])} a year indexing; range {money(eT['excl_low'])} to {money(eT['excl_high'])}"),
+        ("Rate above the limit", "40%", "federal; California and local: none"),
+    ]) + ch + f"""
+<h2>Room for cash and other assets, year by year</h2>
+<p>"Room" is the tax-free amount minus Property A's projected value: how much cash and other property the same estate could hold before any federal estate tax. The amount of cash was not supplied, so no tax figure is shown for the family's own case.</p>
+""" + table(["Year of death", "Tax-free amount, one person", "Property A, central", "Room, one person's amount", "Room with a spouse's unused amount", "Room if Property A grows fast"], [
+        ([str(r["year"]), money(r["excl"]), money(r["home"]), money(r["head1"]), money(r["head2"]), money(r["head1_high_home"])],
+         ["S01", "S02", "S41"], V if False else MD) for r in C.estate], cls="num") + f"""
+<p>The first two rows use the official amounts. Later amounts are projected: the law indexes the amount to a chained price index, assumed here to rise {pct(C.base.infl - F['chained_gap'])} a year, and rounds it to the nearest $10,000.</p>
+<h2>If the estate is larger than the limit</h2>
+<p>Illustration for a death in {C.T} under today's law, with Property A at {money(eT['home'])} and a tax-free amount of {money(ex)}. The estate, not the heir, pays the tax.</p>
+""" + table(["Cash and other assets", "Total estate with Property A", "Federal estate tax, one person's amount", "Left after tax", "Tax if a spouse's unused amount is added"], cash_rows, cls="num") + f"""
+<h2>The rules behind the numbers</h2>
+""" + table(["Question", "Answer"], [
+        (["What counts toward the limit?", "Everything the person owns at death at fair market value: cash, securities, real estate, insurance, trusts and other assets. Property A is counted at its market value on the date of death, not its assessed value."], ["S01"], V),
+        (["Is the limit per heir or per estate?", "Per person who dies. It is not multiplied by the number of heirs. Taxable gifts made during life count against the same amount."], ["S01", "S55"], V),
+        (["Two parents", "A surviving spouse can use the first spouse's unused amount, but only if an estate tax return (Form 706) was filed for the first spouse. A simplified late election is available up to five years after that death when no return was otherwise required."], ["S01", "S03"], V),
+        (["When is an estate tax return due?", "Nine months after the death; an automatic six-month extension is available. It is required when the gross estate plus taxable gifts exceeds the filing threshold for that year."], ["S03"], V),
+        (["Rate", "The schedule rises to 40% on amounts over $1,000,000; the credit that goes with the tax-free amount removes the tax below it, so the excess is taxed at 40%."], ["S55"], V),
+        (["California estate tax", "None. No California estate tax return for deaths on or after 1 January 2005."], ["S22"], V),
+        (["California or local inheritance or gift tax", "Prohibited by statute for the state and every political subdivision."], ["S23"], V),
+        (["Is inherited cash income?", "No. Do not include an inheritance in income; interest, dividends, rent or gains it later produces are taxable."], ["S24"], V),
+        (["Giving during life", "The first $19,000 per recipient in 2026 and $20,000 in 2027 is not a taxable gift. Giving the house itself during life is a gift that the giver reports on Form 709."], ["S05", "S02", "S56"], V),
+        (["Does a lifetime gift of the house keep the basis reset?", ""], ["S56"], UV),
+        (["Cash held in retirement accounts", ""], ["S24"], UV),
+        (["The actual amount of cash to be inherited", ""], ["S01"], UV),
+    ]) + f"""
+<h2>If the law changes</h2>
+<p>The limit has moved by law before: the official table shows $5,490,000 in 2017, $11,180,000 in 2018 and $15,000,000 in 2026. The rows below are what-if calculations, not predictions.</p>
+""" + table(["What-if for a death in " + str(C.T), "Tax-free amount", "Room for cash after Property A", "Estate tax on Property A plus $10,000,000 of cash"], [
+        (["Today's law, indexed", money(ex), money(ex - eT["home"]), money(M.estate_tax(eT["home"] + 10_000_000, ex))], ["S01", "S02"], MD),
+        (["Limit cut in half by a future Congress", money(half), money(half - eT["home"]), money(M.estate_tax(eT["home"] + 10_000_000, half))], ["S01"], MD),
+        (["Estate tax repealed (as H.R.1301 proposes; introduced, no action)", "no limit", "unlimited", money(0)], ["S39"], MD),
+        (["Today's law plus a spouse's unused amount", money(2 * ex), money(2 * ex - eT["home"]), money(M.estate_tax(eT["home"] + 10_000_000, 2 * ex))], ["S01", "S03"], MD),
+    ], cls="num")
+    page("estate-thresholds", "Cash inheritance & tax-free limits",
+         "How much can be inherited before tax at the local, state and federal level, how much room is left once the house is counted, and how that room is projected to change.", body, out)
+
+
+# ====================================================================== rules
+def p_law(C, out):
+    body = legend() + """
+<h2>Federal</h2>
+""" + table(["Topic", "Rule"], [
+        (["Estate tax: tax-free amount", "$15,000,000 per person for 2026 (set by Public Law 119-21, signed 4 July 2025); $15,480,000 for 2027 after the yearly inflation adjustment."], ["S57", "S01", "S02"], V),
+        (["Estate tax: rate", "Up to 40% on the amount above the tax-free amount."], ["S55"], V),
+        (["Estate tax: who files and when", "The estate files Form 706 within nine months (six-month automatic extension) when the gross estate plus taxable gifts exceeds the threshold, or to pass a spouse's unused amount to the survivor."], ["S03"], V),
+        (["Estate tax: unused amount of the first spouse", "Available to the surviving spouse only if elected on a timely estate tax return; simplified late relief up to the fifth anniversary of the death."], ["S01", "S03"], V),
+        (["Gift tax: yearly exclusion", "$19,000 per recipient for 2025 and 2026; $20,000 for 2027."], ["S05", "S02"], V),
+        (["Income tax: basis of inherited property", "Generally the fair market value on the date of death (or the alternate valuation date if elected on an estate tax return). Gain is taxable only above that basis."], ["S04"], V),
+        (["Income tax: sale of inherited property", "Reported on Schedule D and Form 8949. If the estate had to file an estate tax return, the heir's basis must match the value reported there."], ["S04"], V),
+        (["Income tax: long-term gain rates", "0%, 15% or 20% depending on income; 2027 thresholds for a joint return are $102,100 and $633,600. Depreciation previously claimed on a rental building is taxed at up to 25%."], ["S07", "S02"], V),
+        (["Income tax: net investment income tax", "3.8% on investment income (interest, dividends, rent, gains) when income exceeds $250,000 on a joint return or $200,000 single. Home-sale gain that is excluded is not subject to it."], ["S08"], V),
+        (["Income tax: selling a home you live in", "Up to $250,000 of gain ($500,000 on a joint return) is excluded if you owned and lived in the home for 24 months of the five years before the sale."], ["S06"], V),
+        (["Income tax: renting", "Rent is taxable; property tax, insurance, repairs and depreciation are deductible. Residential buildings are depreciated over 27.5 years; land is not depreciated."], ["S09", "S10"], V),
+        (["Income tax: the trust after the death", "The trust or estate needs its own tax ID number and files Form 1041 for any year with more than $600 of gross income."], ["S11"], V),
+        (["Income tax: 2027 rates for a joint return", "10% to $25,600; 12% to $104,050; 22% to $218,250; 24% to $416,650; 32% to $529,100; 35% to $793,650; 37% above."], ["S02"], V),
+    ]) + """
+<h2>California</h2>
+""" + table(["Topic", "Rule"], [
+        (["Estate tax", "None for deaths on or after 1 January 2005."], ["S22"], V),
+        (["Inheritance and gift tax", "The state may not impose a gift, inheritance, succession, legacy or estate tax."], ["S23"], V),
+        (["Is an inheritance income?", "No. Income it later produces is taxable."], ["S24"], V),
+        (["Capital gains", "No lower rate; taxed as ordinary income at rates from 1% to 12.3% under the 2025 schedules."], ["S25", "S26"], V),
+        (["Basis rules", "California applies the federal rules on gain or loss on the disposition of property, which include the date-of-death basis rule, except as otherwise provided. The exceptions were not searched one by one."], ["S27"], V),
+        (["Property tax on inherited real estate", "See Property tax & assessment: reassessment at death unless the family-home exclusion applies."], ["S12"], V),
+    ]) + """
+<h2>Local (county and city)</h2>
+""" + table(["Topic", "Rule"], [
+        (["Local inheritance, estate or gift tax", "Not allowed. The statutory bar covers the state and any political subdivision of the state."], ["S23"], V),
+        (["Transfer tax on the inheritance itself", ""], ["S30"], UV),
+        (["Transfer tax when a property is sold", "State law lets a county charge $0.55 per $500 of sale price, with a city able to take half of it. The local ordinances for Property A's city and county were not read."], ["S30"], V),
+        (["San Francisco flat parcel taxes and the new transit parcel tax", "See Property tax & assessment and Law changes to watch."], ["S18", "S38"], V),
+    ])
+    page("inheritance-law", "Estate & inheritance tax rules",
+         "Federal, California and local rules that apply to the inheritance, each read on the official page linked in its row.", body, out)
+
+
+# ====================================================================== process
+def p_process(C, out):
+    body = legend() + note("Placeholders: [TRUSTEE] is the successor trustee named in the trust; [BENEFICIARY] is the child who inherits; [ADVISOR] is the family's estate attorney or tax professional. No real names are used anywhere on this site.") + """
+<h2>Before the transfer (now to 2040)</h2>
+""" + table(["Step", "What to do", "Why it matters"], [
+        (["1", "Confirm Property A is titled in the trust and that the trust names [BENEFICIARY] and a successor [TRUSTEE].", "A transfer through a trust is treated like any other transfer at death for property tax; the date of death is the date that counts."], ["S12"], V),
+        (["2", "Confirm Property A is the parent's principal residence and that a homeowners' exemption is on file.", "The family-home exclusion applies only to the parent's principal residence. If the exemption is not in the parent's name, the assessor may ask for proof of residence."], ["S12", "S15"], V),
+        (["3", "If one parent dies first, ask [ADVISOR] about filing Form 706 for that parent even if no tax is due.", "It is the only way to pass that parent's unused federal tax-free amount to the survivor."], ["S01", "S03"], V),
+        (["4", "If a parent moves to a care facility, do not rent Property A to anyone outside the immediate family.", "The home keeps its principal-residence status only if it is not rented to others and the parent intends to return."], ["S12"], V),
+        (["5", "Do not transfer Property A during the parent's lifetime without advice.", "A lifetime transfer is a gift, not an inheritance; the basis reset on the date of death applies to inherited property."], ["S56", "S04"], V),
+        (["6", "Keep records: solar connection date and agreement, insurance policy, major repairs, a recent estimate of value.", "The solar tariff's end date and the insurance cost are two of the blanks on Flagged for Review."], ["S32", "S34"], GD),
+        (["7", "Decide in advance who would live in Property A, if anyone.", "The one-year move-in rule has no exceptions."], ["S12"], V),
+    ]) + """
+<h2>After the death</h2>
+""" + table(["Step", "Deadline", "What to do"], [
+        (["8", "Right away", "[TRUSTEE] secures the home, keeps it insured, and obtains certified death certificates."], ["S28"], GD),
+        (["9", "Within 60 days", "[TRUSTEE] serves the written notification to every beneficiary and heir that the trust has become irrevocable."], ["S28"], V),
+        (["10", "Promptly", "Order a written appraisal of Property A as of the date of death. That value is the new income-tax basis and the starting point for any reassessment."], ["S04", "S12"], V),
+        (["11", "Promptly", "Get a tax ID number for the trust; file Form 1041 for any year in which the trust has more than $600 of gross income. The parent's final personal return is separate."], ["S11"], V),
+        (["12", "Within 150 days", "[TRUSTEE] or [BENEFICIARY] files the change in ownership statement with the county assessor or recorder."], ["S29"], V),
+        (["13", "Within 9 months", "If the estate exceeds the federal threshold for that year, or a spouse survives and the unused amount should be preserved, file Form 706 (six-month extension available)."], ["S03"], V),
+        (["14", "Within months", "Choose: sell, rent out or move in. The comparison is on the Decision page; the property tax bill is higher from the date of death in every case."], ["S12", "S16"], GD),
+    ]) + """
+<h2>If the choice is to sell (the recommended path)</h2>
+""" + table(["Step", "What to do"], [
+        (["15a", "List and sell. Expect supplemental property tax bills for the period between the death and the sale."], ["S16"], V),
+        (["15b", "Report the sale on Schedule D and Form 8949 using the date-of-death value as basis. With a prompt sale the taxable gain is small or nil."], ["S04"], V),
+        (["15c", "Expect a documentary transfer tax of $0.55 per $500 of price under state law, plus negotiated commissions and closing costs."], ["S30"], V),
+        (["15d", "Invest the proceeds in a diversified mix. Interest and dividends are taxed each year; the 3.8% net investment income tax applies above $250,000 of joint income."], ["S08", "S49"], V),
+    ]) + """
+<h2>If the choice is to move in</h2>
+""" + table(["Step", "Deadline", "What to do"], [
+        (["16a", "Within 1 year of the death", "[BENEFICIARY] makes Property A the principal residence. There are no exceptions to this deadline."], ["S12"], V),
+        (["16b", "Within 1 year of the death", "File the homeowners' exemption claim (form BOE-266) with the county assessor."], ["S12", "S15"], V),
+        (["16c", "Within 3 years, or before any sale", "File the family-home exclusion claim. A claim is also timely within six months of a supplemental or escape assessment notice."], ["S12"], V),
+        (["16d", "Ongoing", "Tell the assessor if the home stops being the principal residence. The exclusion ends and the date-of-death market value, with yearly factors, is enrolled."], ["S12"], V),
+        (["16e", "After 2 years", "A later sale can exclude up to $250,000 of gain ($500,000 on a joint return) that built up after the inheritance."], ["S06"], V),
+        (["16f", "Any time", "The unit left in Property B can be rented; the first rent for a new tenant is not limited, later increases are."], ["S37"], V),
+    ]) + """
+<h2>If the choice is to rent it out</h2>
+""" + table(["Step", "What to do"], [
+        (["17a", "Expect reassessment to full market value; the family-home exclusion does not apply to a home the child does not live in."], ["S12"], V),
+        (["17b", "Report rent and expenses on Schedule E; depreciate the building portion of the date-of-death value over 27.5 years."], ["S09", "S10"], V),
+        (["17c", "Replace the homeowner policy with a landlord policy and get written quotes."], ["S34"], GD),
+        (["17d", "On a later sale, depreciation claimed is taxed at up to 25% and the rest of the gain at capital-gain rates, plus California tax at ordinary rates."], ["S07", "S25"], V),
+    ])
+    page("inheritance-process", "Step-by-step inheritance process",
+         "What to do before the transfer, in the months after the death, and on each of the three paths, with the official deadline for each step.", body, out)
+
+
+# ====================================================================== black swan
+def p_swan(C, out):
+    T, H = C.T, C.H
+    dT = (1 + C.base.infl) ** (T - BASE_YEAR)          # to today's dollars
+    rp = C.replay
+    best_row = {k: max(rp, key=lambda r: r[k]) for k in OPT}
+    worst_row = {k: min(rp, key=lambda r: r[k]) for k in OPT}
+    med = {k: sorted(r[k] for r in rp)[len(rp) // 2] for k in OPT}
+    o = C.d["options"]
+    episodes = [
+        (1977, "High inflation: prices rose as much as 13% in a single year and homes and rents rose with them"),
+        (1990, "California housing slump of the early 1990s alongside a strong stock market"),
+        (2000, "Two stock-market crashes in one decade (2000-2002 and 2008)"),
+        (2006, "Housing bust: home prices fell for several years after the 2006 peak"),
+        (2013, "Housing boom, then the 2021-2022 inflation shock and a stock fall"),
+    ]
+    ep_rows = []
+    for st, desc in episodes:
+        r = next(x for x in rp if x["start"] == st)
+        ep_rows.append(([f"{r['start']}-{r['end']}", desc, pct(r["worst_home"]), pct(r["worst_stock"]), pct(r["max_cpi"]),
+                         money(r["live"] / dT), money(r["rent"] / dT), money(r["sell"] / dT), NAME[r["best"]]], ["S41", "S43", "S48", "S47"], MD))
+    shocks = [
+        ("Home prices fall 25% in the first year after inheritance, then grow normally", "Selling at inheritance avoids the fall; keeping absorbs it.", ["S41"],
+         M.decide(T, H, M.shock_path(H, home=-0.25))),
+        ("Stocks fall 40% in the first year after the sale, then grow normally", "The sale proceeds take the fall; the home does not.", ["S48"],
+         M.decide(T, H, M.shock_path(H, stock=-0.40))),
+        ("Both of the above in the same year", "A 2008-style year.", ["S41", "S48"], M.decide(T, H, M.shock_path(H, home=-0.25, stock=-0.40))),
+        ("Insurance premium triples", "The regulator notes wildfire surcharges of 15% to over 300%.", ["S34"], C.sens[2][3]),
+        ("Family-home exclusion lost (deadline missed, or the home was not the parent's principal residence)", "No exceptions to the one-year rule.", ["S12"], C.sens[6][3]),
+        (f"A one-off repair of {money(150_000)} in today's dollars in the first year", "Roof, foundation or similar; applies only if the home is kept.", ["S09"],
+         M.decide(T, H, M.Scn(), {"one_off": 150_000 * dT})),
+        ("The home sits empty for the whole first year when rented", "No rent, full costs.", ["S09"], M.decide(T, H, M.Scn(), {"vacant_year1": True})),
+    ]
+    ch = line_chart("Property A's value 2026-2075: smooth central path against a replay of 1976-2025",
+                    [("Replay of real history", [(r["year"], r["a_replay"]) for r in C.fifty]),
+                     ("Smooth central path", [(r["year"], r["a_base"]) for r in C.fifty]),
+                     ("Assessed value (official factors replayed)", [(r["year"], r["av_replay"]) for r in C.fifty])],
+                    "The replay applies each year's actual change in the San Jose metro house price index, 1977 to 2025, to the years 2027 to 2075.")
+    w20 = {k: sum(1 for r in C.replay20 if r["best"] == k) for k in OPT}
+    body = f"""{legend()}
+<p>The projections elsewhere on this site grow at steady rates. Real economies do not: over the last 50 years U.S. inflation ranged from {pct(min(M._chg('cpi_dec', y) for y in range(1976, 2026)))} to {pct(max(M._chg('cpi_dec', y) for y in range(1976, 2026)))} in a year,
+San Jose-area home prices from {pct(min(M._chg('hpi_sj', y) for y in range(1977, 2026)))} to {pct(max(M._chg('hpi_sj', y) for y in range(1977, 2026)))}, and a broad share-price index from {pct(min(M._chg('shares_us', y) for y in range(1976, 2026)))} to {pct(max(M._chg('shares_us', y) for y in range(1976, 2026)))}.
+This section puts the decision through those real sequences instead of an invented one.</p>
+<h2>How the test works</h2>
+<ul>
+<li>The starting point is the central case on the day of inheritance in {T}: the same home value, costs, rent and tax rules as on the Decision page.</li>
+<li>For the {H} years that follow, each year's change in home prices, consumer prices, rents, share prices and the Treasury-bill rate is taken from an actual {H}-year stretch of official data. Every stretch from 1977-1986 to 2015-2024 is used: {len(rp)} in all.</li>
+<li>Stock returns are the yearly change in a broad share-price index plus {pct(M.dividend_addon())} a year for dividends. That add-on is the amount that makes the index match the federal index fund's actual 1988-2025 return; it is a calibration, not an official series.</li>
+<li>Results are after-tax wealth with everything cashed out, in today's dollars, the same measure as on the Decision page ({money(o['live']['liq_real'])} / {money(o['rent']['liq_real'])} / {money(o['sell']['liq_real'])} for live / rent / sell in the steady central case).</li>
+</ul>
+""" + cards([
+        ("Selling came out ahead", f"{C.wins['sell']} of {len(rp)}", "replayed ten-year periods"),
+        ("Renting out came out ahead", f"{C.wins['rent']} of {len(rp)}", "periods beginning " + year_ranges([r["start"] for r in rp if r["best"] == "rent"])),
+        ("Living in it came out ahead", f"{C.wins['live']} of {len(rp)}", "it is a lifestyle choice, not the financial winner"),
+        ("Range for selling", f"{mill(worst_row['sell']['sell'] / dT)} to {mill(best_row['sell']['sell'] / dT)}", f"worst {worst_row['sell']['start']}-{worst_row['sell']['end']}, best {best_row['sell']['start']}-{best_row['sell']['end']}"),
+        ("Range for renting out", f"{mill(worst_row['rent']['rent'] / dT)} to {mill(best_row['rent']['rent'] / dT)}", f"worst {worst_row['rent']['start']}-{worst_row['rent']['end']}, best {best_row['rent']['start']}-{best_row['rent']['end']}"),
+        ("Typical (median) result", f"{mill(med['sell'] / dT)} vs {mill(med['rent'] / dT)}", "selling vs renting out"),
+    ]) + f"""
+<h2>Five episodes</h2>
+""" + table(["Years replayed", "What happened", "Worst year, homes", "Worst year, stocks", "Highest inflation", NAME["live"], NAME["rent"], NAME["sell"], "Best"], ep_rows, cls="num") + f"""
+<p><b>Reading:</b> selling loses to renting when stocks have a poor decade while local home prices boom (the periods beginning in the late 1990s) and in the highest-inflation period, when homes and rents rose with prices.
+Selling wins by the widest margins when the home is inherited near a housing peak or before a long bull market. Nobody knows in advance which period lies ahead, which is why the result is shown for all of them.</p>
+<h2>Every replayed period</h2>
+""" + table(["Years replayed", "Homes, a year", "Prices, a year", "Stocks, a year", "Worst year, homes", "Worst year, stocks", NAME["live"], NAME["rent"], NAME["sell"], "Best"], [
+        ([f"{r['start']}-{r['end']}", pct(r["home"]), pct(r["cpi"]), pct(r["stock"]), pct(r["worst_home"]), pct(r["worst_stock"]),
+          money(r["live"] / dT), money(r["rent"] / dT), money(r["sell"] / dT), NAME[r["best"]]], ["S41", "S43", "S44", "S48", "S47"], MD) for r in rp],
+        caption=f"After-tax wealth from Property A, {H} years after a {T} inheritance, today's dollars", cls="num") + f"""
+<p>Over 20-year stretches (1977-1996 to 2005-2024, {len(C.replay20)} in all) selling came out ahead in {w20['sell']}, renting in {w20['rent']} and living in the home in {w20['live']}.</p>
+<h2>Shocks that are not market cycles</h2>
+<p>One thing goes wrong; everything else follows the central case.</p>
+""" + table(["Shock", "Why it is plausible", NAME["live"], NAME["rent"], NAME["sell"], "Best"], [
+        ([lab, why] + [money(d["options"][k]["liq_real"]) for k in OPT] + [NAME[d["best"]]], sid, MD) for lab, why, sid, d in shocks],
+        caption="After-tax wealth in today's dollars", cls="num") + f"""
+<p>Law shocks (a lower federal tax-free amount, repeal of the estate tax) are on <a href="estate-thresholds.html">Cash inheritance &amp; tax-free limits</a> and <a href="law-watchlist.html">Law changes to watch</a>.
+A change to the basis reset at death would matter most, because the case for selling rests on it; no such bill was confirmed, and the parent's own basis was not supplied, so its cost is left blank on Flagged for Review.</p>
+<h2>Fifty years, replayed: 2026 to 2075</h2>
+{ch}
+<p>Each row applies the actual change from 50 years earlier. Assessed value uses the official yearly factors for the same years, which shows how far a capped assessment falls behind market value when prices rise unevenly.</p>
+""" + table(["Year", "Replays", "Home prices", "Consumer prices", "Stocks", "Property A, replay", "Property A, smooth", "Assessed value, replay", "Property B, replay", "Property B, smooth"], [
+        ([str(r["year"]), str(r["src"]) if r["src"] else "start", pct(r["home_chg"]), pct(r["cpi_chg"]), pct(r["stock_chg"]),
+          money(r["a_replay"]), money(r["a_base"]), money(r["av_replay"]), money(r["b_replay"]), money(r["b_base"])],
+         ["S41", "S42", "S43", "S48", "S14"], MD) for r in C.fifty], cls="num") + f"""
+<p>Limits of this test: the indexes describe a metro area, not one house; the periods overlap, so they are not {len(rp)} independent trials; the rent index is for the San Francisco area; property-tax factors in the ten-year replays use U.S. rather than California prices; and tax law is held at today's rules.</p>
+"""
+    page("black-swan-scenarios", "Black-swan scenarios",
+         "The plan under real booms, busts and inflation instead of steady growth: every ten-year period since 1977 replayed, plus single shocks and a 50-year path.", body, out)
+
+
+# ====================================================================== law watch
+def p_watch(C, out):
+    body = legend() + """
+<p>Status is as read on the linked official page on """ + VERIFIED_ON + """. "What it means here" is this project's reading.</p>
+<h2>Federal</h2>
+""" + table(["Measure", "Status", "What it means here"], [
+        (["Estate tax-free amount (Public Law 119-21)", "Enacted 4 July 2025: $15,000,000 for 2026. The 2027 adjustment to $15,480,000 was released 5 November 2026.", "Raises the room for the cash inheritance. The model indexes it forward; a later Congress can change it."], ["S57", "S02"], V),
+        (["2027 inflation-adjustment document", "Posted with an unfilled drafting placeholder in its first section (\"[Release Date, 2026]\"). The dollar amounts are stated clearly.", "Re-check the amounts when the document appears in the Internal Revenue Bulletin."], ["S02"], V),
+        (["H.R.1301, Death Tax Repeal Act", "Introduced 13 February 2025; referred to the Ways and Means Committee; no further action.", "If enacted, no federal estate tax on the cash or the house. Not law."], ["S39"], V),
+        (["H.R.5336, Equal Tax Act", "Introduced 11 September 2025; referred to the Ways and Means Committee; no summary published.", ""], ["S40"], UV),
+        (["Any bill to end or limit the basis reset at death", "", ""], ["S04"], UV),
+    ]) + """
+<h2>California</h2>
+""" + table(["Measure", "Status", "What it means here"], [
+        (["Proposition 19 family-home exclusion", "In force. The allowance is $1,044,586 until 15 February 2027 and is adjusted again in February 2027.", "Sets how much of Property A's value is sheltered if the child moves in. The new amount was not yet published."], ["S13", "S12"], V),
+        (["Initiative to repeal Proposition 19's family-transfer rules", "Failed to qualify for the ballot (Secretary of State memorandum, 18 May 2026).", "The rules used in this analysis stay as they are."], ["S21"], V),
+        (["SB 293 (2025): family transfers in wildfire areas", "Chaptered 10 October 2025.", "Longer claim periods for certain 2025 fire areas. No effect on either property."], ["S31", "S12"], V),
+        (["Proposition 3 (Nov 2026): extends an existing tax on high incomes", "Unofficial count 10 Nov 2026: 60.6% yes. Certified by 11 December 2026.", "The model already assumes today's California rate schedule continues. The measure's text was not read."], ["S20"], V),
+        (["Proposition 40 (Nov 2026): one-time tax on certain taxpayers", "Unofficial count: 47.4% yes, 52.6% no.", "Failing in the unofficial count. The measure's text was not read."], ["S20"], V),
+        (["Proposition 42 (Nov 2026): prohibits new state personal property taxes and certain retroactive state taxes", "Unofficial count: 51.5% yes. A close contest.", "If it stands, it limits new state taxes of that kind. The measure's text was not read."], ["S20"], V),
+        (["Proposition 43 (Nov 2026): limits voters' ability to raise revenues for local services", "Unofficial count: 42.6% yes, 57.4% no.", "Failing in the unofficial count; local parcel-tax rules stay as they are."], ["S20"], V),
+        (["Insurance rates", "A 17% interim increase for one large insurer's homeowners line took effect 1 June 2025; it had asked for 38% on rental dwellings.", "Premiums for both properties may rise faster than prices; the model assumes 2 points faster."], ["S35"], V),
+        (["Rooftop solar tariffs", "Legacy tariffs closed; new systems on net billing since 15 April 2023; legacy customers keep their tariff for 20 years.", "Property A's small electricity credit will not last into the inheritance window."], ["S32"], V),
+    ]) + """
+<h2>San Francisco (Property B)</h2>
+""" + table(["Measure", "Status", "What it means here"], [
+        (["Measure H (Nov 2026): parcel tax for Muni", "Preliminary count 10 Nov 2026: 74.4% yes (needs a simple majority). Rates from $129 per parcel, inflation-adjusted, for 15 years.", "Adds at least $129 a year to Property B's bill. The rate for a three-unit parcel was not read."], ["S38"], V),
+        (["File No. 261020: cap on banked and capital-improvement rent increases", "Pending at the Board of Supervisors; not enacted (Rent Board notice, 9 November 2026).", "Would limit how fast banked increases can be applied to Property B's tenants."], ["S37"], V),
+        (["Allowed annual rent increase", "1.6% for 1 March 2026 to 28 February 2027; set at 60% of the Bay Area price increase.", "Property B's rent from sitting tenants rises more slowly than costs."], ["S37"], V),
+        (["Empty Homes Tax", "Struck down in 2024; Court of Appeal affirmed 11 September 2026. Not collected unless reversed.", "Relevant because one of Property B's units is not rented. No tax applies today."], ["S19"], V),
+        (["Secured property tax rate, 2026-27", "1.18162182%.", "Used for Property B's projections."], ["S17"], V),
+        (["Water and sewer rate increases for 2026 and 2027", "", ""], ["S52"], UV),
+    ])
+    page("law-watchlist", "Law changes to watch",
+         "Measures that are enacted, pending, failing or failed, and what each would do to the decision.", body, out)
+
+
+# ====================================================================== flagged items
+# (id, area, what is flagged, what to do, source ids, status)
+FLAGS = [
+    ("F01", "Privacy", "Earlier commits, pull requests and deployments of this public repository contain the owner's figures before rounding. Removing them from the current files does not remove them from Git history, forks or caches.",
+     "Repository owner: follow GitHub's procedure for removing sensitive data, or make the repository private.", ["S53"], V),
+    ("F02", "Privacy", "Rounding to $10 hides exact figures from a text search but a multi-year series of rounded assessed values could still be matched against public assessment rolls.",
+     "Owner to decide whether the two history tables on 'The two properties' should be coarsened further or removed. They are published because the brief asks for assessed-value tables rounded to $10.", ["S53"], OI),
+    ("F03", "Owner inputs", "Market values, assessed values, tax bills, rent, utility bills and insurance guesses come from the owner. None was checked against a record, by design: no parcel, address or account is looked up.",
+     "Owner to confirm against the latest bills and statements.", ["S14"], OI),
+    ("F04", "Property tax", "Property A's 2026 tax bill was not supplied.", "Left blank. Add when the bill arrives.", ["S16"], UV),
+    ("F05", "Property tax", "Property A's tax rate area is unknown, and the county's 2026-27 rates were not available in the document read (2025-26). The model uses the sum of 2025-26 component rates for the school and special districts that serve the city (1.1636%).",
+     "Read the tax rate area and total rate from the tax bill.", ["S16"], UV),
+    ("F06", "Property tax", "Property A's bill is about $930 to $1,010 a year above rate times assessed value; Property B's is about $260 above rate times assessed value plus the official flat parcel taxes. The extra charges were not itemised.",
+     "Compare with the 'direct charges' lines on each bill.", ["S16", "S18"], UV),
+    ("F07", "Property tax", "The family-home exclusion needs Property A to be the parent's principal residence at death. That was not stated in the brief.",
+     "Confirm, and confirm a homeowners' exemption is on file in the parent's name.", ["S12", "S15"], UV),
+    ("F08", "Property tax", "The allowance that applies from 16 February 2027 was not yet published. For 2040-2050 the model grows today's allowance by one year of house-price change every second year.",
+     "Check the Board of Equalization's letter in early 2027 and near the transfer date.", ["S13"], UV),
+    ("F09", "Insurance", "No official premium for a home like Property A in its area, or for a tenant-occupied three-unit building in Property B's area, could be read. The regulator's comparison tool is an interactive form and does not cover landlord policies.",
+     "Get written quotes; the tool is linked for manual use.", ["S34"], UV),
+    ("F10", "Insurance", "The owner's guesses (about $1,500 a year each) are used in the model with growth 2 points above inflation. The growth rate is this project's assumption.",
+     "Replace with quotes. The Decision page tests a premium three times higher.", ["S33", "S35"], AS),
+    ("F11", "Solar", "Property A's solar connection date is unknown, so the year its legacy tariff ends is unknown; the bill after that was not estimated and is blank from 2043.",
+     "Find the interconnection date on the utility agreement.", ["S32"], UV),
+    ("F12", "Water", "The water tariff of the utility serving Property A was not read, and adoption of San Francisco's 2026 and 2027 water and sewer increases was not confirmed on an official page.",
+     "Check the latest utility notices.", ["S52", "S45"], UV),
+    ("F13", "Upkeep", "No repair or maintenance figures were supplied. The model uses placeholders ($10,000 a year for Property A and $15,000 for Property B in 2026).",
+     "Replace with actual spending.", ["S09"], AS),
+    ("F14", "Rent", "Property A's rent uses HUD's four-bedroom benchmark for its ZIP code area, a 40th-percentile figure that includes utilities; the home's bedroom count and condition are unknown. The rent for the unit the household would leave in Property B uses the average of the two rented units.",
+     "Ask a local property manager for a rent estimate for each.", ["S36", "S37"], AS),
+    ("F15", "Rent", "Whether Property B's units are covered by the city's rent rules depends on the building's age and legal unit count, which were not looked up. The model assumes they are.",
+     "Confirm with the Rent Board.", ["S37"], UV),
+    ("F16", "Tax model", "The household's filing status and income are unknown. The model assumes a joint return and $200,000 of other taxable income in today's dollars, indexes today's brackets forward, and leaves out the standard deduction, the state-and-local-tax deduction cap, the business-income deduction for rentals, the alternative minimum tax, California's surtax on very high incomes and the California exemption for Treasury interest.",
+     "Have a tax professional rerun the comparison with actual returns. The Decision page tests $100,000 and $400,000.", ["S02", "S26"], AS),
+    ("F17", "Tax model", "The depreciable building is assumed to be 25% of Property A's value; the 27.5-year period was read as an excerpt of the official publication, not by paging through it.",
+     "Use the land and improvement split on the assessment notice.", ["S10"], AS),
+    ("F18", "Investments", "Future returns are assumptions, not official forecasts: stock index fund 8% a year (6% to 10% tested), Treasuries 4.5%. The historical replay uses a price-only share index plus a 3.6-point calibration for dividends.",
+     "Treat the break-even returns on the Decision page as the test, not the central numbers.", ["S49", "S48", "S51"], AS),
+    ("F19", "Selling costs", "Commissions are negotiated, not set by law; 6% of the price is assumed for all selling costs. The local transfer-tax ordinances were not read (state law allows $0.55 per $500).",
+     "Get a listing proposal when the time comes.", ["S30"], AS),
+    ("F20", "Estate", "The amount of cash to be inherited was not supplied, so the site shows room under the limit instead of a tax figure. Cash held in retirement accounts follows different income-tax rules that were not read.",
+     "Give [ADVISOR] the full list of assets.", ["S01"], UV),
+    ("F21", "Estate", "Whether a lifetime gift of the house would keep the date-of-death basis reset was not read on an official page in this pass.",
+     "Ask [ADVISOR] before any lifetime transfer.", ["S56", "S04"], UV),
+    ("F22", "Estate", "California applies the federal rules on gain or loss, which contain the date-of-death basis rule, 'except as otherwise provided'. The exceptions were not searched one by one.",
+     "Confirm with a California tax professional.", ["S27"], UV),
+    ("F23", "Official source", "The IRS document with the 2027 amounts still contains an unfilled drafting placeholder, '[Release Date, 2026]'.",
+     "Re-check when it is published in the Internal Revenue Bulletin.", ["S02"], V),
+    ("F24", "Official source", "The November 2026 state and San Francisco results are unofficial or preliminary until certified (state: by 11 December 2026).",
+     "Re-check after certification. The amount of the new San Francisco parcel tax for a three-unit building was not read.", ["S20", "S38"], V),
+    ("F25", "Official source", "Read without scripts, the federal Thrift Savings Plan's returns page showed identical placeholder values for every fund in 2024 and 2025. Those figures were not used; the fund information sheet was used instead.",
+     "No action; noted so the figures are not picked up by mistake.", ["S54", "S49"], V),
+    ("F26", "Official source", "The consumer price index has no October 2025 value (federal shutdown). California's 2026 assessment factor was therefore computed from August to August, and the St. Louis Fed returns blank 2025 annual averages for several series.",
+     "No action; series end in 2024 where the 2025 average is blank.", ["S14", "S43"], V),
+    ("F27", "Law", "The text of H.R.5336 and of the November 2026 state propositions was not read; only their official titles and status are shown. No bill to end the basis reset at death was confirmed.",
+     "Re-check the federal and state legislative sites near the transfer date.", ["S40", "S20"], UV),
+    ("F28", "Model", "Projections assume steady growth and today's law for 15 to 35 years. The parcel-level property-tax factor in the ten-year replays uses U.S. prices in place of California prices, and metro price indexes stand in for two specific buildings.",
+     "Read the central numbers together with the black-swan section.", ["S41", "S43"], AS),
+    ("F29", "Earlier versions", "Earlier versions of this site said 'sell' using a model that left out California tax and rental income tax, and a later version withdrew all figures. This version recomputes the comparison with those taxes included and reaches 'sell' again, with the conditions under which it flips.",
+     "None; recorded so the change of method is visible.", ["S25", "S09"], MD),
+    ("F30", "Earlier versions", "Facts that earlier sessions cited but that were not re-read from the official page in this pass are not carried forward (for example city-level insurance survey data and the statewide rent-cap statute).",
+     "They can be added back once re-read.", ["S33"], UV),
+    ("F31", "Process", "The hosting platform fixes each working session to one branch, so the requested 'session-id/task' branch names could not be used; isolation was by exclusive file scopes recorded on the task board.",
+     "None.", ["S53"], V),
+]
+
+
+def p_flagged(C, out):
+    body = legend() + f"""
+<p>{len(FLAGS)} items. Nothing here blocks the analysis; each is something that could not be confirmed from an official source, an assumption the owner should replace, or an irregularity in a source. Blank values elsewhere on the site are listed here.</p>
+""" + table(["No.", "Area", "What is flagged", "What to do"], [([i, a, w, t], sid, st) for i, a, w, t, sid, st in FLAGS])
+    page("flagged-for-review", "Flagged for Review",
+         "Unverified values, assumptions and irregularities, each with a link for manual checking.", body, out)
+
+
+# ====================================================================== methodology
+def p_method(C, out):
+    lab = {"infl": "Consumer-price inflation", "home_A": "Property A value growth", "home_B": "Property B value growth",
+           "rent_mkt": "Market rent growth", "water": "Water cost growth", "elec": "Electricity cost growth",
+           "stock": "Stock index fund return", "cash": "Treasury / savings return"}
+    src = {"infl": ["S43", "S50"], "home_A": ["S41"], "home_B": ["S42"], "rent_mkt": ["S44"], "water": ["S45"],
+           "elec": ["S46"], "stock": ["S49", "S48"], "cash": ["S51"]}
+    body = legend() + f"""
+<h2>How the work was done</h2>
+<ul>
+<li><b>Sources.</b> Every fact was read on an official page on {VERIFIED_ON}; the page is linked in the same table row. Values that could not be confirmed are left blank and listed on Flagged for Review.</li>
+<li><b>Owner figures.</b> Rounded to the nearest $10 before they were written anywhere in this project. No parcel, address, account or person was looked up.</li>
+<li><b>Model figures.</b> Calculated from the official rules and the assumptions below, then rounded to $10. They are projections, not forecasts.</li>
+<li><b>Recommendation.</b> Not chosen by hand: it is the choice with the highest after-tax wealth in the central case, reported with the conditions under which another choice wins.</li>
+</ul>
+<h2>Growth assumptions</h2>
+""" + table(["Assumption", "Low", "Central", "High", "Basis"], [
+        ([lab[k], pct(v["low"]), pct(v["base"]), pct(v["high"]), v["why"]], src[k], AS) for k, v in ASSUME.items()]) + f"""
+<h2>Other assumptions</h2>
+""" + table(["Assumption", "Value", "Note"], [
+        (["Inheritance year", "2040, 2045, 2050", f"Central case {C.T}; the brief gives 2040-2050"], ["S12"], OI),
+        (["Holding period compared", "10 and 20 years", "Central case 10 years; everything is cashed out at the end so the choices are compared after tax"], ["S07"], AS),
+        (["Assessed value growth", "2% a year", "The cap binds whenever inflation is at or above 2%"], ["S14"], MD),
+        (["Family-home allowance growth", f"{pct(C.base.gA)} every second year", "One year's house-price change is applied every other February"], ["S13"], MD),
+        (["Federal tax-free amount and brackets", f"{pct(C.base.infl - F['chained_gap'])} a year", "Chained price index assumed 0.3 point below ordinary inflation"], ["S02"], AS),
+        (["California brackets", f"{pct(C.base.infl)} a year from the 2025 schedule", "Indexed with inflation"], ["S26"], AS),
+        (["Insurance growth", f"{pct(C.base.infl + F['spread_insurance'])} a year", "2 points above inflation"], ["S35"], AS),
+        (["Upkeep", f"{money(F['maint_A_2026'])} (A) and {money(F['maint_B_2026'])} (B) in 2026", "Placeholders, rising with prices"], ["S09"], AS),
+        (["Property A rent", f"{money(O['hud_rent_A_4br_2026'])} a month in 2026", "HUD four-bedroom small-area benchmark"], ["S36"], V),
+        (["Rent from the unit left in Property B", f"{money(F['b_unit_rent_month_2026'])} a month in 2026", "Average of the two rented units; then rises at 60% of inflation"], ["S37"], AS),
+        (["Vacancy", pct(F["vacancy"], 0), "Share of rent lost in rental choices"], ["S09"], AS),
+        (["Selling costs", pct(F["selling_cost"], 0) + " of price", "Commission, transfer tax, escrow and preparation; plus six months of carrying costs"], ["S30"], AS),
+        (["Building share of Property A", pct(F["building_share"], 0), "Depreciated over 27.5 years when rented"], ["S10"], AS),
+        (["Portfolio", "60% stock index fund, 40% Treasuries", f"Dividends ({pct(F['dividend_yield'])} of the stock value) and interest taxed yearly; stock gains taxed when sold"], ["S49", "S51"], AS),
+        (["Household", f"Joint return; {money(F['other_income_2026'])} other taxable income in 2026 dollars", "Sets the tax bracket for extra income"], ["S02", "S26"], AS),
+        (["Home-sale exclusion", money(O["sec121_joint"]), "Joint return, after two years of living in the home"], ["S06"], V),
+        (["Solar credit", f"held at the owner's figure until {F['solar_legacy_latest_end'] - 1}", "Blank afterwards"], ["S32"], AS),
+    ]) + f"""
+<h2>Formulas</h2>
+""" + table(["Quantity", "Formula"], [
+        (["Property tax, Property A", "assessed value x 1.1636% + flat charges (the gap between the 2025 bill and rate x assessed value, grown with prices)"], ["S16"], MD),
+        (["Property tax, Property B", "assessed value x 1.18162182% + flat charges (same method) + $129 a year for the new transit parcel tax, 2027-2041"], ["S17", "S18", "S38"], MD),
+        (["Assessed value after inheritance, child moves in", "parent's assessed value, plus any part of market value above (parent's assessed value + allowance); then 2% a year; less the $7,000 homeowners' exemption"], ["S12", "S15"], MD),
+        (["Assessed value after inheritance, otherwise", "market value on the date of death; then 2% a year"], ["S12"], MD),
+        (["Taxable rent", "rent x (1 - vacancy) - property tax - insurance - upkeep - depreciation; losses are carried forward and used against later rent or the sale"], ["S09", "S10"], MD),
+        (["Income tax on extra income", "federal 2027 joint brackets and capital-gain thresholds (indexed) + 3.8% net investment income tax above $250,000 + California 2025 joint brackets (indexed), computed with and without the extra income"], ["S02", "S08", "S26"], MD),
+        (["Tax when a kept home is sold", "(price - selling costs - basis) taxed as long-term gain; depreciation taken is taxed at up to 25%; up to $500,000 excluded if lived in; California taxes all of it as ordinary income"], ["S06", "S07", "S25"], MD),
+        (["After-tax wealth", "home sale proceeds or portfolio value, plus the side account of yearly net cash, minus all taxes due on cashing out"], ["S04"], MD),
+        (["Today's dollars", f"divide by (1 + {pct(C.base.infl)}) for each year after 2026"], ["S43"], MD),
+        (["Room under the estate limit", "tax-free amount for the year - Property A's projected value"], ["S01", "S02"], MD),
+        (["Replay stock return", f"yearly change in the share-price index + {pct(M.dividend_addon())}"], ["S48", "S49"], MD),
+    ]) + """
+<h2>What the model leaves out</h2>
+<p>Mortgage debt (none was mentioned), earthquake damage and insurance, the tenant-side rules that apply if Property A is rented, changes in tax law, the family's own preferences, and Property B's value and rent (identical in all three choices). See Flagged for Review for the full list.</p>
+"""
+    page("methodology", "Methodology & assumptions",
+         "Where every assumption comes from, the formulas, and what is left out.", body, out)
+
+
+# ====================================================================== sources and privacy
+def p_sources(C, out):
+    rows = [([sid, ag, f'<a class="doc" href="{ESC(url, quote=True)}" rel="noopener noreferrer">{ESC(title)}</a>', ESC(read), VERIFIED_ON], [sid], V)
+            for sid, (ag, label, title, url, read) in sorted(SOURCES.items())]
+    rows = [([ESC(c) if i not in (2, 3) else c for i, c in enumerate(cells)], s, st) for cells, s, st in rows]
+    body = legend() + f"""
+<p>{len(SOURCES)} official pages and documents, each opened and read for this version. The same links appear in every table row that relies on them, so any figure can be checked by hand.
+Four hosts are official but do not end in .gov: the Federal Reserve Bank of St. Louis data service (which republishes Bureau of Labor Statistics, Federal Housing Finance Agency, Federal Reserve and OECD series), the San Francisco Treasurer &amp; Tax Collector, the San Francisco Department of Elections, and GitHub's own documentation.</p>
+""" + table(["ID", "Agency", "Document", "What was read", "Read on"], rows, raw=True)
+    page("sources", "Official sources", "Every source used on this site, with what was read on it.", body, out)
+
+
+def p_privacy(C, out):
+    body = legend() + """
+<h2>What this site does and does not show</h2>
+""" + table(["Kind of information", "Treatment"], [
+        (["Names of people, the trust and advisers", "Never shown. Placeholders such as [BENEFICIARY], [TRUSTEE] and [ADVISOR] are used."], ["S53"], V),
+        (["Street addresses, parcel numbers, account numbers", "Never collected, never looked up, never shown."], ["S53"], V),
+        (["ZIP codes and neighbourhood names", "Not shown. Each property is identified by city only."], ["S53"], V),
+        (["Owner's dollar figures", "Rounded to the nearest $10 before being written into this project, as the brief instructs. The figures before rounding are not stored anywhere in the current files, not even as test patterns."], ["S53"], V),
+        (["Model results", "Rounded to the nearest $10."], ["S53"], V),
+        (["Official statutory amounts", "Shown exactly (for example $1,044,586 or $334.38) because they are public and identify no one."], ["S13", "S18"], V),
+        (["Search engines", "Every page asks search engines not to index it."], ["S53"], V),
+    ]) + """
+<h2>What remains exposed</h2>
+<p>This repository and its history are public. Earlier commits and earlier deployments contained the owner's figures before rounding, and removing them from the current files does not remove them from Git history, forks or caches.
+Only the repository owner can purge history or make the repository private; GitHub's procedure is linked in the table above and on Flagged for Review (items F01 and F02).
+Rounding prevents a search for an exact figure but cannot guarantee that a determined person could not match a series of rounded values against public records.</p>
+"""
+    page("privacy", "Privacy", "What is withheld, what is rounded, and what the owner still needs to do.", body, out)
+
+
+ALL_PAGES = [p_index, p_exec, p_properties, p_decision, p_projections, p_ptax, p_costs, p_estate, p_law,
+             p_process, p_swan, p_watch, p_method, p_sources, p_flagged, p_privacy]

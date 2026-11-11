@@ -28,6 +28,7 @@ STATUS_HELP = {
     "Owner input": "Supplied by the owner and shown rounded to the nearest $10. Not checked against any record on purpose: no parcel, address or account is ever looked up.",
     "Model": "Calculated by this project from the linked official rules or statistics and the stated assumptions. Not an official figure.",
     "Assumption": "A planning assumption chosen by this project. Not an official figure.",
+    "Guidance": "A practical step suggested by this project. Not an official requirement; the link gives the related official rule.",
     "Unverified": "Could not be confirmed from an official source, so the value is left blank. Listed on Flagged for Review.",
 }
 
@@ -226,6 +227,7 @@ td:nth-last-child(1){font-size:.8rem;min-width:150px}td:nth-last-child(2){white-
 .badge{display:inline-block;padding:1px 8px;border-radius:999px;font-size:.72rem;font-weight:600;border:1px solid transparent;cursor:help}
 .b-verified{background:#e3f3ea;color:#16603c;border-color:#b9d8c3}.b-owner-input{background:#e8eefb;color:#234a94;border-color:#c5d3f0}
 .b-model{background:#f1ecf8;color:#5b3a86;border-color:#d9cbee}.b-assumption{background:#fdf3d7;color:#7a5600;border-color:#efd88f}
+.b-guidance{background:#eef2f7;color:#3d4a5c;border-color:#cfd7e2}
 .b-unverified{background:#fde8e4;color:#9b2c17;border-color:#f3c0b6}
 a.src{white-space:nowrap}
 .legend{font-size:.88rem;color:var(--mut);margin:8px 0}.legend ul{list-style:none;padding:0;margin:.5em 0}.legend li{margin:.3em 0}
