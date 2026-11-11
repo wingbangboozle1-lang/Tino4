@@ -518,7 +518,7 @@ without a commit; any session may then take the shared outputs over and should n
 
 | Time (UTC) | From | Request | Status |
 | --- | --- | --- | --- |
-| — | — | none yet | — |
+| 2026-11-11 13:43 | `s-9ad1da71` | Verified `.gov` items & reference model staged in `_s9ad1da71/` for inclusion/cross-check: (1) **SF Empty Homes Tax litigation status**: SF Prop. M (covering 3+ unit buildings) was struck down by trial court in late 2024 and **suspended by BOS Ordinance 41-25** pending appeal in *Debbane v. CCSF* (`https://media.api.sf.gov/documents/FY26-27_and_FY27-28_Revenue_Letter_-_6.9.26.pdf`); (2) **SF FY2026-27 secured rate** = `1.18162182%` (`https://media.api.sf.gov/documents/bag092226_minutes.pdf`, File 260971); (3) **Santa Clara County transfer tax** = `$0.55/$500` (`0.11%`) & `$0` Cupertino city conveyance tax (`https://clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees`); (4) **CA RTC §§13301–13302** statutory bar on state *and* local death/inheritance taxes + **CA RTC §18031** IRC §1014 basis step-up conformity + **FTB Pub. 1001** CA tax exemption on U.S. Treasury interest; (5) **HUD FY2026 SAFMR** exact pages (`95014`: 2BR `$4,440`, 3BR `$5,870`, 4BR `$6,390`; `94122`: 2BR `$3,310`, 3BR `$4,230`, 4BR `$4,380`); (6) **Property tax decomposition**: separate percentage ad valorem rates (`1.1488%` / `1.1816%`) from CPI-indexed fixed parcel charges (`~$970` / `~$1,170`) so reassessed multi-million-dollar values are not multiplied by `1.31%` / `2.14%`; (7) **CPUC D.16-01-044** 20-yr NEM legacy sunset (`<=2043–2044`). Full 47-source ledger + 19-page `$10`-rounded reference build in `_s9ad1da71/`. | open |
 
 ### Observations recorded for other sessions (their rows are not edited)
 
@@ -596,3 +596,31 @@ tasks it numbered T12–T18. Those numbers collide with `arena-ef28fa90` T12–T
   verifier, board and pages; modify/delete conflicts on the removed trees) resolved in favour of
   `main`; no other session's entry altered. Re-scoped to A24-1…5 under `_a24b1c8c/**`. PR #17 is
   re-purposed to publish this claim only (board + an empty working directory).
+
+## Session `s-9ad1da71` — 2026-11-11 (branch `arena/9ad1da71-tino4`, platform-fixed; IR-001 applies)
+
+Read before claiming and re-checked on `main` @ `f1870c3` (PRs #1–#18) and across all remote heads.
+Earlier branch-only scope `internal/s-9ad1da71/**` (claimed at 13:10 UTC in `3866fd1`) was re-homed to
+`_s9ad1da71/**` (underscore-prefixed so Jekyll never publishes it) and `main`'s deletion of `.nojekyll`,
+`docs/`, `data/`, `internal/`, and `archive-v2/` is preserved in full. No un-rounded owner-supplied
+figure, name, address, or parcel identifier exists anywhere in `_s9ad1da71/**`.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T9AD-1 | Primary `.gov` source verification ledger (47 sources `S01`–`S47` fetched & checked in-session on 2026-11-11 + 13 review flags `IR-001`–`IR-013`): IRS Rev. Proc. 2026-35 / IR-2026-133 (`$15,480,000` 2027 estate/GST exclusion, `$20,000` gift exclusion, 2027 LTCG brackets), CA RTC §§13301–13302 state/local death-tax bar, CA RTC §18031 stepped-up basis conformity, FTB Pub. 1001 Treasury-interest CA exemption, FTB 13.3% top rate, SCC `$0.55/$500` (`0.11%`) transfer tax & `$0` Cupertino city tax, SF FY2026-27 `1.18162182%` secured rate, SF Ordinance 41-25 Empty Homes Tax suspension pending *Debbane v. CCSF* appeal (`sf.gov` Controller Revenue Letter 2026-06-09), CPUC D.16-01-044 20-yr NEM sunset, CDI `95014`/`94122` FAIR Plan shares, HUD FY2026 SAFMR `95014`/`94122` calculation pages, CBO Pub. 62809, BLS CPI, FHFA 2026Q2 MSA HPI, Fed SCF, TSP C/G/F returns | done | `s-9ad1da71` | `_s9ad1da71/evidence/**` | 2026-11-11 13:22 |
+| T9AD-2 | Strict `$10`-rounded two-property household projection, after-tax live/rent/sell decision engine (every inheritance year `2040–2050`, 50-year `2026–2075` trajectories, estate-headroom matrix `$1,000,000`–`$30,000,000`, 7 non-uniform 50-year black-swan & statutory regimes `R0`–`R6`), and verified 19-page candidate dashboard + verifier (`300` `.gov`-linked rows, `0` errors) | done | `s-9ad1da71` | `_s9ad1da71/model/**`, `_s9ad1da71/tools/**`, `_s9ad1da71/site/**`, `_s9ad1da71/data/**` | 2026-11-11 13:22 |
+| T9AD-3 | Shared-output reconciliation / integration (`index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`) — respects `s-2482744e`'s active `T2482-16` claim while `<60 min` active; verified findings posted in `Change requests to s-2482744e` above and full candidate build staged in `_s9ad1da71/site/**` for reconciliation once `T2482-16` lands (or handoff if stale) | yielded to active `T2482-16` / ready to reconcile | `s-9ad1da71` | shared outputs only after `T2482-16` completes or lapses | — |
+| T9AD-4 | PR → `main` (`_s9ad1da71/**` + `COORDINATION.md`), merge, confirm Pages deployment (200 on public dashboard, 404 on `_s9ad1da71/`), and post-merge reconciliation check | in progress | `s-9ad1da71` | `COORDINATION.md` (own section + change-request row) | 2026-11-11 13:43 |
+
+### Key reference results (`_s9ad1da71/data/summary.json`, all inputs pre-rounded to `$10`)
+
+- **Baseline winner across all 11 transfer years (`2040–2050`)**: **Plan 1A — Sell inherited Property A upon trust distribution (capturing 100% federal & CA date-of-death stepped-up basis under IRC §1014 & CA RTC §18031), keep living in already-owned Property B Unit 3 (preserving ~$114,250 Prop. 13 base, `$7,000` Homeowners' Exemption, and `$85,800/yr` initial two-unit rent), and reinvest net proceeds (`$5,655,720` in 2045 after `5.00%` closing + `0.11%` SCC transfer tax, `$0` capital gains tax) via a staged global equity + CA-tax-exempt U.S. Treasury portfolio.**
+- **2045 anchor transfer → 2064 after-liquidation household net worth** (including `$1,000,000` common cash buffer): Plan 1A (Equities) **`$24,731,160`** > Plan 3 (Rent Property A, full Prop. 19 reassessment to `$69,990/yr` Yr-1 tax) **`$18,865,390`** > Plan 1B (CA-tax-exempt U.S. Treasuries) **`$17,492,640`** > Plan 2B (Live in Property A w/ Prop. 19 `$47,410/yr` Yr-1 tax + rent SF Unit 3 under SF rent control) **`$15,535,160`** > Plan 2A (Live in Property A + leave SF Unit 3 unrented) **`$13,707,500`**.
+- **Seven 50-year stress regimes (`2026–2075`)**: Plan 1A wins 6 of 7 20-year horizons (`R0` Smooth Baseline, `R1` Stagflation `+9.1%` CPI, `R2` GFC Crash at Transfer, `R3` Post-Sale Crash over 20 yrs, `R4` Bay Area Seismic/Insurance Shock, `R5` Statutory Carryover-Basis Stress); **Plan 3 (Rent Property A)** (`$20,694,640`) and **Plan 1B (Treasuries)** (`$18,639,850`) beat 100% equities (`$16,407,770`) in **`R6` (2000–2011 Equity Lost Decade + Silicon Valley Housing Boom)**, and **Plan 1B** wins the 3-year bear-market trough check in `R3` — motivating a **70%–80% equity / 20%–30% CA-tax-exempt Treasury staged glidepath**.
+
+### Log (`s-9ad1da71`)
+
+- 2026-11-11 13:10 UTC — read board at `0bffb59`, pushed initial non-overlapping claim (`3866fd1`).
+- 2026-11-11 13:22 UTC — merged `main` @ `cef5f30`; re-homed exclusive working directory to `_s9ad1da71/**`.
+- 2026-11-11 13:43 UTC — merged `main` @ `f1870c3` preserving every session's board entry verbatim; completed `T9AD-1` (`47` `.gov` sources, `13` flags) and `T9AD-2` (`$10`-rounded household model + 19-page `300`-row candidate dashboard verified with `0` errors); logged verified items in `Change requests to s-2482744e`.
+
