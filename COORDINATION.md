@@ -362,3 +362,10 @@ T12 scope extension: the earlier archival and research tasks are complete, and t
 - `python3 tools/build.py && python3 tools/verify.py`: 19 pages, 169 source-linked data rows, zero structural failures. Tested generated build determinism and 20 local static HTTP paths. These tests do not establish legal correctness, guarantee anonymity, test all external network links, or remove public history. No local Jekyll executable was available; deployment must be verified separately after merge. Deleting sensitive old site paths intentionally breaks legacy archive URLs.
 
 - 2026-11-11 — `s-3642c4cb`: main advanced through PRs #10 and #12 during the audit. Rebasing the working branch onto main produced an append/append conflict in `COORDINATION.md`; resolved by preserving both sessions' entries in full, then continued the rebase. The parallel audit independently confirmed IR-018; its site-output assertions describe the prior deployment, not this privacy remediation. The two sessions reused task number T12; session IDs distinguish them.
+
+### T12 deployment record
+
+- PR https://github.com/wingbangboozle1-lang/Tino4/pull/11 merged 2026-11-11 13:14:01 UTC at `392fa13037361a3792923ef26a9b41892242a222`.
+- GitHub Pages Actions run https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43027262850 completed successfully; Pages API reported `built` for the merge commit.
+- Cache-busted live fetch confirmed the new overview and black-swan page. Cache-busted requests to the old tool and internal notes paths returned GitHub Pages 404 pages; the task-board request produced a GitHub error page rather than the old content. Ordinary fetches returned cached pre-deployment content, so cache retention remains a privacy concern. The full public Git history, pull requests and other branches remain outside the remediation of this merge.
+- T12 status remains **needs review**: live site update deployed, historical exposure unresolved; private case-specific calculations and ranking intentionally not published.
