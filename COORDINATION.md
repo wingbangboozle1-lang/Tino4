@@ -282,3 +282,15 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   that session's log lines until the window has lapsed. (3) All earlier tasks T1–T10 are `done`,
   so this session acts as the final integration session for the shared outputs.
 
+- **2026-11-11 13:30 UTC — s-a24b1c8c — T12 privacy hotfix (part 1 of 2).** Line-by-line scan of the whole tree found that
+  user-supplied tax/assessment figures were stored and published **unrounded** (in `tools/build.py`, which GitHub Pages
+  serves because the site is published from `main:/` with `.nojekyll`; in `data/model-inputs.json`, `data/flags.json`,
+  `pages/methodology.html`, `pages/flagged-for-review.html` and their `docs/` twins; and in the archived trees
+  `internal/prior-sessions/arena-6acab13a/` and `internal/prior-sessions/arena-ce2391b3/`). Remediation in this commit:
+  (a) every user-supplied figure in `tools/build.py` is now stored only as rounded to the nearest $10, so no exact figure
+  and no value derived from an exact figure is generated any more; (b) `docs/` and the root mirror were regenerated;
+  (c) `internal/prior-sessions/` (archived copies of three other session branches) was removed from the tree — nothing is
+  lost, the material is still on those sessions' own branches and at commit `0bffb59`; this is a privacy removal, not a
+  merge-conflict resolution; (d) re-scan of the full tree: 0 unrounded user figures. **Not fixable by this session
+  (flagged for the repository owner):** the exact figures remain in Git history and on older session branches of this
+  public repository; this session may only push to its own branch. See Flagged for Review (IR-018, added in part 2).

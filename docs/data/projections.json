@@ -16,7 +16,7 @@
       },
       "B": {
         "market": 1800000,
-        "assessed": 116530,
+        "assessed": 116540,
         "tax": 1380,
         "water": 4380,
         "electric": 600,
@@ -40,7 +40,7 @@
       },
       "B": {
         "market": 1854000,
-        "assessed": 118860,
+        "assessed": 118870,
         "tax": 1410,
         "water": 4500,
         "electric": 620,
@@ -78,7 +78,7 @@
       "year": 2029,
       "A": {
         "market": 3387450,
-        "assessed_pre": 584230,
+        "assessed_pre": 584240,
         "tax_pre": 6710,
         "water": 1610,
         "electric": -190,
@@ -150,7 +150,7 @@
       "year": 2032,
       "A": {
         "market": 3701560,
-        "assessed_pre": 619990,
+        "assessed_pre": 620000,
         "tax_pre": 7120,
         "water": 1720,
         "electric": -210,
@@ -174,7 +174,7 @@
       "year": 2033,
       "A": {
         "market": 3812610,
-        "assessed_pre": 632390,
+        "assessed_pre": 632400,
         "tax_pre": 7260,
         "water": 1760,
         "electric": -210,
@@ -198,7 +198,7 @@
       "year": 2034,
       "A": {
         "market": 3926990,
-        "assessed_pre": 645040,
+        "assessed_pre": 645050,
         "tax_pre": 7410,
         "water": 1790,
         "electric": -220,
@@ -222,7 +222,7 @@
       "year": 2035,
       "A": {
         "market": 4044800,
-        "assessed_pre": 657940,
+        "assessed_pre": 657950,
         "tax_pre": 7560,
         "water": 1830,
         "electric": -220,
@@ -246,7 +246,7 @@
       "year": 2036,
       "A": {
         "market": 4166140,
-        "assessed_pre": 671100,
+        "assessed_pre": 671110,
         "tax_pre": 7710,
         "water": 1870,
         "electric": -220,
@@ -256,7 +256,7 @@
       },
       "B": {
         "market": 2419050,
-        "assessed": 142050,
+        "assessed": 142060,
         "tax": 1680,
         "water": 5470,
         "electric": 750,
@@ -270,7 +270,7 @@
       "year": 2037,
       "A": {
         "market": 4291120,
-        "assessed_pre": 684520,
+        "assessed_pre": 684530,
         "tax_pre": 7860,
         "water": 1920,
         "electric": -230,
@@ -280,7 +280,7 @@
       },
       "B": {
         "market": 2491620,
-        "assessed": 144890,
+        "assessed": 144900,
         "tax": 1710,
         "water": 5590,
         "electric": 770,
@@ -294,7 +294,7 @@
       "year": 2038,
       "A": {
         "market": 4419860,
-        "assessed_pre": 698210,
+        "assessed_pre": 698220,
         "tax_pre": 8020,
         "water": 1960,
         "electric": -230,
@@ -342,7 +342,7 @@
       "year": 2040,
       "A": {
         "market": 4689030,
-        "assessed_pre": 726420,
+        "assessed_pre": 726430,
         "tax_pre": 8350,
         "water": 2040,
         "electric": -250,
@@ -352,7 +352,7 @@
       },
       "B": {
         "market": 2722660,
-        "assessed": 153760,
+        "assessed": 153770,
         "tax": 1820,
         "water": 5970,
         "electric": 820,
@@ -400,7 +400,7 @@
       },
       "B": {
         "market": 2888470,
-        "assessed": 159970,
+        "assessed": 159980,
         "tax": 1890,
         "water": 6230,
         "electric": 850,
@@ -414,7 +414,7 @@
       "year": 2043,
       "A": {
         "market": 5123830,
-        "assessed_pre": 770880,
+        "assessed_pre": 770890,
         "tax_pre": 8860,
         "water": 2180,
         "electric": -260,
@@ -424,7 +424,7 @@
       },
       "B": {
         "market": 2975130,
-        "assessed": 163170,
+        "assessed": 163180,
         "tax": 1930,
         "water": 6370,
         "electric": 870,
@@ -438,7 +438,7 @@
       "year": 2044,
       "A": {
         "market": 5277540,
-        "assessed_pre": 786300,
+        "assessed_pre": 786310,
         "tax_pre": 9030,
         "water": 2230,
         "electric": -270,
@@ -558,7 +558,7 @@
       "year": 2049,
       "A": {
         "market": 6118120,
-        "assessed_pre": 868140,
+        "assessed_pre": 868150,
         "tax_pre": 9970,
         "water": 2490,
         "electric": -300,
@@ -582,7 +582,7 @@
       "year": 2050,
       "A": {
         "market": 6301660,
-        "assessed_pre": 885500,
+        "assessed_pre": 885510,
         "tax_pre": 10170,
         "water": 2540,
         "electric": -300,
@@ -606,7 +606,7 @@
       "year": 2051,
       "A": {
         "market": 6490710,
-        "assessed_pre": 903210,
+        "assessed_pre": 903220,
         "tax_pre": 10380,
         "water": 2600,
         "electric": -310,
@@ -616,7 +616,7 @@
       },
       "B": {
         "market": 3768800,
-        "assessed": 191180,
+        "assessed": 191190,
         "tax": 2260,
         "water": 7580,
         "electric": 1040,
@@ -654,7 +654,7 @@
       "year": 2053,
       "A": {
         "market": 6886000,
-        "assessed_pre": 939700,
+        "assessed_pre": 939710,
         "tax_pre": 10800,
         "water": 2710,
         "electric": -330,
@@ -712,7 +712,7 @@
       },
       "B": {
         "market": 4241820,
-        "assessed": 206940,
+        "assessed": 206950,
         "tax": 2450,
         "water": 8270,
         "electric": 1130,

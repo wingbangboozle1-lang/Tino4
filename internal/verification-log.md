@@ -10033,16 +10033,22 @@ Verified 2026-11-11 (UTC). This log is internal and contains no personal informa
 | 10025 | PASS | root mirror byte-identical: pages/property-tax.html |  |
 | 10026 | PASS | root mirror byte-identical: pages/sources.html |  |
 | 10027 | PASS | prior merged site preserved in archive-v2/ |  |
-| 10028 | PASS | parallel session tree preserved: arena-6acab13a |  |
-| 10029 | PASS | parallel session tree preserved: arena-ce2391b3 |  |
-| 10030 | PASS | parallel session tree preserved: arena-fd984e93 |  |
+| 10028 | FAIL | parallel session tree preserved: arena-6acab13a |  |
+| 10029 | FAIL | parallel session tree preserved: arena-ce2391b3 |  |
+| 10030 | FAIL | parallel session tree preserved: arena-fd984e93 |  |
 | 10031 | PASS | root .nojekyll present for static Pages build |  |
 
 ## Summary
 
-- 10031 checks, 0 failures.
+- 10031 checks, 3 failures.
 - 30 HTML pages, 984 table rows; 984 rows carry an official source link.
 - 62 official sources, all on government domains.
 - Internal links resolved against the published `docs/` tree; no broken links.
 - Privacy scan: no email addresses, phone numbers, street addresses, or parcel/APN identifiers.
 - Unverified official values are left blank and published on the Flagged for Review page.
+
+## Failures
+
+- parallel session tree preserved: arena-6acab13a
+- parallel session tree preserved: arena-ce2391b3
+- parallel session tree preserved: arena-fd984e93

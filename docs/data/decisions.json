@@ -7,7 +7,7 @@
     "2040": {
       "year": 2040,
       "market": 4689030,
-      "fbyv": 726420,
+      "fbyv": 726430,
       "tax_pre": 8350,
       "assessed_full": 4689030,
       "tax_full": 53870,
@@ -35,7 +35,7 @@
     "2050": {
       "year": 2050,
       "market": 6301660,
-      "fbyv": 885500,
+      "fbyv": 885510,
       "tax_pre": 10170,
       "assessed_full": 6301660,
       "tax_full": 72390,
