@@ -9,14 +9,14 @@ def p_law(out):
     body = "<p>Rules in force on 11 November 2026. Each row states the rule in plain words and what it does to this decision; the quoted passage is on %s.</p><h2>Federal</h2>" % link("sources", "Sources", s)
     rows = [
         (["Estate tax threshold", "An estate tax return is required, and tax can be due, only when the estate exceeds $15,000,000 (2026 deaths) or $15,480,000 (2027). The house, cash and investments all count, at market value.", "Sets the room available for cash on top of the house."], ["IRS-ESTATE", "IRS-RP-2026-35"], "V"),
-        (["Law behind the threshold", "Public Law 119-21 (July 4, 2025) set $15,000,000 for 2026; the 2027 figure shows it is now adjusted for inflation each year.", "No scheduled drop, unlike the old law."], ["IRS-EG-WHATSNEW", "IRS-RP-2026-35"], "V"),
+        (["Law behind the threshold", "Public Law 119-21 (July 4, 2025) set $15,000,000 for 2026; the 2027 figure shows it is now adjusted for inflation each year.", "The published figures rise from one year to the next."], ["IRS-EG-WHATSNEW", "IRS-RP-2026-35"], "V"),
         (["Estate tax rate", "40% on the amount above the threshold.", "Each $1,000,000 over costs $400,000."], ["IRS-I706"], "V"),
         (["Unused exclusion of the first parent", "A surviving spouse can use it, but only if an estate tax return is filed for the first death — due in 9 months, 6 more on request, up to 5 years in simple cases.", "Can double the room. Easy to lose by not filing."], ["IRS-ESTATE", "IRS-ESTATE-FAQ"], "V"),
-        (["Gifts during life", "$19,000 per recipient in 2026 and $20,000 in 2027 pass with no gift tax return.", "A way to move cash out of the estate gradually."], ["IRS-RP-2026-35"], "V"),
+        (["Gifts during life", "In 2027 the first $20,000 given to any one person in the year is not counted as a taxable gift.", "A way to move cash out of the estate gradually."], ["IRS-RP-2026-35"], "V"),
         (["Basis of inherited property", "Generally the market value on the date of death.", "The reason a prompt sale of Property A is almost tax-free."], ["IRS-INHERIT-FAQ"], "V"),
         (["When the basis does not reset", "Assets in an irrevocable trust that are not counted in the estate keep their old basis.", "The trust type must be confirmed."], ["IRS-RR-2023-2"], "V"),
         (["Capital gains", "0%, 15% or 20% depending on income; depreciation taken on a rental is taxed at up to 25% on sale.", "Applies to growth after the date of death, and to Property B if ever sold."], ["IRS-TC409", "IRS-RP-2026-35"], "V"),
-        (["Net investment income tax", "3.8% on rents, dividends, interest and gains once income passes $250,000 (joint) or $200,000 (single); these amounts are not indexed.", "By the 2040s most of this household's investment income is likely to be above the line."], ["IRS-TC559"], "V"),
+        (["Net investment income tax", "3.8% on rents, dividends, interest and gains once income passes $250,000 (joint) or $200,000 (single). The IRS lists these as fixed dollar amounts; the model keeps them fixed.", "By the 2040s most of this household's investment income is likely to be above the line."], ["IRS-TC559"], "V"),
         (["Selling a home you live in", "Up to $250,000 of gain ($500,000 joint) is excluded after owning and living in it 2 of the last 5 years.", "Softens the tax if the family lives in Property A and sells later."], ["IRS-TC701"], "V"),
         (["Renting a house out", "The building (not the land) is depreciated over 27.5 years.", "Shelters part of the rent; recaptured on sale."], ["IRS-P527"], "V"),
         (["Deducting property tax", "State and local taxes are deductible up to $40,000 (2025), shrinking for high incomes; the higher cap ends before 2030.", "From 2030 little of a large property tax bill on a home is deductible."], ["IRS-SCHA-2025", "IRS-VITA-SALT"], "V"),
@@ -59,23 +59,23 @@ The amount of cash is deliberately not shown here, so the tables give the room l
 <h2>Thresholds by level of government</h2>"""
     rows = [
         (["Federal", "$15,000,000 per person for deaths in 2026; $15,480,000 in 2027", "40% above it", "Indexed for inflation from here on"], ["IRS-ESTATE", "IRS-RP-2026-35", "IRS-I706"], "V"),
-        (["Federal, married parents", "The survivor can add the first parent's unused amount if a return was filed for the first death", "40% above the combined amount", "The first parent's amount is fixed at that death; it does not keep growing"], ["IRS-ESTATE", "IRS-ESTATE-FAQ"], "V"),
+        (["Federal, married parents", "The survivor can add the first parent's unused amount if a return was filed for the first death", "40% above the combined amount", "Set when the first parent dies; ask the estate attorney how it is carried forward"], ["IRS-ESTATE", "IRS-ESTATE-FAQ"], "V"),
         (["California", "No estate or inheritance tax, no return", "0%", "Barred by a 1982 voter initiative"], ["CA-RTC-13301", "CA-SCO-ESTATE"], "V"),
         (["County and city", "None allowed", "0%", "Same state law"], ["CA-RTC-13301"], "V"),
-        (["Gifts while living", "$19,000 per recipient (2026), $20,000 (2027) with no return", "Larger gifts use up the lifetime amount", "Adjusted for inflation"], ["IRS-RP-2026-35"], "V"),
+        (["Gifts while living", "$20,000 per recipient in 2027 is not counted as a taxable gift", "Larger gifts count against the lifetime amount", "Published each year by the IRS"], ["IRS-RP-2026-35"], "V"),
     ]
     body += table(["Level", "Amount that passes free of tax", "Tax above it", "How it changes"], rows)
     body += """<h2>Room left after the house, by year</h2>
 <p>Projected federal threshold less the projected value of Property A. "Room" is what cash, investments and everything else can add up to before any federal estate tax.
-The last two columns stress the law itself: what if Congress cut the threshold in half, as the pre-2026 law would have done.</p>"""
+The last two columns stress the law itself: what if Congress cut the threshold in half.</p>"""
     rows = []
     for e_ in R["estate"]:
-        st = "V" if e_["year"] in (2026, 2027) else "P"
+        st = "O" if e_["year"] == 2026 else "P"
         rows.append(([str(e_["year"]), money(e_["exclusion"]), money(e_["house"]), money(e_["room"]), money(e_["room_two"]), money(e_["half_law"]), money(e_["room_half"])],
                      ["IRS-RP-2026-35", "IRS-ESTATE", "FRED-SERIES"], st))
     body += table(["Year of death", "Federal threshold (one person)", "Property A value", "Room for other assets", "Room with a full second exclusion", "Threshold if halved", "Room if halved"], rows, num=(1, 2, 3, 4, 5, 6))
-    body += """<p>2026 and 2027 thresholds are the published amounts. Later years assume the threshold grows with inflation of %s less %s a year
-(it follows a slower-moving price index) and Property A grows %s a year. The "second exclusion" column is an upper bound: a first parent's unused amount is frozen at the first death.</p>
+    body += """<p>The 2026 and 2027 thresholds are the published amounts; the 2026 house value is the owner's estimate. Later years assume the threshold grows with inflation of %s less %s a year
+(an assumption) and Property A grows %s a year. The "second exclusion" column is an upper bound: it assumes a full second exclusion at the later date, which was not verified.</p>
 <h2>If the estate is over the line</h2>""" % (pct(PRM["infl"]["value"]), pct(PRM["excl_gap"]["value"], 2), pct(PRM["hpi_a"]["value"], 0))
     rows = [([money(x["over"]), money(x["tax"])], ["IRS-I706"], "P") for x in R["estate_examples"]]
     body += table(["Amount above the threshold", "Federal estate tax at 40%"], rows, num=(0, 1))
@@ -223,8 +223,8 @@ def p_lawwatch(out):
     body += table(["Item", "Status", "Effect on the decision"], rows)
     body += "<h2>Decided at the November 3, 2026 election (count not yet certified)</h2>"
     rows = [
-        (["Proposition 3 — keeps the higher California income tax rates on high incomes permanently", "Ahead, 60.6% yes", "California's upper brackets stay. A large one-year gain — for example selling Property B — would continue to be taxed at up to 12.3% plus 1%."], ["CA-SOS-RESULTS-2026", "FTB-RATES-2025"], "V"),
-        (["Proposition 42 — bars new state taxes on personal property (investments, accounts) and certain retroactive taxes", "Narrowly ahead, 51.5% yes", "Lowers the risk of a future California tax on the invested proceeds themselves."], ["CA-SOS-RESULTS-2026"], "V"),
+        (["Proposition 3 — makes permanent the higher California income tax rates on high incomes that were due to expire in 2031", "Ahead, 60.6% yes", "California's upper brackets stay. A large one-year gain — for example selling Property B — would continue to be taxed at up to 12.3% plus 1%."], ["CA-SOS-RESULTS-2026", "CA-SOS-PR26-96", "FTB-RATES-2025"], "V"),
+        (["Proposition 42 — bars new state taxes on owning personal property (financial assets, investment and retirement accounts) and certain retroactive taxes", "Narrowly ahead, 51.5% yes", "Lowers the risk of a future California tax on the invested proceeds themselves."], ["CA-SOS-RESULTS-2026", "CA-SOS-PR26-96"], "V"),
         (["Proposition 40 — one-time tax on very large fortunes", "Behind, 47.4% yes", "No effect at this scale either way."], ["CA-SOS-RESULTS-2026"], "V"),
         (["Proposition 43 — would have made voter-initiated local special taxes harder to pass", "Behind, 42.6% yes", "New parcel taxes remain as easy to pass as today; fixed charges on both bills can keep growing."], ["CA-SOS-RESULTS-2026"], "V"),
         (["Any change to Proposition 13 or to the Proposition 19 inheritance rules", "None was on the ballot", "The reassessment rules on this dashboard stand."], ["CA-SOS-QUALIFIED-2026"], "V"),
@@ -236,7 +236,7 @@ def p_lawwatch(out):
         (["Next Proposition 19 allowance", "Changes February 16, 2027 by the 2026 change in the California house price index; not yet published.", "Small. The allowance moves by one year's price change every two years."], ["BOE-LTA-2025-009"], "V"),
         (["Solar tariff protection on a change of ownership", "Today the 20-year protection belongs to the system. The utilities regulator has listed ending it when a home changes ownership as an option.", "If adopted, the solar credit on Property A could end at the inheritance even inside the 20 years."], ["CPUC-EO-N-5-24", "CPUC-NEM"], "V"),
         (["Higher cap on deducting state and local taxes", "Temporary: ends before 2030.", "After that, almost none of Property A's property tax would be deductible if it is a home."], ["IRS-VITA-SALT", "IRS-SCHA-2025"], "V"),
-        (["Net investment income tax thresholds", "Fixed in dollars; not indexed.", "More of the household's investment income becomes subject to the 3.8% tax every year. Already in the model."], ["IRS-TC559"], "V"),
+        (["Net investment income tax thresholds", "Listed by the IRS as fixed dollar amounts.", "If they stay fixed, more of the household's investment income becomes subject to the 3.8% tax every year. The model assumes they do."], ["IRS-TC559"], "V"),
     ]
     body += table(["Item", "Status", "Effect on the decision"], rows)
     body += """<h2>If the big rules changed</h2>
@@ -244,7 +244,7 @@ def p_lawwatch(out):
     rows = [
         (["The basis reset at death", "Selling Property A soon after inheriting would become taxable on decades of growth. Living in it or holding it would look better, and the timing of any sale would matter much more.", "No bill changing it was found in this review; it has been proposed in past years."], ["IRS-INHERIT-FAQ"], "V"),
         (["Proposition 19's limits on the family exclusion", "If the pre-2021 rules returned, Property A could be kept — even as a rental — at the parents' taxable value, cutting the yearly tax by tens of thousands of dollars and making keeping it far more attractive.", "A repeal measure was not on the November 2026 ballot."], ["BOE-PROP19", "CA-SOS-QUALIFIED-2026"], "V"),
-        (["The estate tax threshold", "Halving it would leave about %s of room after the house in %d instead of %s." % (money(EST[T0]["room_half"]), T0, money(EST[T0]["room"])), "Congress can change it at any time; the current law has no built-in drop."], ["IRS-EG-WHATSNEW", "IRS-RP-2026-35"], "P"),
+        (["The estate tax threshold", "Halving it would leave about %s of room after the house in %d instead of %s." % (money(EST[T0]["room_half"]), T0, money(EST[T0]["room"])), "Congress can change it at any time."], ["IRS-EG-WHATSNEW", "IRS-RP-2026-35"], "P"),
     ]
     body += table(["Rule", "What a change would do", "Where it stands"], rows)
     return page(out, s, "Law changes to watch", "What has just changed, what voters decided this month, what is proposed — and what each means for the plan.", body)
@@ -282,6 +282,7 @@ FLAGS = [
     ("F-28", "Vacancy and building share", "5% vacancy and a 20% building share of Property A's value are assumptions; the assessor's land and improvement split is on the bill.", "Read the bill.", "Tested at 40% building share: no change.", ["IRS-P527"], "A"),
     ("F-29", "Santa Clara County rate book", "Read through search excerpts of the official document rather than page by page.", "Open the linked document.", "Small.", ["SCC-TAXRATEBOOK-2025"], "V"),
     ("F-30", "Repository history", "Earlier versions of this repository, written by other sessions and since deleted from the published site, contained un-rounded figures. They remain in the public commit history, which only the repository owner can purge.", "See the project's task board.", "Privacy, not the decision.", ["BOE-LTA-2026-002"], "O"),
+    ("F-31", "Fixed-dollar tax thresholds", "The $250,000 / $200,000 investment-income tax thresholds and the $250,000 / $500,000 home-sale exclusion are held at today's dollar amounts for the whole projection; the IRS pages list them as fixed amounts, but whether they will ever be raised is unknown.", "Recheck IRS Topics 559 and 701 each year.", "Small; works against the sell plan if anything.", ["IRS-TC559", "IRS-TC701"], "A"),
 ]
 
 
@@ -368,7 +369,7 @@ def p_method(out):
 <li>No names, street addresses, parcel numbers, account numbers or ZIP codes appear anywhere in this dashboard or its working files.</li>
 <li>Every figure supplied by the owner was rounded to the nearest $10 before it was written to any file. The model is run on the rounded figures, so nothing published can be worked back to an exact amount held in this project.</li>
 <li>The amount of cash in the inheritance is not stored or shown; the estate tables are built so it is not needed.</li>
-<li>Rounding lowers the chance of a search match; it is not a guarantee. Public assessment rolls can be searched by value, so anyone with the address could confirm the figures, though not derive the address from them easily.</li>
+<li>Rounding lowers the chance of a search match; it is not a guarantee.</li>
 <li>Pages carry a "noindex" tag asking search engines not to list them.</li>
 </ul>
 <h2>Limits</h2>

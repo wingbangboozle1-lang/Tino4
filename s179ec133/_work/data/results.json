@@ -134,7 +134,7 @@
    "value": 0.0025,
    "unit": "rate",
    "src": "ASSUMPTION",
-   "note": "The exclusion is indexed to chained CPI, assumed to run 0.25 point below CPI-U"
+   "note": "The exclusion's yearly inflation adjustment is assumed to run 0.25 point below consumer price inflation (the published 2027 step was +3.2%)"
   },
   {
    "key": "estate_rate",
@@ -204,14 +204,14 @@
    "value": 500000,
    "unit": "usd",
    "src": "IRS-TC701",
-   "note": "Home-sale gain exclusion, joint return (not indexed)"
+   "note": "Home-sale gain exclusion, joint return (held fixed in dollars)"
   },
   {
    "key": "s121_single",
    "value": 250000,
    "unit": "usd",
    "src": "IRS-TC701",
-   "note": "Home-sale gain exclusion, single (not indexed)"
+   "note": "Home-sale gain exclusion, single (held fixed in dollars)"
   },
   {
    "key": "wages_real",

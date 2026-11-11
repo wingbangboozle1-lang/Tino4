@@ -66,5 +66,22 @@
    }
   ],
   "fetched": "2026-11-11"
+ },
+ {
+  "id": "CA-SOS-PR26-96",
+  "agency": "California Secretary of State",
+  "title": "News release PR26-96 (June 25, 2026): measures certified for the November 3, 2026 ballot",
+  "url": "https://www.sos.ca.gov/administration/news-releases-and-advisories/2026-news-releases-and-advisories/california-secretary-state-shirley-n-weber-phd-certifies-measures-november-3-2026-general-election-ballot",
+  "fetched": "2026-11-11",
+  "verified": [
+   {
+    "claim": "The high-income tax measure (later numbered Proposition 3) makes permanent the 2012 voter-approved rates that were due to expire in 2031.",
+    "quote": "Makes permanent the existing 2012 voter-approved tax rates for high-income Californians, currently set to expire in 2031."
+   },
+   {
+    "claim": "The personal-property measure (later numbered Proposition 42) bars new state taxes on owning financial assets, investment and retirement accounts, and retroactive taxes.",
+    "quote": "Prohibits any new state tax that either (1) taxes the ownership or control of personal property (including retirement accounts, financial assets, investment accounts, business interests, and intellectual property), or (2) applies retroactively based on the taxpayer's conduct, activities, or a status that occurred before the new tax's effective date, with limited exceptions."
+   }
+  ]
  }
 ]

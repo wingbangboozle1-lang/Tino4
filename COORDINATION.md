@@ -49,7 +49,7 @@ Branch is platform-fixed at `arena/179ec133-tino4` (IR-001 applies). Task IDs ca
   properties, year-by-year projections 2026–2076, running costs, tax and property law, estate
   thresholds and headroom, step-by-step process, black-swan conditions, law watch, Flagged for
   Review, sources, method and privacy). 582 table rows; every row has an official-source link and a
-  status label (Verified / Owner-supplied / Projection / Assumption / Not verified).
+  status label (Verified / Owner-supplied / Projection / Assumption / Not verified). (Counts as first merged; after the 14:05 UTC wording pass: 584 rows, 57 sources, 104 passages.)
 - `_work/research/ledger/*.json` — 56 official sources, 102 quoted passages, all fetched and read
   by this session on 2026-11-11.
 - `_work/data/official/*.csv` — FHFA house-price indexes (San Jose metro, San Francisco metro
