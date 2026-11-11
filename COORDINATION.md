@@ -369,3 +369,46 @@ T12 scope extension: the earlier archival and research tasks are complete, and t
 - GitHub Pages Actions run https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43027262850 completed successfully; Pages API reported `built` for the merge commit.
 - Cache-busted live fetch confirmed the new overview and black-swan page. Cache-busted requests to the old tool and internal notes paths returned GitHub Pages 404 pages; the task-board request produced a GitHub error page rather than the old content. Ordinary fetches returned cached pre-deployment content, so cache retention remains a privacy concern. The full public Git history, pull requests and other branches remain outside the remediation of this merge.
 - T12 status remains **needs review**: live site update deployed, historical exposure unresolved; private case-specific calculations and ranking intentionally not published.
+
+## Session `s-5533dc75` — 2026-11-11 (branch `arena/5533dc75-tino4`, platform-fixed; IR-001 applies)
+
+Read before claiming (13:09–13:19 UTC): this board on `main` @ `21478bb`, and the boards on every
+remote branch (`git fetch` of all 18 heads). Observed: `s-3642c4cb` T12 is deployed (PR #11, #13;
+status `needs review`); `arena-ef28fa90` T12–T14 done; `s-dfc5a019` done. Sessions `s-2482744e`,
+`s-356f911b`, `s-9ad1da71`, `s-a24b1c8c`, `arena-ec965fac` and `a71eef30` hold claims **on their own
+branches only** (not on `main`); their file scopes are `internal/**`, `archive-v2/**`, `research/**`,
+`engine/**`, `site/**`, `model/**`, `internal/s-9ad1da71/**`, `tools/model.py`, `tools/blackswan.py`
+and (several, overlapping) the old `docs/**` tree that PR #11 deleted from `main`.
+This session claims **only a new path that no branch uses**, so it cannot collide with any of them.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T5533-1 | Requirements traceability matrix: every requirement in the owner's brief tested against `main` after PR #11/#13, with evidence and gap list | in progress | `s-5533dc75` | `_analysis/requirements/**` | 2026-11-11 13:19 |
+| T5533-2 | Official-source evidence ledger re-fetched by this session (URL + quoted passage + date), covering items missing from `main`: 2027 IRS inflation adjustments, California statutory bar on state/local inheritance tax, basis rules for the already-owned vs inherited home, transfer taxes on sale, solar legacy-tariff term, rent benchmarks, insurance data, official historical series (CPI / house prices / investment returns) | in progress | `s-5533dc75` | `_analysis/evidence/**` | 2026-11-11 13:19 |
+| T5533-3 | Household-level quantitative model from owner-authorised **$10-rounded** inputs only: year-by-year value / assessed value / property tax / operating costs for both properties, after-tax live-vs-rent-vs-sell comparison that keeps the already-owned home in every scenario, estate-threshold headroom, sensitivity, history-based stress replay | in progress | `s-5533dc75` | `_analysis/model/**`, `_analysis/data/**` | 2026-11-11 13:19 |
+| T5533-4 | Integration into shared outputs (`tools/build.py`, `tools/verify.py`, `index.html`, `pages/**`, `assets/**`, `_config.yml`, `README.md`) — **not started**; starts only after merging `main` and confirming no session holds those paths with a claim younger than 60 minutes that has commits | blocked | `s-5533dc75` | shared outputs, at integration only | — |
+| T5533-5 | PR → `main`, merge, confirm Pages deployment, record result here | blocked on T5533-4 | `s-5533dc75` | `COORDINATION.md` (own section only) | — |
+
+`_analysis/` begins with an underscore, so the Jekyll build that PR #11 enabled does not publish it;
+nothing in it will contain any un-rounded owner-supplied figure, name, address or parcel identifier.
+
+### Why this claim exists (acceptance findings on `main` @ `21478bb`)
+
+- PR #11 fixed the publication of internal paths and un-rounded figures (IR-018) but also removed every
+  case figure, all 30 projection rows (now blank), all cost projections and the plan ranking. The
+  owner's brief asks for exactly those, **rounded to the nearest $10**, plus "the best plan and why".
+  The site is therefore privacy-safe but no longer meets the brief. T5533-3/-4 restore the numbers using
+  only $10-rounded inputs, as the brief authorises.
+- Items to verify and add that are absent from `main`: the 2027 federal inflation adjustments released
+  in November 2026, and a statutory source for the "local inheritance tax" row that is still blank.
+
+### Requests to other sessions
+
+- **To any session integrating before this one:** please leave `_analysis/**` untouched and keep this
+  section; this session will merge `main` and reconcile, never overwrite, whatever model has landed.
+- **To sessions with `docs/**`-based branches:** `main` no longer has `docs/`, `data/`, `internal/` or
+  `archive-v2/`, and `tools/verify.py` on `main` fails if they reappear. Re-adding them re-opens IR-018.
+
+### Log (`s-5533dc75`)
+
+- 2026-11-11 13:19 UTC — board read, all remote heads inspected, claim written and pushed.
