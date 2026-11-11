@@ -14,10 +14,10 @@ verification performed, and irregularities here and mark it `done`. Never mark a
 anything. A claim older than 60 minutes with no commits may be taken over; note the handoff.
 
 - **Repository:** `wingbangboozle1-lang/Tino4`
-- **Working / integration branch:** `arena/accb6bba-tino4` (platform-fixed; see IR-001)
+- **Working / integration branch:** `arena/9ad1da71-tino4` (platform-fixed; see IR-001)
 - **Live site:** https://wingbangboozle1-lang.github.io/Tino4/ (GitHub Pages, `main`, root)
 - **Board last updated:** 2026-11-11 (UTC)
-- **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11)
+- **Final integration session:** `s-0837be92` (2026-11-10); follow-up `s-accb6bba` (PR #9 merged `0bffb59`); active session `s-9ad1da71` (coordinating with parallel session `s-3642c4cb`)
 
 ## Platform constraint (IR-001)
 
@@ -42,14 +42,17 @@ analysis.
 | T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
 | T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
 | T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
-| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done (PR #9 merged `0bffb59`) | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T13 | Independent line-by-line official source verification, repo-wide privacy & $10-rounding audit (including archived trees & unmerged `arena/f5c6ffa9-tino4`), and 50-year black-swan / tax-law / insurance / utility research package | in progress | `s-9ad1da71` | `internal/s-9ad1da71/**` (non-overlapping with `s-3642c4cb` T12 on `origin/arena/3642c4cb-tino4`) | 2026-11-11 13:10 |
 
 ## Session registry
 
 | Session ID | Branch | Role | Status |
 | --- | --- | --- | --- |
 | `s-0837be92` | `arena/0837be92-tino4` | Full research → build → verification → final integration → PR → merge → deploy | done (merged) |
-| `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | active |
+| `s-accb6bba` | `arena/accb6bba-tino4` | Follow-up: black-swan / 50-year stress scenarios, re-verify, PR → merge → deploy | done (PR #9 merged `0bffb59`) |
+| `s-3642c4cb` | `arena/3642c4cb-tino4` | Parallel session (observed via `git fetch`): claimed T12 (`tools/**`, `docs/**`, root mirror, `.github/**`, `README.md`) at 13:08 UTC | active on remote branch |
+| `s-9ad1da71` | `arena/9ad1da71-tino4` | Independent line-by-line verification, repo-wide privacy/$10-rounding audit, unmerged-branch audit, research (`internal/s-9ad1da71/**`), and final integration once active scopes complete | active |
 | `session-9dcf1e9f` | `arena/9dcf1e9f-tino4` | First rules-only dashboard; PR #1 and #2 merged to `main`; preserved as `archive-v1/` | done (merged) |
 | `arena-5e491e8f` | `arena/5e491e8f-tino4` | Quantified 9-page dashboard, model, PR #3 merged to `main`; preserved as `archive-v2/` | done (merged) |
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
@@ -264,3 +267,10 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   choices, not forecasts. `python3 tools/build.py && python3 tools/verify.py`: 10,031 checks,
   0 failures; 984/984 table rows source-linked; 30 HTML files; privacy and mirror checks pass.
   Local `git diff --check` passes. No new personal data or unverified official values were added.
+- 2026-11-11 13:10 UTC — `s-9ad1da71` (`arena/9ad1da71-tino4`): read `COORDINATION.md` and
+  inspected all remote branches via `git fetch`. Noted PR #9 (`s-accb6bba`) already merged to
+  `main` at `0bffb59`, unmerged prior branch `arena/f5c6ffa9-tino4`, and active parallel session
+  `s-3642c4cb` on `origin/arena/3642c4cb-tino4` claiming `tools/**`, `docs/**`, root mirror,
+  `.github/**`, `README.md`. Claimed non-overlapping scope `T13` (`internal/s-9ad1da71/**`) to
+  perform line-by-line official-source verification, repo-wide privacy/$10-rounding audit, and
+  deep economic/tax/utility/insurance research before final integration.
