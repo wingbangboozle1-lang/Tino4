@@ -58,7 +58,7 @@ PARAMS = [
     ("estate_rate", 0.40, "rate", "IRS-I706", "Top federal estate tax rate"),
     ("sell_comm", 0.05, "rate", "ASSUMPTION", "Agent commissions, escrow, title and preparation when selling. No official rate exists"),
     ("transfer_tax", 0.0011, "rate", "CA-RTC-11911", "County documentary transfer tax, $1.10 per $1,000"),
-    ("rent_a_month", 5860, "usd", "HUD-FMR-FY2027", "Property A market rent in 2026 dollars. ASSUMPTION: midpoint of the official HUD 4-bedroom figure ($4,688) and HUD's own ceiling of 150% of it ($7,032); bedroom count not supplied"),
+    ("rent_a_month", 5860, "usd", "HUD-FMR-FY2027", "Property A market rent in 2026 dollars. ASSUMPTION: midpoint of the official HUD 4-bedroom figure ($4,688) and HUD's own ceiling of 150% of it (about $7,030); bedroom count not supplied"),
     ("vacancy", 0.05, "share", "ASSUMPTION", "Share of the year a rented Property A stands empty"),
     ("bldg_share", 0.20, "share", "ASSUMPTION", "Share of Property A's value that is building (depreciable) rather than land. The assessor's land/improvement split on the bill replaces this"),
     ("dep_years", 27.5, "years", "IRS-P527", "Depreciation period for a rented house"),

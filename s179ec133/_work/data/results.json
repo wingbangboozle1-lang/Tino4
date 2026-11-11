@@ -162,7 +162,7 @@
    "value": 5860,
    "unit": "usd",
    "src": "HUD-FMR-FY2027",
-   "note": "Property A market rent in 2026 dollars. ASSUMPTION: midpoint of the official HUD 4-bedroom figure ($4,688) and HUD's own ceiling of 150% of it ($7,032); bedroom count not supplied"
+   "note": "Property A market rent in 2026 dollars. ASSUMPTION: midpoint of the official HUD 4-bedroom figure ($4,688) and HUD's own ceiling of 150% of it (about $7,030); bedroom count not supplied"
   },
   {
    "key": "vacancy",
