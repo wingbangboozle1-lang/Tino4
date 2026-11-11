@@ -287,14 +287,14 @@ const P = {
   ...P0,
   valueA: H.properties[0].valueNov2026,
   valueB: H.properties[1].valueNov2026,
-  avA2026: 550537, // client table, 2026 tax assessment
-  avB2026: 114248, // client table, 2025 tax assessment (latest supplied); carried to 2026 at the 1.02 factor
+  avA2026: 550540, // client table, 2026 tax assessment
+  avB2026: 114250, // client table, 2025 tax assessment (latest supplied); carried to 2026 at the 1.02 factor
   section121: 500000,
   capGainFed: 0.20,
   capGainNiit: 0.038,
   capGainCA: 0.093,
 };
-P.avB2026 = 114248 * P.inflator2027; // B's 2026 assessed value was not supplied; factored at the official 2026-27 factor
+P.avB2026 = 114250 * P.inflator2027; // B's 2026 assessed value was not supplied; factored at the official 2026-27 factor
 
 const proj = buildProjection(P);
 
@@ -478,10 +478,10 @@ const out = {
   },
   sensitivity: sensitivity(),
   stepUpRepealStress: {
-    note: 'If the step-up in basis were replaced by carryover basis (the STEP Act proposal, not enacted), a sale would be taxed on the parents\' original low basis instead of the date-of-death value. Quantified for Property A, assumed original basis of $440,305 (the 2014 assessed value in the client\'s own table) and Property B at $96,557 (2016).',
+    note: 'If the step-up in basis were replaced by carryover basis (the STEP Act proposal, not enacted), a sale would be taxed on the parents\' original low basis instead of the date-of-death value. Quantified for Property A, assumed original basis of $440,310 (the 2014 assessed value in the client\'s own table) and Property B at $96,560 (2016).',
     rows: ['A', 'B'].map((prop) => {
       const deathValue = proj.get(P.inheritanceYear)[prop].marketValue;
-      const carryover = prop === 'A' ? 440305 : 96557;
+      const carryover = prop === 'A' ? 440310 : 96560;
       const gainWithStepUp = 0; // sold at inheritance
       const gainCarryover = deathValue - carryover;
       const rate = 0.20 + 0.038 + 0.093;

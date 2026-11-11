@@ -184,7 +184,7 @@ const dashboard = `
   <p>Property A is a <strong>${money(properties.properties[0].market_value.amount)}</strong> single-family home
   assessed at only <strong>${money(properties.properties[0].tax_history.find((r) => r.year === 2025).assessment)}</strong>,
   which is why its tax bill is ${money(properties.properties[0].tax_history.find((r) => r.year === 2025).property_tax)}
-  a year instead of the ${money(properties.properties[0].market_value.amount * 0.013352)} a year a buyer
+  a year instead of the ${money(properties.properties[0].market_value.amount * 0.013358)} a year a buyer
   at today's value would pay. Proposition 19 lets that low assessment survive the inheritance —
   but only if someone moves in and stays in, and only for as long as they stay. The model says the
   low assessment is worth roughly <strong>${money(
@@ -536,24 +536,24 @@ const propsBody = `
 <section class="card warncard">
   <h2>Two things the supplied series cannot explain</h2>
   <h3>1. Property B's implied tax rate is 2.14%, but San Francisco publishes 1.1816%</h3>
-  <p>${money(2439)} ÷ ${money(114248)} = <strong>2.1350%</strong>. The published FY2026-27 secured rate is
+  <p>${money(2440)} ÷ ${money(114250)} = <strong>2.1357%</strong>. The published FY2026-27 secured rate is
   <strong>1.18162182%</strong> ${srcLink("S-SF-TREAS-SECURED")}. The gap is roughly $1,070 a year, and it has
   persisted for a decade — the implied rate ranges from 1.68% (2016) to 2.14% (2025). A ten-year consistent
   gap is more likely to be real parcel-level charges (special assessments, bond levies, a district charge
   that is not in the secured rate) or a second parcel appearing on the same bill, than a typo. The model
-  uses the implied 2.135% so the projection matches the bills actually paid, and shows the published rate
+  uses the implied 2.136% so the projection matches the bills actually paid, and shows the published rate
   beside it.</p>
   <p><strong>Action:</strong> one actual tax bill settles it.</p>
 
   <h3>2. Property A's implied rate is 1.335%, against a county illustration of 1.1488%</h3>
-  <p>${money(7207)} ÷ ${money(539743)} = <strong>1.3352%</strong>. Santa Clara County's own illustration of a
+  <p>${money(7210)} ÷ ${money(539740)} = <strong>1.3358%</strong>. Santa Clara County's own illustration of a
   typical tax rate area is 1.1488% ${srcLink("S-SCC-ASSESSOR-BOOKLET")}. A 16% excess is explained easily by a
   tax rate area with more bond load, but it cannot be confirmed without the parcel number. The model uses
   the implied rate and runs the county figure as a sensitivity.</p>
 
   <h3>3. Two Property A years break the pattern</h3>
   <p>In 2017 the tax <em>fell</em> 0.5% while the assessment rose 2%. In 2020 the tax was identical to 2019
-  ($6,565) while the assessment rose 2%. Neither can be produced by a constant-rate model. They are kept
+  ($6,570) while the assessment rose 2%. Neither can be produced by a constant-rate model. They are kept
   exactly as supplied rather than corrected.</p>
 </section>
 `;
@@ -594,7 +594,7 @@ const projectionsBody = `
       <h3>Property tax</h3>
       <p>Assessed value rises at most 2% a year on the existing roll — the BOE set the 2026-27 inflation
       factor at exactly 1.02 ${srcLink("S-BOE-LTA26002")}. Tax is assessed value times the property's rate.
-      Property A's rate is the 1.3352% implied by its own bills; Property B's is the 2.1350% implied by its own.
+      Property A's rate is the 1.3358% implied by its own bills; Property B's is the 2.1357% implied by its own.
       Both are flagged, because they differ from the published county rates.</p>
     </div>
     <div>
@@ -616,7 +616,7 @@ const projectionsBody = `
     <div>
       <h3>What is deliberately not in this table</h3>
       <p>Market value is not the same as assessed value and the gap only widens. That gap is the whole
-      reason Property A is worth less to hold than to sell — a buyer would pay 1.3352% on
+      reason Property A is worth less to hold than to sell — a buyer would pay 1.3358% on
       ${money(properties.properties[0].market_value.amount)}, not on
       ${money(properties.properties[0].tax_history.find((r) => r.year === 2026).assessment)}.</p>
     </div>
@@ -846,7 +846,7 @@ const decisionsBody = `
       `<tr><td>Property A rent</td><td>$5,400 → $7,000/mo</td><td>Rent out</td><td class="num">${money(
         proj.sensitivity.rent_high_rent
       )}</td><td>No</td></tr>`,
-      `<tr><td>Property A tax rate</td><td>1.3352% → 1.1488% (county typical)</td><td>Live in</td><td class="num">${money(
+      `<tr><td>Property A tax rate</td><td>1.3358% → 1.1488% (county typical)</td><td>Live in</td><td class="num">${money(
         proj.sensitivity.live_rate_county_typical
       )}</td><td>No</td></tr>`,
       `<tr><td>Property A insurance</td><td>$1,500 → $3,000/yr</td><td>Live in</td><td class="num">${money(
@@ -955,7 +955,7 @@ const steps = [
   {
     n: "Within 1 year — hard deadline",
     t: "Claim the homeowners' exemption on Property A",
-    d: `File BOE-266 with the Santa Clara County Assessor. This $7,000 reduction in taxable value is worth about ${money(93)} a year at a 1.3352% rate. More importantly, under Prop 19 the exclusion itself is conditioned on a homeowners' or disabled-veterans' exemption being claimed within one year of the transfer. Miss it and the exclusion can be lost entirely, which is worth roughly ${money(sc["SC-LIVE"].prop19_detail.annual_tax_saved_year_one)} a year.`,
+    d: `File BOE-266 with the Santa Clara County Assessor. This $7,000 reduction in taxable value is worth about ${money(93)} a year at a 1.3358% rate. More importantly, under Prop 19 the exclusion itself is conditioned on a homeowners' or disabled-veterans' exemption being claimed within one year of the transfer. Miss it and the exclusion can be lost entirely, which is worth roughly ${money(sc["SC-LIVE"].prop19_detail.annual_tax_saved_year_one)} a year.`,
     src: "S-BOE-HOMEEX",
     flag: null
   },
@@ -1044,7 +1044,7 @@ const inheritanceBody = `
       )}</td><td>The value of the exclusion</td></tr>`,
       `<tr><td>Annual tax saved, year one</td><td class="num">${money(
         sc["SC-LIVE"].prop19_detail.annual_tax_saved_year_one
-      )}</td><td>At Property A's implied 1.3352% rate</td></tr>`
+      )}</td><td>At Property A's implied 1.3358% rate</td></tr>`
     ]
   )}
   <p class="note">The ${money(1044586)} allowance is the figure published for transfers through

@@ -52,23 +52,23 @@
     {
       "id": "A-RATE-A",
       "name": "Property tax composite rate, Property A (Cupertino)",
-      "value": 0.013352,
+      "value": 0.013358,
       "units": "fraction of assessed value",
       "status": "model_assumption",
-      "basis": "Deliberately uses the rate IMPLIED by the user's own 2025 figures ($7,207 / $539,743 = 1.3352%) rather than the county's illustrative 1.1488%, because the implied rate reproduces the actual bills and the illustrative rate does not. A lower-bound sensitivity uses the county's 1.1488% typical TRA.",
+      "basis": "Deliberately uses the rate IMPLIED by the user's own 2025 figures ($7,210 / $539,740 = 1.3358%) rather than the county's illustrative 1.1488%, because the implied rate reproduces the actual bills and the illustrative rate does not. A lower-bound sensitivity uses the county's 1.1488% typical TRA.",
       "source_ids": ["S-SCC-ASSESSOR-BOOKLET"],
-      "range": [0.011488, 0.013352],
+      "range": [0.011488, 0.013358],
       "used_in_model": true
     },
     {
       "id": "A-RATE-B",
       "name": "Property tax composite rate, Property B (San Francisco)",
-      "value": 0.02135,
+      "value": 0.02136,
       "units": "fraction of assessed value",
       "status": "model_assumption",
-      "basis": "Uses the rate implied by the user's 2025 figures ($2,439 / $114,248 = 2.135%) for the same reason as Property A. Note this is 81% above SF's published 1.18162182% secured rate, which is the largest single irregularity in the supplied data and is flagged.",
+      "basis": "Uses the rate implied by the user's 2025 figures ($2,440 / $114,250 = 2.136%) for the same reason as Property A. Note this is 81% above SF's published 1.18162182% secured rate, which is the largest single irregularity in the supplied data and is flagged.",
       "source_ids": ["S-SF-TREAS-SECURED"],
-      "range": [0.0118162182, 0.02135],
+      "range": [0.0118162182, 0.02136],
       "used_in_model": true
     },
     {

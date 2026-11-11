@@ -83,5 +83,5 @@ Implied effective rate = property tax ÷ tax assessment, from the supplied rows:
 | Cupertino 95014 | 1.33% – 1.41% (2014–2025) | ≈1.193% | ~0.14–0.22 pts unexplained → likely fixed direct assessments or a different value column **[FLAGGED I1b]** |
 | San Francisco 94122 | 1.96% – 2.13% (2016–2025) | 1.1827% | ~2× the official rate → second parcel, direct charges, or transcription **[FLAGGED I1]** |
 
-Both are flagged, not "corrected": the supplied figures are reproduced verbatim and the model uses
+Both are flagged, not "corrected": the supplied figures are reproduced (rounded to the nearest $10 for privacy on 2026-11-11) and the model uses
 the official rate.

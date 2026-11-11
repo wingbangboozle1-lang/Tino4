@@ -1,6 +1,6 @@
 {
   "privacy": "All identifiers removed. Properties are referred to only as 'Property A' (Cupertino, ZIP 95014) and 'Property B' (San Francisco, ZIP 94122). No street addresses, assessor parcel numbers, owner names, heir names, trust names, loan numbers or account numbers appear in this repository or on the published site.",
-  "note": "These tables are reproduced VERBATIM as supplied by the client. They are the client's own records, not an official county publication. The 'impliedRatePct' column is arithmetic performed here (property tax / tax assessment) and is used only to test internal consistency. Nothing has been 'corrected'.",
+  "note": "PRIVACY REMEDIATION 2026-11-11 (s-356f911b): every dollar figure below was rounded to the nearest $10 so it cannot be matched to a public record; the tables are therefore no longer verbatim. Originally: these tables were reproduced as supplied by the client. They are the client's own records, not an official county publication. The 'impliedRatePct' column is arithmetic performed here (property tax / tax assessment) and is used only to test internal consistency. Nothing has been 'corrected'.",
   "properties": [
     {
       "id": "A",
@@ -8,19 +8,19 @@
       "valueNov2026": 3100000,
       "valueSource": "client-supplied estimate (2026-11)",
       "rows": [
-        { "year": 2026, "propertyTax": null, "taxAssessment": 550537, "assessmentChangePct": 2, "taxChangePct": null },
-        { "year": 2025, "propertyTax": 7207, "taxAssessment": 539743, "assessmentChangePct": 2, "taxChangePct": 2.9 },
-        { "year": 2024, "propertyTax": 7003, "taxAssessment": 529161, "assessmentChangePct": 2, "taxChangePct": 1.2 },
-        { "year": 2023, "propertyTax": 6917, "taxAssessment": 518786, "assessmentChangePct": 2, "taxChangePct": 2.4 },
-        { "year": 2022, "propertyTax": 6755, "taxAssessment": 508614, "assessmentChangePct": 2, "taxChangePct": 1.4 },
-        { "year": 2021, "propertyTax": 6662, "taxAssessment": 498642, "assessmentChangePct": 1, "taxChangePct": 1.5 },
-        { "year": 2020, "propertyTax": 6565, "taxAssessment": 493530, "assessmentChangePct": 2, "taxChangePct": 0 },
-        { "year": 2019, "propertyTax": 6565, "taxAssessment": 483854, "assessmentChangePct": 2, "taxChangePct": 2.8 },
-        { "year": 2018, "propertyTax": 6383, "taxAssessment": 474368, "assessmentChangePct": 2, "taxChangePct": 0 },
-        { "year": 2017, "propertyTax": 6383, "taxAssessment": 465067, "assessmentChangePct": 2, "taxChangePct": -0.5 },
-        { "year": 2016, "propertyTax": 6414, "taxAssessment": 455949, "assessmentChangePct": 1.5, "taxChangePct": 4.6 },
-        { "year": 2015, "propertyTax": 6130, "taxAssessment": 449101, "assessmentChangePct": 2, "taxChangePct": 2.8 },
-        { "year": 2014, "propertyTax": 5965, "taxAssessment": 440305, "assessmentChangePct": 0.5, "taxChangePct": null }
+        { "year": 2026, "propertyTax": null, "taxAssessment": 550540, "assessmentChangePct": 2, "taxChangePct": null },
+        { "year": 2025, "propertyTax": 7210, "taxAssessment": 539740, "assessmentChangePct": 2, "taxChangePct": 2.9 },
+        { "year": 2024, "propertyTax": 7000, "taxAssessment": 529160, "assessmentChangePct": 2, "taxChangePct": 1.2 },
+        { "year": 2023, "propertyTax": 6920, "taxAssessment": 518790, "assessmentChangePct": 2, "taxChangePct": 2.4 },
+        { "year": 2022, "propertyTax": 6760, "taxAssessment": 508610, "assessmentChangePct": 2, "taxChangePct": 1.4 },
+        { "year": 2021, "propertyTax": 6660, "taxAssessment": 498640, "assessmentChangePct": 1, "taxChangePct": 1.5 },
+        { "year": 2020, "propertyTax": 6570, "taxAssessment": 493530, "assessmentChangePct": 2, "taxChangePct": 0 },
+        { "year": 2019, "propertyTax": 6570, "taxAssessment": 483850, "assessmentChangePct": 2, "taxChangePct": 2.8 },
+        { "year": 2018, "propertyTax": 6380, "taxAssessment": 474370, "assessmentChangePct": 2, "taxChangePct": 0 },
+        { "year": 2017, "propertyTax": 6380, "taxAssessment": 465070, "assessmentChangePct": 2, "taxChangePct": -0.5 },
+        { "year": 2016, "propertyTax": 6410, "taxAssessment": 455950, "assessmentChangePct": 1.5, "taxChangePct": 4.6 },
+        { "year": 2015, "propertyTax": 6130, "taxAssessment": 449100, "assessmentChangePct": 2, "taxChangePct": 2.8 },
+        { "year": 2014, "propertyTax": 5970, "taxAssessment": 440310, "assessmentChangePct": 0.5, "taxChangePct": null }
       ]
     },
     {
@@ -29,16 +29,16 @@
       "valueNov2026": 1800000,
       "valueSource": "client-supplied estimate (2026-11)",
       "rows": [
-        { "year": 2025, "propertyTax": 2439, "taxAssessment": 114248, "assessmentChangePct": 2, "taxChangePct": 5.3 },
-        { "year": 2024, "propertyTax": 2315, "taxAssessment": 112008, "assessmentChangePct": 2, "taxChangePct": 6.2 },
-        { "year": 2023, "propertyTax": 2179, "taxAssessment": 109814, "assessmentChangePct": 2, "taxChangePct": 3.4 },
-        { "year": 2022, "propertyTax": 2107, "taxAssessment": 107662, "assessmentChangePct": 2, "taxChangePct": 2 },
-        { "year": 2021, "propertyTax": 2066, "taxAssessment": 105595, "assessmentChangePct": 1, "taxChangePct": -5.9 },
-        { "year": 2020, "propertyTax": 2197, "taxAssessment": 104513, "assessmentChangePct": 2, "taxChangePct": 3 },
-        { "year": 2019, "propertyTax": 2134, "taxAssessment": 102465, "assessmentChangePct": 2, "taxChangePct": 3.5 },
-        { "year": 2018, "propertyTax": 2061, "taxAssessment": 100456, "assessmentChangePct": 2, "taxChangePct": 18.4 },
-        { "year": 2017, "propertyTax": 1740, "taxAssessment": 98488, "assessmentChangePct": 2, "taxChangePct": 3.9 },
-        { "year": 2016, "propertyTax": 1675, "taxAssessment": 96557, "assessmentChangePct": 1.5, "taxChangePct": 1.6 }
+        { "year": 2025, "propertyTax": 2440, "taxAssessment": 114250, "assessmentChangePct": 2, "taxChangePct": 5.3 },
+        { "year": 2024, "propertyTax": 2320, "taxAssessment": 112010, "assessmentChangePct": 2, "taxChangePct": 6.2 },
+        { "year": 2023, "propertyTax": 2180, "taxAssessment": 109810, "assessmentChangePct": 2, "taxChangePct": 3.4 },
+        { "year": 2022, "propertyTax": 2110, "taxAssessment": 107660, "assessmentChangePct": 2, "taxChangePct": 2 },
+        { "year": 2021, "propertyTax": 2070, "taxAssessment": 105600, "assessmentChangePct": 1, "taxChangePct": -5.9 },
+        { "year": 2020, "propertyTax": 2200, "taxAssessment": 104510, "assessmentChangePct": 2, "taxChangePct": 3 },
+        { "year": 2019, "propertyTax": 2130, "taxAssessment": 102470, "assessmentChangePct": 2, "taxChangePct": 3.5 },
+        { "year": 2018, "propertyTax": 2060, "taxAssessment": 100460, "assessmentChangePct": 2, "taxChangePct": 18.4 },
+        { "year": 2017, "propertyTax": 1740, "taxAssessment": 98490, "assessmentChangePct": 2, "taxChangePct": 3.9 },
+        { "year": 2016, "propertyTax": 1680, "taxAssessment": 96560, "assessmentChangePct": 1.5, "taxChangePct": 1.6 }
       ]
     }
   ],

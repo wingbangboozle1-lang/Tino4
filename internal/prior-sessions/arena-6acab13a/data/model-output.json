@@ -1829,7 +1829,7 @@
     }
   ],
   "stepUpRepealStress": {
-    "note": "If the step-up in basis were replaced by carryover basis (the STEP Act proposal, not enacted), a sale would be taxed on the parents' original low basis instead of the date-of-death value. Quantified for Property A, assumed original basis of $440,305 (the 2014 assessed value in the client's own table) and Property B at $96,557 (2016).",
+    "note": "If the step-up in basis were replaced by carryover basis (the STEP Act proposal, not enacted), a sale would be taxed on the parents' original low basis instead of the date-of-death value. Quantified for Property A, assumed original basis of $440,310 (the 2014 assessed value in the client's own table) and Property B at $96,560 (2016).",
     "rows": [
       {
         "property": "A",
@@ -2011,14 +2011,14 @@
   "unverifiedInputs": [
     {
       "id": "rateA_billed",
-      "label": "Property A effective rate back-solved from the client's own bills (2026: 7,207 / 539,743 for 2025)",
+      "label": "Property A effective rate back-solved from the client's own bills (2026: 7,210 / 539,740 for 2025)",
       "value": 0.01349,
       "note": "Arithmetic on client-supplied rows. Used as the cost basis of the projection because it reproduces what is actually paid."
     },
     {
       "id": "rateB_billed",
-      "label": "Property B effective rate back-solved from the client's own bills (2025: 2,439 / 114,248)",
-      "value": 0.02135,
+      "label": "Property B effective rate back-solved from the client's own bills (2025: 2,440 / 114,250)",
+      "value": 0.02136,
       "note": "~1.8x the official SF rate. Flagged I1. Used for cost realism; official-rate variant in sensitivity."
     },
     {

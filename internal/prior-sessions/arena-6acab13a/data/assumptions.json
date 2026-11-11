@@ -16,7 +16,7 @@
       "id": "rateA_billed",
       "value": 0.01349,
       "unit": "decimal",
-      "label": "Property A effective rate back-solved from the client's own bills (2026: 7,207 / 539,743 for 2025)",
+      "label": "Property A effective rate back-solved from the client's own bills (2026: 7,210 / 539,740 for 2025)",
       "basis": "client",
       "sourceId": null,
       "note": "Arithmetic on client-supplied rows. Used as the cost basis of the projection because it reproduces what is actually paid."
@@ -31,9 +31,9 @@
     },
     {
       "id": "rateB_billed",
-      "value": 0.02135,
+      "value": 0.02136,
       "unit": "decimal",
-      "label": "Property B effective rate back-solved from the client's own bills (2025: 2,439 / 114,248)",
+      "label": "Property B effective rate back-solved from the client's own bills (2025: 2,440 / 114,250)",
       "basis": "client",
       "sourceId": null,
       "note": "~1.8x the official SF rate. Flagged I1. Used for cost realism; official-rate variant in sensitivity."
