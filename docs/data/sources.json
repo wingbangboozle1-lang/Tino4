@@ -1,5 +1,5 @@
 {
-  "verified_on": "2026-11-10",
+  "verified_on": "2026-11-11",
   "policy": "Only official government domains are used as verified facts. Every table row links one.",
   "sources": {
     "S01": {
@@ -281,6 +281,36 @@
       "title": "SF.gov \u2014 Annual Rent Increase for 3/1/26\u20132/28/27 Announced (1.6%)",
       "agency": "City & County of SF",
       "url": "https://www.sf.gov/news--annual-rent-increase-3126-22827-announced"
+    },
+    "S57": {
+      "title": "BLS \u2014 Historical CPI-U, U.S. city average, all items (2024 archive)",
+      "agency": "U.S. Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202402.pdf"
+    },
+    "S58": {
+      "title": "Federal Reserve \u2014 Evidence from the Survey of Consumer Finances: 2007\u201309 recession",
+      "agency": "Federal Reserve Board",
+      "url": "https://www.federalreserve.gov/pubs/feds/2010/201006/201006pap.pdf"
+    },
+    "S59": {
+      "title": "FHFA \u2014 House Price Index: scope, repeat-sales method, and datasets",
+      "agency": "Federal Housing Finance Agency",
+      "url": "https://www.fhfa.gov/data/hpi"
+    },
+    "S60": {
+      "title": "CBO \u2014 The Long-Term Budget Outlook: 2024 to 2054",
+      "agency": "Congressional Budget Office",
+      "url": "https://www.cbo.gov/publication/59711"
+    },
+    "S61": {
+      "title": "BLS \u2014 CPI-U June 2022: 9.1% 12-month increase",
+      "agency": "U.S. Bureau of Labor Statistics",
+      "url": "https://www.bls.gov/news.release/archives/cpi_07132022.htm"
+    },
+    "S62": {
+      "title": "CBO \u2014 The Long-Term Budget Outlook: 2025 to 2055",
+      "agency": "Congressional Budget Office",
+      "url": "https://www.cbo.gov/publication/61187"
     }
   }
 }

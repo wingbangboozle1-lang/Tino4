@@ -1,4 +1,5 @@
-"""Official source register. Every URL here was fetched and read on 2026-11-10 (UTC).
+"""Official source register. S01–S56 were fetched and read on 2026-11-10;
+S57–S62 were fetched and read on 2026-11-11 (UTC).
 
 Only government domains (.gov / ca.gov / sf.gov / sfgov / leginfo / congress.gov /
 boe.ca.gov / huduser.gov / cbo.gov / cpuc.ca.gov / insurance.ca.gov / sccassessor)
@@ -118,6 +119,18 @@ SOURCES = {
             "https://vig.cdn.sos.ca.gov/2026/general/pdf/complete-vig.pdf"),
     "S56": ("SF.gov — Annual Rent Increase for 3/1/26–2/28/27 Announced (1.6%)", "City & County of SF",
             "https://www.sf.gov/news--annual-rent-increase-3126-22827-announced"),
+    "S57": ("BLS — Historical CPI-U, U.S. city average, all items (2024 archive)", "U.S. Bureau of Labor Statistics",
+            "https://www.bls.gov/cpi/tables/supplemental-files/historical-cpi-u-202402.pdf"),
+    "S58": ("Federal Reserve — Evidence from the Survey of Consumer Finances: 2007–09 recession", "Federal Reserve Board",
+            "https://www.federalreserve.gov/pubs/feds/2010/201006/201006pap.pdf"),
+    "S59": ("FHFA — House Price Index: scope, repeat-sales method, and datasets", "Federal Housing Finance Agency",
+            "https://www.fhfa.gov/data/hpi"),
+    "S60": ("CBO — The Long-Term Budget Outlook: 2024 to 2054", "Congressional Budget Office",
+            "https://www.cbo.gov/publication/59711"),
+    "S61": ("BLS — CPI-U June 2022: 9.1% 12-month increase", "U.S. Bureau of Labor Statistics",
+            "https://www.bls.gov/news.release/archives/cpi_07132022.htm"),
+    "S62": ("CBO — The Long-Term Budget Outlook: 2025 to 2055", "Congressional Budget Office",
+            "https://www.cbo.gov/publication/61187"),
 }
 
 OFFICIAL_DOMAINS = (
