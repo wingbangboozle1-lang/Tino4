@@ -412,3 +412,56 @@ nothing in it will contain any un-rounded owner-supplied figure, name, address o
 ### Log (`s-5533dc75`)
 
 - 2026-11-11 13:19 UTC — board read, all remote heads inspected, claim written and pushed.
+
+## Session `s-356f911b` — 2026-11-11 (branch `arena/356f911b-tino4`, platform-fixed; IR-001 applies)
+
+Read before claiming: this board on `main` @ `9f1b307` and the boards on all 19 remote heads.
+
+**Earlier claim on this branch is withdrawn.** At 13:13 UTC this session had claimed, on its own
+branch only, privacy rounding of `internal/**` / `archive-v2/**`, a `research/**` ledger and a
+`model/**` rebuild. Those are yielded under the first-claim rule:
+
+| Withdrawn item | Why | What happened to the work |
+| --- | --- | --- |
+| Privacy rounding of the archived prior-session trees | `s-2482744e` claimed the same paths at 13:12 UTC, and PR #11 (`s-3642c4cb`) then deleted those trees from `main`, which is a stronger fix | Done and pushed on this branch at 13:16 UTC (19 files rounded to $10, ratios recomputed), then discarded: in the merge of `main` every modify/delete conflict (20 files) was resolved **in favour of `main`'s deletion** |
+| `research/**` ledger path | claimed first by `s-2482744e` | never used |
+| Whole-model rebuild and site integration | claimed by `s-2482744e` (13:12), `s-a24b1c8c` (13:15) on their branches and by `s-5533dc75` (13:19) on `main` | not started |
+
+**New claim — a role nobody else holds: independent verification and reconciliation.** Four sessions
+are each building the household model and each plan to integrate it. What is missing is a session that
+does not ship a fifth competing site but checks whatever lands, line by line, against sources it
+fetched itself and against a second implementation of the arithmetic.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T356-1 | Independent official-source evidence ledger. Every fact that is, or is about to be, published is re-fetched by this session from the official page and recorded as URL + quoted passage + fetch date + verdict (`confirmed` / `differs` / `not found`). Used to check landed table data row by row. | in progress | `s-356f911b` | `_qa/s-356f911b/evidence/**` | 2026-11-11 13:24 |
+| T356-2 | Independent reference calculation: a second implementation of the year-by-year and live / rent / sell arithmetic from owner-authorised **$10-rounded** inputs only. Purpose: row-by-row diff against whichever model lands on `main`. It becomes site content only if no model has landed when the other claims are done or stale. | in progress | `s-356f911b` | `_qa/s-356f911b/model/**` | 2026-11-11 13:24 |
+| T356-3 | Reconciliation and final QA on top of the then-current `main`: merge `main`; diff published numbers against T356-1 / T356-2; fix defects that an official source proves; confirm the brief is met (figures rounded to $10, year-by-year projections for both properties, best plan and why, separate black-swan section, tax thresholds and headroom, step-by-step process, law watch, Flagged for Review); links, privacy scan, build. Starts only when no session holds the shared outputs with a claim younger than 60 minutes that has commits. | blocked | `s-356f911b` | shared outputs, at that time only | — |
+| T356-4 | PR → `main`, merge, confirm Pages deployment, record the result here | blocked on T356-3 | `s-356f911b` | `COORDINATION.md` (own section only) | — |
+
+`_qa/` starts with an underscore, so the Jekyll build enabled by PR #11 does not publish it. Nothing in
+it will contain an un-rounded owner-supplied figure, a name, an address or a parcel identifier.
+
+### Notes for other sessions
+
+- **Privacy regression guard.** Branches cut from `0bffb59` still carry `docs/**`, `data/**`,
+  `internal/**` and `archive-v2/**` with un-rounded figures. When merging `main`, resolve
+  modify/delete conflicts on those paths in favour of deletion; re-adding them re-opens IR-018.
+- **Brief compliance.** The owner's brief both authorises and requires figures rounded to the nearest
+  $10, year-by-year projections and a ranked recommendation. `main` @ `9f1b307` has none of these
+  (see `s-5533dc75`'s finding, which this session confirms). Restoring them with $10-rounded inputs is
+  consistent with the privacy rule as the owner wrote it.
+- **To integrating sessions:** please keep this section and leave `_qa/s-356f911b/**` untouched.
+  Discrepancies this session finds in landed data will be listed here with the official link before
+  anything is changed.
+
+### Log (`s-356f911b`)
+
+- 2026-11-11 13:09 UTC — read the board at `0bffb59`; found un-rounded figures in the published tree
+  and that Pages served the whole repository; merged `s-3642c4cb`'s claim commit so both were visible.
+- 2026-11-11 13:13 UTC — first claim pushed on this branch (now withdrawn, see table above).
+- 2026-11-11 13:16 UTC — archived-tree rounding committed and pushed on this branch.
+- 2026-11-11 13:22 UTC — `main` had advanced through PRs #10–#14. Merged `main`: append/append
+  conflict in `COORDINATION.md` resolved by taking `main`'s text in full and re-appending this section;
+  20 modify/delete conflicts resolved in favour of deletion. No other session's entry was altered.
+- 2026-11-11 13:24 UTC — re-scoped to T356-1…4 and published the claim on `main`.
