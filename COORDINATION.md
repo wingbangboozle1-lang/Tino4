@@ -28,6 +28,31 @@ file scopes** within the one branch, recorded below. The pull request is opened 
 `arena/0837be92-tino4` → `main`. Published on Flagged for Review as IR-001; does not affect the
 analysis.
 
+## Active session `s-179ec133` — claims (2026-11-11)
+
+Branch is platform-fixed at `arena/179ec133-tino4` (IR-001 applies). This block sits here, away
+from the end of the file, so that it does not collide with other sessions' appended sections.
+Task IDs are prefixed `S179-` because `T12`–`T18` are reused by several parallel sessions.
+
+Read before claiming (13:08–13:18 UTC): `main` through PR #13 and every remote branch
+(`git fetch origin '+refs/heads/*:refs/remotes/origin/*'`). Active parallel claims observed on
+`s-2482744e`, `s-356f911b`, `s-9ad1da71`, `s-a24b1c8c`, `s-a71eef30`, `arena-ec965fac`
+(their scopes: `research/**`, `engine/**`, `site/**`, `model/**`, `internal/**`, `tools/**`,
+`docs/**`, root published files). **This session edits none of those paths** until its own
+integration step, and works only inside the new, exclusive directory below.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| S179-T1 | Official-source research and line-by-line verification ledger: federal / California / local estate, inheritance, income and property-tax rules; Prop 13 / Prop 19; thresholds and their indexing; insurance, water, electricity / solar; rental rules; pending law; official long-run economic series (prices, housing, equities, rates) | in progress | `s-179ec133` | `s179ec133/research/**` | 2026-11-11 13:19 |
+| S179-T2 | Two-property projection and decision model, 2026–2076, year by year (market value, assessed value, property tax, insurance, utilities, maintenance; live-in / rent / sell-and-reinvest after tax; inherited-vs-already-owned distinction; estate-threshold headroom) with every owner-supplied figure entered only as a $10-rounded value | in progress | `s-179ec133` | `s179ec133/model/**`, `s179ec133/data/**` | 2026-11-11 13:19 |
+| S179-T3 | Black-swan engine: replay of real historical sequences from official series plus seeded block-bootstrap paths; strategy outcomes per path | in progress | `s-179ec133` | `s179ec133/model/**` | 2026-11-11 13:19 |
+| S179-T4 | Candidate dashboard (generator, pages, verification tooling) staged inside the session directory; not published by this task | in progress | `s-179ec133` | `s179ec133/site/**`, `s179ec133/tools/**` | 2026-11-11 13:19 |
+| S179-T5 | Final integration, PR → `main`, merge, Pages deploy check. Starts only when S179-T1…T4 are done: merge the then-current `main`, keep other sessions' verified work, re-verify the combined data line by line, then update the shared outputs | blocked on S179-T1…T4 | `s-179ec133` | shared outputs (root `index.html`, `pages/**`, `assets/**`, `data/**`, `tools/**`, `_config.yml`, `README.md`) — **only at integration time** | 2026-11-11 13:19 |
+
+Privacy rule applied by this session: no owner-supplied figure is committed unless already
+rounded to the nearest $10; no names, addresses, parcel numbers or account data; the cash amount
+stays a placeholder. Exact figures are never written to this board.
+
 ## Task board
 
 | Task ID | Task | Status | Owner session | File scope (exclusive) | Claimed (UTC) |
