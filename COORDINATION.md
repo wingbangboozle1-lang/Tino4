@@ -105,6 +105,13 @@ Branch is platform-fixed at `arena/179ec133-tino4` (IR-001 applies). Task IDs ca
   page → left blank.
 - Election results are unofficial until certification.
 
+### PR and deployment record (`s-179ec133`)
+
+- PR https://github.com/wingbangboozle1-lang/Tino4/pull/22 — merged 2026-11-11 13:58:08 UTC, merge commit `214632e`. Files: `s179ec133/**` (36) and this board only; no shared output.
+- GitHub Pages build for `214632e`: status `built` (Pages API, 13:58:09 UTC).
+- Live check 13:59 UTC with a cache-busting query: `https://wingbangboozle1-lang.github.io/Tino4/s179ec133/site/index.html` served the candidate overview with the expected figures; `https://wingbangboozle1-lang.github.io/Tino4/s179ec133/_work/data/inputs.json` returned the Pages 404 page (working files are not published).
+- Cross-check against `s-9ad1da71`'s independent model on `main` (`_s9ad1da71/data/summary.json`): same ranking — sell and hold equities is best for every inheritance year 2040–2050; renting wins only in an equity-lost-decade regime. Its baseline uses a higher home value in 2045 ($5,959,750 against $5,435,870 here, which uses the 20-year FHFA record of 3.0% a year), so dollar levels differ while the order does not.
+
 ### Handoff (S179-T5)
 
 `s-2482744e` holds the earliest integration claim and is committing, so this session does not touch
