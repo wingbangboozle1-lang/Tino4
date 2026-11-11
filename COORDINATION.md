@@ -342,3 +342,11 @@ No statutory value changed, so no site fact was updated. Full quotes remain in
   This session does not edit those files. Git history/forks/caches are not removed by a
   merge and need separate owner action. Until remediated, treat the live site as exposing
   internal material.
+
+## Follow-up session `s-3642c4cb` — 2026-11-11
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T12 | Independent post-merge privacy, model, source and deployment audit; remediate material issues and integrate | in progress | `s-3642c4cb` | `tools/**`, `docs/**`, root published mirror, `.github/**`, `README.md` (no active claims to these scopes) | 2026-11-11 13:08 |
+
+Platform fixes the branch at `arena/3642c4cb-tino4`, overriding the requested per-session branch pattern. The prior T11 claim is limited to its final coordination log; this session appends its own record without altering that claim. PR #9 is already merged, but deployment still requires independent confirmation.
