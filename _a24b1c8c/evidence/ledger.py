@@ -90,6 +90,12 @@ SOURCES = {
                     "https://fred.stlouisfed.org/series/SPASTT01USM661N"),
     "ERP-B56": ("Council of Economic Advisers / U.S. Government Publishing Office", "Economic Report of the President 2025, Table B-56: Common stock prices and yields, 2000-2024",
                 "https://www.govinfo.gov/content/pkg/ERP-2025/pdf/ERP-2025-table56.pdf"),
+    "CA-RTC51": ("California Legislature", "Revenue and Taxation Code section 51 (taxable value: inflation factor capped at 2%; lesser of factored base or market)",
+                 "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC"),
+    "CA-PROB16061": ("California Legislature", "Probate Code section 16061.7 (notification by trustee)",
+                     "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB"),
+    "SOS-RESULTS": ("California Secretary of State", "2026 General Election: state ballot measures, statewide results (unofficial until certified)",
+                    "https://electionresults.sos.ca.gov/returns/ballot-measures"),
 }
 
 # Each fact: id, topic, claim (plain words), value (number/str or None), quote, src (list of SOURCES ids)
@@ -313,6 +319,25 @@ FACTS = [
     dict(id="F184", topic="economy", claim="Thrift Savings Plan, 12 months to 2026-10-31: government securities fund 4.61%; S&P 500 index fund 12.09%",
          value=[0.0461, 0.1209], src=["TSP-RETURNS"],
          quote="Individual funds From November 1, 2025 to October 31, 2026: G Fund 4.61% ... C Fund 12.09% ... S&P 500 C Fund Benchmark Index 12.11%"),
+    # ================= batch 3 (read 2026-11-11) =================
+    dict(id="F107", topic="proptax", claim="Proposition 13 in statute: taxable value is the lesser of (a) base year value compounded by an inflation factor capped at 2% a year and (b) current market value",
+         value=0.02, src=["CA-RTC51"],
+         quote="the taxable value of real property shall ... be the lesser of: (1) Its base year value, compounded annually since the base year by an inflation factor ... (D) In no event shall the percentage increase for any assessment year determined pursuant to subparagraph (A), (B), or (C) exceed 2 percent of the prior year's value. (2) Its full cash value, as defined in Section 110, as of the lien date, taking into account reductions in value due to damage, destruction, depreciation, obsolescence, removal of property, or other factors causing a decline in value."),
+    dict(id="F108", topic="proptax", claim="The inflation factor is the October-to-October change in the California Consumer Price Index",
+         value=None, src=["CA-RTC51"],
+         quote="For any assessment year commencing on or after January 1, 1998, the inflation factor shall be the percentage change, rounded to the nearest one-thousandth of 1 percent, from October of the prior fiscal year to October of the current fiscal year in the California Consumer Price Index for all items, as determined by the California Department of Industrial Relations."),
+    dict(id="F200", topic="process", claim="Trustee must notify beneficiaries and heirs within 60 days after the trust becomes irrevocable at death",
+         value=60, src=["CA-PROB16061"],
+         quote="(a) A trustee shall serve a notification by the trustee ... (1) When a revocable trust or any portion thereof becomes irrevocable because of the death of one or more of the settlors of the trust ... (f) The notification by trustee shall be served not later than 60 days following the occurrence of the event requiring service of the notification by trustee"),
+    dict(id="F201", topic="process", claim="Federal estate tax return (if required or to elect portability) is due 9 months after death; automatic 6-month extension with Form 4768; tax is due at 9 months",
+         value=9, src=["IRS-706I"],
+         quote="You must file Form 706 to report estate and/or GST tax within 9 months after the date of the decedent's death. If you are unable to file Form 706 by the due date, you may receive an extension of time to file. Use Form 4768 ... to apply for an automatic 6-month extension of time to file. ... The estate and GST taxes are due within 9 months of the date of the decedent's death."),
+    dict(id="F202", topic="estate", claim="Portability of a deceased spouse's unused exclusion needs a timely Form 706; estates below the filing threshold may elect up to the fifth anniversary of death",
+         value=5, src=["IRS-706I"],
+         quote="An executor can only elect to transfer the DSUE amount to the surviving spouse if the Form 706 is filed timely ... Executors filing to elect portability may now file Form 706 on or before the fifth anniversary of the decedent's death."),
+    dict(id="F091", topic="lawwatch", claim="2026-11-03 ballot, UNOFFICIAL count as of 2026-11-10 5:31 p.m. (certification due 2026-12-11): Prop 3 (extend tax on high incomes) Yes 60.6%; Prop 40 (one-time tax) No 52.6%; Prop 42 (bar new state personal-property taxes) Yes 51.5%; Prop 43 No 57.4%",
+         value=None, src=["SOS-RESULTS"],
+         quote="Unofficial Election Results. Results will be certified by December 11, 2026. ... reporting as of November 10, 2026, 5:31 p.m. ... Yes | 3 | Provides Permanent Funding For Schools And Health Care By Extending Existing Tax On High Incomes ... 60.6% ... 39.4% | No | 40 | Imposes One-Time Tax On Certain Taxpayers ... 47.4% ... 52.6% | Yes | 42 | Prohibits New State Personal Property Taxes And Certain Retroactive State Taxes ... 51.5% ... 48.5% | No | 43 | Limits Voters' Ability To Raise Revenues For Local Government Services ... 42.6% ... 57.4%"),
 ]
 
 # Irregularities noticed while reading (published on Flagged for Review)
