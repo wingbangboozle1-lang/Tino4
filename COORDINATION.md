@@ -294,3 +294,7 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   merge-conflict resolution; (d) re-scan of the full tree: 0 unrounded user figures. **Not fixable by this session
   (flagged for the repository owner):** the exact figures remain in Git history and on older session branches of this
   public repository; this session may only push to its own branch. See Flagged for Review (IR-018, added in part 2).
+  Follow-up in the same pull request: `archive-v2/` (two superseded copies of the site, still served by GitHub Pages)
+  was removed from the tree because it published model dollars that were not rounded to $10; it is recoverable from
+  commit `0bffb59`. `tools/verify.py` now fails if any dollar amount of $1,000 or more anywhere in the repository tree is
+  not a multiple of $10, unless it is an allow-listed official published figure, and fails if the removed trees return.
