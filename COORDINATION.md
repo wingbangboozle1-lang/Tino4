@@ -541,3 +541,26 @@ without a commit; any session may then take the shared outputs over and should n
   section; every deletion made by PR #11 was accepted; no other session's entry was altered. The
   earlier draft of this section (which described the pre-PR-#11 tree and quoted file locations of the
   un-rounded figures) is replaced by this one.
+## Session `arena-ec965fac` — 2026-11-11 (branch `arena/ec965fac-tino4`, platform-fixed; IR-001 applies)
+
+This session started from `0bffb59` (main @ PR #9), before PRs #10–#15 landed. It read the board, claimed `T12` (privacy rounding of un-rounded parcel figures — at that time still in `tools/build.py`, the published `docs/`/root mirror, and the archived trees), completed it on its branch, and pushed PR [#16](https://github.com/wingbangboozle1-lang/Tino4/pull/16). PRs #10–#15 merged while #16 was open, including `s-3642c4cb`'s `T12` privacy remediation (PR #11, `5bfd238`, `ef1928a`; rounding follow-up `4f6bc52`), which deleted every case-specific figure, projection and derived number from the public tree — a strictly stronger fix than nearest-$10 rounding. `tools/verify.py` on `main` now fails if `docs/`, `data/`, `internal/` or `archive-v2/` reappear.
+
+**Resolution (coordinated with the board's privacy-regression guard):**
+
+- PR [#16](https://github.com/wingbangboozle1-lang/Tino4/pull/16) was **closed without merging**. Its body and comments restate the finding and the withdrawal rationale so the audit trail is complete.
+- `arena/ec965fac-tino4` was reset to `origin/main` (`cef5f30`) and force-pushed with lease. Every modify/delete conflict was resolved **in favour of deletion**; no file from the pre-remediation tree was reintroduced, and `_analysis/**` (`s-5533dc75`) and `_qa/**` (`s-356f911b`) were not touched or claimed.
+- The earlier `T12` rounding work is documented as withdrawn, not as done: the deployed remediation supersedes it. Net effect on `main`: none (the branch matches `main` before this section is added).
+
+**Independent verification performed by this session (2026-11-11, post-remediation):**
+
+- `python3 tools/build.py` on `origin/main` → deterministic (no working-tree changes; 15 pages + 4 redirects rebuilt).
+- `python3 tools/verify.py` → **19 pages, 169 table rows, 0 structural failures** (requires `archive-v2/`, `internal/`, `docs/`, `data/` absent — confirms the remediation is intact).
+- Pages API: `main` source `/`, latest build **`built`** for `cef5f30` at 2026-11-11T13:21:37Z, no error.
+- Independent re-fetch and read of key official sources (match confirmed; consistent with `arena-ef28fa90`'s T13 and the deployed site): IRS Instructions for Form 706 (Rev. July 2026 — 2026 basic exclusion $15,000,000; basic credit $5,945,800; filing threshold > $15,000,000; instructions list unchanged future releases as Rev. Proc.), IRS Rev. Proc. 2025-32 (2026 15% ceilings $613,700 MFJ / $545,500 all other individuals; 2026 annual gift exclusion $19,000 per Rev. Proc. 2025-32 section 4), CA BOE News Release NR 25-02 (Prop 19 $1,044,586 for transfers 2/16/2025–2/15/2027; 2.15% increase from $1,022,600), CDI Sustainable Insurance Strategy (California average homeowner premium $1,571; national $1,512).
+- Local static-file scan of the reset tree: no email addresses, phone numbers, SSNs, street addresses or parcel identifiers; `.nojekyll` removed; `_config.yml` excludes tooling and board notes from Jekyll.
+
+**Findings already fixed by others; not re-claimed here:** raw un-rounded parcel figures published on the site and in archives (IR-018, remediated by PR #11 — deletion); the unsupported "Sell & reinvest" recommendation (withdrawn in PR #11); Pages serving the whole repository (mitigated: Jekyll exclusions; public history remains exposed, owner-led remediation outstanding).
+
+**Outstanding work is claimed by others; this session does not duplicate it:** requirement traceability and an owner-authorised $10-rounded household model (`s-5533dc75`, T5533-1..3), independent evidence ledger and reference calculation (`s-356f911b`, T356-1..2), integration of any landed model (`T5533-4` / `T356-3`, blocked until no active claim holds shared outputs), final PR and Pages record (`T5533-5` / `T356-4`). The owner's brief — year-by-year projections, a ranked best plan, $10-rounded figures, per the brief — is **not yet met by `main`**; it is expected to be restored by those sessions from $10-rounded inputs, which is consistent with the privacy rule as the owner wrote it.
+
+**Claims held by this session:** none beyond this coordination record. No other files are claimed; no site output is claimed or edited.
