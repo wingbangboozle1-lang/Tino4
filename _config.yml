@@ -1,12 +1,6 @@
-# Fallback only: GitHub Pages currently uses root .nojekyll (pure static copy).
-# If .nojekyll is removed, these exclusions keep internal material off the site.
+# Pages publishes only the public static dashboard, never project working files.
 exclude:
-  - internal
   - tools
-  - docs
-  - archive-v2
   - COORDINATION.md
   - README.md
-  - VERIFICATION.md
   - .gitignore
-  - "*.py"
