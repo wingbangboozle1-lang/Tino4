@@ -42,7 +42,8 @@ analysis.
 | T8 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-0837be92` | `COORDINATION.md` (final log only) | 2026-11-10 |
 | T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
 | T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
-| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | in progress | `s-accb6bba` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-accb6bba` → `arena-ec965fac` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| T12 | Privacy redaction: raw user-supplied figures (unrounded, parcel-identifying) found published in `docs/`, root mirror, `archive-v2/`, `internal/`; round all to nearest $10 per the rounding/traceability requirement; add flag IR-018; re-verify; PR → merge → deploy | in progress | `arena-ec965fac` | all published/served paths (targeted $10-rounding substitutions only), `tools/build.py`, `COORDINATION.md` | 2026-11-11 |
 
 ## Session registry
 
@@ -55,6 +56,7 @@ analysis.
 | `arena-6acab13a` | `arena/6acab13a-tino4` | Source registry + projection engine; preserved in `internal/prior-sessions/arena-6acab13a/` | merged at integration |
 | `arena-ce2391b3` | `arena/ce2391b3-tino4` | 12-page site + verification log; preserved in `internal/prior-sessions/arena-ce2391b3/` | merged at integration |
 | `arena-fd984e93` | `arena/fd984e93-tino4` | Source-linked dashboard; preserved in `internal/prior-sessions/arena-fd984e93/` | merged at integration |
+| `arena-ec965fac` | `arena/ec965fac-tino4` | Privacy-redaction review pass; completes the T11 deployment record; PR → merge → deploy | active |
 
 ## Parallel-session audit and merge resolution
 
@@ -225,6 +227,7 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
 | GitHub Pages build (PR #6) | `built` at 2026-11-10T10:32:37Z, no error, https://wingbangboozle1-lang.github.io/Tino4/ |
 | Live-site spot check | `pages/executive-summary.html` served the new dashboard; a rendering-column defect was found in the generated tables, fixed, and redeployed via the follow-up PR recorded below |
 | Follow-up fix | Table-structure fix (nested/duplicated `<td>`) + column-count verification; see the final Change log entry and the follow-up PR link below |
+| T11 handoff + Pages confirmation | PR #9 (`Add 50-year black-swan economic stress scenarios`) merged 2026-11-11T13:03:56Z (merge commit `0bffb59`); Pages build `built` 2026-11-11T13:04:09Z, no error; record missing from this log was restored by `arena-ec965fac` on 2026-11-11 |
 | Follow-up PR | https://github.com/wingbangboozle1-lang/Tino4/pull/7 — "Fix table column structure and add column-count verification (follow-up to #6)" |
 | Follow-up merge result | `gh pr merge 7 --merge` → **MERGED**, merge commit `bf5bc946a6e8d137cef665d2ccc937c23d1d8d2e` at 2026-11-10T10:37:31Z |
 | Final Pages deployment | Build `built` at 2026-11-10T10:37:53Z with no error; live root dashboard and `pages/executive-summary.html` fetched from https://wingbangboozle1-lang.github.io/Tino4/ and verified: correct content, aligned table columns, official source links present |
@@ -256,6 +259,7 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   requested separate black-swan / 50-year stress-scenario section (historical episodes from
   official sources + modelled stress paths), re-verify, PR → merge → deploy. No file scope
   overlaps with any other active session.
+- 2026-11-11 — `arena-ec965fac`: took over the T11 deployment record. PR #9 verified MERGED (2026-11-11T13:03:56Z) and the Pages legacy build verified `built` 2026-11-11T13:04:09Z with no error (`gh api repos/wingbangboozle1-lang/Tino4/pages/builds`). `python3 tools/build.py && python3 tools/verify.py` on the merged tree: 10,031 checks, 0 failures. Independent audit then found raw user-supplied figures (nearest-$1, parcel-identifying) published verbatim in `docs/`, the root mirror, `archive-v2/` and `internal/prior-sessions/` — against the rounding/traceability requirement. Claimed as T12.
 - 2026-11-11 — `s-accb6bba`: T9/T10 complete. Added S57–S62 (BLS historical CPI and 2022 CPI release;
   Federal Reserve staff paper on 2008–09; FHFA HPI; CBO 2024/2025 long-term outlooks), an
   anonymized 2026–2075 stress model (baseline/stress home values, assessments, property tax,
