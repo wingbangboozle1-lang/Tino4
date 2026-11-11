@@ -43,7 +43,7 @@ analysis.
 | T9 | Black-swan / 50-year stress-scenario section: historical episodes from official sources + modelled stress paths, new subpage, nav, index link | done | `s-accb6bba` | `tools/sources.py`, `tools/build.py`, `docs/data/black-swan.json`, `docs/pages/black-swan-scenarios.html`, `pages/black-swan-scenarios.html`, `docs/index.html`, `index.html` | 2026-11-11 |
 | T10 | Re-verify line by line after T9 (source links, column counts, privacy, root mirror), fix failures | done | `s-accb6bba` | `tools/verify.py`, `internal/verification-log.md` | 2026-11-11 |
 | T11 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `s-accb6bba` → `arena-ec965fac` | `COORDINATION.md` (final log only) | 2026-11-11 |
-| T12 | Privacy redaction: raw user-supplied figures (unrounded, parcel-identifying) found published in `docs/`, root mirror, `archive-v2/`, `internal/`; round all to nearest $10 per the rounding/traceability requirement; add flag IR-018; re-verify; PR → merge → deploy | in progress | `arena-ec965fac` | all published/served paths (targeted $10-rounding substitutions only), `tools/build.py`, `COORDINATION.md` | 2026-11-11 |
+| T12 | Privacy redaction: raw user-supplied figures (unrounded, parcel-identifying) found published in `docs/`, root mirror, `archive-v2/`, `internal/`; round all to nearest $10 per the rounding/traceability requirement; add flag IR-018; re-verify; PR → merge → deploy | done | `arena-ec965fac` | all published/served paths (targeted $10-rounding substitutions only), `tools/build.py`, `COORDINATION.md` | 2026-11-11 |
 
 ## Session registry
 
@@ -190,6 +190,10 @@ Every table row on the site links to one or more of these IDs.
 | Table column integrity | Every `<tbody>` row has exactly as many `<td>` as the table has `<th>` (Status/Source columns included) | PASS |
 | Black-swan model integrity | `tools/verify.py` validates 50 consecutive years, all scenario source IDs, $10-rounded money, 2045 investment start, and variable paths | PASS |
 | Overall | `python3 tools/verify.py` after the black-swan addition | **10,031 checks, 0 failures** |
+| T12 redaction audit | Raw user-supplied figure scan across all served/committed paths; generator regenerated; boundary-aware substitutions; year tokens 2061/2066 excluded from bare-form mapping; independent re-scan found none remaining | PASS |
+| Official-source spot checks (independent) | IRS Form 706 instructions (2026 basic exclusion $15,000,000; basic credit $5,945,800; filing threshold), IRS Rev. Proc. 2025-32 (2026 15% ceilings $613,700 MFJ / $545,500), BOE NR 25-02 (Prop 19 $1,044,586, 2/16/25–2/15/27), CDI Sustainable Insurance Strategy (CA $1,571 / National $1,512) — each re-fetched and read 2026-11-11 | PASS |
+| Local HTTP smoke test | 28/28 published paths returned 200 on a local static server (root, all 14 pages, assets, data JSON, `archive-v2/index.html`, `archive-v2/pages/taxes.html`) | PASS |
+| Overall (post-T12) | `python3 tools/build.py && python3 tools/verify.py` | **10,039 checks, 0 failures; 986/986 rows source-linked** |
 
 Full machine-readable log: `internal/verification-log.md`.
 
@@ -214,6 +218,7 @@ Full machine-readable log: `internal/verification-log.md`.
 | IR-015 | SFPUC water/sewer increases proposed, not confirmed adopted | needs review |
 | IR-016 | Rental income tax and depreciation recapture not fully modelled | needs review |
 | IR-017 | Pages admin API inaccessible; root mirror used | needs review |
+| IR-018 | Raw user-supplied figures were published verbatim (parcel-identifying) before the rounding pass; now nearest-$10 everywhere | needs review |
 
 Site page: `pages/flagged-for-review.html` (each flag links its official sources).
 `needs review` does not block the merge.
@@ -259,6 +264,7 @@ Site page: `pages/flagged-for-review.html` (each flag links its official sources
   requested separate black-swan / 50-year stress-scenario section (historical episodes from
   official sources + modelled stress paths), re-verify, PR → merge → deploy. No file scope
   overlaps with any other active session.
+- 2026-11-11 — `arena-ec965fac`: T12 complete. Fixed the first redaction script's false positives by reverting and reapplying boundary-aware substitutions (comma / `$` / underscore / plain forms; bare `2061`/`2066` never replaced — they are scenario years). Generator inputs A_ASSESSED_2026/A_TAX_2025/B_ASSESSED_2025/B_TAX_2025 and A_HIST/B_HIST now nearest-$10; all published figures rounded. Independent re-scan found zero raw user-supplied figures (remaining bare `2061`/`2066` are scenario years, and `$1,571`/`$1,044,586`/`$11,488` are official quoted amounts). Official-source spot checks re-fetched and read (IRS Form 706 instructions; Rev. Proc. 2025-32; BOE NR 25-02; CDI page) — all match the site. Local HTTP smoke test 28/28 OK. IR-018 added on the Flagged for Review page.
 - 2026-11-11 — `arena-ec965fac`: took over the T11 deployment record. PR #9 verified MERGED (2026-11-11T13:03:56Z) and the Pages legacy build verified `built` 2026-11-11T13:04:09Z with no error (`gh api repos/wingbangboozle1-lang/Tino4/pages/builds`). `python3 tools/build.py && python3 tools/verify.py` on the merged tree: 10,031 checks, 0 failures. Independent audit then found raw user-supplied figures (nearest-$1, parcel-identifying) published verbatim in `docs/`, the root mirror, `archive-v2/` and `internal/prior-sessions/` — against the rounding/traceability requirement. Claimed as T12.
 - 2026-11-11 — `s-accb6bba`: T9/T10 complete. Added S57–S62 (BLS historical CPI and 2022 CPI release;
   Federal Reserve staff paper on 2008–09; FHFA HPI; CBO 2024/2025 long-term outlooks), an
