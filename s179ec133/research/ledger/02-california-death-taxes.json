@@ -1,0 +1,28 @@
+[
+ {
+  "id": "CA-RTC-13301",
+  "agency": "California Legislature (Legislative Counsel)",
+  "title": "Revenue and Taxation Code § 13301 — Prohibition of gift and death taxes",
+  "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301.&lawCode=RTC",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "Neither California nor any city, county or other political subdivision may impose an inheritance, estate or gift tax.",
+    "quote": "Neither the state nor any political subdivision of the state shall impose any gift, inheritance, succession, legacy, income, or estate tax, or any other tax, on gifts or on the estate or inheritance of any person or on or by reason of any transfer occurring by reason of a death."},
+   {"claim": "The prohibition was enacted by voter initiative (Proposition 6, June 8, 1982).",
+    "quote": "Part 8 repealed and added June 8, 1982, by initiative Proposition 6."}
+  ]
+ },
+ {
+  "id": "CA-SCO-ESTATE",
+  "agency": "California State Controller's Office",
+  "title": "California Estate Tax",
+  "url": "https://www.sco.ca.gov/ardtax_estate_tax.html",
+  "fetched": "2026-11-11",
+  "verified": [
+   {"claim": "No California estate tax return is required for deaths on or after January 1, 2005.",
+    "quote": "For decedents that die on or after January 1, 2005, there is no longer a requirement to file a California Estate Tax Return."},
+   {"claim": "The California estate tax was a pick-up of the federal state-death-tax credit, which was eliminated effective January 1, 2005.",
+    "quote": "The Economic Growth and Tax Relief Reconciliation Act of 2001, phased out the state death tax credit over a four (4) year period beginning January 2002. Effective January 1, 2005, the state death tax credit has been eliminated."}
+  ]
+ }
+]
