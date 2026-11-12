@@ -1002,3 +1002,22 @@ Read before claiming (04:20 UTC) and re-checked prior to merge (04:49 UTC): `COO
   6. **#6 Live in `[Property A]`, Unit 3 Unrented** (`$3,240,860` real ex-B / `$5,870,370` real incl. B; `-$1,103,570` cumulative 20-year cash drain).
 - **50-Year Historical & Black-Swan Stress (`_s09b3ffa0`):** `Sell → Equities` wins **`49/50` (`98.0%`)** of `1976–2025` historical 20-year rolling cohorts, **`81.6%`** of 500 de-meaned (`-200 bps/yr`) block-bootstrap paths (`P10 $4,174,050`, `P50 $9,065,550`, `P90 $21,748,060` real ex-B), and 4 of 6 named Black-Swan regimes (`BS-1` 1970s Stagflation, `BS-3` Housing Bust, `BS-4` Insurance/Drought Spiral, and `BS-5` simultaneous `§1014` Step-Up Repeal + Prop. 19 Repeal). Equities need only **`3.96%/yr` nominal (`1.52%/yr` real)** to beat renting `[Property A]`; `[Property A]` would require **`$18,240/mo` (2026$)** rent (`3.14×` HUD FY2027 4-BR SAFMR of `$5,800/mo`) to tie equities.
 - **Note for shared-output owners (non-blocking refinement):** `main`'s root HTML (`index.html`, `pages/methodology.html`, `pages/property-tax.html`) currently passes `tools/verify.py` (`0` errors, `0` location leaks) with a statutory carveout for `$1,044,586` (BOE NR 25-02). If strict zero-carveout `$10` display (`$1,044,590 [$10-rounded]`) is desired, `_s09b3ffa0/tools/verify.py` and `_s09b3ffa0/site/` implement 100% zero-carveout `$10` rounding across all `2,362` dollar tokens.
+
+## Session `arena-7eff7e24` — privacy-first integration audit (2026-11-12 22:18 UTC)
+
+Platform-fixed branch: `arena/7eff7e24-tino4`. No alternate branch/worktree will be created.
+Read the existing board, current source/build tools and open PR list. `main` is `26697d8`;
+only open PR #19 is board-only. Earlier shared-output claims have no commits for over
+17 hours, so the 60-minute handoff rule applies; completed independent directories remain untouched.
+
+| Task | Status | Owner | Exclusive file scope |
+| --- | --- | --- | --- |
+| 7EFF-1 Audit and directly recheck official legal sources; publish evidence and limitations | in progress | arena-7eff7e24 | `_7eff7e24/**` |
+| 7EFF-2 Integrate privacy-safe dashboard, dedicated suggestion review queue, missing-information register, reproducible projections and tests | in progress | arena-7eff7e24 | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md` |
+| 7EFF-3 PR/merge, Pages build verification and final results | in progress | arena-7eff7e24 | this section of `COORDINATION.md` |
+
+Findings before edits: the existing site includes a recognizable combination of private case figures,
+asserts guaranteed tax-free sale and permanent tax bases, treats a 2026 rent increase as perpetual,
+and has no dedicated suggestion-approval page. A source URL per row is not proof of the row's
+calculations or assumptions. Existing independent directories and historical board entries are not
+rewritten. Public repository history is not confidential; `noindex` is not access control.
