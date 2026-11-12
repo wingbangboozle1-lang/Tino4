@@ -720,3 +720,21 @@ figure, name, address, or parcel identifier exists anywhere in `_s9ad1da71/**`.
 - 2026-11-11 13:43 UTC — merged `main` @ `f1870c3` preserving every session's board entry verbatim; completed `T9AD-1` (`47` `.gov` sources, `13` flags) and `T9AD-2` (`$10`-rounded household model + 19-page `300`-row candidate dashboard verified with `0` errors); logged verified items in `Change requests to s-2482744e`.
 - 2026-11-11 13:46 UTC — PR [#20](https://github.com/wingbangboozle1-lang/Tino4/pull/20) merged to `main` at `d806f9afa427009b0603449f731ad75844a829b7`. GitHub Pages API reported `status: "built"` (`error: null`) at `2026-11-11T13:46:26Z`; cache-busted live fetch confirmed public site availability at `https://wingbangboozle1-lang.github.io/Tino4/` while `/_s9ad1da71/data/summary.json` is withheld from publication by Jekyll's underscore-directory exclusion. Shared root paths remain yielded to active `T2482-16` holder `s-2482744e` (`<60 min` active commits), with `_s9ad1da71/` ready for integration/reconciliation.
 
+
+## Session `arena-ccfa33cc` — 2026-11-12 (UTC)
+
+| Task | Status | Owner | Exclusive scope | Claim |
+| --- | --- | --- | --- | --- |
+| CCFA-1 | in progress | `arena-ccfa33cc` | `tools/build.py`, `tools/verify.py`, `index.html`, `pages/**`, `README.md`, `_config.yml` and this board section | 2026-11-12 |
+
+Scope handoff: `s-2482744e`'s shared-output integration claim has had no published commit for more than 60 minutes (last remote head checked 2026-11-12); this session takes over the shared-output scope under the board's stale-claim rule. This is not a claim over other sessions' underscore-prefixed candidate work. Arena mandates the existing branch `arena/ccfa33cc-tino4`; separate session branches/worktrees are prohibited. Priority is privacy-safe site quality, verified 2027 IRS updates, and source/blank validation, without publishing private property inputs or derived values. Git history and other branches remain an unresolved privacy exposure; no public trust/parcel detail will be added.
+
+### CCFA-1 verification and findings (2026-11-12 UTC)
+
+- Official pages opened and checked against the exact added site rows: [IRS IR-2026-133](https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts) gives 2026 and 2027 federal basic exclusions and the 2027 annual gift exclusion; [California RTC §13301](https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301.&lawCode=RTC) prohibits state and local death/ inheritance taxes; [BOE Proposition 19](https://www.boe.ca.gov/Prop19/) distinguishes eligible principal residences from other property. The IRS gift exclusion is not the estate exclusion.
+- `python3 tools/build.py && python3 tools/verify.py` passed: 19 files, 173 sourced table rows, 0 structural failures. `git diff --check` passed. Table rows now distinguish unverified/withheld blanks, synthetic assumptions and source-linked rules; source links do not prove parcel-specific inputs or future assumptions. A public HTML identifier guard was added. Previous site rows were NOT independently rechecked line by line against each official source; re-verification remains **needs review**, not marked verified.
+- Privacy finding remains **needs review**: public Git history/other branches and prior deployment caches may still reveal case-specific data despite the current Pages exclusion. No case-specific financial values were added to this site. The user-requested individualized figures, 2040–2050 valuations, premium quotes and unique best choice cannot be certified from official sources and remain blank, not silently invented.
+
+| Task | Status | Owner | Result |
+| --- | --- | --- | --- |
+| CCFA-1 | done (source re-audit of older rows needs review) | `arena-ccfa33cc` | Privacy-safe site status labels, verified 2027/California statute update, structural verification; deployment recorded below. |

@@ -45,6 +45,11 @@ for p in files:
     text=' '.join(c.text)
     for match in re.finditer(r'\$([\d,]+)(?![\d,.])',text):
         if int(match.group(1).replace(',',''))%10: errors.append(f'{p}: unrounded dollar amount')
+    # Guard public HTML against common identifiers and owner-supplied exact detail.
+    if re.search(r'\b(?:95014|94122)\b|[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}|\b\d{3}-\d{2}-\d{4}\b', text, re.I):
+        errors.append(f'{p}: potential private identifier')
+    if c.rows and 'Status</th>' not in p.read_text(encoding='utf8'):
+        errors.append(f'{p}: table lacks verification status column')
     if not c.rows and p.name not in {'decisions.html','costs.html','properties.html','flagged.html'}: errors.append(f'{p}: no sourced table')
 if not (ROOT/'_config.yml').exists() or (ROOT/'.nojekyll').exists(): errors.append('Jekyll exclusions not enabled')
 config=(ROOT/'_config.yml').read_text()
