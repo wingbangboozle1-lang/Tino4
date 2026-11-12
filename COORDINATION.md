@@ -738,3 +738,15 @@ Scope handoff: `s-2482744e`'s shared-output integration claim has had no publish
 | Task | Status | Owner | Result |
 | --- | --- | --- | --- |
 | CCFA-1 | done (source re-audit of older rows needs review) | `arena-ccfa33cc` | Privacy-safe site status labels, verified 2027/California statute update, structural verification; deployment recorded below. |
+## Session `arena-b14e4024` — 2026-11-12
+
+| Task | Status | Owner | Scope | Claimed UTC |
+| --- | --- | --- | --- | --- |
+| B14-1 | Urgent privacy integration: prevent publication of legacy candidate containing case-specific figures; strengthen publication verification and document residual exposure. | in progress | `arena-b14e4024` | `_config.yml`, `tools/verify.py`, `tools/build.py`, generated `pages/**` and `index.html`, `COORDINATION.md` (own entry) | 2026-11-12 04:15 |
+
+Previous shared-output claims are older than 60 minutes with no active commits visible; this is a privacy handoff, preserving existing public dashboard. Platform-fixed branch restriction IR-001 applies. The candidate `s179ec133/site/` was explicitly confirmed public by its own prior log despite the current privacy-first root dashboard; $10 rounding does not anonymize an identifiable combined profile.
+
+- 2026-11-12 04:15 UTC — claim committed; initial pull of this new remote branch failed because it did not yet exist. Pulled/rebased against `main`, then pushed the claim to the platform-fixed branch.
+- 2026-11-12 — independently fetched the published legacy candidate overview and confirmed it contains case-specific projections and a recommendation previously withdrawn on the root site. The repository is public; excluding a directory from Pages does not make it private on GitHub or remove historical copies. Excluded `s179ec133` from the Jekyll build, added an exclusion regression check, and updated the public privacy and review notices. Sources: [GitHub Pages/Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll), [GitHub sensitive-data removal](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
+- Verification: `python3 tools/build.py` and `python3 tools/verify.py` pass (19 pages, 169 sourced rows, zero structural failures). This is not a line-by-line official-source audit, a live external-link check, a privacy guarantee, or a validation of the candidate models. Personal projections and a defensible numerical recommendation remain unavailable under the user's verification and privacy constraints. Source refresh, historical removal and repository-wide privacy remediation remain outstanding; do not represent them as complete.
+- 2026-11-12 — `main` advanced through PR #25 after the claim. Rebased onto `main`; resolved the append/append board conflict by retaining both sessions' entries and regenerated the two conflicting HTML pages from the merged generator, preserving PR #25's changes. Post-rebase build and verifier passed: 19 pages, 173 rows, zero structural failures.

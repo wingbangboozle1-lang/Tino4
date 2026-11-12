@@ -53,7 +53,7 @@ for p in files:
     if not c.rows and p.name not in {'decisions.html','costs.html','properties.html','flagged.html'}: errors.append(f'{p}: no sourced table')
 if not (ROOT/'_config.yml').exists() or (ROOT/'.nojekyll').exists(): errors.append('Jekyll exclusions not enabled')
 config=(ROOT/'_config.yml').read_text()
-for x in ['tools','COORDINATION.md','README.md']:
+for x in ['tools','s179ec133','COORDINATION.md','README.md']:
     if f'  - {x}' not in config: errors.append(f'missing exclusion: {x}')
 for dir in ['archive-v2','internal','docs','data']:
     if (ROOT/dir).exists(): errors.append(f'old public tree remains: {dir}')
