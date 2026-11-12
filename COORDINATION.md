@@ -902,3 +902,41 @@ Previous shared-output claims are older than 60 minutes with no active commits v
 
 - [PR #27](https://github.com/wingbangboozle1-lang/Tino4/pull/27) merged at `6baf72ec90222f46d84003d1ab46cc4828ca7fcb`. A live cache-busted request showed the candidate path returned 404 after deployment, and the then-current privacy page was accessible. The #27 Pages workflow was cancelled by subsequent concurrent deployments; no successful workflow conclusion was established for that run.
 - Subsequent PR #28 published the same case-derived model at the root. $10 rounding and omitted addresses do not guarantee anonymity, and structural verification does not independently validate assumptions, taxes, or ranking. Request to current integration owner: review re-identification and unsupported personalized conclusions; the older candidate path exclusion alone is no longer sufficient to protect privacy. GitHub repository/history exposure also remains. Mark B14-1 **needs review** rather than complete pending privacy assessment of current root site and deployment.
+
+## Session `arena-1775f697` — 2026-11-12 (branch `arena/1775f697-tino4`, platform-fixed)
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T1775-1 | Independent privacy, source-row, model-validity, and deployment review of merged PR #28 root dashboard; record evidence-backed findings/change requests only, with no shared-site edits | in progress | `arena-1775f697` | `COORDINATION.md` (this session's section only), `_1775f697/review/**` | 2026-11-12 04:17 |
+
+This is a read-only review of the just-merged integration and B14-1's explicit request for a privacy/model-validity assessment. It does not claim `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, or `README.md`; route any required shared-output correction through the task board while the integration window is active. The website must not publish household/property-specific information merely because it was rounded or given a placeholder label.
+
+### T1775-1 review result (2026-11-12 UTC)
+
+- Structural rebuild/verifier for the merged PR #28 root: 14 pages, 584 table rows, 1,364 links, 1,909 displayed dollar amounts, zero structural failures. This does not constitute line-by-line factual validation of all rows or model assumptions.
+- Re-fetched and checked official text for IRS IR-2026-133 / estate-tax rules, IRS inherited-property basis, CA RTC §13301, BOE Proposition 19 and its current-period adjustment notice, FTB inheritance-income treatment, CDI residential insurance data/reporting period, FHFA HPI scope, and GitHub's sensitive-data-removal guidance. Evidence/limits are recorded without case-specific figures in `_1775f697/review/PR28-review.md`.
+- **Critical privacy finding:** PR #28's root dashboard exposes household-derived projections and a personalized ranking. Placeholder labels, omission of direct location identifiers, and $10 rounding do not satisfy the user's explicit no-publication rule. The build also emits derived results in stdout. Request: restore privacy-safe public pages and ensure public builds cannot load or print private model output.
+- **Source/assumption irregularities:** CDI does publish historical ZIP-level insurance experience (report covers data through 2023), but not a current policy quote for a particular dwelling/rental. The present verifier proves structure/source-domain/status coverage, not that every cited page supports each statement. Trust treatment, eligibility, basis, 2040s law, local parcel costs, rental operations and portfolio returns remain unverified; the individualized ranking is not a verified recommendation.
+- GitHub Pages API for `a29f10c` reported `built` / no build error (run `43153858827`, success). This is deployment processing, not approval of the privacy or model content. Public history/PR diffs/caches/forks remain independently exposed; GitHub's official guide warns history cleanup requires coordination and does not remove every copy.
+
+| Task ID | Status | Result |
+| --- | --- | --- |
+| T1775-1 | done (privacy review complete; full line-by-line content audit remains needs review) | Privacy, build-output, insurance-data, and model-validity findings recorded in `_1775f697/review/PR28-review.md`; no shared site files edited. |
+
+## Session `arena-1775f697` — T1775-2 urgent privacy-safe publication remediation
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T1775-2 | Correct the post-PR-#28 public privacy regression: restore source-linked generic pages with blank private estimates, preserve current official-law updates and black-swan index analysis, remove the public build's dependency on private model output, strengthen regression checks, remove obsolete case-derived working artifacts from the current tree, verify, PR/merge, and confirm deployment | in progress | `arena-1775f697` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, deletions under `s179ec133/**`, `_s9ad1da71/**`, `_research/**`, `_a24b1c8c/**`, and this session's `COORDINATION.md` section only | 2026-11-12 04:22 |
+
+Handoff basis: PR #28 (`F570-T1`) is merged and its task is done; B14-1 is marked needs review (non-blocking), and the only remaining open PR is the older board-only PR #19. This follow-up claims the now-unowned public site for a privacy correction, not another session's active work directory. It will not rewrite Git history or alter other sessions' board entries. A current-tree correction cannot purge prior commits, PR diffs, caches, forks, or other remote branches; that residual requires a repository-owner-coordinated process.
+
+### T1775-2 execution update — 2026-11-12 (pre-PR)
+
+- Restored generic, source-linked pages and blank private property-estimate cells. The 50-year black-swan page uses only synthetic index assumptions; the standalone builder does not read private model output, and its build log prints only page/redirect counts.
+- Removed obsolete case-derived working artifacts from the current tree. Git history is unchanged; the deletion diff itself and previously public copies may still expose old material, so repository-owner coordination remains necessary.
+- Reviewed PR #32's location-wording handling. Reintroduced a privacy-first notice in Flagged for Review, Privacy, and this README: jurisdiction-specific source names/URLs may identify the issuing authority but do not verify a household property's location. No address, ZIP, parcel/account identifier, or household-specific estimate is intentionally emitted.
+- Retained official-source context for current federal and California rules, CDI insurance limits, CBO's 30-year horizon, BLS inflation history, local rent-rule status, and the vacant-home-tax appeal. These citations are not a line-by-line validation of every claim or assumption; that audit remains open.
+- Local checks passed: Python compilation; deterministic rebuild; 15 dashboard pages plus 4 compatibility redirects; verifier 19 pages / 200 rows / 111 external links / 0 failures; `git diff --check`; generic identifier scan clean. The verifier also checks blank 2026–2075 estimate cells, the synthetic index horizon, redirect targets, Jekyll exclusions, and absence of private-path dependencies in the builder.
+- Scope review found no overlap with another active file claim; no stale-claim handoff was needed. No history rewrite or other session's board-entry edit was made.
+- PR #34 was opened from `arena/1775f697-tino4`; GitHub reports a clean merge state and no branch checks are configured/reported. Local build and verification passed. Merge and post-merge Pages verification are still pending.
