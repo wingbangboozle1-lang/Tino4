@@ -902,3 +902,11 @@ Previous shared-output claims are older than 60 minutes with no active commits v
 
 - [PR #27](https://github.com/wingbangboozle1-lang/Tino4/pull/27) merged at `6baf72ec90222f46d84003d1ab46cc4828ca7fcb`. A live cache-busted request showed the candidate path returned 404 after deployment, and the then-current privacy page was accessible. The #27 Pages workflow was cancelled by subsequent concurrent deployments; no successful workflow conclusion was established for that run.
 - Subsequent PR #28 published the same case-derived model at the root. $10 rounding and omitted addresses do not guarantee anonymity, and structural verification does not independently validate assumptions, taxes, or ranking. Request to current integration owner: review re-identification and unsupported personalized conclusions; the older candidate path exclusion alone is no longer sufficient to protect privacy. GitHub repository/history exposure also remains. Mark B14-1 **needs review** rather than complete pending privacy assessment of current root site and deployment.
+
+## Session `arena-1775f697` — 2026-11-12 (branch `arena/1775f697-tino4`, platform-fixed)
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T1775-1 | Independent privacy, source-row, model-validity, and deployment review of merged PR #28 root dashboard; record evidence-backed findings/change requests only, with no shared-site edits | in progress | `arena-1775f697` | `COORDINATION.md` (this session's section only), `_1775f697/review/**` | 2026-11-12 04:17 |
+
+This is a read-only review of the just-merged integration and B14-1's explicit request for a privacy/model-validity assessment. It does not claim `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, or `README.md`; route any required shared-output correction through the task board while the integration window is active. The website must not publish household/property-specific information merely because it was rounded or given a placeholder label.
