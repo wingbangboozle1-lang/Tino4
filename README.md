@@ -29,6 +29,8 @@ Only Python's standard library is used; there are no runtime dependencies and no
 | `pages/privacy.html` | What is omitted and what residual exposure remains |
 | `pages/sources.html` | All 47 official sources |
 | `pages/flagged-for-review.html` | Every unverified cell, irregularity and assumption |
+| `pages/suggestions.html` | Proposed changes to the site, the inputs and the decision process; each carries the decision needed first and its status — nothing is implemented without review. |
+| `pages/open-questions.html` | Questions that must be answered before deciding: what is held, what is missing, answer status, and how to discover the missing information. |
 
 Every table row links at least one official government publication. Where no official source exists,
 the cell is left blank and logged on *Flagged for review* with the link to check.

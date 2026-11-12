@@ -166,6 +166,8 @@ NAV = [
     ("pages/privacy.html", "Privacy"),
     ("pages/sources.html", "Sources"),
     ("pages/flagged-for-review.html", "Flagged for review"),
+    ("pages/suggestions.html", "Suggestions"),
+    ("pages/open-questions.html", "Questions & answers"),
 ]
 
 CSS = """
@@ -1874,6 +1876,234 @@ def page_flags() -> str:
     return body
 
 
+def page_suggestions() -> str:
+    rows = [
+        [
+            "SUG-01",
+            "Obtain binding homeowners- and landlord-insurance quotes for both properties before the transfer, replacing the owner's $1,500 estimate and the model's labeled assumptions.",
+            "Insurance cost inputs on both properties.",
+            "Insurance is the largest unverified carrying cost; regime R4 tests a 45% premium shock, but real quotes anchor affordability and the keep-versus-sell comparison.",
+            "Bind quotes and update the cost inputs.",
+            "Required before relying on cost totals.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S36", "S37"]),
+        ],
+        [
+            "SUG-02",
+            "Confirm the trust instrument is a revocable grantor trust (stepped-up basis available under IRC section 1014 and CA RTC section 18031), not an irrevocable or completed-gift trust.",
+            "The basis and Prop. 19 treatment of the inherited home.",
+            "The whole sell-versus-hold ranking rests on the tax-free stepped-up basis; the wrong trust type can forfeit it.",
+            "Review the trust document with counsel.",
+            "Required before executing the sale route.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S07", "S15"]),
+        ],
+        [
+            "SUG-03",
+            "Stage sale proceeds into equities over 24 to 36 months through Treasury bills instead of a single-day purchase.",
+            "The investment execution of the sell-and-reinvest plans.",
+            "Removes sequence-of-returns risk (regime R3: equities down 24% then 18%) while keeping the sell recommendation's advantage.",
+            "Adopt a staged entry schedule.",
+            "Required at transfer.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S18", "S43", "S44"]),
+        ],
+        [
+            "SUG-04",
+            "Calendar a re-check when BOE publishes the next biennial Prop. 19 allowance (after February 15, 2027); the current $1,044,586 applies only through that date.",
+            "The occupancy-under-Prop. 19 tax and the full-reassessment rental alternative.",
+            "The owner-occupant tax depends on the allowance growing with the California house-price index; a stale allowance misstates the keep option.",
+            "Re-run the affected rows at each adjustment.",
+            "Required before any occupancy decision.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S22", "S23"]),
+        ],
+        [
+            "SUG-05",
+            "Monitor federal legislation that would repeal or limit stepped-up basis (H.R. 5336 is tracked on the Law watch page) before each inheritance year.",
+            "The statutory environment for the sale route.",
+            "Basis repeal (regime R5) is the one law change that materially weakens selling.",
+            "Decide whether to delay or re-rank if enacted.",
+            "Required before each transfer year.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S07", "S46"]),
+        ],
+        [
+            "SUG-06",
+            "Replace HUD small-area rent benchmarks with a parcel-specific market-rent appraisal for the inherited home before modeling rental income.",
+            "The rent route's income line.",
+            "The rent-versus-sell gap is wide, but achievable rent is unverified; an appraisal anchors the comparison.",
+            "Commission a rental market analysis.",
+            "Required before choosing the rent route.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S38"]),
+        ],
+        [
+            "SUG-07",
+            "Commission a pre-transfer home inspection (roof, seismic condition, solar interconnection date, inverter replacement, systems) to size maintenance reserves.",
+            "Upkeep and capital-reserve lines for both properties.",
+            "Maintenance and the solar legacy-window sunset (by the early 2040s) are major cost unknowns.",
+            "Update upkeep and reserve lines.",
+            "Required before finalizing operating budgets.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S33", "S42"]),
+        ],
+        [
+            "SUG-08",
+            "Keep the already-owned building's remaining unit as the owner's residence or keep it rented; do not leave it vacant while renting the other two units.",
+            "The 3-unit building's net cash flow and its low Prop. 13 base protection.",
+            "Vacancy forfeits $85,800 per year of in-place rent and can expose the unit to rent and eviction controls if it is leased later.",
+            "Lease the unit or occupy it.",
+            "Required whenever the inherited home is not sold.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S24", "S31"]),
+        ],
+        [
+            "SUG-09",
+            "Log every approved change here with date and reviewer, and publish no new figure without an official source link.",
+            "The audit trail of the dashboard.",
+            "Keeps the decision reviewable and the rounding and privacy controls enforceable.",
+            "Maintain the log.",
+            "Ongoing.",
+            '<span class="badge">PROPOSED</span>',
+            src_links(["S01"]),
+        ],
+    ]
+    body = (
+        "<p>This section lists proposed changes to the dashboard, the inputs and the decision process. Every suggestion below is a "
+        "proposal only: it states what would change, why it would improve the decision, what decision is needed first, and its "
+        "current status. <strong>Nothing here is implemented until someone with authority reviews and approves it.</strong></p>"
+        + table(
+            [
+                "ID",
+                "Suggestion",
+                "What it changes",
+                "Why it improves the decision",
+                "Decision needed",
+                "When it is needed",
+                "Status",
+                "Official context",
+            ],
+            rows,
+        )
+        + "<h2>How suggestions are reviewed</h2>"
+        + "<ol>"
+        + "<li>A suggestion is added here with status Proposed.</li>"
+        + "<li>Someone with authority reviews the official basis and records Approved or Declined, with the date.</li>"
+        + "<li>Approved changes are implemented through the generator (<code>tools/build.py</code>) and re-verified "
+        + "(<code>tools/verify.py</code>) before publication.</li>"
+        + "<li>Declined suggestions stay on this page with the reason, so the same proposal is not re-litigated without new evidence.</li>"
+        + "<li>Nothing in this section is tax, legal, investment or appraisal advice.</li>"
+        + "</ol>"
+    )
+    return body
+
+
+def page_open_questions() -> str:
+    rows = [
+        [
+            "Q-01",
+            "Will the inherited home receive the date-of-death stepped-up basis and the Prop. 19 parent-child treatment?",
+            "The home is held in a trust described as revocable; IRC section 1014 and CA RTC section 18031 give inherited property a date-of-death basis; Prop. 19 sets the parent-child value cap and occupancy window.",
+            "Trust instrument terms; whether the home is included in the settlor's gross estate; the transfer relationship.",
+            "Unverified until the trust instrument is reviewed.",
+            "Have counsel review the trust; file the parent-child exclusion claim within three years of transfer.",
+            src_links(["S07", "S15", "S22"]),
+        ],
+        [
+            "Q-02",
+            "How much cash is included in the inheritance, and will the estate owe federal estate tax?",
+            "The 2026 filing threshold is $15,000,000 and the 2027 exclusion is $15,480,000; the annual gift exclusion and the portability election exist; California adds no death tax at any estate size.",
+            "Estate size, lifetime taxable gifts, and whether a portability election is useful.",
+            "Not computable until the trustee marshals the estate; headroom tables by cash tier are published instead of inventing a number.",
+            "The trustee files Form 706 within nine months of death when the estate is above the threshold and considers portability.",
+            src_links(["S01", "S02", "S13"]),
+        ],
+        [
+            "Q-03",
+            "What will the inherited home's property tax be after inheritance?",
+            "Current assessed values and tax history; the Prop. 13 two percent cap; the Prop. 19 reassessment rules; the county documentary transfer tax of 0.11 percent.",
+            "Date-of-death value; the 2040-2050 assessment; the occupancy decision; future levies and rates.",
+            "Projected ranges only; the exact bill is unknowable until the transfer occurs.",
+            "Commission a date-of-death appraisal; file the county change-of-ownership report within 150 days.",
+            src_links(["S21", "S22", "S23", "S26", "S28", "S29"]),
+        ],
+        [
+            "Q-04",
+            "What will homeowners and landlord insurance cost per property?",
+            "The California Department of Insurance statewide average homeowner premium is $1,570 (rounded; updated October 27, 2026), with last-resort plan context.",
+            "Parcel-specific quotes for either property.",
+            "Blank: no official parcel-specific quote exists.",
+            "Obtain binding quotes from admitted carriers and check last-resort plan eligibility.",
+            src_links(["S36", "S37"]),
+        ],
+        [
+            "Q-05",
+            "What rent could the inherited home achieve, and what are its operating costs?",
+            "HUD small-area rent benchmarks; the owner's water and electricity ranges; maintenance and reserve assumptions.",
+            "Achievable parcel rent; utility bills after the solar legacy window ends; repair history.",
+            "Modeled ranges only.",
+            "Commission a rental market appraisal; collect utility tariff schedules; order a home inspection.",
+            src_links(["S33", "S38", "S41", "S42"]),
+        ],
+        [
+            "Q-06",
+            "Will stepped-up basis and the Prop. 19 exclusion survive until the 2040-2050 transfer?",
+            "Current federal and California law; pending proposals and litigation tracked on the Law watch page.",
+            "Future statutory changes.",
+            "Current law applies unless and until it is enacted.",
+            "Monitor Congress.gov and California legislation each year before the transfer.",
+            src_links(["S13", "S45", "S46"]),
+        ],
+        [
+            "Q-07",
+            "What is the already-owned building's tax basis, and what would selling it cost?",
+            "A market value estimate; the current low Prop. 13 base and tax history.",
+            "Original purchase basis; improvement records; selling costs.",
+            "Not assembled yet.",
+            "Locate the deed and purchase documents; commission an appraisal.",
+            src_links(["S07", "S29"]),
+        ],
+        [
+            "Q-08",
+            "Which route maximizes after-tax wealth at the actual transfer year?",
+            "Six plans are ranked for every inheritance year 2040-2050 under the baseline and seven stress regimes.",
+            "The actual transfer date, tax rates then, and market returns then.",
+            "Conditional answer: selling at the stepped-up basis and reinvesting in equities wins in the baseline and in most stress regimes.",
+            "Re-run the model at the transfer date with actual figures.",
+            src_links(["S40", "S42"]),
+        ],
+    ]
+    body = (
+        "<p>The table below lists the questions that must be answered before the inheritance decision can be made reasonably: what "
+        "information is held, what is still missing, the status of each answer, and how to discover the missing information. "
+        "Nothing here is treated as fact unless it is linked to an official source.</p>"
+        + table(
+            [
+                "ID",
+                "Question",
+                "Information we hold",
+                "Information still missing",
+                "Answer / status",
+                "How to discover the missing information",
+                "Official context",
+            ],
+            rows,
+        )
+        + "<h2>Suggestions for discovering the missing information</h2>"
+        + "<ul>"
+        + "<li>Review the trust instrument with an estate attorney: stepped-up basis qualification and Prop. 19 eligibility depend on it (IRC section 1014 / CA RTC section 18031; BOE Prop. 19 rules).</li>"
+        + "<li>Ask the trustee for the estate marshaling summary and the Form 706 filing determination (IRS Form 706 instructions).</li>"
+        + "<li>Commission a date-of-death appraisal and a rental market appraisal (county assessor guidance; HUD small-area rent benchmarks).</li>"
+        + "<li>Obtain binding insurance quotes from the admitted market and check last-resort plan eligibility (California Department of Insurance).</li>"
+        + "<li>Order a pre-transfer home inspection: roof, seismic condition, solar interconnection date, inverter replacement (CPUC net metering rules).</li>"
+        + "<li>Check the Prop. 19 allowance at each biennial Board of Equalization adjustment, and watch Congress.gov for basis legislation before every transfer year.</li>"
+        + "<li>File the county change-of-ownership report within 150 days and the Prop. 19 claims inside their windows (one year for the exemption; three years for the exclusion).</li>"
+        + "</ul>"
+    )
+    return body
+
+
 # ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
@@ -1966,6 +2196,16 @@ def main() -> None:
             "Flagged for review",
             "Every unverified cell, every irregularity in the supplied history and every modeling assumption, with the link to check it.",
             page_flags(),
+        ),
+        "pages/suggestions.html": (
+            "Suggestions — review before implementing",
+            "Proposed changes to the dashboard, the inputs and the decision process. Each suggestion states what would change, why it would improve the decision, what decision is needed first, and its status. Nothing here is implemented until it is reviewed and approved.",
+            page_suggestions(),
+        ),
+        "pages/open-questions.html": (
+            "Questions, information and answers",
+            "What must be resolved before the inheritance decision can be made reasonably: what information is held, what is missing, the status of each answer, and how to discover the missing information.",
+            page_open_questions(),
         ),
     }
 

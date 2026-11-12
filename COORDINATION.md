@@ -1016,8 +1016,8 @@ Scope: gap analysis against the owner's brief, official-source re-verification, 
 | --- | --- | --- | --- | --- | --- |
 | BB-E1 | Gap analysis vs. owner's brief: executive summary, suggestions section, questions/info/answers, black-swan, $10 rounding, privacy | in progress | `s-bbe20e73` | `pages/**`, `index.html`, `_c07ccf45/tools/build_candidate.py`, `_c07ccf45/tools/verify_candidate.py` | 2026-11-12 |
 | BB-E2 | Official-source re-verification of consequential figures | done | `s-bbe20e73` | `COORDINATION.md` log only | 2026-11-12 |
-| BB-E3 | Create suggestions page + open questions/info/answers page; wire both into navigation and index dashboard | in progress | `s-bbe20e73` | generated pages (via `_c07ccf45/tools/build_candidate.py`) | 2026-11-12 |
-| BB-E4 | Build, line-by-line verify, fix failures | in progress | `s-bbe20e73` | `tools/build.py`, `tools/verify.py` delegation | 2026-11-12 |
+| BB-E3 | Create suggestions page + open questions/info/answers page; wire both into navigation and index dashboard | done | `s-bbe20e73` | generated pages (via `_c07ccf45/tools/build_candidate.py`) | 2026-11-12 |
+| BB-E4 | Build, line-by-line verify, fix failures | done | `s-bbe20e73` | `tools/build.py`, `tools/verify.py` delegation | 2026-11-12 |
 | BB-E5 | Pull request → `main`, merge, confirm Pages deployment, record result here | blocked on BB-E4 | `s-bbe20e73` | `COORDINATION.md` (own section) | — |
 
 ### Log (`s-bbe20e73`)
