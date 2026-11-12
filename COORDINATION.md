@@ -1047,3 +1047,31 @@ Read on `main` @ `26697d8` (PR #39 merged). No other session had an open claim o
 - **Irregularity logged for the owner of `pages/open-questions.html` (IR-019, not edited here):** the "Utilities, solar, and rate cases" row is labelled **"Have — … verified to CPUC D.16-01-044/D.22-12-056 and general rate cases"** but the figures it lists (Property A water `$1,500/yr`, Property B water/sewer `$4,380/yr`, electricity `$600/yr`, solar `−$180/yr`) are owner-supplied or modelled. The cited CPUC decisions do not set a household bill. The page's own legend defines "Have" as "verified to an official source", so these should read "Owner-supplied / modelled" and be flagged. Similar wording applies to the Property A market-value row ("Have — owner-supplied"). Request: reclassify on the Flagged for review page.
 - **Irregularity for the owner (privacy, not resolved here):** IR-018 (previously published un-rounded figures in git history) remains open. The Suggestions page from PR #40 does not yet carry this as a decision item (checked: no history or rewrite entry), so the owner must add it and choose whether to rewrite history. This session did not rewrite or force-push anything.
 - Pre-merge: branch `arena/8fa3c77e-tino4` → `main` (this section only). PR link and merge result are recorded in the session log below.
+## Session `arena/4deabd6a-tino4` — privacy-first requirements and decision-dashboard integration (2026-11-12)
+
+Board and published tree reviewed at 2026-11-12 22:16 UTC on `main` / commit `26697d8` (PR #39).
+Arena fixes this session to `arena/4deabd6a-tino4`; no other branch or worktree will be created.
+
+**Stale-claim handoff under the 60-minute rule.** The root-output integration claim C049-3 last had a
+remote commit at 04:16:28 UTC; F9B-1…3 last had a remote commit at 04:28:25 UTC. At review time,
+both were over 17 hours old with no newer commit and no open PR from either session; F9B-4/5 were
+blocked behind the integration. I take over only the stale shared-site/integration work, not the
+other sessions' private work directories. This handoff is recorded here; their historical entries
+are retained unchanged.
+
+| Task ID | Task | Status | Owner | File scope (exclusive after stale handoff) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A4D6-1 | Audit the existing dashboard against the owner's complete requirements; verify legal/economic claims against primary sources; document limitations and missing inputs | in progress | `arena/4deabd6a-tino4` | `_arena_4deabd6a/audit/**` |
+| A4D6-2 | Build privacy-safe, source-linked public dashboard with explicit decision gates, a dedicated suggestions-review page, and a separate 50-year non-uniform stress page; retain sensitive case inputs only outside published files | in progress | `arena/4deabd6a-tino4` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md` |
+| A4D6-3 | Line-by-line privacy, source-link, table-row, internal-link and build verification; flag any unsupported values instead of filling them | in progress | `arena/4deabd6a-tino4` | `_arena_4deabd6a/verification/**`, `COORDINATION.md` (this section only) |
+| A4D6-4 | Open PR from this fixed branch, merge only after build/verification, confirm Pages result, record PR/deployment | in progress | `arena/4deabd6a-tino4` | `COORDINATION.md` (this section only) |
+
+This scope supersedes only stale C049-3 / F9B-4 integration ownership after the documented handoff.
+It does not edit `_f9b466e7/**`, `_c07ccf45/**`, `_s09b3ffa0/**`, `_1775f697/**`, or any other
+session's internal artifacts. Exact household/property facts are not copied into this board entry.
+
+### Rebase and scope refresh (2026-11-12 UTC)
+
+- Fetched the current `origin/main` at `3bdd34c` after PRs #40 and #41; rebased this claim on that commit while preserving both this A4D6 section and the newer coordination entries. The dedicated Suggestions and Open Questions pages now exist on `main`, so A4D6-2 integrates and privacy-corrects them rather than duplicating them.
+- Current-board review found the newly published decision pages contain case-derived figures and present owner-supplied utilities/market values under a `Have — verified` label. Those are not independently verified official facts. A4D6-1/2 will replace the case-specific public outputs with generic, source-linked decision gates, blank private-value cells, explicit owner-supplied / modelled status, and review flags. No other session's underscore-prefixed work is claimed or edited.
+- The separate history/other-branch exposure finding IR-018 remains outside the public-tree correction; this session will not rewrite history or force-push.
