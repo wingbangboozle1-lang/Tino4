@@ -1023,3 +1023,27 @@ Read `COORDINATION.md` on `main` @ `26697d8` (PR #39 merged) and inspected all p
 - Privacy re-check: `grep -i` for `95014|94122|cupertino|san francisco|san jose|bay area|santa clara|outer sunset` in `pages/suggestions.html` and `pages/open-questions.html` → no leak; `noindex` present on both; `$10` rounding verified on 1694 dollar tokens.
 - No other session's file scope was overwritten; candidates in `_s09b3ffa0/` and `_1775f697/` left untouched.
 
+## Session `arena-8fa3c77e` — 2026-11-12 22:17 UTC (branch `arena/8fa3c77e-tino4`, platform-fixed)
+
+Read on `main` @ `26697d8` (PR #39 merged). No other session had an open claim on the board at this time (every listed branch was merged or superseded). Scope is limited to adding two decision-support pages the owner's brief asks for and that the published site lacks.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A8F-1 | New page `pages/suggestions.html`: site-improvement suggestions, each with options and an owner decision column, to be chosen before any change is implemented | superseded | `arena-8fa3c77e` | `_c07ccf45/tools/build_candidate.py` (new functions and page map only), `_c07ccf45/tools/verify_candidate.py` (expected-page list only) | 2026-11-12 22:17 |
+| A8F-2 | New page `pages/questions.html`: consolidated list of questions, known answers, missing information and how to obtain it, each row linked to an official source in the register | superseded | `arena-8fa3c77e` | same generator files as A8F-1; generated `pages/questions.html`, `pages/suggestions.html`, `index.html` nav | 2026-11-12 22:17 |
+| A8F-3 | Re-run generator and verifier; privacy scan; PR → `main`; merge; confirm Pages | in progress | `arena-8fa3c77e` | `COORDINATION.md` (own section only) | 2026-11-12 22:17 |
+
+### Log (`arena-8fa3c77e`)
+
+- 2026-11-12 22:17 UTC — claim committed before any edit to shared outputs.
+- Build of the duplicate pages (local only, never pushed to `main`): 17 pages, verifier OK. Discarded in favour of the merged work below.
+- **Stood down.** `main` @ `84ea222` (PR #40, `arena-35cc20e8`, merged 2026-11-13 07:18 +0900) already publishes `pages/suggestions.html` and `pages/open-questions.html` with the same purpose (site-improvement suggestions, gated review before implementation, Have/Missing question inventory). A second version would collide on the same file, so A8F-1 and A8F-2 are marked **superseded** and nothing new is published under those names.
+- **Independent spot-check of official sources (2026-11-13 UTC, fetched directly):**
+  - SF Rent Board current-rates page (`https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit`): allowable increase `1.6%` for 1 Mar 2026–28 Feb 2027 — matches S31. The same page posts a proposal (File 261020) to cap banked and capital-improvement increases at 10%/yr, **not enacted** — matches IR-014.
+  - Cal. Rev. & Tax. Code §13301 (`https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301.&lawCode=RTC`): state and political subdivisions barred from any gift, inheritance, succession, legacy or estate tax — matches S13.
+  - Cal. Probate Code §16061.7(f) (`https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB`): trustee notification due within 60 days — matches S27.
+  - CPUC NEM / NBT page (`https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing`): NBT original-customer legacy is nine years; export credits are usually below retail; the page states it applies to PG&E, SCE and SDG&E territories only. Matches IR-008 and the flagged "9-year NBT" wording on `main`. Not yet confirmed: which utility serves Property A, and the NEM 1.0/2.0 20-year legacy (cited to D.16-01-044 on `main`, not re-fetched here).
+- **Previously verified on `main` and re-fetched this session:** IRS Rev. Proc. 2026-35 (§3.44 `$15,480,000`, §3.46 `$20,000`) and BOE NR 25-02 (`$1,044,586`, revised every two years).
+- **Irregularity logged for the owner of `pages/open-questions.html` (IR-019, not edited here):** the "Utilities, solar, and rate cases" row is labelled **"Have — … verified to CPUC D.16-01-044/D.22-12-056 and general rate cases"** but the figures it lists (Property A water `$1,500/yr`, Property B water/sewer `$4,380/yr`, electricity `$600/yr`, solar `−$180/yr`) are owner-supplied or modelled. The cited CPUC decisions do not set a household bill. The page's own legend defines "Have" as "verified to an official source", so these should read "Owner-supplied / modelled" and be flagged. Similar wording applies to the Property A market-value row ("Have — owner-supplied"). Request: reclassify on the Flagged for review page.
+- **Irregularity for the owner (privacy, not resolved here):** IR-018 (previously published un-rounded figures in git history) remains open. The Suggestions page from PR #40 does not yet carry this as a decision item (checked: no history or rewrite entry), so the owner must add it and choose whether to rewrite history. This session did not rewrite or force-push anything.
+- Pre-merge: branch `arena/8fa3c77e-tino4` → `main` (this section only). PR link and merge result are recorded in the session log below.
