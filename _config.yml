@@ -1,7 +1,10 @@
 # Pages publishes only the public static dashboard, never project working files.
 exclude:
   - tools
+  - s179ec133
   - COORDINATION.md
   - README.md
   - .gitignore
-  - s179ec133/site
+  - _s9ad1da71
+  - _research
+  - _a24b1c8c

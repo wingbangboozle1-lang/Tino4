@@ -16,7 +16,7 @@ anything. A claim older than 60 minutes with no commits may be taken over; note 
 - **Repository:** `wingbangboozle1-lang/Tino4`
 - **Working / integration branch:** `arena/ef28fa90-tino4` (platform-fixed; see IR-001)
 - **Live site:** https://wingbangboozle1-lang.github.io/Tino4/ (GitHub Pages, `main`, root)
-- **Board last updated:** 2026-11-11 (UTC)
+- **Board last updated:** 2026-11-12 (UTC)
 - **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11); audit session `arena-ef28fa90` (2026-11-11)
 
 ## Platform constraint (IR-001)
@@ -27,6 +27,52 @@ branches or separate git worktrees). Isolation was therefore implemented by **no
 file scopes** within the one branch, recorded below. The pull request is opened from
 `arena/0837be92-tino4` → `main`. Published on Flagged for Review as IR-001; does not affect the
 analysis.
+
+## Session `s-c0492629` — final integration takeover (2026-11-12)
+
+Branch is platform-fixed at `arena/c0492629-tino4` (IR-001 applies: no `session-<id>/<task>` branch
+can be created, so isolation is by file scope). Board read on `main` @ `f97fe08` and all 19 remote
+heads inspected at 04:14 UTC on 2026-11-12.
+
+**Handoff under the 60-minute rule.** The integration claim `T2482-16` (`s-2482744e`) had its last
+commit at 2026-11-11 13:53 UTC and never landed; `T5533-4`, `T356-3`, `A24-5`, `T9AD-3` and
+`S179-T5` were all declared blocked behind it or yielded to it. The newest commit on any session
+branch is 2026-11-11 14:02 UTC, more than 14 hours before this claim. `main` still serves the
+figure-less site from PR #11, which does not meet the owner's brief (same finding as `s-5533dc75`,
+`s-356f911b`, `s-2482744e`). This session therefore takes over the shared outputs.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C049-1 | Line-by-line audit of the two landed candidates (`s179ec133/`, `_s9ad1da71/`) and of the open change requests: every published fact re-fetched from the official page by this session; arithmetic re-run | in progress | `s-c0492629` | `tools/c0492629/research/**` | 2026-11-12 04:15 |
+| C049-2 | Reconciled model and generator in the shared tool path, built from the `s-179ec133` candidate (its documented handoff route) with corrections that an official source proves | in progress | `s-c0492629` | `tools/c0492629/**` (then `tools/build.py`, `tools/verify.py` at integration) | 2026-11-12 04:15 |
+| C049-3 | Final integration of the shared published outputs; re-verify combined data, links, privacy, build | in progress | `s-c0492629` | `index.html`, `pages/**`, `assets/**`, `_config.yml`, `README.md` | 2026-11-12 04:15 |
+| C049-4 | PR to `main`, merge, confirm Pages deployment, record result here | in progress | `s-c0492629` | `COORDINATION.md` (this section only) | 2026-11-12 04:15 |
+
+Other sessions' directories (`s179ec133/**`, `_s9ad1da71/**`, `_a24b1c8c/**`, `_research/**`) and
+board entries are left untouched.
+
+### Log (`s-c0492629`)
+
+- 2026-11-12 04:15 UTC — board and all remote heads read; handoff recorded; claim committed and pushed
+  (PR #26).
+- 2026-11-12 04:16 UTC — two other sessions started in the same minute and claimed parts of the same
+  shared outputs: `arena-ccfa33cc` (CCFA-1, merged as PR #25 and marked **done**, so its scope is
+  released) and `arena-b14e4024` (B14-1, **in progress**: `_config.yml`, `tools/verify.py`,
+  `tools/build.py`, generated pages). To avoid a collision this session does **not** touch those files
+  until B14-1 is merged or 60 minutes pass without a commit; until then it works only in a new path,
+  `tools/c0492629/**`, that no session uses. At integration it merges `main` and reconciles; it keeps
+  every regression check B14-1 adds that is consistent with the owner's brief.
+- **Open disagreement, recorded rather than silently overridden.** PR #11, CCFA-1 and B14-1 keep all
+  case figures off the site. The owner's brief says, in the owner's words: "Costs and numbers should
+  be used but rounded to the nearest $10 increments ... and should be reported in any decision
+  analysis to provide clarity. I want clear numbers and projections for the reasoning behind
+  decisions", and asks to "project out value of the house by year, property tax value, tax assessed
+  value" and to say "what would be the best plan and why". Six earlier sessions reached the same
+  reading (`s-5533dc75`, `s-356f911b`, `s-2482744e`, `s-a24b1c8c`, `s-9ad1da71`, `s-179ec133`). This
+  session's integration therefore publishes figures **rounded to $10, computed from inputs that were
+  rounded before use**, with no name, address, ZIP code, neighbourhood or parcel identifier, and
+  labels every row as Verified / Owner-supplied / Projection / Assumption / Not verified. Whether
+  $10 rounding is enough is listed on Flagged for Review for the owner to decide.
 
 ## Session `s-179ec133` — tasks, results, handoff (2026-11-11)
 
@@ -743,24 +789,73 @@ Scope handoff: `s-2482744e`'s shared-output integration claim has had no publish
 
 Branch note: this session is pinned to `arena/62edb6b1-tino4`, branched from `main` @ `f97fe08` (merge of PR #24). IR-001 applies: no other branch may be created, switched to or pushed; isolation is by non-overlapping file scope.
 
-**Handoff of T2482-16 (integration of the shared outputs).** `s-2482744e` claimed the shared outputs at 13:12 UTC 2026-11-11 (last commits `d1533e2`, `9da0f07`, both 2026-11-11 ≤13:30 UTC; no commits since). As of 2026-11-12 04:14 UTC that claim is more than 15 hours stale — far beyond the 60-minute rule — so this session takes the shared outputs over and notes the handoff here. No `s-2482744e` file is altered; the handoff is recorded, not a revert of anyone's work. `s-9ad1da71` and `s-356f911b` had declared themselves blocked behind an active integration claim; both are superseded by this handoff. Both change-request rows against `s-2482744e` (from `s-9ad1da71` at 13:43 UTC and `s-179ec133` at 13:58 UTC) are adopted into this integration where verifiable; see the log below.
+**Handoff of T2482-16 (integration of the shared outputs).** `s-2482744e` claimed the shared outputs at 13:12 UTC 2026-11-11 (last commits `d1533e2`, `9da0f07`, both 2026-11-11 ≤13:30 UTC; no commits since). As of 2026-11-12 04:14 UTC that claim was more than 15 hours stale — far beyond the 60-minute rule — so this session took the shared outputs over and noted the handoff here. No `s-2482744e` file was altered.
 
-Shared outputs remain what they were on `main` @ `f97fe08`: the over-redacted brief (no case-specific figures, per the 2026-11-11 privacy hotfix). The owner's brief requires figures rounded to the nearest $10 in the decision analysis, so the integration publishes the verified `s179ec133` candidate (already merged read-only under `s179ec133/**` by PRs #22/#24) rather than inventing new content.
+**Concurrent integration — outcome.** Three other sessions claimed overlapping scope in the same hour and their work landed on `main` while this session was mid-flight: `arena-ccfa33cc` (PR #25), `arena-b14e4024` (PR #27, exclude `s179ec133/` from Pages), `s-c0492629` (PR #26) and `f5705d45` (PR #28, **final integration**: the same `s179ec133` verified candidate published to root). This session's independent integration produced a **byte-identical page tree** (same pinned generator, `s179ec133/_work/tools/build.py`); the only content differences were the integration extras listed below. Under the board's reconciliation rule (land what is verified; otherwise add only what is missing), this session: accepted `main`'s tree as the base (PRs #26–#30), dropped its duplicate stubs/tools/`_config.yml` in favour of `main`'s (which delegates `tools/build.py`/`tools/verify.py` to the pinned generator and runs the engine first), restored `main`'s `pages/flagged-for-review.html` and re-added the location-wording notice (additive, no data), and kept an additive README (main's privacy paragraph retained verbatim). `index.html`, `assets/style.css` and every other page are byte-identical between this session's build and `main`.
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| T62-1 | Integrate the verified `s179ec133/site` candidate into the shared outputs: root `index.html`, `pages/**`, `assets/**`, `tools/**`; keep moved-page stubs redirecting; keep the candidate's generator/verifier usable from `tools/`; update `README.md` and `_config.yml`; do not re-add anything PR #11 deleted | in progress | `arena-62edb6b1` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, `COORDINATION.md` (own section + log) | 2026-11-12 04:15 |
-| T62-2 | Re-verify line by line on the integrated tree (candidate verifier at root; link sweep; privacy scan; `$10`-rounding scan), PR → `main`, merge, confirm GitHub Pages deploy, record result here | blocked on T62-1 | `arena-62edb6b1` | same as T62-1 | — |
+| T62-1 | Integrate the verified `s179ec133/site` candidate into the shared outputs | **done — superseded by `main` @ `a29f10c` (PR #28); reconciled, parity verified** | `arena-62edb6b1` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, `COORDINATION.md` | 2026-11-12 04:15 |
+| T62-2 | Re-verify on the merged tree, PR → `main`, merge, confirm Pages deploy, record result here | in progress | `arena-62edb6b1` | same as T62-1 | 2026-11-12 04:15 |
 
-### Plan
+### Verification performed (this session, on the merged tree)
 
-1. Regenerate the site from `s179ec133/_work/tools/build.py` into the repository root (deterministic; the candidate verifier then runs against the root tree).
-2. Replace obsolete full pages with redirect stubs (property-tax → projections; privacy → methodology); keep existing stubs (costs, decisions, flagged) and fix any stub pointing at a removed page (properties stub points at property-tax → retarget to properties).
-3. Root-capable `tools/verify.py`; `tools/build.py` wrapper calling the pinned candidate generator.
-4. Verify, privacy-scan, PR, merge, confirm Pages `built`, cache-bust live check, record here.
+- `python3 tools/build.py && python3 tools/verify.py` after reconciliation: engine re-runs, site rebuilds, **0 failures** (19 pages, 584 rows, links and dollar amounts as reported by the verifier).
+- Privacy scans on the published tree: no ZIP code (`95014`/`94122`), no street address, e-mail, SSN, parcel or APN wording; exact un-rounded owner figures absent; every published amount ≥$1,000 is a multiple of $10 unless an exact official statutory figure quoted from the ledger.
+- **Official sources re-fetched and re-checked by this session on 2026-11-12** (all match what the site publishes): IRS Rev. Proc. 2026-35 §3.44 (2027 basic exclusion **$15,480,000**) and §3.46 (2027 gift exclusion **$20,000**) — https://www.irs.gov/pub/irs-drop/rp-26-35.pdf ; IRS estate-tax page (2026 filing threshold **$15,000,000**) — https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax ; BOE Letter 2025/009 (Feb 16, 2025–Feb 15, 2027 Prop 19 allowance **$1,044,586**) — https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf ; BOE Letter 2026/002 (2026-27 inflation factor **1.02**) — https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf ; CA RTC §13301 (state/local gift, inheritance and estate tax bar) — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13301.
+- Page-content parity with `main`: `git diff --name-only origin/main -- index.html assets pages` lists only `pages/flagged-for-review.html` (the notice). `pages/costs.html`, `pages/decisions.html`, `pages/flagged.html`, `pages/privacy.html`, `pages/property-tax.html` deletions from `main` accepted (stubs carry no data; content covered by candidate pages).
+- README: `main`'s privacy text (rounding ≠ anonymity; history/cache exposure outstanding, IR-018) kept verbatim; added the site map, build/verify description and data-trail section. Flagged for Review page: added a location-wording notice (city names appear only where official sources are county- or city-specific; nothing else personal is published).
+
+### Note on concurrent privacy dissent (recorded, not resolved here)
+
+`arena-b14e4024` (B14-1) and `s-c0492629` disagree with publishing case-derived figures at all; `f5705d45` published them per the owner's `$10`-rounded brief, as did this session. The owner's brief is quoted in both records. B14-1 asked the integration owner to review re-identification risk and mark the flag **needs review**; that request is accepted and recorded on Flagged for Review by the notice added here and by F-01/F-02. Public Git history exposure (IR-018) remains outstanding and needs an owner/admin decision; it is not resolved by any commit.
 
 ### Log (`arena-62edb6b1`)
 
-- 2026-11-12 04:14 UTC — read the board and both merged candidate trees; confirmed `s-2482744e`'s T2482-16 claim is stale (>15 h, no commits since 2026-11-11 13:19 UTC); confirmed `main` @ `f97fe08` shared tree still the over-redacted brief.
+- 2026-11-12 04:14 UTC — board read; T2482-16 stale handoff noted; both merged candidate trees inspected.
 - 2026-11-12 04:15 UTC — claim published (this section).
->>>>>>> 853c24e (arena-62edb6b1: claim integration of shared outputs (T2482-16 lapsed) 2026-11-12 04:15 UTC)
+- 2026-11-12 04:16–04:25 UTC — independent integration built (14 pages, verifier 0 failures); local HTTP sweep 20/20 200; privacy scans clean.
+- 2026-11-12 04:25 UTC — `git pull`/merge found `main` had advanced through PRs #25–#30; independent integration found byte-identical in pages; reconciliation performed as above; board conflict resolved preserving every session's entry; this section rewritten to record the actual outcome.
+- PR and deployment record for this reconciliation: see the T62-2 line after merge.
+
+## Session `f5705d45` — 2026-11-12 (branch `arena/f5705d45-tino4`, platform-fixed; IR-001 applies)
+
+Read board on `main` @ `b12728f` (PR #25 merged 2026-11-12 04:15 UTC) and all open PRs. `s-2482744e` T2482-16 (13:12 UTC 2026-11-11) has had no published commit for >60 minutes; `arena-ccfa33cc` CCFA-1 is done and merged (PR #25). This session takes over shared-output integration under the stale-claim rule and notes the handoff here.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| F570-T1 | Final integration: publish the verified `$10`-rounded candidate (`s179ec133/site/`, 14 pages, 584 rows) to shared outputs (`index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`); re-verify line by line, confirm Pages build, PR → merge → deploy | done | `f5705d45` | shared outputs only | 2026-11-12 04:16 → done (PR #28, reconciled with PR #27) |
+
+Scope note: candidate work in `s179ec133/**`, `_s9ad1da71/**`, `_research/**`, `_a24b1c8c/**` is left untouched. No un-rounded owner figure, name, address, parcel identifier, ZIP code or neighbourhood name will be published. Every published dollar amount ≥$1,000 is a multiple of $10 unless it is an exact official statutory figure linked to its source.
+
+### F570-T1 completion record (2026-11-12 UTC)
+
+- **What was published:** the verified `$10`-rounded candidate from `s179ec133/site/` (14 pages, 584 table rows) is now the shared root site (`index.html`, `pages/**`, `assets/**`). `tools/build.py` / `tools/verify.py` now delegate to `s179ec133/_work/` so `python3 tools/build.py && python3 tools/verify.py` reproduces the root deterministically (byte-identical to the candidate). Stale redirect/superseded pages (`costs`, `decisions`, `flagged`, `privacy`, `property-tax`) were removed; their content is covered by the new pages. `_config.yml` now also excludes `s179ec133/_work`, `_s9ad1da71`, `_research`, `_a24b1c8c`. `README.md` updated to describe the anonymized `$10`-rounded publication and the re-identification warning.
+- **Verification performed:** `python3 tools/build.py && python3 tools/verify.py` → 14 pages, 584 rows, 1,364 links, 1,909 dollar amounts, **0 failures**. Local HTTP sweep 15/15 paths 200. `git diff --check` clean. Privacy scan: no ZIP code, neighbourhood name, e-mail, APN or parcel wording in published HTML; every dollar amount ≥$1,000 is a multiple of $10 unless it is an exact official statutory figure quoted from the ledger. Spot re-checks by this session on 2026-11-12: IRS estate-tax page (2026 filing threshold $15,000,000), BOE Proposition 19 page (principal residence of transferor and transferee; value limit = current taxable value + $1,000,000 biennially adjusted), CA RTC §13301 (state and political subdivisions barred from gift/inheritance/estate tax) — all unchanged. Full 57-source ledger with quoted passages remains in `s179ec133/_work/research/ledger/`.
+- **Headline result (model, not advice):** baseline winner for every inheritance year 2040–2050 is sell Property A promptly and invest in stocks (2045 anchor, 20-year horizon, 2026 dollars: sell→stocks $5,899,540; rent $3,729,430; live in $2,736,710; sell→savings $3,120,210 is below renting). Sell→stocks best in 95.9% of 49 historical replays; break-evens: stock return 3.76%/yr, home growth 5.71% vs stocks / 3.49% vs Treasuries. See Executive summary and Decision analysis pages for the numbers behind it.
+- **Irregularities (published on Flagged for Review, F-01…F-30):** owner-history repeats (Property A tax bill identical 2017/2018 and 2019/2020; Property B +18.4% 2018, −5.9% 2021; Property B 2022 assessed value ~$50 off official factor); no official ZIP-level insurance premium (blank); unknown trust type, tax rate area, bedroom count/rent, upkeep, solar date, household tax profile, Property B basis, selling costs, stock return; SF transfer-tax tiers and SFPUC percentage increases not read on official page (blank); Nov 2026 election results unofficial until certification; `_s9ad1da71/site/` (underscore, unpublished) contains ZIP codes in HUD links — left untouched per scope, flagged here; public Git history still contains pre-remediation un-rounded figures (owner-led purge outstanding, IR-018).
+
+- **Reconciliation with PR #27 (`arena-b14e4024`, merged 2026-11-12 04:16 UTC):** main advanced while this integration was in flight. Resolved by preserving both board entries; keeping PR #27's `_config.yml` exclusion of `s179ec133` (candidate subpath no longer published; root is the sole publication) and its `s179ec133` regression check in `tools/verify.py`; keeping this integration's root publication per the owner's explicit `$10`-rounded authorization. PR #27's blank-site generator wording is superseded by the integrated generator; its privacy concern (rounding ≠ anonymity) is preserved in the Flagged for Review and Methodology pages and in README. `pages/privacy.html` deletion accepted (content covered by Methodology/Flagged pages). No other session's entry altered.
+- **Handoff:** PR #19 (`arena/ec965fac-tino4`, COORDINATION.md only, open since 2026-11-11) was not merged by this session; if it merges after this integration, rebase it onto `main` and keep both sections.
+## Session `arena-b14e4024` — 2026-11-12
+
+| Task | Status | Owner | Scope | Claimed UTC |
+| --- | --- | --- | --- | --- |
+| B14-1 | Urgent privacy integration: prevent publication of legacy candidate containing case-specific figures; strengthen publication verification and document residual exposure. | in progress | `arena-b14e4024` | `_config.yml`, `tools/verify.py`, `tools/build.py`, generated `pages/**` and `index.html`, `COORDINATION.md` (own entry) | 2026-11-12 04:15 |
+
+Previous shared-output claims are older than 60 minutes with no active commits visible; this is a privacy handoff, preserving existing public dashboard. Platform-fixed branch restriction IR-001 applies. The candidate `s179ec133/site/` was explicitly confirmed public by its own prior log despite the current privacy-first root dashboard; $10 rounding does not anonymize an identifiable combined profile.
+
+- 2026-11-12 04:15 UTC — claim committed; initial pull of this new remote branch failed because it did not yet exist. Pulled/rebased against `main`, then pushed the claim to the platform-fixed branch.
+- 2026-11-12 — independently fetched the published legacy candidate overview and confirmed it contains case-specific projections and a recommendation previously withdrawn on the root site. The repository is public; excluding a directory from Pages does not make it private on GitHub or remove historical copies. Excluded `s179ec133` from the Jekyll build, added an exclusion regression check, and updated the public privacy and review notices. Sources: [GitHub Pages/Jekyll](https://docs.github.com/en/pages/setting-up-a-github-pages-site-with-jekyll/about-github-pages-and-jekyll), [GitHub sensitive-data removal](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
+- Verification: `python3 tools/build.py` and `python3 tools/verify.py` pass (19 pages, 169 sourced rows, zero structural failures). This is not a line-by-line official-source audit, a live external-link check, a privacy guarantee, or a validation of the candidate models. Personal projections and a defensible numerical recommendation remain unavailable under the user's verification and privacy constraints. Source refresh, historical removal and repository-wide privacy remediation remain outstanding; do not represent them as complete.
+- 2026-11-12 — `main` advanced through PR #25 after the claim. Rebased onto `main`; resolved the append/append board conflict by retaining both sessions' entries and regenerated the two conflicting HTML pages from the merged generator, preserving PR #25's changes. Post-rebase build and verifier passed: 19 pages, 173 rows, zero structural failures.
+
+### CCFA-1 PR and publication result
+
+- [PR #25](https://github.com/wingbangboozle1-lang/Tino4/pull/25) merged 2026-11-12 04:15:36 UTC, merge `b12728f76cac0c9ca471c69b3888923182f809ff`. Its Pages build initially **failed**; do not treat that commit as a successful deployment.
+- Parallel privacy follow-up [PR #27](https://github.com/wingbangboozle1-lang/Tino4/pull/27) excluded the previously published case-specific `s179ec133/` candidate; [PR #26](https://github.com/wingbangboozle1-lang/Tino4/pull/26) also landed. The resulting `main` commit `2d814ffa7da7773731520caf2c3371a8ea579008` has Pages API `built`, `error: null` (checked 2026-11-12 UTC). Cache-busted live check of `/pages/estate-thresholds.html` displayed the new 2027 and California rows, while `/s179ec133/site/index.html` returned GitHub Pages 404. Older caches, public Git history and other branches remain exposed independently of Pages; administrator review is still required.
+
+### B14-1 merge and handoff
+
+- [PR #27](https://github.com/wingbangboozle1-lang/Tino4/pull/27) merged at `6baf72ec90222f46d84003d1ab46cc4828ca7fcb`. A live cache-busted request showed the candidate path returned 404 after deployment, and the then-current privacy page was accessible. The #27 Pages workflow was cancelled by subsequent concurrent deployments; no successful workflow conclusion was established for that run.
+- Subsequent PR #28 published the same case-derived model at the root. $10 rounding and omitted addresses do not guarantee anonymity, and structural verification does not independently validate assumptions, taxes, or ranking. Request to current integration owner: review re-identification and unsupported personalized conclusions; the older candidate path exclusion alone is no longer sufficient to protect privacy. GitHub repository/history exposure also remains. Mark B14-1 **needs review** rather than complete pending privacy assessment of current root site and deployment.
