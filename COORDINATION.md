@@ -738,3 +738,13 @@ Scope handoff: `s-2482744e`'s shared-output integration claim has had no publish
 | Task | Status | Owner | Result |
 | --- | --- | --- | --- |
 | CCFA-1 | done (source re-audit of older rows needs review) | `arena-ccfa33cc` | Privacy-safe site status labels, verified 2027/California statute update, structural verification; deployment recorded below. |
+
+## Session `f5705d45` — 2026-11-12 (branch `arena/f5705d45-tino4`, platform-fixed; IR-001 applies)
+
+Read board on `main` @ `b12728f` (PR #25 merged 2026-11-12 04:15 UTC) and all open PRs. `s-2482744e` T2482-16 (13:12 UTC 2026-11-11) has had no published commit for >60 minutes; `arena-ccfa33cc` CCFA-1 is done and merged (PR #25). This session takes over shared-output integration under the stale-claim rule and notes the handoff here.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| F570-T1 | Final integration: publish the verified `$10`-rounded candidate (`s179ec133/site/`, 14 pages, 584 rows) to shared outputs (`index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`); re-verify line by line, confirm Pages build, PR → merge → deploy | in progress | `f5705d45` | shared outputs only | 2026-11-12 04:16 |
+
+Scope note: candidate work in `s179ec133/**`, `_s9ad1da71/**`, `_research/**`, `_a24b1c8c/**` is left untouched. No un-rounded owner figure, name, address, parcel identifier, ZIP code or neighbourhood name will be published. Every published dollar amount ≥$1,000 is a multiple of $10 unless it is an exact official statutory figure linked to its source.
