@@ -1086,9 +1086,9 @@ only open PR #19 is board-only. Earlier shared-output claims have no commits for
 
 | Task | Status | Owner | Exclusive file scope |
 | --- | --- | --- | --- |
-| 7EFF-1 Audit and directly recheck official legal sources; publish evidence and limitations | in progress | arena-7eff7e24 | `_7eff7e24/**` |
-| 7EFF-2 Integrate privacy-safe dashboard, dedicated suggestion review queue, missing-information register, reproducible projections and tests | in progress | arena-7eff7e24 | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md` |
-| 7EFF-3 PR/merge, Pages build verification and final results | in progress | arena-7eff7e24 | this section of `COORDINATION.md` |
+| 7EFF-1 Audit and directly recheck official legal sources; publish evidence and limitations | done (29 scoped official sources) | arena-7eff7e24 | `_7eff7e24/**` |
+| 7EFF-2 Integrate privacy-safe dashboard, dedicated suggestion review queue, missing-information register, reproducible projections and tests | done | arena-7eff7e24 | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md` |
+| 7EFF-3 PR/merge, Pages build verification and final results | done (PR #45 merged; Pages successful) | arena-7eff7e24 | this section of `COORDINATION.md` |
 
 Findings before edits: the existing site includes a recognizable combination of private case figures,
 asserts guaranteed tax-free sale and permanent tax bases, treats a 2026 rent increase as perpetual,
@@ -1111,7 +1111,7 @@ notice (including pending File 261020), BLS 2022 inflation, SEC stocks, Treasury
 Exact passages and retrieval chunks are recorded in `_7eff7e24/evidence.py`. Broken/moved source
 routes and FHFA maintenance are logged rather than reported verified.
 
-### Concurrent handoff and integration reconciliation (7EFF, 22:32 UTC)
+### Concurrent handoff and integration reconciliation (7EFF, 2026-11-12)
 
 Re-read `main` after it advanced through PRs #40–43 to `92c8f3d`; these shared-output tasks
 are done/superseded and their remaining in-progress scopes are board/deployment records only.
@@ -1135,3 +1135,34 @@ private amounts removed). Regenerated shared HTML and maintained old open-questi
 Obsolete private-dependent generators/candidate pages were deleted in favor of the migrated,
 source-checked public generator; original contributions remain in Git history. No active claim
 was taken over: incoming sessions' shared-output tasks were already done/superseded.
+
+### Final verification and publication result — 7EFF (2026-11-12)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino4/pull/45 — merged at
+  `2026-11-12T22:31:48Z`, merge commit `fc6da8a0e13c051e0929cf870e4c09a1b0b3ba12`.
+- **CI:** Verify public dashboard run `43320630361` (branch) and `43320739433` (main) succeeded.
+  21 HTML files (17 pages + 4 redirects), 842 sourced/statused table rows, 3,863 registered
+  official link instances, 108 deliberately blank cells, 561 labeled synthetic CSV rows;
+  verifier zero failures, 13 independent arithmetic/content tests passed; deterministic rebuild,
+  JavaScript syntax and whitespace checks passed.
+- **Browser:** Chromium smoke tests on all 17 desktop and mobile pages passed; year selector,
+  local review persistence and reset passed; no JavaScript errors or third-party browser requests.
+  Screenshots inspected. A small mobile follow-up keeps the status line break readable and
+  widens tables inside their scroll containers; it changes no data or recommendation.
+- **Pages:** run https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43320737802 succeeded.
+  Pages API reports `built`, error message `null`, and the exact PR #45 merge commit. Jekyll build,
+  artifact upload and deployment all passed. Platform notices about Node/Ubuntu migration were
+  non-fatal, not application failures.
+- **Live content:** https://wingbangboozle1-lang.github.io/Tino4/ fetched successfully with the new
+  heading/conditional decision. New Flagged for Review content fetched successfully. A cached
+  first fetch of Suggestions returned old content; a deployment-keyed query then confirmed the
+  new page with 17 review-only proposals, distinct financial/site queues and no private amounts.
+  `/_7eff7e24/evidence.py` returns the GitHub Pages “404 File not found” page, confirming exclusion.
+- **Open / needs review (published):** F01–F16 on Flagged for Review. Most urgent: public Git
+  history, old board/PR diffs/caches/clones may retain disclosures; $10 rounding and noindex are
+  not confidentiality. Private title/trust/estate/debt/insurance/rent/repair evidence remains
+  unverified and blank. No actual household best-profit conclusion or official 50-year forecast
+  is claimed. No history rewrite, visibility change, private-document request or financial action.
+- This follow-up records the actual PR #45 merge/deployment result and the mobile polish on the
+  same platform-fixed branch. `git pull --rebase --ff-only` is used before pushing, preserving
+  explicit integration merges and avoiding rebase flattening of other sessions' histories.
