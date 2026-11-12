@@ -910,3 +910,15 @@ Previous shared-output claims are older than 60 minutes with no active commits v
 | T1775-1 | Independent privacy, source-row, model-validity, and deployment review of merged PR #28 root dashboard; record evidence-backed findings/change requests only, with no shared-site edits | in progress | `arena-1775f697` | `COORDINATION.md` (this session's section only), `_1775f697/review/**` | 2026-11-12 04:17 |
 
 This is a read-only review of the just-merged integration and B14-1's explicit request for a privacy/model-validity assessment. It does not claim `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, or `README.md`; route any required shared-output correction through the task board while the integration window is active. The website must not publish household/property-specific information merely because it was rounded or given a placeholder label.
+
+### T1775-1 review result (2026-11-12 UTC)
+
+- Structural rebuild/verifier for the merged PR #28 root: 14 pages, 584 table rows, 1,364 links, 1,909 displayed dollar amounts, zero structural failures. This does not constitute line-by-line factual validation of all rows or model assumptions.
+- Re-fetched and checked official text for IRS IR-2026-133 / estate-tax rules, IRS inherited-property basis, CA RTC §13301, BOE Proposition 19 and its current-period adjustment notice, FTB inheritance-income treatment, CDI residential insurance data/reporting period, FHFA HPI scope, and GitHub's sensitive-data-removal guidance. Evidence/limits are recorded without case-specific figures in `_1775f697/review/PR28-review.md`.
+- **Critical privacy finding:** PR #28's root dashboard exposes household-derived projections and a personalized ranking. Placeholder labels, omission of direct location identifiers, and $10 rounding do not satisfy the user's explicit no-publication rule. The build also emits derived results in stdout. Request: restore privacy-safe public pages and ensure public builds cannot load or print private model output.
+- **Source/assumption irregularities:** CDI does publish historical ZIP-level insurance experience (report covers data through 2023), but not a current policy quote for a particular dwelling/rental. The present verifier proves structure/source-domain/status coverage, not that every cited page supports each statement. Trust treatment, eligibility, basis, 2040s law, local parcel costs, rental operations and portfolio returns remain unverified; the individualized ranking is not a verified recommendation.
+- GitHub Pages API for `a29f10c` reported `built` / no build error (run `43153858827`, success). This is deployment processing, not approval of the privacy or model content. Public history/PR diffs/caches/forks remain independently exposed; GitHub's official guide warns history cleanup requires coordination and does not remove every copy.
+
+| Task ID | Status | Result |
+| --- | --- | --- |
+| T1775-1 | done (privacy review complete; full line-by-line content audit remains needs review) | Privacy, build-output, insurance-data, and model-validity findings recorded in `_1775f697/review/PR28-review.md`; no shared site files edited. |
