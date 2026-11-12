@@ -43,17 +43,36 @@ figure-less site from PR #11, which does not meet the owner's brief (same findin
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| C049-1 | Line-by-line audit of the two landed candidates (`s179ec133/`, `_s9ad1da71/`) and of the open change requests: every published fact re-fetched from the official page by this session; arithmetic re-run | in progress | `s-c0492629` | `tools/research/**` | 2026-11-12 04:20 |
-| C049-2 | Reconciled model and generator in the shared tool path, built from the `s-179ec133` candidate (its documented handoff route) with corrections that an official source proves | in progress | `s-c0492629` | `tools/**` | 2026-11-12 04:20 |
-| C049-3 | Final integration of the shared published outputs; re-verify combined data, links, privacy, build | in progress | `s-c0492629` | `index.html`, `pages/**`, `assets/**`, `_config.yml`, `README.md` | 2026-11-12 04:20 |
-| C049-4 | PR to `main`, merge, confirm Pages deployment, record result here | in progress | `s-c0492629` | `COORDINATION.md` (this section only) | 2026-11-12 04:20 |
+| C049-1 | Line-by-line audit of the two landed candidates (`s179ec133/`, `_s9ad1da71/`) and of the open change requests: every published fact re-fetched from the official page by this session; arithmetic re-run | in progress | `s-c0492629` | `tools/c0492629/research/**` | 2026-11-12 04:15 |
+| C049-2 | Reconciled model and generator in the shared tool path, built from the `s-179ec133` candidate (its documented handoff route) with corrections that an official source proves | in progress | `s-c0492629` | `tools/c0492629/**` (then `tools/build.py`, `tools/verify.py` at integration) | 2026-11-12 04:15 |
+| C049-3 | Final integration of the shared published outputs; re-verify combined data, links, privacy, build | in progress | `s-c0492629` | `index.html`, `pages/**`, `assets/**`, `_config.yml`, `README.md` | 2026-11-12 04:15 |
+| C049-4 | PR to `main`, merge, confirm Pages deployment, record result here | in progress | `s-c0492629` | `COORDINATION.md` (this section only) | 2026-11-12 04:15 |
 
 Other sessions' directories (`s179ec133/**`, `_s9ad1da71/**`, `_a24b1c8c/**`, `_research/**`) and
 board entries are left untouched.
 
 ### Log (`s-c0492629`)
 
-- 2026-11-12 04:20 UTC — board and all remote heads read; handoff recorded; claim committed and pushed.
+- 2026-11-12 04:15 UTC — board and all remote heads read; handoff recorded; claim committed and pushed
+  (PR #26).
+- 2026-11-12 04:16 UTC — two other sessions started in the same minute and claimed parts of the same
+  shared outputs: `arena-ccfa33cc` (CCFA-1, merged as PR #25 and marked **done**, so its scope is
+  released) and `arena-b14e4024` (B14-1, **in progress**: `_config.yml`, `tools/verify.py`,
+  `tools/build.py`, generated pages). To avoid a collision this session does **not** touch those files
+  until B14-1 is merged or 60 minutes pass without a commit; until then it works only in a new path,
+  `tools/c0492629/**`, that no session uses. At integration it merges `main` and reconciles; it keeps
+  every regression check B14-1 adds that is consistent with the owner's brief.
+- **Open disagreement, recorded rather than silently overridden.** PR #11, CCFA-1 and B14-1 keep all
+  case figures off the site. The owner's brief says, in the owner's words: "Costs and numbers should
+  be used but rounded to the nearest $10 increments ... and should be reported in any decision
+  analysis to provide clarity. I want clear numbers and projections for the reasoning behind
+  decisions", and asks to "project out value of the house by year, property tax value, tax assessed
+  value" and to say "what would be the best plan and why". Six earlier sessions reached the same
+  reading (`s-5533dc75`, `s-356f911b`, `s-2482744e`, `s-a24b1c8c`, `s-9ad1da71`, `s-179ec133`). This
+  session's integration therefore publishes figures **rounded to $10, computed from inputs that were
+  rounded before use**, with no name, address, ZIP code, neighbourhood or parcel identifier, and
+  labels every row as Verified / Owner-supplied / Projection / Assumption / Not verified. Whether
+  $10 rounding is enough is listed on Flagged for Review for the owner to decide.
 
 ## Session `s-179ec133` — tasks, results, handoff (2026-11-11)
 
