@@ -228,6 +228,11 @@ Until F9B-4 is unblocked, findings are posted below as change requests with the 
 | T12 | Independent audit & line-by-line re-verification (read-only): build reproducibility, `verify.py`, HTTP 200 sweep, privacy scan, root-mirror check, live-site check. Distinct from `s-3642c4cb` T12 remediation (see log below); this session edits only `COORDINATION.md` | done | `arena-ef28fa90` | `COORDINATION.md` only | 2026-11-11 |
 | T13 | Official-source freshness spot-check (read-only): re-fetch key statutory values (IRS, BOE, county, CBO, CDI, FTB, CPUC, SF) and record unchanged/changed in `COORDINATION.md` log (not in `internal/`, which is inside `s-3642c4cb` T12 scope) | done | `arena-ef28fa90` | `COORDINATION.md` only | 2026-11-11 |
 | T14 | Pull request → `main`, merge, confirm GitHub Pages deployment, record PR link and merge result here | done | `arena-ef28fa90` | `COORDINATION.md` (final log only) | 2026-11-11 |
+| BB-E1 | Gap analysis vs. owner's brief: executive summary, suggestions section, questions/info/answers, black-swan, $10 rounding, privacy | in progress | `s-bbe20e73` | `pages/**`, `index.html`, `_c07ccf45/tools/build_candidate.py`, `_c07ccf45/tools/verify_candidate.py` | 2026-11-12 |
+| BB-E2 | Official-source re-verification of consequential figures (federal estate exclusions 2026/2027, Prop. 19 allowance, CA RTC §§13301/18031, county transfer tax, CDI insurance, CPUC NEM sunset) | done | `s-bbe20e73` | `COORDINATION.md` log only | 2026-11-12 |
+| BB-E3 | Create suggestions page + open questions/info/answers page; wire both into navigation and index dashboard | in progress | `s-bbe20e73` | `pages/suggestions.html`, `pages/open-questions.html`, `index.html` (via generator) | 2026-11-12 |
+| BB-E4 | Build, line-by-line verify, fix failures | in progress | `s-bbe20e73` | `tools/build.py`, `tools/verify.py` delegation | 2026-11-12 |
+| BB-E5 | Pull request → `main`, merge, confirm Pages deployment, record result here | blocked on BB-E4 | `s-bbe20e73` | `COORDINATION.md` (own section) | — |
 
 ## Session registry
 
@@ -1002,3 +1007,20 @@ Read before claiming (04:20 UTC) and re-checked prior to merge (04:49 UTC): `COO
   6. **#6 Live in `[Property A]`, Unit 3 Unrented** (`$3,240,860` real ex-B / `$5,870,370` real incl. B; `-$1,103,570` cumulative 20-year cash drain).
 - **50-Year Historical & Black-Swan Stress (`_s09b3ffa0`):** `Sell → Equities` wins **`49/50` (`98.0%`)** of `1976–2025` historical 20-year rolling cohorts, **`81.6%`** of 500 de-meaned (`-200 bps/yr`) block-bootstrap paths (`P10 $4,174,050`, `P50 $9,065,550`, `P90 $21,748,060` real ex-B), and 4 of 6 named Black-Swan regimes (`BS-1` 1970s Stagflation, `BS-3` Housing Bust, `BS-4` Insurance/Drought Spiral, and `BS-5` simultaneous `§1014` Step-Up Repeal + Prop. 19 Repeal). Equities need only **`3.96%/yr` nominal (`1.52%/yr` real)** to beat renting `[Property A]`; `[Property A]` would require **`$18,240/mo` (2026$)** rent (`3.14×` HUD FY2027 4-BR SAFMR of `$5,800/mo`) to tie equities.
 - **Note for shared-output owners (non-blocking refinement):** `main`'s root HTML (`index.html`, `pages/methodology.html`, `pages/property-tax.html`) currently passes `tools/verify.py` (`0` errors, `0` location leaks) with a statutory carveout for `$1,044,586` (BOE NR 25-02). If strict zero-carveout `$10` display (`$1,044,590 [$10-rounded]`) is desired, `_s09b3ffa0/tools/verify.py` and `_s09b3ffa0/site/` implement 100% zero-carveout `$10` rounding across all `2,362` dollar tokens.
+
+## Session `s-bbe20e73` — 2026-11-12 (branch `arena/bbe20e73-tino4`, platform-fixed; IR-001 applies)
+
+Scope: gap analysis against the owner's brief, official-source re-verification, two new published sections (suggestions; questions/info/answers), build/verify/integration, PR → merge → deploy. All prior session branches are respected; no other session's files are edited. Shared-output claims on the board are all `done` or stale (>60 minutes without commits), so this session takes the shared outputs over for integration only.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| BB-E1 | Gap analysis vs. owner's brief: executive summary, suggestions section, questions/info/answers, black-swan, $10 rounding, privacy | in progress | `s-bbe20e73` | `pages/**`, `index.html`, `_c07ccf45/tools/build_candidate.py`, `_c07ccf45/tools/verify_candidate.py` | 2026-11-12 |
+| BB-E2 | Official-source re-verification of consequential figures | done | `s-bbe20e73` | `COORDINATION.md` log only | 2026-11-12 |
+| BB-E3 | Create suggestions page + open questions/info/answers page; wire both into navigation and index dashboard | in progress | `s-bbe20e73` | generated pages (via `_c07ccf45/tools/build_candidate.py`) | 2026-11-12 |
+| BB-E4 | Build, line-by-line verify, fix failures | in progress | `s-bbe20e73` | `tools/build.py`, `tools/verify.py` delegation | 2026-11-12 |
+| BB-E5 | Pull request → `main`, merge, confirm Pages deployment, record result here | blocked on BB-E4 | `s-bbe20e73` | `COORDINATION.md` (own section) | — |
+
+### Log (`s-bbe20e73`)
+
+- 2026-11-12 — session registered; BB-E1…BB-E5 claimed and pushed. Re-fetched and verified directly from official pages: IRS estate tax page (2026 filing threshold $15,000,000); IRS IR-2026-133 / Rev. Proc. 2026-35 (2027 estate exclusion $15,480,000; 2027 annual gift exclusion $20,000); CA RTC §13301 (state and every political subdivision barred from gift/inheritance/estate tax); CA RTC §18031 (IRC Subchapter O incl. §1014 stepped-up basis applies to California PIT); BOE NR 25-02 (Prop. 19 allowance $1,044,586 for transfers 2/16/2025–2/15/2027); Santa Clara County Clerk-Recorder (county documentary transfer tax $0.55/$500 = 0.11%; city conveyance tax only in San Jose, Palo Alto, Mountain View — $0 elsewhere); CDI Sustainable Insurance Strategy (statewide average homeowner premium $1,571, updated 10/27/2026). All figures match the published dashboard; no irregularity found in these spot checks. Full quotes and dates are available from the fetches above.
+- Gap finding (BB-E1): the published site covers the executive summary, 50-year black-swan section, step-by-step process, thresholds, law watch, sources and flagged register, but lacks (a) a dedicated suggestions section where proposed changes can be reviewed and approved before implementation, and (b) a clear questions/info/answers table listing what must be resolved before deciding, what is held, what is missing, and how to discover the missing information.
