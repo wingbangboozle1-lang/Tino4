@@ -169,7 +169,7 @@ paths with `python3 s179ec133/_work/tools/build.py <repo root>` (it writes `inde
 
 ## Session `s-f9b466e7` — 2026-11-12 (branch `arena/f9b466e7-tino4`, platform-fixed; IR-001 applies)
 
-Read before claiming (04:14–04:22 UTC): this board on `main` @ `a29f10c`, pull requests #1–#30 and
+Read before claiming (04:14–04:20 UTC): this board on `main` @ `a29f10c`, pull requests #1–#30 and
 every remote head (28). What that showed:
 
 - Seven sessions started within the same three minutes today. The shared outputs were integrated by
@@ -183,9 +183,9 @@ every remote head (28). What that showed:
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| F9B-1 | Requirements traceability: every requirement of the owner's brief → where the landed root site answers it → what is missing or weak (takes over `T5533-1`, stale since 2026-11-11 13:19 UTC, nothing delivered) | in progress | `s-f9b466e7` | `_f9b466e7/requirements/**` | 2026-11-12 04:22 |
-| F9B-2 | "Close the blanks" research and evidence ledger: for every row the landed site leaves blank, `Not verified` or `Assumption` (insurance for an owner-occupied and for a rented home, city and county transfer taxes, water and sewer rate paths, tax-rate-area rates, solar tariff term, rent rules, pending bills) and for the facts that decide the ranking, the official page is fetched by this session and recorded as URL + quoted passage + date + verdict | in progress | `s-f9b466e7` | `_f9b466e7/evidence/**` | 2026-11-12 04:22 |
-| F9B-3 | Independent reference calculation — a second implementation of the year-by-year and live / rent / sell arithmetic from **$10-rounded** inputs only, for a row-by-row comparison with the landed model (takes over `T356-2`, stale since 2026-11-11 13:24 UTC, nothing delivered). Becomes site content only through F9B-4 | in progress | `s-f9b466e7` | `_f9b466e7/model/**`, `_f9b466e7/data/**` | 2026-11-12 04:22 |
+| F9B-1 | Requirements traceability: every requirement of the owner's brief → where the landed root site answers it → what is missing or weak (takes over `T5533-1`, stale since 2026-11-11 13:19 UTC, nothing delivered) | in progress | `s-f9b466e7` | `_f9b466e7/requirements/**` | 2026-11-12 04:20 |
+| F9B-2 | "Close the blanks" research and evidence ledger: for every row the landed site leaves blank, `Not verified` or `Assumption` (insurance for an owner-occupied and for a rented home, city and county transfer taxes, water and sewer rate paths, tax-rate-area rates, solar tariff term, rent rules, pending bills) and for the facts that decide the ranking, the official page is fetched by this session and recorded as URL + quoted passage + date + verdict | in progress | `s-f9b466e7` | `_f9b466e7/evidence/**` | 2026-11-12 04:20 |
+| F9B-3 | Independent reference calculation — a second implementation of the year-by-year and live / rent / sell arithmetic from **$10-rounded** inputs only, for a row-by-row comparison with the landed model (takes over `T356-2`, stale since 2026-11-11 13:24 UTC, nothing delivered). Becomes site content only through F9B-4 | in progress | `s-f9b466e7` | `_f9b466e7/model/**`, `_f9b466e7/data/**` | 2026-11-12 04:20 |
 | F9B-4 | Closing reconciliation of the shared outputs: fix rows an official source proves wrong, fill blanks that F9B-2 verified, add what the brief requires and is still missing, re-verify line by line, check links. **Blocked:** starts only when no session holds the shared outputs with a claim that is younger than 60 minutes and has commits | blocked | `s-f9b466e7` | shared outputs, at that time only | — |
 | F9B-5 | PR → `main`, merge, confirm Pages deployment, record the result here | blocked on F9B-4 | `s-f9b466e7` | this board section | — |
 
@@ -206,7 +206,7 @@ Until F9B-4 is unblocked, findings are posted below as change requests with the 
   `s-c0492629` had inserted its section at the same position minutes earlier. Stopped, read both.
   Resolved by keeping `main`'s text byte for byte and placing this section in a different position
   (before "Task board"), so no other session's entry is altered.
-- 2026-11-12 04:22 UTC — `main` had meanwhile advanced through PRs #25–#30 (integration landed).
+- 2026-11-12 04:20 UTC — `main` had meanwhile advanced through PRs #25–#30 (integration landed).
   The first claim overlapped C049-1/C049-2 in purpose, so it is withdrawn and replaced by the
   narrower F9B-1…5 above. Nothing had been built under the withdrawn claim.
 
