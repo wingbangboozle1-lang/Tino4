@@ -922,3 +922,11 @@ This is a read-only review of the just-merged integration and B14-1's explicit r
 | Task ID | Status | Result |
 | --- | --- | --- |
 | T1775-1 | done (privacy review complete; full line-by-line content audit remains needs review) | Privacy, build-output, insurance-data, and model-validity findings recorded in `_1775f697/review/PR28-review.md`; no shared site files edited. |
+
+## Session `arena-1775f697` — T1775-2 urgent privacy-safe publication remediation
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T1775-2 | Correct the post-PR-#28 public privacy regression: restore source-linked generic pages with blank private estimates, preserve current official-law updates and black-swan index analysis, remove the public build's dependency on private model output, strengthen regression checks, remove obsolete case-derived working artifacts from the current tree, verify, PR/merge, and confirm deployment | in progress | `arena-1775f697` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, deletions under `s179ec133/**`, `_s9ad1da71/**`, `_research/**`, `_a24b1c8c/**`, and this session's `COORDINATION.md` section only | 2026-11-12 04:22 |
+
+Handoff basis: PR #28 (`F570-T1`) is merged and its task is done; B14-1 is marked needs review (non-blocking), and the only remaining open PR is the older board-only PR #19. This follow-up claims the now-unowned public site for a privacy correction, not another session's active work directory. It will not rewrite Git history or alter other sessions' board entries. A current-tree correction cannot purge prior commits, PR diffs, caches, forks, or other remote branches; that residual requires a repository-owner-coordinated process.
