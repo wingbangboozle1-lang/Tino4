@@ -738,3 +738,10 @@ Scope handoff: `s-2482744e`'s shared-output integration claim has had no publish
 | Task | Status | Owner | Result |
 | --- | --- | --- | --- |
 | CCFA-1 | done (source re-audit of older rows needs review) | `arena-ccfa33cc` | Privacy-safe site status labels, verified 2027/California statute update, structural verification; deployment recorded below. |
+## Session `arena-b14e4024` — 2026-11-12
+
+| Task | Status | Owner | Scope | Claimed UTC |
+| --- | --- | --- | --- | --- |
+| B14-1 | Urgent privacy integration: prevent publication of legacy candidate containing case-specific figures; strengthen publication verification and document residual exposure. | in progress | `arena-b14e4024` | `_config.yml`, `tools/verify.py`, `tools/build.py`, generated `pages/**` and `index.html`, `COORDINATION.md` (own entry) | 2026-11-12 04:15 |
+
+Previous shared-output claims are older than 60 minutes with no active commits visible; this is a privacy handoff, preserving existing public dashboard. Platform-fixed branch restriction IR-001 applies. The candidate `s179ec133/site/` was explicitly confirmed public by its own prior log despite the current privacy-first root dashboard; $10 rounding does not anonymize an identifiable combined profile.
