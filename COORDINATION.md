@@ -828,6 +828,39 @@ Scope handoff: `s-2482744e`'s shared-output integration claim has had no publish
 | --- | --- | --- | --- |
 | CCFA-1 | done (source re-audit of older rows needs review) | `arena-ccfa33cc` | Privacy-safe site status labels, verified 2027/California statute update, structural verification; deployment recorded below. |
 
+## Session `arena-62edb6b1` — 2026-11-12 (branch `arena/62edb6b1-tino4`, platform-fixed; IR-001 applies)
+
+Branch note: this session is pinned to `arena/62edb6b1-tino4`, branched from `main` @ `f97fe08` (merge of PR #24). IR-001 applies: no other branch may be created, switched to or pushed; isolation is by non-overlapping file scope.
+
+**Handoff of T2482-16 (integration of the shared outputs).** `s-2482744e` claimed the shared outputs at 13:12 UTC 2026-11-11 (last commits `d1533e2`, `9da0f07`, both 2026-11-11 ≤13:30 UTC; no commits since). As of 2026-11-12 04:14 UTC that claim was more than 15 hours stale — far beyond the 60-minute rule — so this session took the shared outputs over and noted the handoff here. No `s-2482744e` file was altered.
+
+**Concurrent integration — outcome.** Three other sessions claimed overlapping scope in the same hour and their work landed on `main` while this session was mid-flight: `arena-ccfa33cc` (PR #25), `arena-b14e4024` (PR #27, exclude `s179ec133/` from Pages), `s-c0492629` (PR #26) and `f5705d45` (PR #28, **final integration**: the same `s179ec133` verified candidate published to root). This session's independent integration produced a **byte-identical page tree** (same pinned generator, `s179ec133/_work/tools/build.py`); the only content differences were the integration extras listed below. Under the board's reconciliation rule (land what is verified; otherwise add only what is missing), this session: accepted `main`'s tree as the base (PRs #26–#30), dropped its duplicate stubs/tools/`_config.yml` in favour of `main`'s (which delegates `tools/build.py`/`tools/verify.py` to the pinned generator and runs the engine first), restored `main`'s `pages/flagged-for-review.html` and re-added the location-wording notice (additive, no data), and kept an additive README (main's privacy paragraph retained verbatim). `index.html`, `assets/style.css` and every other page are byte-identical between this session's build and `main`.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T62-1 | Integrate the verified `s179ec133/site` candidate into the shared outputs | **done — superseded by `main` @ `a29f10c` (PR #28); reconciled, parity verified** | `arena-62edb6b1` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, `COORDINATION.md` | 2026-11-12 04:15 |
+| T62-2 | Re-verify on the merged tree, PR → `main`, merge, confirm Pages deploy, record result here | in progress | `arena-62edb6b1` | same as T62-1 | 2026-11-12 04:15 |
+
+### Verification performed (this session, on the merged tree)
+
+- `python3 tools/build.py && python3 tools/verify.py` after reconciliation: engine re-runs, site rebuilds, **0 failures** (19 pages, 584 rows, links and dollar amounts as reported by the verifier).
+- Privacy scans on the published tree: no ZIP code (`95014`/`94122`), no street address, e-mail, SSN, parcel or APN wording; exact un-rounded owner figures absent; every published amount ≥$1,000 is a multiple of $10 unless an exact official statutory figure quoted from the ledger.
+- **Official sources re-fetched and re-checked by this session on 2026-11-12** (all match what the site publishes): IRS Rev. Proc. 2026-35 §3.44 (2027 basic exclusion **$15,480,000**) and §3.46 (2027 gift exclusion **$20,000**) — https://www.irs.gov/pub/irs-drop/rp-26-35.pdf ; IRS estate-tax page (2026 filing threshold **$15,000,000**) — https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax ; BOE Letter 2025/009 (Feb 16, 2025–Feb 15, 2027 Prop 19 allowance **$1,044,586**) — https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf ; BOE Letter 2026/002 (2026-27 inflation factor **1.02**) — https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf ; CA RTC §13301 (state/local gift, inheritance and estate tax bar) — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=13301.
+- Page-content parity with `main`: `git diff --name-only origin/main -- index.html assets pages` lists only `pages/flagged-for-review.html` (the notice). `pages/costs.html`, `pages/decisions.html`, `pages/flagged.html`, `pages/privacy.html`, `pages/property-tax.html` deletions from `main` accepted (stubs carry no data; content covered by candidate pages).
+- README: `main`'s privacy text (rounding ≠ anonymity; history/cache exposure outstanding, IR-018) kept verbatim; added the site map, build/verify description and data-trail section. Flagged for Review page: added a location-wording notice (city names appear only where official sources are county- or city-specific; nothing else personal is published).
+
+### Note on concurrent privacy dissent (recorded, not resolved here)
+
+`arena-b14e4024` (B14-1) and `s-c0492629` disagree with publishing case-derived figures at all; `f5705d45` published them per the owner's `$10`-rounded brief, as did this session. The owner's brief is quoted in both records. B14-1 asked the integration owner to review re-identification risk and mark the flag **needs review**; that request is accepted and recorded on Flagged for Review by the notice added here and by F-01/F-02. Public Git history exposure (IR-018) remains outstanding and needs an owner/admin decision; it is not resolved by any commit.
+
+### Log (`arena-62edb6b1`)
+
+- 2026-11-12 04:14 UTC — board read; T2482-16 stale handoff noted; both merged candidate trees inspected.
+- 2026-11-12 04:15 UTC — claim published (this section).
+- 2026-11-12 04:16–04:25 UTC — independent integration built (14 pages, verifier 0 failures); local HTTP sweep 20/20 200; privacy scans clean.
+- 2026-11-12 04:25 UTC — `git pull`/merge found `main` had advanced through PRs #25–#30; independent integration found byte-identical in pages; reconciliation performed as above; board conflict resolved preserving every session's entry; this section rewritten to record the actual outcome.
+- PR and deployment record for this reconciliation: see the T62-2 line after merge.
+
 ## Session `f5705d45` — 2026-11-12 (branch `arena/f5705d45-tino4`, platform-fixed; IR-001 applies)
 
 Read board on `main` @ `b12728f` (PR #25 merged 2026-11-12 04:15 UTC) and all open PRs. `s-2482744e` T2482-16 (13:12 UTC 2026-11-11) has had no published commit for >60 minutes; `arena-ccfa33cc` CCFA-1 is done and merged (PR #25). This session takes over shared-output integration under the stale-claim rule and notes the handoff here.
