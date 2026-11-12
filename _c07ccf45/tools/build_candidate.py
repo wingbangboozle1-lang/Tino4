@@ -154,6 +154,8 @@ NAV = [
     ("index.html", "Overview"),
     ("pages/executive-summary.html", "Best plan"),
     ("pages/decision-analysis.html", "Decision analysis"),
+    ("pages/suggestions.html", "Suggestions"),
+    ("pages/open-questions.html", "Open questions"),
     ("pages/property-tax.html", "Property tax"),
     ("pages/projections.html", "50-year projections"),
     ("pages/operating-costs.html", "Costs & insurance"),
@@ -166,8 +168,6 @@ NAV = [
     ("pages/privacy.html", "Privacy"),
     ("pages/sources.html", "Sources"),
     ("pages/flagged-for-review.html", "Flagged for review"),
-    ("pages/suggestions.html", "Suggestions"),
-    ("pages/open-questions.html", "Questions & answers"),
 ]
 
 CSS = """
@@ -372,6 +372,16 @@ def page_index(anchor: dict, series: list[dict], headroom: list[dict]) -> str:
                 f'<a href="pages/decision-analysis.html">Decision analysis</a>',
                 "Live in A, rent A out, or sell and reinvest — compared for every inheritance year 2040–2050, plus sensitivity cases.",
                 src_links(["S10", "S11", "S12", "S29"]),
+            ],
+            [
+                f'<a href="pages/suggestions.html">Suggestions — pick the path</a>',
+                "Six ranked decision suggestions, site-improvement proposals, and a gated flow so you choose in writing before acting.",
+                src_links(["S07", "S15", "S22", "S29"]),
+            ],
+            [
+                f'<a href="pages/open-questions.html">Open questions &amp; readiness</a>',
+                "What we have vs. what is missing, ten questions that must be answered, and the exact next step to close each gap.",
+                src_links(["S01", "S26", "S27", "S36"]),
             ],
             [
                 f'<a href="pages/property-tax.html">Property tax</a>',
@@ -1835,6 +1845,390 @@ def page_privacy() -> str:
     return body
 
 
+def page_suggestions(anchor: dict, regimes: dict, by_year: dict) -> str:
+    p = anchor["plans"]
+    w = p["P1A_SELL_EQUITY"]
+    # decision suggestions table
+    sug_rows = [
+        [
+            "SUG-01 · Sell Property A at stepped-up basis, stay in Property B Unit 3, invest in broad equities (Plan 1A)",
+            "Choose when the goal is to maximise 20-year after-tax wealth and you do not need to live in Property A. At a 2045 transfer, $5,959,750 steps up under IRC §1014 / RTC §18031, nets $5,655,210 after 5.11% sale friction, with $0 capital-gains tax; after-liquidation $24,737,450 in 2064 — $4,944,320 ahead of renting Property A and $10,076,390 ahead of moving in.",
+            "Highest after-liquidation net worth in all 11 inheritance years (2040–2050) and in 5 of 7 black-swan regimes; removes $53,580–$70,180/yr reassessed tax and post-solar carrying cost.",
+            "You give up use of Property A; portfolio is exposed to equity drawdowns (regime R3: −24% then −18% two-year crash).",
+            src_links(["S07", "S15", "S22", "S28", "S29"]),
+        ],
+        [
+            "SUG-02 · Sell Property A, stay in Property B Unit 3, split 75% equities / 25% CA-tax-exempt Treasuries (Plan 1C)",
+            "Choose when you want most of Plan 1A's upside with a dampener for a crash the year after sale. $22,927,150 after-liquidation in 2064 (2045 transfer), $1,810,300 behind pure equities but ahead of renting in 6 of 7 regimes.",
+            "Treasury interest is exempt from California income tax (S18); staging over 24–36 months removes single-day entry risk; after-liquidation gap to renting is $3,134,020.",
+            "You surrender $1,810,300 of expected upside vs. pure equities in baseline; still leaves Property A unused.",
+            src_links(["S07", "S15", "S18", "S40", "S43"]),
+        ],
+        [
+            "SUG-03 · Sell Property A, hold proceeds entirely in CA-tax-exempt Treasuries (Plan 1B)",
+            "Choose when preservation and predictable income outweigh growth — near-retirement horizon, or you expect an equity lost decade. $17,496,230 after-liquidation in baseline; wins outright in regime R6 (equity lost decade + local boom: $18,694,600 vs $16,466,860 for equities).",
+            "No equity volatility; Treasury interest exempt from California tax; fully liquid; beats renting when equities lag.",
+            "$7,241,220 behind equities in baseline; still requires finding new housing if you must leave Property B.",
+            src_links(["S18", "S40", "S44", "S29"]),
+        ],
+        [
+            "SUG-04 · Rent out Property A, keep living in Property B Unit 3 (Plan 3)",
+            "Choose only if you insist on retaining both parcels in the same seismic and insurance market and can carry $70,180/yr reassessed tax plus insurance, maintenance and management to net a sub-1% cash yield. Generates $68,350/yr household cash flow year 1 and $1,896,740 20-year operating cash, but finishes $4,944,320 behind selling in baseline.",
+            "Keeps both appreciated parcels; $85,800/yr Property B rent retained; after-liquidation $19,793,130 in 2064.",
+            "Property A reassessed to full $5,959,750 (no Prop. 19 relief); depreciation recapture taxed at 25% + 13.3% California at exit; concentrated seismic/insurance risk (regime R4).",
+            src_links(["S12", "S21", "S22", "S36", "S38"]),
+        ],
+        [
+            "SUG-05 · Move into Property A, rent out vacated Property B Unit 3 (Plan 2B)",
+            "Choose when lifestyle — living in Property A — is the objective and you price it explicitly. Trail vs. sell: $8,229,950 over 20 years (baseline). Beats leaving Unit 3 empty by $1,846,440. Requires occupying within 1 year and filing Prop. 19 + $7,000 exemption claims on time.",
+            "$53,580/yr Property A tax (partial Prop. 19 relief: FBYV $802,030 + $1,044,586 allowance); Property B 3-unit rent $131,040/yr replaces 2-unit $85,800/yr.",
+            "Highest carrying cost of ownership plans; Property B loses its exemption if you claim it on Property A; Unit 3 becomes rent-controlled (1.6% allowable increase, just-cause rules).",
+            src_links(["S22", "S24", "S30", "S31", "S28"]),
+        ],
+        [
+            "SUG-06 · Move into Property A, leave Property B Unit 3 vacant (Plan 2A)",
+            "Never choose as a financial plan — it is the cost of leaving money on the table. $14,661,060 after-liquidation, $10,076,390 behind selling and $1,846,440 behind renting Unit 3. Listed only to quantify the vacancy cost.",
+            "None financially; useful only to illustrate the $1,846,440 cost of an empty unit over 20 years.",
+            "Negative $63,620/yr year-1 cash flow; $1,884,880 cumulative 20-year drain before any wealth comparison.",
+            src_links(["S24", "S30", "S31", "S32"]),
+        ],
+    ]
+
+    site_rows = [
+        [
+            "Add a side-by-side selector with a 2040–2050 slider",
+            "Readers must compare six plans across 11 inheritance years in a static table today.",
+            "Interactive year picker that re-ranks the six plans and rewrites the property-tax and net-worth figures for the selected year reduces misreading of the wrong column.",
+            "High — removes the most common user error in the decision analysis page.",
+            src_links(["S21", "S28", "S40"]),
+        ],
+        [
+            "Surface the 5 mechanisms as a decision gate checklist on the suggestions page",
+            "The executive summary's five mechanisms (basis step-up, Prop. 19 cap, rental yield vs. Treasuries, Property B exemption, solar sunset) are the actual deciders.",
+            "A gated flow: if you answer no to 'will you live in Property A?' the plan narrows to sell vs. rent; the site can then highlight only the relevant rows.",
+            "High — turns 42 tables into a 3-question flow without changing any number.",
+            src_links(["S07", "S15", "S22", "S33", "S38"]),
+        ],
+        [
+            "Expose the open-questions inventory as a fillable readiness tracker",
+            "Today the missing items (insurance quotes, trust instrument type, estate size, solar interconnection date, lifestyle preference) are buried in the flagged page.",
+            "A tracker showing Have / Missing / Assumed with a due date and who to ask (trustee, CPA, insurance broker, assessor) turns the model into an execution checklist.",
+            "High — the decision cannot be acted on without those answers.",
+            src_links(["S01", "S26", "S27", "S36", "S33"]),
+        ],
+        [
+            "Show sensitivity bands, not just the baseline point estimate",
+            "The decision analysis page already contains sensitivity cases but the executive summary shows only the $24,737,450 point.",
+            "Display the range for each plan (−1.5%/yr equity, +1.0%/yr home growth, repeal of step-up) so the reader sees that the ranking holds across bands except in R5/R6.",
+            "Medium — prevents overconfidence in a single number.",
+            src_links(["S42", "S43", "S44", "S46"]),
+        ],
+        [
+            "Separate meta suggestions from analytical suggestions visually",
+            "The new suggestions page mixes 'improve the site' with 'which plan to pick' — readers conflate the two.",
+            "Two tabs or accordions: 'How this site could be clearer' vs. 'Which path to choose' makes the review-before-implementation step explicit.",
+            "Medium — requested directly in the brief: 'choose the best path before implementing any changes'.",
+            src_links(["S21", "S28"]),
+        ],
+        [
+            "Add a printable one-page decision brief",
+            "The full site is 15 pages; a trustee or advisor meeting needs a single page.",
+            "A one-page PDF with the ranked scoreboard, the five mechanisms, the three deadlines (60-day notice, 150-day ownership statement, 1-year Prop. 19 move-in), and the open questions to bring to the meeting.",
+            "Medium — practical adoption aid, no new analysis.",
+            src_links(["S26", "S27", "S22", "S24"]),
+        ],
+    ]
+
+    gate_rows = [
+        [
+            "Gate 0 — Confirm you understand the three options the brief actually compares",
+            "Read the executive summary and the suggestions page; do not act on the flagged or source pages alone. Every number is shown for a 2045 transfer and for 2040–2050; pick your transfer year first.",
+            "The brief models only live in Property A, rent Property A, or sell Property A and reinvest — while always keeping Property B. There is no 'sell both and leave' or 'gift before death' scenario.",
+            src_links(["S07", "S15", "S21"]),
+        ],
+        [
+            "Gate 1 — Is moving into Property A a lifestyle requirement, not a financial preference?",
+            "If yes, the comparison narrows to Plan 2B vs. Plan 1A and the explicit lifestyle price is $8,229,950 over 20 years (2045 baseline). If no, the financial comparison is Plan 1A vs. Plan 3 and the gap is $4,944,320.",
+            "This single answer determines which scoreboard column to read; everything else is arithmetic conditional on it.",
+            src_links(["S22", "S24", "S28"]),
+        ],
+        [
+            "Gate 2 — Do you have the four blocking documents?",
+            "Obtain before choosing: the signed trust and amendments, the preliminary title report, the date-of-death appraisal instruction, and the trustee's 60-day notice list. Without them the basis cannot be proved and the Prop. 19 window cannot be met.",
+            "IRC §1014 basis and Prop. 19 relief both depend on documents created before or within 60–150 days of death; delay is not recoverable.",
+            src_links(["S07", "S15", "S26", "S27", "S28"]),
+        ],
+        [
+            "Gate 3 — Choose a risk sleeve before you choose a plan",
+            "Decide the Treasury reserve (0% for pure equities, 20–30% for the staged 75/25 plan, 100% for capital preservation). This choice decides the R3 sequence-risk outcome ($20,704,040 vs. $16,981,140) more than the timing of the sale.",
+            "The staged 24–36 month Treasury-to-equity entry is the hedge against the trap where the sale completes at a peak and equities fall 24% then 18%.",
+            src_links(["S18", "S40", "S43"]),
+        ],
+        [
+            "Gate 4 — Verify the two assumptions that change the math",
+            "Get two hard quotes: a parcel-specific HO-3 dwelling quote for Property A and a 1–4 unit dwelling quote for Property B; and confirm the rooftop solar interconnection date and remaining NEM legacy years. Model uses $4,800/yr and $4,500/yr plus $1,500/yr water vs. owner estimates of $1,500/yr; the gap is $3,200–$3,000/yr per property.",
+            "Insurance repriced at 4.0%/yr with a 45% seismic shock is the largest operating-cost escalation; solar sunset (20-year legacy) flips a −$180/yr credit to a $1,440/yr cost by the mid-2040s.",
+            src_links(["S33", "S36", "S37"]),
+        ],
+        [
+            "Gate 5 — Review the suggestion, record the choice, then execute the inheritance steps page",
+            "Mark one suggestion as chosen, note the date and the open questions it closes, and follow the inheritance steps in order: death certificates → trust TIN → 60-day notice → appraisal → 150-day ownership statement → 9-month Form 706/portability check → sale or Prop. 19 filing.",
+            "The inheritance process page's deadlines run from the date of death, not from when you decide; choosing first and executing second prevents missing the 1-year Prop. 19 and 3-year claim windows.",
+            src_links(["S01", "S20", "S26", "S27", "S22", "S23"]),
+        ],
+    ]
+
+    body = (
+        PRIVACY
+        + '<div class="verdict"><strong>How to use this page.</strong> Review every suggestion here before changing anything on the site or committing to a financial plan. '
+        "The first table is the six decision suggestions — pick one. The second table is site-improvement suggestions — pick which ones to implement. "
+        "The third table is the gate sequence that forces a choice in writing before any execution step in the inheritance process."
+        "</div>"
+        + "<h2>Decision suggestions — pick one of six, with the price of each choice</h2>"
+        + "<p>All figures are for a 2045 transfer → 2064, after-liquidation, rounded to $10; every row is linked to the official rule it depends on. "
+        "The same ranking holds for every inheritance year 2040–2050 in baseline; the exceptions are regimes R5 and R6.</p>"
+        + table(["Suggestion", "What it means in this brief", "Why it wins or loses (financial consequence)", "Trade-off you accept", "Official basis"], sug_rows)
+        + "<h2>Site-improvement suggestions — how the dashboard could make this decision clearer</h2>"
+        + "<p>These are changes to the site itself, not changes to your finances. Each one addresses a verified friction in the current pages. "
+        "Implementing them does not alter any projection; it reduces the chance of misreading one.</p>"
+        + table(["Improvement suggestion", "Friction it removes", "Decision-making benefit", "Priority", "Official basis"], site_rows)
+        + "<h2>Recommended review flow — do not implement until you have passed these gates</h2>"
+        + "<p>The gates are sequential: you cannot pass Gate 2 without answering Gate 1. A choice recorded here is reversible until the trust sells or files a Prop. 19 claim; "
+        "after that the property-tax base and the basis are locked.</p>"
+        + table(["Gate", "What to do before deciding", "Why this gate blocks the next step", "Official basis"], gate_rows)
+        + "<p class=\"lead\">After you choose a suggestion above, open the <a href=\"open-questions.html\">Open questions &amp; decision readiness checklist</a> to close the "
+        "information gaps that remain, then follow the <a href=\"inheritance-process.html\">Inheritance steps</a> page in deadline order.</p>"
+    )
+    return body
+
+
+def page_open_questions() -> str:
+    have_rows = [
+        [
+            "Property A — market value Nov 2026, rounded $3,100,000",
+            "Have — owner-supplied, rounded to $10 before modelling; model escalates at 3.5%/yr (local FHFA repeat-sales trend)",
+            "$3,100,000 (2026) → $5,959,750 (2045) in baseline; source register S42",
+            "Obtain a retrospective broker price opinion or licensed appraisal for the file; do not publish a new exact value.",
+            src_links(["S42", "S21"]),
+        ],
+        [
+            "Property A — assessed value & tax history 2014–2026, rounded",
+            "Have — 13 years supplied, each rounded to $10; 2026 assessed $550,540 (+2.0% BOE factor), 2025 tax $7,210; effective rate ~1.34% implying fixed parcel charges",
+            "Reproduces 2025 bill as 1.1488% × (assessed − $7,000) + fixed charges; used to project 2040–2050 reassessments",
+            "Confirm the 2026 roll entry after publication; history already matches the published inflation factors within one irregularity flagged as IR-007.",
+            src_links(["S21", "S25", "S28"]),
+        ],
+        [
+            "Property B — market value Nov 2026, rounded $1,800,000; assessed $114,250 / tax $2,440 (2025)",
+            "Have — owner-supplied, rounded to $10; 3-unit building, 2 units rented at $85,800/yr, 1 unit owner-occupiable; Prop. 13 base intact",
+            "$1,800,000 → $3,207,750 (2045) in baseline; ad valorem rate 1.18162% + $7,000 exemption if retained",
+            "Confirm title vesting and rent roll from leases; history matches the secured-roll rate within rounding.",
+            src_links(["S30", "S31", "S39"]),
+        ],
+        [
+            "Property B — rent-control and vacancy status",
+            "Have — allowable increase 1.6% (2026–27 = 60% of regional CPI), just-cause rules apply; Empty Homes Tax struck down and suspended (Court of Appeal affirmed preemption Sep. 2026)",
+            "$85,800/yr from 2 units escalated at 1.6% then 60% of CPI; Unit 3 at $45,240/yr if rented",
+            "Re-check the rent board's current rates page within 30 days of any decision — File 261020 cap has not been enacted as of Nov. 2026.",
+            src_links(["S31", "S32"]),
+        ],
+        [
+            "Federal & California death-tax framework",
+            "Have — verified to official sources: federal exclusion $15,000,000 (2026) → $15,480,000 (2027 indexed), 40% above exclusion; California + every subdivision barred from any estate/inheritance tax (RTC §13301); stepped-up basis under IRC §1014 / RTC §18031",
+            "Headroom tables show $0 California tax at any estate size; federal tax applied only on illustrative tiers above exclusion",
+            "Re-verify exclusion year-of-death figure at death (indexed to C-CPI-U; $15,480,000 projected for 2027).",
+            src_links(["S01", "S02", "S05", "S13", "S14", "S15"]),
+        ],
+        [
+            "Property-tax mechanics & Prop. 19 cap",
+            "Have — Prop. 13 1% + voter debt, 2% FBYV cap, reassessment on change in ownership; Prop. 19 parent-child requires principal-residence occupancy within 1 year and claim within 3 years; current cap $1,044,586 (exact statutory figure) for 2025–2027, biennially indexed to FHFA California HPI",
+            "Used to compute $53,580/yr (live-in) vs. $70,180/yr (rental) year-1 tax at 2045 transfer",
+            "Projected caps for 2040–2050 are modelled, not published; check the BOE biennial release in February of the death year.",
+            src_links(["S21", "S22", "S23", "S24", "S28"]),
+        ],
+        [
+            "Utilities, solar, and rate cases",
+            "Have — Property A water $1,500/yr, solar −$180/yr credit until 20-year NEM legacy expires (by early 2040s), then $1,440/yr cost; Property B water/sewer $4,380/yr, electricity $600/yr; verified to CPUC D.16-01-044/D.22-12-056 and general rate cases",
+            "Water escalates 3.2%/yr (8% in 2027–28 for Property B sewer), electricity 3.2%/yr, solar credit flat then cost",
+            "Confirm solar interconnection date to pin the legacy expiry year; model assumes sunset by 2046.",
+            src_links(["S33", "S34", "S35"]),
+        ],
+        [
+            "Insurance market context (no parcel quote)",
+            "Have (context) / Missing (parcel quote) — no official parcel-specific HO-3 or 1–4 unit dwelling quote exists; modeled $4,800/yr (Property A) and $4,500/yr (Property B) vs. owner $1,500/yr estimate; statewide average ~$1,570/yr in 8.3M voluntary policies; FAIR Plan 0.5% (Property A area) / 0.2% (Property B area)",
+            "Official benchmark cells on operating-costs table are intentionally blank; model escalates 4.0%/yr with 45% seismic-shock spike",
+            "Obtain two written broker quotes — one HO-3 for Property A and one 1–4 unit dwelling policy for Property B — and replace the $4,800/$4,500 assumptions before acting.",
+            src_links(["S36", "S37"]),
+        ],
+        [
+            "Rent benchmarks (HUD SAFMR 40th percentile)",
+            "Have — FY2026 SAFMR: Property A area 4-BR $6,390/mo; Property B area 2-BR $3,310/mo, 3-BR $4,230/mo; not parcel rents",
+            "Single-family rent modelled 2.80% gross yield ($86,800/yr); Property A 4-BR benchmark implies 2.47%; Property B Unit 3 $45,240/yr modelled",
+            "Order a local rent survey for Property A's achievable single-family rent; model spread is the largest driver of Plan 3's result.",
+            src_links(["S38", "S39"]),
+        ],
+        [
+            "Capital-market & inflation history",
+            "Have — CBO 10-yr Treasury 4.3% (2026–2036 avg), BLS CPI 9.1% peak (June 2022), FHFA HPI 3.0–3.5%/yr 20-yr compound, S&P 500 total return 7.0% modelled (below 11.6% historical 1977–2025), Fed flow-of-funds 2007–09 −22% housing / −37% equity drawdowns",
+            "Seven regimes replay these official series; baseline uses CBO/FHFA/BLS long-run averages",
+            "No further discovery needed; history is published and linked.",
+            src_links(["S40", "S41", "S42", "S43", "S44"]),
+        ],
+        [
+            "Statutory process & deadlines",
+            "Have — 60-day trustee notice (Prob. §16061.7), 150-day change-in-ownership statement (RTC §480(b)), 9-month Form 706 / portability, 1-year Prop. 19 move-in, 3-year Prop. 19 claim, 15th-day-of-4th-month fiduciary returns",
+            "Inheritance steps page lists each deadline with the miss penalty; all verified to the legislative text",
+            "Confirm with counsel at death — deadlines run from date of death, not distribution.",
+            src_links(["S01", "S20", "S26", "S27", "S28"]),
+        ],
+    ]
+
+    q_rows = [
+        [
+            "Q-01 · Is Property A in a revocable trust that will get a full stepped-up basis, or in an irrevocable/completed-gift vehicle?",
+            "Determines whether $5,959,750 of gain is tax-free. Revocable grantor trust → full step-up (IRC §1014, RTC §18031); completed-gift irrevocable → $0 step-up and the sell-vs-rent math reverses into a large pre-reinvestment tax.",
+            "$4,944,320 advantage of selling assumes step-up; without it net cash drops by roughly one-third under regime R5 and renting may win.",
+            "No trust instrument on file — unknown.",
+            "Ask the trustee and the drafting attorney for the signed trust, every amendment, and whether any property was transferred by completed gift. Have a CPA confirm grantor-trust status in writing.",
+            src_links(["S07", "S15", "S28"]),
+        ],
+        [
+            "Q-02 · What is the total gross estate plus prior taxable gifts and is the grantor single or married (portability available)?",
+            "Determines federal estate tax. Exclusion $15,000,000 (2026) / $15,480,000 (2027); single vs. DSUE (spouse's unused exclusion) doubles headroom; California is $0 always; tax is 40% only on the amount above the exclusion.",
+            "Headroom table: $19,800,000 gross estate (Property A $5,959,750 + $13,840,250 cash) leaves ~$4,759,750 headroom single in 2045; $31,000,000 estate owes $2,400,000 federal single, $0 DSUE.",
+            "No estate size supplied — illustrative tiers shown only; flagged as IR-004.",
+            "Have the trustee tally date-of-death FMV of Property A + all other assets + prior Forms 709; decide 706 filing/portability election within 9 months (6-month extension available for filing, not for tax).",
+            src_links(["S01", "S02", "S05", "S13", "S14"]),
+        ],
+        [
+            "Q-03 · Do you intend to live in Property A as your principal residence within 1 year of death?",
+            "Gates Prop. 19. Yes → reassessed to FBYV $802,030 + $1,044,586 allowance + excess over that sum = $53,580/yr (2045). No → full reassessment to $5,959,750 = $70,180/yr. Missing the 1-year move or the 3-year claim forfeits retroactive relief.",
+            "$16,600/yr difference in year-1 tax; $1,044,586 allowance is an exact statutory figure, not a model assumption.",
+            "Unknown — lifestyle preference not stated.",
+            "Decide in writing before the 1-year deadline; if yes, file the $7,000 exemption claim and Prop. 19 parent-child claim and relinquish the exemption on Property B.",
+            src_links(["S22", "S23", "S24", "S28"]),
+        ],
+        [
+            "Q-04 · What is the achievable market rent for Property A as a single-family rental in its jurisdiction?",
+            "Drives Plan 3's return. Model uses 2.80% gross ($86,800/yr) vs. official 4-BR SAFMR 2.47% ($76,680/yr). $18,240/mo ($218,880/yr) would be needed to tie equities — 3.14× the official 4-BR benchmark.",
+            "Every $10,000/yr of rent is ~$160,000 of 20-year after-liquidation wealth at baseline escalation.",
+            "No local rent survey — modelled from HUD benchmark and the brief's yield assumption; flagged as IR-003.",
+            "Order a licensed property-management rent opinion for a comparable single-family home; compare to HUD SAFMR $6,390/mo 4-BR to sanity-check.",
+            src_links(["S12", "S38", "S40"]),
+        ],
+        [
+            "Q-05 · What are the parcel-specific insurance premiums for Property A (HO-3) and Property B (1–4 unit dwelling)?",
+            "Largest operating-cost uncertainty. Model uses $4,800/yr and $4,500/yr vs. owner $1,500/yr; escalates 4.0%/yr with +45% seismic shock. Statewide average $1,570/yr proves $1,500/yr is not a high-value rebuild quote.",
+            "$3,000–$3,300/yr difference per property compounds to $80,000–$100,000 over 20 years per property before shock.",
+            "No quotes — official cells intentionally blank per IR-001/IR-002.",
+            "Get two written quotes from a California-licensed broker, one HO-3 and one landlord dwelling policy, stating rebuild cost, deductible, wildfire/seismic exclusions, and FAIR Plan eligibility before passing Gate 4.",
+            src_links(["S36", "S37"]),
+        ],
+        [
+            "Q-06 · When was the rooftop solar interconnected and how many NEM legacy years remain?",
+            "Determines when −$180/yr credit becomes $1,440/yr cost plus a $4,500 inverter at year 15. Legacy is 20 years from interconnection (NEM 1.0/2.0 retail export), expiring by 2043–2046 for existing systems; NBT gives only 9 years for the original customer.",
+            "$1,620/yr swing per year after expiry; model assumes sunset by 2046.",
+            "Interconnection date not supplied; model assumption flagged.",
+            "Pull the interconnection agreement and the most recent true-up bill from the utility; confirm remaining legacy years in writing from the utility or CPUC record.",
+            src_links(["S33"]),
+        ],
+        [
+            "Q-07 · What is your risk posture for the reinvested proceeds — can you tolerate a 24% then 18% two-year equity fall right after the sale?",
+            "Decides the Treasury sleeve. Regime R3 sequence-of-returns trap turns a lump-sum equity sale into $20,704,040 (equities) vs. $16,981,140 (Treasuries staged) vs. $16,534,110 (renting kept) — the 75/25 staged plan lands at $19,773,310, hedging most of the trap.",
+            "$3,722,900 swing between pure equities and Treasuries in R3; baseline gap is $7,241,220 the other way.",
+            "Unknown — no risk preference or horizon stated beyond the 2040–2050 window.",
+            "Write down a target equity/Treasury split (e.g., 100/0, 75/25, 0/100) and a 24–36 month dollar-cost staging schedule; Treasury interest is CA-tax-exempt per S18.",
+            src_links(["S18", "S40", "S43", "S44"]),
+        ],
+        [
+            "Q-08 · Will Property B's unrented unit be kept as your residence or rented, and can you carry the vacancy cost?",
+            "Property B Unit 3 is the fulcrum between Plan 2A and 2B. Keeping it vacant is a −$63,620/yr year-1 drain and −$1,884,880 20-year drain; renting it adds $45,240/yr and $664,620 real over 20 years but subjects it to rent control (1.6% allowable increase, just-cause).",
+            "$1,846,440 gap between 2A and 2B in baseline; $4,944,320 gap between 1A and renting both.",
+            "Current rent $85,800/yr from 2 units known; Unit 3 status is a choice, not a fact.",
+            "Decide before death if possible: if you plan to live in Property A, line up a tenant or manager for Unit 3 so it does not sit empty past the 1-year Prop. 19 window.",
+            src_links(["S31", "S32", "S39"]),
+        ],
+        [
+            "Q-09 · Are you aware of the statutory trust-administration workload and its deadlines?",
+            "A California trust inheritance is not a deed transfer; it is a sequence with penalties. 60-day notice → 120-day contest; 150-day BOE-502-D ($ penalty on reassessed tax); 9-month 706/portability; 1-year/3-year Prop. 19; annual 541 fiduciary returns with compressed trust brackets.",
+            "Missing the 150-day statement or the 706 portability election is a multi-thousand to multi-million dollar error; delay in appraisal converts post-death appreciation to taxable gain.",
+            "No documents assembled — steps page lists them all.",
+            "Retain counsel now and assemble: trust + amendments, deeds, title report, gift returns, insurance binder, and an appraisal engagement letter ready to execute on death.",
+            src_links(["S01", "S03", "S20", "S26", "S27", "S28"]),
+        ],
+        [
+            "Q-10 · Has Congress, the state or a court changed stepped-up basis, Prop. 19, or local rent/transfer rules by the time of death?",
+            "Law watch is not speculative — H.R. 5336 would tax unrealized gains at death; Prop. 19's allowance is reset every two years; File 261020 would cap banked increases at 10%/yr; the Empty Homes Tax was suspended after a Court of Appeal preemption ruling.",
+            "Regime R5 reprices the sell plan down by roughly a third if §1014 is repealed and the exclusion falls to 35% of schedule.",
+            "Current law verified Nov. 2026; future law unknowable — law-watch page tracks each item with the check date.",
+            "Check the law-watch page at death and have counsel confirm: is §1014 intact, what is the current Prop. 19 cap (February of death year), and has any pending bill been enacted.",
+            src_links(["S22", "S23", "S31", "S32", "S45", "S46"]),
+        ],
+    ]
+
+    next_rows = [
+        [
+            "1 — Immediate, before any decision",
+            "Have the trustee pull the signed trust + amendments, deeds, preliminary title report, and prior gift-tax returns; confirm who the successor trustee is.",
+            "Answers Q-01 and Q-02; proves ownership, amendment history, and whether the step-up is available; needed for the 60-day notice list.",
+            src_links(["S07", "S15", "S27", "S28"]),
+        ],
+        [
+            "2 — Within 1 week of confirming the trust path",
+            "Commission two insurance broker quote requests (HO-3 for Property A; 1–4 unit dwelling for Property B) and a local rent survey for Property A.",
+            "Closes the $3,000–$3,300/yr per-property insurance gap and the single-family rent uncertainty (Q-04/Q-05); official cells are blank until this is done.",
+            src_links(["S36", "S37", "S38"]),
+        ],
+        [
+            "3 — Within 30 days, still before the death",
+            "Write down answers to Q-03, Q-07 and Q-08: live-in vs. sell preference, equity/Treasury split, and Unit 3 vacancy decision. Record which suggestion (SUG-01 to SUG-06) you choose and why.",
+            "The choice is reversible until sale/Prop. 19 filing; documenting it prevents drift and satisfies the 'choose best path before implementing' requirement.",
+            src_links(["S22", "S24", "S18"]),
+        ],
+        [
+            "4 — At death, in deadline order",
+            "Execute the inheritance steps page: death certificates → trust TIN → 60-day notice → date-of-death appraisal → 150-day BOE-502-D → 9-month 706/portability → sale or Prop. 19 filing (1-year move, 3-year claim).",
+            "Each step has a statutory miss penalty; appraisal is the $5,959,750 basis proof; Form 706 preserves up to $15,480,000 of spousal exclusion if applicable.",
+            src_links(["S01", "S02", "S20", "S26", "S27", "S28"]),
+        ],
+        [
+            "5 — If you choose to sell",
+            "Engage a brokerage with 5.00% + 0.11% transfer tax closing disclosure, sell from the administrative trust, and stage proceeds over 24–36 monthly Treasury-to-equity tranches.",
+            "Locks the tax-free basis (S07/S15) and hedges regime R3 sequence risk; Treasury interest is CA-tax-exempt (S18).",
+            src_links(["S07", "S15", "S18", "S29", "S33"]),
+        ],
+        [
+            "6 — Ongoing until the decision is made",
+            "Re-check the law-watch page each quarter: Prop. 19 cap (February biennial), federal exclusion index (C-CPI-U), rent-board allowable increase (Feb/Mar), and any bill moving from 'proposed' to 'enacted'.",
+            "The model's projected 2040–2050 caps and exclusions are not published yet; the next BOE release is February of the death year.",
+            src_links(["S01", "S22", "S23", "S31", "S45", "S46"]),
+        ],
+    ]
+
+    body = (
+        PRIVACY
+        + '<div class="verdict"><strong>What this page answers.</strong> The brief models six plans from rounded figures and official sources, but it cannot answer for you '
+        "whether you want to live in Property A, what the whole estate is worth, or what your insurance actually costs. This page lists every question that must be answered before "
+        "any choice is final, marks what the site already has and what is still missing, and gives the exact next step to close each gap. "
+        "Do not implement a plan until every row below is Have or a written assumption you accept."
+        "</div>"
+        + "<h2>What we already have and what is still missing</h2>"
+        + "<p>Have means verified to an official source and used in the model. Missing means no official parcel-specific source exists and the model uses an assumption flagged on the Flagged for review page. "
+        "Items marked Have still need a document in hand at death.</p>"
+        + table(["Information", "Status today", "Value used in the model", "How to close the gap — next document or quote", "Official basis"], have_rows)
+        + "<h2>Questions that must be answered before any decision can be reasonably made</h2>"
+        + "<p>Each question is scored by what changes if the answer flips. The 'Current answer' column is the gap — most are blank today. "
+        "The discovery column is the action you take to turn it into Have.</p>"
+        + table(["Question", "Why it matters — what flips if the answer changes", "Financial consequence of a different answer", "Current answer / status", "How to discover the definitive answer", "Official basis"], q_rows)
+        + "<h2>Suggested discovery plan — in the order you should do it</h2>"
+        + "<p>Do not pay for an appraisal or list the house until priority 1–3 are done. The deadlines in priority 4 start at death, not at sale.</p>"
+        + table(["Priority", "Action", "What it uncovers (which Q it answers)", "Official basis"], next_rows)
+        + "<p class=\"lead\">When every question above has a definitive answer, return to the <a href=\"suggestions.html\">Suggestions</a> page, re-select one suggestion, and execute the "
+        "<a href=\"inheritance-process.html\">Inheritance steps</a> in deadline order. If any answer is still unknown, the model is not ready to be acted on.</p>"
+    )
+    return body
+
+
 def page_sources() -> str:
     rows = [
         [
@@ -1876,234 +2270,6 @@ def page_flags() -> str:
     return body
 
 
-def page_suggestions() -> str:
-    rows = [
-        [
-            "SUG-01",
-            "Obtain binding homeowners- and landlord-insurance quotes for both properties before the transfer, replacing the owner's $1,500 estimate and the model's labeled assumptions.",
-            "Insurance cost inputs on both properties.",
-            "Insurance is the largest unverified carrying cost; regime R4 tests a 45% premium shock, but real quotes anchor affordability and the keep-versus-sell comparison.",
-            "Bind quotes and update the cost inputs.",
-            "Required before relying on cost totals.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S36", "S37"]),
-        ],
-        [
-            "SUG-02",
-            "Confirm the trust instrument is a revocable grantor trust (stepped-up basis available under IRC section 1014 and CA RTC section 18031), not an irrevocable or completed-gift trust.",
-            "The basis and Prop. 19 treatment of the inherited home.",
-            "The whole sell-versus-hold ranking rests on the tax-free stepped-up basis; the wrong trust type can forfeit it.",
-            "Review the trust document with counsel.",
-            "Required before executing the sale route.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S07", "S15"]),
-        ],
-        [
-            "SUG-03",
-            "Stage sale proceeds into equities over 24 to 36 months through Treasury bills instead of a single-day purchase.",
-            "The investment execution of the sell-and-reinvest plans.",
-            "Removes sequence-of-returns risk (regime R3: equities down 24% then 18%) while keeping the sell recommendation's advantage.",
-            "Adopt a staged entry schedule.",
-            "Required at transfer.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S18", "S43", "S44"]),
-        ],
-        [
-            "SUG-04",
-            "Calendar a re-check when BOE publishes the next biennial Prop. 19 allowance (after February 15, 2027); the current $1,044,586 applies only through that date.",
-            "The occupancy-under-Prop. 19 tax and the full-reassessment rental alternative.",
-            "The owner-occupant tax depends on the allowance growing with the California house-price index; a stale allowance misstates the keep option.",
-            "Re-run the affected rows at each adjustment.",
-            "Required before any occupancy decision.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S22", "S23"]),
-        ],
-        [
-            "SUG-05",
-            "Monitor federal legislation that would repeal or limit stepped-up basis (H.R. 5336 is tracked on the Law watch page) before each inheritance year.",
-            "The statutory environment for the sale route.",
-            "Basis repeal (regime R5) is the one law change that materially weakens selling.",
-            "Decide whether to delay or re-rank if enacted.",
-            "Required before each transfer year.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S07", "S46"]),
-        ],
-        [
-            "SUG-06",
-            "Replace HUD small-area rent benchmarks with a parcel-specific market-rent appraisal for the inherited home before modeling rental income.",
-            "The rent route's income line.",
-            "The rent-versus-sell gap is wide, but achievable rent is unverified; an appraisal anchors the comparison.",
-            "Commission a rental market analysis.",
-            "Required before choosing the rent route.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S38"]),
-        ],
-        [
-            "SUG-07",
-            "Commission a pre-transfer home inspection (roof, seismic condition, solar interconnection date, inverter replacement, systems) to size maintenance reserves.",
-            "Upkeep and capital-reserve lines for both properties.",
-            "Maintenance and the solar legacy-window sunset (by the early 2040s) are major cost unknowns.",
-            "Update upkeep and reserve lines.",
-            "Required before finalizing operating budgets.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S33", "S42"]),
-        ],
-        [
-            "SUG-08",
-            "Keep the already-owned building's remaining unit as the owner's residence or keep it rented; do not leave it vacant while renting the other two units.",
-            "The 3-unit building's net cash flow and its low Prop. 13 base protection.",
-            "Vacancy forfeits $85,800 per year of in-place rent and can expose the unit to rent and eviction controls if it is leased later.",
-            "Lease the unit or occupy it.",
-            "Required whenever the inherited home is not sold.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S24", "S31"]),
-        ],
-        [
-            "SUG-09",
-            "Log every approved change here with date and reviewer, and publish no new figure without an official source link.",
-            "The audit trail of the dashboard.",
-            "Keeps the decision reviewable and the rounding and privacy controls enforceable.",
-            "Maintain the log.",
-            "Ongoing.",
-            '<span class="badge">PROPOSED</span>',
-            src_links(["S01"]),
-        ],
-    ]
-    body = (
-        "<p>This section lists proposed changes to the dashboard, the inputs and the decision process. Every suggestion below is a "
-        "proposal only: it states what would change, why it would improve the decision, what decision is needed first, and its "
-        "current status. <strong>Nothing here is implemented until someone with authority reviews and approves it.</strong></p>"
-        + table(
-            [
-                "ID",
-                "Suggestion",
-                "What it changes",
-                "Why it improves the decision",
-                "Decision needed",
-                "When it is needed",
-                "Status",
-                "Official context",
-            ],
-            rows,
-        )
-        + "<h2>How suggestions are reviewed</h2>"
-        + "<ol>"
-        + "<li>A suggestion is added here with status Proposed.</li>"
-        + "<li>Someone with authority reviews the official basis and records Approved or Declined, with the date.</li>"
-        + "<li>Approved changes are implemented through the generator (<code>tools/build.py</code>) and re-verified "
-        + "(<code>tools/verify.py</code>) before publication.</li>"
-        + "<li>Declined suggestions stay on this page with the reason, so the same proposal is not re-litigated without new evidence.</li>"
-        + "<li>Nothing in this section is tax, legal, investment or appraisal advice.</li>"
-        + "</ol>"
-    )
-    return body
-
-
-def page_open_questions() -> str:
-    rows = [
-        [
-            "Q-01",
-            "Will the inherited home receive the date-of-death stepped-up basis and the Prop. 19 parent-child treatment?",
-            "The home is held in a trust described as revocable; IRC section 1014 and CA RTC section 18031 give inherited property a date-of-death basis; Prop. 19 sets the parent-child value cap and occupancy window.",
-            "Trust instrument terms; whether the home is included in the settlor's gross estate; the transfer relationship.",
-            "Unverified until the trust instrument is reviewed.",
-            "Have counsel review the trust; file the parent-child exclusion claim within three years of transfer.",
-            src_links(["S07", "S15", "S22"]),
-        ],
-        [
-            "Q-02",
-            "How much cash is included in the inheritance, and will the estate owe federal estate tax?",
-            "The 2026 filing threshold is $15,000,000 and the 2027 exclusion is $15,480,000; the annual gift exclusion and the portability election exist; California adds no death tax at any estate size.",
-            "Estate size, lifetime taxable gifts, and whether a portability election is useful.",
-            "Not computable until the trustee marshals the estate; headroom tables by cash tier are published instead of inventing a number.",
-            "The trustee files Form 706 within nine months of death when the estate is above the threshold and considers portability.",
-            src_links(["S01", "S02", "S13"]),
-        ],
-        [
-            "Q-03",
-            "What will the inherited home's property tax be after inheritance?",
-            "Current assessed values and tax history; the Prop. 13 two percent cap; the Prop. 19 reassessment rules; the county documentary transfer tax of 0.11 percent.",
-            "Date-of-death value; the 2040-2050 assessment; the occupancy decision; future levies and rates.",
-            "Projected ranges only; the exact bill is unknowable until the transfer occurs.",
-            "Commission a date-of-death appraisal; file the county change-of-ownership report within 150 days.",
-            src_links(["S21", "S22", "S23", "S26", "S28", "S29"]),
-        ],
-        [
-            "Q-04",
-            "What will homeowners and landlord insurance cost per property?",
-            "The California Department of Insurance statewide average homeowner premium is $1,570 (rounded; updated October 27, 2026), with last-resort plan context.",
-            "Parcel-specific quotes for either property.",
-            "Blank: no official parcel-specific quote exists.",
-            "Obtain binding quotes from admitted carriers and check last-resort plan eligibility.",
-            src_links(["S36", "S37"]),
-        ],
-        [
-            "Q-05",
-            "What rent could the inherited home achieve, and what are its operating costs?",
-            "HUD small-area rent benchmarks; the owner's water and electricity ranges; maintenance and reserve assumptions.",
-            "Achievable parcel rent; utility bills after the solar legacy window ends; repair history.",
-            "Modeled ranges only.",
-            "Commission a rental market appraisal; collect utility tariff schedules; order a home inspection.",
-            src_links(["S33", "S38", "S41", "S42"]),
-        ],
-        [
-            "Q-06",
-            "Will stepped-up basis and the Prop. 19 exclusion survive until the 2040-2050 transfer?",
-            "Current federal and California law; pending proposals and litigation tracked on the Law watch page.",
-            "Future statutory changes.",
-            "Current law applies unless and until it is enacted.",
-            "Monitor Congress.gov and California legislation each year before the transfer.",
-            src_links(["S13", "S45", "S46"]),
-        ],
-        [
-            "Q-07",
-            "What is the already-owned building's tax basis, and what would selling it cost?",
-            "A market value estimate; the current low Prop. 13 base and tax history.",
-            "Original purchase basis; improvement records; selling costs.",
-            "Not assembled yet.",
-            "Locate the deed and purchase documents; commission an appraisal.",
-            src_links(["S07", "S29"]),
-        ],
-        [
-            "Q-08",
-            "Which route maximizes after-tax wealth at the actual transfer year?",
-            "Six plans are ranked for every inheritance year 2040-2050 under the baseline and seven stress regimes.",
-            "The actual transfer date, tax rates then, and market returns then.",
-            "Conditional answer: selling at the stepped-up basis and reinvesting in equities wins in the baseline and in most stress regimes.",
-            "Re-run the model at the transfer date with actual figures.",
-            src_links(["S40", "S42"]),
-        ],
-    ]
-    body = (
-        "<p>The table below lists the questions that must be answered before the inheritance decision can be made reasonably: what "
-        "information is held, what is still missing, the status of each answer, and how to discover the missing information. "
-        "Nothing here is treated as fact unless it is linked to an official source.</p>"
-        + table(
-            [
-                "ID",
-                "Question",
-                "Information we hold",
-                "Information still missing",
-                "Answer / status",
-                "How to discover the missing information",
-                "Official context",
-            ],
-            rows,
-        )
-        + "<h2>Suggestions for discovering the missing information</h2>"
-        + "<ul>"
-        + "<li>Review the trust instrument with an estate attorney: stepped-up basis qualification and Prop. 19 eligibility depend on it (IRC section 1014 / CA RTC section 18031; BOE Prop. 19 rules).</li>"
-        + "<li>Ask the trustee for the estate marshaling summary and the Form 706 filing determination (IRS Form 706 instructions).</li>"
-        + "<li>Commission a date-of-death appraisal and a rental market appraisal (county assessor guidance; HUD small-area rent benchmarks).</li>"
-        + "<li>Obtain binding insurance quotes from the admitted market and check last-resort plan eligibility (California Department of Insurance).</li>"
-        + "<li>Order a pre-transfer home inspection: roof, seismic condition, solar interconnection date, inverter replacement (CPUC net metering rules).</li>"
-        + "<li>Check the Prop. 19 allowance at each biennial Board of Equalization adjustment, and watch Congress.gov for basis legislation before every transfer year.</li>"
-        + "<li>File the county change-of-ownership report within 150 days and the Prop. 19 claims inside their windows (one year for the exemption; three years for the exclusion).</li>"
-        + "</ul>"
-    )
-    return body
-
-
 # ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
@@ -2136,6 +2302,16 @@ def main() -> None:
             "Decision analysis: live in, rent out, or sell and reinvest",
             "Six plans compared for every inheritance year 2040–2050, with sensitivity cases and the year-by-year cash-flow trail.",
             page_decision(anchor, by_year),
+        ),
+        "pages/suggestions.html": (
+            "Suggestions — choose the best path before implementing any changes",
+            "Six ranked decision suggestions, site-improvement proposals, and a gated review flow so you choose in writing before acting.",
+            page_suggestions(anchor, regimes, by_year),
+        ),
+        "pages/open-questions.html": (
+            "Open questions & decision readiness checklist",
+            "What we have, what is missing, the ten questions that must be answered, and the exact next steps to close each gap.",
+            page_open_questions(),
         ),
         "pages/property-tax.html": (
             "Property tax, assessment history and Prop. 19",
@@ -2196,16 +2372,6 @@ def main() -> None:
             "Flagged for review",
             "Every unverified cell, every irregularity in the supplied history and every modeling assumption, with the link to check it.",
             page_flags(),
-        ),
-        "pages/suggestions.html": (
-            "Suggestions — review before implementing",
-            "Proposed changes to the dashboard, the inputs and the decision process. Each suggestion states what would change, why it would improve the decision, what decision is needed first, and its status. Nothing here is implemented until it is reviewed and approved.",
-            page_suggestions(),
-        ),
-        "pages/open-questions.html": (
-            "Questions, information and answers",
-            "What must be resolved before the inheritance decision can be made reasonably: what information is held, what is missing, the status of each answer, and how to discover the missing information.",
-            page_open_questions(),
         ),
     }
 

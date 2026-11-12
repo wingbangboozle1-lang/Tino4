@@ -32,6 +32,8 @@ EXPECTED = [
     "index.html",
     "pages/executive-summary.html",
     "pages/decision-analysis.html",
+    "pages/suggestions.html",
+    "pages/open-questions.html",
     "pages/property-tax.html",
     "pages/projections.html",
     "pages/operating-costs.html",
@@ -44,8 +46,6 @@ EXPECTED = [
     "pages/privacy.html",
     "pages/sources.html",
     "pages/flagged-for-review.html",
-    "pages/suggestions.html",
-    "pages/open-questions.html",
 ]
 
 # Exact official statutory figures that are quoted as published (not $10 multiples).

@@ -17,6 +17,8 @@ Only Python's standard library is used; there are no runtime dependencies and no
 | `index.html` | The ranked recommendation, the two-property snapshot, and how to read the numbers |
 | `pages/executive-summary.html` | The best plan and why, what executing it involves, and what would change the answer |
 | `pages/decision-analysis.html` | Live in / rent out / sell and reinvest for every inheritance year 2040–2050, plus sensitivities |
+| `pages/suggestions.html` | Six decision suggestions, site-improvement proposals, and a gated review flow to choose before implementing |
+| `pages/open-questions.html` | What we have, what is missing, ten questions that must be answered, and how to discover each gap |
 | `pages/property-tax.html` | Rounded assessment and tax history, the fixed-charge explanation, Prop. 13/19/8 mechanics |
 | `pages/projections.html` | Year-by-year 2026–2075 values, assessed values, taxes, insurance, water, electricity, upkeep |
 | `pages/operating-costs.html` | Verified benchmarks, blank unverified cells, and how each cost line escalates |
@@ -29,8 +31,6 @@ Only Python's standard library is used; there are no runtime dependencies and no
 | `pages/privacy.html` | What is omitted and what residual exposure remains |
 | `pages/sources.html` | All 47 official sources |
 | `pages/flagged-for-review.html` | Every unverified cell, irregularity and assumption |
-| `pages/suggestions.html` | Proposed changes to the site, the inputs and the decision process; each carries the decision needed first and its status — nothing is implemented without review. |
-| `pages/open-questions.html` | Questions that must be answered before deciding: what is held, what is missing, answer status, and how to discover the missing information. |
 
 Every table row links at least one official government publication. Where no official source exists,
 the cell is left blank and logged on *Flagged for review* with the link to check.
