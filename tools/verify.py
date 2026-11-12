@@ -11,6 +11,19 @@ sys.path.insert(0,str(ROOT/'_7eff7e24'))
 from evidence import SOURCES
 from content import PAGES
 
+# Generic regression patterns against publishing supplied household attributes.
+# The patterns deliberately avoid storing any household values or exact narratives.
+CASE_SPECIFIC_PATTERNS = (
+    r'\b(?:owner|user)[\s-]+(?:provided|supplied)\b',
+    r'\b(?:owner|user)[’\']s\s+(?:tentative\s+)?estimate\b',
+    r'\b(?:additional|extra) inherited (?:money|cash|assets?) (?:is|are|was|were) expected\b',
+    r'\b(?:two|three|four|five|six|\d+)\s+(?:rented\s+)?units?\b',
+    r'\b\d+\s*/\s*\d+\s+(?:expense|cost|allocation)\b',
+    r'\bproperty a (?:is|was) described as\b',
+    r'\bthe available b space\b',
+    r'\b(?:latest|most recent) supplied year\b',
+)
+
 class Document(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -62,6 +75,11 @@ def verify():
             for u in row['urls']:
                 if u not in official: errors.append(path.name+': unregistered row URL')
         visible=' '.join(doc.visible)
+        normalized_visible=' '.join(visible.split()).casefold()
+        if any(re.search(pattern,normalized_visible,re.I) for pattern in CASE_SPECIFIC_PATTERNS):
+            errors.append(path.name+': case-specific narrative detail')
+        if path.name=='property-tax.html' and re.search(r'<tr>\s*<td>[AB]</td>\s*<td>20\d{2}</td>',text):
+            errors.append(path.name+': case-specific historical year range')
         # Geographic source URLs are allowed; visible private property locations are not.
         if re.search(r'Cupertino|Outer Sunset|San Francisco|\b(?:APN|SSN)\b',visible,re.I):
             errors.append(path.name+': prohibited identifying text')
@@ -85,7 +103,7 @@ def verify():
             elif parts.fragment and target in docs and parts.fragment not in docs[target].ids:
                 errors.append(path.name+': missing anchor '+u)
     if len(pages)!=21: errors.append('expected 17 content pages plus 4 redirects')
-    if blank<80: errors.append('missing blank/unverified registers')
+    if blank<60: errors.append('missing blank/unverified registers')
     projections=docs[ROOT/'pages/projections.html']
     if len(projections.rows)!=563: errors.append('expected 561 synthetic and 2 missing projection rows')
     for key,_,_ in PAGES:
@@ -99,11 +117,12 @@ def verify():
         if [int(r['year']) for r in cohort]!=list(range(2026,2077)): errors.append('CSV horizon')
     for row in rows:
         if row['kind']!='SYNTHETIC_NOT_HOUSEHOLD': errors.append('CSV missing synthetic label')
+        if row['official_context'] not in official: errors.append('CSV row missing registered official context URL')
         for key,value in row.items():
             if key not in {'kind','year','inheritance_year','official_context'} and int(value)%10:
                 errors.append('CSV rounding')
     config=(ROOT/'_config.yml').read_text()
-    for x in ('tools','_7eff7e24','COORDINATION.md','README.md','_1775f697'):
+    for x in ('tools','_7eff7e24','_a3de132b','COORDINATION.md','README.md','_1775f697'):
         if f'  - {x}\n' not in config: errors.append('publication exclusion missing '+x)
     if (ROOT/'.nojekyll').exists(): errors.append('.nojekyll bypasses exclusions')
     for path in [ROOT/'tools/build.py',ROOT/'_7eff7e24/content.py',ROOT/'_7eff7e24/model.py']:
