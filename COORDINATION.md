@@ -242,6 +242,24 @@ Until F9B-4 is unblocked, findings are posted below as change requests with the 
 | `arena-ce2391b3` | `arena/ce2391b3-tino4` | 12-page site + verification log; preserved in `internal/prior-sessions/arena-ce2391b3/` | merged at integration |
 | `arena-fd984e93` | `arena/fd984e93-tino4` | Source-linked dashboard; preserved in `internal/prior-sessions/arena-fd984e93/` | merged at integration |
 
+## Session `s-c07ccf45` — 2026-11-12 (branch `arena/c07ccf45-tino4`, platform-fixed; IR-001 applies)
+
+Read before claiming (04:20 UTC): `COORDINATION.md` on `main` @ `e871cde` (PRs #1–#31) and all remote session branches. Active `<60 min` claims respected: `s-c0492629` (`C049-1..4`, holding `tools/c0492629/**` and shared outputs), `s-f9b466e7` (`_f9b466e7/**`), `arena-1775f697` (`_1775f697/**`), `s-09b3ffa0` (`_s09b3ffa0/**`), and `arena-62edb6b1` (branch claim). All prior sessions' scopes (`s179ec133/**`, `_s9ad1da71/**`, `_a24b1c8c/**`, `_research/**`) are left untouched.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C07C-T1 | Independent line-by-line repo review & official-source verification ledger: fetch and verify directly from official `.gov`/`.ca.gov` pages every statutory rule, rate, threshold, ballot result, utility tariff, insurance study, rent rule, and historical economic series required by the user's brief (with exact URL, 2026-11-12 fetch date, and verbatim quote), and audit the published root site (`s179ec133`) and `_s9ad1da71` | in progress | `s-c07ccf45` | `_c07ccf45/evidence/**`, `_c07ccf45/audit/**` | 2026-11-12 04:21 |
+| C07C-T2 | Independent `$10`-pre-rounded two-property household financial & tax decision engine (`2026–2076`, all 11 inheritance years `2040–2050`): strict `$10`-rounded inputs before computation, anonymized placeholders (`Property A` / `Property B`, zero PII/ZIP/city/parcel identifiers in candidate HTML), full year-by-year property value / Prop. 13 & Prop. 19 assessed value / decomposed ad valorem + parcel property tax / insurance / water / solar NEM 20-yr sunset / maintenance projections, live vs. rent vs. sell-and-reinvest (equities, CA-tax-exempt Treasuries, balanced) after federal & CA taxes, estate-threshold headroom matrix, and 50-year historical & multi-shock Black Swan stress suite | in progress | `s-c07ccf45` | `_c07ccf45/model/**`, `_c07ccf45/data/**` | 2026-11-12 04:21 |
+| C07C-T3 | Self-contained 15-page candidate dashboard & strict line-by-line verifier (every table row linked to official `.gov` sources with status label, unverified parcel/quote cells left blank and flagged on Flagged for Review, strict `$10` rounding & privacy scan, 0 broken links) | in progress | `s-c07ccf45` | `_c07ccf45/site/**`, `_c07ccf45/tools/**` | 2026-11-12 04:21 |
+| C07C-T4 | Shared-output reconciliation (`index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`) — respects active `<60 min` shared-output claim (`C049-3`); logs verified change requests in `COORDINATION.md`, or reconciles into shared outputs only if all shared-output claims are `done` or `>60 min` stale | blocked on `C049-3` | `s-c07ccf45` | shared outputs only if `C049-3` completes or lapses | — |
+| C07C-T5 | Pull request `arena/c07ccf45-tino4` → `main`, merge, confirm GitHub Pages `built` (`error: null`) and live site availability (with `_c07ccf45/` withheld from publication by Jekyll's underscore-directory exclusion), and record PR link & merge result here | blocked on C07C-T1..T3 | `s-c07ccf45` | `COORDINATION.md` (own section) | — |
+
+`_c07ccf45/` is underscore-prefixed so Jekyll never publishes internal working files or staged candidate pages to GitHub Pages. No un-rounded owner-supplied figure, name, street address, or parcel identifier exists anywhere in `_c07ccf45/**`.
+
+### Log (`s-c07ccf45`)
+
+- 2026-11-12 04:21 UTC — read `COORDINATION.md` and all remote branches; claimed `C07C-T1..T5` in exclusive non-overlapping scope `_c07ccf45/**`; committed and pushed claim.
+
 ## Parallel-session audit and merge resolution
 
 At 10:06 UTC, `git ls-remote --heads origin` showed five other session branches. Each was
