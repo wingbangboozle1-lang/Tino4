@@ -1047,3 +1047,20 @@ Read on `main` @ `26697d8` (PR #39 merged). No other session had an open claim o
 - **Irregularity logged for the owner of `pages/open-questions.html` (IR-019, not edited here):** the "Utilities, solar, and rate cases" row is labelled **"Have — … verified to CPUC D.16-01-044/D.22-12-056 and general rate cases"** but the figures it lists (Property A water `$1,500/yr`, Property B water/sewer `$4,380/yr`, electricity `$600/yr`, solar `−$180/yr`) are owner-supplied or modelled. The cited CPUC decisions do not set a household bill. The page's own legend defines "Have" as "verified to an official source", so these should read "Owner-supplied / modelled" and be flagged. Similar wording applies to the Property A market-value row ("Have — owner-supplied"). Request: reclassify on the Flagged for review page.
 - **Irregularity for the owner (privacy, not resolved here):** IR-018 (previously published un-rounded figures in git history) remains open. The Suggestions page from PR #40 does not yet carry this as a decision item (checked: no history or rewrite entry), so the owner must add it and choose whether to rewrite history. This session did not rewrite or force-push anything.
 - Pre-merge: branch `arena/8fa3c77e-tino4` → `main` (this section only). PR link and merge result are recorded in the session log below.
+
+## Session `s-8a5014b7` — 2026-11-12 (branch `arena/8a5014b7-tino4`)
+
+Scope: add a dedicated suggestions section (review before implementing changes) and a clear questions/information/answers list, then build, verify, integrate and deploy. On reading the board, PR #40 (`arena-35cc20e8` / `arena-8fa3c77e`) had already merged `pages/suggestions.html` and `pages/open-questions.html` into `main`, so this branch duplicated that effort. Per the non-overlap rule, PR #40's integrated, verified version was kept and this session's duplicate rendering was not re-published (no other session's work discarded).
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| S8A-1 | Draft suggestions + open-questions pages (13 suggestions S-01..S-13 with review-before-implement flow; 9 questions Q-01..Q-09 with have/need/status/resolve) | superseded by PR #40 | `s-8a5014b7` | `_c07ccf45/tools/build_candidate.py`, `pages/suggestions.html`, `pages/open-questions.html` | 2026-11-12 |
+| S8A-2 | Build + verify locally (`python3 tools/build.py` → 17 pages; `python3 tools/verify.py` → OK, 0 failures) | done | `s-8a5014b7` | `_c07ccf45/tools/**`, `index.html`, `pages/**` | 2026-11-12 |
+| S8A-3 | Open PR `arena/8a5014b7-tino4` → `main` (#42), merge, confirm GitHub Pages `built` with `error: null` | done | `s-8a5014b7` | `COORDINATION.md` (this section) | 2026-11-12 |
+
+### Log (`s-8a5014b7`)
+
+- 2026-11-12 — extended the generator with suggestions and open-questions pages; properties anonymized as Property A / Property B; no names, streets, parcels, cities, neighbourhoods or ZIP codes; all dollar amounts multiples of $10 except quoted statutory figures; every table row links an official `.gov` source (S01–S47).
+- 2026-11-12 — local build and verify passed: 17 pages, 489 sourced table rows, 1,694 dollar amounts, 47 sources, 13 flags, 0 failures; no banned identifier leak (`grep -i 95014|94122|cupertino|san francisco|san jose|bay area|santa clara|outer sunset` → clean); `noindex` present.
+- 2026-11-12 — pushed `arena/8a5014b7-tino4`, opened PR #42 (`arena/8a5014b7-tino4` → `main`), merged PR #42. GitHub Pages reports `status: built`, `error: null`. Live site: https://wingbangboozle1-lang.github.io/Tino4/ (suggestions and open-questions pages served from PR #40's integrated version).
+- Irregularities carried forward from PR #40 / main and left for the owner: IR-018 (un-rounded figures in git history), IR-019 (open-questions.html utilities row mislabeled "Have"). This session did not rewrite or force-push history.
