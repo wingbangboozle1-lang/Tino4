@@ -166,6 +166,8 @@ NAV = [
     ("pages/privacy.html", "Privacy"),
     ("pages/sources.html", "Sources"),
     ("pages/flagged-for-review.html", "Flagged for review"),
+    ("pages/suggestions.html", "Suggestions & review"),
+    ("pages/open-questions.html", "Open questions"),
 ]
 
 CSS = """
@@ -405,6 +407,16 @@ def page_index(anchor: dict, series: list[dict], headroom: list[dict]) -> str:
                 f'<a href="pages/flagged-for-review.html">Flagged for review</a>',
                 "Every blank unverified cell, every owner-history irregularity, and every modeling assumption — with the link to check it.",
                 src_links(["S36", "S38", "S45"]),
+            ],
+            [
+                f'<a href="pages/suggestions.html">Suggestions — review before change</a>',
+                "Every suggested change to the plan, listed in one place so it can be compared and decided on before anything is implemented.",
+                src_links(["S07", "S15", "S22"]),
+            ],
+            [
+                f'<a href="pages/open-questions.html">Open questions before any decision</a>',
+                "The questions, information and answers that must be resolved before the household can reasonably choose live in, rent out, or sell.",
+                src_links(["S01", "S02", "S13"]),
             ],
         ],
     )
@@ -1874,6 +1886,265 @@ def page_flags() -> str:
     return body
 
 
+def page_suggestions() -> str:
+    """Dedicated suggestions section: changes to review before implementing any of them."""
+    rows = [
+        [
+            esc("S-01"),
+            esc("Sell Property A at distribution at the stepped-up basis"),
+            esc("The basis resets to date-of-death value under IRC §1014 and CA RTC §18031, so the sale carries no capital-gains tax on the pre-death gain."),
+            esc("Removes reassessed Property A tax ($53,580 to $70,180 per year) and post-solar carrying costs, and converts the home into a liquid, diversified portfolio."),
+            esc("Stage the sale proceeds into the portfolio over 24 to 36 months to remove single-day entry risk."),
+            esc("Proposed — leading candidate"),
+            src_links(["S07", "S15", "S43"]),
+        ],
+        [
+            esc("S-02"),
+            esc("Keep living in Property B unit 3; do not move into Property A"),
+            esc("Stays inside Property B's low Proposition 13 base and $7,000 homeowners' exemption and keeps both rented units producing income."),
+            esc("Protects the asset whose property-tax base is permanently low and avoids unit 3 rent-control exposure."),
+            esc("File the $7,000 exemption claim and claim the allowable annual increase each year."),
+            esc("Proposed"),
+            src_links(["S15", "S22", "S24", "S31"]),
+        ],
+        [
+            esc("S-03"),
+            esc("Do not rent out Property B unit 3 if moving into Property A"),
+            esc("Renting unit 3 would expose it to local rent and just-cause eviction rules and cap its rent growth at the annual allowable percentage."),
+            esc("Keeps unit 3 flexible and preserves the higher-value use of the already-owned building."),
+            esc("Decide the primary residence before committing any unit to a long-term lease."),
+            esc("Proposed"),
+            src_links(["S31", "S24"]),
+        ],
+        [
+            esc("S-04"),
+            esc("Confirm the trust instrument before relying on the stepped-up basis"),
+            esc("IRC §1014 and CA RTC §18031 step-up require the home to be in the settlor's gross estate, typically a revocable grantor trust; an irrevocable or completed-gift trust can forfeit the step-up."),
+            esc("Avoids discovering after the death that the basis reset is unavailable."),
+            esc("Have the trustee confirm the trust type and the parent-child transfer path."),
+            esc("Proposed — gating item, see Flag IR-005"),
+            src_links(["S07", "S15", "S27"]),
+        ],
+        [
+            esc("S-05"),
+            esc("Obtain parcel-specific insurance quotes for both properties"),
+            esc("No government source publishes parcel-specific homeowners or landlord premiums, so both insurance cells are blank and the model tests a range."),
+            esc("Replaces guesswork with real pricing before finalizing carrying-cost estimates."),
+            esc("Request quotes from several licensed carriers and the state insurer of last resort."),
+            esc("Proposed — gating item, see Flags IR-001, IR-002"),
+            src_links(["S36", "S37"]),
+        ],
+        [
+            esc("S-06"),
+            esc("Verify the achievable market rent for Property A"),
+            esc("The HUD small-area rent benchmark is official but is not a parcel-specific rent offer; the decision engine tests it plus several gross-yield cases."),
+            esc("Puts the rent-versus-sell comparison on a realistic income figure rather than a benchmark."),
+            esc("Commission a rental appraisal or comparable-leasing analysis."),
+            esc("Proposed — gating item, see Flag IR-003"),
+            src_links(["S38", "S39"]),
+        ],
+        [
+            esc("S-07"),
+            esc("Tally the full gross estate and the cash inheritance before assuming no estate tax"),
+            esc("Federal estate tax applies only above the exclusion ($15,000,000 for 2026; $15,480,000 for 2027) on the entire worldwide gross estate plus lifetime taxable gifts."),
+            esc("Confirms whether Form 706 is required and how much headroom remains after the house is included."),
+            esc("Ask the trustee for a gross-estate inventory including the house, cash, gifts and any portability election."),
+            esc("Proposed — gating item, see Flag IR-004"),
+            src_links(["S01", "S02", "S16"]),
+        ],
+        [
+            esc("S-08"),
+            esc("Track the Proposition 19 parent-child exclusion allowance after February 2027"),
+            esc("The allowance is verified only through February 15, 2027; future biennial adjustments follow the California house-price index and are not yet published for 2040 to 2050."),
+            esc("Keeps the 2040 to 2050 property-tax estimate honest as the allowance moves."),
+            esc("Re-check the Board of Equalization allowance each time it is republished."),
+            esc("Proposed — see Flag IR-006"),
+            src_links(["S22", "S23"]),
+        ],
+        [
+            esc("S-09"),
+            esc("Monitor federal stepped-up basis repeal proposals before the transfer"),
+            esc("If IRC §1014 is repealed before the death, the pre-death gain becomes taxable at sale and the selling plan weakens materially."),
+            esc("Lets the household re-run sell versus rent under the new rules rather than being surprised."),
+            esc("Watch the legislation tracked on the law watch page."),
+            esc("Proposed — see regime R5 on the black-swan page"),
+            src_links(["S46", "S07"]),
+        ],
+        [
+            esc("S-10"),
+            esc("Monitor the November 2026 California ballot measure certification"),
+            esc("The statewide canvass was in progress as of November 12, 2026 with certification due December 11, 2026; outcomes could change state or local taxes."),
+            esc("Keeps the tax picture current before any transfer-year decision."),
+            esc("Check the Secretary of State certification once published."),
+            esc("Proposed — see Flag IR-011"),
+            src_links(["S45"]),
+        ],
+        [
+            esc("S-11"),
+            esc("Budget for the solar legacy credit sunset"),
+            esc("The rooftop solar export credit runs on a legacy window that ends in the early 2040s, after which the electric bill turns positive and inverter or panel replacement is likely."),
+            esc("Adds a post-legacy electricity cost and a replacement reserve to Property A carrying costs."),
+            esc("Size the inverter replacement reserve and re-run the operating-cost page after the sunset date."),
+            esc("Proposed — see Flag IR-008"),
+            src_links(["S33"]),
+        ],
+        [
+            esc("S-12"),
+            esc("Hold a maintenance and capital reserve for both properties"),
+            esc("No statute sets a mandatory reserve rate; the model uses labeled assumptions of 0.75% per year for Property A and 0.85% per year for Property B."),
+            esc("Funds roofs, HVAC and seismic work without disturbing the investment portfolio."),
+            esc("Review the reserve annually against actual repair bills."),
+            esc("Proposed — labeled assumption, see Flag IR-012"),
+            src_links(["S12"]),
+        ],
+        [
+            esc("S-13"),
+            esc("Re-run the whole comparison at the actual transfer date"),
+            esc("Every number here is a projection based on rounded inputs and current law; the real decision should use the actual assessed value, actual insurance quotes, actual rent, and then-current law."),
+            esc("Makes the final live-in / rent-out / sell choice on facts rather than estimates."),
+            esc("Update this dashboard with confirmed figures before signing any listing or lease."),
+            esc("Proposed — final gating step"),
+            src_links(["S07", "S21", "S28"]),
+        ],
+    ]
+    body = (
+        PRIVACY
+        + "<p>This section collects every suggested change to the household plan in one place so it can be reviewed and compared "
+        "before anything is implemented. No suggestion is acted on until its open questions are answered and a tax or legal "
+        "professional has confirmed it. Each suggestion links to the official basis it rests on and to the open questions or "
+        "flagged items it depends on.</p>"
+        + "<h2>Review before implementing</h2>"
+        + "<p>Use the table below to choose a path. Read each suggestion with its official basis, check the linked open question "
+        "or flagged item, and only then decide whether to adopt it. Suggestions marked gating item must be resolved before "
+        "they can be acted on.</p>"
+        + table(
+            ["ID", "Suggestion", "Why it matters", "Expected effect", "Before implementing", "Status", "Official basis"],
+            rows,
+        )
+        + "<h2>How suggestions are handled</h2>"
+        + "<ol>"
+        + "<li>List the suggestion here and link it to its official sources and open questions.</li>"
+        + "<li>Answer the open questions it depends on (see the Open questions page).</li>"
+        + "<li>Have the trustee and a tax or legal professional confirm the suggestion fits current law.</li>"
+        + "<li>Record the decision—adopt, defer, or reject—with the date and the facts relied on.</li>"
+        + "<li>Implement only the adopted items, one at a time, and re-run this dashboard after each material change.</li>"
+        + "</ol>"
+    )
+    return body
+
+
+def page_open_questions() -> str:
+    """Clear list of questions, information and answers that must be addressed before any decision."""
+    rows = [
+        [
+            esc("Q-01"),
+            esc("What is the exact trust instrument type for Property A?"),
+            esc("Confirmation that Property A is held in a revocable grantor trust included in the settlor's gross estate and passing to the child."),
+            esc("The owner supplies a revocable trust; the instrument itself has not been reviewed."),
+            esc("The trust deed and the parent-child transfer path."),
+            esc("Unanswered"),
+            esc("Ask the trustee for the trust document; confirm gross-estate inclusion under IRC §§2036–2038."),
+            src_links(["S07", "S15", "S27"]),
+        ],
+        [
+            esc("Q-02"),
+            esc("What is the exact cash inheritance amount and gross estate?"),
+            esc("Full estate tally: the house, the cash inheritance, lifetime taxable gifts and any portability election."),
+            esc("The owner describes a considerable cash amount but supplies no dollar figure."),
+            esc("Dollar amounts for the cash inheritance and the full gross estate."),
+            esc("Unanswered"),
+            esc("Ask the trustee for a gross-estate inventory; project Form 706 against the $15,000,000 (2026) / $15,480,000 (2027) exclusion."),
+            src_links(["S01", "S02", "S16"]),
+        ],
+        [
+            esc("Q-03"),
+            esc("What are actual insurance premiums for both properties?"),
+            esc("Parcel-specific homeowners (Property A) and landlord (Property B) quotes from licensed carriers."),
+            esc("None; both insurance cells are blank because no government source publishes parcel-specific premiums."),
+            esc("Actual quotes for both parcels."),
+            esc("Unanswered"),
+            esc("Request quotes from several licensed carriers and the state insurer of last resort."),
+            src_links(["S36", "S37"]),
+        ],
+        [
+            esc("Q-04"),
+            esc("What rent can Property A actually achieve?"),
+            esc("Single-family market rent from comparable leasing or a rental appraisal."),
+            esc("HUD small-area rent benchmark only ($5,870 to $6,390 per month); parcel-specific rent is blank."),
+            esc("Parcel-specific achievable rent."),
+            esc("Partial"),
+            esc("Commission a rental appraisal or comparable-leasing analysis."),
+            src_links(["S38", "S39"]),
+        ],
+        [
+            esc("Q-05"),
+            esc("What will Property A's assessment and tax be at the 2040 to 2050 transfer?"),
+            esc("The reassessed value and the Proposition 19 parent-child allowance applied at transfer."),
+            esc("A model projection; the allowance is verified only through February 15, 2027 and is not yet published for 2040 to 2050."),
+            esc("The actual future assessment and tax bill."),
+            esc("Projection"),
+            esc("At the death, the county assessor reassesses; check the Board of Equalization allowance in force then."),
+            src_links(["S22", "S23", "S28"]),
+        ],
+        [
+            esc("Q-06"),
+            esc("Will stepped-up basis (IRC §1014) survive to the transfer?"),
+            esc("The status of federal legislation to repeal or modify the date-of-death basis reset."),
+            esc("Current law is in force; no repeal is enacted yet."),
+            esc("The law in force at the date of death."),
+            esc("Watched"),
+            esc("Watch the legislation tracked on the law watch page."),
+            src_links(["S46", "S07"]),
+        ],
+        [
+            esc("Q-07"),
+            esc("What is the settlor's date of death or transfer year?"),
+            esc("The actual date of death, which fixes the stepped-up basis date and the transfer-year tax rules."),
+            esc("Expected sometime in 2040 to 2050; no exact date is known."),
+            esc("The exact date of death."),
+            esc("Unknown"),
+            esc("Known only at the death; Form 706 is due nine months after death."),
+            src_links(["S01"]),
+        ],
+        [
+            esc("Q-08"),
+            esc("Will the November 2026 California ballot measures pass?"),
+            esc("The certified outcome of the statewide measures, which could change state or local taxes."),
+            esc("The canvass was in progress as of November 12, 2026 with certification due December 11, 2026."),
+            esc("The certified result."),
+            esc("Pending"),
+            esc("Check the Secretary of State certification once published."),
+            src_links(["S45"]),
+        ],
+        [
+            esc("Q-09"),
+            esc("What are actual post-inheritance utility and maintenance costs?"),
+            esc("Actual water, electricity and maintenance bills for each property after the transfer."),
+            esc("Owner estimates rounded to the nearest $10; actual bills are not yet available."),
+            esc("Actual bills."),
+            esc("Estimate"),
+            esc("Track the bills after the transfer and update the operating-cost page."),
+            src_links(["S33", "S35"]),
+        ],
+    ]
+    body = (
+        PRIVACY
+        + "<p>This page lists the questions, information and answers that must be addressed before the household can reasonably "
+        "choose to live in Property A, rent it out, or sell it and reinvest. Each row shows what we already have, what we still "
+        "need, and how to resolve it.</p>"
+        + "<h2>Questions to answer before any decision</h2>"
+        + table(
+            ["ID", "Question", "Information needed", "What we have", "What we still need", "Status", "How to resolve", "Official basis"],
+            rows,
+        )
+        + "<h2>How to use this list</h2>"
+        + "<p>Treat every item marked Unanswered or Partial as a gate: do not finalize live-in / rent-out / sell until the "
+        "information is gathered or a reason to proceed without it is recorded. Answers that change (for example, the estate "
+        "exclusion or the Proposition 19 allowance) should be re-entered here and the dashboard re-run.</p>"
+    )
+    return body
+
+
 # ---------------------------------------------------------------------------
 # main
 # ---------------------------------------------------------------------------
@@ -1966,6 +2237,16 @@ def main() -> None:
             "Flagged for review",
             "Every unverified cell, every irregularity in the supplied history and every modeling assumption, with the link to check it.",
             page_flags(),
+        ),
+        "pages/suggestions.html": (
+            "Suggestions — review before implementing changes",
+            "Every suggested change to the household plan, listed in one place so it can be compared and decided on before anything is implemented.",
+            page_suggestions(),
+        ),
+        "pages/open-questions.html": (
+            "Open questions — what must be answered before any decision",
+            "The questions, information and answers that must be resolved before the household can reasonably choose live in, rent out, or sell.",
+            page_open_questions(),
         ),
     }
 

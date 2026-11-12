@@ -44,6 +44,8 @@ EXPECTED = [
     "pages/privacy.html",
     "pages/sources.html",
     "pages/flagged-for-review.html",
+    "pages/suggestions.html",
+    "pages/open-questions.html",
 ]
 
 # Exact official statutory figures that are quoted as published (not $10 multiples).
