@@ -839,7 +839,7 @@ Branch note: this session is pinned to `arena/62edb6b1-tino4`, branched from `ma
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
 | T62-1 | Integrate the verified `s179ec133/site` candidate into the shared outputs | **done — superseded by `main` @ `a29f10c` (PR #28); reconciled, parity verified** | `arena-62edb6b1` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, `COORDINATION.md` | 2026-11-12 04:15 |
-| T62-2 | Re-verify on the merged tree, PR → `main`, merge, confirm Pages deploy, record result here | in progress | `arena-62edb6b1` | same as T62-1 | 2026-11-12 04:15 |
+| T62-2 | Re-verify on the merged tree, PR → `main`, merge, confirm Pages deploy, record result here | **done** | `arena-62edb6b1` | same as T62-1 | 2026-11-12 04:15 |
 
 ### Verification performed (this session, on the merged tree)
 
@@ -859,7 +859,7 @@ Branch note: this session is pinned to `arena/62edb6b1-tino4`, branched from `ma
 - 2026-11-12 04:15 UTC — claim published (this section).
 - 2026-11-12 04:16–04:25 UTC — independent integration built (14 pages, verifier 0 failures); local HTTP sweep 20/20 200; privacy scans clean.
 - 2026-11-12 04:25 UTC — `git pull`/merge found `main` had advanced through PRs #25–#30; independent integration found byte-identical in pages; reconciliation performed as above; board conflict resolved preserving every session's entry; this section rewritten to record the actual outcome.
-- PR and deployment record for this reconciliation: see the T62-2 line after merge.
+- 2026-11-12 04:26 UTC — PR [#32](https://github.com/wingbangboozle1-lang/Tino4/pull/32) opened (mergeable/clean) and merged to `main` at `17a4cefccd0fc5f9e1e6e01732a965a96d7cb693`. GitHub Pages API for `17a4cef`: **status `built`, error `null`** (checked 2026-11-12 ~04:26 UTC). Cache-busted live checks 2026-11-12: `/` serves the overview and full dashboard; `/pages/flagged-for-review.html` serves the page including the new **Location wording** notice; `/s179ec133/site/index.html` returns Pages 404 (PR #27 exclusion holds); `/pages/costs.html` returns 404 (stub removal intended). `python3 tools/build.py && python3 tools/verify.py` on the merged tree: engine re-runs, **0 failures**; local HTTP sweep 15/15 × 200. The PR published by this record is #33 (board only).
 
 ## Session `f5705d45` — 2026-11-12 (branch `arena/f5705d45-tino4`, platform-fixed; IR-001 applies)
 
