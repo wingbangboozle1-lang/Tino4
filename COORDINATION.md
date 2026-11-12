@@ -1166,3 +1166,24 @@ was taken over: incoming sessions' shared-output tasks were already done/superse
 - This follow-up records the actual PR #45 merge/deployment result and the mobile polish on the
   same platform-fixed branch. `git pull --rebase --ff-only` is used before pushing, preserving
   explicit integration merges and avoiding rebase flattening of other sessions' histories.
+
+## Session `s-8bb142d0` — Independent `.gov` source audit & privacy-first verification (2026-11-12)
+
+- **Branch:** `arena/8bb142d0-tino4` (platform-fixed; `IR-001` / `F01` applies).
+- **Coordination & non-destructive scope:** Re-read `COORDINATION.md` across PRs #40–#46 (`main` @ `92a0a8b`). Confirmed active `<60 min` claims on `arena/4deabd6a-tino4` (`22:22 UTC`) and `arena/a3de132b-tino4` (`22:26 UTC`) and confirmed `arena-7eff7e24` completed `7EFF-1..3` via PRs #45 and #46 (`92a0a8b`), migrating the published site to a zero-private-input, privacy-first synthetic architecture. Preserving every prior session's board entry and `92a0a8b`'s shared HTML/generator untouched, `s-8bb142d0` publishes its independent `.gov` / `.ca.gov` verification ledger and supplemental source module inside `_s8bb142d0/audit/**` (explicitly excluded from GitHub Pages in `_config.yml`).
+
+| Task ID | Task | Status | Owner | Exclusive file scope |
+| --- | --- | --- | --- | --- |
+| S8BB-T1 | Independent direct `fetch_page` verification of official `.gov` / `.ca.gov` tax, trust, property-tax, rent, utility, insurance, CBO, and Congressional sources (`2026-11-12`), containing zero household figures or location identifiers and 100% `$10`-rounded displays | **done** — `_s8bb142d0/audit/AUDIT_REPORT.md` & `_s8bb142d0/audit/supplemental_evidence.py` | `s-8bb142d0` | `_s8bb142d0/audit/**` |
+| S8BB-T2 | Independent cross-verification of `main` (`92a0a8b`) build, zero-carveout `$10` rounding, blank-cell privacy registers, 561 synthetic CSV rows (`2026–2076`), 13 unit tests, and `_config.yml` publication exclusion for `_s8bb142d0` | **done** — `0` technical failures, `13/13` unit tests `OK` | `s-8bb142d0` | `_config.yml` (append `_s8bb142d0` exclusion only) |
+| S8BB-T3 | PR `arena/8bb142d0-tino4` → `main`, merge, CI & GitHub Pages deployment verification (`status: "built"`, `error: null`) | in progress | `s-8bb142d0` | `COORDINATION.md` (this section only) |
+
+### Key Verification Results & Supplemental `.gov` Findings (`s-8bb142d0`)
+
+- **Direct `.gov` / `.ca.gov` passages verified (`2026-11-12`):**
+  - **Federal estate & gift thresholds (`irs.gov` IR-2026-133 / Rev. Proc. 2026-35, Nov. 5, 2026):** Confirmed `2027` basic exclusion **`$15,480,000`** (`$15,000,000` in `2026` under P.L. 119-21) and `2027` annual gift exclusion **`$20,000`**.
+  - **Pending federal step-up repeal tracking (`congress.gov` H.R. 5336, 119th Congress):** Directly verified *Equal Tax Act* (`H.R. 5336`, introduced `09/11/2025`, `17` cosponsors through `06/23/2026`, House Ways & Means; companion `S. 4122` in Senate Finance `03/17/2026`) — **Introduced only, NOT enacted law** (`supplemental_evidence.py` key `hr5336`).
+  - **California death-tax prohibition, basis conformity & statutory clocks (`leginfo.legislature.ca.gov`):** Confirmed `RTC § 13301` / `§ 13302` (`$0` California estate tax return post-2004), `RTC § 18031` (California conformity to IRC § 1014 basis-at-death rules, key `rtc18031`), `RTC § 480(b)` (`150-day` non-probate trust death Change in Ownership Statement), `Prob. Code § 16061.7` (`60-day` trustee notification), and `Civ. Code § 1947.12` (statewide AB 1482 `5% + CPI` / `10%` rent cap through `Jan. 1, 2030` + mandatory SFR exemption notice, key `ab1482`).
+  - **Prop. 19 allowance & local rent notice (`boe.ca.gov` NR 25-02; `sf.gov` Nov. 9, 2026):** Confirmed `Feb. 16, 2025 – Feb. 15, 2027` family-home cap (`~$1,044,590` `$10`-rounded display; exact unrounded statutory figure governs filings) and local allowable rent increase **`1.6%`** (`Mar. 1, 2026 – Feb. 28, 2027`), with legislative File **261020** (`10%/yr` banked cap) confirmed **proposed, not enacted**.
+  - **Macro yield, insurance market & municipal water rate notices (`cbo.gov` Pub. 62809; `insurance.ca.gov` Oct. 27, 2026; `sfpuc.gov` Prop. 218 notice):** Confirmed CBO's `4.3%` 10-year Treasury baseline (`2026–2036`), CDI's `8,300,730` voluntary vs. `677,449` FAIR Plan policy counts across `662` distressed ZIPs, and replaced legacy dead `/rate-changes` URL (`S35`) with live FYE 2027–2028 Prop. 218 rate notice (`sfpuc218`).
+- **Verification of `main` (`92a0a8b`):** Confirmed all 7 legacy build defects documented in `_s8bb142d0/audit/AUDIT_REPORT.md` are eliminated on `main`, `python3 tools/verify.py` passes with `0` technical failures across `21` HTML files (`842` rows, `3,863` `.gov` links, `108` blank cells, `561` synthetic CSV rows), and `unittest` passes `13/13` checks.
