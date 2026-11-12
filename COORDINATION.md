@@ -927,7 +927,7 @@ This is a read-only review of the just-merged integration and B14-1's explicit r
 
 | Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| T1775-2 | Correct the post-PR-#28 public privacy regression: restore source-linked generic pages with blank private estimates, preserve current official-law updates and black-swan index analysis, remove the public build's dependency on private model output, strengthen regression checks, remove obsolete case-derived working artifacts from the current tree, verify, PR/merge, and confirm deployment | in progress | `arena-1775f697` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, deletions under `s179ec133/**`, `_s9ad1da71/**`, `_research/**`, `_a24b1c8c/**`, and this session's `COORDINATION.md` section only | 2026-11-12 04:22 |
+| T1775-2 | Correct the post-PR-#28 public privacy regression: restore source-linked generic pages with blank private estimates, preserve current official-law updates and black-swan index analysis, remove the public build's dependency on private model output, strengthen regression checks, remove obsolete case-derived working artifacts from the current tree, verify, PR/merge, and confirm deployment | **done** (PR #34 merged; Pages built) | `arena-1775f697` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, deletions under `s179ec133/**`, `_s9ad1da71/**`, `_research/**`, `_a24b1c8c/**`, and this session's `COORDINATION.md` section only | 2026-11-12 04:22 |
 
 Handoff basis: PR #28 (`F570-T1`) is merged and its task is done; B14-1 is marked needs review (non-blocking), and the only remaining open PR is the older board-only PR #19. This follow-up claims the now-unowned public site for a privacy correction, not another session's active work directory. It will not rewrite Git history or alter other sessions' board entries. A current-tree correction cannot purge prior commits, PR diffs, caches, forks, or other remote branches; that residual requires a repository-owner-coordinated process.
 
@@ -939,4 +939,10 @@ Handoff basis: PR #28 (`F570-T1`) is merged and its task is done; B14-1 is marke
 - Retained official-source context for current federal and California rules, CDI insurance limits, CBO's 30-year horizon, BLS inflation history, local rent-rule status, and the vacant-home-tax appeal. These citations are not a line-by-line validation of every claim or assumption; that audit remains open.
 - Local checks passed: Python compilation; deterministic rebuild; 15 dashboard pages plus 4 compatibility redirects; verifier 19 pages / 200 rows / 111 external links / 0 failures; `git diff --check`; generic identifier scan clean. The verifier also checks blank 2026–2075 estimate cells, the synthetic index horizon, redirect targets, Jekyll exclusions, and absence of private-path dependencies in the builder.
 - Scope review found no overlap with another active file claim; no stale-claim handoff was needed. No history rewrite or other session's board-entry edit was made.
-- PR #34 was opened from `arena/1775f697-tino4`; GitHub reports a clean merge state and no branch checks are configured/reported. Local build and verification passed. Merge and post-merge Pages verification are still pending.
+- PR #34 was opened from `arena/1775f697-tino4`; GitHub reported a clean merge state and no branch checks were configured/reported. Local build and verification passed. Merge and post-merge Pages verification were pending at the time of this pre-merge note.
+
+### T1775-2 post-merge result — 2026-11-12
+
+- PR #34 merged to `main` at `0011ce81169dff72e98a4592604340ff895a5951` on 2026-11-12 04:41 UTC.
+- GitHub Pages workflow `43156456538` completed successfully. The Pages API reports status `built`, no build error, and the same merge commit; published site: https://wingbangboozle1-lang.github.io/Tino4/.
+- The independent line-by-line legal/source audit remains open. This task restores a privacy-safe generic build and does not purge previously public history, PR diffs, caches, other branches or forks; repository-owner coordination is still required.
