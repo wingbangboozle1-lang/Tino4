@@ -5,3 +5,6 @@ __pycache__/
 node_modules/
 .vscode/
 *.log
+_7eff7e24/_preview/
+_7eff7e24/browser/
+_7eff7e24/screenshots/

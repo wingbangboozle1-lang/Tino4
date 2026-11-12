@@ -1,9 +1,12 @@
-# GitHub Pages publishes only the public static dashboard.
-# Every working directory, task board, data file and generator is excluded so the
-# site build can never serve an internal artefact.
+title: Two-property decision brief
+description: Privacy-first research and synthetic decision scenarios
+# Jekyll processes the root. Do not add .nojekyll: it would bypass exclusions.
 exclude:
   - tools
+  - _7eff7e24
+  - _1775f697
   - _c07ccf45
+  - _s09b3ffa0
   - s179ec133
   - _s9ad1da71
   - _research
