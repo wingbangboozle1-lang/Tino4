@@ -16,7 +16,7 @@ anything. A claim older than 60 minutes with no commits may be taken over; note 
 - **Repository:** `wingbangboozle1-lang/Tino4`
 - **Working / integration branch:** `arena/ef28fa90-tino4` (platform-fixed; see IR-001)
 - **Live site:** https://wingbangboozle1-lang.github.io/Tino4/ (GitHub Pages, `main`, root)
-- **Board last updated:** 2026-11-11 (UTC)
+- **Board last updated:** 2026-11-12 (UTC)
 - **Final integration session:** `s-0837be92` (2026-11-10); follow-up session `s-accb6bba` (2026-11-11); audit session `arena-ef28fa90` (2026-11-11)
 
 ## Platform constraint (IR-001)
@@ -27,6 +27,33 @@ branches or separate git worktrees). Isolation was therefore implemented by **no
 file scopes** within the one branch, recorded below. The pull request is opened from
 `arena/0837be92-tino4` → `main`. Published on Flagged for Review as IR-001; does not affect the
 analysis.
+
+## Session `s-c0492629` — final integration takeover (2026-11-12)
+
+Branch is platform-fixed at `arena/c0492629-tino4` (IR-001 applies: no `session-<id>/<task>` branch
+can be created, so isolation is by file scope). Board read on `main` @ `f97fe08` and all 19 remote
+heads inspected at 04:14 UTC on 2026-11-12.
+
+**Handoff under the 60-minute rule.** The integration claim `T2482-16` (`s-2482744e`) had its last
+commit at 2026-11-11 13:53 UTC and never landed; `T5533-4`, `T356-3`, `A24-5`, `T9AD-3` and
+`S179-T5` were all declared blocked behind it or yielded to it. The newest commit on any session
+branch is 2026-11-11 14:02 UTC, more than 14 hours before this claim. `main` still serves the
+figure-less site from PR #11, which does not meet the owner's brief (same finding as `s-5533dc75`,
+`s-356f911b`, `s-2482744e`). This session therefore takes over the shared outputs.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C049-1 | Line-by-line audit of the two landed candidates (`s179ec133/`, `_s9ad1da71/`) and of the open change requests: every published fact re-fetched from the official page by this session; arithmetic re-run | in progress | `s-c0492629` | `tools/research/**` | 2026-11-12 04:20 |
+| C049-2 | Reconciled model and generator in the shared tool path, built from the `s-179ec133` candidate (its documented handoff route) with corrections that an official source proves | in progress | `s-c0492629` | `tools/**` | 2026-11-12 04:20 |
+| C049-3 | Final integration of the shared published outputs; re-verify combined data, links, privacy, build | in progress | `s-c0492629` | `index.html`, `pages/**`, `assets/**`, `_config.yml`, `README.md` | 2026-11-12 04:20 |
+| C049-4 | PR to `main`, merge, confirm Pages deployment, record result here | in progress | `s-c0492629` | `COORDINATION.md` (this section only) | 2026-11-12 04:20 |
+
+Other sessions' directories (`s179ec133/**`, `_s9ad1da71/**`, `_a24b1c8c/**`, `_research/**`) and
+board entries are left untouched.
+
+### Log (`s-c0492629`)
+
+- 2026-11-12 04:20 UTC — board and all remote heads read; handoff recorded; claim committed and pushed.
 
 ## Session `s-179ec133` — tasks, results, handoff (2026-11-11)
 
