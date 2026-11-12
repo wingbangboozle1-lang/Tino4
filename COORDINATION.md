@@ -738,3 +738,29 @@ Scope handoff: `s-2482744e`'s shared-output integration claim has had no publish
 | Task | Status | Owner | Result |
 | --- | --- | --- | --- |
 | CCFA-1 | done (source re-audit of older rows needs review) | `arena-ccfa33cc` | Privacy-safe site status labels, verified 2027/California statute update, structural verification; deployment recorded below. |
+
+## Session `arena-62edb6b1` — 2026-11-12 (branch `arena/62edb6b1-tino4`, platform-fixed; IR-001 applies)
+
+Branch note: this session is pinned to `arena/62edb6b1-tino4`, branched from `main` @ `f97fe08` (merge of PR #24). IR-001 applies: no other branch may be created, switched to or pushed; isolation is by non-overlapping file scope.
+
+**Handoff of T2482-16 (integration of the shared outputs).** `s-2482744e` claimed the shared outputs at 13:12 UTC 2026-11-11 (last commits `d1533e2`, `9da0f07`, both 2026-11-11 ≤13:30 UTC; no commits since). As of 2026-11-12 04:14 UTC that claim is more than 15 hours stale — far beyond the 60-minute rule — so this session takes the shared outputs over and notes the handoff here. No `s-2482744e` file is altered; the handoff is recorded, not a revert of anyone's work. `s-9ad1da71` and `s-356f911b` had declared themselves blocked behind an active integration claim; both are superseded by this handoff. Both change-request rows against `s-2482744e` (from `s-9ad1da71` at 13:43 UTC and `s-179ec133` at 13:58 UTC) are adopted into this integration where verifiable; see the log below.
+
+Shared outputs remain what they were on `main` @ `f97fe08`: the over-redacted brief (no case-specific figures, per the 2026-11-11 privacy hotfix). The owner's brief requires figures rounded to the nearest $10 in the decision analysis, so the integration publishes the verified `s179ec133` candidate (already merged read-only under `s179ec133/**` by PRs #22/#24) rather than inventing new content.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T62-1 | Integrate the verified `s179ec133/site` candidate into the shared outputs: root `index.html`, `pages/**`, `assets/**`, `tools/**`; keep moved-page stubs redirecting; keep the candidate's generator/verifier usable from `tools/`; update `README.md` and `_config.yml`; do not re-add anything PR #11 deleted | in progress | `arena-62edb6b1` | `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `README.md`, `COORDINATION.md` (own section + log) | 2026-11-12 04:15 |
+| T62-2 | Re-verify line by line on the integrated tree (candidate verifier at root; link sweep; privacy scan; `$10`-rounding scan), PR → `main`, merge, confirm GitHub Pages deploy, record result here | blocked on T62-1 | `arena-62edb6b1` | same as T62-1 | — |
+
+### Plan
+
+1. Regenerate the site from `s179ec133/_work/tools/build.py` into the repository root (deterministic; the candidate verifier then runs against the root tree).
+2. Replace obsolete full pages with redirect stubs (property-tax → projections; privacy → methodology); keep existing stubs (costs, decisions, flagged) and fix any stub pointing at a removed page (properties stub points at property-tax → retarget to properties).
+3. Root-capable `tools/verify.py`; `tools/build.py` wrapper calling the pinned candidate generator.
+4. Verify, privacy-scan, PR, merge, confirm Pages `built`, cache-bust live check, record here.
+
+### Log (`arena-62edb6b1`)
+
+- 2026-11-12 04:14 UTC — read the board and both merged candidate trees; confirmed `s-2482744e`'s T2482-16 claim is stale (>15 h, no commits since 2026-11-11 13:19 UTC); confirmed `main` @ `f97fe08` shared tree still the over-redacted brief.
+- 2026-11-12 04:15 UTC — claim published (this section).
+>>>>>>> 853c24e (arena-62edb6b1: claim integration of shared outputs (T2482-16 lapsed) 2026-11-12 04:15 UTC)
