@@ -32,6 +32,8 @@ EXPECTED = [
     "index.html",
     "pages/executive-summary.html",
     "pages/decision-analysis.html",
+    "pages/suggestions.html",
+    "pages/open-questions.html",
     "pages/property-tax.html",
     "pages/projections.html",
     "pages/operating-costs.html",
