@@ -1,0 +1,175 @@
+[
+ {
+  "id": "IRS-ESTATE",
+  "agency": "Internal Revenue Service",
+  "title": "Estate tax",
+  "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "A federal estate tax return is required only above the filing threshold for the year of death: $15,000,000 for 2026 ($13,990,000 for 2025).",
+    "quote": "A filing is required if the gross estate of the decedent, increased by the decedent's adjusted taxable gifts and specific gift tax exemption, is valued at more than the filing threshold for the year of the decedent's death, as shown in the table below. ... 2025 | $13,990,000 ... 2026 | $15,000,000"},
+   {"claim": "The gross estate counts everything at fair market value, including real estate and trusts.",
+    "quote": "The fair market value of these items is used, not necessarily what you paid for them or what their values were when you acquired them. The total of all of these items is your \"Gross Estate.\" The includible property may consist of cash and securities, real estate, insurance, trusts, annuities, business interests and other assets."},
+   {"claim": "A surviving spouse can receive the first spouse's unused exclusion, but only by an election on a timely filed estate tax return.",
+    "quote": "Beginning January 1, 2011, estates of decedents survived by a spouse may elect to pass any of the decedent's unused exemption to the surviving spouse. This election is made on a timely filed estate tax return for the decedent with a surviving spouse."}
+  ]
+ },
+ {
+  "id": "IRS-IR-2026-133",
+  "agency": "Internal Revenue Service",
+  "title": "IR-2026-133 (Nov. 5, 2026): tax inflation adjustments for tax year 2027 (announces Rev. Proc. 2026-35)",
+  "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "Basic exclusion amount: $15,480,000 for deaths in 2027, $15,000,000 for deaths in 2026.",
+    "quote": "Estates of decedents who die during 2027 have a basic exclusion amount of $15,480,000, up from a total of $15,000,000 for estates of decedents who died in 2026."},
+   {"claim": "Annual gift exclusion: $20,000 per recipient in 2027, $19,000 in 2026.",
+    "quote": "For calendar year 2027, the annual exclusion for gifts increases to $20,000, up from $19,000 for calendar year 2026."},
+   {"claim": "2027 standard deduction: $33,200 joint, $16,600 single.",
+    "quote": "For tax year 2027, the standard deduction increases to $33,200 for married couples filing jointly, up $1,000 from 2026. For single taxpayers and married individuals filing separately, the standard deduction rises to $16,600 for tax year 2027"},
+   {"claim": "2027 bracket thresholds (single / joint): 12% over $12,800 / $25,600; 22% over $52,025 / $104,050; 24% over $109,125 / $218,250; 32% over $208,325 / $416,650; 35% over $264,550 / $529,100; 37% over $661,375 / $793,650.",
+    "quote": "the top tax rate remains 37% for individual single taxpayers with incomes greater than $661,375 ($793,650 for married couples filing jointly). The other rates are: 35% for incomes over $264,550 ($529,100 for married couples filing jointly); 32% for incomes over $208,325 ($416,650 for married couples filing jointly); 24% for incomes over $109,125 ($218,250 for married couples filing jointly); 22% for incomes over $52,025 ($104,050 for married couples filing jointly); 12% for incomes over $12,800 ($25,600 for married couples filing jointly)."}
+  ]
+ },
+ {
+  "id": "IRS-ESTATE-FAQ",
+  "agency": "Internal Revenue Service",
+  "title": "Frequently asked questions on estate taxes",
+  "url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "To pass the unused exclusion to the surviving spouse (portability), Form 706 must be filed even when the estate is below the threshold.",
+    "quote": "An estate tax return also must be filed if the estate elects to transfer any deceased spousal unused exclusion (DSUE) amount to a surviving spouse, regardless of the size of the gross estate or amount of adjusted taxable gifts. The election to transfer a DSUE amount to a surviving spouse is known as the portability election."},
+   {"claim": "Deadline for the portability return: nine months after death, with an automatic six-month extension on Form 4768.",
+    "quote": "The due date of the estate tax return is nine months after the decedent's date of death, however, the estate's representative may request an extension of time to file the return for up to six months. An automatic six month extension of time to file the return is available to all estates, including those filing solely to elect portability, by filing Form 4768 on or before the due date of the estate tax return."},
+   {"claim": "If the deadline is missed and the estate is below the filing threshold, a late portability election is possible until the fifth anniversary of death under Rev. Proc. 2022-32.",
+    "quote": "The simplified method under the revenue procedure to obtain an extension of time to make the portability election requires the filing of a complete and properly prepared estate tax return on or before the fifth annual anniversary of the decedent's date of death"},
+   {"claim": "The $15,000,000 amount for 2026 comes from Public Law 119-21, signed July 4, 2025.",
+    "quote": "The Working Families Tax Cuts Bill was signed into law on July 4, 2025 as Public Law 119-21 and amends § 2010(c)(3) by increasing the basic exclusion amount to $15,000,000 for gifts for calendar year 2026."}
+  ]
+ },
+ {
+  "id": "IRS-INHERIT-FAQ",
+  "agency": "Internal Revenue Service",
+  "title": "Gifts & inheritances: Is money received from the sale of inherited property considered taxable income?",
+  "url": "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "The income-tax basis of inherited property is generally its fair market value on the date of death (or on the alternate valuation date if elected on Form 706).",
+    "quote": "The basis of property inherited from a decedent is generally one of the following: The fair market value (FMV) of the property on the date of the decedent's death (whether or not the executor of the estate files an estate tax return ... The FMV of the property on the alternate valuation date, but only if the executor of the estate files an estate tax return (Form 706) and elects to use the alternate valuation on that return."},
+   {"claim": "Only the amount above that basis is a taxable gain on sale.",
+    "quote": "If you sell the property for more than your basis, you have a taxable gain."},
+   {"claim": "If an estate tax return is filed, the heir may have to use the estate-tax value as basis (Form 8971, Schedule A).",
+    "quote": "If you receive a Schedule A to Form 8971 from an executor of an estate or other person required to file an estate tax return, you may be required to report a basis consistent with the estate tax value of the property."}
+  ]
+ },
+ {
+  "id": "IRS-TC425",
+  "agency": "Internal Revenue Service",
+  "title": "Topic no. 425, Passive activities - Losses and credits",
+  "url": "https://www.irs.gov/taxtopics/tc425",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "A rental loss (for example one created by depreciation) generally cannot offset wages; it is carried forward.",
+    "quote": "Generally, passive activity losses that exceed the passive activity income are disallowed for the current year. You can carry forward disallowed passive losses to the next taxable year."},
+   {"claim": "Rental real estate is generally a passive activity.",
+    "quote": "In general, rental activities, including rental real estate activities, are passive activities even if you materially participate."},
+   {"claim": "Suspended losses are released when the property is sold.",
+    "quote": "Generally, you may fully deduct any previously disallowed passive activity loss in the year you dispose of your entire interest in the activity."}
+  ]
+ },
+ {
+  "id": "BOE-PROP19",
+  "agency": "California State Board of Equalization",
+  "title": "Proposition 19 (comparison chart, former law vs current law)",
+  "url": "https://www.boe.ca.gov/prop19/",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "The parent-child exclusion now requires the home to be the principal residence of both the parent and the child, and is capped at the current taxable value plus $1,000,000 (adjusted every two years).",
+    "quote": "Principal residence of transferor and transferee ... Value limit of current taxable value plus $1,000,000 (as biennially adjusted) ... Family homes and farms"},
+   {"claim": "No exclusion remains for any other real property (a rental, a second home).",
+    "quote": "Eliminates exclusion for other real property other than the principal residence"},
+   {"claim": "Two filing deadlines: homeowners' exemption within one year; exclusion claim within three years or before a transfer to a third party.",
+    "quote": "File for homeowners' exemption within 1 year of transfer ... File claim for exclusion within 3 years or before transfer to third party"},
+   {"claim": "Operative for parent-child transfers since February 16, 2021; implemented by Revenue and Taxation Code section 63.2.",
+    "quote": "Proposition 19's provisions became operative on February 16, 2021 (for intergenerational transfer exclusions) ... Senate Bill 539 (Stats. 2021, ch. 427) added sections 63.2 and 69.6 to the Revenue and Taxation Code to implement the provisions of Proposition 19."}
+  ]
+ },
+ {
+  "id": "SF-RECORDER-FEES",
+  "agency": "City and County of San Francisco, Office of the Assessor-Recorder",
+  "title": "Fees to record a document in San Francisco (includes the transfer tax rate table; page dated January 1, 2026)",
+  "url": "https://www.sf.gov/reports--march-2024--fees-record-document-san-francisco",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "San Francisco's transfer tax is tiered on the whole price: $2.50 per $500 up to $250,000; $3.40 per $500 above $250,000 and below $1,000,000; $3.75 per $500 from $1,000,000 to below $5,000,000; $11.25 per $500 from $5,000,000 to below $10,000,000; $27.50 per $500 from $10,000,000 to below $25,000,000; $30.00 per $500 at $25,000,000 or more.",
+    "quote": "Transfer Tax - Imposed per Article 12C of San Francisco Business and Tax Regulations Code | If entire consideration or value is: | Tax rate for entire consideration or value is: | More than $100 but less than/equal to $250,000 | $2.50 for each $500 or portion thereof | More than $250,000 but less than $1,000,000 | $3.40 for each $500 or portion thereof | $1,000,000 or more but less than $5,000,000 | $3.75 for each $500 or portion thereof | $5,000,000 or more but less than $10,000,000 | $11.25 for each $500 or portion thereof | $10,000,000 or more but less than $25,000,000 | $27.50 for each $500 or portion thereof | $25,000,000 or more | $30.00 for each $500 or portion thereof"}
+  ]
+ },
+ {
+  "id": "CDI-SIS",
+  "agency": "California Department of Insurance",
+  "title": "Sustainable Insurance Strategy - California Homeowners Insurance Market Snapshot (updated October 27, 2026)",
+  "url": "https://www.insurance.ca.gov/01-consumers/180-climate-change/sustainable-insurance-strategy.Cfm",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "The Department's published average homeowner premium is $1,571 a year for California and $1,512 nationally.",
+    "quote": "California: $1,571 National: $1,512 Average homeowner premium"},
+   {"claim": "That average is a statewide figure taken from National Association of Insurance Commissioners data; it is not a ZIP-code or property-specific premium.",
+    "quote": "Average Homeowner Premiums: The average annual cost of homeowner insurance premiums in California compared to the national average, based on annual data from the National Association of Insurance Commissioners."},
+   {"claim": "The Department's residential policy counts cover buildings of up to four units and include dwelling-fire and landlord policies, the policy types a rented or part-rented building uses.",
+    "quote": "Policy counts include residential policies of 4 units or less: homeowners' policies (HO-2, HO-3, HO-5, and HO-8, or equivalent); dwelling-fire policies (excluding dwelling fire contents only coverage); landlord/business-owner policies; and mobile/manufactured home policies."},
+   {"claim": "FAIR Plan homeowner policies: 677,449; other homeowner policies: 8,300,730.",
+    "quote": "8,300,730 Total homeowner policy count (not including FAIR Plan policies) ... 677,449 FAIR Plan homeowner policy count (+2,230 from July 2026)"}
+  ]
+ },
+ {
+  "id": "CA-CIV-1947-12",
+  "agency": "California Legislature",
+  "title": "Civil Code section 1947.12 (statewide limit on rent increases)",
+  "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1947.12.&lawCode=CIV",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "Statewide cap on yearly rent increases: 5 percent plus the change in the cost of living, at most 10 percent.",
+    "quote": "an owner of residential real property shall not, over the course of any 12-month period, increase the gross rental rate for a dwelling or a unit more than 5 percent plus the percentage change in the cost of living, or 10 percent, whichever is lower"},
+   {"claim": "The first rent of a new tenancy is not capped.",
+    "quote": "For a new tenancy in which no tenant from the prior tenancy remains in lawful possession of the residential real property, the owner may establish the initial rental rate not subject to subdivision (a)."},
+   {"claim": "A separately sold single-family home is exempt when the owner is not a real estate investment trust, a corporation, or a limited liability company with a corporate member, and the tenants were given the written notice the statute prescribes.",
+    "quote": "(5) Residential real property that is alienable separate from the title to any other dwelling unit, including a mobilehome, provided that both of the following apply: (A) The owner is not any of the following: (i) A real estate investment trust, as defined in Section 856 of the Internal Revenue Code. (ii) A corporation. (iii) A limited liability company in which at least one member is a corporation. ... (B) (i) The tenants have been provided written notice that the residential real property is exempt from this section using the following statement"},
+   {"claim": "Housing already under stricter local rent control (as in San Francisco) is outside this statewide cap.",
+    "quote": "(3) Housing subject to rent or price control through a public entity's valid exercise of its police power consistent with Chapter 2.7 (commencing with Section 1954.50) that restricts annual increases in the rental rate to an amount less than that provided in subdivision (a)."}
+  ]
+ },
+ {
+  "id": "SFPUC-10YR-PLAN-FY27",
+  "agency": "San Francisco Public Utilities Commission",
+  "title": "10-Year Financial Plan, FY 2026-27 to FY 2035-36 - Commission presentation, February 10, 2026",
+  "url": "https://www.sfpuc.gov/sites/default/files/about-us/policies-reports/FY27-10-Year-Plan-Presentation.pdf",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "Planned yearly increases (retail water / wastewater / combined bill): FYE 2027 7.0% / 15.0% / 10.5%; FYE 2028 7.0% / 14.5% / 12.5%; FYE 2029 7.5% / 13.0% / 10.7%; FYE 2030 7.5% / 13.0% / 11.3%; FYE 2031 7.5% / 12.0% / 10.4%; FYE 2032 7.0% / 8.0% / 7.7%; FYE 2033 6.0% / 8.0% / 7.3%; FYE 2034 6.0% / 8.0% / 7.3%; FYE 2035 4.5% / 5.0% / 3.7%; FYE 2036 4.5% / 5.0% / 4.8%.",
+    "quote": "| | Retail Water Rate Change | Wastewater Rate Change | Combined Bill Increase | Wholesale Water Rate Change | FYE 2027* | 7.0% | 15.0% | 10.5% | 7.6% | FYE 2028* | 7.0% | 14.5% | 12.5% | 7.2% | FYE 2029 | 7.5% | 13.0% | 10.7% | 3.1% | FYE 2030 | 7.5% | 13.0% | 11.3% | 2.5% | FYE 2031 | 7.5% | 12.0% | 10.4% | 4.5% | FYE 2032 | 7.0% | 8.0% | 7.7% | 5.5% | FYE 2033 | 6.0% | 8.0% | 7.3% | 5.3% | FYE 2034 | 6.0% | 8.0% | 7.3% | 3.0% | FYE 2035 | 4.5% | 5.0% | 3.7% | 3.7% | FYE 2036 | 4.5% | 5.0% | 4.8% | 0.5%"},
+   {"claim": "Average planned increase in the combined water and sewer bill: 8.6% a year over ten years, 5.4% a year over twenty years.",
+    "quote": "10-Year Avg | 6.4% | 10.1% | 8.6% | 4.3% | 20-Year Avg | 3.8% | 6.4% | 5.4% | 3.8%"},
+   {"claim": "The first two years were still proposals when the plan was presented.",
+    "quote": "* Rates expected to be adopted in Spring 2026"},
+   {"claim": "Wastewater costs are the driver and fall entirely on San Francisco retail customers.",
+    "quote": "Wastewater Expenses More than Double ... Average annual growth: 8.4% ... Capital is the driver ... All costs borne by San Francisco retail ratepayers"}
+  ]
+ },
+ {
+  "id": "USGS-FS-2016-3020",
+  "agency": "U.S. Geological Survey",
+  "title": "Fact Sheet 2016-3020: Earthquake Outlook for the San Francisco Bay Region 2014-2043 (rev. August 2016)",
+  "url": "https://pubs.usgs.gov/fs/2016/3020/fs20163020.pdf",
+  "fetched": "2026-11-12",
+  "passages": [
+   {"claim": "72 percent probability of at least one magnitude 6.7 or greater earthquake in the San Francisco Bay region between 2014 and 2043.",
+    "quote": "They concluded that there is a 72 percent probability (or likelihood) of at least one earthquake of magnitude 6.7 or greater striking somewhere in the San Francisco Bay region before 2043."},
+   {"claim": "30-year likelihoods by magnitude: 98 percent for 6.0 or more, 72 percent for 6.7 or more, 51 percent for 7.0 or more, 20 percent for 7.5 or more.",
+    "quote": "M ≥ 6.0 | 98 percent | M ≥ 6.7 | 72 percent | M ≥ 7.0 | 51 percent | M ≥ 7.5 | 20 percent"},
+   {"claim": "The region covered by the forecast includes both San Francisco and the San Jose area.",
+    "quote": "Map of known active faults in the San Francisco Bay region. The 72 percent probability of a magnitude 6.7 or greater earthquake includes the well-known major plate-boundary faults, lesser-known faults, and unknown faults."}
+  ]
+ }
+]
