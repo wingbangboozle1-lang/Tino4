@@ -1002,3 +1002,17 @@ Read before claiming (04:20 UTC) and re-checked prior to merge (04:49 UTC): `COO
   6. **#6 Live in `[Property A]`, Unit 3 Unrented** (`$3,240,860` real ex-B / `$5,870,370` real incl. B; `-$1,103,570` cumulative 20-year cash drain).
 - **50-Year Historical & Black-Swan Stress (`_s09b3ffa0`):** `Sell → Equities` wins **`49/50` (`98.0%`)** of `1976–2025` historical 20-year rolling cohorts, **`81.6%`** of 500 de-meaned (`-200 bps/yr`) block-bootstrap paths (`P10 $4,174,050`, `P50 $9,065,550`, `P90 $21,748,060` real ex-B), and 4 of 6 named Black-Swan regimes (`BS-1` 1970s Stagflation, `BS-3` Housing Bust, `BS-4` Insurance/Drought Spiral, and `BS-5` simultaneous `§1014` Step-Up Repeal + Prop. 19 Repeal). Equities need only **`3.96%/yr` nominal (`1.52%/yr` real)** to beat renting `[Property A]`; `[Property A]` would require **`$18,240/mo` (2026$)** rent (`3.14×` HUD FY2027 4-BR SAFMR of `$5,800/mo`) to tie equities.
 - **Note for shared-output owners (non-blocking refinement):** `main`'s root HTML (`index.html`, `pages/methodology.html`, `pages/property-tax.html`) currently passes `tools/verify.py` (`0` errors, `0` location leaks) with a statutory carveout for `$1,044,586` (BOE NR 25-02). If strict zero-carveout `$10` display (`$1,044,590 [$10-rounded]`) is desired, `_s09b3ffa0/tools/verify.py` and `_s09b3ffa0/site/` implement 100% zero-carveout `$10` rounding across all `2,362` dollar tokens.
+
+## Session `arena-8fa3c77e` — 2026-11-12 22:17 UTC (branch `arena/8fa3c77e-tino4`, platform-fixed)
+
+Read on `main` @ `26697d8` (PR #39 merged). No other session had an open claim on the board at this time (every listed branch was merged or superseded). Scope is limited to adding two decision-support pages the owner's brief asks for and that the published site lacks.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A8F-1 | New page `pages/suggestions.html`: site-improvement suggestions, each with options and an owner decision column, to be chosen before any change is implemented | in progress | `arena-8fa3c77e` | `_c07ccf45/tools/build_candidate.py` (new functions and page map only), `_c07ccf45/tools/verify_candidate.py` (expected-page list only) | 2026-11-12 22:17 |
+| A8F-2 | New page `pages/questions.html`: consolidated list of questions, known answers, missing information and how to obtain it, each row linked to an official source in the register | in progress | `arena-8fa3c77e` | same generator files as A8F-1; generated `pages/questions.html`, `pages/suggestions.html`, `index.html` nav | 2026-11-12 22:17 |
+| A8F-3 | Re-run generator and verifier; privacy scan; PR → `main`; merge; confirm Pages | in progress | `arena-8fa3c77e` | `COORDINATION.md` (own section only) | 2026-11-12 22:17 |
+
+### Log (`arena-8fa3c77e`)
+
+- 2026-11-12 22:17 UTC — claim committed before any edit to shared outputs.
