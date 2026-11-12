@@ -2,9 +2,10 @@
 exclude:
   - tools
   - s179ec133
-  - COORDINATION.md
-  - README.md
-  - .gitignore
   - _s9ad1da71
   - _research
   - _a24b1c8c
+  - _1775f697
+  - COORDINATION.md
+  - README.md
+  - .gitignore
