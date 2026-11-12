@@ -1,0 +1,74 @@
+{
+  "_note": "Owner-supplied inputs, ALREADY ROUNDED to the nearest $10 before being written here. Un-rounded figures are never stored anywhere in this package. Zero personal names, street addresses, parcel numbers, city names, neighborhood names, or ZIP codes.",
+  "as_of": "2026-11",
+  "property_a": {
+    "label": "[Property A — Inherited Trust Single-Family Residence]",
+    "status": "To be inherited via trust, planned 2040-2050",
+    "market_value_2026": 3100000,
+    "assessed_history": {
+      "2014": 440310,
+      "2015": 449100,
+      "2016": 455950,
+      "2017": 465070,
+      "2018": 474370,
+      "2019": 483850,
+      "2020": 493530,
+      "2021": 498640,
+      "2022": 508610,
+      "2023": 518790,
+      "2024": 529160,
+      "2025": 539740,
+      "2026": 550540
+    },
+    "tax_history": {
+      "2014": 5970,
+      "2015": 6130,
+      "2016": 6410,
+      "2017": 6380,
+      "2018": 6380,
+      "2019": 6570,
+      "2020": 6570,
+      "2021": 6660,
+      "2022": 6760,
+      "2023": 6920,
+      "2024": 7000,
+      "2025": 7210
+    },
+    "water_per_month": [100, 150],
+    "electricity_per_month": [-20, -10],
+    "insurance_per_year_owner_estimate": 1500
+  },
+  "property_b": {
+    "label": "[Property B — Already-Owned 3-Unit Primary/Rental Residence]",
+    "status": "Already owned by inheritor; 2 units rented, 1 unit available for owner occupancy",
+    "market_value_2026": 1800000,
+    "assessed_history": {
+      "2016": 96560,
+      "2017": 98490,
+      "2018": 100460,
+      "2019": 102470,
+      "2020": 104510,
+      "2021": 105600,
+      "2022": 107660,
+      "2023": 109810,
+      "2024": 112010,
+      "2025": 114250
+    },
+    "tax_history": {
+      "2016": 1680,
+      "2017": 1740,
+      "2018": 2060,
+      "2019": 2130,
+      "2020": 2200,
+      "2021": 2070,
+      "2022": 2110,
+      "2023": 2180,
+      "2024": 2320,
+      "2025": 2440
+    },
+    "rent_per_month_two_units": 7150,
+    "water_per_month": [330, 400],
+    "electricity_per_month": [30, 70],
+    "insurance_per_year_owner_estimate": 1500
+  }
+}

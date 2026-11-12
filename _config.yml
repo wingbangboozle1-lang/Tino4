@@ -1,11 +1,13 @@
-# Pages publishes only the public static dashboard, never project working files.
+# GitHub Pages publishes only the public static dashboard.
+# Every working directory, task board, data file and generator is excluded so the
+# site build can never serve an internal artefact.
 exclude:
   - tools
+  - _c07ccf45
   - s179ec133
   - _s9ad1da71
   - _research
   - _a24b1c8c
-  - _1775f697
   - COORDINATION.md
   - README.md
   - .gitignore
