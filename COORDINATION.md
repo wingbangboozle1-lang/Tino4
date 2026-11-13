@@ -1187,3 +1187,19 @@ was taken over: incoming sessions' shared-output tasks were already done/superse
   - **Prop. 19 allowance & local rent notice (`boe.ca.gov` NR 25-02; `sf.gov` Nov. 9, 2026):** Confirmed `Feb. 16, 2025 – Feb. 15, 2027` family-home cap (`~$1,044,590` `$10`-rounded display; exact unrounded statutory figure governs filings) and local allowable rent increase **`1.6%`** (`Mar. 1, 2026 – Feb. 28, 2027`), with legislative File **261020** (`10%/yr` banked cap) confirmed **proposed, not enacted**.
   - **Macro yield, insurance market & municipal water rate notices (`cbo.gov` Pub. 62809; `insurance.ca.gov` Oct. 27, 2026; `sfpuc.gov` Prop. 218 notice):** Confirmed CBO's `4.3%` 10-year Treasury baseline (`2026–2036`), CDI's `8,300,730` voluntary vs. `677,449` FAIR Plan policy counts across `662` distressed ZIPs, and replaced legacy dead `/rate-changes` URL (`S35`) with live FYE 2027–2028 Prop. 218 rate notice (`sfpuc218`).
 - **Verification of `main` (`92a0a8b`):** Confirmed all 7 legacy build defects documented in `_s8bb142d0/audit/AUDIT_REPORT.md` are eliminated on `main`, `python3 tools/verify.py` passes with `0` technical failures across `21` HTML files (`842` rows, `3,863` `.gov` links, `108` blank cells, `561` synthetic CSV rows), and `unittest` passes `13/13` checks.
+
+## Session `s-24be15f7` — Owner brief implementation (2026-11-13)
+
+Branch: `arena/24be15f7-tino4` (@ `a67bebd == main`). Single active session; isolation by file scope.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| S24-1 | Publish owner-supplied property-tax / assessed-value history rounded to nearest $10 (no city, ZIP, parcel or names) plus illustrative forward projections of value, assessment and base tax | in progress | `s-24be15f7` | `_7eff7e24/content.py` (property-tax section) | 2026-11-13 |
+| S24-2 | Publish owner-supplied operating-cost estimates rounded to nearest $10 (water, electricity/solar credit, insurance, maintenance) marked unverified, with discovery paths | in progress | `s-24be15f7` | `_7eff7e24/content.py` (operating-costs section) | 2026-11-13 |
+| S24-3 | Add 2026 annual gift exclusion ($19,000) to estate-thresholds; enrich questions page with official statutory answers where known | in progress | `s-24be15f7` | `_7eff7e24/content.py` (estate-thresholds, questions sections) | 2026-11-13 |
+| S24-4 | Extend `tools/verify.py` statuses (`Owner-supplied`, `Assumption`) and `assets/style.css` badges; build, verify, unit tests zero failures | in progress | `s-24be15f7` | `tools/verify.py`, `assets/style.css` | 2026-11-13 |
+| S24-5 | Commit, push `arena/24be15f7-tino4`, PR → main, merge, confirm GitHub Pages deploy, record result and sources in this board | in progress | `s-24be15f7` | `COORDINATION.md` (this section/log) | 2026-11-13 |
+
+### Log (`s-24be15f7`)
+
+- 2026-11-13 — claims committed; verified IRS IR-2026-133 (2026 exclusion $15,000,000; 2027 $15,480,000; gift exclusion $19,000 in 2026 / $20,000 in 2027) via fetch_page; computed all $10-rounded history and projection tables.
