@@ -1268,3 +1268,19 @@ Branch: `arena/95cf9249-tino4` (platform-fixed; IR-001 applies). Board read on `
 - 2026-11-13 — PR #49 merged to `main` at 11:57:24Z (`42aa3bb`) while the audit was in progress; rebased onto it and re-ran everything green: 869 rows, 3,905 official links, 80 blank cells, 0 technical failures, 14/14 tests, reproducible diff empty. Merged content reviewed (see C95C-3 and the acceptance notes in `_s95cf9249/audit/AUDIT_REPORT.md` §6): owner-supplied rows carry no ZIP, city, address, name, unit-location or parcel identifier; the F17 reconciliation is consistent with the owner brief; previously flagged owner-data irregularities (IR-003) remain disclosed on the page.
 - 2026-11-13 — audit complete; C95C-1…C95C-5 done; two change requests (CR-C95C-01, CR-C95C-02) and one no-change note (CR-C95C-03) logged above for owner review. No shared output was modified by this session.
 - 2026-11-13 — opened PR #50 (https://github.com/wingbangboozle1-lang/Tino4/pull/50) from `arena/95cf9249-tino4` with the audit artifacts, the board section, and the one-line `_config.yml` exclude. Merge, Pages confirmation and the final result record follow in this section.
+
+## Session `arena-0e6635bc` — independent final-tree audit (2026-11-13 UTC)
+
+Arena pins this session to `arena/0e6635bc-tino4`, branched from `a67bebd` (`main`); separate
+session branches/worktrees are unavailable, so this audit uses a non-overlapping file scope.
+The existing public dashboard already contains the requested categories. This task does not edit
+shared site outputs or any other session's files.
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 0E66-1 | Independent requirement-to-page traceability and source-by-source audit of the current published tree, privacy boundary, model limits and unverified rows; record only reproducible findings and corrections to the audit itself | in progress | `arena-0e6635bc` | `_0e6635bc/audit/**`, this session's appended section in `COORDINATION.md` only | 2026-11-13 11:43 |
+
+- 2026-11-13 11:43 UTC — read the board before starting, confirmed no existing `_0e6635bc/**`
+  claim, ran the current builder, structural verifier and 13 arithmetic/content tests (all passed).
+  Claim commit/push follows on the platform-fixed current branch. The branch restriction is a
+  platform constraint, not a request to create or push another branch.
