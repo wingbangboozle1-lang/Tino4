@@ -1269,3 +1269,21 @@ Branch: `arena/95cf9249-tino4` (platform-fixed; IR-001 applies). Board read on `
 - 2026-11-13 — audit complete; C95C-1…C95C-5 done; two change requests (CR-C95C-01, CR-C95C-02) and one no-change note (CR-C95C-03) logged above for owner review. No shared output was modified by this session.
 - 2026-11-13 — opened PR #50 (https://github.com/wingbangboozle1-lang/Tino4/pull/50) from `arena/95cf9249-tino4` with the audit artifacts, the board section, and the one-line `_config.yml` exclude. Merge, Pages confirmation and the final result record follow in this section.
 - 2026-11-13 — C95C-6 complete. CI `verify` passed on the PR head (run `43422955594`). `gh pr merge 50 --merge` → **MERGED** at 2026-11-13T12:10:58Z, merge commit `bc83c543af459ec72fa8bb2ac377081e04b57936`. GitHub Pages build for `bc83c54`: status `built`, error `null`. Live checks after deployment: `pages/property-tax.html` serves the owner-supplied rounded history (A 2014–2026, B 2016–2025, labeled Assumption, all rows source-linked) and the illustrative projection (values reproduce); the family-home §63.2 mechanics rule and the $1,044,590-rounded allowance are already published (CR-C95C-01 therefore concerns the numeric projection column only); `/_s95cf9249/audit/AUDIT_REPORT.md` returns the GitHub Pages 404 page, confirming the audit package is excluded from the published artifact. Final record integrated to `main` via a follow-up coordination-only PR from this branch.
+
+## Session `s-7adb71fc` — Requirement audit, case figures & independent .gov spot-check (2026-11-13)
+
+- **Branch:** `arena/7adb71fc-tino4` (platform-fixed; `IR-001`/`F01` apply — no `session-<id>/<task>` branch can be created, so isolation is by exclusive file scope).
+- **Board read:** `2026-11-13 11:45 UTC` on `main` @ `a67bebd` (PR #47). Fetched all 20+ remote heads; newest commit on any branch predates this claim by >12 h. No live claim conflicts with the scope below. Merged stale open PR #48 (`arena/a3de132b-tino4`, 2026-11-12 22:50 UTC, CI green, MERGEABLE) as `c5dcb6b` before claiming, to preserve that session's privacy/generic-copy work instead of duplicating it; its owner has not committed in >12 h and its own task S8BB/A3DE records were complete on the branch.
+- **Preserved:** every prior board section above is untouched. Other sessions' directories (`_7eff7e24/**` except the generator files claimed below, `_s8bb142d0/**`, `_a3de132b/**`, `_1775f697/**`, `s179ec133/**`, `_s9ad1da71/**`) are read-only for this session.
+
+| Task ID | Task | Status | Owner | Exclusive file scope |
+| --- | --- | --- | --- | --- |
+| S7AD-1 | Re-read the owner brief and audit the published product requirement by requirement; log gaps as findings with evidence | in progress | `s-7adb71fc` | `_7adb71fc/AUDIT.md` |
+| S7AD-2 | Independent direct `fetch_page` verification of every official source cited by the product plus the laws the brief names (inheritance/estate thresholds, Prop. 13/19, trust clocks, rent cap, insurance, utilities, macro) — quoted passage + retrieval date per claim | in progress | `s-7adb71fc` | `_7adb71fc/evidence.py`, `_7adb71fc/audit/**` |
+| S7AD-3 | Publish the brief's **$10-rounded** case figures and year-by-year projections (both properties) with status labels, source links, and a rounding/privacy trade-off notice | in progress | `s-7adb71fc` | `_7eff7e24/case_data.py`, `_7eff7e24/model.py` (case model), `_7eff7e24/content.py` (case pages) |
+| S7AD-4 | Publish Questions/Information/Answers register with discovery suggestions for missing data | in progress | `s-7adb71fc` | `_7eff7e24/content.py` (questions page) |
+| S7AD-5 | Re-run builder, verifier, unit tests, link/anchor checks and the case-figure rounding/privacy guards; integrate; PR to `main`, merge, confirm Pages deployment | in progress | `s-7adb71fc` | `tools/build.py`, `tools/verify.py`, `tools/test_model.py`, `_config.yml`, `index.html`, `pages/**`, `README.md` |
+
+### Log (`s-7adb71fc`)
+
+- 2026-11-13 11:45 UTC — board read, stale PR #48 merged (`c5dcb6b`), claim written.
