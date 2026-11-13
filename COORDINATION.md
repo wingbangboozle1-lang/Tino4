@@ -1451,3 +1451,24 @@ case layer (PR #52/#54). Resolution protocol applied in PR #55:
   running suite.
 
 ---
+
+### PR and deployment record (`arena-e6ba08a8`, E6BA-4 complete · 2026-11-13)
+
+- **PR #55** https://github.com/wingbangboozle1-lang/Tino4/pull/55
+  ("Merge main: adopt deployed s-7adb71fc case engine; add BOE factor-chain
+  reconciliation and flags") merged to `main` without waiting for approval,
+  as merge commit `32b4621a3e82ed8891ebc7dae6eba2e87e6a0d75`.
+- **CI:** branch runs green (29/29 tests, build, verify 449 sourced/statused
+  rows / 921 official links / 204 CSV rows, 0 technical failures, reproducible
+  build diff clean). Browser smoke: 15 desktop + 15 mobile pages, 19 review
+  choices persisted/reset, no JS errors, no third-party requests.
+- **GitHub Pages:** build for `32b4621` status `built`, error `null`.
+  Live check through the page fetcher: `pages/property-tax.html` serves the
+  factor-chain reconciliation (B 2022 = $50 below the official chain) and
+  `pages/flagged-for-review.html` serves F15/F16 with official links.
+  Site URL: https://wingbangboozle1-lang.github.io/Tino4/
+- **Status: E6BA-1…4 all DONE.** The site is live; flagged items remain on the
+  Flagged page (non-blocking); the owner decisions recorded as F01/F02 are
+  untouched.
+
+---
