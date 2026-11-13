@@ -1188,6 +1188,23 @@ was taken over: incoming sessions' shared-output tasks were already done/superse
   - **Macro yield, insurance market & municipal water rate notices (`cbo.gov` Pub. 62809; `insurance.ca.gov` Oct. 27, 2026; `sfpuc.gov` Prop. 218 notice):** Confirmed CBO's `4.3%` 10-year Treasury baseline (`2026–2036`), CDI's `8,300,730` voluntary vs. `677,449` FAIR Plan policy counts across `662` distressed ZIPs, and replaced legacy dead `/rate-changes` URL (`S35`) with live FYE 2027–2028 Prop. 218 rate notice (`sfpuc218`).
 - **Verification of `main` (`92a0a8b`):** Confirmed all 7 legacy build defects documented in `_s8bb142d0/audit/AUDIT_REPORT.md` are eliminated on `main`, `python3 tools/verify.py` passes with `0` technical failures across `21` HTML files (`842` rows, `3,863` `.gov` links, `108` blank cells, `561` synthetic CSV rows), and `unittest` passes `13/13` checks.
 
+## Session `s-24be15f7` — Owner brief implementation (2026-11-13)
+
+Branch: `arena/24be15f7-tino4` (@ `a67bebd == main`). Single active session; isolation by file scope.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| S24-1 | Publish owner-supplied property-tax / assessed-value history rounded to nearest $10 (no city, ZIP, parcel or names) plus illustrative forward projections of value, assessment and base tax | **done** | `s-24be15f7` | `_7eff7e24/content.py` (property-tax section) | 2026-11-13 |
+| S24-2 | Publish owner-supplied operating-cost estimates rounded to nearest $10 (water, electricity/solar credit, insurance, maintenance) marked unverified, with discovery paths | **done** | `s-24be15f7` | `_7eff7e24/content.py` (operating-costs section) | 2026-11-13 |
+| S24-3 | Add 2026 annual gift exclusion ($19,000) to estate-thresholds; enrich questions page with official statutory answers where known | **done** | `s-24be15f7` | `_7eff7e24/content.py` (estate-thresholds, questions sections) | 2026-11-13 |
+| S24-4 | Extend `tools/verify.py` statuses (`Owner-supplied`, `Assumption`) and `assets/style.css` badges; build, verify, unit tests zero failures | **done** | `s-24be15f7` | `tools/verify.py`, `assets/style.css` | 2026-11-13 |
+| S24-5 | Commit, push `arena/24be15f7-tino4`, PR → main, merge, confirm GitHub Pages deploy, record result and sources in this board | in progress | `s-24be15f7` | `COORDINATION.md` (this section/log) | 2026-11-13 |
+
+### Log (`s-24be15f7`)
+
+- 2026-11-13 — claims committed; verified IRS IR-2026-133 (2026 exclusion $15,000,000; 2027 $15,480,000; gift exclusion $19,000 in 2026 / $20,000 in 2027) via fetch_page; computed all $10-rounded history and projection tables.
+- 2026-11-13 — Build passes: 21 HTML files, 867 sourced/statused rows, 3,902 official links, 80 blank cells, 561 synthetic CSV rows, 0 technical failures; 13/13 unit tests OK. Directly checked sources: IRS IR-2026-133/Rev. Proc. 2026-35, IRS estate/706/basis, FTB, CA leginfo (RTC 13301/13302/480, Prob. 16061.7), BOE Prop. 13/19/homeowners, CDI, CPUC (solar/water), local rent board, BLS CPI, SEC investor.gov, TreasuryDirect, FDIC. No household inputs in the build; all published dollars $10-rounded; no names, addresses, ZIPs or parcels published.
+
 ## Session `arena-a3de132b` — 2026-11-12 (branch `arena/a3de132b-tino4`, platform-fixed)
 
 Read the board, inspected remote branch tips and PR states, and claimed an independent audit. Immediately
@@ -1215,6 +1232,67 @@ reverted.
 - 2026-11-12 22:45 UTC — rebase fetched PR #47 (`s-8bb142d0`), advancing `main` to `a67bebd`. Preserved its complete source-audit board section and appended the latest A3DE section. Because the appended section already contained all earlier A3DE board updates, skipped their duplicate replay patches; pushed the rewritten coordination-only tip with a lease from the verified prior branch SHA. No incoming session entry was dropped or rewritten.
 - 2026-11-12 22:49 UTC — completed requirement trace and re-fetched all 29 registered official-source URLs; checked consequential legal, threshold, deadline, rental, insurance, solar, rent-board and investment-risk scopes against cited text. Rebuilt from generic content: 21 HTML files, 821 sourced/statused rows, 3,842 registered official links, 66 blank cells and 561 synthetic CSV rows; verifier reported zero technical failures and all 14 tests passed. Independently recomputed one-year equity/bills/rental mechanics and spot-checked the 2026–2076 projection horizon. A3DE-1 report records limitations and gaps, notably actual household results and F01 public Git exposure. A3DE-2 changes and PR handoff remain in progress; no history rewrite or other-session board edit.
 - 2026-11-12 22:50 UTC — opened PR #48 (https://github.com/wingbangboozle1-lang/Tino4/pull/48) from `arena/a3de132b-tino4`; branch CI `verify` passed on the initial PR head (run `43323589640`) and latest head (run `43323653974`). A3DE-2 is complete on the branch and awaits PR review/merge. PR #48 does not remove F01's current public Git exposure; that owner decision remains open.
+
+## Session `arena-95cf9249` — independent audit, owner-brief gap check, and integration record (2026-11-13)
+
+Branch: `arena/95cf9249-tino4` (platform-fixed; IR-001 applies). Board read on `main` @ `c5dcb6b` at session start. Concurrent open claim noted: `s-24be15f7` (PR #49, shared outputs) — **not touched by this session**; change requests to it are logged in this section instead of edited directly.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C95C-1 | Baseline reproducibility on `main` @ `c5dcb6b`: `tools/build.py`, `tools/verify.py`, unit tests, generated-tree reproducibility diff | done | `arena-95cf9249` | read-only on shared outputs; results recorded in `_s95cf9249/**` + this section | 2026-11-13 |
+| C95C-2 | Independent line-by-line re-fetch of decision-critical official sources (IRS 2026/2027 exclusion + annual gift exclusions, BOE Prop. 19 allowance + RTC 63.2 mechanics, RTC 13301/13302/18031/480, Prob. 16061.7, Civ. 1947.12, SF Rent Board current rates + File 261020 status, CDI FAIR Plan counts, CPUC NEM/NBT legacy, CBO Treasury baseline, IRC 121/NIIT/1014) and comparison with every consequential figure published on the live site and PR #49 | done | `arena-95cf9249` | `_s95cf9249/**`, `COORDINATION.md` (this section only) | 2026-11-13 |
+| C95C-3 | PR #49 content review: owner-supplied tables ($10 rounding, status labels, no identifiers), new gift-exclusion row and its citation, projection-path coverage vs the owner's brief; change requests logged here, not edited | done | `arena-95cf9249` | `_s95cf9249/**`, change-request rows in this section | 2026-11-13 |
+| C95C-4 | Live-site deployment spot check: fetched pages from https://wingbangboozle1-lang.github.io/Tino4/ compared with the local build | done | `arena-95cf9249` | `_s95cf9249/**` | 2026-11-13 |
+| C95C-5 | Publish audit report + evidence ledger in `_s95cf9249/` (Jekyll auto-excludes underscore dirs); `_config.yml` append of `_s95cf9249` to the exclude list for explicitness | done | `arena-95cf9249` | `_s95cf9249/**`, `_config.yml` (append one exclude line only) | 2026-11-13 |
+| C95C-6 | PR [#50](https://github.com/wingbangboozle1-lang/Tino4/pull/50) `arena/95cf9249-tino4` → `main`: **MERGED** 2026-11-13T12:10:58Z, merge commit `bc83c54`; Pages build `built` (error `null`) for `bc83c54`; live site verified | done | `arena-95cf9249` | `COORDINATION.md` (this section only) | 2026-11-13 |
+
+### Change requests (from `arena-95cf9249` to the shared-output owners — review before implementing)
+
+| ID | Request | Verified basis |
+| --- | --- | --- |
+| CR-C95C-01 | Add the **RTC §63.2 family-home exclusion path** alongside the rental path in the illustrative forward projection on `pages/property-tax.html` (currently only full reassessment at transfer, labeled "rental path"). At the page's own 2045 assumption: FMV $5,435,870; taxable value $802,030; allowance $1,044,586 → family-home base ≈ **$4,391,290** (1% base levy ≈ $43,910/yr) vs rental base $5,435,870 (≈ $54,360/yr) — ≈ **$10,450/yr** difference, growing with the biennial allowance indexation. Also note §63.2(a)(1)(C): if the transferee later loses eligibility, the DOC-date base (factored) is enrolled — material to the owner's live-then-rent comparison. | RTC §63.2(d)(2)(A)-(B), (a)(1)(C) + BOE Pub 801 worked example, fetched directly 2026-11-13 (`_s95cf9249/audit/evidence.md` E-03/E-04) |
+| CR-C95C-02 | The projection uses the **1% base levy only**; the page's own owner-supplied A history implies ≈ 1.33–1.37% effective (tax ÷ assessment, 2014–2025). Add a disclosed effective-rate variant or note so decision totals are not understated ~25–33%. | Pub 29 (already cited on the page: 1% general levy + voter-approved debt/charges) + owner-supplied history ratios |
+| CR-C95C-03 | Note only, no change: PR #49's description text "2026 annual gift exclusion 9,000" is a **PR-body typo**; the published row says **$19,000 (Verified)**, confirmed correct by direct fetch of IR-2026-133 ("up from $19,000 for calendar year 2026"). | `_s95cf9249/audit/evidence.md` E-02 |
+
+### Verification performed (`arena-95cf9249`)
+
+- **Direct official fetches (2026-11-13):** IRS *What's new — Estate and gift tax* (2026 exclusion $15,000,000, P.L. 119-21); IRS newsroom IR-2026-133 (2027 exclusion $15,480,000; gift exclusion $20,000 in 2027, $19,000 in 2026); Cal. RTC §63.2 chunks 0–1 (family-home formula, occupancy/exemption conditions, DOC-date-base enrollment on later ineligibility, trust transfers qualify, 3-year claim); BOE Pub 801 (allowance windows incl. $1,044,586 for 2025-02-16–2027-02-15; worked example → new base = max(taxable value, FMV − allowance)); sf.gov Rent Board current rates (1.6% for 2026-03-01–2027-02-28; File 261020 proposed, **not enacted**); CPUC NEM/NBT page (NBT since 2023-04-15 under D.22-12-056; export credits usually below retail; nine-year legacy; NEM closed to new enrollments). Live site fetched and compared against the local build.
+- **Independent implementation** (`_s95cf9249/audit/check.py`, separate from `tools/verify.py`): 21 published HTML files; 869/869 rows carry an official-source link and status badge (synthetic 617, verified 70, guidance 75, missing 69, assumption 37, owner-supplied 1); **0 visible dollar amounts ≥ $1,000 not a multiple of $10** (site + 561-row CSV); privacy patterns (both owner ZIPs, "Cupertino", "San Francisco", neighbourhood "Sunset", email, phone, SSN, APN) → **0 true hits** (2 regex false-positives: the word "sunset" in "TCJA sunset").
+- **Cross-checked arithmetic:** PR #49 owner-supplied history rows and its illustrative projection re-computed and reproduced (e.g. A FMV 2045 = $3,100,000×1.03¹⁹ = $5,435,870; FBYV 2045 = $550,540×1.02¹⁹ = $802,030; 2050 base tax $63,020; B 2045 FMV $3,156,310). Live-site exclusion illustrations re-computed (2045: 2.5% → $24,143,520 ✓; 4% → $31,359,640 ✓).
+- Full report: `_s95cf9249/audit/AUDIT_REPORT.md`; evidence matrix: `_s95cf9249/audit/evidence.md`; raw check output: `_s95cf9249/audit/check-output.txt`.
+
+### Log (`arena-95cf9249`)
+
+- 2026-11-13 — board read; claim committed and pushed before any audit work. No overlap with `s-24be15f7` (PR #49) scopes; no shared-output file is edited by this session except this section and the one-line `_config.yml` exclude append.
+- 2026-11-13 — baseline on `main` @ `c5dcb6b`: `tools/build.py` → 17 public pages, 561 synthetic CSV rows, no household inputs; `tools/verify.py` → 21 HTML files, 821 sourced/statused rows, 3,842 official links, 66 blank cells, **0 technical failures**; unit tests **14/14 OK**; generated-tree reproducibility diff empty.
+- 2026-11-13 — PR #49 merged to `main` at 11:57:24Z (`42aa3bb`) while the audit was in progress; rebased onto it and re-ran everything green: 869 rows, 3,905 official links, 80 blank cells, 0 technical failures, 14/14 tests, reproducible diff empty. Merged content reviewed (see C95C-3 and the acceptance notes in `_s95cf9249/audit/AUDIT_REPORT.md` §6): owner-supplied rows carry no ZIP, city, address, name, unit-location or parcel identifier; the F17 reconciliation is consistent with the owner brief; previously flagged owner-data irregularities (IR-003) remain disclosed on the page.
+- 2026-11-13 — audit complete; C95C-1…C95C-5 done; two change requests (CR-C95C-01, CR-C95C-02) and one no-change note (CR-C95C-03) logged above for owner review. No shared output was modified by this session.
+- 2026-11-13 — opened PR #50 (https://github.com/wingbangboozle1-lang/Tino4/pull/50) from `arena/95cf9249-tino4` with the audit artifacts, the board section, and the one-line `_config.yml` exclude. Merge, Pages confirmation and the final result record follow in this section.
+- 2026-11-13 — C95C-6 complete. CI `verify` passed on the PR head (run `43422955594`). `gh pr merge 50 --merge` → **MERGED** at 2026-11-13T12:10:58Z, merge commit `bc83c543af459ec72fa8bb2ac377081e04b57936`. GitHub Pages build for `bc83c54`: status `built`, error `null`. Live checks after deployment: `pages/property-tax.html` serves the owner-supplied rounded history (A 2014–2026, B 2016–2025, labeled Assumption, all rows source-linked) and the illustrative projection (values reproduce); the family-home §63.2 mechanics rule and the $1,044,590-rounded allowance are already published (CR-C95C-01 therefore concerns the numeric projection column only); `/_s95cf9249/audit/AUDIT_REPORT.md` returns the GitHub Pages 404 page, confirming the audit package is excluded from the published artifact. Final record integrated to `main` via a follow-up coordination-only PR from this branch.
+
+## Session `s-7adb71fc` — Requirement audit, case figures & independent .gov spot-check (2026-11-13)
+
+- **Branch:** `arena/7adb71fc-tino4` (platform-fixed; `IR-001`/`F01` apply — no `session-<id>/<task>` branch can be created, so isolation is by exclusive file scope).
+- **Board read:** `2026-11-13 11:45 UTC` on `main` @ `a67bebd` (PR #47). Fetched all 20+ remote heads; newest commit on any branch predates this claim by >12 h. No live claim conflicts with the scope below. Merged stale open PR #48 (`arena/a3de132b-tino4`, 2026-11-12 22:50 UTC, CI green, MERGEABLE) as `c5dcb6b` before claiming, to preserve that session's privacy/generic-copy work instead of duplicating it; its owner has not committed in >12 h and its own task S8BB/A3DE records were complete on the branch.
+- **Preserved:** every prior board section above is untouched. Other sessions' directories (`_7eff7e24/**` except the generator files claimed below, `_s8bb142d0/**`, `_a3de132b/**`, `_1775f697/**`, `s179ec133/**`, `_s9ad1da71/**`) are read-only for this session.
+
+| Task ID | Task | Status | Owner | Exclusive file scope |
+| --- | --- | --- | --- | --- |
+| S7AD-1 | Re-read the owner brief and audit the published product requirement by requirement; log gaps as findings with evidence | done | `s-7adb71fc` | `_7adb71fc/AUDIT.md` |
+| S7AD-2 | Independent direct `fetch_page` verification of every official source cited by the product plus the laws the brief names (inheritance/estate thresholds, Prop. 13/19, trust clocks, rent cap, insurance, utilities, macro) — quoted passage + retrieval date per claim | done | `s-7adb71fc` | `_7adb71fc/evidence.py`, `_7adb71fc/audit/**` |
+| S7AD-3 | Publish the brief's **$10-rounded** case figures and year-by-year projections (both properties) with status labels, source links, and a rounding/privacy trade-off notice | done | `s-7adb71fc` | `_7eff7e24/case_data.py`, `_7eff7e24/case_model.py`, `_7adb71fc/content_part*.py`, `_7adb71fc/sitebuild.py` |
+| S7AD-4 | Publish Questions/Information/Answers register with discovery suggestions for missing data | done | `s-7adb71fc` | `_7adb71fc/content_part2.py` (questions page) |
+| S7AD-5 | Re-run builder, verifier, unit tests, link/anchor checks and the case-figure rounding/privacy guards; integrate; PR to `main`, merge, confirm Pages deployment | done | `s-7adb71fc` | `tools/build.py`, `tools/verify.py`, `tools/test_case.py`, `_7adb71fc/{selftest,verify}.py`, `.github/workflows/verify.yml`, `_config.yml`, `index.html`, `pages/**`, `assets/case-projections.csv`, `README.md` |
+
+### Log (`s-7adb71fc`)
+
+- 2026-11-13 11:45 UTC — board read, stale PR #48 merged (`c5dcb6b`), claim written.
+
+- 2026-11-13 12:10 UTC — **S7AD-1…5 done on the branch, not yet merged.** The case layer is now the published site: `_7adb71fc/sitebuild.py` writes `index.html`, 15 `pages/*.html`, 7 redirect stubs, `_7adb71fc/manifest.json` and `assets/case-projections.csv` (204 rows). `tools/build.py` runs `_7adb71fc/selftest.py` then the builder; `tools/verify.py` wraps `_7adb71fc/verify.py`; `tools/test_case.py` replaces `tools/test_model.py` (28 regressions, all pass) and the retired generic `_7eff7e24/{content,model,evidence,manifest}` modules were removed from the tree. Last full run: 22 HTML files, 425 sourced/statused rows, 895 official link instances, 24 blank-cell registers, 204 CSV rows, 0 technical failures. `.github/workflows/verify.yml` now runs the tests, rebuilds, verifies, and fails if the committed output is stale. Defects found and fixed while reading the rendered pages: all five invented shock paths printed the same ten-year value (a `**0` bug), the last black-swan row promised a window table that was never emitted, the decision page left all seven path results blank, and two stray backslash escapes reached the DOM. **F01 restated with the concrete exposure:** this public repository's `COORDINATION.md` still records both ZIP codes, both counties and the exact federal rent benchmarks for those ZIPs, written by earlier sessions; the file is excluded from the Pages artifact but is in the current tree and the history. No history rewrite was attempted — that needs an owner decision. Nothing private was added by this session and no other session's files were edited or deleted.
+
+- 2026-11-13 12:55 UTC — rebased onto `origin/main` @ `b742d9f` (PRs #49/#50/#51 merged by two other sessions). Conflict resolution preserved both incoming board sections in full and took the case generator as the source of truth for the eleven generated pages; a follow-up commit re-emitted them after the rebase left conflict markers inside the committed HTML. That failure is exactly what the new CI reproducibility step exists to catch. **Answered CR-C95C-01/02 and found a real defect behind CR-C95C-01.** CR-C95C-02 does not apply: this model never used a 1% levy — it applies the effective rate the owner's own bills imply (A 1.32–1.41%, B 1.74–2.14%), which is stated on the page and is why the totals are not understated. CR-C95C-01's *structural* request was already met (the projections carry `assessed_if_rented` and `assessed_if_occupied` side by side, and the saving is published), but checking the request exposed a genuine error in **how the allowance was indexed**: the model grew the $1,044,590 published allowance at the 4% home-growth assumption, while RTC 63.2 and BOE LTA 2025/009 adjust the $1,000,000 base every second February 16 by the prior calendar year percentage change in the **FHFA House Price Index for California**. Fixed to replay the measured 6.35% index rate in two-year steps, with a callout, a new `rtc632` ledger entry and a regression that pins the statutory behaviour. Consequence at a 2045 transfer: qualified assessment $2,918,180 → $5,893,150; twenty-year tax saving $1,244,570 → $883,660. The recommendation survives because $883,660 still exceeds the $856,010 twenty-year rental operating loss, and every page is computed from the model, so no hand-written figure went stale. Also repointed a **dead official link** (`boe.ca.gov/proptaxes/pdf/pub801.pdf` → live `/prop19/` page). Re-verified: 22 HTML files, 426 sourced/statused rows, 897 official link instances, 24 blank-cell registers, 204 CSV rows, 0 technical failures, 29/29 tests.
+
+- 2026-11-13 12:20 UTC — **PR #52 opened, CI green, merged, and deployed.** PR https://github.com/wingbangboozle1-lang/Tino4/pull/52 merged to `main` at 12:18:08Z as `c4c7096caf23344ab374517537d51f6e193b3166`. Branch CI `verify` passed on the head (run `43423892951`), including the new reproducibility step that fails when committed output differs from a fresh build. GitHub Pages build for `c4c7096`: status `built`, error `null`. Live verification through the page fetcher (direct `curl` to the Pages CDN is blocked by this sandbox, `SSL_ERROR_SYSCALL`): `pages/executive-summary.html` serves the merged brief with the corrected figures ($5,893,150 occupied vs $9,705,070 rented, $883,660 saved, −$856,010 rental cash), and `COORDINATION.md` returns the GitHub Pages 404, confirming the log stays out of the published artifact while remaining in the public tree. S7AD-1…5 complete.
 
 ## Session `arena-e6ba08a8` — owner-directed brief completion (2026-11-13, branch `arena/e6ba08a8-tino4`, platform-fixed; IR-001 applies)
 
@@ -1337,5 +1415,39 @@ melon-gg/libnss3.so (NSS 3.53) was required for the Chromium build.
 
 **Status: E6BA-1/2/3 DONE.** PR/merge/deploy (E6BA-4) follows in the
 next entry.
+
+---
+
+### Integration record (`arena-e6ba08a8`, E6BA-4 · 2026-11-13)
+
+This session's branch met `main` after `s-7adb71fc` merged an overlapping
+case layer (PR #52/#54). Resolution protocol applied in PR #55:
+
+- **Shared outputs follow the deployed `s-7adb71fc` engine** (`_7adb71fc/sitebuild.py`
+  + `content_part1-3`, `tools/{build,verify}.py`, `tools/test_case.py`,
+  `assets/case-projections.csv`): it was merged, audited (`_s95cf9249`),
+  and its Prop-19 allowance is indexed to the FHFA California index as RTC 63.2
+  requires. No deployed page was rewritten by this session except the additive
+  tables listed below.
+- **Additive contributions kept from this session's research (E6BA-1):**
+  (1) "Measured historical anchors" table on the black-swan page — the real
+  episodes (1970s CCPI 17.316% and factor sub-1.000 years; 2010-11 factor
+  0.99763; 2021-22 CPI 9.1%; 2022-26 FHFA plateau; 2023-26 insurance hard
+  market; CBO 4.3% 10-yr average and 3.5-4.8% band);
+  (2) BOE factor-chain reconciliation table on the property-tax page
+  (expected = prior assessment x official LTA factor; the B 2022 step is $50
+  below the chain and A shows two flat bill pairs) with flags on the Flagged
+  page; (3) `_7eff7e24/evidence.py` (41 checked sources with quotes) kept as
+  the session research ledger beside `_7adb71fc/evidence.py`.
+- **Dropped to avoid two conflicting models in one repo:** this session's
+  `_7eff7e24/case.py` model, `tools/test_model.py`, `assets/projections.csv`
+  and the `content.py` page rewrite. The ranking question (sell-first vs
+  live-in-first) is assumption-driven: this session's independent model ranked
+  sell-first under 3% home growth; the deployed model ranks live-in first under
+  4% home growth with an FHFA-indexed allowance. Both pages warn that these
+  invented numbers drive the answer; re-run at decision time with the CPA.
+- **CI note:** the retired `tools/test_model.py` and `assets/synthetic-projections.csv`
+  were dropped deliberately; `tools/test_case.py` (28 regressions) is the
+  running suite.
 
 ---

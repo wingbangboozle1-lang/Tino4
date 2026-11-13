@@ -4,6 +4,7 @@ description: Privacy-first research and synthetic decision scenarios
 exclude:
   - tools
   - _7eff7e24
+  - _7adb71fc
   - _s8bb142d0
   - _a3de132b
   - _1775f697
@@ -13,6 +14,7 @@ exclude:
   - _s9ad1da71
   - _research
   - _a24b1c8c
+  - _s95cf9249
   - COORDINATION.md
   - README.md
   - .gitignore

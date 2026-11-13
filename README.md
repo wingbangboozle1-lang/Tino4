@@ -1,76 +1,52 @@
-# Two-property decision brief
+# Two-property inheritance: decision dashboard
 
-**Live:** https://wingbangboozle1-lang.github.io/Tino4/
+A static site answering one question: for a house that is expected to arrive by
+trust, and a house that is already owned, is it better to live in the inherited
+home, rent it out, or sell it and reinvest?
 
-A privacy-first static dashboard using a generic inherited-asset (**Property A**) versus
-already-owned-property (**Property B**) scenario. Includes an executive summary,
-live/rent/sell comparison, missing-evidence register, review-only suggestion queue, costs and
-insurance, tax/process guidance, current-law watchlist, source ledger and flagged irregularities.
+The published site contains only rounded figures, anonymous property labels
+(Property A and Property B), and no addresses, parcel numbers, names or balances.
+Every table row carries a link to the official source that supports the rule it
+rests on, and a badge saying what kind of evidence the row is.
 
-## Evidence and privacy boundary
+## What is here
 
-* 29 official sources directly retrieved/read on **2026-11-12**. Short passages, retrieval chunks
-  and exact verification scope are in `_7eff7e24/evidence.py` and the site's source ledger.
-* Every published table body row links to an official source and carries a status:
-  **Verified**, **Guidance**, **Missing**, or **Synthetic**. A contextual link is not verification
-  of the row's recommendation, household applicability or invented model parameters.
-* Unverified household numeric cells in the **generated Pages content** are **blank**, never zero
-  or guessed. That site does not reproduce private tax history, rent, utility estimates, property
-  values, addresses, ZIPs, parcels or individuals. Rounded numbers can still identify a property
-  in combination. The synthetic layer uses fictional inputs. Separately, the case layer publishes owner-supplied figures only after rounding every dollar to $10, with an Owner-supplied status label; projection outputs are labeled assumptions, never forecasts.
-* Synthetic examples: 2026–2076 (50 compounding years, 51 endpoints), all 11 illustrative transfer
-  years 2040–2050, seven economic regimes, and a 20-/50-year simplified after-tax comparison.
-  All displayed dollars round half-up to $10. They are not officially verified forecasts,
-  insurance quotes, tax returns, backtests or recommendations to execute.
-* **Public repository warning:** The GitHub repository is public. The current root
-  `COORDINATION.md`, earlier Git history, PR diffs, other branches, deployment caches, forks and
-  clones may contain case-derived detail. Jekyll exclusions keep coordination/work files out of
-  the Pages artifact; they do not restrict access to the public Git repository. Obsolete
-  case-derived packages were removed from the current build tree, but that is not deletion of
-  earlier disclosures. Owner-coordinated visibility/history/cache review remains necessary. No
-  history rewrite or repository-visibility change was performed automatically.
+| Path | Purpose |
+| --- | --- |
+| `index.html` | Dashboard: the recommendation, the four numbers behind it, and links to each section |
+| `pages/*.html` | The fifteen section pages, plus short redirects for retired URLs |
+| `assets/case-projections.csv` | The year-by-year table as data, every value rounded to $10 |
+| `_7adb71fc/` | Generator: official evidence ledger, replay engine, projection engine, page text |
+| `_7eff7e24/case_data.py`, `case_model.py` | The case inputs and the cash-flow model |
+| `tools/build.py`, `tools/verify.py`, `tools/test_case.py` | Build entry point, site checks, regressions |
+| `.github/workflows/verify.yml` | Runs the tests, rebuilds, verifies, and fails if the committed output differs |
 
-## Reproduce and test
-
-Python 3, standard library only. No install or network needed.
+## Build and check locally
 
 ```sh
-python3 tools/build.py
-python3 tools/verify.py
-python3 -m unittest discover -s tools -p 'test_*.py' -v
+python3 tools/build.py       # self-checks, then writes the site
+python3 tools/verify.py      # structural, sourcing, rounding and privacy checks
+python3 -m unittest discover -s tools -p 'test_*.py'
 ```
 
-`tools/build.py` uses only `_7eff7e24/{content,evidence,model}.py`. There are no private inputs.
-It emits 17 pages, four legacy redirects, and `assets/projections.csv` (561 case rows, every dollar rounded to $10, each labeled CASE_PROJECTION_ASSUMPTIONS). Assets are local;
-there are no analytics, remote fonts or browser API calls. Optional suggestion review choices
-are saved only in local browser storage; they do not implement changes or constitute shared approval.
+Everything is standard library. There is no network call, no analytics, no
+external asset and no build step beyond Python. Pages are served with a strict
+Content-Security-Policy and `noindex`.
 
-The verifier checks internal targets/anchors, every row's source/status, official URL allowlist,
-missing cells, $10 dollar rounding, prohibited identifiers, row statuses and official links, CSV horizon, HTML structure,
-publication exclusions, absence of `.nojekyll`, and private-package independence. Arithmetic
-unit tests independently check the calculation rules and stress paths. These technical checks
-are **not** a claim of comprehensive legal verification or financial accuracy for a household.
+## How the numbers are handled
 
-## Layout
+- Dollar amounts are rounded half-up to the nearest $10 before publication.
+- A figure that no official source supports is left blank and marked
+  `missing`, rather than estimated.
+- Each row is badged `verified` (an official source states it), `owner` (the
+  owner supplied it, not independently confirmed), `projection` (arithmetic on
+  rounded inputs under a stated assumption), `assumption` (an invented planning
+  parameter), or `missing` (no evidence).
+- The black-swan page replays the published California record rather than
+  assuming constant growth, and states no probabilities.
 
-```
-index.html, pages/, assets/    public static product
-_7eff7e24/evidence.py          source extracts and failed-retrieval register
-_7eff7e24/content.py           reviewed public content
-_7eff7e24/model.py             deterministic synthetic examples (no household inputs)
-_7eff7e24/AUDIT.md             repository audit findings and limits
-tools/                        builder, verifier, regression tests
-COORDINATION.md               shared task board and deployment record (not site content)
-```
+## Scope
 
-## Decision boundary
-
-The provisional research priority is to test retaining existing housing and selling A into a
-risk-appropriate diversified portfolio, but **no household profit-maximizing winner is established**.
-Trust terms, eligibility, estate size/gift history, debts, insurance, achievable rent, repairs,
-actual tax rates and future law remain unverified. The questions page assigns discovery tasks to
-trustee/advisers; they cannot be resolved by public research without private records and authority.
-Never upload those records to this public repository or public issues.
-
-Not tax, legal, investment, appraisal or insurance advice. No sale, move, rent increase, trust
-distribution or investment is executed by this site.
+This is a planning document, not legal, tax or investment advice. Statutes and
+thresholds change; the pages link to the primary sources so any figure can be
+re-checked before it is relied on.

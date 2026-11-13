@@ -1,22 +1,33 @@
-name: Verify public dashboard
+name: verify
+
 on:
   push:
+    branches: [main]
   pull_request:
+  workflow_dispatch:
+
 permissions:
   contents: read
+
 jobs:
-  verify:
+  build-and-verify:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
-      - name: Build without private inputs or network
-        run: python3 tools/build.py
-      - name: Verify source labels, links, rounding and publication boundary
-        run: python3 tools/verify.py
-      - name: Independently test arithmetic and content regressions
-        run: python3 -m unittest discover -s tools -p 'test_*.py' -v
-      - name: Confirm generated public files are reproducible
-        run: git diff --exit-code -- index.html pages assets/projections.csv _7eff7e24/manifest.json
+          python-version: '3.11'
+      - name: Unit and regression tests
+        run: python -m unittest discover -s tools -p 'test_*.py' -v
+      - name: Build the site
+        run: python tools/build.py
+      - name: Verify the built site
+        run: python tools/verify.py
+      - name: Confirm the build is reproducible
+        run: |
+          git add -A
+          git diff --cached --stat
+          if ! git diff --cached --quiet; then
+            echo "::error::The committed site does not match a fresh build. Run tools/build.py and commit the output."
+            exit 1
+          fi
