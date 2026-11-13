@@ -2,8 +2,8 @@
 
 **Live:** https://wingbangboozle1-lang.github.io/Tino4/
 
-A privacy-first static dashboard distinguishing a future trust inheritance (**Property A**)
-from property the inheritor already owns (**Property B**). Includes an executive summary,
+A privacy-first static dashboard using a generic inherited-asset (**Property A**) versus
+already-owned-property (**Property B**) scenario. Includes an executive summary,
 live/rent/sell comparison, missing-evidence register, review-only suggestion queue, costs and
 insurance, tax/process guidance, current-law watchlist, source ledger and flagged irregularities.
 
@@ -14,19 +14,21 @@ insurance, tax/process guidance, current-law watchlist, source ledger and flagge
 * Every published table body row links to an official source and carries a status:
   **Verified**, **Guidance**, **Missing**, or **Synthetic**. A contextual link is not verification
   of the row's recommendation, household applicability or invented model parameters.
-* Unverified household numeric cells are **blank**, never zero or guessed. No private tax
-  history, rent, utility estimate, property value, address, ZIP, parcel or individual is published.
-* Rounded numbers can still identify a property in combination. Public projections use only
-  fictional inputs, not rescaled or obscured household data.
+* Unverified household numeric cells in the **generated Pages content** are **blank**, never zero
+  or guessed. That site does not reproduce private tax history, rent, utility estimates, property
+  values, addresses, ZIPs, parcels or individuals. Rounded numbers can still identify a property
+  in combination; projections use fictional inputs, not rescaled or obscured household data.
 * Synthetic examples: 2026–2076 (50 compounding years, 51 endpoints), all 11 illustrative transfer
   years 2040–2050, seven economic regimes, and a 20-/50-year simplified after-tax comparison.
   All displayed dollars round half-up to $10. They are not officially verified forecasts,
   insurance quotes, tax returns, backtests or recommendations to execute.
-* **Public repository warning:** Jekyll exclusions and `noindex` are not confidentiality.
-  Obsolete case-derived packages were removed from the current tree, but earlier Git history,
-  task-board entries, PR diffs, other branches, caches, forks and clones may retain disclosures.
-  Owner-coordinated visibility/history/cache remediation is still needed. No history rewrite
-  or repository-visibility change was performed automatically.
+* **Public repository warning:** The GitHub repository is public. The current root
+  `COORDINATION.md`, earlier Git history, PR diffs, other branches, deployment caches, forks and
+  clones may contain case-derived detail. Jekyll exclusions keep coordination/work files out of
+  the Pages artifact; they do not restrict access to the public Git repository. Obsolete
+  case-derived packages were removed from the current build tree, but that is not deletion of
+  earlier disclosures. Owner-coordinated visibility/history/cache review remains necessary. No
+  history rewrite or repository-visibility change was performed automatically.
 
 ## Reproduce and test
 
