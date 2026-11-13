@@ -17,7 +17,7 @@ insurance, tax/process guidance, current-law watchlist, source ledger and flagge
 * Unverified household numeric cells in the **generated Pages content** are **blank**, never zero
   or guessed. That site does not reproduce private tax history, rent, utility estimates, property
   values, addresses, ZIPs, parcels or individuals. Rounded numbers can still identify a property
-  in combination; projections use fictional inputs, not rescaled or obscured household data.
+  in combination. The synthetic layer uses fictional inputs. Separately, the case layer publishes owner-supplied figures only after rounding every dollar to $10, with an Owner-supplied status label; projection outputs are labeled assumptions, never forecasts.
 * Synthetic examples: 2026–2076 (50 compounding years, 51 endpoints), all 11 illustrative transfer
   years 2040–2050, seven economic regimes, and a 20-/50-year simplified after-tax comparison.
   All displayed dollars round half-up to $10. They are not officially verified forecasts,
@@ -41,12 +41,12 @@ python3 -m unittest discover -s tools -p 'test_*.py' -v
 ```
 
 `tools/build.py` uses only `_7eff7e24/{content,evidence,model}.py`. There are no private inputs.
-It emits 17 pages, four legacy redirects, and a labeled synthetic CSV. Assets are local;
+It emits 17 pages, four legacy redirects, and `assets/projections.csv` (561 case rows, every dollar rounded to $10, each labeled CASE_PROJECTION_ASSUMPTIONS). Assets are local;
 there are no analytics, remote fonts or browser API calls. Optional suggestion review choices
 are saved only in local browser storage; they do not implement changes or constitute shared approval.
 
 The verifier checks internal targets/anchors, every row's source/status, official URL allowlist,
-missing cells, all dollar rounding, prohibited identifiers, CSV horizon, HTML structure,
+missing cells, $10 dollar rounding, prohibited identifiers, row statuses and official links, CSV horizon, HTML structure,
 publication exclusions, absence of `.nojekyll`, and private-package independence. Arithmetic
 unit tests independently check the calculation rules and stress paths. These technical checks
 are **not** a claim of comprehensive legal verification or financial accuracy for a household.

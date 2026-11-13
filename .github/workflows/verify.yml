@@ -19,4 +19,4 @@ jobs:
       - name: Independently test arithmetic and content regressions
         run: python3 -m unittest discover -s tools -p 'test_*.py' -v
       - name: Confirm generated public files are reproducible
-        run: git diff --exit-code -- index.html pages assets/synthetic-projections.csv _7eff7e24/manifest.json
+        run: git diff --exit-code -- index.html pages assets/projections.csv _7eff7e24/manifest.json
