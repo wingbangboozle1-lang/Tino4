@@ -1194,12 +1194,13 @@ Branch: `arena/24be15f7-tino4` (@ `a67bebd == main`). Single active session; iso
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| S24-1 | Publish owner-supplied property-tax / assessed-value history rounded to nearest $10 (no city, ZIP, parcel or names) plus illustrative forward projections of value, assessment and base tax | in progress | `s-24be15f7` | `_7eff7e24/content.py` (property-tax section) | 2026-11-13 |
-| S24-2 | Publish owner-supplied operating-cost estimates rounded to nearest $10 (water, electricity/solar credit, insurance, maintenance) marked unverified, with discovery paths | in progress | `s-24be15f7` | `_7eff7e24/content.py` (operating-costs section) | 2026-11-13 |
-| S24-3 | Add 2026 annual gift exclusion ($19,000) to estate-thresholds; enrich questions page with official statutory answers where known | in progress | `s-24be15f7` | `_7eff7e24/content.py` (estate-thresholds, questions sections) | 2026-11-13 |
-| S24-4 | Extend `tools/verify.py` statuses (`Owner-supplied`, `Assumption`) and `assets/style.css` badges; build, verify, unit tests zero failures | in progress | `s-24be15f7` | `tools/verify.py`, `assets/style.css` | 2026-11-13 |
+| S24-1 | Publish owner-supplied property-tax / assessed-value history rounded to nearest $10 (no city, ZIP, parcel or names) plus illustrative forward projections of value, assessment and base tax | **done** | `s-24be15f7` | `_7eff7e24/content.py` (property-tax section) | 2026-11-13 |
+| S24-2 | Publish owner-supplied operating-cost estimates rounded to nearest $10 (water, electricity/solar credit, insurance, maintenance) marked unverified, with discovery paths | **done** | `s-24be15f7` | `_7eff7e24/content.py` (operating-costs section) | 2026-11-13 |
+| S24-3 | Add 2026 annual gift exclusion ($19,000) to estate-thresholds; enrich questions page with official statutory answers where known | **done** | `s-24be15f7` | `_7eff7e24/content.py` (estate-thresholds, questions sections) | 2026-11-13 |
+| S24-4 | Extend `tools/verify.py` statuses (`Owner-supplied`, `Assumption`) and `assets/style.css` badges; build, verify, unit tests zero failures | **done** | `s-24be15f7` | `tools/verify.py`, `assets/style.css` | 2026-11-13 |
 | S24-5 | Commit, push `arena/24be15f7-tino4`, PR → main, merge, confirm GitHub Pages deploy, record result and sources in this board | in progress | `s-24be15f7` | `COORDINATION.md` (this section/log) | 2026-11-13 |
 
 ### Log (`s-24be15f7`)
 
 - 2026-11-13 — claims committed; verified IRS IR-2026-133 (2026 exclusion $15,000,000; 2027 $15,480,000; gift exclusion $19,000 in 2026 / $20,000 in 2027) via fetch_page; computed all $10-rounded history and projection tables.
+- 2026-11-13 — Build passes: 21 HTML files, 867 sourced/statused rows, 3,902 official links, 80 blank cells, 561 synthetic CSV rows, 0 technical failures; 13/13 unit tests OK. Directly checked sources: IRS IR-2026-133/Rev. Proc. 2026-35, IRS estate/706/basis, FTB, CA leginfo (RTC 13301/13302/480, Prob. 16061.7), BOE Prop. 13/19/homeowners, CDI, CPUC (solar/water), local rent board, BLS CPI, SEC investor.gov, TreasuryDirect, FDIC. No household inputs in the build; all published dollars $10-rounded; no names, addresses, ZIPs or parcels published.

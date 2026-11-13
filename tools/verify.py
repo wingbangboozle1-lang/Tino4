@@ -57,7 +57,7 @@ def verify():
         for row in doc.rows:
             total_rows+=1
             if not row['urls']: errors.append(path.name+': row missing official link')
-            if not any(x in row['text'] for x in ('Verified','Guidance','Missing','Synthetic')):
+            if not any(x in row['text'] for x in ('Verified','Guidance','Missing','Synthetic','Owner-supplied','Assumption')):
                 errors.append(path.name+': row missing status')
             for u in row['urls']:
                 if u not in official: errors.append(path.name+': unregistered row URL')
