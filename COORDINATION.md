@@ -1232,3 +1232,11 @@ guard's purpose (no unmarked household facts) is preserved and strengthened. See
   household figure, any case-specific projection, any case decision comparison, and the insurance /
   water / electricity cost lines the owner asked to be researched and projected.
 - 2026-11-13 11:50 UTC — claim written, committed and pushed before any shared-output edit.
+
+### arena-726573c7 — progress note (unpublished)
+- Private case layer kept local-only and excluded from Git via `.git/info/exclude`: `_7eff7e24/case.py`, `_7eff7e24/casepages.py`. Neither is imported by `tools/build.py`.
+- `casepages.py` now imports and renders (profile, projections, decision analysis). Source keys it uses were registered locally from official URLs already in the ledger or the BOE/SF/CDI/Civil Code/SFPUC pages fetched this session.
+- Verification: A assessment history reproduces within $10 on 12 of 12 steps; B reproduces on 8 of 9 steps, with 2022 off by $52 (flagged).
+- Public build: `tools/build.py` and `tools/verify.py` pass (21 HTML files, 842 rows, 3,863 links, 0 technical failures). Public pages carry no household figures.
+- Not done: publishing household-figure pages (blocked by the privacy boundary; requires owner decision), exact composite tax-rate/CDI/SFPUC verification, PR #48 integration, PR to main, merge, and Pages deployment confirmation.
+- Irregularity (unchanged): older commits, PR diffs and caches may still contain private case-derived material; requires owner decision on history rewrite, repository visibility and cache remediation.
