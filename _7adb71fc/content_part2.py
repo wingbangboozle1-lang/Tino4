@@ -1,7 +1,7 @@
 """Case content: pages 6-11."""
 from html import escape as E
 from case_data import A, B, A_HISTORY, B_HISTORY, A_MID, B_MID, P, assess_check
-from case_model import (money as M, projection, path_comparison, sale_proceeds,
+from case_model import (money as M, rounded, projection, path_comparison, sale_proceeds,
                         after_tax_reinvest, exclusion_projection, allowance)
 from evidence import SOURCES, FAILED, DATE
 from content_part1 import table, callout, cards, refs, pct, V, O, Pj, As, Ms
@@ -76,6 +76,32 @@ def page_tax():
         for year, step, implied, supplied in assess_check(hist, rate):
             checks.append(([label, year, pct(step * 100, 2), M(implied), M(supplied)], O,
                            'lta26002 pub29'))
+    # Independent reconciliation against the official BOE factor chain
+    # (Letter to Assessors 2026/002): expected roll = prior roll x factor.
+    # Re-derived at build time from the rounded owner rows; verdicts:
+    # match, within $10 of display rounding, or flag.
+    chain_factors = {
+        2015: ('2014-15', 1.01998), 2016: ('2015-16', 1.01525),
+        2017: ('2016-17', 1.02), 2018: ('2017-18', 1.02), 2019: ('2018-19', 1.02),
+        2020: ('2019-20', 1.02), 2021: ('2020-21', 1.01036), 2022: ('2021-22', 1.02),
+        2023: ('2022-23', 1.02), 2024: ('2023-24', 1.02), 2025: ('2024-25', 1.02),
+        2026: ('2025-26', 1.02),
+    }
+    chain = []
+    for label, hist in (('A', A_HISTORY), ('B', B_HISTORY)):
+        d = {y: (t, a) for y, t, a in hist}
+        for y in sorted(chain_factors):
+            if y in d and y - 1 in d:
+                tag, factor = chain_factors[y]
+                expected = rounded(d[y - 1][1] * factor)
+                supplied = d[y][1]
+                diff = supplied - expected
+                verdict = ('matches the official chain' if diff == 0 else
+                           'within $10 of display rounding' if abs(diff) <= 10 else
+                           'FLAG: only step the official chain does not explain')
+                chain.append(([label, y, tag + ' = ' + f'{factor:.5f}', M(expected), M(supplied),
+                              (('+', '\u2212')[diff < 0] if diff else '') + M(abs(diff)) if diff else M(0), verdict],
+                              O, 'lta26002'))
     return callout('Three different numbers are called "value" and they are not interchangeable',
         'Market value is what a buyer would pay. Assessed value is the Prop 13 base that the bill is calculated on. Tax '
         'basis is what the income tax is calculated on when you sell. A federal step-up resets the third and does nothing '
@@ -88,6 +114,11 @@ def page_tax():
         'The implied column multiplies the rounded assessment by the effective rate your own bills support. Where it and '
         'the supplied tax differ, the difference is consistent with the deduction of the $7,000 homeowners exemption from '
         'the assessed value before the rate is applied, which is what the constitution provides.') + table(
+        'The same history against the official factor chain (BOE Letter to Assessors 2026/002)',
+        ['Property', 'Roll year', 'Official factor', 'Expected assessment', 'Supplied assessment', 'Difference', 'Verdict'], chain,
+        'Expected assessment = the prior supplied roll multiplied by the published annual factor, rounded to $10. Every '
+        'step on both properties matches the official chain within display rounding except one: B\u2019s 2022 roll is $50 '
+        'below the chain. It is published as a flag, not explained away \u2014 see F15 on the Flagged page.') + table(
         'The rules that govern the bill', ['Rule', 'What the official source says', 'What it means here'], [
         (['The 1% levy', 'One percent of assessed value plus the rate needed for voter-approved bonded debt.', 'A\'s effective rate is ' + pct(A_MID['tax_rate']*100, 2) + ' of assessed value and B\'s is ' + pct(B_MID['tax_rate']*100, 2) + '. Neither is 1%.'], V, 'pub29'),
         (['The 2% cap', 'Annual increases in the base year value are limited to no more than 2%.', 'Applied every year in every projection on this site, including in the crash years, because that is what the cap does.'], V, 'pub29'),

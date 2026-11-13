@@ -245,6 +245,22 @@ def page_flagged():
          'direct assessments that can change by local vote.',
          'Re-derive the rate from the actual bill each year.',
          'Owner', 'pub29'),
+        ('F15', 'Medium', 'One supplied assessment step does not match the official factor chain',
+         'The prior roll multiplied by the published BOE factor predicts B\u2019s 2022 roll at ' + M(107710) +
+         '. The supplied figure is ' + M(107660) + '. The difference is ' + M(50) + '. Every other year on both '
+         'properties, 21 steps in all, matches the official chain within display rounding, so this is the one step the '
+         'published factors do not explain.',
+         'Pull the 2022 assessment notice and any corrected value notice for that property. A partial-year change, a '
+         'corrected roll entry or a rounding convention at the assessor would each produce exactly this appearance.',
+         'Owner', 'lta26002'),
+        ('F16', 'Medium', 'Two of B\u2019s tax bills jump in ways the assessment roll does not explain',
+         'The supplied bill rises about 18% from 2017 to 2018 and falls about 6% from 2020 to 2021, while the assessment '
+         'rose 2% in both years. Voter-approved debt and direct assessments can raise a bill faster than the base grows, '
+         'and a refund or correction can lower one, so the pattern is plausible \u2014 but nothing in the brief records '
+         'the cause.',
+         'Pull both bills with the direct-assessment detail attached, and reconcile them line by line against the tax '
+         'rate area for that roll year.',
+         'Owner', 'pub29 lta26002'),
     ]
     return callout('This page is the honest inventory of what is weak in this brief',
         'Nothing below blocks the recommendation, because the recommendation does not depend on the items that are '

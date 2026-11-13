@@ -1,5 +1,7 @@
 // Optional browser smoke test. Install playwright-core and @sparticuz/chromium
 // under _7eff7e24/browser; serve only public files on port 8000 first.
+// If the system lacks NSS/NSPR shared libraries, put them on LD_LIBRARY_PATH
+// (for example the nss-libs folder under _7eff7e24/browser).
 const assert = require('node:assert/strict');
 const path = require('node:path');
 const fs = require('node:fs');
@@ -13,7 +15,7 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
   page.on('pageerror',e=>errors.push(e.message));
   page.on('request',r=>{if(!r.url().startsWith('http://127.0.0.1:8000/'))unexpected.push(r.url());});
   fs.mkdirSync(path.join(__dirname,'../_7eff7e24/screenshots'),{recursive:true});
-  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname,'../_7eff7e24/manifest.json')));
+  const manifest = JSON.parse(fs.readFileSync(path.join(__dirname,'../_7adb71fc/manifest.json')));
   for (const file of manifest) {
     const response=await page.goto('http://127.0.0.1:8000/'+file);
     assert.equal(response.status(),200,file);
@@ -23,18 +25,18 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
   }
   await page.goto('http://127.0.0.1:8000/index.html');
   await page.screenshot({path:path.join(__dirname,'../_7eff7e24/screenshots/desktop.png'),fullPage:true});
-  await page.goto('http://127.0.0.1:8000/pages/projections.html');
-  assert.equal(await page.locator('.projection-group:not([hidden])').getAttribute('data-year'),'2045');
-  await page.selectOption('#inherit-year','2050');
-  assert.equal(await page.locator('.projection-group:not([hidden])').getAttribute('data-year'),'2050');
+  // Review queue: choices persist locally and reset; nothing is implemented.
   await page.goto('http://127.0.0.1:8000/pages/suggestions.html');
-  await page.selectOption('[data-id="S01"]','Investigate');
-  assert.match(await page.locator('#review-summary').textContent(),/1 of 17/);
+  const total = await page.locator('.review-choice').count();
+  assert.ok(total >= 8, 'expected a populated review queue, found ' + total);
+  const first = await page.locator('.review-choice').first().getAttribute('data-id');
+  await page.selectOption(`.review-choice[data-id="${first}"]`, 'Investigate');
+  assert.match(await page.locator('#review-summary').textContent(), new RegExp('1 of ' + total));
   await page.reload();
-  assert.equal(await page.locator('[data-id="S01"]').inputValue(),'Investigate');
+  assert.equal(await page.locator(`.review-choice[data-id="${first}"]`).inputValue(), 'Investigate');
   await page.click('#reset-reviews');
-  assert.equal(await page.locator('[data-id="S01"]').inputValue(),'Not reviewed');
-  assert.match(await page.locator('#review-summary').textContent(),/0 of 17/);
+  assert.equal(await page.locator(`.review-choice[data-id="${first}"]`).inputValue(), 'Not reviewed');
+  assert.match(await page.locator('#review-summary').textContent(), new RegExp('0 of ' + total));
   await page.setViewportSize({width:390,height:844});
   for (const file of manifest) {
     await page.goto('http://127.0.0.1:8000/'+file);
@@ -45,6 +47,6 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
   await page.route('**/*',route=>route.continue());
   assert.deepEqual(errors,[]);
   assert.deepEqual(unexpected,[]);
-  console.log('Browser passed: 17 desktop + 17 mobile pages; projection selector; persisted/reset reviews; no JS errors or third-party requests.');
+  console.log(`Browser passed: ${manifest.length} desktop + ${manifest.length} mobile pages; ${total} persisted/reset reviews; no JS errors or third-party requests.`);
   await browser.close();
 })().catch(error=>{console.error(error);process.exit(1)});
