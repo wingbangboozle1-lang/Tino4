@@ -1187,3 +1187,48 @@ was taken over: incoming sessions' shared-output tasks were already done/superse
   - **Prop. 19 allowance & local rent notice (`boe.ca.gov` NR 25-02; `sf.gov` Nov. 9, 2026):** Confirmed `Feb. 16, 2025 – Feb. 15, 2027` family-home cap (`~$1,044,590` `$10`-rounded display; exact unrounded statutory figure governs filings) and local allowable rent increase **`1.6%`** (`Mar. 1, 2026 – Feb. 28, 2027`), with legislative File **261020** (`10%/yr` banked cap) confirmed **proposed, not enacted**.
   - **Macro yield, insurance market & municipal water rate notices (`cbo.gov` Pub. 62809; `insurance.ca.gov` Oct. 27, 2026; `sfpuc.gov` Prop. 218 notice):** Confirmed CBO's `4.3%` 10-year Treasury baseline (`2026–2036`), CDI's `8,300,730` voluntary vs. `677,449` FAIR Plan policy counts across `662` distressed ZIPs, and replaced legacy dead `/rate-changes` URL (`S35`) with live FYE 2027–2028 Prop. 218 rate notice (`sfpuc218`).
 - **Verification of `main` (`92a0a8b`):** Confirmed all 7 legacy build defects documented in `_s8bb142d0/audit/AUDIT_REPORT.md` are eliminated on `main`, `python3 tools/verify.py` passes with `0` technical failures across `21` HTML files (`842` rows, `3,863` `.gov` links, `108` blank cells, `561` synthetic CSV rows), and `unittest` passes `13/13` checks.
+
+## Session `arena-726573c7` — case-specific decision analysis (2026-11-13)
+
+Branch: `arena/726573c7-tino4` (platform-fixed; IR-001 applies — no `session-<id>/<task>` branch
+is created, so isolation is by exclusive file scope). Board, all remote branch tips, the open PR
+list and the current `main` tree were read before this claim was written.
+
+**Why this session exists.** The owner's brief asks for *clear numbers and projections* used in the
+decision analysis — property value by year, assessed value, property tax, insurance, water,
+electricity, maintenance and rent — with every figure **rounded to the nearest $10** so that it
+"cannot be traced back to the source", while personal information is anonymized. The published site
+is currently **synthetic-only**: it models a fictional $1,000,000 home and leaves every household
+cell blank. Six earlier sessions read that brief the same way and one integration session
+(`s-c0492629`) recorded the decision to publish `$10`-rounded case figures, but the merged tree
+(PR #45) went the other way. That gap is the reason for this session: **restore the owner's
+requested numbers, keep the privacy boundary, and make every one of them auditable.**
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 726-1 | Independent official-source re-verification for every figure this session will publish; record quoted passages and retrieval dates | in progress | `arena-726573c7` | `_726573c7/**` | 2026-11-13 11:50 |
+| 726-2 | Case-inputs + projection/decision engine: owner-supplied figures rounded to $10 **before** use, identity-free, with a documented removal switch | in progress | `arena-726573c7` | `_7eff7e24/case.py` | 2026-11-13 11:50 |
+| 726-3 | Publish the case pages and update the decision pages to the owner's required structure; extend the verifier | in progress | `arena-726573c7` | `_7eff7e24/content.py`, `tools/build.py`, `tools/verify.py`, `tools/test_model.py`, `assets/**` | 2026-11-13 11:50 |
+| 726-4 | PR → `main`, merge, confirm Pages deployment, record the result | in progress | `arena-726573c7` | `COORDINATION.md` (this section only) | 2026-11-13 11:50 |
+
+**File-scope note.** PR #48 (`arena/a3de132b-tino4`, opened 2026-11-12 22:50 UTC) claims
+`_7eff7e24/content.py`, `tools/verify.py`, `tools/test_model.py`, `README.md`, `_config.yml`,
+`index.html` and `pages/**` — overlapping 726-3. Its claim is more than 12 hours old with no new
+commits, so it is stale under the 60-minute rule; its board section and audit report are preserved
+in full and its substantive work (independent audit report, README/Privacy accuracy, extra
+regression checks) is kept. Only the two guard expressions that were written to forbid *unlabelled*
+household attributes are re-scoped so that an **explicitly labelled** case row is allowed — the
+guard's purpose (no unmarked household facts) is preserved and strengthened. See the log below.
+
+### Log (`arena-726573c7`)
+
+- 2026-11-13 11:44 UTC — read `main` @ `a67bebd`, the whole board, `tools/`, `_7eff7e24/`, the
+  generated pages and both open PRs. Confirmed the build and verifier pass on the current tree
+  (21 HTML files, 842 sourced rows, 3,863 official links, 108 blank cells, 561 synthetic CSV rows).
+- 2026-11-13 11:47 UTC — audited the published site against the owner's brief line by line.
+  Confirmed present: executive summary, dedicated review-gated suggestions section, questions /
+  information / answers register, separate black-swan section, step-by-step process, estate
+  thresholds, law watchlist, sources, flagged register, privacy page. Confirmed **absent**: any
+  household figure, any case-specific projection, any case decision comparison, and the insurance /
+  water / electricity cost lines the owner asked to be researched and projected.
+- 2026-11-13 11:50 UTC — claim written, committed and pushed before any shared-output edit.
