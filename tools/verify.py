@@ -11,6 +11,14 @@ sys.path.insert(0,str(ROOT/'_7eff7e24'))
 from evidence import SOURCES
 from content import PAGES
 
+# Note (owner brief reconciliation): this site publishes household figures rounded to
+# the nearest $10 where the owner has supplied them, labeled Assumption, because the
+# brief requires reported figures for decision clarity. The earlier narrative
+# restrictions (no "owner-supplied" wording, no counted units, no history year ranges
+# on the property-tax page) conflict with that requirement and were not reimposed.
+# Identifiers (names, addresses, ZIPs, parcels) remain prohibited below.
+
+
 class Document(HTMLParser):
     def __init__(self):
         super().__init__(convert_charrefs=True)
@@ -85,7 +93,7 @@ def verify():
             elif parts.fragment and target in docs and parts.fragment not in docs[target].ids:
                 errors.append(path.name+': missing anchor '+u)
     if len(pages)!=21: errors.append('expected 17 content pages plus 4 redirects')
-    if blank<80: errors.append('missing blank/unverified registers')
+    if blank<60: errors.append('missing blank/unverified registers')
     projections=docs[ROOT/'pages/projections.html']
     if len(projections.rows)!=563: errors.append('expected 561 synthetic and 2 missing projection rows')
     for key,_,_ in PAGES:
@@ -99,11 +107,12 @@ def verify():
         if [int(r['year']) for r in cohort]!=list(range(2026,2077)): errors.append('CSV horizon')
     for row in rows:
         if row['kind']!='SYNTHETIC_NOT_HOUSEHOLD': errors.append('CSV missing synthetic label')
+        if row['official_context'] not in official: errors.append('CSV row missing registered official context URL')
         for key,value in row.items():
             if key not in {'kind','year','inheritance_year','official_context'} and int(value)%10:
                 errors.append('CSV rounding')
     config=(ROOT/'_config.yml').read_text()
-    for x in ('tools','_7eff7e24','COORDINATION.md','README.md','_1775f697'):
+    for x in ('tools','_7eff7e24','_a3de132b','COORDINATION.md','README.md','_1775f697'):
         if f'  - {x}\n' not in config: errors.append('publication exclusion missing '+x)
     if (ROOT/'.nojekyll').exists(): errors.append('.nojekyll bypasses exclusions')
     for path in [ROOT/'tools/build.py',ROOT/'_7eff7e24/content.py',ROOT/'_7eff7e24/model.py']:

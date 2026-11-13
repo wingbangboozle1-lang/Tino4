@@ -1,12 +1,13 @@
 """Independent arithmetic and content regression checks; no personal inputs."""
 import math
+import re
 from pathlib import Path
 import sys
 import unittest
 ROOT=Path(__file__).resolve().parent.parent
 sys.path.insert(0,str(ROOT/'_7eff7e24'))
 from model import rounded, money, prop19_assessment, projection, compare, rates, exclusion, REGIMES
-from content import content
+from content import content, PAGES
 from evidence import SOURCES
 
 class ModelTests(unittest.TestCase):
@@ -89,5 +90,11 @@ class ModelTests(unittest.TestCase):
         self.assertIn('Not reviewed',content('suggestions'))
         self.assertIn('actual household answers are missing',content('estate-thresholds'))
         self.assertIn('10% per year',content('law-watchlist'))
+    def test_public_copy_uses_generic_property_labels(self):
+        public_content=' '.join(content(key) for key,_,_ in PAGES).casefold()
+        self.assertNotRegex(public_content,r'\b(?:cupertino|outer sunset|san francisco|apn|ssn)\b')
+        self.assertIn('assumption',public_content)
+        self.assertIn('figures not officially verified',public_content)
+        self.assertIn('property a is a future inheritance',public_content)
 
 if __name__=='__main__': unittest.main()
