@@ -40,7 +40,7 @@ The legacy model and its arithmetic tests remain in the public repository even t
 
 ### F-04 — Medium, unresolved: substantive and deployment verification limits
 
-The verifier checks structure, registered links, status labels, allowed current-law numeric displays, explicit blank projection cells, internal targets, privacy patterns, and publication exclusions. It cannot prove that every sentence follows from its cited source. No browser-based visual or interactive smoke test was run for this candidate. The latest GitHub Pages API check reported `building` from `main`, not this branch; a prior direct live-page request failed with a TLS/SSL EOF, so end-user live rendering remains unverified.
+The verifier checks structure, registered links, status labels, allowed current-law numeric displays, explicit blank projection cells, internal targets, privacy patterns, and publication exclusions. It cannot prove that every sentence follows from its cited source. No browser-based visual or interactive smoke test was run for this candidate. During this audit the Pages API status changed between `building` and `built`, always with source `main`, not this branch; a prior direct live-page request failed with a TLS/SSL EOF, so end-user live rendering remains unverified.
 
 ## Technical validation on this branch
 
