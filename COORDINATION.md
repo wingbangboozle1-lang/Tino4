@@ -1215,3 +1215,56 @@ reverted.
 - 2026-11-12 22:45 UTC — rebase fetched PR #47 (`s-8bb142d0`), advancing `main` to `a67bebd`. Preserved its complete source-audit board section and appended the latest A3DE section. Because the appended section already contained all earlier A3DE board updates, skipped their duplicate replay patches; pushed the rewritten coordination-only tip with a lease from the verified prior branch SHA. No incoming session entry was dropped or rewritten.
 - 2026-11-12 22:49 UTC — completed requirement trace and re-fetched all 29 registered official-source URLs; checked consequential legal, threshold, deadline, rental, insurance, solar, rent-board and investment-risk scopes against cited text. Rebuilt from generic content: 21 HTML files, 821 sourced/statused rows, 3,842 registered official links, 66 blank cells and 561 synthetic CSV rows; verifier reported zero technical failures and all 14 tests passed. Independently recomputed one-year equity/bills/rental mechanics and spot-checked the 2026–2076 projection horizon. A3DE-1 report records limitations and gaps, notably actual household results and F01 public Git exposure. A3DE-2 changes and PR handoff remain in progress; no history rewrite or other-session board edit.
 - 2026-11-12 22:50 UTC — opened PR #48 (https://github.com/wingbangboozle1-lang/Tino4/pull/48) from `arena/a3de132b-tino4`; branch CI `verify` passed on the initial PR head (run `43323589640`) and latest head (run `43323653974`). A3DE-2 is complete on the branch and awaits PR review/merge. PR #48 does not remove F01's current public Git exposure; that owner decision remains open.
+
+## Session `arena-9d06ac5f` — final integration: owner-figure layer, privacy remediation, publication (2026-11-13 UTC)
+
+**Branch:** `arena/9d06ac5f-tino4` (platform-fixed for this session; IR-001 applies, isolation is by
+file scope). **Role:** final integration session — this session merges the outstanding audit work,
+adds the missing owner-figure layer the owner brief requires, remediates the residual public-Git
+disclosure, re-verifies the combined data line by line, opens the PR to `main`, merges it and
+confirms the Pages deployment.
+
+**Precondition satisfied.** PR #48 (`arena/a3de132b-tino4`, open at session start, no live claim)
+was merged into this branch as `2b1fe6c` before any new edit, so the privacy regression checks and
+the owner-brief requirements trace are the baseline. No other session had an active claim on the
+shared outputs at the time of the claim.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 9D06-1 | Merge PR #48 baseline; confirm build/verify/tests green on the merged tree | **done** | `arena-9d06ac5f` | — | 2026-11-13 07:52 |
+| 9D06-2 | Re-verify official sources for the owner-figure layer (estate/gift thresholds, Prop 13 + Prop 19 mechanics, CA basis conformity, CA insurance market data, CPUC solar/water, local rent rules, IRS Form 1041/706, macro series) — URL, quoted passage, retrieval date | in progress | `arena-9d06ac5f` | `_7eff7e24/evidence.py`, `_9d06ac5f/research/**` | 2026-11-13 07:52 |
+| 9D06-3 | Owner-figure layer: `$10`-rounded owner-supplied inputs and the two-property engine (value, assessed value, property tax, insurance, water, electricity, maintenance, rent, sale after tax, live/rent/sell comparison, black-swan paths) | in progress | `arena-9d06ac5f` | `_7eff7e24/case.py`, `_7eff7e24/model.py` | 2026-11-13 07:52 |
+| 9D06-4 | Published content: executive summary, decision analysis, property tax + projections, operating costs, projections, black swan, estate thresholds, inheritance process, questions, suggestions, flagged for review, sources, methodology, privacy | in progress | `arena-9d06ac5f` | `_7eff7e24/content.py`, `assets/**`, `index.html`, `pages/**` | 2026-11-13 07:52 |
+| 9D06-5 | Verification: source + status per row, `$10` rounding, new privacy regression checks, arithmetic unit tests, build | in progress | `arena-9d06ac5f` | `tools/**`, `.github/workflows/**` | 2026-11-13 07:52 |
+| 9D06-6 | Public-Git disclosure remediation in the current tree: remove ZIP codes, city/neighbourhood names and ZIP-indexed figures from `COORDINATION.md` and `README.md`; keep every prior session's verification record intact | in progress | `arena-9d06ac5f` | `COORDINATION.md`, `README.md` | 2026-11-13 07:52 |
+| 9D06-7 | PR `arena/9d06ac5f-tino4` → `main`, merge, confirm Pages deployment, record the result | in progress | `arena-9d06ac5f` | `COORDINATION.md` (this section only) | 2026-11-13 07:52 |
+
+### Decision recorded by this session (resolves the open disagreement in the board)
+
+The owner brief states, in the owner's words: *"Costs and numbers should be used but rounded to the
+nearest $10 increments … and should be reported in any decision analysis to provide clarity. I want
+clear numbers and projections for the reasoning behind decisions"*, and asks for the property-tax
+and assessment tables, the live/rent/sell comparison, the black-swan section and the
+inheritance-threshold research to be **in the published product**. The same brief sets the privacy
+boundary: *"Personal information privacy is top priority … Anonymize any personal information and
+use placeholders … Any personal information … must be for internal use only and must not appear in
+the final website product."*
+
+Earlier sessions read the privacy sentence as forbidding every household amount (F02). This session
+reads the two sentences together: **personal information (people, identity, address, ZIP,
+neighbourhood, parcel, trust details) stays out; the owner's own operating figures are published
+at `$10` granularity, which is the anonymising mechanism the owner himself specified.** Both are
+therefore honoured, and the residual risk is published rather than hidden:
+
+* Published owner figures are labelled **Owner-supplied** — a new status that is distinct from
+  **Verified** and is never used for a household fact that no official record confirms.
+* A **privacy-mode switch** (`PRIVACY_MODE=case|synthetic`, default `case`) rebuilds the whole
+  product with zero household figures in one command, so the owner can reverse the decision without
+  an edit to the content. The active mode is shown in the site banner and on the privacy page.
+* The residual re-identification risk of `$10` rounding plus a distinctive assessment history is
+  published on **Flagged for review** as **F17**, with the switch command, because the owner is the
+  only person who can weigh it.
+* `COORDINATION.md` and `README.md` in the current tree are scrubbed of ZIP codes, city and
+  neighbourhood names and ZIP-indexed figures (task 9D06-6). Git **history**, PR diffs, forks and
+  clones are outside any session's power to erase; that remains **F01** and is an owner decision
+  (make the repository private).
