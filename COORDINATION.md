@@ -1273,14 +1273,21 @@ Branch: `arena/95cf9249-tino4` (platform-fixed; IR-001 applies). Board read on `
 
 Arena pins this session to `arena/0e6635bc-tino4`, branched from `a67bebd` (`main`); separate
 session branches/worktrees are unavailable, so this audit uses a non-overlapping file scope.
-The existing public dashboard already contains the requested categories. This task does not edit
-shared site outputs or any other session's files.
+The existing dashboard contains the requested categories. Scope began with an isolated audit and
+has been expanded only after checking stale-claim handoffs below. This session remains on the
+platform-fixed branch; all shared-tree work will be integrated here, not on another branch.
 
 | Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
 | 0E66-1 | Independent requirement-to-page traceability and source-by-source audit of the current published tree, privacy boundary, model limits and unverified rows; record only reproducible findings and corrections to the audit itself | in progress | `arena-0e6635bc` | `_0e6635bc/audit/**`, this session's appended section in `COORDINATION.md` only | 2026-11-13 11:43 |
+| 0E66-2 | Take over stale privacy/integration work, reconcile the privacy remediation, update verified legal/economic context, rebuild and line-by-line verify the final public tree and record deployment results | in progress | `arena-0e6635bc` | `_7eff7e24/content.py`, `_7eff7e24/evidence.py`, `_config.yml`, `README.md`, `tools/build.py`, `tools/verify.py`, `tools/test_model.py`, `index.html`, `pages/**`, `assets/synthetic-projections.csv`, `_a3de132b/**` integration only, `_0e6635bc/audit/**`, this session's appended board section | 2026-11-13 11:47 |
 
 - 2026-11-13 11:43 UTC — read the board before starting, confirmed no existing `_0e6635bc/**`
   claim, ran the current builder, structural verifier and 13 arithmetic/content tests (all passed).
-  Claim commit/push follows on the platform-fixed current branch. The branch restriction is a
-  platform constraint, not a request to create or push another branch.
+  Initial isolated claim pushed on the platform-fixed branch.
+- 2026-11-13 11:47 UTC — takeover recorded under the board's 60-minute rule: A3DE-2's PR #48
+  branch last committed 2026-11-12 22:51 UTC and has had no newer commits; its branch-only privacy
+  cleanup is complete but not integrated. PR #48's successful checks and exact file scope were
+  inspected. The stale BB-E4 build/verification claim (last dated 2026-11-12) is also superseded
+  because final verification is part of this integration. Neither source branch is switched to or
+  modified; preserve all incoming work and record conflicts if any.
