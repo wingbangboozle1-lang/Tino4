@@ -1,0 +1,10 @@
+=== Independent audit checks (arena-95cf9249) ===
+Published HTML files checked: 21
+Table body rows: 869; source links in rows: 3905; status badges: 869
+Rows missing a source link: 0
+Visible dollar amounts >= $1,000 NOT a multiple of $10: 0
+Status label counts: assumption=37, guidance=75, missing=69, owner-supplied=1, synthetic=617, verified=70
+Privacy-pattern hits: 2
+   law-watchlist.html: neighbourhood Sunset [VISIBLE TEXT]: ... Do not apply the old assumed 2026 TCJA sunset.  Use published death-year figure, not ...
+   sources.html: neighbourhood Sunset [VISIBLE TEXT]: ...d July 4, 2025 law, not an assumed 2026 sunset.  2026-11-12 · chunks 0   Verified    n...
+CSV rows scanned; non-$10-multiple amounts >= $1,000 in CSV: 0
