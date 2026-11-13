@@ -27,17 +27,25 @@ def money(n):
 
 
 def allowance(year):
-    """Prop. 19 family-home allowance, published amounts and an assumed indexation.
+    """Prop. 19 family-home allowance.
 
     Verified: $1,044,586 for transfers 2025-02-16 to 2027-02-15 (BOE LTA 2025/009).
-    The 2025-02-16 to 2027-02-15 figure is shown rounded to $1,044,590 for display.
-    After 2027 the amount is assumed to grow with the home-growth assumption, which
-    is an assumption, not law: the statute indexes the figure to FHFA's California
-    House Price Index every second February 16.
+    Displayed rounded to $1,044,590.
+
+    After that, RTC 63.2 indexes the $1,000,000 statutory base to the FHFA
+    California house price index every second February 16. This function applies
+    the measured 1975-2026 index rate (6.35% a year) from 2027. That is a replay
+    of the published series, not a forecast, and it is deliberately not tied to
+    the 4% home-growth assumption: the statute does not index to the value of
+    this particular house.
     """
     if year <= 2027:
         return P['allowance_2025']
-    return P['allowance_2025'] * (1 + P['home_growth_default']) ** (year - 2027)
+    rate = P.get('allowance_index_rate', 0.0635)
+    # The statute re-indexes on each second February 16, so the figure moves in
+    # two-year steps rather than smoothly.
+    steps = (year - 2027 + 1) // 2
+    return P['allowance_2025'] * (1 + rate) ** (2 * steps)
 
 
 def base_levy_rate(property_row):

@@ -66,6 +66,14 @@ class ProjectionTests(unittest.TestCase):
         self.assertEqual(allowance(2027), 1_044_590)
         self.assertGreater(allowance(2045), allowance(2027))
 
+    def test_allowance_is_indexed_like_the_statute_not_like_the_house(self):
+        # RTC 63.2 indexes the $1,000,000 base to the FHFA California index, so
+        # the allowance must climb faster than a 4% house assumption would imply.
+        self.assertGreater(allowance(2045), 1_044_586 * 1.04 ** 18)
+        # and it moves in two-year steps, because it is re-set each second February
+        self.assertEqual(allowance(2028), allowance(2029))
+        self.assertLess(allowance(2028), allowance(2030))
+
     def test_selling_cost_and_transfer_tax(self):
         c = path_comparison(2045)
         self.assertLess(c['sale_net'], c['sale_price'])

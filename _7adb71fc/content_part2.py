@@ -99,7 +99,15 @@ def page_tax():
         (['The homeowners exemption', 'A $7,000 reduction in taxable value for a qualifying owner-occupied home.', 'Worth about ' + M(7000 * A_MID['tax_rate']) + ' a year on A. One such home per claimant.'], V, 'homeex'),
         (['The death-transfer statement', 'The trustee or transferee files within 150 days after the date of death.', 'Not optional, and it is how the county learns to reassess.'], V, 'rtc480'),
         (['Documentary transfer tax', 'Fifty-five cents per $500 in the county, plus any city tax.', 'Paid on a sale, not on an inheritance that stays in the trust.'], V, 'rtc11911'),
-    ]) + callout('What the history does not tell you',
+    ]) + callout('Why the allowance is the number most people get wrong',
+        'The statute does not freeze one million dollars, and it does not index the allowance to the value of the house. '
+        'Revenue and Taxation Code 63.2 sets a one million dollar base and directs that it be adjusted every second '
+        'February 16 to the prior calendar year percentage change in the federal House Price Index for California. The published '
+        'figure for transfers between 16 February 2025 and 15 February 2027 is $1,044,590, shown rounded like every other '
+        'dollar on this site. This site replays the measured index rate of 6.35% a year, from the same official series used '
+        'on the black-swan page, and re-sets the figure in two-year steps. That is why the allowance on a 2045 transfer is '
+        'about $3,163,890 rather than $1,044,590. It is a replay of a published series, not a forecast, and it is '
+        'deliberately not tied to the 4% house-growth assumption.', 'info') + callout('What the history does not tell you',
         'No county roll, bill or exemption record has been read. A supplied total that repeats in consecutive years, a '
         'year with no bill, and a missing current-year bill for B are all recorded as gaps rather than explained. They may '
         'be perfectly ordinary: fiscal-year labelling, a supplemental assessment, a refund or a payment timing difference '
