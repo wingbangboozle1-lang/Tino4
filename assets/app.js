@@ -1,13 +1,5 @@
 'use strict';
 // No network requests, private inputs, analytics, or remotely stored approvals.
-const year = document.getElementById('inherit-year');
-if (year) {
-  year.addEventListener('change', () => {
-    document.querySelectorAll('.projection-group').forEach(group => {
-      group.hidden = group.dataset.year !== year.value;
-    });
-  });
-}
 document.getElementById('print-page')?.addEventListener('click', () => window.print());
 const storageKey = 'public-suggestion-review-v1';
 const choices = [...document.querySelectorAll('.review-choice')];

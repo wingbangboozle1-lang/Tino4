@@ -1,11 +1,12 @@
 title: Two-property decision brief
-description: Privacy-first research and synthetic decision scenarios
+description: Privacy-first inheritance research, evidence gaps, and blank household projections
 # Jekyll processes the root. Do not add .nojekyll: it would bypass exclusions.
 exclude:
   - tools
   - _7eff7e24
   - _s8bb142d0
   - _a3de132b
+  - _0e6635bc
   - _1775f697
   - _c07ccf45
   - _s09b3ffa0

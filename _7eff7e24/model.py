@@ -1,6 +1,6 @@
-"""Synthetic examples ONLY. Does not load any household inputs.
-Nominal USD; annual steps; no forecasts or probabilities. Full precision internal,
-Decimal ROUND_HALF_UP for public display. See methodology for exclusions.
+"""Retired synthetic calculation sandbox; not imported by the public Pages builder.
+Its default parameters are invented test fixtures, not verified estimates or approved
+assumptions. It does not load household inputs and must not feed a public forecast.
 """
 from decimal import Decimal, ROUND_HALF_UP
 

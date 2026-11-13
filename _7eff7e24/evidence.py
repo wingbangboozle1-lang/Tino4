@@ -1,8 +1,8 @@
-"""Official passages directly read with fetch_page on 2026-11-12.
-Only the quoted scope is verified, not private property facts or model assumptions.
-No page fetch is required at build time. Chunk numbers identify the retrieval used.
+"""Official passages directly read with fetch_page.
+Only the quoted scope is verified, not private property facts or future outcomes.
+No page fetch is required at build time. Chunk numbers and dates identify each retrieval.
 """
-DATE = '2026-11-12'
+DATE = '2026-11-13'
 SOURCES = {
  'estate': ('IRS — Estate tax', 'https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax', 'The includible property may consist of cash and securities, real estate, insurance, trusts, annuities, business interests and other assets.', '2026 filing threshold $15,000,000; gross estate and adjusted taxable gifts; deductions; portability election.', '0'),
  'new': ('IRS — Estate and gift tax changes', 'https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax', 'WFTC amends § 2010(c)(3) by increasing the basic exclusion amount to $15,000,000 for calendar year 2026.', 'Enacted July 4, 2025 law, not an assumed 2026 sunset.', '0'),
@@ -33,12 +33,18 @@ SOURCES = {
  'stocks': ('SEC Investor.gov — Stocks FAQs', 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks', 'There’s no guarantee that the company whose stock you hold will grow and do well, so you can lose money you invest in stocks.', 'Diversification, fees and loss risks; does not validate any assumed return or strategy probability.', '0'),
  'bills': ('U.S. Treasury — Treasury bills', 'https://treasurydirect.gov/marketable-securities/treasury-bills/', 'Federal tax due on interest earned', '4–52 week terms; no state or local tax on interest; auction rates change, not a perpetual fixed yield.', '0'),
  'fdic': ('FDIC — Understanding deposit insurance', 'https://www.fdic.gov/resources/deposit-insurance/understanding-deposit-insurance', 'FDIC deposit insurance covers $250,000 per depositor, per FDIC-insured bank, for each account ownership category.', 'Same-category deposits aggregated. Stocks, mutual funds and Treasury securities are not FDIC deposits.', '0'),
+ 'fhfa': ('FHFA — House Price Index and datasets', 'https://www.fhfa.gov/data/hpi', 'The FHFA HPI is a comprehensive collection of publicly available house price indexes that measure changes in single-family home values based on data that extend back to the mid-1970s from all 50 states and over 400 American cities.', 'Weighted repeat-sales measure using eligible Enterprise mortgage transactions/refinances. Geographic historical movements are not an appraisal, a particular parcel value or a forward forecast.', '0', '2026-11-13'),
+ 'rtc18031': ('California Legislature — Revenue and Taxation Code §18031', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=18031.&lawCode=RTC', 'Subchapter O of Chapter 1 of Subtitle A of the Internal Revenue Code, relating to gain or loss on disposition of property, shall apply, except as otherwise provided.', 'California applies federal gain/loss provisions subject to California exceptions/modifications; confirm any IRC §1014 basis-at-death application for the relevant year.', '0', '2026-11-13'),
+ 'ab1482': ('California Legislature — Civil Code §1947.12', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1947.12.&lawCode=CIV', 'An owner of residential real property shall not ... increase the gross rental rate ... more than 5 percent plus the percentage change in the cost of living, or 10 percent, whichever is lower.', 'Only covered units; exceptions, notice rules and local rent limits matter. Subdivision (o) schedules repeal on January 1, 2030 unless the law changes.', '0, 1, 2', '2026-11-13'),
+ 'hr5336': ('Congress.gov — H.R. 5336 bill text (introduced)', 'https://www.congress.gov/bill/119th-congress/house-bill/5336/text', 'Any property which is transferred by gift or at death shall be treated as sold for its fair market value on the date of such gift or death.', 'Introduced September 11, 2025 and referred to House Ways and Means as of retrieval. Introduced text includes exceptions and is not enacted law.', '0', '2026-11-13'),
+ 's4122': ('Congress.gov — S. 4122 bill text (introduced)', 'https://www.congress.gov/bill/119th-congress/senate-bill/4122/text', 'Any property which is transferred by gift or at death shall be treated as sold for its fair market value on the date of such gift or death.', 'Introduced March 17, 2026 and referred to Senate Finance as of retrieval. Introduced text includes exceptions and is not enacted law.', '0', '2026-11-13'),
+ 'cbo2026': ('CBO — Projections of Deficits and Debt Under Two Scenarios With Higher Interest Rates', 'https://www.cbo.gov/publication/62809', 'In CBO’s economic forecast, the interest rate on 10-year Treasury notes averages 4.3 percent over the 2026–2036 period.', 'A dated ten-year baseline, not a Treasury-bill yield, property/portfolio return or 50-year forecast; alternative-rate scenarios are uncertain.', '0', '2026-11-13'),
+ 'githubvisibility': ('GitHub Docs — Setting repository visibility', 'https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/managing-repository-settings/setting-repository-visibility', 'Any published GitHub Pages site will be automatically unpublished.', 'GitHub also states public forks are not made private. This documents platform consequences; it does not establish current repository settings or remove clones and caches.', '0', '2026-11-13'),
 }
 FAILED = [
- ('CDI old compare-premiums.cfm', 'Redirected to document-not-found; replaced with verified residential landing page.'),
- ('Local rates slash-style /reports/current-rates...', 'Returned Not Found; replaced with working /reports--current-rates... URL.'),
- ('FHFA /data/hpi', 'Maintenance page; no local appreciation series or historical backtest verified in this session.'),
- ('BLS inflation story under /2023/', 'Not found; corrected to /2022/ and verified actual passage.'),
- ('FTB singular /estate-and-trusts/', 'Not found; corrected to plural /estates-and-trusts/.'),
- ('BOE /proptaxes/prop8.htm', 'Not found; do not claim this dead link verifies a decline-in-value formula.'),
+ ('CDI old compare-premiums.cfm', 'Initial URL redirected to document-not-found; current residential-insurance resource is recorded above.', 'insurance'),
+ ('Local rates slash-style /reports/current-rates...', 'Initial URL returned Not Found; current rent-board route is recorded above.', 'rentlocal'),
+ ('BLS inflation story under /2023/', 'Initial URL not found; corrected to the 2022 article recorded above.', 'cpi'),
+ ('FTB singular /estate-and-trusts/', 'Initial URL not found; corrected to the plural estates-and-trusts route recorded above.', '541'),
+ ('BOE /proptaxes/prop8.htm', 'Not found; do not use that route to substantiate a decline-in-value formula.', 'prop13'),
 ]

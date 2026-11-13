@@ -9,26 +9,27 @@ insurance, tax/process guidance, current-law watchlist, source ledger and flagge
 
 ## Evidence and privacy boundary
 
-* 29 official sources directly retrieved/read on **2026-11-12**. Short passages, retrieval chunks
-  and exact verification scope are in `_7eff7e24/evidence.py` and the site's source ledger.
+* 36 official-source entries: 29 sources were directly read on **2026-11-12** and 7 additional
+  sources on **2026-11-13**. Short passages, per-source retrieval dates/chunks and verification
+  limits are in `_7eff7e24/evidence.py` and the site's source ledger.
 * Every published table body row links to an official source and carries a status:
-  **Verified**, **Guidance**, **Missing**, or **Synthetic**. A contextual link is not verification
-  of the row's recommendation, household applicability or invented model parameters.
-* Unverified household numeric cells in the **generated Pages content** are **blank**, never zero
-  or guessed. That site does not reproduce private tax history, rent, utility estimates, property
-  values, addresses, ZIPs, parcels or individuals. Rounded numbers can still identify a property
-  in combination; projections use fictional inputs, not rescaled or obscured household data.
-* Synthetic examples: 2026–2076 (50 compounding years, 51 endpoints), all 11 illustrative transfer
-  years 2040–2050, seven economic regimes, and a 20-/50-year simplified after-tax comparison.
-  All displayed dollars round half-up to $10. They are not officially verified forecasts,
-  insurance quotes, tax returns, backtests or recommendations to execute.
+  **Verified**, **Guidance**, or **Missing**. A contextual link is not verification of a row's
+  recommendation, household applicability or future outcome.
+* Unverified household amounts and future projections in the **generated Pages content** are
+  **blank**, never zero or guessed. The site does not publish invented model-dollar examples,
+  private tax history, rent, utility estimates, property values, addresses, ZIPs, parcels or
+  individuals. The 2026–2076 register shows annual rows with all household monetary cells
+  intentionally blank; it is a template, not a forecast.
+* Public monetary figures are limited to directly sourced current-law amounts and are rounded
+  half-up to the nearest $10 for display. Exact statutory figures control filings. Historical
+  economic observations and current statutory rates are not projected through 2040–2050.
 * **Public repository warning:** The GitHub repository is public. The current root
   `COORDINATION.md`, earlier Git history, PR diffs, other branches, deployment caches, forks and
   clones may contain case-derived detail. Jekyll exclusions keep coordination/work files out of
   the Pages artifact; they do not restrict access to the public Git repository. Obsolete
   case-derived packages were removed from the current build tree, but that is not deletion of
   earlier disclosures. Owner-coordinated visibility/history/cache review remains necessary. No
-  history rewrite or repository-visibility change was performed automatically.
+  repository-wide history rewrite or repository-visibility change was performed.
 
 ## Reproduce and test
 
@@ -40,16 +41,21 @@ python3 tools/verify.py
 python3 -m unittest discover -s tools -p 'test_*.py' -v
 ```
 
-`tools/build.py` uses only `_7eff7e24/{content,evidence,model}.py`. There are no private inputs.
-It emits 17 pages, four legacy redirects, and a labeled synthetic CSV. Assets are local;
-there are no analytics, remote fonts or browser API calls. Optional suggestion review choices
-are saved only in local browser storage; they do not implement changes or constitute shared approval.
+`tools/build.py` uses only `_7eff7e24/{content,evidence}.py`. It does not import the legacy
+synthetic sandbox model or read private inputs. It emits 17 public HTML pages and four legacy
+redirects; no monetary projection CSV is generated. Assets are local; there are no analytics,
+remote fonts or outbound network/API calls. `app.js` uses local storage only for optional review
+choices and the browser print dialog; choices do not implement changes or constitute shared
+approval. The retired model and arithmetic tests remain in the public repository as isolated test
+fixtures, but are not imported by the builder or shipped in Pages. Their parameters are not
+verified or approved household assumptions; Jekyll exclusions do not hide them from Git users.
 
-The verifier checks internal targets/anchors, every row's source/status, official URL allowlist,
-missing cells, all dollar rounding, prohibited identifiers, CSV horizon, HTML structure,
-publication exclusions, absence of `.nojekyll`, and private-package independence. Arithmetic
-unit tests independently check the calculation rules and stress paths. These technical checks
-are **not** a claim of comprehensive legal verification or financial accuracy for a household.
+The verifier checks internal targets/anchors, every row's source/status, the official-source
+allowlist, blank projection cells, current-law monetary and percentage allowlists, nearest-$10
+displays, prohibited identifiers, HTML structure, publication exclusions, absence of `.nojekyll`,
+and independence from private packages and the retired model. Unit tests exercise the isolated
+legacy arithmetic, but those values do not feed public pages. These technical checks are **not**
+comprehensive legal verification or a household financial result.
 
 ## Layout
 
@@ -57,7 +63,7 @@ are **not** a claim of comprehensive legal verification or financial accuracy fo
 index.html, pages/, assets/    public static product
 _7eff7e24/evidence.py          source extracts and failed-retrieval register
 _7eff7e24/content.py           reviewed public content
-_7eff7e24/model.py             deterministic synthetic examples (no household inputs)
+_7eff7e24/model.py             retired isolated arithmetic sandbox; not in public build
 _7eff7e24/AUDIT.md             repository audit findings and limits
 tools/                        builder, verifier, regression tests
 COORDINATION.md               shared task board and deployment record (not site content)
@@ -65,8 +71,8 @@ COORDINATION.md               shared task board and deployment record (not site 
 
 ## Decision boundary
 
-The provisional research priority is to test retaining existing housing and selling A into a
-risk-appropriate diversified portfolio, but **no household profit-maximizing winner is established**.
+**No household profit-maximizing winner or preferred path is established.** The site compares
+living in, renting or selling A while keeping B separate, but leaves all household amounts blank.
 Trust terms, eligibility, estate size/gift history, debts, insurance, achievable rent, repairs,
 actual tax rates and future law remain unverified. The questions page assigns discovery tasks to
 trustee/advisers; they cannot be resolved by public research without private records and authority.

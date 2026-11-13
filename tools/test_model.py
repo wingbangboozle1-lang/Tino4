@@ -1,4 +1,4 @@
-"""Independent arithmetic and content regression checks; no personal inputs."""
+"""Isolated legacy arithmetic tests and public-content regression checks; no personal inputs."""
 import math
 import re
 from pathlib import Path
@@ -9,6 +9,7 @@ sys.path.insert(0,str(ROOT/'_7eff7e24'))
 from model import rounded, money, prop19_assessment, projection, compare, rates, exclusion, REGIMES
 from content import content, PAGES
 from evidence import SOURCES
+from verify import CASE_SPECIFIC_PATTERNS
 
 class ModelTests(unittest.TestCase):
     def test_half_up_not_bankers(self):
@@ -85,16 +86,39 @@ class ModelTests(unittest.TestCase):
             self.assertTrue(all(math.isfinite(v) for v in c.values()))
             self.assertLess(c['real_equity'],c['equity'])
     def test_content_regressions(self):
-        self.assertEqual(len(SOURCES),29)
-        self.assertIn('not automatically tax-free',content('executive-summary'))
+        self.assertEqual(len(SOURCES),36)
+        self.assertIn('no evidence-backed winner',content('executive-summary').lower())
         self.assertIn('Not reviewed',content('suggestions'))
         self.assertIn('actual household answers are missing',content('estate-thresholds'))
-        self.assertIn('10% per year',content('law-watchlist'))
-    def test_public_copy_uses_generic_property_labels(self):
+        self.assertIn('not enacted law',content('law-watchlist').lower())
+        self.assertIn('scheduled for repeal January 1, 2030',content('law-watchlist'))
+        self.assertIn('FHFA publishes repeat-sales',content('black-swan-scenarios'))
+        self.assertIn('no dollar forecast is published',content('projections').lower())
+
+    def test_public_currency_is_only_verified_current_law(self):
+        public=' '.join(content(key) for key,_,_ in PAGES)
+        amounts=set(re.findall(r'\$[\d,]+(?:\.\d+)?',public))
+        allowed={'$10','$7,000','$20,000','$125,000','$200,000','$250,000',
+                 '$500,000','$1,044,590','$15,000,000','$15,480,000'}
+        self.assertLessEqual(amounts,allowed)
+        for invented in ('$1,000,000','$200,000 assessment','$48,000'):
+            self.assertNotIn(invented,public)
+        self.assertNotIn('SYNTHETIC_NOT_HOUSEHOLD',public)
+
+    def test_public_pages_do_not_rely_on_retired_synthetic_scenario_rates(self):
+        public=' '.join(content(key) for key,_,_ in PAGES)
+        rates=set(re.findall(r'(?<![\w.])\d+(?:\.\d+)?%',public))
+        allowed={'0%','1%','1.6%','2%','3.8%','4.3%','5%','9.1%','10%',
+                 '13.7%','15%','20%','25%','40%'}
+        self.assertLessEqual(rates,allowed)
+    def test_public_copy_uses_generic_property_context(self):
         public_content=' '.join(content(key) for key,_,_ in PAGES).casefold()
-        self.assertNotRegex(public_content,r'\b(?:cupertino|outer sunset|san francisco|apn|ssn)\b')
-        self.assertIn('assumption',public_content)
-        self.assertIn('figures not officially verified',public_content)
-        self.assertIn('property a is a future inheritance',public_content)
+        for pattern in CASE_SPECIFIC_PATTERNS:
+            with self.subTest(pattern=pattern):
+                self.assertIsNone(re.search(pattern,public_content,re.I))
+        self.assertIn('for this generic scenario',public_content)
+        self.assertIn('if some space is rented or used personally',public_content)
+        self.assertIn('current root coordination.md',public_content)
+        self.assertIn('jekyll exclusions do not restrict git access',public_content)
 
 if __name__=='__main__': unittest.main()
