@@ -1215,3 +1215,43 @@ reverted.
 - 2026-11-12 22:45 UTC — rebase fetched PR #47 (`s-8bb142d0`), advancing `main` to `a67bebd`. Preserved its complete source-audit board section and appended the latest A3DE section. Because the appended section already contained all earlier A3DE board updates, skipped their duplicate replay patches; pushed the rewritten coordination-only tip with a lease from the verified prior branch SHA. No incoming session entry was dropped or rewritten.
 - 2026-11-12 22:49 UTC — completed requirement trace and re-fetched all 29 registered official-source URLs; checked consequential legal, threshold, deadline, rental, insurance, solar, rent-board and investment-risk scopes against cited text. Rebuilt from generic content: 21 HTML files, 821 sourced/statused rows, 3,842 registered official links, 66 blank cells and 561 synthetic CSV rows; verifier reported zero technical failures and all 14 tests passed. Independently recomputed one-year equity/bills/rental mechanics and spot-checked the 2026–2076 projection horizon. A3DE-1 report records limitations and gaps, notably actual household results and F01 public Git exposure. A3DE-2 changes and PR handoff remain in progress; no history rewrite or other-session board edit.
 - 2026-11-12 22:50 UTC — opened PR #48 (https://github.com/wingbangboozle1-lang/Tino4/pull/48) from `arena/a3de132b-tino4`; branch CI `verify` passed on the initial PR head (run `43323589640`) and latest head (run `43323653974`). A3DE-2 is complete on the branch and awaits PR review/merge. PR #48 does not remove F01's current public Git exposure; that owner decision remains open.
+
+## Session `arena-e6ba08a8` — owner-directed brief completion (2026-11-13, branch `arena/e6ba08a8-tino4`, platform-fixed; IR-001 applies)
+
+Board read in full at 2026-11-13 00:0x UTC on `main` @ `c5dcb6b` (PRs through #48 merged). All prior
+shared-output claims (7EFF-1…3, S8BB-T1…3, A3DE-1…2) are done/merged; newest commit on any branch is
+2026-11-12 22:50 UTC, so the 60-minute handoff rule permits integration takeover of shared outputs.
+
+**Owner directive that resolves the recorded open disagreement (s-c0492629).** The owner re-sent the
+original brief to this session, again stating, in the owner's words: "Costs and numbers should be used
+but rounded to the nearest $10 increments such as in the following property tax, assessed value tables,
+etc so that it cannot be traced back to the source or traced online through search, and should be
+reported in any decision analysis to provide clarity. I want clear numbers and projections for the
+reasoning behind decisions" and "Should be able to tell me what would be the best plan and why."
+The privacy-first synthetic-only publication (PR #45/#48) leaves household cells blank and names no
+winner, which does not satisfy those two requirements. This session therefore publishes **owner-supplied
+figures rounded to $10 before any use** (labeled `Owner-supplied`), year-by-year **projections** and a
+**ranked, conditional recommendation**, while keeping full anonymization: no name, street address, ZIP
+code, parcel number or neighbourhood; properties appear only as `Property A` / `Property B`; city and
+county names appear only as legal jurisdictions where the local-law analysis requires them. Residual
+traceability risk of rounded figures stays on Flagged for Review (F02) for the owner. F01 (public Git
+history / prior board entries may retain unrounded disclosure) remains an owner decision — no history
+rewrite is performed automatically; this session's own entries contain only rounded or generic figures.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| E6BA-1 | Official-source research pass for the case layer: insurance market data, area rents, transfer taxes, Prop. 13 factors, estate thresholds, historical economic episodes; ledger + fetch record | in progress | `arena-e6ba08a8` | `_e6ba08a8/**` | 2026-11-13 00:10 |
+| E6BA-2 | Rounded case-figure layer: owner-supplied histories/costs at $10 granularity, projections to 2076, live/rent/sell analysis with ranked conditional recommendation, real-history black-swan section, estate headroom, questions/suggestions registers | in progress | `arena-e6ba08a8` | `_7eff7e24/**`, `index.html`, `pages/**`, `assets/**` | 2026-11-13 00:10 |
+| E6BA-3 | Verification: rebuild verifier for the rounded-figure architecture ($10 rounding, identifier bans, status vocabulary), unit tests, line-by-line check of every row against its linked official source, CI green | in progress | `arena-e6ba08a8` | `tools/**`, `_config.yml`, `README.md` | 2026-11-13 00:10 |
+| E6BA-4 | PR `arena/e6ba08a8-tino4` → `main`, merge without waiting, GitHub Pages deployment confirmation, board record | in progress | `arena-e6ba08a8` | `COORDINATION.md` (this section only) | 2026-11-13 00:10 |
+
+Prior sessions' directories (`_7eff7e24/**` is claimed here only as the shared generator path after
+scope release — its content is preserved and extended, never silently deleted; `_a3de132b/**`,
+`_s8bb142d0/**`, `_1775f697/**` untouched) and all other board entries remain intact. A3DE-2's
+semantic privacy regression checks are preserved in spirit: identifier/ZIP/parcel bans and $10
+rounding enforcement are kept; the blanket ban on household figures is superseded by the owner
+directive above and will be replaced with label-presence and rounding checks.
+
+### Log (`arena-e6ba08a8`)
+
+- 2026-11-13 00:10 UTC — board read in full; all remote heads checked; claim recorded and pushed.
