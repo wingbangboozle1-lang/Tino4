@@ -1,0 +1,163 @@
+"""Independent evidence ledger for session s-7adb71fc.
+
+Every entry below was retrieved with a direct page fetch on 2026-11-13 (UTC) by
+this session. The quoted passage is held verbatim from the fetched page; the
+"scope" field states exactly what the source does and does not establish.
+
+Nothing in this file was copied from another session's ledger without re-fetching
+the page. Where a page could not be read, it is recorded in FAILED instead of
+being cited.
+"""
+DATE = '2026-11-13'
+
+# key: (label, url, verbatim passage, scope, chunk)
+SOURCES = {
+ # ---------------------------------------------------------------- federal estate
+ 'estate': ('IRS - Estate tax', 'https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax',
+  'The includible property may consist of cash and securities, real estate, insurance, trusts, annuities, business interests and other assets.',
+  'Defines the gross estate and includes the year-of-death filing threshold table (2026: $15,000,000). The filing threshold is not a tax on what an heir receives.', '0'),
+ 'wfct': ('IRS - What is new, estate and gift tax', 'https://www.irs.gov/businesses/small-businesses-self-employed/whats-new-estate-and-gift-tax',
+  'WFTC amends 2010(c)(3) by increasing the basic exclusion amount to $15,000,000 for calendar year 2026.',
+  'Confirms Public Law 119-21, signed 4 July 2025, set the 2026 basic exclusion. It does not predict 2040 law.', '0'),
+ 'irs2027': ('IRS - 2027 inflation adjustments, IR-2026-133', 'https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts',
+  'Estates of decedents who die during 2027 have a basic exclusion amount of $15,480,000, up from a total of $15,000,000 for estates of decedents who died in 2026.',
+  '2027 exclusion and the $20,000 annual gift exclusion. Published 5 November 2026. Not a forecast of the 2040s.', '0'),
+ 'form706': ('IRS - Instructions for Form 706', 'https://www.irs.gov/instructions/i706',
+  'You must file Form 706 to report estate and/or GST tax within 9 months after the date of the Decedent\'s death.',
+  'Filing deadline and the 40% top marginal rate. The tax is computed on the whole estate, not on one beneficiary share.', '0'),
+ 'basis': ('IRS - Gifts and inheritances FAQ', 'https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances',
+  'The basis of property inherited from a decedent is generally the fair market value (FMV) of the property on the date of the decedent\'s death',
+  'The step-up in basis. Also states that selling above basis produces taxable gain, so an inherited home is not automatically tax free.', '0'),
+ 'niit': ('IRS - Topic 559, net investment income tax', 'https://www.irs.gov/taxtopics/tc559',
+  'A 3.8 percent net investment income tax (NIIT) applies to individuals, estates, and trusts that have net investment income above applicable threshold amounts.',
+  'Thresholds ($250,000 joint, $200,000 single) and the trust rule that uses the top-bracket starting point. Applies to rents and to gains.', '0'),
+ 'capgains': ('IRS - Topic 409, capital gains and losses', 'https://www.irs.gov/taxtopics/tc409',
+  'The portion of any unrecaptured section 1250 gain from selling section 1250 real property is taxed at a maximum 25% rate.',
+  'Long-term rates of 0/15/20%, the 25% recapture ceiling, and the rule that personal-use losses are not deductible.', '0'),
+ 'homegain': ('IRS - Topic 701, sale of your home', 'https://www.irs.gov/taxtopics/tc701',
+  'If you or your spouse owned the home for at least 24 months (2 years) out of the last 5 years leading up to the date of the sale, you meet the ownership test.',
+  'Section 121 exclusion of up to $250,000 (single) or $500,000 (joint) and the two-of-five-year tests.', '0'),
+ # ---------------------------------------------------------------- California death taxes
+ 'rtc13301': ('California RTC 13301', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301.&lawCode=RTC',
+  'Neither the state nor any political subdivision of the state shall impose any gift, inheritance, succession, legacy, income, or estate tax, or any other tax, on gifts or on the estate or inheritance of any person or on or by reason of any transfer occurring by reason of a death.',
+  'California has no inheritance or estate tax of its own. Read together with RTC 13302, which links the state pickup to a federal credit that no longer exists.', '0'),
+ 'rtc13302': ('California RTC 13302', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13302.&lawCode=RTC',
+  'whenever a federal estate tax is payable to the United States, there is hereby imposed a California estate tax equal to the portion, if any, of the maximum allowable amount of the Credit for State Death Taxes',
+  'The dormant state pickup provision. It only bites if a federal state death tax credit is reinstated.', '0'),
+ 'sco': ('California State Controller - Estate tax', 'https://www.sco.ca.gov/ardtax_estate_tax.html',
+  'For decedents that die on or after January 1, 2005, there is no longer a requirement to file a California Estate Tax Return.',
+  'Administrative confirmation that the state estate return is not required. The same page notes the generation-skipping tax does not apply after 31 December 2004.', '0'),
+ 'ftbtrust': ('FTB - Estates and trusts', 'https://www.ftb.ca.gov/file/personal/filing-situations/estates-and-trusts/index.html',
+  'The trustee may have to file a return if the trust meets any of these',
+  'California fiduciary filing tests (gross income over $10,000, net income over $100 for trusts) and Form 541. This is income tax, not inheritance tax.', '0'),
+ 'ftbgains': ('FTB - Capital gains and losses', 'https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html',
+  'California does not have a lower rate for capital gains. All capital gains are taxed as ordinary income.',
+  'No preferential California rate. The marginal rate depends on the taxpayers other income, which is not known here.', '0'),
+ # ---------------------------------------------------------------- California property tax
+ 'pub29': ('BOE - California Property Tax, Publication 29', 'https://www.boe.ca.gov/proptaxes/pdf/pub29.pdf',
+  'Proposition 13 generally limits annual increases in the base year value of real property to no more than 2 percent',
+  'The 1% levy plus voter-approved debt, reassessment on change in ownership, and the 2% cap. The cap is not a cap on the whole bill.', '0'),
+ 'lta26002': ('BOE - Letter to Assessors 2026/002, 2026-27 CPI', 'https://www.boe.ca.gov/proptaxes/pdf/lta26002.pdf',
+  'please prepare your 2026 assessment roll using an inflation factor of 1.02',
+  'The official factor table for 1976-77 through 2026-27, including eleven years when the factor was below 2% and the 2010-11 negative year. This is the source of the replay on the black-swan page.', '0'),
+ 'pub19': ('BOE - Proposition 19 guidance', 'https://www.boe.ca.gov/prop19/',
+  'Value limit of current taxable value plus $1,000,000 (as biennially adjusted)',
+  'Intergenerational exclusion requires both transferor and transferee principal residence, an eligible relationship, and a claim filed within three years.', '0'),
+ 'pub801': ('BOE - Proposition 19 fact sheet', 'https://www.boe.ca.gov/pdf/pub801.pdf',
+  'from February 16, 2025, through February 15, 2027, the adjusted amount is $1,044,586',
+  'The current allowance, the one-year homeowners exemption requirement, the three-year claim window, and a worked example of the excess formula.', '0'),
+ 'lta25009': ('BOE - Letter to Assessors 2025/009', 'https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf',
+  'the value cap will be the sum of the property\'s factored base year value plus $1,044,586',
+  'Shows the allowance is indexed every second February 16 to FHFAs California House Price Index, which is why a fixed $1,044,586 cannot be used for a 2040 transfer.', '0'),
+ 'lta26026': ('BOE - Letter to Assessors 2026/026, Prop. 19 FAQ', 'https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf',
+  'If the family home becomes ineligible for the Homeowners\' or Disabled Veterans\' Exemption, the exclusion is removed',
+  'Continual-use requirement, eligible-child definitions, and the rule that the exclusion is lost if the home stops being the transferees principal residence.', '0'),
+ 'homeex': ('BOE - Homeowners exemption', 'https://www.boe.ca.gov/proptaxes/homeowners_exemption.htm',
+  'The California Constitution provides a $7,000 reduction in the taxable value for a qualifying owner-occupied home.',
+  'A $7,000 reduction in taxable value, not a $7,000 credit. One owner-occupied home per claimant, claimed by February 15.', '0'),
+ 'rtc480': ('California RTC 480', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=480.&lawCode=RTC',
+  'the change in ownership statement or statements shall be filed by the trustee (if the property was held in trust) or the transferee with the county recorder or assessor in each county in which the decedent owned an interest in real property within 150 days after the date of death',
+  'The 150-day death-transfer statement, including trust transfers, and the penalty for not filing.', '0'),
+ 'prob16061': ('California Probate Code 16061.7', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB',
+  'The notification by trustee shall be served not later than 60 days following the occurrence of the event requiring service of the notification by trustee',
+  'Trustee notification duty when a revocable trust becomes irrevocable, and the 60-day clock.', '0'),
+ 'prob13100': ('California Probate Code 13100', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13100.&lawCode=PROB',
+  'if the gross value of the decedent\'s real and personal property in this state does not exceed one hundred sixty-six thousand two hundred fifty dollars ($166,250)',
+  'The small-estate affidavit ceiling, which is far below either property, so a funded trust or probate is the realistic route.', '0'),
+ 'rtc11911': ('California RTC 11911', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11911.&lawCode=RTC',
+  'a tax at the rate of fifty-five cents ($0.55) for each five hundred dollars ($500) or fractional part thereof',
+  'The county documentary transfer tax rate, $1.10 per $1,000, plus any city tax. Paid on the recorded sale price.', '0'),
+ 'ab1482': ('California Civil Code 1947.12', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1947.12.&lawCode=CIV',
+  'shall not, over the course of any 12-month period, increase the gross rental rate for a dwelling or a unit more than 5 percent plus the percentage change in the cost of living, or 10 percent, whichever is lower',
+  'Statewide rent ceiling with a hard 10% maximum, and the statute expires 1 January 2030. A single-family home is exempt only if the owner is not a corporate entity and gives the required notice.', '1-2'),
+ # ---------------------------------------------------------------- San Francisco rent
+ 'sfrates': ('SF Rent Board - current rates', 'https://www.sf.gov/reports--current-rates-including-rent-increase-relocation-sec-deposit',
+  '1.6% for March 1, 2026 - February 28, 2027',
+  'The current allowable increase for covered units, the 4.2% security deposit interest rate, and relocation amounts. Also carries the notice that File 261020 is proposed and not enacted.', '0'),
+ # ---------------------------------------------------------------- operating costs
+ 'rental': ('IRS - Publication 527, residential rental property', 'https://www.irs.gov/publications/p527',
+  'The expenses for personal use aren not deductible as rental expenses.',
+  'Rental income and expense reporting, the 27.5-year GDS life used here, and the rule that personal-use days must be allocated out rather than ignored.', '0'),
+ 'cdi': ('California Department of Insurance - residential', 'https://www.insurance.ca.gov/01-consumers/105-type/5-residential/index.cfm',
+  'it is important to shop and compare insurance products',
+  'Official comparison tools and the FAIR Plan gap description. No premium for any property is published here, so a quote cannot be derived from this source.', '0'),
+ 'cpucnem': ('CPUC - net energy metering and net billing', 'https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing',
+  'The value of the export compensation (which the IOUs term Energy Export Credits) is usually lower than the retail rate',
+  'Export credits are bill credits, not cash, and their value is below retail. A system installed before April 2023 sits on a different tariff from a new one.', '0'),
+ 'eia': ('EIA - Electric Power Monthly, Table 5.6.A', 'https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_6_a',
+  'California 29.75 30.92 30.02 29.24 24.12 23.84',
+  'Average California residential price, 29.75 cents per kWh in August 2026, against a 14.47 cent commercial average. A credit of $10-$20 a month is plausible only for a small, well-sited system.', '0'),
+ 'bls2022': ('BLS - consumer prices up 9.1 percent', 'https://www.bls.gov/opub/ted/2022/consumer-prices-up-9-1-percent-over-the-year-ended-june-2022-largest-increase-in-40-years.htm',
+  'Over the 12 months ended June 2022, the Consumer Price Index for All Urban Consumers increased 9.1 percent.',
+  'A single historical 12-month observation, and the electricity component at 13.7%. It is not a 50-year inflation assumption.', '0'),
+ 'blsrent': ('BLS - CPI rent of primary residence, San Francisco-Oakland-Hayward', 'https://api.bls.gov/publicAPI/v1/timeseries/data/CUURS49BSEHA',
+  '2024 annual 508.109, 2025 annual 519.667, October 2026 538.654',
+  'Series CUURS49BSEHA. Annual averages give 2.27% for 2025 and 3.66% for the ten months to October 2026. October 2025 is missing because of the federal funding lapse, so no figure is interpolated across that gap. This is area CPI rent, not this or any tenancy.', '0'),
+ # ---------------------------------------------------------------- macro anchors
+ 'cbo': ('CBO - higher interest rate scenarios, October 2026', 'https://www.cbo.gov/publication/62809',
+  'In CBO\'s economic forecast, the interest rate on 10-year Treasury notes averages 4.3 percent over the 2026-2036 period',
+  'A 4.3% ten-year baseline, a 4.8% higher-rate scenario and a 5.8% stress scenario. CBO also projects debt held by the public rising from 100.6% to 120.2% of GDP.', '0'),
+ 'stocks': ('SEC Investor.gov - stocks', 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks',
+  'There\'s no guarantee that the company whose stock you hold will grow and do well, so you can lose money you invest in stocks.',
+  'Risk disclosure and the observation that large-company stocks as a group lost money in about one year out of three. It does not support any assumed return.', '0'),
+ 'bills': ('TreasuryDirect - Treasury bills', 'https://treasurydirect.gov/marketable-securities/treasury-bills/',
+  'Federal tax due on interest earned',
+  'Terms of 4 to 52 weeks, a $100 minimum, and federal tax with no state or local tax on the interest.', '0'),
+ 'fhfa': ('FHFA - House Price Index datasets', 'https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_state.txt',
+  'California, all-transactions index, 1975Q1 to 2026Q2',
+  'The full published quarterly series used for the replay on the black-swan page. The index is a state average, not a valuation of any one parcel.', '1-2'),
+ # ---------------------------------------------------------------- 2026 election
+ 'sos2026': ('California Secretary of State - 2026 general election ballot measures', 'https://electionresults.sos.ca.gov/returns/ballot-measures',
+  '42 Prohibits New State Personal Property Taxes And Certain Retroactive State Taxes. Initiative Constitutional Amendment. 6,378,156 51.4% 6,040,829 48.6%',
+  'Unofficial results as of 12 November 2026, to be certified by 11 December 2026. Proposition 42 was leading. It constrains state personal property taxes, not real property tax or rent law.', '0'),
+}
+
+FAILED = [
+ ('congress.gov H.R. 5336 detail', 'Fetched, but the page reported status Introduced and a summary in progress. Treated as introduced only, not enacted, and therefore not used for any numeric claim.'),
+ ('huduser FMR summary for Santa Clara and San Francisco', 'The FY2026 table rendered with empty rent cells, so no fair-market rent figure could be read. Left blank rather than quoted from a secondary source.'),
+ ('api.census.gov ACS rent and home value', 'Returned Missing Key. No Census series was used.'),
+ ('insurance.ca.gov residential guide', 'Returned Document Not Found. The residential landing page was used instead, and it carries no premium.'),
+ ('sf.gov current-rent-increase page', 'Returned the 404 page. Replaced with the working Rent Board current-rates page.'),
+ ('bls.gov CUURS49BSEHA October 2025', 'Missing value, footnoted as unavailable because of the 2025 lapse in appropriations. Recorded as a gap rather than interpolated.'),
+ ('fhfa.gov with a direct curl fetch', 'The sandbox cannot reach fhfa.gov except through the page-fetch tool, so the series was transcribed from two verified fetch chunks rather than downloaded.'),
+]
+
+
+# Short public-facing labels. The internal keys above are deliberately terse so
+# the generator cannot drift; these are what a reader sees on the page.
+LABELS = {
+ 'estate': 'IRS estate tax', 'wfct': 'IRS 2026 exclusion', 'irs2027': 'IRS 2027 exclusion',
+ 'form706': 'Form 706 instructions', 'basis': 'IRS inherited basis', 'niit': 'IRS NIIT',
+ 'capgains': 'IRS capital gains', 'homegain': 'IRS home sale', 'rtc13301': 'RTC 13301',
+ 'rtc13302': 'RTC 13302', 'sco': 'CA Controller', 'ftbtrust': 'FTB trusts',
+ 'ftbgains': 'FTB capital gains', 'pub29': 'BOE publication 29', 'lta26002': 'BOE LTA 2026/002',
+ 'pub19': 'BOE Proposition 19', 'pub801': 'BOE Prop 19 fact sheet', 'lta25009': 'BOE LTA 2025/009',
+ 'lta26026': 'BOE LTA 2026/026', 'homeex': 'BOE homeowners exemption', 'rtc480': 'RTC 480',
+ 'prob16061': 'Probate Code 16061.7', 'prob13100': 'Probate Code 13100',
+ 'rtc11911': 'RTC 11911', 'ab1482': 'Civil Code 1947.12', 'sfrates': 'Rent board rates',
+ 'rental': 'IRS publication 527', 'cdi': 'Dept of Insurance', 'cpucnem': 'CPUC solar tariffs',
+ 'eia': 'EIA electricity prices', 'bls2022': 'BLS 2022 inflation',
+ 'blsrent': 'BLS area rent index', 'cbo': 'CBO rate projection', 'stocks': 'SEC investor education',
+ 'bills': 'TreasuryDirect bills', 'fhfa': 'FHFA house price index',
+ 'sos2026': 'Secretary of State results',
+}
