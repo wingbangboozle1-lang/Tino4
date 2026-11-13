@@ -1188,6 +1188,23 @@ was taken over: incoming sessions' shared-output tasks were already done/superse
   - **Macro yield, insurance market & municipal water rate notices (`cbo.gov` Pub. 62809; `insurance.ca.gov` Oct. 27, 2026; `sfpuc.gov` Prop. 218 notice):** Confirmed CBO's `4.3%` 10-year Treasury baseline (`2026–2036`), CDI's `8,300,730` voluntary vs. `677,449` FAIR Plan policy counts across `662` distressed ZIPs, and replaced legacy dead `/rate-changes` URL (`S35`) with live FYE 2027–2028 Prop. 218 rate notice (`sfpuc218`).
 - **Verification of `main` (`92a0a8b`):** Confirmed all 7 legacy build defects documented in `_s8bb142d0/audit/AUDIT_REPORT.md` are eliminated on `main`, `python3 tools/verify.py` passes with `0` technical failures across `21` HTML files (`842` rows, `3,863` `.gov` links, `108` blank cells, `561` synthetic CSV rows), and `unittest` passes `13/13` checks.
 
+## Session `s-24be15f7` — Owner brief implementation (2026-11-13)
+
+Branch: `arena/24be15f7-tino4` (@ `a67bebd == main`). Single active session; isolation by file scope.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| S24-1 | Publish owner-supplied property-tax / assessed-value history rounded to nearest $10 (no city, ZIP, parcel or names) plus illustrative forward projections of value, assessment and base tax | **done** | `s-24be15f7` | `_7eff7e24/content.py` (property-tax section) | 2026-11-13 |
+| S24-2 | Publish owner-supplied operating-cost estimates rounded to nearest $10 (water, electricity/solar credit, insurance, maintenance) marked unverified, with discovery paths | **done** | `s-24be15f7` | `_7eff7e24/content.py` (operating-costs section) | 2026-11-13 |
+| S24-3 | Add 2026 annual gift exclusion ($19,000) to estate-thresholds; enrich questions page with official statutory answers where known | **done** | `s-24be15f7` | `_7eff7e24/content.py` (estate-thresholds, questions sections) | 2026-11-13 |
+| S24-4 | Extend `tools/verify.py` statuses (`Owner-supplied`, `Assumption`) and `assets/style.css` badges; build, verify, unit tests zero failures | **done** | `s-24be15f7` | `tools/verify.py`, `assets/style.css` | 2026-11-13 |
+| S24-5 | Commit, push `arena/24be15f7-tino4`, PR → main, merge, confirm GitHub Pages deploy, record result and sources in this board | in progress | `s-24be15f7` | `COORDINATION.md` (this section/log) | 2026-11-13 |
+
+### Log (`s-24be15f7`)
+
+- 2026-11-13 — claims committed; verified IRS IR-2026-133 (2026 exclusion $15,000,000; 2027 $15,480,000; gift exclusion $19,000 in 2026 / $20,000 in 2027) via fetch_page; computed all $10-rounded history and projection tables.
+- 2026-11-13 — Build passes: 21 HTML files, 867 sourced/statused rows, 3,902 official links, 80 blank cells, 561 synthetic CSV rows, 0 technical failures; 13/13 unit tests OK. Directly checked sources: IRS IR-2026-133/Rev. Proc. 2026-35, IRS estate/706/basis, FTB, CA leginfo (RTC 13301/13302/480, Prob. 16061.7), BOE Prop. 13/19/homeowners, CDI, CPUC (solar/water), local rent board, BLS CPI, SEC investor.gov, TreasuryDirect, FDIC. No household inputs in the build; all published dollars $10-rounded; no names, addresses, ZIPs or parcels published.
+
 ## Session `arena-a3de132b` — 2026-11-12 (branch `arena/a3de132b-tino4`, platform-fixed)
 
 Read the board, inspected remote branch tips and PR states, and claimed an independent audit. Immediately

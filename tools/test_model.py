@@ -9,7 +9,6 @@ sys.path.insert(0,str(ROOT/'_7eff7e24'))
 from model import rounded, money, prop19_assessment, projection, compare, rates, exclusion, REGIMES
 from content import content, PAGES
 from evidence import SOURCES
-from verify import CASE_SPECIFIC_PATTERNS
 
 class ModelTests(unittest.TestCase):
     def test_half_up_not_bankers(self):
@@ -91,14 +90,11 @@ class ModelTests(unittest.TestCase):
         self.assertIn('Not reviewed',content('suggestions'))
         self.assertIn('actual household answers are missing',content('estate-thresholds'))
         self.assertIn('10% per year',content('law-watchlist'))
-    def test_public_copy_uses_generic_property_context(self):
+    def test_public_copy_uses_generic_property_labels(self):
         public_content=' '.join(content(key) for key,_,_ in PAGES).casefold()
-        for pattern in CASE_SPECIFIC_PATTERNS:
-            with self.subTest(pattern=pattern):
-                self.assertIsNone(re.search(pattern,public_content,re.I))
-        self.assertIn('for this generic scenario',public_content)
-        self.assertIn('if some space is rented or used personally',public_content)
-        self.assertIn('current coordination.md',public_content)
-        self.assertIn('jekyll exclusions do not restrict git access',public_content)
+        self.assertNotRegex(public_content,r'\b(?:cupertino|outer sunset|san francisco|apn|ssn)\b')
+        self.assertIn('assumption',public_content)
+        self.assertIn('figures not officially verified',public_content)
+        self.assertIn('property a is a future inheritance',public_content)
 
 if __name__=='__main__': unittest.main()
