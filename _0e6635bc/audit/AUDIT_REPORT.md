@@ -10,7 +10,7 @@ This report intentionally does not reproduce personal, household, location, or c
 
 The branch-generated static Pages artifact now contains a generic comparison of inherited Property A and already-owned Property B, kept distinct. It publishes no household monetary projections, no winner or preferred financial path, and no model-generated projection CSV. The annual register keeps its year labels while every household amount cell is explicitly blank. Current-law amounts are limited to the reviewed allowlist and carry date/scope caveats.
 
-This finding applies to the **candidate built from this branch**, not the presently served Pages deployment. GitHub reports the repository and Pages site as public, with Pages sourced from `main`; the branch has not been deployed. A Pages API status of `built` is not a live browser or content-render test.
+This finding applies to the **candidate built from this branch**, not the presently served Pages deployment. GitHub reports the repository and Pages site as public, with Pages sourced from `main`; the branch has not been deployed. The Pages API status is asynchronous and does not verify the rendered content in a user's browser.
 
 ## Scope and evidence limits
 
@@ -40,7 +40,7 @@ The legacy model and its arithmetic tests remain in the public repository even t
 
 ### F-04 — Medium, unresolved: substantive and deployment verification limits
 
-The verifier checks structure, registered links, status labels, allowed current-law numeric displays, explicit blank projection cells, internal targets, privacy patterns, and publication exclusions. It cannot prove that every sentence follows from its cited source. No browser-based visual or interactive smoke test was run for this candidate. The GitHub Pages API reported a built site sourced from `main`, not this branch; a prior direct live-page request failed with a TLS/SSL EOF, so end-user live rendering remains unverified.
+The verifier checks structure, registered links, status labels, allowed current-law numeric displays, explicit blank projection cells, internal targets, privacy patterns, and publication exclusions. It cannot prove that every sentence follows from its cited source. No browser-based visual or interactive smoke test was run for this candidate. The latest GitHub Pages API check reported `building` from `main`, not this branch; a prior direct live-page request failed with a TLS/SSL EOF, so end-user live rendering remains unverified.
 
 ## Technical validation on this branch
 
