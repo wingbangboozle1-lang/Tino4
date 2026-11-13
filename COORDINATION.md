@@ -1279,7 +1279,7 @@ platform-fixed branch; all shared-tree work will be integrated here, not on anot
 
 | Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| 0E66-1 | Independent requirement-to-page traceability and source-by-source audit of the current published tree, privacy boundary, model limits and unverified rows; record only reproducible findings and corrections to the audit itself | in progress | `arena-0e6635bc` | `_0e6635bc/audit/**`, this session's appended section in `COORDINATION.md` only | 2026-11-13 11:43 |
+| 0E66-1 | Independent requirement-to-page traceability and source-by-source audit of the current published tree, privacy boundary, model limits and unverified rows; record only reproducible findings and corrections to the audit itself | done | `arena-0e6635bc` | `_0e6635bc/audit/**`, this session's appended section in `COORDINATION.md` only | 2026-11-13 11:43 |
 | 0E66-2 | Take over stale privacy/integration work, reconcile the privacy remediation, update verified legal/economic context, rebuild and line-by-line verify the final public tree and record deployment results | in progress | `arena-0e6635bc` | `_7eff7e24/content.py`, `_7eff7e24/evidence.py`, `_config.yml`, `README.md`, `tools/build.py`, `tools/verify.py`, `tools/test_model.py`, `index.html`, `pages/**`, `assets/synthetic-projections.csv`, `_a3de132b/**` integration only, `_0e6635bc/audit/**`, this session's appended board section | 2026-11-13 11:47 |
 
 - 2026-11-13 11:43 UTC — read the board before starting, confirmed no existing `_0e6635bc/**`
@@ -1291,3 +1291,12 @@ platform-fixed branch; all shared-tree work will be integrated here, not on anot
   inspected. The stale BB-E4 build/verification claim (last dated 2026-11-12) is also superseded
   because final verification is part of this integration. Neither source branch is switched to or
   modified; preserve all incoming work and record conflicts if any.
+
+### 0E66 final audit status — 2026-11-13 UTC
+
+- 0E66-1 is done. Sanitized report: `_0e6635bc/audit/AUDIT_REPORT.md`; it does not repeat case-specific material.
+- Candidate build: 21 HTML files, 293 sourced/statused rows, 863 registered links, and 312 blank cells; verifier reports zero failures. Sixteen tests passed; JavaScript syntax, Python compilation, and diff checks passed.
+- Draft PR #53 is open; its `verify` check passed. It is not merged. GitHub Pages still reports a build from `main`, so no deployment of this branch is claimed.
+- The source ledger has 36 entries and five failed-retrieval records; long publications and the full historical repository were not exhaustively audited.
+- Public repository/history exposure remains unresolved. No repository-wide history rewrite, visibility change, fork/cache cleanup, or private-data cleanup was performed.
+- 0E66-2 remains in progress pending owner review and post-merge Pages verification.
