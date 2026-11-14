@@ -1,0 +1,19 @@
+# Suppress deletion hunks for retired private/case-derived artifacts in the cleanup PR.
+# This does not remove their historical Git objects or guarantee cache purging.
+COORDINATION.md -diff
+index.html -diff
+pages/** -diff
+assets/case-projections.csv -diff
+_7eff7e24/** -diff
+_7adb71fc/content_part*.py -diff
+_7adb71fc/evidence.py -diff
+_7adb71fc/manifest.json -diff
+_7adb71fc/prbody.md -diff
+_7adb71fc/selftest.py -diff
+_7adb71fc/swan.py -diff
+_7adb71fc/verify.py -diff
+_7adb71fc/work/** -diff
+_a3de132b/** -diff
+_s8bb142d0/** -diff
+_s95cf9249/** -diff
+_1775f697/** -diff
