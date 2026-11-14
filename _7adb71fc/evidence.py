@@ -126,6 +126,10 @@ SOURCES = {
  'bills': ('TreasuryDirect - Treasury bills', 'https://treasurydirect.gov/marketable-securities/treasury-bills/',
   'Federal tax due on interest earned',
   'Terms of 4 to 52 weeks, a $100 minimum, and federal tax with no state or local tax on the interest.', '0'),
+ 'h15': ('Federal Reserve Board - H.15 Selected Interest Rates, release of 13 November 2026',
+  'https://www.federalreserve.gov/releases/h15/current/',
+  'Treasury bills (secondary market), 3-month: 4.14 on 12 November 2026. Treasury constant maturities, nominal, 2-year: 4.86 on 12 November 2026.',
+  'Observed secondary-market and constant-maturity yields on one day; auction yields change at every auction and are not a forward commitment. Bills are federally taxable; see bills for state/local treatment.', '0'),
  'fhfa': ('FHFA - House Price Index datasets', 'https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_state.txt',
   'California, all-transactions index, 1975Q1 to 2026Q2',
   'The full published quarterly series used for the replay on the black-swan page. The index is a state average, not a valuation of any one parcel.', '1-2'),
@@ -161,6 +165,6 @@ LABELS = {
  'rental': 'IRS publication 527', 'cdi': 'Dept of Insurance', 'cpucnem': 'CPUC solar tariffs',
  'eia': 'EIA electricity prices', 'bls2022': 'BLS 2022 inflation',
  'blsrent': 'BLS area rent index', 'cbo': 'CBO rate projection', 'stocks': 'SEC investor education',
- 'bills': 'TreasuryDirect bills', 'fhfa': 'FHFA house price index',
+ 'bills': 'TreasuryDirect bills', 'fhfa': 'FHFA house price index', 'h15': 'Federal Reserve H.15',
  'sos2026': 'Secretary of State results',
 }
