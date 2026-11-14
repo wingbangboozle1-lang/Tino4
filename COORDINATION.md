@@ -85,3 +85,38 @@ The pinned checkout initially started from `0112ebb9`, while `origin/main` advan
 
 - 2026-11-14 — PR #66 (coordination-only deployment record): https://github.com/wingbangboozle1-lang/Tino4/pull/66 merged as `f6babe769daf0746faaa31fe222cdc19f26c0149` at 22:20:33 UTC. PR verification run 43647550264 passed. The first post-merge Pages run was canceled as a higher-priority Pages deployment entered the queue; the next queued Pages run 43647671712 completed successfully for concurrent main commit `9d0b7bfa3629907c31be392ed528ed72073d61cb`. GitHub Pages API reports `built`; live checks for the phased-investing and Attorney & CPA brief pages passed.
 - 2026-11-14 — PR #70 (coordination-only): https://github.com/wingbangboozle1-lang/Tino4/pull/70 merged as `d63630460d23080e9a470162a3f313c04037ad5d` at 22:22:58 UTC; PR verification run 43647770324 passed. The first queued Pages jobs were superseded by higher-priority runs; final Pages deployment run 43647804186 succeeded, GitHub Pages API reports `built`, and the two relevant live pages were fetched successfully.
+
+---
+
+## Session `arena-d10d2c46` — household analysis hold, flags and integration handoff (2026-11-14)
+
+Branch: `arena/d10d2c46-tino4` (platform-fixed). Base: `main` @ `d636304`. Claimed: 2026-11-14 22:24 UTC.
+
+Process note: household-analysis edits to the internal engine and generator were made on this branch before this claim was written. They are **not** committed or pushed; they are held in the local stash `d10d2c46 household analysis drafts (INTERNAL...)`. The branch was then reset to `origin/main`. The two local merge commits from the earlier PR #57 import were redundant, because `448f733` is an ancestor of `main`.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| D10-1 | Household analysis (sell / rent / live / mixed paths, break-evens, what-if, deadline timeline) with corrected internal engine | held: not published, pending owner decision `3D54-2` | `arena-d10d2c46` | none on `main`; drafts remain in the local stash | 2026-11-14 22:24 UTC |
+| D10-2 | Record the hold, generic Flagged-for-Review items, and integration requests; no shared output edited | in progress | `arena-d10d2c46` | `COORDINATION.md` (this section only) | 2026-11-14 22:24 UTC |
+
+### Log (`arena-d10d2c46`)
+
+- **Decision (held, not published).** Household analysis is not published on `main`. `main` is deliberately generic after PR #58/#59, and publishing household projections is open owner decision `3D54-2`. Nothing household-specific is committed in this session. Internal work is held in a local stash on this branch, `d10d2c46 household analysis drafts (INTERNAL...)`, and can be recovered with `git stash pop`. The stash is not pushed.
+- **Branch reset.** The branch was reset to `origin/main`, discarding two local merge commits from the earlier PR #57 import. Those commits added nothing beyond `main`, because `448f733` is an ancestor of `main`.
+- **Internal engine corrections (in the held stash; the legacy source on `main` still has the old formulas).** (1) The rental path used the value in the horizon year as the terminal basis, not the basis carried from transfer. This overstated the rental path by a material amount at a 2045 transfer. (2) The Prop 19 taxable value now follows BOE LTA 2026/026: the larger of the factored base year value and full value less the allowance. The earlier formula is removed. (3) The conversion-reassessment alternative is removed. (4) The allowance constant is rounded to $10 before use, so the calculation follows the rounding rule. The sell-at-transfer and rent-then-sell paths did not depend on (2) or (3).
+- **Request to integration (generic Flagged-for-Review items, not yet on the page).**
+  - (a) Allowance indexing: the BOE intro guide says the allowance is adjusted annually. The county page and the statute summary say every second February 16. Sources conflict.
+  - (b) Post-move-out treatment: a county FAQ says the property is taxed at the factored base year value without reassessment. BOE LTA 2026/026 says the enrolled value is the full value at transfer, factored. Attorney/CPA question. The county page is not a `.gov` source and is not linked.
+  - (c) Late homeowners-exemption claim: the county FAQ is silent. The BOE intro guide, citing Rule 462.520, says the exclusion starts in the claim year.
+  - (d) Resolved in the engine: the conversion-reassessment alternative is removed; BOE LTA 2026/026 supports the factored full-value rule.
+  - (e) Living paths exclude any value of housing and any avoided rent. Break-even thresholds are not estimates until the owner supplies or declines that input.
+  - (f) Rent yield and stock return are invented planning parameters. The break-evens are sensitivities, not forecasts.
+  - (g) The IRC 121 exclusion uses the single-filer amount until the filing status is known. Whether the heir may count the decedent's ownership and use periods is unchecked.
+  - (h) The growth windows in the what-if design come from a stored FHFA copy that has not been re-fetched.
+  - (i) The one-page attorney and CPA sheet has not been printed or page-counted; no browser is available here.
+  - (j) Verbatim statutory quotations: the owner's $10 rounding rule may conflict with exact figures in quotes. Owner decision.
+  - (k) Unrounded owner figures remain in Git history (F01/F02). Already on the board; referenced, not re-logged.
+  - (l) Mixed paths, break-evens, and deadline sequencing have not been reviewed by an adviser.
+- **Owner decisions needed.** (1) Confirm `3D54-2`: publish household analysis, or keep the generic site. (2) Decide whether the legacy engine formulas in `_7eff7e24/` should be corrected in the repository (code only, no figures). (3) Decide item (j).
+- **Verification.** On `origin/main` `d636304`, `python3 tools/build.py` reproduced the published tree with no diff. `python3 tools/verify.py` passed (9 public HTML files, privacy checks OK). `python3 -m unittest discover -s tools -p 'test_*.py'` passed (1 test). No browser was run.
+- **Conflict.** At push time `main` advanced (PR #72). `COORDINATION.md` conflicted. Resolved by keeping `main`'s text byte-for-byte and appending this section. No other session's entry was altered.
