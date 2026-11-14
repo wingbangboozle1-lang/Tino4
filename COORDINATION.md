@@ -1472,3 +1472,36 @@ case layer (PR #52/#54). Resolution protocol applied in PR #55:
   untouched.
 
 ---
+
+---
+
+## Session `arena-81f46e1f` — owner brief, gap closure and privacy escalation (2026-11-14, branch `arena/81f46e1f-tino4`)
+
+Board read in full at 2026-11-14 22:00 UTC on `main` @ `0112ebb` (PR #56). Newest claim on the board is
+2026-11-13 00:10 UTC; no session has committed since, so no 60-minute takeover is needed. Branch is
+platform-fixed at `arena/81f46e1f-tino4` (IR-001 applies: isolation is by file scope).
+
+**Privacy finding, escalated first (M26-1).** The repository is **public** (`gh repo view`: `isPrivate: false`).
+A full mirror clone (outside the repo, scratch only) shows that the shallow working clone hid history. Across all
+236 commits on all branches, unrounded owner figures (the pre-rounding household tables) and ZIP codes appear in
+commits dated 2026-11-10 and 2026-11-11, including the first site commits. Rounded $10 versions appear later, so
+the raw values remain readable in history. **No history rewrite was performed.** Pushes are restricted to this
+session's branch, and a force-push of `main` is an owner decision (see M26-1 record).
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| M26-1 | Privacy escalation: mirror-based history audit (counts only, no figures in repo), owner runbook for a history scrub, Flagged for Review entry | in progress | `arena-81f46e1f` | `_7adb71fc/content_part3.py` (page_flagged only), `COORDINATION.md` (own section) | 2026-11-14 22:00 |
+| M26-2 | One-page printable "Attorney & CPA Briefing Sheet" (print CSS, single Letter page, every row sourced) | in progress | `arena-81f46e1f` | `_7adb71fc/content_part4.py` (new), `_7adb71fc/sitebuild.py` (PAGES list only), `assets/style.css` (print block only) | 2026-11-14 22:00 |
+| M26-3 | Deadlines timeline page, glossary page (each term sourced), menu regrouping | in progress | `arena-81f46e1f` | `_7adb71fc/content_part4.py`, `_7adb71fc/sitebuild.py` (PAGES list only) | 2026-11-14 22:00 |
+| M26-4 | "What would change the answer" and reinvestment risk on the first screen | in progress | `arena-81f46e1f` | `_7adb71fc/content_part1.py` (page_overview only) | 2026-11-14 22:00 |
+| M26-5 | Phased-investing path in the black-swan engine (park in short Treasuries 24-36 months, then stocks), tested on the official episodes present in the repo | in progress | `arena-81f46e1f` | `_7adb71fc/swan.py`, `_7adb71fc/content_part1.py` (page_black_swan only) | 2026-11-14 22:00 |
+| M26-6 | Build, verify, unit tests, line-by-line source check, PR → `main`, merge, Pages check, board record | in progress | `arena-81f46e1f` | `tools/test_case.py`, generated `index.html` and `pages/**`, `COORDINATION.md` (own section) | 2026-11-14 22:00 |
+
+**Not claimed (logged as open, not silently dropped):** interactive what-if controls (needs a browser port of the
+model, or a rebuilt precomputed grid); a mixed-path model (partial conversions in the same year); a 1929 crash test
+(no official daily or monthly stock series back to 1929 is in the repo, so it would be invented); and the
+2-year Treasury leg (the repo holds 3-month and 10-year yields only).
+
+### Log (`arena-81f46e1f`)
+
+- 2026-11-14 22:00 UTC: board read; mirror-based history audit completed (counts only); claims recorded.
