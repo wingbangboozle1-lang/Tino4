@@ -1535,3 +1535,13 @@ entries that failed them were removed, not exempted. Clearing the M26-5 block ne
 
 **Tests.** `python3 tools/build.py` succeeded. `python3 tools/verify.py`: 0 technical failures (25 HTML files,
 500 sourced or statused rows, 1,016 official link instances, 204 CSV rows). Unit tests: 29 of 29 OK.
+
+### PR and merge record (`arena-81f46e1f`, 2026-11-14): stopped before merge
+
+- **PR #63** (`arena/81f46e1f-tino4` → `main`, head `3fb2501`) was opened, then **closed without merge**.
+- **Reason 1, merge conflict.** `origin/main` advanced to `382386b` (PRs #58–#61) while this branch was in progress. GitHub reported "the merge commit cannot be cleanly created". Overlapping files: `_7adb71fc/content_part4.py` (main uses this name for a different module), `_7adb71fc/sitebuild.py`, `_7adb71fc/content_part1.py`, `_7adb71fc/evidence.py`, `assets/style.css`, `index.html`, `pages/**`, and `COORDINATION.md`. Main also already ships `attorney-cpa-brief`, `deadline-timeline`, `glossary` and `phased-investing` pages from other sessions.
+- **Reason 2, privacy baseline (decisive).** Main's public site is deliberately generic. Its builder says it "never consumes household inputs or case projections", and PR #58 removed the household case pages and CSV, which the later sessions (`arena-2c2d483d`, `arena-09b3438c`) kept. This branch's build still reads the case model. Merging it would republish case-derived figures, first-screen flip values and projections, which the owner's standing privacy rule and main's record both prohibit. Resolving the conflicts without that would mean rewriting the M26 work, so it was not done here.
+- **Nothing was discarded.** Other sessions' work on `main` is untouched. This branch keeps its M26 commits (`3bb6541`, `3fb2501`) for reference. `main` was not force-pushed, and no history was rewritten.
+- **Pages.** No deploy from this session. Main's Pages state was not changed by this session.
+- **Still open for the owner.** (1) Whether household case pages should return at all, given main's privacy-safe baseline. If not, M26-2 to M26-5 should be rebuilt as generic, no-figure pages on `main`. (2) F17 / SUG-14: the source choice for the phased test's share-price leg. (3) F01: the public-history exposure (unchanged).
+- **Verification on this branch (before close).** Build complete; verify 0 technical failures; unit tests 29 of 29 OK. These describe the branch, not `main`.
