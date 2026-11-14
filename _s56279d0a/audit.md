@@ -1,14 +1,15 @@
 # A562 privacy-first public-site audit
 
 **Audit date:** 2026-11-14 UTC  
-**Status:** privacy containment prepared on the Arena-fixed branch; merge and post-merge Pages verification still required.  
+**Status:** PR #76 merged; verification and Pages deployment succeeded; cache-busted live pages were checked. Public Git source/history exposure remains unresolved.
+
 **Scope:** current public Pages output, its generator/checks, the source links used by the generic pages, phased-investing wording, deadline timeline, and deployment. No household values or identifiers are reproduced here.
 
 ## Executive result
 
 The post-PR #65 generic publication was privacy-conscious and reproducible, but PR #71 subsequently merged a case-specific publication regression. PR #71 merged as `6815e458d13658810c903d8a5919d37a9222e5a1`; its Pages workflow completed successfully and the Pages API reported `built` for that commit. A live fetch showed owner-supplied property/tax/rent details, an individualized decision statement, and case-oriented pages in the public output. The required verification workflow for that commit failed in its unit/regression-test step before build/verify ran.
 
-I created a normal revert of the PR #71 merge on this feature branch (`8ead1ba`), restoring its first-parent generic baseline (`78fc323`) without rewriting history or adding any household data. That reverted tree builds a generic site, verifies **9 public HTML files and no case-projection CSV**, and passes the one-test generic privacy suite. It is not yet the live `main` site; do not treat Pages privacy as restored until the revert PR is merged and a cache-busted live fetch confirms it.
+I created a normal revert of the PR #71 merge (`8ead1ba`), restoring its first-parent generic baseline (`78fc323`) without rewriting history or adding any household data. The revert was merged through PR #76 as `f86b16b0a5bef50e8a48b8d21d8727079f3c0fe2`. Its verification run passed; Pages deployment run `43648816642` succeeded, and the Pages API reports `built` for that SHA. Cache-busted live fetches of the home, privacy, phased-investing, deadline-timeline, and flagged-for-review pages returned the generic content. The current Pages output is restored; public Git source/history exposure is not.
 
 A revert cannot remove the now-public merge, PR diff, prior Git objects, forks, caches, or clones. No history scrub is claimed or attempted. Legacy source/model files containing case-derived inputs remain in the public working tree; the generic site warns about that exposure. Repository/history remediation remains unresolved and needs repository-owner coordination.
 
@@ -19,7 +20,7 @@ A revert cannot remove the now-public merge, PR diff, prior Git objects, forks, 
 - The generic output keeps the anticipated inheritance distinct from the separately owned property and uses no individualized values, rents, expense history, forecasts, or recommendation. The phased-investing page presents a general 24–36-month Treasury-staging comparison as a framework, not a calculator or return forecast.
 - The generic phased page asks for historical crash-entry and inflation stress tests; it does **not** contain results of those tests or a verified historical total-return replay. Do not describe the current generic page as a 1929/2008 replay. No such analysis was added here.
 - Current generated HTML is checked by the build/verifier/test. This does not make the repository private: legacy source/model files remain tracked and accessible, and Git history/PRs are separate from Pages output.
-- The broader 29-test suite introduced on PR #71 was run locally against that merged tree: 28 tests passed and one failed in `test_published_pages_have_no_exact_source_figures`, because the parser treated an official threshold abbreviated in millions as a literal two-digit dollar amount. The main-branch Actions run failed at “Unit and regression tests.” This was a test-format false positive, not evidence that the generic baseline passed PR #71's privacy regression. The reverted baseline uses its existing generic privacy test; this audit does not claim 29 tests pass.
+- The broader 29-test suite introduced on PR #71 was run locally against that merged tree: 28 tests passed and one failed in `test_published_pages_have_no_exact_source_figures`, because the parser treated an official threshold abbreviated in millions as a literal two-digit dollar amount. The main-branch Actions run failed at “Unit and regression tests.” This failure appears to be a test-format false positive: the official amount is abbreviated in millions, while the regex reads only the digits before the word “million.” That test is not a privacy guarantee; the separate live-page inspection confirmed the case-specific output. The reverted baseline uses its existing generic privacy test; this audit does not claim 29 tests pass.
 - No browser smoke test was run. No personalized financial or legal analysis was performed.
 
 ## Source-link and wording check
@@ -45,7 +46,7 @@ The current generic HTML contains four recurring official starting links plus th
 ## Deployment and privacy boundary
 
 - Post-PR #71: GitHub Pages run `43648228684` succeeded; Pages API reported `built` at merge `6815e45`; the live output contained case-specific owner material. The post-merge verification run `43648229338` failed at its unit/regression tests.
-- Containment: merge `6815e45` is reverted on this feature branch only. `main` and the live site remain exposed until the revert PR is merged and deployment is confirmed. After merge, verify the Pages API SHA/status and fetch the home page, privacy page, and phased-investing page with cache-busting URLs.
+- Containment: PR #76 merged at 2026-11-14 22:34:35 UTC. Verification run `43648817456` and Pages run `43648816642` both succeeded. The Pages API reports `built` for `f86b16b0a5bef50e8a48b8d21d8727079f3c0fe2`. Cache-busted live fetches confirmed generic home, privacy, phased-investing, deadline-timeline, and flagged-for-review content with no owner-specific values or recommendation in the fetched pages.
 - The history is not scrubbed. The current generic publication, source repository, and previously published history are different privacy boundaries. A plain revert only changes current output; it cannot recall prior public copies.
 
 ## Suggestions for review (not applied)
