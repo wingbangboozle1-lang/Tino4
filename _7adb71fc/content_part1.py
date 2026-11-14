@@ -67,19 +67,21 @@ def page_overview():
 Property B is a three-unit building you already own and partly rent. Every figure below is rounded to the nearest
 ten dollars before it is used, every rule is linked to the official page that states it, and every gap is left blank.</p>
 <a class="button" href="pages/executive-summary.html">Read the executive summary <span>&#8599;</span></a></div>
-<div class="hero-panel"><span class="eyebrow">THE ANSWER, STATED PLAINLY</span>
-<h2>Live in it,<br>or sell it.<br>Do not rent it.</h2>
-<p>On these rounded inputs, renting Property A after transfer loses money every year for two decades while a
-sell-and-reinvest path compounds. Renting only wins if rent is far higher than assumed, and that case fails on a
-rent-to-price ratio the local rent caps make hard to reach.</p>
-<div class="signal"><span></span> Privacy first &middot; no name, address, ZIP or parcel is published</div></div></div>''' + cards([
+<div class="hero-panel"><span class="eyebrow">CONDITIONAL STARTING POINT — NOT A FINAL ANSWER</span>
+<h2>Occupy if eligible.<br>Otherwise compare selling and renting.</h2>
+<p>The inherited home is a future trust transfer; the other home is already owned and must remain a separate baseline. The current model is assumption-led, not a professional recommendation.</p>
+<strong>What would change the answer?</strong><ul><li>The trust terms require sale or restrict occupancy.</li><li>Prop 19 eligibility or the whole-estate tax position differs.</li><li>Written rent, insurance, repairs, debt and utility evidence changes net cash flow.</li><li>The inheritor cannot or does not want to live there.</li></ul>
+<div class="signal"><span></span> Privacy caution: rounded values and histories may still identify a household. This public repository is not a secure vault.</div></div></div>''' + cards([
         ('01 / The bottom line', 'Executive summary', 'Eight findings, one recommendation, and what would overturn it', 'pages/executive-summary.html'),
         ('02 / The numbers', 'Year-by-year projections', 'Both homes, 2026 to 2076, with both assessment cases', 'pages/projections.html'),
         ('03 / The stress test', 'Black-swan conditions', 'Official 1975-2026 replay plus invented adverse paths', 'pages/black-swan.html'),
         ('04 / The gaps', 'Questions and missing evidence', 'Twenty-two questions, who can answer each, and what unlocks it', 'pages/questions.html'),
         ('05 / Before you change anything', 'Suggestions for review', 'Nineteen proposals, review-only, nothing auto-applied', 'pages/suggestions.html'),
         ('06 / The paperwork', 'Inheritance step by step', 'Month 0 to month 36, with the statutory clocks', 'pages/inheritance-process.html'),
-    ]) + callout('The one comparison that decides this', 
+        ('07 / Mixed investing path', 'Treasuries then phased stocks', 'Test 24–36 month staging against a lump sum under synthetic crash scenarios', 'pages/phased-investing.html'),
+        ('08 / Adviser handoff', 'Attorney & CPA briefing sheet', 'Print a one-page fact-finding brief without identifiers', 'pages/attorney-cpa-brief.html'),
+    ]) + callout('Privacy warning before using the numbers',
+        'The repository is public. Omitting names, addresses and ZIP codes and rounding dollars to $10 does not prove anonymity: a distinctive combination of property values, assessments and tax history can still be matched. Do not add private documents or identifying details. History cleanup needs a separate, authorized repository-wide action.', 'warning') + callout('The one comparison that decides this',
         f'If the trust distributes in 2045 and A is worth {M(c45["sale_price"])} on that date, selling nets '
         f'{M(c45["sale_net"])} after selling costs and the county transfer tax. Left invested for twenty years at the '
         'assumptions on the methods page it is worth ' + M(c45['reinvest_after_tax']) + ' after tax. Renting for the same '
@@ -187,9 +189,13 @@ def page_decision():
          'Equity market risk, taxed dividends and a terminal gain.',
          M(c45['reinvest_after_tax']) + ' after tax, modelled at a constant ' + pct(P['equity']*100) + ' return. That rate is an assumption, not a forecast.',
          Pj),
-        ('Sell A at transfer and hold Treasury bills',
-         'Inflation and reinvestment risk, federal tax on interest, no state tax.',
-         'Not modelled, because no verified forward bill rate exists. The bill market prices a rate for months, not for twenty years.',
+        ('Sell A, park in 3-month to 2-year Treasuries, then phase into stocks',
+         'Entry-timing risk, cash drag, inflation, federal tax on Treasury interest and reinvestment risk when maturities roll.',
+         '<a href="phased-investing.html">Open the local what-if tool</a>. It compares a generic starting amount under synthetic early/late crash paths; it is not this property’s after-tax proceeds or a return forecast.',
+         Pj),
+        ('Occupy A briefly, then sell and phase proceeds into stocks',
+         'Sale timing and gain tax; short occupancy may change the tax/property-tax result; the value of housing and the already-owned B must stay separate.',
+         'Not yet modelled as a household net outcome. The date-of-sale basis, occupancy facts, costs avoided and B rental/occupancy plan are missing; do not infer a winner from the generic calculator.',
          Ms),
         ('Sell A and leave the proceeds in insured deposits',
          'Inflation risk and deposit insurance limits, but no market loss.',
@@ -212,7 +218,7 @@ def page_decision():
          'Not modelled. Losing principal-residence status forfeits the family-home exclusion, and the full reassessment arrives with no rent to pay it.',
          Ms),
     ]:
-        rows.append(([name, kinds, result], status, 'basis ab1482 rental pub801'))
+        rows.append(([name, kinds, result], status, 'basis ab1482 rental pub801 bills treasnotes stocks'))
     return callout('This page compares paths, it does not choose for you',
         'The three modelled columns use the same transfer year, the same selling costs and the same tax assumptions. '
         'Property B\'s own value and rent are deliberately excluded from all of them, so the columns measure only the '

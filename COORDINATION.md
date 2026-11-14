@@ -1481,10 +1481,24 @@ Branch is platform-fixed at `arena/38a4359d-tino4`; no branch or worktree creati
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| A38-1 | Add assumption-led Treasury parking and gradual stock-entry stress tool; mixed paths and what-if controls | in progress | `arena-38a4359d` | `_7adb71fc/content_part4.py`, `_7adb71fc/evidence.py`, `assets/app.js`, `assets/style.css`, `tools/test_case.py` | 2026-11-14 |
-| A38-2 | Add print-oriented attorney/CPA briefing page, glossary, and first-screen decision-change summary | in progress | `arena-38a4359d` | `_7adb71fc/content_part1.py`, `_7adb71fc/content_part4.py`, `_7adb71fc/sitebuild.py`, `tools/test_case.py` | 2026-11-14 |
-| A38-3 | Privacy and publication audit; record non-remediable history limitations and final verification | in progress | `arena-38a4359d` | `COORDINATION.md` (this section only) | 2026-11-14 |
+| A38-1 | Add assumption-led Treasury parking and gradual stock-entry stress tool; mixed paths and what-if controls | done | `arena-38a4359d` | `_7adb71fc/content_part1.py`, `_7adb71fc/content_part4.py`, `_7adb71fc/evidence.py`, `assets/app.js`, `assets/style.css`, `tools/test_case.py`, `tools/browser-test.cjs` | 2026-11-14 |
+| A38-2 | Add print-oriented attorney/CPA briefing page, glossary, and first-screen decision-change summary | done | `arena-38a4359d` | `_7adb71fc/content_part1.py`, `_7adb71fc/content_part3.py`, `_7adb71fc/content_part4.py`, `_7adb71fc/sitebuild.py`, `tools/test_case.py`, `README.md` | 2026-11-14 |
+| A38-3 | Privacy and publication audit; record non-remediable history limitations and final verification | needs review | `arena-38a4359d` | `COORDINATION.md` (this section only) | 2026-11-14 |
 
 ### Log (`arena-38a4359d`)
 
 - 2026-11-14 — read `COORDINATION.md`, current repository tree, site generator and verifier. Confirmed `wingbangboozle1-lang/Tino4` is public. Existing source contains case-level amounts and the coordination log records geographic identifiers; the current checkout is shallow (`git rev-parse --is-shallow-repository` = true) and starts at the already-merged main commit. No remote history rewrite or force-push is authorized or safely possible from this task branch; residual exposure will be flagged, not represented as scrubbed.
+
+### A38 follow-up completion record (2026-11-14)
+
+**A38-1/A38-2 done.** Added a local-only Treasury-ladder/stock-phasing what-if tool with 24/30/36-month controls, editable net Treasury yield / equity return / drawdown / crash date / recovery / horizon, and synthetic early-versus-late crash comparisons. The presets are expressly illustrative and do not claim to replay 1929 or 2008. Added a mixed-path row in the decision comparison; a short-occupancy-then-sale path remains unquantified and is marked missing because household housing value, tax basis/gain, and timing inputs are not established. Added a print/Save-as-PDF attorney/CPA brief, a sourced glossary, first-screen conditional decision factors, and grouped navigation.
+
+**New official evidence read directly on 2026-11-14:**
+- TreasuryDirect, Treasury bills: https://treasurydirect.gov/marketable-securities/treasury-bills/ — confirms terms from four weeks to 52 weeks, fixed-at-auction rate, can be held to maturity or sold earlier, federal tax on interest and no state/local taxes.
+- TreasuryDirect, Treasury notes: https://treasurydirect.gov/marketable-securities/treasury-notes/ — confirms 2/3/5/7/10-year maturities, fixed auction rate, can be held to maturity or sold earlier, federal interest tax and no state/local taxes.
+
+**Checks:** `python3 tools/build.py` passed (18 generated section pages, 7 redirects); `python3 tools/verify.py` passed (25 HTML files, 469 sourced/statused rows, 1,016 official link instances, 24 intentional blank cells, 204 CSV rows, 0 technical failures); 36 unit tests passed; `node --check assets/app.js` and `node --check tools/browser-test.cjs` passed; `git diff --check` passed. The optional full browser smoke was not run because no browser/Playwright installation is present in this checkout. The browser test was extended for the phased controls and print layout.
+
+**A38-3 needs review (urgent, unresolved):** `gh repo view` confirmed the GitHub repository is public. The checked-out repository is shallow and starts at the already-merged main commit; this session cannot safely scrub old main history from the pinned feature branch. No force-push/history rewrite, visibility change, or cleanup of other sessions' files was performed. Current public coordination/research files and prior Git objects may retain geographic identifiers and case-derived source figures; $10 rounding is not anonymisation. Updated the published Privacy page and Flagged for Review entry to say this plainly. Repository access restriction and any history remediation require the repository owner/admin. The website still omits direct property identifiers, but the combined financial histories may be re-identifiable; treat as exposed until reviewed.
+
+---
