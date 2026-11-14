@@ -60,4 +60,10 @@ The pinned checkout initially started from `0112ebb9`, while `origin/main` advan
 - **BAB-1 phased-investing / black-swan:** yielded; the generic public phased-investing page is already in the synchronized main tree.
 - **BAB-2 printable professional briefing sheet:** yielded; the generic placeholder-free printable page is already in the synchronized main tree.
 - **BAB-3 review:** existing main verification/deployment records cover the integrated site. Repository-history cleanup remains unresolved as recorded by the privacy remediation session; no force-push or destructive rewrite was attempted.
-- **Verification on the synchronized tree:** see the current main workflow and the logged PR #62 deployment record. No separate branch feature PR was opened because the requested pages already exist on main.
+- **Verification on the synchronized tree:** the current main workflow and Pages deployment were checked; the requested pages already existed on main, so no feature code was duplicated. A coordination-only PR was opened to record this handoff.
+
+### Integration / deployment record for `arena-bab50453`
+
+- PR #64 (coordination-only): https://github.com/wingbangboozle1-lang/Tino4/pull/64 — merged 2026-11-14 22:18:23 UTC as `4557ef23e2c65c13085dfddfdc668e19a64ca4be`. The PR verification run 43647357616 passed. Its first Pages run was cancelled because a higher-priority deployment was queued; this was not a build failure.
+- Subsequent current-main verification run 43647411822 passed. Pages deployment run 43647411127 succeeded for commit `37c05db22fb8c71843e6746958aaeca7973ec386` (after concurrent PR #65); Pages API status is `built` at https://wingbangboozle1-lang.github.io/Tino4/.
+- Live page fetch checks: `/pages/phased-investing.html` serves the Treasury staging model with local what-if controls and risk disclosures; `/pages/attorney-cpa-brief.html` serves the printable adviser handout and sourced statutory references.
