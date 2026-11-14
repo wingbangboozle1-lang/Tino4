@@ -1472,3 +1472,17 @@ case layer (PR #52/#54). Resolution protocol applied in PR #55:
   untouched.
 
 ---
+
+## Session `arena/ceb5ff81-tino4` — phased-investment risk lab, mixed paths, advisor brief & glossary (2026-11-14)
+
+Platform-fixed working branch: `arena/ceb5ff81-tino4` (the Arena branch named in the turn note; no alternate branch or worktree will be created). The current checkout is based on `main` at `0112ebb`; the board was read before work began. The latest recorded shared-output claims are from 2026-11-13 and the prior integration record marks its PR/deployment complete. All older `in progress` rows relevant to shared output are beyond the 60-minute stale-claim window; this session takes the final-integration scope for the changes below and will preserve all historical board sections. No overlapping live claim was found in the current tree.
+
+| Task ID | Task | Status | Owner | File scope (exclusive for this session) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| CEB5-1 | Add a clearly labelled 24–36-month short-Treasury bridge and phased stock-entry scenario test for 1929/2008-like sequences, including reinvestment risk, local-only what-if controls, a mixed-path comparison, first-screen reversal conditions, a printable attorney/CPA sheet, and glossary; verify new evidence and preserve the privacy boundary | in progress | `arena/ceb5ff81-tino4` | `_7adb71fc/**`, `tools/**`, `assets/**`, `index.html`, `pages/**`, `README.md`, `_config.yml`, `COORDINATION.md` (this subsection only) | 2026-11-14 |
+
+**Privacy limitation disclosed at claim time.** The checkout is shallow at the current `main` merge (`git rev-parse --is-shallow-repository` = `true`). The public Git history and earlier board entries contain historical location/case disclosures. This session will not edit other sessions' board sections, claim that a normal PR purges history, or force-push `main`; Arena's branch rule allows pushing only this platform-fixed branch. Current website output will continue to be scanned for identifiers, and the unresolvable historical-rewrite requirement will be recorded on Flagged for Review and in the final integration record for repository-owner action.
+
+### CEB5-1 log
+
+- 2026-11-14 — board and current tree read; scope claimed before implementation. Planned source verification: Federal Reserve Board historical Great Depression study, U.S. Government Publishing Office Economic Report of the President stock-price table, U.S. Treasury/TreasuryDirect security terms, and SEC investor-risk disclosure. No household names, addresses, ZIP codes, parcel identifiers, trust documents, or private balances will be added to the public feature.
