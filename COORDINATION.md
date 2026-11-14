@@ -1489,3 +1489,26 @@ Board read on `main` @ `0112ebb9` (PR #56 merged; live site at https://wingbangb
 ### Log (`arena/93ca1648-tino4`)
 
 - 2026-11-14 — claim recorded above; committing and pushing immediately.
+
+---
+
+## Session `arena-45c2b846` — urgent post-merge privacy remediation (2026-11-14)
+
+Branch is platform-fixed at `arena/45c2b846-tino4`. During the required rebase, `origin/main` advanced through PR #71. This conflict resolution preserves the complete then-current main board and appends only this claim; the next task will redact current-tree material that should not remain public. PR #71 merged while this session was resolving the coordination conflict, so its prior file scope is released. The owner’s latest instruction is treated as controlling: household-specific financial/property information and direct location identifiers must not appear on public Pages.
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A45-1 | Urgently restore a privacy-safe public site: remove household-specific figures/history from current Pages and tracked legacy inputs; retain only official public-law facts, placeholders, and generic assumption-labeled scenarios | in progress | `arena-45c2b846` | `_45c2b846/**`, `_7eff7e24/**`, `_7adb71fc/**`, `_a3de132b/**`, `_s8bb142d0/**`, `_s95cf9249/**`, `_1775f697/**`, `index.html`, `pages/**`, `assets/**`, `tools/**`, `_config.yml`, `.gitignore`, `README.md`, `.gitattributes`, `COORDINATION.md` | 2026-11-14 |
+| A45-2 | Add generic privacy scanning and regression tests that never echo matched data; preserve official source links for published legal facts | in progress | `arena-45c2b846` | `_45c2b846/**`, `tools/privacy_audit.py`, `tools/test_privacy_audit.py`, `tools/verify.py`, `tools/test_case.py`, `.github/workflows/verify.yml` | 2026-11-14 |
+| A45-3 | Record the Git-history exposure boundary and safe owner/admin follow-up; do not claim historical scrubbing from a normal merge | in progress | `arena-45c2b846` | `_45c2b846/**`, `COORDINATION.md` | 2026-11-14 |
+
+### Coordination and privacy decision
+
+- PR #71 merged to `main` at 2026-11-14 22:27:56 UTC and reintroduced case-derived inputs, outputs and a projection artifact into the current tree. This session treats that as an urgent current-tree publication problem and will replace it with the generic/privacy-safe presentation. No private values are repeated in this board entry.
+- PR #19 remains a stale open coordination-only request; no current implementation task is claimed from it. The `COORDINATION.md` cleanup will preserve only a compact, redacted task history and this current session’s board entries.
+- No household figures, property histories, postal codes, street addresses, parcel identifiers, names, account details or private source values will be added to the public website. If a fact cannot be verified from an official source, it will remain blank and flagged. Official links will identify the rule/data source, not be presented as verification of a private fact.
+- **History limitation:** this branch may push only to `arena/45c2b846-tino4`; a regular pull request/merge cannot rewrite old `main` commits, PR diffs, forks, caches or clones. No force-push to `main` or repository-visibility change is attempted. The historical exposure must remain flagged for owner/admin remediation.
+
+### Log (`arena-45c2b846`)
+
+- 2026-11-14 — Read the shared task board and PR scopes. While rebasing the claim, PR #71 merged and advanced `main`; preserved that complete main state before appending this task. The public site’s latest change must be re-audited and its current output sanitized immediately. Historical Git-object cleanup remains outside this branch’s permitted push scope.
