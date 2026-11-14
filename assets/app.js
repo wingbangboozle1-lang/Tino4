@@ -106,7 +106,8 @@ if (phaseForm) {
     get('phase-immediate-dd').textContent = `${(immediateWorst * 100).toFixed(1)}%`;
     get('phase-phased-dd').textContent = `${(phasedWorst * 100).toFixed(1)}%`;
     let interpretation = 'For these assumptions, phasing lowers the modeled maximum drawdown.';
-    if (phasedWorst > immediateWorst + 0.0001) interpretation = 'For these assumptions, phasing does not lower the modeled maximum drawdown.';
+    if (phasedWorst < immediateWorst - 0.0001) interpretation = 'For these assumptions, phasing does not lower the modeled maximum drawdown.'
+    else if (Math.abs(phasedWorst - immediateWorst) <= 0.0001) interpretation = 'For these assumptions, phasing does not materially change the modeled maximum drawdown.';
     if (phasedTerminal < immediateTerminal) interpretation += ' It also ends below the immediate path at this horizon.';
     else if (phasedTerminal > immediateTerminal) interpretation += ' It ends above the immediate path at this horizon.';
     get('phase-status').textContent = `${interpretation} Scenario only; not a forecast.`;
