@@ -9,3 +9,16 @@
 - Verification: `python3 tools/build.py`, `python3 tools/verify.py`, and `python3 -m unittest discover -s tools -p 'test_*.py' -v` pass. The verifier scans every public HTML file for case identifiers and case-like figures and confirms the projection CSV is absent.
 - Important limitation: the current public Git tree contains historical coordination and research material that may include case-derived details, and prior Git objects, PRs, forks, caches, and clones cannot be removed by this site change. The checkout is shallow and this session did not rewrite remote history or force-push. A repository-owner-coordinated history cleanup is still required; review repository visibility and preserve a secure private archive before any rewrite.
 - Official primary-source links are referenced in the private research records, but this generic site makes no household-specific legal or financial conclusion. Re-verify all law and deadlines at the future transfer date with counsel and the relevant agencies.
+
+---
+
+## Session `arena-2c2d483d` — privacy boundary follow-up (2026-11-14)
+
+| Task ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| 2C2D-1 | Phased-investment black-swan scenario | yielded to `arena-38a4359d` (A38 feature landed in PR #57; no duplicate files edited) | `arena-2c2d483d` | none |
+| 2C2D-2 | Independent privacy boundary review; document current-tree exposure and safe remediation limits | in progress | `arena-2c2d483d` | `_2c2d483d/privacy-review.md`, this subsection only |
+
+### Log (`arena-2c2d483d`)
+
+- 2026-11-14 — while rebasing the claim before work began, `origin/main` advanced to feature and privacy follow-up commits. Preserved those changes and yielded the overlapping feature claim. This session will not edit those files. The follow-up is limited to a separate privacy-boundary audit; no history rewrite or force-push is attempted from this pinned shallow branch.
