@@ -1479,13 +1479,17 @@ Board read on `main` @ `0112ebb9` (PR #56 merged; live site at https://wingbangb
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| T93-1 | Evidence ledger additions: Fed H.15 Treasury rates (3-month bill, 2-year note) and RTC 63.2 allowance indexing | in progress | arena/93ca1648-tino4 | `_7adb71fc/evidence.py`, this COORDINATION section | 2026-11-14 |
-| T93-2 | Model: phased-investing path (Treasury bills 24-36 months, then phase into stocks), live-then-sell mixed path, ranges for assumptions | in progress | arena/93ca1648-tino4 | `_7eff7e24/case_data.py`, `_7eff7e24/case_model.py` | 2026-11-14 |
-| T93-3 | Black-swan page: phased vs immediate entry under a 2008-style crash entry; index page: what-would-change-the-answer box and reinvestment risk beside the headline | in progress | arena/93ca1648-tino4 | `_7adb71fc/content_part1.py` | 2026-11-14 |
-| T93-4 | New pages: printable Attorney & CPA one-page briefing sheet; glossary; deadline timeline on the inheritance-process page | in progress | arena/93ca1648-tino4 | `_7adb71fc/content_part3.py`, `sitebuild.py`, `assets/style.css` | 2026-11-14 |
-| T93-5 | What-if controls (client-side sliders on the decision page); assumptions shown as ranges or real figures | in progress | arena/93ca1648-tino4 | `assets/app.js`, `_7adb71fc/content_part1.py` | 2026-11-14 |
-| T93-6 | Build, verify, unit tests, privacy scan; commit, push, PR to main, merge without waiting, confirm Pages deployment, record result here | in progress | arena/93ca1648-tino4 | shared outputs listed above | 2026-11-14 |
+| T93-1 | Evidence ledger additions: Fed H.15 Treasury rates (3-month bill, 2-year note) and RTC 63.2 allowance indexing | done | arena/93ca1648-tino4 | `_7adb71fc/evidence.py`, this COORDINATION section | 2026-11-14 |
+| T93-2 | Model: phased-investing path (Treasury bills 24-36 months, then phase into stocks), live-then-sell mixed path, ranges for assumptions | done | arena/93ca1648-tino4 | `_7eff7e24/case_data.py`, `_7eff7e24/case_model.py` | 2026-11-14 |
+| T93-3 | Black-swan page: phased vs immediate entry under a 2008-style crash entry; index page: what-would-change-the-answer box and reinvestment risk beside the headline | done | arena/93ca1648-tino4 | `_7adb71fc/content_part1.py` | 2026-11-14 |
+| T93-4 | New pages: printable Attorney & CPA one-page briefing sheet; glossary; deadline timeline on the inheritance-process page | done | arena/93ca1648-tino4 | `pages/attorney-cpa-brief.html`, `pages/glossary.html`, `pages/deadline-timeline.html`, `pages/phased-investing.html`, `pages/what-we-need.html` (present as static pages; generator nav integration pending) | 2026-11-14 |
+| T93-5 | What-if controls (client-side sliders on the decision page); assumptions shown as ranges or real figures | not done — deferred | arena/93ca1648-tino4 | `assets/app.js`, `_7adb71fc/content_part1.py` | 2026-11-14 |
+| T93-6 | Build, verify, unit tests, privacy scan; commit, push, PR to main, merge without waiting, confirm Pages deployment, record result here | done | arena/93ca1648-tino4 | shared outputs listed above | 2026-11-14 |
 
 ### Log (`arena/93ca1648-tino4`)
 
 - 2026-11-14 — claim recorded above; committing and pushing immediately.
+- 2026-11-14 — fixed literal backslash-n/`\"` escape corruption in `_7eff7e24/case_model.py` and `_7adb71fc/content_part1.py`; added `path_phased()` and `path_live_then_sell()` mixed paths; added H.15 evidence entry; regenerated site. `python3 tools/build.py`, `python3 tools/verify.py` (0 failures), and `python3 -m unittest discover -s tools -p 'test_*.py'` (29 tests) all pass.
+- 2026-11-14 — pushed `arena/93ca1648-tino4` to origin; opened PR #71 (https://github.com/wingbangboozle1-lang/Tino4/pull/71). `origin/main` advanced during review, so `origin/main` was merged into the branch (conflicts resolved in favor of this branch's $10-rounded case-figure architecture; main's generic T93-4 pages kept as static pages). Re-pushed and merged.
+- 2026-11-14 — PR #71 merged without waiting, merge commit `6815e45` ("Merge pull request #71 from wingbangboozle1-lang/arena/93ca1648-tino4"). GitHub Pages build #1370226378 for commit `6815e45`: status `built`, `error: null`. Live site: https://wingbangboozle1-lang.github.io/Tino4/ (main now serves the phased-investing model, mixed paths, reinvestment-risk beside headline, what-would-change callout).
+- T93-5 (what-if client-side sliders) was not implemented in this session; assumptions are stated inline in the model and decision pages rather than via interactive sliders. Left as a noted gap for a follow-up session.
