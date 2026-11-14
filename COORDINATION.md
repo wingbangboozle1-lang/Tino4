@@ -12,136 +12,28 @@
 
 ---
 
-## Session `arena-2c2d483d` — privacy boundary follow-up (2026-11-14)
+## Session `arena-e428aa88` — privacy-first repository and release audit (2026-11-14)
 
-| Task ID | Task | Status | Owner | File scope |
-| --- | --- | --- | --- | --- |
-| 2C2D-1 | Phased-investment black-swan scenario | yielded to `arena-38a4359d` (A38 feature landed in PR #57; no duplicate files edited) | `arena-2c2d483d` | none |
-| 2C2D-2 | Independent privacy boundary review; document current-tree exposure and safe remediation limits | done — repository/history cleanup remains needs review | `arena-2c2d483d` | `_2c2d483d/privacy-review.md`, this subsection only |
-
-### Log (`arena-2c2d483d`)
-
-- 2026-11-14 — while rebasing the claim before work began, `origin/main` advanced to feature and privacy follow-up commits. Preserved those changes and yielded the overlapping feature claim. This session did not edit those files. The current public pages are now generic after PR #58/#59; the public repository still contains legacy case-specific input/model source and historical Git refs may retain older details. The audit and current state are documented in `_2c2d483d/privacy-review.md`. No history rewrite or force-push was attempted from this pinned shallow branch.
-- 2026-11-14 — PR #60 (https://github.com/wingbangboozle1-lang/Tino4/pull/60) merged to `main` as `4a29086bd46b849e7799ee373bd10102574f5015`. Verify run 43646927347 passed; Pages deployment run 43646956696 completed successfully and the Pages API reported `built`, `error: null`. Cache-busted live checks returned the generic decision workspace, phased-investing framework, and attorney/CPA brief. A normal cached fetch initially showed the previous artifact; the cache-busted response confirmed the new deployment. Repository/history remediation remains open and is not claimed complete.
-
-| 2C2D-3 | Make the public Privacy and Flagged for Review pages explicit that excluded legacy source files can still be read in a public GitHub repository; add privacy wording regression test | done — current source-data removal remains needs review | `arena-2c2d483d` | `_7adb71fc/sitebuild.py`, `tools/test_case.py`, generated privacy/review pages, this subsection only |
-| 2C2D-4 | Correct stale README claims about case-specific pages, CSV, model, browser controls, and CSP; document the current generic site and unresolved public-repository source exposure | done | `arena-2c2d483d` | `README.md`, this subsection only |
-
-- 2026-11-14 — README now reflects the privacy-safe generic Pages site, no case-projection CSV, no interactive personal calculator, and the public-repository/history limitation. Build and verifier passed (9 public HTML files; no case CSV); 1 test passed; `git diff --check` passed. No case-specific figures or identifiers were added.
-
-- 2026-11-14 — clarified on the public Privacy and Flagged for Review pages that excluded legacy source/model files can remain publicly readable from GitHub even when not built into Pages; added regression assertions. `python3 tools/build.py`, `python3 tools/verify.py` (9 HTML files; no case projection CSV), one unit test, and `git diff --check` passed. These warnings do not remove the current legacy inputs or history; the report keeps that remediation open. No new personal data or property-specific figures were added.
-
----
-
-## Session `arena-09b3438c` — owner brief follow-up: privacy remediation (current tree), deadline timeline, integration (2026-11-14)
-
-Branch is platform-fixed at `arena/09b3438c-tino4` (base `main` @ `448f733`). Remote branches at claim time: `main` only, so no other session is active on a feature branch.
+Branch is platform-fixed at `arena/e428aa88-tino4`; no branch/worktree creation. Read the task board through the latest privacy-first remediation record. This session continues the owner-requested audit and final release verification on the current branch only.
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| B09-1 | Current-tree privacy remediation: replace ZIP codes, city and neighbourhood names in logs and audit notes with placeholders (`[ZIP-A]`, `[ZIP-B]`, `[city-A]`); keep detector regexes in code | done | `arena-09b3438c` | `COORDINATION.md` (ZIP/city text only, and this section), `_s95cf9249/audit/AUDIT_REPORT.md` | 2026-11-14 |
-| B09-2 | Visual deadline timeline on the inheritance step-by-step page, built from the existing sourced rows (no new facts) | done | `arena-09b3438c` | `_7adb71fc/sitebuild.py` (new `pages/deadline-timeline.html`, timeline CSS, one flagged item), generated `pages/**`, `index.html`, `assets/style.css` | 2026-11-14 |
-| B09-3 | Rebuild, verify, test, PR to `main`, merge, confirm Pages deploy, record result here | done | `arena-09b3438c` | generated `pages/**`, `index.html`, `assets/**`, this section | 2026-11-14 |
+| E428-1 | Audit the published site and current tracked tree for privacy exposure; add enforceable release checks; remediate what is safe on the pinned branch and explicitly preserve any unresolved history/admin limitation | in progress | `arena-e428aa88` | `COORDINATION.md` (this section only), `README.md`, `_7adb71fc/**`, `_7eff7e24/**`, `_1775f697/review/**`, `_a3de132b/audit/**`, `_s8bb142d0/audit/**`, `_s95cf9249/audit/**`, `assets/**`, `index.html`, `pages/**`, `tools/**`, `.github/workflows/verify.yml` | 2026-11-14 |
+| E428-2 | Rebuild, run tests and source/privacy/link checks; PR current branch to `main`, merge only if checks pass, verify Pages deploy and record result | in progress | `arena-e428aa88` | `COORDINATION.md` (this section only), release verification | 2026-11-14 |
 
-### Log (`arena-09b3438c`)
+### Claim/rebase conflict log
 
-- 2026-11-14 — Full history fetched read-only (`git fetch --unshallow`; 194 commits). **Finding, not remediable from this branch:** the exact, unrounded owner tax and assessment figures, ZIP codes and the city name appear in earlier commits on `main` (e.g. first added in the 2026-11-10 to 2026-11-12 sessions). The current tree contains no raw figures. A history rewrite requires a force-push to `main` and an owner or admin decision; this session is limited to pushing its own branch, so it did **not** rewrite history. Recommended owner action: decide whether to rewrite history (`git filter-repo` plus force-push, then ask GitHub to purge cached views) or make the repository private, and rotate nothing else since no credentials were found in the tree.
+- While committing this claim, `origin/main` advanced from the initial base (`448f733`) to `bea5d88`, integrating privacy-remediation PR #58 and follow-up PR #59. The claim-only rebase conflicted because the incoming session replaced the historical board with a concise privacy-first status record. Resolution preserves the entire incoming board and tree, then appends this claim; no incoming work was discarded. The session continues from the updated `main` state.
 
-- 2026-11-14 — Merged `origin/main` @ `c3a9999` (PR #58, session `arena-e1ea4bef`) into this branch, which removed the household case pages and CSV from the public site. This session **kept that privacy-safe baseline** and did not reintroduce case figures. Its COORDINATION.md was adopted; this section was re-appended.
-- 2026-11-14 — Current-tree privacy scan (`git grep` on HEAD): no raw owner figures and no ZIP codes outside detector patterns in code (`_7adb71fc/verify.py`, `tools/verify.py`, `tools/test_case.py`, `_s95cf9249/audit/check.py`) and one audit-report line. The audit line is redacted to `[ZIP-A]`/`[ZIP-B]`/`[city-A]`. Detector patterns are kept on purpose.
-- 2026-11-14 — Added `pages/deadline-timeline.html`: Day 0 date of death; 60-day trustee notice; 150-day change-in-ownership statement; 9-month Form 706 due date and payment; 1-year principal-residence condition; 60-day appeal window; December 10 / April 10 installments. Navigation and index link come from the generator.
-- **Sources read on 2026-11-14 (official):** California Probate Code 16061.7 (60-day notice, subd. (f)): https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7 ; Revenue and Taxation Code 480 (150 days for death-transfer statement, subd. (e)): https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=480 ; BOE Information Sheet 800-9 (150 days, one-year residence condition, appeal 60 days, December 10 / April 10 delinquency dates, 10% penalty): https://www.boe.ca.gov/pdf/pub800-9.pdf ; IRS Instructions for Form 706 (Rev. July 2026) (9-month due date and payment, Form 4768 6-month extension, 2026 basic exclusion $15,000,000): https://www.irs.gov/pub/irs-pdf/i706.pdf
-- **Irregularities (on Flagged for Review):** (1) the BOE FAQ URL `boe.ca.gov/proptaxes/faqs/ownerocc.htm` returned 404 and was not used; (2) the three-year BOE-19-P claim window appears only in a county-hosted copy of the form, not in the official BOE sheet read, so it is not on the timeline and is flagged; (3) the 2026 $15,000,000 threshold applies to 2026 deaths only; the threshold for the actual transfer year is unknown; (4) the **full Git history still contains** the owner's exact figures, ZIP codes and city name (194 commits, checked with `git fetch --unshallow`). A history rewrite needs repository-owner action and was **not** performed by this session.
-- **Checks:** `python3 tools/build.py` passed (reproducible); `python3 tools/verify.py` passed (9 public HTML files; privacy checks OK; no case projection file); `python3 -m unittest discover -s tools -p 'test_*.py'` passed (36 tests). Browser smoke test not run (no browser installed in this checkout).
+Pre-rounding history remediation is not presumed complete. A safe current-tree pattern scan found case-derived source, financial and audit material under `_7adb71fc/`, `_7eff7e24/`, `_1775f697/review/`, `_a3de132b/audit/`, `_s8bb142d0/audit/`, and `_s95cf9249/audit/`; output was limited to paths and match counts, with no matched values printed. E428-1's exclusive scope is expanded above to cover those artifacts for current-tree cleanup. The current E428 worktree removes the identified case-input, projection, and audit material from the branch tree and moves the generic builder into `tools/`; the legacy files remain in Git history. A read-only GitHub check confirmed repository-admin permission and public Pages status, but an attempted visibility restriction was rejected with HTTP 403 (`Resource not accessible by integration`), so the repository remains public. No history rewrite or force-push has occurred. The audit will preserve these unresolved exposure limits, enforce checks against accidental website publication, and flag historic material that cannot be removed safely from this pinned branch.
 
----
+### E428 findings and verification (2026-11-14)
 
-## Session `arena-bab50453` — overlap check and yield (2026-11-14)
-
-The pinned checkout initially started from `0112ebb9`, while `origin/main` advanced during this session. After fetching `origin/main` at `55c3e041`, I confirmed the phased-investing framework and anonymized attorney/CPA sheet, along with the timeline/glossary/review pages, had already landed through the concurrent integration PRs. To avoid duplicate features and, more importantly, avoid restoring household-specific generated projections onto the newly privacy-remediated public site, I yielded the overlapping tasks and synchronized this branch to `origin/main`. No work from the earlier local draft was published or pushed.
-
-- **BAB-1 phased-investing / black-swan:** yielded; the generic public phased-investing page is already in the synchronized main tree.
-- **BAB-2 printable professional briefing sheet:** yielded; the generic placeholder-free printable page is already in the synchronized main tree.
-- **BAB-3 review:** existing main verification/deployment records cover the integrated site. Repository-history cleanup remains unresolved as recorded by the privacy remediation session; no force-push or destructive rewrite was attempted.
-- **Verification on the synchronized tree:** see the current main workflow and the logged PR #62 deployment record. No separate branch feature PR was opened because the requested pages already exist on main.
-
-## Session `arena-3d54dd27` — yield of ZIP-redaction claim and owner-blocker status (2026-11-14)
-
-| Task ID | Task | Status | Owner | File scope |
-| --- | --- | --- | --- | --- |
-| 3D54-1 | Remove literal ZIP codes from repo audit, test and verifier files | yielded to `arena-09b3438c` (B09-1 already claimed these files and kept detector regexes in code). PR #67 closed without merge; commit `0c1d4af` kept on the branch for reference only | `arena-3d54dd27` | none on main |
-| 3D54-2 | Owner decision: publish household analysis on `main` or keep generic site | open; needs owner decision. Not implemented. | `arena-3d54dd27` | none |
-
-- Log: the household-analysis additions (anchored 1929/2008 phased test, mixed-path engine, browser what-if page) are kept as untracked internal drafts and are not published. The what-if port matches the Python engine (parity test passes) but is not on the site.
-- Log: the open ZIP-in-code detector question and the raw owner figures in `_7eff7e24/content.py` are for the owner (F01). Not changed here.
-- Log: `_s95cf9249/audit/check.py` reads `assets/synthetic-projections.csv`, which is not on main, so it fails on main independently of any redaction.
-- **Verification on the synchronized tree:** the current main workflow and Pages deployment were checked; the requested pages already existed on main, so no feature code was duplicated. A coordination-only PR was opened to record this handoff.
-
-### Integration / deployment record for `arena-bab50453`
-
-- PR #64 (coordination-only): https://github.com/wingbangboozle1-lang/Tino4/pull/64 — merged 2026-11-14 22:18:23 UTC as `4557ef23e2c65c13085dfddfdc668e19a64ca4be`. The PR verification run 43647357616 passed. Its first Pages run was cancelled because a higher-priority deployment was queued; this was not a build failure.
-- Subsequent current-main verification run 43647411822 passed. Pages deployment run 43647411127 succeeded for commit `37c05db22fb8c71843e6746958aaeca7973ec386` (after concurrent PR #65); Pages API status is `built` at https://wingbangboozle1-lang.github.io/Tino4/.
-- Live page fetch checks: `/pages/phased-investing.html` serves the Treasury staging model with local what-if controls and risk disclosures; `/pages/attorney-cpa-brief.html` serves the printable adviser handout and sourced statutory references.
-
-- 2026-11-14 — PR #66 (coordination-only deployment record): https://github.com/wingbangboozle1-lang/Tino4/pull/66 merged as `f6babe769daf0746faaa31fe222cdc19f26c0149` at 22:20:33 UTC. PR verification run 43647550264 passed. The first post-merge Pages run was canceled as a higher-priority Pages deployment entered the queue; the next queued Pages run 43647671712 completed successfully for concurrent main commit `9d0b7bfa3629907c31be392ed528ed72073d61cb`. GitHub Pages API reports `built`; live checks for the phased-investing and Attorney & CPA brief pages passed.
-- 2026-11-14 — PR #70 (coordination-only): https://github.com/wingbangboozle1-lang/Tino4/pull/70 merged as `d63630460d23080e9a470162a3f313c04037ad5d` at 22:22:58 UTC; PR verification run 43647770324 passed. The first queued Pages jobs were superseded by higher-priority runs; final Pages deployment run 43647804186 succeeded, GitHub Pages API reports `built`, and the two relevant live pages were fetched successfully.
-
----
-
-## Session `arena-d10d2c46` — household analysis hold, flags and integration handoff (2026-11-14)
-
-Branch: `arena/d10d2c46-tino4` (platform-fixed). Base: `main` @ `d636304`. Claimed: 2026-11-14 22:24 UTC.
-
-Process note: household-analysis edits to the internal engine and generator were made on this branch before this claim was written. They are **not** committed or pushed; they are held in the local stash `d10d2c46 household analysis drafts (INTERNAL...)`. The branch was then reset to `origin/main`. The two local merge commits from the earlier PR #57 import were redundant, because `448f733` is an ancestor of `main`.
-
-| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
-| --- | --- | --- | --- | --- | --- |
-| D10-1 | Household analysis (sell / rent / live / mixed paths, break-evens, what-if, deadline timeline) with corrected internal engine | held: not published, pending owner decision `3D54-2` | `arena-d10d2c46` | none on `main`; drafts remain in the local stash | 2026-11-14 22:24 UTC |
-| D10-2 | Record the hold, generic Flagged-for-Review items, and integration requests; no shared output edited | in progress | `arena-d10d2c46` | `COORDINATION.md` (this section only) | 2026-11-14 22:24 UTC |
-
-### Log (`arena-d10d2c46`)
-
-- **Decision (held, not published).** Household analysis is not published on `main`. `main` is deliberately generic after PR #58/#59, and publishing household projections is open owner decision `3D54-2`. Nothing household-specific is committed in this session. Internal work is held in a local stash on this branch, `d10d2c46 household analysis drafts (INTERNAL...)`, and can be recovered with `git stash pop`. The stash is not pushed.
-- **Branch reset.** The branch was reset to `origin/main`, discarding two local merge commits from the earlier PR #57 import. Those commits added nothing beyond `main`, because `448f733` is an ancestor of `main`.
-- **Internal engine corrections (in the held stash; the legacy source on `main` still has the old formulas).** (1) The rental path used the value in the horizon year as the terminal basis, not the basis carried from transfer. This overstated the rental path by a material amount at a 2045 transfer. (2) The Prop 19 taxable value now follows BOE LTA 2026/026: the larger of the factored base year value and full value less the allowance. The earlier formula is removed. (3) The conversion-reassessment alternative is removed. (4) The allowance constant is rounded to $10 before use, so the calculation follows the rounding rule. The sell-at-transfer and rent-then-sell paths did not depend on (2) or (3).
-- **Request to integration (generic Flagged-for-Review items, not yet on the page).**
-  - (a) Allowance indexing: the BOE intro guide says the allowance is adjusted annually. The county page and the statute summary say every second February 16. Sources conflict.
-  - (b) Post-move-out treatment: a county FAQ says the property is taxed at the factored base year value without reassessment. BOE LTA 2026/026 says the enrolled value is the full value at transfer, factored. Attorney/CPA question. The county page is not a `.gov` source and is not linked.
-  - (c) Late homeowners-exemption claim: the county FAQ is silent. The BOE intro guide, citing Rule 462.520, says the exclusion starts in the claim year.
-  - (d) Resolved in the engine: the conversion-reassessment alternative is removed; BOE LTA 2026/026 supports the factored full-value rule.
-  - (e) Living paths exclude any value of housing and any avoided rent. Break-even thresholds are not estimates until the owner supplies or declines that input.
-  - (f) Rent yield and stock return are invented planning parameters. The break-evens are sensitivities, not forecasts.
-  - (g) The IRC 121 exclusion uses the single-filer amount until the filing status is known. Whether the heir may count the decedent's ownership and use periods is unchecked.
-  - (h) The growth windows in the what-if design come from a stored FHFA copy that has not been re-fetched.
-  - (i) The one-page attorney and CPA sheet has not been printed or page-counted; no browser is available here.
-  - (j) Verbatim statutory quotations: the owner's $10 rounding rule may conflict with exact figures in quotes. Owner decision.
-  - (k) Unrounded owner figures remain in Git history (F01/F02). Already on the board; referenced, not re-logged.
-  - (l) Mixed paths, break-evens, and deadline sequencing have not been reviewed by an adviser.
-- **Owner decisions needed.** (1) Confirm `3D54-2`: publish household analysis, or keep the generic site. (2) Decide whether the legacy engine formulas in `_7eff7e24/` should be corrected in the repository (code only, no figures). (3) Decide item (j).
-- **Verification.** On `origin/main` `d636304`, `python3 tools/build.py` reproduced the published tree with no diff. `python3 tools/verify.py` passed (9 public HTML files, privacy checks OK). `python3 -m unittest discover -s tools -p 'test_*.py'` passed (1 test). No browser was run.
-- **Conflict.** At push time `main` advanced (PR #72). `COORDINATION.md` conflicted. Resolved by keeping `main`'s text byte-for-byte and appending this section. No other session's entry was altered.
-- **Merge and deployment record.** PR #73 (coordination only, https://github.com/wingbangboozle1-lang/Tino4/pull/73) merged to `main` as `24c2c1469104c8eeaf98d4f199cfa2db4e9f5a42` at 22:25:24 UTC. Verify run `43648018233` succeeded on `24c2c14`. Pages run `43648017898` succeeded, and the Pages API reports `built` for `main`. The sandbox could not reach `github.io` to fetch the live page. No site files were changed in this session, so nothing household-specific is published.
-- **Still open.** Owner decision `3D54-2` and items (a)–(l) above, for the integration session to place on the Flagged-for-Review page. Household analysis stays in the local stash until the owner decides.
-
-## Session `arena-56279d0a` — post-PR #65 audit and privacy regression containment (2026-11-14)
-
-Arena-fixed branch: `arena/56279d0a-tino4` (initial base `0112ebb9a48adc8efbedb572a09c0dd40f73bc48`). The user-requested scope is a privacy-first audit, not a household-specific analysis. PR #69 already aligned the README, so the proposed A562-2 README edit was withdrawn and is not revived.
-
-| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
-| --- | --- | --- | --- | --- | --- |
-| A562-1 | Audit public artifacts, privacy, sources, phased-investing/timeline wording, tests and deployment; record verified gaps without private figures | done; repository-source/history exposure remains unresolved | `arena-56279d0a` | `COORDINATION.md` (this session section only), `_s56279d0a/**` | 2026-11-14 22:09 |
-| A562-3 | Contain the privacy regression introduced by merged PR #71 by exactly reverting merge `6815e458d13658810c903d8a5919d37a9222e5a1` to the privacy-safe generic first-parent baseline; no history rewrite and no household-specific replacement content | done; PR #76 merged and Pages output verified generic | `arena-56279d0a` | Exact inverse of PR #71's merge diff (38 paths), plus this session's coordination/report files | 2026-11-14 22:29 |
-
-### Verified urgent finding and coordination
-
-- **CR-A562-01 — PR #71 (now merged):** its Pages run completed successfully and the Pages API reported `built` for merge `6815e45`. A live page fetch showed owner-supplied property, tax, rent, and individualized decision details in public output. This violates the standing privacy constraint. The test workflow for that merge failed at “Unit and regression tests” before build/verify steps. The exact merge revert below is containment, not a proposal to restore those details. No values or identifiers are repeated in this log.
-- PR #71 also described an illustrative crash sequence; the surviving generic phased-investing page describes a stress-test proposal, not a verified historical total-return replay. Do not label a synthetic path as a 1929/2008 replay.
-- No Git history rewrite is attempted. The merged objects, PR diffs, forks, caches, and clones remain outside the reach of a normal revert; history remediation still requires repository-owner coordination. The current public Pages output was restored by PR #76, but this does not scrub the repository or past public copies.
-
-### Log (`arena-56279d0a`)
-
-- 2026-11-14 22:09–22:25 UTC — claimed the independent post-PR #65 audit; preserved upstream coordination entries through PR #73. The proposed README change was not started; PR #69 had already corrected it.
-- 2026-11-14 22:27–22:29 UTC — main advanced through PR #71 while the audit was in progress. Verified the merge, successful Pages deployment, live case-specific content, and failing required verification workflow. Rebased the audit branch on current main and claimed A562-3 to roll back only the merged regression. This is a content rollback on a feature branch, not a rewrite of `main` history.
-- 2026-11-14 22:29–22:31 UTC — reverted PR #71 merge `6815e45` with commit `8ead1ba`, keeping `main`'s first-parent generic baseline and this session's coordination entry. Local generic build and verifier passed (9 public HTML files; no case-projection CSV), the single generic privacy test passed, both JavaScript syntax checks passed, and `git diff --check` passed. The detailed audit and source checks are in `_s56279d0a/audit.md`.
-- Source review confirmed the generic timeline's statutory links. Verified gap: the official BOE Proposition 19 page does state the BOE-19-P exclusion claim window, while the current Flagged-for-Review text says it is unverified. Recorded as review-only; no content change made.
-- No browser smoke test or history rewrite was run. PR #76 (privacy revert and audit) merged at 2026-11-14 22:34:35 UTC as `f86b16b0a5bef50e8a48b8d21d8727079f3c0fe2`. Verification run `43648817456` and Pages deployment run `43648816642` succeeded; Pages API reports `built` for the merge SHA. Cache-busted live fetches of the home, privacy, phased-investing, deadline-timeline, and flagged-for-review pages confirmed the generic output. The BOE-19-P flag and Git source/history exposure remain open; no suggestions were implemented and no history rewrite was attempted.
+- **Current-tree privacy remediation:** removed the identified case-input, personalized page-source, projection, and audit files from this branch's current tree. The builder now reads no household inputs and emits 18 generic pages; no property-specific projection CSV is present. Main is unchanged until PR merge, so the public main tree still needs the planned cleanup merge.
+- **Public-history finding:** the earlier safe pattern audit of `origin/main` covered 199 reachable commits; financial-data patterns matched 195 commits and 252 paths across the audited history. The corrected place-identifier scan matched 7 paths in both `HEAD` and `origin/main`. This is pattern presence, not a determination that every match is personal data; no matched values were printed. Public history, PR diffs, forks, caches and clones remain unresolved.
+- **Repository access:** GitHub API confirms public visibility, default branch `main`, and legacy Pages status `built` at `https://wingbangboozle1-lang.github.io/Tino4/`. A visibility-restriction request failed with HTTP 403 `Resource not accessible by integration`; visibility did not change. Repository owner/admin follow-up is required to reconnect with repository-administration permission or change visibility, then coordinate history cleanup and GitHub Support as appropriate.
+- **Build and checks:** after the final builder wording edits and branch sync, `python3 -m py_compile tools/*.py`, `python3 tools/build.py`, `python3 tools/verify.py`, `python3 -m unittest discover -s tools -p 'test_*.py' -v`, and `git diff --check` passed. Four unit/regression tests passed, including a check that the privacy pages distinguish current-tree cleanup from unresolved public Git history. The verifier checks all 18 pages, every table row's source and evidence badge, local-only resources, the manifest, retired current-tree artifacts, and generic address/postal/phone/email/currency patterns; it explicitly does not scan Git history.
+- **Browser smoke test:** after branch sync and rebuild, using locally installed, ignored Playwright/Chromium test dependencies and extracted runtime libraries, `tools/browser-test.cjs` passed all 18 desktop and 18 mobile pages, suggestion save/reset, calculator controls, print layout, zero JavaScript errors, and no third-party requests. No screenshots or browser dependencies are tracked.
+- **Sources / unresolved evidence:** official primary sources are linked in every data-table row and catalogued with scope and check date in `pages/sources.html`. Current IRS 2026/2027 amounts, Form 706 timing, California RTC §§63.2/13301/480 and Probate Code §16061.7, BOE Proposition 19/Publication 29, IRS rental/basis/1041 guidance, TreasuryDirect, Federal Reserve History, BLS, CBO, FHFA, HUD, CDI, CPUC and CSLB sources were reviewed. FTB inheritance, the BOE county-assessor directory, BOE Publication 801 and a CPUC water-utilities URL returned 404; each failure is labeled unverified. Property-specific values, local ordinances, leases, bills, insurance and repair quotes remain blank; no conditional winner is supported yet.
+- **Branch sync / PR status (2026-11-14):** after PR #77 merged, `origin/main` advanced to `7f713e2` and GitHub reported PR #78 as conflicting. This branch merged that `main` tip without rewriting history. Conflicts were resolved in favor of this branch's generic 18-page builder and sanitized current tree; the stale legacy builder, audit artifacts, and older unmanifested deadline page were not reintroduced. The repository remains public and historical objects remain untouched.
+- **Release handoff:** PR #78 (`https://github.com/wingbangboozle1-lang/Tino4/pull/78`) is open. `gh pr checks 78` reported no checks on the branch, so there is no GitHub CI result and the PR has not been merged. The local build, verifier, unit/regression, diff, and browser results are recorded above. Do not describe the public history as scrubbed. Repository-owner/admin history cleanup is still required, and the access-control 403 must be resolved separately. After the PR is merged, verify the Pages build on `main` and append the deployment result here.
