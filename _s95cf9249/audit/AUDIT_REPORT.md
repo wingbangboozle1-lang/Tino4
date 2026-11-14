@@ -22,7 +22,7 @@ Script: `_s95cf9249/audit/check.py`; raw output: `_s95cf9249/audit/check-output.
 - 21 published HTML files; **869/869 table-body rows carry at least one official-source link** (3,905 link instances) and a status badge.
 - Status distribution: synthetic 617, verified 70, guidance 75, missing 69, assumption 37, owner-supplied 1.
 - **0 visible dollar amounts ≥ $1,000 that are not multiples of $10** (site text and the 561-row synthetic CSV).
-- Privacy patterns (ZIPs 95014/94122, "Cupertino", neighbourhood "Sunset", "San Francisco", email, phone, SSN, APN wording): **0 true hits**. Two regex false-positives on the word "sunset" refer to the 2026 TCJA *sunset* (tax law), not a neighbourhood. No city, ZIP, address, parcel, name or contact detail is published.
+- Privacy patterns (two ZIP codes [ZIP-A]/[ZIP-B], a city name [city-A], neighbourhood name [area-A], "San Francisco", email, phone, SSN, APN wording): **0 true hits**. Two regex false-positives on the word "sunset" refer to the 2026 TCJA *sunset* (tax law), not a neighbourhood. No city, ZIP, address, parcel, name or contact detail is published.
 
 ## 4. Direct official-source verification (fetched by this session, 2026-11-13)
 
