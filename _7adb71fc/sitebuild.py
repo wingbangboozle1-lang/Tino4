@@ -12,6 +12,7 @@ sys.path.insert(0, str(ROOT / '_7adb71fc'))
 import content_part1 as c1
 import content_part2 as c2
 import content_part3 as c3
+import content_part4 as c4
 from case_model import projection, money as M, rounded
 from case_data import P
 from evidence import DATE
@@ -21,12 +22,15 @@ PAGES = [
     ('executive-summary', 'Executive summary', 'Decision', c1.page_exec),
     ('decision-analysis', 'Live, rent or sell', 'Decision', c1.page_decision),
     ('questions', 'Questions & missing evidence', 'Decision', c2.page_questions),
+    ('brief', 'Attorney & CPA briefing sheet', 'Decision', c4.page_brief),
     ('suggestions', 'Suggestions for review', 'Decision', c2.page_suggestions),
     ('projections', 'Year-by-year projections', 'The numbers', c1.page_projections),
     ('property-tax', 'Property tax & history', 'The numbers', c2.page_tax),
     ('operating-costs', 'Costs & insurance', 'The numbers', c2.page_cost),
     ('black-swan', 'Black-swan conditions', 'Stress', c1.page_black_swan),
+    ('deadlines', 'Deadlines timeline', 'Tax & process', c4.page_deadlines),
     ('estate-thresholds', 'Estate tax & headroom', 'Tax & process', c3.page_estate),
+    ('glossary', 'Glossary', 'Evidence', c4.page_glossary),
     ('inheritance-process', 'Inheritance step by step', 'Tax & process', c3.page_process),
     ('law-watchlist', 'Law watchlist', 'Tax & process', c3.page_law),
     ('flagged-for-review', 'Flagged for review', 'Evidence', c3.page_flagged),

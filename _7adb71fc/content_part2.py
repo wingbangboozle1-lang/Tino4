@@ -300,6 +300,11 @@ def page_suggestions():
          'Sixty days for the trustee notice, 150 days for the death-transfer statement, nine months for a federal estate return, twelve months for the exemption, three years for the exclusion claim.',
          'Every one of these has a statutory clock and a penalty or a lost benefit if it is missed.',
          'prob16061 rtc480 form706 pub801'),
+        ('SUG-14', 'P1', 'Evidence', 'Choose a source for the share-price leg of the phased-investing test',
+         'Option A: accept the OECD share-price series carried by FRED as a named exception to the .gov rule, for this one test only. '
+         'Option B: keep the test unpublished until an official .gov series is found. Option C: drop the test.',
+         'The test is built and checked, but its stock leg cannot be published under the current rule. The choice is a policy call, not a technical one.',
+         'bills'),
         ('S01', 'P1', 'Site', 'Add a printable one-page decision sheet',
          'A single page carrying the recommendation, the three numbers that decide it and the six questions that are still open.',
          'It is what you would actually take to a trustee or an adviser meeting. It should contain no private data.',

@@ -261,6 +261,12 @@ def page_flagged():
          'Pull both bills with the direct-assessment detail attached, and reconcile them line by line against the tax '
          'rate area for that roll year.',
          'Owner', 'pub29 lta26002'),
+        ('F17', 'High', 'The phased-investing test is built but not published',
+         'The test needs a broad share-price series. The only one found is an OECD series carried by FRED, which is not a .gov host, '
+         'and the repository rule allows only .gov sources. No phased-test figure is shown on the black-swan page. '
+         'The parking leg (3-month and 2-year Treasury yields) has .gov sources but cannot be tested without the stock leg.',
+         'Owner decision: accept a named non-.gov statistical source for this one test, or find an official .gov series. See SUG-14.',
+         'Missing', 'bills'),
     ]
     return callout('This page is the honest inventory of what is weak in this brief',
         'Nothing below blocks the recommendation, because the recommendation does not depend on the items that are '

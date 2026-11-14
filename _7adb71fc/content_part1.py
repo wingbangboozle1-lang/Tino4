@@ -57,6 +57,94 @@ def pct(x, dp=1):
 
 
 # --------------------------------------------------------------------------- overview
+def _override(key, value, fn):
+    """Run fn with one model parameter changed, then restore it exactly."""
+    from case_data import P as _P
+    old = _P[key]
+    _P[key] = value
+    try:
+        return fn()
+    finally:
+        _P[key] = old
+
+
+def _gap_at(key, value, transfer=None):
+    """Sell-and-reinvest minus rent-then-sell, after tax, over twenty years, at one parameter value."""
+    def run():
+        c = path_comparison(transfer)
+        return c['reinvest_after_tax'] - c['rental_total']
+    return _override(key, value, run)
+
+
+def _flip(f, lo, hi, steps=60):
+    """Bisect for the value where the sign of f changes between lo and hi. None if it does not change."""
+    flo, fhi = f(lo), f(hi)
+    if (flo > 0) == (fhi > 0):
+        return None
+    for _ in range(steps):
+        mid = (lo + hi) / 2
+        fm = f(mid)
+        if (fm > 0) == (flo > 0):
+            lo, flo = mid, fm
+        else:
+            hi = mid
+    return (lo + hi) / 2
+
+
+def _first_screen():
+    """What would change the answer, and the reinvestment risk beside the headline. All figures from the model."""
+    from case_data import P as _P
+    base = path_comparison()
+    base_gap = base['reinvest_after_tax'] - base['rental_total']
+    eq = _P['equity']
+    eq_flip = _flip(lambda v: _gap_at('equity', v), 0.0, 0.15)
+    g = _P['home_growth_default']
+    g_flip = _flip(lambda v: _gap_at('home_growth_default', v), 0.0, 0.10)
+    ry = _P['rent_yield_default']
+    ry_flip = _flip(lambda v: _gap_at('rent_yield_default', v), 0.0, 0.10)
+    gap40, gap50 = _gap_at('equity', eq, 2040), _gap_at('equity', eq, 2050)
+    low = _override('equity', 0.03, lambda: path_comparison()['reinvest_after_tax'])
+    high = _override('equity', 0.08, lambda: path_comparison()['reinvest_after_tax'])
+
+    def flip_text(x, lo_word, hi_word):
+        return pct(x * 100, 1) if x is not None else 'no flip inside the tested range'
+
+    out = callout('Reinvestment risk, beside the headline',
+        f'The sell path is only as good as the return on the proceeds. At {pct(3.0)} a year after tax the sale produces '
+        f'{M(low)} after twenty years, at the {pct(eq*100)} assumption it produces {M(base["reinvest_after_tax"])}, and at '
+        f'{pct(8.0)} it produces {M(high)}. Selling beats renting for as long as the return stays above '
+        f'{flip_text(eq_flip, "", "")} a year. That return is an assumption, not a forecast, and it is the largest single '
+        f'input to the sell path.', 'warning')
+    out += table('What would change the answer', ['Factor', 'Assumption in this brief', 'Value at which the answer flips', 'Why it matters'], [
+        (['Stock return on the sale proceeds', pct(eq*100, 1) + ' a year, after dividend tax',
+          flip_text(eq_flip, '', ''),
+          'Selling wins while the return stays above this rate. Below it, selling and reinvesting falls behind renting over twenty years.'],
+         As, 'stocks bills'),
+        (['Home price growth for Property A', pct(g*100, 1) + ' a year',
+          flip_text(g_flip, '', ''),
+          f'Selling wins while growth stays below {flip_text(g_flip, "", "")} a year; above it, renting wins in this model. Growth changes the sale price and the rent together.'],
+         Pj, 'fhfa lta26002'),
+        (['Gross rent for Property A', pct(ry*100, 1) + ' of value a year',
+          flip_text(ry_flip, '', ''),
+          f'Selling wins while gross rent stays below {flip_text(ry_flip, "", "")} of value a year; above it, renting wins. The statewide rent cap limits increases, not the starting rent, so it does not verify that level. Treat it as a check, not a plan.'],
+         As, 'ab1482'),
+        (['Transfer year', '2045 in the headline',
+          'Same answer for 2040 and 2050' if (gap40 > 0) == (gap50 > 0) == (base_gap > 0) else 'Answer changes with the year',
+          'The answer is tested at both ends of the planning window, not only the midpoint.'],
+         Pj, 'pub801 lta26002'),
+        (['Occupancy of Property A', 'Owner occupies after transfer, if the trust permits it',
+          'Not occupiable: sell is the fallback', 'Occupying keeps the lower tax base. If it cannot be done, the sell path becomes the plan.'],
+         Ms, 'pub801 pub19'),
+        (['One uninsured earthquake or fire loss', 'Not modelled; no policy has been read',
+          'Any loss larger than the modelled gap', 'A single uninsured loss can exceed every difference in this table.'],
+         Ms, 'cdi'),
+        (['Federal estate tax exclusion', M(P['exclusion_2027']) + ' for 2027, under current law',
+          'Any change that lowers the exclusion below the estate', 'Not an issue at today\'s law. A future Congress is the risk.'],
+         V, 'estate irs2027'),
+    ], note='Each flip point was solved by bisection on the same model that produces the headline, with one input changed at a time and every other input at its stated value. Status shows whether the input is verified, an owner figure, a projection or an assumption.')
+    return out
+
+
 def page_overview():
     c45 = path_comparison(2045)
     h = swan.episodes()[0][1]
@@ -72,7 +160,7 @@ ten dollars before it is used, every rule is linked to the official page that st
 <p>On these rounded inputs, renting Property A after transfer loses money every year for two decades while a
 sell-and-reinvest path compounds. Renting only wins if rent is far higher than assumed, and that case fails on a
 rent-to-price ratio the local rent caps make hard to reach.</p>
-<div class="signal"><span></span> Privacy first &middot; no name, address, ZIP or parcel is published</div></div></div>''' + cards([
+<div class="signal"><span></span> Privacy first &middot; no name, address, ZIP or parcel is published</div></div></div>''' + _first_screen() + cards([
         ('01 / The bottom line', 'Executive summary', 'Eight findings, one recommendation, and what would overturn it', 'pages/executive-summary.html'),
         ('02 / The numbers', 'Year-by-year projections', 'Both homes, 2026 to 2076, with both assessment cases', 'pages/projections.html'),
         ('03 / The stress test', 'Black-swan conditions', 'Official 1975-2026 replay plus invented adverse paths', 'pages/black-swan.html'),
@@ -281,6 +369,16 @@ def page_projections():
 
 
 # --------------------------------------------------------------------------- black swan
+def _phased_html():
+    """Phased-investing test: not published. Its stock leg needs a share-price series with a .gov source, and none was found."""
+    return callout('Phased-investing test: built, not published',
+        'The model for this test runs on official quarterly averages from 1976 to 2026. It is withheld here because it needs '
+        'a broad share-price series and the yields for the parking leg, and the only share-price series found is an OECD series '
+        'carried by FRED, which is not a .gov host. The repository rule allows only .gov sources, so no figure from that test is '
+        'shown. The owner can choose a path on the Suggestions page. The test would not reach 1929: no series in the repository '
+        'does. Nothing on this page is a forecast.', 'warning')
+
+
 def page_black_swan():
     eps, dd = swan.episodes()
     eps = eps
@@ -339,8 +437,9 @@ def page_black_swan():
           'The statewide rent ceiling expires on 1 January 2030. The family-home exclusion is a constitutional provision that has already been replaced once, in 2021.',
           'Re-read the primary sources each year, and do not sign a fifty-year plan that only works under today\'s statute.'], V, 'ab1482 pub19'),
     ])
+    out += _phased_html()
     out += callout('What is missing from this page on purpose',
-        'There is no probability of a crash, no expected return, no success rate and no backtest of an investment strategy. '
+        'There is no probability of a crash, no expected return and no success rate. The one backtest on this page, the phased-investing test, is withheld until a .gov source exists for its share-price leg. '
         'The United States Treasury and the securities regulator both publish risk warnings rather than forecasts, and the '
         'one official long-run interest-rate projection that exists, from the Congressional Budget Office, covers ten years '
         'and not fifty. Anyone quoting a fifty-year number with a decimal point is inventing it.')

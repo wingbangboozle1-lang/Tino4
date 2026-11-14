@@ -1505,3 +1505,33 @@ model, or a rebuilt precomputed grid); a mixed-path model (partial conversions i
 ### Log (`arena-81f46e1f`)
 
 - 2026-11-14 22:00 UTC: board read; mirror-based history audit completed (counts only); claims recorded.
+
+### Status update (`arena-81f46e1f`, 2026-11-14, before PR to `main`)
+
+| Task | Status | What landed | Evidence |
+| --- | --- | --- | --- |
+| M26-1 | done (escalated, not remediated) | Privacy escalation recorded above. No history rewrite. Owner decision on F01 still open. | Mirror scan counts only; no figures in the repo. |
+| M26-2 | done | `pages/brief.html` "Attorney & CPA Briefing Sheet". Every row sourced or marked Missing. Owner-supplied figures (market value, tax bills, rent) are left blank, not published. | Headless Chromium print to Letter: 1 page (887 px of 980 px). |
+| M26-3 | done | `pages/deadlines.html` (ordered by trigger; missing dates shown as Missing) and `pages/glossary.html` (every term linked to its official page). Pages added to the menu under Decision, Tax & process and Evidence. This is a partial regroup, not a full redesign. | Verifier: 25 HTML files, 0 technical failures. |
+| M26-4 | done | "What would change the answer" table on the first screen. Flip directions now computed, not typed: sell wins above a 4.2% return; sell wins below 5.5% growth; sell wins below a 5.3% gross yield. | Recomputed by bisection and sign check. |
+| M26-5 | **blocked: publication withheld** | `phased.py` and the 203-quarter CSV are built and run. No phased figure is published, because the share-price leg has no `.gov` source (the only series found is OECD via FRED). The black-swan page carries a blocked notice. Flagged as **F17**; owner choice on **SUG-14**. | `python3 _7adb71fc/phased.py` runs (rc 0). |
+| M26-6 | in progress | Build, verify and unit tests are run; PR and merge follow this entry. | See the PR record below. |
+
+**Scope exceptions (logged, not silent).** Files edited outside the M26 claim: `_7adb71fc/content_part2.py`
+(SUG-14 added to `page_suggestions`), `_7adb71fc/evidence.py` (three non-`.gov` FRED entries removed; RTC 2610.5
+entry `rtc2610` added and labelled), `assets/style.css` (layout and print rules for the brief, the timeline and the
+first-screen block, beyond the print block claimed), `_7adb71fc/sitebuild.py` (PAGES only, as claimed), and
+`_7adb71fc/phased.py` plus `_7adb71fc/data/` (internal model and data; not published, excluded by `_config.yml`).
+`_7adb71fc/swan.py` (named in M26-5) was not edited, because the phased work lives in `phased.py`.
+
+**Rounding commit.** `_7eff7e24/content.py`: 40 owner integers rounded to $10 in the shared history tables (not
+published; the published pages already used rounded figures). The rounding makes the owner-integer scan pass for
+that file.
+
+**Verifier note.** The `.gov` rule and the test `test_every_source_is_official` were kept as written. The FRED
+entries that failed them were removed, not exempted. Clearing the M26-5 block needs an owner decision (SUG-14).
+
+**Empty directory.** `.private/` was created by this session and was empty. Removed. It was never tracked.
+
+**Tests.** `python3 tools/build.py` succeeded. `python3 tools/verify.py`: 0 technical failures (25 HTML files,
+500 sourced or statused rows, 1,016 official link instances, 204 CSV rows). Unit tests: 29 of 29 OK.

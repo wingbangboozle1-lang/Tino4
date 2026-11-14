@@ -133,6 +133,10 @@ SOURCES = {
  'sos2026': ('California Secretary of State - 2026 general election ballot measures', 'https://electionresults.sos.ca.gov/returns/ballot-measures',
   '42 Prohibits New State Personal Property Taxes And Certain Retroactive State Taxes. Initiative Constitutional Amendment. 6,378,156 51.4% 6,040,829 48.6%',
   'Unofficial results as of 12 November 2026, to be certified by 11 December 2026. Proposition 42 was leading. It constrains state personal property taxes, not real property tax or rent law.', '0'),
+ # ---------------------------------------------------------------- phased-investing test inputs: none published (see black-swan page)
+ 'rtc2610': ('California RTC 2610.5 - tax bill mailing', 'https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=2610.5.&lawCode=RTC',
+  'Tax bill mailed on or before November 1 each year; delinquency dates are in other sections, not checked here.',
+  'Annually, on or before November 1, the tax collector shall mail or electronically transmit a county tax bill for every property on the secured roll.', '1-2'),
 }
 
 FAILED = [
@@ -149,6 +153,7 @@ FAILED = [
 # Short public-facing labels. The internal keys above are deliberately terse so
 # the generator cannot drift; these are what a reader sees on the page.
 LABELS = {
+ 'rtc2610': 'RTC 2610.5 tax bill',
  'estate': 'IRS estate tax', 'wfct': 'IRS 2026 exclusion', 'irs2027': 'IRS 2027 exclusion',
  'form706': 'Form 706 instructions', 'basis': 'IRS inherited basis', 'niit': 'IRS NIIT',
  'capgains': 'IRS capital gains', 'homegain': 'IRS home sale', 'rtc13301': 'RTC 13301',
