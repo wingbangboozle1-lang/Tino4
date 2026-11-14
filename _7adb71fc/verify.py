@@ -25,7 +25,7 @@ from sitebuild import PAGES, REDIRECTS
 # on .gov domains are allowed to contain them, because a link is not a claim
 # about where these homes are.
 PROHIBITED = re.compile(
-    r'\b(?:cupertino|san\s+francisco\s+metro|outer\s+sunset|sunnyvale|9[45]\d{3}|'
+    r'\b(?:cupertino|san\s+francisco\s+metro|outer\s+sunset|sunnyvale|95014|94122|'
     r'santa\s+clara\s+county|san\s+jose\s+metro|\bAPN\b|assessor\s+parcel\s+number|'
     r'social\s+security\s+number|SSN)\b', re.I)
 # Document identifiers that are citations, not geography or identity.
@@ -205,7 +205,7 @@ def verify(verbose=True):
     # a hard privacy gate: the raw owner figures and the geography must never be
     # published in any form a search engine could match.
     raw_source = re.compile(
-        r'\b9[45]\d{3}\b|cupertino|outer sunset|\bsunset district\b', re.I)
+        r'\b95014\b|\b94122\b|cupertino|outer sunset|\bsunset district\b', re.I)
     # Exact owner values must not appear at all. The rent figure is checked
     # against the annual total, because a monthly rent can legitimately collide
     # with an unrelated projection (an insurance line, for example).

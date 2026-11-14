@@ -10,8 +10,65 @@
 - Important limitation: the current public Git tree contains historical coordination and research material that may include case-derived details, and prior Git objects, PRs, forks, caches, and clones cannot be removed by this site change. The checkout is shallow and this session did not rewrite remote history or force-push. A repository-owner-coordinated history cleanup is still required; review repository visibility and preserve a secure private archive before any rewrite.
 - Official primary-source links are referenced in the private research records, but this generic site makes no household-specific legal or financial conclusion. Re-verify all law and deadlines at the future transfer date with counsel and the relevant agencies.
 
-## Claim: ZIP redaction in repository files (arena/3d54dd27-tino4)
+---
 
-- Branch: `arena/3d54dd27-tino4`. Status: claimed; small, privacy-only change.
-- Scope: remove the two literal ZIP codes from tracked audit/test/verifier files (`_s95cf9249/audit/AUDIT_REPORT.md`, `_s95cf9249/audit/check.py`, `tools/test_case.py`, `tools/verify.py`, `_7adb71fc/verify.py`). Replace them with generic Bay Area ZIP-prefix patterns. No site pages change.
-- Not in scope (owner decision, F01): raw owner figures in `_7eff7e24/content.py`, git-history exposure, and whether household analysis is published. The owner-decision question is open.
+## Session `arena-2c2d483d` — privacy boundary follow-up (2026-11-14)
+
+| Task ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| 2C2D-1 | Phased-investment black-swan scenario | yielded to `arena-38a4359d` (A38 feature landed in PR #57; no duplicate files edited) | `arena-2c2d483d` | none |
+| 2C2D-2 | Independent privacy boundary review; document current-tree exposure and safe remediation limits | done — repository/history cleanup remains needs review | `arena-2c2d483d` | `_2c2d483d/privacy-review.md`, this subsection only |
+
+### Log (`arena-2c2d483d`)
+
+- 2026-11-14 — while rebasing the claim before work began, `origin/main` advanced to feature and privacy follow-up commits. Preserved those changes and yielded the overlapping feature claim. This session did not edit those files. The current public pages are now generic after PR #58/#59; the public repository still contains legacy case-specific input/model source and historical Git refs may retain older details. The audit and current state are documented in `_2c2d483d/privacy-review.md`. No history rewrite or force-push was attempted from this pinned shallow branch.
+- 2026-11-14 — PR #60 (https://github.com/wingbangboozle1-lang/Tino4/pull/60) merged to `main` as `4a29086bd46b849e7799ee373bd10102574f5015`. Verify run 43646927347 passed; Pages deployment run 43646956696 completed successfully and the Pages API reported `built`, `error: null`. Cache-busted live checks returned the generic decision workspace, phased-investing framework, and attorney/CPA brief. A normal cached fetch initially showed the previous artifact; the cache-busted response confirmed the new deployment. Repository/history remediation remains open and is not claimed complete.
+
+| 2C2D-3 | Make the public Privacy and Flagged for Review pages explicit that excluded legacy source files can still be read in a public GitHub repository; add privacy wording regression test | done — current source-data removal remains needs review | `arena-2c2d483d` | `_7adb71fc/sitebuild.py`, `tools/test_case.py`, generated privacy/review pages, this subsection only |
+
+- 2026-11-14 — clarified on the public Privacy and Flagged for Review pages that excluded legacy source/model files can remain publicly readable from GitHub even when not built into Pages; added regression assertions. `python3 tools/build.py`, `python3 tools/verify.py` (9 HTML files; no case projection CSV), one unit test, and `git diff --check` passed. These warnings do not remove the current legacy inputs or history; the report keeps that remediation open. No new personal data or property-specific figures were added.
+
+---
+
+## Session `arena-09b3438c` — owner brief follow-up: privacy remediation (current tree), deadline timeline, integration (2026-11-14)
+
+Branch is platform-fixed at `arena/09b3438c-tino4` (base `main` @ `448f733`). Remote branches at claim time: `main` only, so no other session is active on a feature branch.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| B09-1 | Current-tree privacy remediation: replace ZIP codes, city and neighbourhood names in logs and audit notes with placeholders (`[ZIP-A]`, `[ZIP-B]`, `[city-A]`); keep detector regexes in code | done | `arena-09b3438c` | `COORDINATION.md` (ZIP/city text only, and this section), `_s95cf9249/audit/AUDIT_REPORT.md` | 2026-11-14 |
+| B09-2 | Visual deadline timeline on the inheritance step-by-step page, built from the existing sourced rows (no new facts) | done | `arena-09b3438c` | `_7adb71fc/sitebuild.py` (new `pages/deadline-timeline.html`, timeline CSS, one flagged item), generated `pages/**`, `index.html`, `assets/style.css` | 2026-11-14 |
+| B09-3 | Rebuild, verify, test, PR to `main`, merge, confirm Pages deploy, record result here | done | `arena-09b3438c` | generated `pages/**`, `index.html`, `assets/**`, this section | 2026-11-14 |
+
+### Log (`arena-09b3438c`)
+
+- 2026-11-14 — Full history fetched read-only (`git fetch --unshallow`; 194 commits). **Finding, not remediable from this branch:** the exact, unrounded owner tax and assessment figures, ZIP codes and the city name appear in earlier commits on `main` (e.g. first added in the 2026-11-10 to 2026-11-12 sessions). The current tree contains no raw figures. A history rewrite requires a force-push to `main` and an owner or admin decision; this session is limited to pushing its own branch, so it did **not** rewrite history. Recommended owner action: decide whether to rewrite history (`git filter-repo` plus force-push, then ask GitHub to purge cached views) or make the repository private, and rotate nothing else since no credentials were found in the tree.
+
+- 2026-11-14 — Merged `origin/main` @ `c3a9999` (PR #58, session `arena-e1ea4bef`) into this branch, which removed the household case pages and CSV from the public site. This session **kept that privacy-safe baseline** and did not reintroduce case figures. Its COORDINATION.md was adopted; this section was re-appended.
+- 2026-11-14 — Current-tree privacy scan (`git grep` on HEAD): no raw owner figures and no ZIP codes outside detector patterns in code (`_7adb71fc/verify.py`, `tools/verify.py`, `tools/test_case.py`, `_s95cf9249/audit/check.py`) and one audit-report line. The audit line is redacted to `[ZIP-A]`/`[ZIP-B]`/`[city-A]`. Detector patterns are kept on purpose.
+- 2026-11-14 — Added `pages/deadline-timeline.html`: Day 0 date of death; 60-day trustee notice; 150-day change-in-ownership statement; 9-month Form 706 due date and payment; 1-year principal-residence condition; 60-day appeal window; December 10 / April 10 installments. Navigation and index link come from the generator.
+- **Sources read on 2026-11-14 (official):** California Probate Code 16061.7 (60-day notice, subd. (f)): https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=PROB&sectionNum=16061.7 ; Revenue and Taxation Code 480 (150 days for death-transfer statement, subd. (e)): https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?lawCode=RTC&sectionNum=480 ; BOE Information Sheet 800-9 (150 days, one-year residence condition, appeal 60 days, December 10 / April 10 delinquency dates, 10% penalty): https://www.boe.ca.gov/pdf/pub800-9.pdf ; IRS Instructions for Form 706 (Rev. July 2026) (9-month due date and payment, Form 4768 6-month extension, 2026 basic exclusion $15,000,000): https://www.irs.gov/pub/irs-pdf/i706.pdf
+- **Irregularities (on Flagged for Review):** (1) the BOE FAQ URL `boe.ca.gov/proptaxes/faqs/ownerocc.htm` returned 404 and was not used; (2) the three-year BOE-19-P claim window appears only in a county-hosted copy of the form, not in the official BOE sheet read, so it is not on the timeline and is flagged; (3) the 2026 $15,000,000 threshold applies to 2026 deaths only; the threshold for the actual transfer year is unknown; (4) the **full Git history still contains** the owner's exact figures, ZIP codes and city name (194 commits, checked with `git fetch --unshallow`). A history rewrite needs repository-owner action and was **not** performed by this session.
+- **Checks:** `python3 tools/build.py` passed (reproducible); `python3 tools/verify.py` passed (9 public HTML files; privacy checks OK; no case projection file); `python3 -m unittest discover -s tools -p 'test_*.py'` passed (36 tests). Browser smoke test not run (no browser installed in this checkout).
+
+---
+
+## Session `arena-bab50453` — overlap check and yield (2026-11-14)
+
+The pinned checkout initially started from `0112ebb9`, while `origin/main` advanced during this session. After fetching `origin/main` at `55c3e041`, I confirmed the phased-investing framework and anonymized attorney/CPA sheet, along with the timeline/glossary/review pages, had already landed through the concurrent integration PRs. To avoid duplicate features and, more importantly, avoid restoring household-specific generated projections onto the newly privacy-remediated public site, I yielded the overlapping tasks and synchronized this branch to `origin/main`. No work from the earlier local draft was published or pushed.
+
+- **BAB-1 phased-investing / black-swan:** yielded; the generic public phased-investing page is already in the synchronized main tree.
+- **BAB-2 printable professional briefing sheet:** yielded; the generic placeholder-free printable page is already in the synchronized main tree.
+- **BAB-3 review:** existing main verification/deployment records cover the integrated site. Repository-history cleanup remains unresolved as recorded by the privacy remediation session; no force-push or destructive rewrite was attempted.
+- **Verification on the synchronized tree:** see the current main workflow and the logged PR #62 deployment record. No separate branch feature PR was opened because the requested pages already exist on main.
+
+## Session `arena-3d54dd27` — yield of ZIP-redaction claim and owner-blocker status (2026-11-14)
+
+| Task ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| 3D54-1 | Remove literal ZIP codes from repo audit, test and verifier files | yielded to `arena-09b3438c` (B09-1 already claimed these files and kept detector regexes in code). PR #67 closed without merge; commit `0c1d4af` kept on the branch for reference only | `arena-3d54dd27` | none on main |
+| 3D54-2 | Owner decision: publish household analysis on `main` or keep generic site | open; needs owner decision. Not implemented. | `arena-3d54dd27` | none |
+
+- Log: the household-analysis additions (anchored 1929/2008 phased test, mixed-path engine, browser what-if page) are kept as untracked internal drafts and are not published. The what-if port matches the Python engine (parity test passes) but is not on the site.
+- Log: the open ZIP-in-code detector question and the raw owner figures in `_7eff7e24/content.py` are for the owner (F01). Not changed here.
+- Log: `_s95cf9249/audit/check.py` reads `assets/synthetic-projections.csv`, which is not on main, so it fails on main independently of any redaction.

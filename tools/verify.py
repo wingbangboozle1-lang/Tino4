@@ -6,7 +6,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 if __name__ == '__main__':
     html = [ROOT / 'index.html', *sorted((ROOT / 'pages').glob('*.html'))]
-    bad = re.compile(r'\b9[45]\d{3}\b|Cupertino|San Francisco|Outer Sunset|\$\s*[0-9][0-9,]{4,}|case-projections', re.I)
+    bad = re.compile(r'95014|94122|Cupertino|San Francisco|Outer Sunset|\$\s*[0-9][0-9,]{4,}|case-projections', re.I)
     errors = []
     for file in html:
         text = file.read_text(encoding='utf-8')

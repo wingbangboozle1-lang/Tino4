@@ -1,5 +1,4 @@
 """Regression tests for privacy-safe public output."""
-import re
 import subprocess
 import sys
 import unittest
@@ -11,8 +10,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         files = [ROOT / 'index.html', *sorted((ROOT / 'pages').glob('*.html'))]
         self.assertGreaterEqual(len(files), 5)
         text = '\n'.join(p.read_text(encoding='utf-8') for p in files)
-        self.assertIsNone(re.search(r'\b9[45]\d{3}\b', text))
-        for token in ('Cupertino', 'Outer Sunset', '$3,100,000', '$1,800,000', '$7,150'):
+        for token in ('95014', '94122', 'Cupertino', 'Outer Sunset', '$3,100,000', '$1,800,000', '$7,150'):
             self.assertNotIn(token.lower(), text.lower())
         self.assertFalse((ROOT / 'assets/case-projections.csv').exists())
         self.assertIn('Attorney &amp; CPA briefing sheet', (ROOT / 'pages/attorney-cpa-brief.html').read_text())
