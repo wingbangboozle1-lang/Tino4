@@ -9,3 +9,9 @@
 - Verification: `python3 tools/build.py`, `python3 tools/verify.py`, and `python3 -m unittest discover -s tools -p 'test_*.py' -v` pass. The verifier scans every public HTML file for case identifiers and case-like figures and confirms the projection CSV is absent.
 - Important limitation: the current public Git tree contains historical coordination and research material that may include case-derived details, and prior Git objects, PRs, forks, caches, and clones cannot be removed by this site change. The checkout is shallow and this session did not rewrite remote history or force-push. A repository-owner-coordinated history cleanup is still required; review repository visibility and preserve a secure private archive before any rewrite.
 - Official primary-source links are referenced in the private research records, but this generic site makes no household-specific legal or financial conclusion. Re-verify all law and deadlines at the future transfer date with counsel and the relevant agencies.
+
+## Claim: ZIP redaction in repository files (arena/3d54dd27-tino4)
+
+- Branch: `arena/3d54dd27-tino4`. Status: claimed; small, privacy-only change.
+- Scope: remove the two literal ZIP codes from tracked audit/test/verifier files (`_s95cf9249/audit/AUDIT_REPORT.md`, `_s95cf9249/audit/check.py`, `tools/test_case.py`, `tools/verify.py`, `_7adb71fc/verify.py`). Replace them with generic Bay Area ZIP-prefix patterns. No site pages change.
+- Not in scope (owner decision, F01): raw owner figures in `_7eff7e24/content.py`, git-history exposure, and whether household analysis is published. The owner-decision question is open.

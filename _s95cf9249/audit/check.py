@@ -51,7 +51,7 @@ class Rows(HTMLParser):
 
 MONEY = re.compile(r'\$\s?([0-9][0-9,]*)(?:\.[0-9]+)?')
 PRIV = {
-    'ZIP 95014': r'95014', 'ZIP 94122': r'94122',
+    'ZIP (Bay Area 94xxx/95xxx)': r'\b9[45]\d{3}\b',
     'city Cupertino': r'(?i)cupertino', 'neighbourhood Sunset': r'(?i)\bsunset\b',
     'city San Francisco': r'(?i)san francisco', 'email': r'[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}',
     'phone': r'\b(?:\+?1[-. ]?)?\(?\d{3}\)?[-. ]\d{3}[-. ]\d{4}\b', 'SSN': r'\b\d{3}-\d{2}-\d{4}\b',
