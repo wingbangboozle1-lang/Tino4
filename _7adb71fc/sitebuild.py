@@ -16,6 +16,18 @@ PAGES = {
         ("Operations", "Confirm legal unit status, leases, deposits, rent-control coverage, insurance availability, rebuilding limits, utilities, maintenance history, and solar/export-credit agreements."),
         ("Decision model", "Request side-by-side after-tax cash flows for occupy, rent, sell, mixed use, and phased investing, including fees, vacancy, capital repairs, inflation, and adverse market entry scenarios."),
     ]),
+    "pages/phased-investing.html": ("Phased investing & reinvestment risk", "A general scenario framework for comparing immediate investment with a 24–36 month Treasury staging period; no return is guaranteed.", [
+        ("Sequence-risk question", "If sale proceeds are invested shortly before a major equity decline, an investor may experience a large early loss. A Treasury holding period changes exposure during that interval but creates reinvestment risk if yields fall before reinvestment."),
+        ("Compare the pathways", "Model immediate diversified investment; staged short-duration Treasury holdings followed by scheduled equity purchases over 24–36 months; and a blended allocation with a retained liquidity reserve."),
+        ("Stress-test", "Use multiple historical crash-entry dates and inflation regimes, including the Great Depression and global financial crisis, as historical illustrations rather than forecasts. Compare ending wealth, drawdown, purchasing power, income, and liquidity."),
+        ("Required inputs", "At decision time obtain the actual distributable amount, taxes and costs, current Treasury yields, tax status, portfolio allocation, risk tolerance, liquidity needs, and adviser-approved investment policy."),
+    ]),
+    "pages/glossary.html": ("Glossary", "Plain-language definitions for the decision framework.", [
+        ("Assessment / tax basis", "Assessment is the value used by a property-tax authority to calculate property tax. Income-tax basis is a separate concept used to determine taxable gain; confirm the applicable basis with a tax professional."),
+        ("Reinvestment risk", "The risk that proceeds from a maturing investment must be reinvested at a lower yield."),
+        ("Sequence risk", "The effect of the timing of returns, especially losses early in a withdrawal or investment period."),
+        ("Mixed path", "A combination of choices, such as occupying part of a property, renting another lawful unit, retaining a separate property, or investing sale proceeds in stages."),
+    ]),
     "pages/suggestions.html": ("Suggestions for review", "Review these improvements before adopting any change; this site does not apply recommendations automatically.", [
         ("Create a verified document vault", "Store deeds, trust documents, leases, tax bills, insurance policies, utility statements, and repair records in an access-controlled private location; publish only anonymized conclusions."),
         ("Compare mixed choices", "Model occupying one unit while renting others where lawful, retaining one property while selling another, and staged investment rather than limiting comparison to pure choices."),
@@ -55,7 +67,7 @@ def build():
         (ROOT / name).write_text(html, encoding='utf-8')
     # Remove old generated tables and aliases from the public output. Never publish projections.
     for p in (ROOT / 'pages').glob('*.html'):
-        if p.name not in {"attorney-cpa-brief.html", "what-we-need.html", "flagged-for-review.html", "privacy.html", "suggestions.html"}:
+        if p.name not in {"attorney-cpa-brief.html", "what-we-need.html", "flagged-for-review.html", "privacy.html", "suggestions.html", "phased-investing.html", "glossary.html"}:
             p.unlink()
     csv_path = ROOT / 'assets' / 'case-projections.csv'
     if csv_path.exists():
