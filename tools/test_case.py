@@ -15,5 +15,9 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertFalse((ROOT / 'assets/case-projections.csv').exists())
         self.assertIn('Attorney &amp; CPA briefing sheet', (ROOT / 'pages/attorney-cpa-brief.html').read_text())
         self.assertIn('24–36 months', (ROOT / 'pages/suggestions.html').read_text())
+        privacy = (ROOT / 'pages/privacy.html').read_text()
+        flagged = (ROOT / 'pages/flagged-for-review.html').read_text()
+        self.assertIn('Jekyll exclusions hide content from Pages only', privacy)
+        self.assertIn('legacy excluded source/model files', flagged)
 if __name__ == '__main__':
     unittest.main()
