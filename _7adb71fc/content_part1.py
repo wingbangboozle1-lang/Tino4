@@ -1,11 +1,13 @@
 """Case content: pages 1-5. No names, addresses, ZIPs, parcels or account numbers."""
 from html import escape as E
+import json
 from case_data import A, B, A_HISTORY, B_HISTORY, A_MID, B_MID, P, assess_check, CA_HPI
 from case_model import (money as M, rounded, projection, sale_proceeds,
                         after_tax_reinvest, hold_after_tax, path_comparison,
                         allowance, exclusion_projection)
 from evidence import SOURCES, FAILED, DATE, LABELS
 import swan
+import phase_investing as phase
 
 V, O, Pj, As, Ms = 'Verified', 'Owner', 'Projection', 'Assumption', 'Missing'
 
@@ -67,11 +69,14 @@ def page_overview():
 Property B is a three-unit building you already own and partly rent. Every figure below is rounded to the nearest
 ten dollars before it is used, every rule is linked to the official page that states it, and every gap is left blank.</p>
 <a class="button" href="pages/executive-summary.html">Read the executive summary <span>&#8599;</span></a></div>
-<div class="hero-panel"><span class="eyebrow">THE ANSWER, STATED PLAINLY</span>
-<h2>Live in it,<br>or sell it.<br>Do not rent it.</h2>
-<p>On these rounded inputs, renting Property A after transfer loses money every year for two decades while a
-sell-and-reinvest path compounds. Renting only wins if rent is far higher than assumed, and that case fails on a
-rent-to-price ratio the local rent caps make hard to reach.</p>
+<div class="hero-panel"><span class="eyebrow">PROVISIONAL ANSWER — VERIFY THE GATES FIRST</span>
+<h2>Occupy A if eligible.<br>Sell if not.<br>Rent only if the numbers prove it.</h2>
+<p>The current model favors occupancy over a long rental hold, but neither the trust terms, insurance quotes, actual net rent nor future investment returns are verified. Selling also exchanges property risk for market-entry risk.</p>
+<div class="hero-change"><strong>What would change this answer?</strong><ul>
+<li>The trust, title, debt or a legal/beneficiary rule prevents occupancy.</li>
+<li>Verified insurance, repair, rent or tax figures materially change the cash comparison.</li>
+<li>The estate-wide tax result or the inheritor’s ability to tolerate a market drawdown changes the sell-and-reinvest fallback.</li>
+</ul><a href="pages/executive-summary.html">See the reversal conditions</a> &middot; <a href="pages/black-swan.html#phased-entry">Test reinvestment timing</a></div>
 <div class="signal"><span></span> Privacy first &middot; no name, address, ZIP or parcel is published</div></div></div>''' + cards([
         ('01 / The bottom line', 'Executive summary', 'Eight findings, one recommendation, and what would overturn it', 'pages/executive-summary.html'),
         ('02 / The numbers', 'Year-by-year projections', 'Both homes, 2026 to 2076, with both assessment cases', 'pages/projections.html'),
@@ -79,6 +84,8 @@ rent-to-price ratio the local rent caps make hard to reach.</p>
         ('04 / The gaps', 'Questions and missing evidence', 'Twenty-two questions, who can answer each, and what unlocks it', 'pages/questions.html'),
         ('05 / Before you change anything', 'Suggestions for review', 'Nineteen proposals, review-only, nothing auto-applied', 'pages/suggestions.html'),
         ('06 / The paperwork', 'Inheritance step by step', 'Month 0 to month 36, with the statutory clocks', 'pages/inheritance-process.html'),
+        ('07 / The meeting', 'Attorney / CPA one-page brief', 'Print a private-work-session checklist with no property-specific totals', 'pages/advisor-brief.html'),
+        ('08 / The terms', 'Glossary', 'Plain-language definitions with official sources', 'pages/glossary.html'),
     ]) + callout('The one comparison that decides this', 
         f'If the trust distributes in 2045 and A is worth {M(c45["sale_price"])} on that date, selling nets '
         f'{M(c45["sale_net"])} after selling costs and the county transfer tax. Left invested for twenty years at the '
@@ -218,6 +225,19 @@ def page_decision():
         'Property B\'s own value and rent are deliberately excluded from all of them, so the columns measure only the '
         'incremental decision about A. Anything you do to B is a separate comparison on the same arithmetic.', 'warning') + table(
         'Paths to evaluate', ['Path', 'What is really being risked', 'Household net result'], rows) + table(
+        'Mixed and phased reinvestment paths after a sale', ['Entry path', 'Primary trade-off', 'Where to compare it'], [
+        (['All stocks at transfer', 'Immediate market exposure; no holding-period guarantee.',
+          'The 20-year property model uses an assumed rate. Compare timing in the four-year stress lab.'], As, 'stocks erp2026stocks'),
+        (['Hold 24, 30 or 36 months in short Treasuries, then phase stocks over 6 or 12 months',
+          'Lower immediate equity exposure, but short yields can fall before reinvestment; a 2-year note can lose market value if sold before maturity.',
+          '<a href="black-swan.html#phased-entry">Open the local-only scenario calculator</a>. Outputs are nominal and pre-tax.'], As, 'treasuryarchive treasurybillarchive treasury2008curve treasurynotes treasurypricing'),
+        (['Mixed allocation: invest 25%, 50% or 75% immediately; bridge and phase the remainder',
+          'Combines immediate sequence exposure with lower near-term exposure on the balance; no allocation eliminates loss risk.',
+          'Adjust the immediate share, bridge length, phase-in length and gross yield in the stress lab.'], As, 'stocks treasuryarchive'),
+        (['Remain in short Treasuries for the entire 48-month test',
+          'Avoids stock-price changes during this test window but exposes the owner to future rate, inflation and tax changes.',
+          'The test uses an assumed constant gross yield, not a yield forecast or historical realized return.'], As, 'bills treasuryarchive treasury2008curve'),
+    ], 'These are entry-timing comparisons, not a recommendation to sell. None includes a reserve calculation, actual after-tax returns, fees, inflation, dividends or a forecast. The 2008 yield snapshot and price-index path are separate evidence and use different measurements.') + table(
         'The arithmetic behind the comparison', ['Line', 'Amount in the transfer year', 'Amount at the twenty-year horizon', 'Rule applied'], [
         (['Market value of A', M(c45['sale_price']), M(c45['horizon_row']['value']), 'Owner estimate grown at ' + pct(P['home_growth_default']*100) + ' a year, an assumption.'], As, 'pub29'),
         (['Selling costs', M(c45['sale_price']*P['selling_cost']), M(c45['horizon_row']['value']*P['selling_cost']), 'A ' + pct(P['selling_cost']*100) + ' assumption covering commission, escrow and concessions. No written quote has been read.'], As, 'rtc11911'),
@@ -280,6 +300,97 @@ def page_projections():
     return out
 
 
+# ---------------------------------------------------------------------- phased-entry lab
+def phase_entry_section():
+    """Render the static risk table and a browser-only, privacy-local what-if tool."""
+    default = phase.simulate()
+    rows = []
+    for result in phase.scenario_summary():
+        scenario = result['scenario']
+        if scenario == '1929':
+            src, status = 'fed1929 bills treasuryarchive treasurybillarchive treasury2008curve treasurynotes treasurypricing stocks', Pj
+        elif scenario == '2008':
+            src, status = 'erp2026stocks bills treasuryarchive treasurybillarchive treasury2008curve treasurynotes treasurypricing stocks', Pj
+        else:
+            src, status = 'stocks bills treasuryarchive treasurybillarchive treasury2008curve treasurynotes treasurypricing', As
+        rows.append(([phase.SCENARIOS[scenario], phase.money(result['immediate']),
+                      phase.money(result['park_then_phase_24']),
+                      phase.money(result['park_then_phase_30']),
+                      phase.money(result['park_then_phase_36']),
+                      phase.money(result['treasury_only'])], status, src))
+    baseline = table('Four-year entry-risk illustration, per $100,000 of hypothetical net proceeds',
+        ['Market sequence', 'All stocks at transfer', '24-month bridge cash proxy + 12-month phase-in',
+         '30-month bridge cash proxy + 12-month phase-in', '36-month bridge cash proxy + 12-month phase-in',
+         'Cash proxy at assumed gross yield for all 48 months'], rows,
+        'Nominal ending values at month 48. Default sensitivity: 3.00% constant gross Treasury cash-proxy yield, 0% immediate stock allocation. '
+        'All values are synthetic scenario arithmetic, rounded to $10, and before tax, inflation, dividends, fees or any note-sale price change. '
+        'The 1929 severity is an 80% floor because the Federal Reserve source says the decline exceeded 80%; the 2008 path uses annual official '
+        'price-index points with assumed straight-line monthly interpolation. Neither path is an actual monthly investment backtest.')
+    equity_anchors = table('Historical crash anchors—different indices and measurement windows',
+        ['Episode / measure', 'Historical observation or model input', 'Interpretation'], [
+        (['1929–1932 historical observation', 'The Federal Reserve reports a decline of more than 80% from peak to trough, with a June 1932 low.',
+          'Official evidence uses a precursor stock-market index; it is not the same series or return definition as the S&P composite.'], V, 'fed1929'),
+        (['1929 synthetic path assumption', 'Exactly −80%, interpolated linearly over 33 months, then held flat to month 48.',
+          'Invented scenario shape and severity floor; not a historical monthly replay.'], As, 'fed1929 stocks'),
+        (['Official S&P composite endpoints', 'End-2007: 1,468.36; end-2008: 903.25.',
+          'Official annual price-index levels; dividends are not included.'], V, 'erp2026stocks'),
+        (['Calculated 2008 calendar-year move', '−38.5%, computed from 1,468.36 to 903.25.',
+          'Year-end-to-year-end price-index change, not a peak-to-trough drawdown or total return.'], Pj, 'erp2026stocks'),
+        (['2008 synthetic monthly interpolation', 'Official year-end points from 2007 through 2011, joined with straight lines.',
+          'Intermediate monthly levels and purchase dates are assumptions; the result is not an exact investment backtest.'], As, 'erp2026stocks stocks'),
+    ], 'Historical observations are kept separate from the model’s invented paths. The sources establish anchor values, not the intermediate monthly line or any future return.')
+    treasury_rows = [
+        (['2 January 2008', '3.26%', '2.88%', 'Daily par-yield observations; not returns on a security held to maturity.'], V, 'treasuryarchive treasury2008curve treasurynotes'),
+        (['31 December 2008', '0.11%', '0.76%', 'Daily par-yield observations; not returns on a security held to maturity.'], V, 'treasuryarchive treasury2008curve treasurynotes'),
+    ]
+    treasury_snapshot = table('Observed Treasury par yields during 2008 (rate-risk evidence, not portfolio returns)',
+        ['Observation date', '3-month maturity', '2-year maturity', 'Interpretation'], treasury_rows,
+        'The official Treasury daily par-yield feed shows these date-specific yields. The 3-month figure is a constant-maturity par yield, not the realized return on a rolling bill ladder; the 2-year figure is a par yield, not the return on a note sold early. The large change illustrates why a constant future yield is only a sensitivity input. TreasuryDirect explains that note prices may be above or below par when yields change.')
+    paths = {key: [round(phase.market_index(key, month), 8)
+                   for month in range(phase.HORIZON_MONTHS + 1)] for key in phase.SCENARIOS}
+    path_data = E(json.dumps(paths, separators=(',', ':')), quote=True)
+    chart_min, chart_max = 20.0, 150.0
+    chart_x0, chart_x1, chart_y0, chart_y1 = 42, 620, 20, 205
+    def points(key):
+        return ' '.join(
+            f'{chart_x0 + month * (chart_x1 - chart_x0) / phase.HORIZON_MONTHS:.1f},'
+            f'{chart_y1 - (paths[key][month] - chart_min) * (chart_y1 - chart_y0) / (chart_max - chart_min):.1f}'
+            for month in range(phase.HORIZON_MONTHS + 1))
+    chart = (f'<figure class="phase-chart"><svg viewBox="0 0 660 245" role="img" aria-labelledby="entry-chart-title entry-chart-desc">'
+             '<title id="entry-chart-title">Illustrative stock-price index sequences</title>'
+             '<desc id="entry-chart-desc">A normalized 1929-like linear drawdown, an annual-point 2008 to 2011 sequence with linear interpolation, and an invented rising path. Month zero equals 100. These are scenario paths, not a total-return investment backtest.</desc>'
+             + ''.join(f'<line x1="42" x2="620" y1="{chart_y1 - (y-chart_min)*(chart_y1-chart_y0)/(chart_max-chart_min):.1f}" y2="{chart_y1 - (y-chart_min)*(chart_y1-chart_y0)/(chart_max-chart_min):.1f}" class="chart-grid"/><text x="5" y="{chart_y1 - (y-chart_min)*(chart_y1-chart_y0)/(chart_max-chart_min)+4:.1f}" class="chart-label">{int(y)}</text>' for y in (20, 60, 100, 140))
+             + f'<line x1="42" x2="620" y1="{chart_y1}" y2="{chart_y1}" class="chart-axis"/><polyline class="line-1929" points="{points("1929")}"/><polyline class="line-2008" points="{points("2008")}"/><polyline class="line-rising" points="{points("rising")}"/>'
+             '<text x="42" y="235" class="chart-label">Month 0</text><text x="574" y="235" class="chart-label">Month 48</text>'
+             '</svg><figcaption><span><i class="swatch swatch-1929"></i>1929-like: synthetic linear path to an 80% loss floor</span><span><i class="swatch swatch-2008"></i>2008–2011: official annual price-index points, linearly interpolated</span><span><i class="swatch swatch-rising"></i>Rising: invented +8%/year price-only path</span></figcaption></figure>')
+    html = f'''<section class="table-section phase-lab" id="phased-entry" data-paths="{path_data}">
+<h2>Phased entry: compare an illustrative short-Treasury bridge with stock exposure</h2>
+<p class="table-note">This tests sequence risk, not whether selling is best. It starts with a hypothetical amount already net of sale costs and tax; it does not publish or estimate this household's sale proceeds. The bridge is a simplified cash proxy for a possible short-Treasury holding period, not a security-level ladder simulation. A 13-week bill matures in about three months; a 2-year note pays fixed coupons and can have a different market price if sold before maturity. {refs('bills', 'treasurynotes', 'treasurypricing')}</p>
+<p class="table-note">Changing any control recalculates locally in this browser only. No value is saved or transmitted. The gross yield control is a sensitivity input, not a current quote or forecast. The model does not capture actual bill-roll yields, specific note coupons or prices, or a 2-year note's price change if sold early. Federal tax on interest, state/local exemption, stock dividends, capital-gains tax, inflation, fees and a dedicated cash reserve are excluded. Confirm the actual after-tax amount with the CPA.</p>
+<div class="phase-controls">
+<label for="phase-principal">Illustrative starting cash<input id="phase-principal" type="number" min="10000" max="5000000" step="10" value="100000"></label>
+<label for="phase-wait">Months held in short Treasuries before phasing<select id="phase-wait"><option value="24" selected>24 months</option><option value="30">30 months</option><option value="36">36 months</option></select></label>
+<label for="phase-ramp">Phase into stocks over<select id="phase-ramp"><option value="6">6 equal-dollar installments</option><option value="12" selected>12 equal-dollar installments</option></select></label>
+<label for="phase-yield">Assumed gross annual bridge yield<input id="phase-yield" type="number" min="0" max="6" step="0.25" value="3"></label>
+<label for="phase-sequence">Stress sequence<select id="phase-sequence"><option value="1929">1929-like severe drawdown</option><option value="2008" selected>2008–2011 price-index sequence</option><option value="rising">Rising market, invented +8% a year</option></select></label>
+<label for="phase-immediate">Share invested in stocks immediately<select id="phase-immediate"><option value="0" selected>0%</option><option value="0.25">25%</option><option value="0.5">50%</option><option value="0.75">75%</option><option value="1">100%</option></select></label>
+</div>
+<div class="phase-result" aria-live="polite">
+<h3>Nominal value at month 48</h3>
+<dl class="phase-metrics">
+<div><dt>All stocks immediately</dt><dd id="phase-immediate-value">{phase.money(default['immediate_equity'])}</dd></div>
+<div><dt>Selected mixed/phase path</dt><dd id="phase-staged-value">{phase.money(default['mixed_phase'])}</dd></div>
+<div><dt>Cash proxy at assumed yield for 48 months</dt><dd id="phase-treasury-value">{phase.money(default['treasury_only'])}</dd></div>
+<div><dt>Phase path minus immediate</dt><dd id="phase-delta-value">{phase.money(default['mixed_phase'] - default['immediate_equity'])}</dd></div>
+</dl>
+<p id="phase-explanation">At default settings, the calculator compares a 24-month bridge followed by 12 equal-dollar monthly stock purchases with immediate stock exposure, at the same month-48 valuation. A positive or negative difference belongs only to the selected scenario and assumptions.</p>
+<p id="phase-error" class="phase-error" role="status"></p>
+</div>
+<p class="table-note">1929 anchor: the Federal Reserve reports the stock-market peak-to-trough loss exceeded 80% from the 1929 peak to June 1932; the model uses exactly −80% as a severity floor over an assumed 33 months, then holds the index flat to month 48. 2008 anchor: ERP 2026 Table B-56 gives year-end S&amp;P composite price-index levels for 2007–2011; the model interpolates between those annual observations. The rising sequence is an invented opportunity-cost case. {refs('fed1929', 'erp2026stocks', 'stocks')}</p>
+</section>'''
+    return baseline + equity_anchors + treasury_snapshot + chart + html
+
+
 # --------------------------------------------------------------------------- black swan
 def page_black_swan():
     eps, dd = swan.episodes()
@@ -294,6 +405,7 @@ def page_black_swan():
         'This page replaces the constants with the actual published record where one exists, and with labelled inventions '
         'where it does not. No probability, success rate or forecast appears anywhere on it, because none has been '
         'verified.', 'warning')
+    out += phase_entry_section()
     out += table('The real record, from the official California index, 1975-2026', ['Episode', 'Peak to trough', 'Length', 'What happened'], [
         ([e['name'], pct(e['change']), f'{e["years"]:.1f} years', e['note']], V, 'fhfa')
         for e in eps] + [

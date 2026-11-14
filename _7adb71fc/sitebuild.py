@@ -28,7 +28,9 @@ PAGES = [
     ('black-swan', 'Black-swan conditions', 'Stress', c1.page_black_swan),
     ('estate-thresholds', 'Estate tax & headroom', 'Tax & process', c3.page_estate),
     ('inheritance-process', 'Inheritance step by step', 'Tax & process', c3.page_process),
+    ('advisor-brief', 'Attorney / CPA one-page brief', 'Tax & process', c3.page_advisor_brief),
     ('law-watchlist', 'Law watchlist', 'Tax & process', c3.page_law),
+    ('glossary', 'Glossary', 'Evidence', c3.page_glossary),
     ('flagged-for-review', 'Flagged for review', 'Evidence', c3.page_flagged),
     ('sources', 'Official source ledger', 'Evidence', c3.page_sources),
     ('privacy', 'Privacy & rounding', 'Evidence', c3.page_privacy),
@@ -72,8 +74,9 @@ def build():
         heading = '' if home else (
             f'<div class="page-heading"><span class="eyebrow">{E(cat.upper())}</span><h1>{E(title)}</h1>'
             f'<p class="lead">Current law, owner figures, stated assumptions and open questions, kept apart on purpose.</p></div>')
+        body_class = 'advisor-print' if key == 'advisor-brief' else ''
         html = HEAD.format(title=E(title), prefix=prefix) + f'''
-<body><a class="skip" href="#main">Skip to content</a><div class="layout">
+<body class="{body_class}"><a class="skip" href="#main">Skip to content</a><div class="layout">
 <aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">&#9672;</span><span>TWO-PROPERTY<br>DECISION BRIEF</span></a>
 <p class="sidebar-note">A home to inherit.<br>A home already owned.</p>
 <nav aria-label="Main navigation">{nav_html(key, prefix)}</nav>

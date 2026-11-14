@@ -1,14 +1,16 @@
-"""Independent evidence ledger for session s-7adb71fc.
+"""Independent evidence ledger for the public decision brief.
 
-Every entry below was retrieved with a direct page fetch on 2026-11-13 (UTC) by
-this session. The quoted passage is held verbatim from the fetched page; the
+The original entries were retrieved with direct page fetches on 2026-11-13
+(UTC). The supplemental investment sources were fetched and read on
+2026-11-14 (UTC). Each quoted passage is held from its fetched page; the
 "scope" field states exactly what the source does and does not establish.
 
 Nothing in this file was copied from another session's ledger without re-fetching
 the page. Where a page could not be read, it is recorded in FAILED instead of
 being cited.
 """
-DATE = '2026-11-13'
+DATE = '2026-11-14'
+SUPPLEMENTAL_DATE = '2026-11-14'
 
 # key: (label, url, verbatim passage, scope, chunk)
 SOURCES = {
@@ -121,8 +123,8 @@ SOURCES = {
   'In CBO\'s economic forecast, the interest rate on 10-year Treasury notes averages 4.3 percent over the 2026-2036 period',
   'A 4.3% ten-year baseline, a 4.8% higher-rate scenario and a 5.8% stress scenario. CBO also projects debt held by the public rising from 100.6% to 120.2% of GDP.', '0'),
  'stocks': ('SEC Investor.gov - stocks', 'https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks',
-  'There\'s no guarantee that the company whose stock you hold will grow and do well, so you can lose money you invest in stocks.',
-  'Risk disclosure and the observation that large-company stocks as a group lost money in about one year out of three. It does not support any assumed return.', '0'),
+  'But stock prices move down as well as up. There’s no guarantee that the company whose stock you hold will grow and do well, so you can lose money you invest in stocks.',
+  'Direct fetch 2026-11-14. Risk disclosure; the page also says large-company stocks as a group have lost money on average about one out of every three years. It does not support an assumed return or sequence-risk probability.', '0'),
  'bills': ('TreasuryDirect - Treasury bills', 'https://treasurydirect.gov/marketable-securities/treasury-bills/',
   'Federal tax due on interest earned',
   'Terms of 4 to 52 weeks, a $100 minimum, and federal tax with no state or local tax on the interest.', '0'),
@@ -133,6 +135,28 @@ SOURCES = {
  'sos2026': ('California Secretary of State - 2026 general election ballot measures', 'https://electionresults.sos.ca.gov/returns/ballot-measures',
   '42 Prohibits New State Personal Property Taxes And Certain Retroactive State Taxes. Initiative Constitutional Amendment. 6,378,156 51.4% 6,040,829 48.6%',
   'Unofficial results as of 12 November 2026, to be certified by 11 December 2026. Proposition 42 was leading. It constrains state personal property taxes, not real property tax or rent law.', '0'),
+ # ---------------------------------------------------------------- supplemental investment-entry sources, fetched 2026-11-14
+ 'fed1929': ('Federal Reserve Board - Financial Market Shocks during the Great Depression', 'https://www.federalreserve.gov/pubs/feds/2010/201022/index.html',
+  'At its trough, the stock market had declined by more than 80 percent from its peak value.',
+  'Direct fetch 2026-11-14. The source describes a precursor to the S&P 500, with a fall beginning in autumn 1929 and a trough in June 1932. It does not provide a monthly total-return series. The model uses exactly an 80% synthetic severity floor and an assumed linear path, not a historical replay.', '1'),
+ 'erp2026stocks': ('U.S. Government Publishing Office - ERP 2026 Table B-56', 'https://www.govinfo.gov/content/pkg/ERP-2026/pdf/ERP-2026-table56.pdf',
+  'TABLE B–56. Common stock prices and yields, 2000–2025; end-of-year S&P composite index: 2007 1,468.36; 2008 903.25; 2009 1,115.10; 2010 1,257.64; 2011 1,257.60.',
+  'Direct fetch 2026-11-14. Official end-of-year S&P composite price-index observations (not total returns; dividends excluded). The scenario linearly interpolates these annual points for monthly purchase dates, so it is a synthetic approximation, not an exact monthly backtest.', '0'),
+ 'treasurynotes': ('TreasuryDirect - Treasury notes', 'https://www.treasurydirect.gov/marketable-securities/treasury-notes/',
+  'We sell Treasury Notes for a term of 2, 3, 5, 7, or 10 years. Notes pay a fixed rate of interest every six months until they mature.',
+  'Direct fetch 2026-11-14. Confirms the 2-year note maturity and fixed coupon terms. The page does not establish any future yield or recommend a maturity for this household.', '0'),
+ 'treasurypricing': ('TreasuryDirect - Understanding pricing and interest rates', 'https://www.treasurydirect.gov/marketable-securities/understanding-pricing/',
+  'The price of a bond or a note may be the face value (also called par value) or may be more or less than the face value. The price depends on the yield to maturity and the interest rate.',
+  'Direct fetch 2026-11-14. Supports the reinvestment/early-sale risk warning for notes. The calculator does not model this price risk; it assumes a constant gross cash yield.', '0'),
+ 'treasuryarchive': ('U.S. Treasury - Daily Treasury Rate Archives', 'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/daily-treasury-rate-archives',
+  'Daily Treasury Bill Rates; 2002-2009; bill-rates-2002-2009.csv; 2002-2023; bill-rates-2002-2023.csv.',
+  'Official archive page fetched 2026-11-14. It lists the bill-rate archive periods and CSV files. The page fetch returned only its archive heading in the text viewer; exact archive labels were read in the official-page search result. Daily quotations are yields, not realized after-tax holding returns.', '0'),
+ 'treasurybillarchive': ('U.S. Treasury - Daily Treasury Bill Rates, archived CSV', 'https://home.treasury.gov/system/files/276/bill-rates-2002-2023.csv',
+  'Date,4 WEEKS BANK DISCOUNT,4 WEEKS COUPON EQUIVALENT,8 WEEKS BANK DISCOUNT,8 WEEKS COUPON EQUIVALENT,13 WEEKS BANK DISCOUNT,13 WEEKS COUPON EQUIVALENT.',
+  'Official Treasury archive CSV; direct file fetch returned HTTP 500 in this session. The official search result exposed the CSV header and rows. This series provides daily secondary-market bill yield quotations (including 13-week bills), not realized investor returns.', 'search result'),
+ 'treasury2008curve': ('U.S. Treasury - Daily Treasury Par Yield Curve Rates, 2008 data feed', 'https://home.treasury.gov/resource-center/data-chart-center/interest-rates/pages/xml?data=daily_treasury_yield_curve&field_tdr_date_value=2008',
+  '2008-01-02T00:00:00 3.09 3.26 3.32 3.17 2.88 2.89 3.28 3.54 3.91 4.39 4.35; 2008-12-31T00:00:00 0.11 0.11 0.27 0.37 0.76 1.00 1.55 1.87 2.25 3.05 2.69.',
+  'Direct official Treasury XML feed fetch 2026-11-14; field order was cross-checked against the Treasury CSV header (1 Mo, 3 Mo, 6 Mo, 1 Yr, 2 Yr, 3 Yr, 5 Yr, 7 Yr, 10 Yr, 20 Yr, 30 Yr). The 3-month and 2-year values are par-yield observations on those dates, not returns on a bill/note held for a period and not a forecast. They illustrate changing yields and reinvestment/note-price risks only.', '0'),
 }
 
 FAILED = [
@@ -143,6 +167,7 @@ FAILED = [
  ('sf.gov current-rent-increase page', 'Returned the 404 page. Replaced with the working Rent Board current-rates page.'),
  ('bls.gov CUURS49BSEHA October 2025', 'Missing value, footnoted as unavailable because of the 2025 lapse in appropriations. Recorded as a gap rather than interpolated.'),
  ('fhfa.gov with a direct curl fetch', 'The sandbox cannot reach fhfa.gov except through the page-fetch tool, so the series was transcribed from two verified fetch chunks rather than downloaded.'),
+ ('Treasury historical CSV direct fetch, 2026-11-14', 'The static Treasury CSV archive files and direct 2008 CSV query returned HTTP 500 to the page fetcher. The official year-specific XML yield-curve feed was fetched successfully and supplies the two displayed 2008 par-yield observations. No full bill/yield series was downloaded or used to calculate holding-period investment returns.'),
 ]
 
 
@@ -162,5 +187,8 @@ LABELS = {
  'eia': 'EIA electricity prices', 'bls2022': 'BLS 2022 inflation',
  'blsrent': 'BLS area rent index', 'cbo': 'CBO rate projection', 'stocks': 'SEC investor education',
  'bills': 'TreasuryDirect bills', 'fhfa': 'FHFA house price index',
- 'sos2026': 'Secretary of State results',
+ 'sos2026': 'Secretary of State results', 'fed1929': 'Federal Reserve 1929 episode',
+ 'erp2026stocks': 'GPO ERP 2026 Table B-56', 'treasurynotes': 'TreasuryDirect notes',
+ 'treasurypricing': 'TreasuryDirect pricing', 'treasuryarchive': 'Treasury rate archives',
+ 'treasurybillarchive': 'Treasury bill CSV archive', 'treasury2008curve': 'Treasury 2008 yield-curve feed',
 }

@@ -16,6 +16,7 @@ sys.path.insert(0, str(ROOT / '_7adb71fc'))
 from case_data import A, B, P, CA_HPI, BOE_FACTORS
 from case_model import rounded, projection, path_comparison, allowance, money
 import swan
+import phase_investing as phase
 from evidence import SOURCES, FAILED, LABELS
 from verify import PROHIBITED
 
@@ -90,6 +91,72 @@ class ProjectionTests(unittest.TestCase):
             self.assertGreater(c['reinvest_after_tax'], c['rental_total'], year)
 
 
+class PhaseInvestingTests(unittest.TestCase):
+    def test_scenario_endpoints_and_1929_floor(self):
+        self.assertEqual(phase.market_index('1929', 0), 100.0)
+        self.assertAlmostEqual(phase.market_index('1929', 33), 20.0)
+        self.assertAlmostEqual(phase.market_index('1929', 48), 20.0)
+        self.assertEqual(phase.market_index('2008', 0), 100.0)
+        self.assertAlmostEqual(phase.market_index('2008', 12), 903.25 / 1468.36 * 100)
+        self.assertAlmostEqual(phase.market_index('2008', 48), 1257.60 / 1468.36 * 100)
+        self.assertAlmostEqual(phase.market_index('rising', 12), 108.0)
+
+    def test_default_scenario_values_are_reproducible(self):
+        staged = phase.simulate(scenario='2008')
+        self.assertAlmostEqual(staged['immediate_equity'], 85_646.5716854)
+        self.assertAlmostEqual(staged['mixed_phase'], 113_836.1838834)
+        self.assertAlmostEqual(staged['treasury_only'], 112_550.881)
+        self.assertEqual(phase.round_money(-125), -130)
+        self.assertEqual(phase.money(124.99), '$120')
+
+    def test_late_entry_opportunity_cost_in_rising_case(self):
+        row = next(r for r in phase.scenario_summary() if r['scenario'] == 'rising')
+        self.assertGreater(row['immediate'], row['park_then_phase_24'])
+        self.assertGreater(row['park_then_phase_24'], row['park_then_phase_30'])
+        self.assertGreater(row['park_then_phase_30'], row['park_then_phase_36'])
+
+    def test_mixed_immediate_share_boundaries(self):
+        staged = phase.simulate(scenario='2008', immediate_share=0.25)
+        fully_invested = phase.simulate(scenario='2008', immediate_share=1)
+        self.assertNotEqual(staged['mixed_phase'], staged['immediate_equity'])
+        self.assertAlmostEqual(fully_invested['mixed_phase'], fully_invested['immediate_equity'])
+        self.assertEqual(fully_invested['ending_cash'], 0)
+
+    def test_inputs_are_rejected_outside_defined_sensitivity(self):
+        with self.assertRaises(ValueError):
+            phase.simulate(wait_months=23)
+        with self.assertRaises(ValueError):
+            phase.simulate(phase_months=7)
+        with self.assertRaises(ValueError):
+            phase.simulate(annual_treasury_yield=0.061)
+        with self.assertRaises(ValueError):
+            phase.simulate(immediate_share=1.1)
+        with self.assertRaises(ValueError):
+            phase.simulate(scenario='forecast')
+
+    def test_every_entry_assumption_is_labelled_on_the_page(self):
+        from content_part1 import page_black_swan, page_overview
+        html = page_black_swan()
+        self.assertIn('phased-entry', html)
+        self.assertIn('Rising: invented +8%/year price-only path', html)
+        self.assertIn('2008–2011 price-index sequence', html)
+        self.assertIn('rate-risk evidence, not portfolio returns', html)
+        self.assertIn('Treasury 2008 yield-curve feed', html)
+        overview = page_overview()
+        self.assertIn('What would change this answer?', overview)
+        self.assertIn('market-entry risk', overview)
+
+    def test_advisor_brief_and_glossary_are_sources_and_privacy_aware(self):
+        from content_part3 import page_advisor_brief, page_glossary
+        brief = page_advisor_brief()
+        glossary = page_glossary()
+        self.assertIn('Public copy intentionally omits addresses', brief)
+        self.assertIn('Property B: analyze separately', brief)
+        self.assertIn('Generally within 60 days', brief)
+        self.assertIn('Sensitivity, not forecast', glossary)
+        self.assertIn('Price index vs. total return', glossary)
+
+
 class ReplayTests(unittest.TestCase):
     def test_series_integrity(self):
         self.assertEqual(len(CA_HPI), 206)
@@ -131,7 +198,7 @@ class EvidenceTests(unittest.TestCase):
     def test_no_source_copied_without_fetch(self):
         # The ledger records the retrieval date this session used.
         from evidence import DATE
-        self.assertEqual(DATE, '2026-11-13')
+        self.assertEqual(DATE, '2026-11-14')
 
 
 class PrivacyTests(unittest.TestCase):

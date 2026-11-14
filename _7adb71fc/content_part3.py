@@ -277,10 +277,11 @@ def page_sources():
         rows.append(([f'<a href="{E(url, quote=True)}" rel="noopener noreferrer">{E(label)}</a>',
                       f'<span class="quote">{E(passage[:160])}{"..." if len(passage) > 160 else ""}</span>',
                       E(scope), chunk], 'Verified', key))
-    out = callout('Every source below was fetched and read by this session on ' + DATE,
-        'The quoted passage is what the page actually said, trimmed for length. The scope column states what the source '
-        'does and does not establish, which is the part that prevents a link from being mistaken for a fact. Where a page '
-        'could not be read, it is listed as a failed retrieval instead of being cited.', 'info')
+    out = callout('Evidence review current through ' + DATE,
+        'The quoted passage and the scope field record what each source supports. Supplemental sources show their own '
+        'retrieval method and date in the scope text. Some Treasury CSV downloads returned HTTP 500; their official '
+        'search-result excerpts are identified as such, and no unobserved full rate series was used to compute returns. '
+        'Failed retrievals are listed rather than silently substituted.', 'info')
     out += table('Official source ledger', ['Source', 'Passage as published', 'What it establishes and what it does not', 'Chunk'], rows,
                  'All sources are on official domains. A link verifies the rule, never a private fact about these properties.')
     out += table('Failed retrievals, recorded rather than substituted', ['Attempt', 'What happened'], [
@@ -292,9 +293,11 @@ def page_privacy():
     return callout('What was done to protect identity, and what was not',
         'No person, street address, ZIP code, parcel number, account number or permit number appears anywhere in this '
         'site. No private lookup was performed: this session did not search for an owner, an address or a parcel record. '
-        'Every dollar figure is rounded half-up to the nearest ten dollars before it is used in any calculation, so a '
-        'published number cannot be worked back to an exact bill. Property names are labels, A and B. That is the whole '
-        'of the protection, and it should be understood for exactly what it is.', 'warning') + table(
+        'Every owner-supplied dollar figure displayed here is rounded half-up to the nearest ten dollars. That reduces '
+        'precision but does not anonymize a property: a reader may match a combination of value, assessment, bill, rent '
+        'and property characteristics to public records. Property names A and B are placeholders, not a privacy guarantee. '
+        'This site contains no uploaded deeds, trust instruments, account numbers or contact details, but its financial '
+        'disclosures remain potentially identifying.', 'warning') + table(
         'Privacy safeguards and the limits of each', ['Area', 'What is protected', 'What is still exposed'], [
         (['Identity', 'No name, address, ZIP or parcel identifier, account or permit number is published. Properties are called A and B.',
           'A reader who already knows the household can infer which properties these are. Anonymisation protects against strangers, not against people who know you.'], V, 'sco'),
@@ -320,3 +323,83 @@ def page_privacy():
         (['Percentages', 'Shown to one or two decimals and not rounded to ten.', 'Rates, growth and impliede returns.'], V, 'pub29'),
         (['Totals', 'Computed from full precision, then rounded, so a column may not add exactly by hand.', 'Every total row.'], V, 'pub29'),
     ])
+
+
+def page_advisor_brief():
+    """One-page printable meeting brief with no household-specific amounts."""
+    paths = table('Decision paths to review', ['Path', 'Question for the advisers', 'Evidence status'], [
+        (['Property A: occupy if trust, title and eligibility permit',
+          'Confirm the instrument, beneficiary rights, principal-residence test, claim deadlines, and cost of giving up current housing.',
+          'No trust, title or occupancy facts have been independently reviewed.'], Ms, 'prob16061 pub801 lta26026'),
+        (['Property A: rent',
+          'Verify lawful rental use, signed leases, achievable net rent, vacancy, repairs, insurance class and tax treatment.',
+          'No property-specific rent survey, lease or landlord quote has been reviewed.'], Ms, 'rental ab1482 cdi'),
+        (['Property A: sell, then invest',
+          'Verify date-of-death basis, debt, sale costs and tax; decide reserve, risk limit, and whether to invest immediately or gradually.',
+          'Returns are not forecast. The stress lab compares all-at-once, phased and mixed entry paths.'], As, 'basis capgains stocks'),
+        (['Property A: bridge, then phase into stocks',
+          'Compare 24, 30 and 36 months in short Treasury instruments, followed by equal-dollar stock installments over 6 or 12 months; review rolling-yield and note-price risk.',
+          'Rates are user-adjustable sensitivities; the published historical observations are yields, not realized holding returns.'], As, 'treasuryarchive treasurybillarchive treasury2008curve treasurynotes treasurypricing'),
+        (['Property B: analyze separately',
+          'Keep the already-owned, multi-unit, partly rented property distinct. Reconcile actual leases, income, operating costs, insurance and assessed value.',
+          'Its case description is user-provided; no private documents or addresses are included in this public sheet.'], O, 'rental pub29 ab1482'),
+    ])
+    deadlines = table('First deadlines to calendar from the actual legal trigger', ['Clock', 'Action', 'Responsible adviser'], [
+        (['Generally within 60 days', 'Trustee notice after a revocable trust becomes irrevocable; confirm the trigger and exceptions.', 'Trust attorney / trustee'], V, 'prob16061'),
+        (['Within 150 days', 'Death-transfer change-of-ownership statement; confirm which assessor/recorder receives it.', 'Trustee / attorney'], V, 'rtc480'),
+        (['Nine months after death, if required', 'Federal estate return; determine filing threshold and any extension from the full estate.', 'CPA / estate attorney'], V, 'form706 estate'),
+        (['Within one year / within three years', 'Homeowners-exemption timing and Prop. 19 claim timing are separate; confirm the facts and file the correct forms.', 'Trustee / attorney / assessor'], V, 'pub801 homeex lta26026'),
+    ])
+    return f'''<article class="advisor-sheet" id="advisor-brief">
+<header class="advisor-title"><p class="eyebrow">PRIVATE WORKING SESSION · ATTORNEY / CPA</p>
+<h2>Two-property inheritance decision brief</h2>
+<p>Public copy intentionally omits addresses, personal balances and property-specific dollar totals. Fill case-specific amounts only in the advisers’ private workpapers.</p></header>
+<div class="advisor-columns">
+<section><h3>Case frame</h3><ul>
+<li><strong>Property A:</strong> expected to pass through a trust in the 2040–2050 window; transfer date, debt, title and trust terms are unverified.</li>
+<li><strong>Property B:</strong> already owned by the inheritor, multi-unit and partly rented; analyze its actual tenancy and cash flow separately.</li>
+<li>Do not treat a projected inheritance date, future law, estimated rent or modelled market return as a verified fact.</li>
+</ul></section>
+<section><h3>Decision gates</h3><ul>
+<li>Can A legally and practically be occupied, and does occupancy meet current transfer-tax requirements?</li>
+<li>What are the estate-wide tax result, date-of-death basis, liabilities, insurance and actual net rental economics?</li>
+<li>How much sequence loss can be tolerated without a forced sale? Keep reinvestment risk beside the sale headline.</li>
+</ul></section></div>
+{paths}
+{deadlines}
+<div class="advisor-columns advisor-assignments">
+<section><h3>Attorney / trustee</h3><p>Review the executed trust and amendments, deed/title, authority, debt, beneficiary rights, Prop. 19 eligibility, tenant rights, and exact filing triggers. Provide a written deadline calendar.</p></section>
+<section><h3>CPA</h3><p>Build an estate-wide inventory; assess any Form 706 and fiduciary returns; confirm basis and depreciation; compare occupancy, rent and sale proceeds after tax; stress-test liquidity and tax assumptions.</p></section>
+<section><h3>Property / insurance advisers</h3><p>Verify actual leases and lawful unit use; obtain comparable rent opinions, inspections, utility/repair history, and matched owner-occupied, landlord and earthquake coverage quotes.</p></section>
+</div>
+<p class="advisor-next"><strong>Next review:</strong> at the actual death/vesting or distribution event, before any occupancy, lease, deed transfer, sale or investment decision. See <a href="inheritance-process.html">the full deadline timeline</a> and <a href="black-swan.html#phased-entry">the entry-risk lab</a>. This is an issue-spotting sheet, not legal, tax or investment advice.</p>
+</article>'''
+
+
+def page_glossary():
+    terms = [
+        ('Assessed value', 'The value used to calculate property tax under the applicable assessment rules. It may differ substantially from current market value.', 'pub29 lta26002'),
+        ('Base-year value', 'The assessment starting point established after a change in ownership or new construction, subject to exclusions and statutory limits.', 'pub29'),
+        ('Proposition 13 annual limit', 'A limit on increases to a qualifying assessed value; it does not cap every component of a property-tax bill or prevent a downward market change.', 'pub29 lta26002'),
+        ('Proposition 19 family-home exclusion', 'A conditional California property-tax benefit for qualifying parent-child transfers when statutory relationship, residence and filing requirements are met.', 'pub19 pub801 lta26026'),
+        ('Date-of-death basis / step-up', 'For inherited property, federal income-tax basis is generally tied to fair market value at the decedent’s death, subject to exceptions and valuation rules.', 'basis'),
+        ('Capital gain', 'The amount realized on a sale minus adjusted basis and applicable selling costs; exact tax depends on the facts and rules.', 'capgains homegain'),
+        ('Depreciation recapture', 'Tax treatment that can apply to depreciation deductions previously claimed on rental property when it is sold.', 'rental capgains'),
+        ('Gross estate / estate-tax exclusion', 'The federal estate tax generally applies to a decedent’s taxable estate above the exclusion for the year of death; it is not an inheritance tax on an heir’s receipt.', 'estate form706'),
+        ('Trustee notice', 'A statutory notice to specified beneficiaries or heirs after certain trusts become irrevocable; the trigger and service rules should be confirmed by counsel.', 'prob16061'),
+        ('Treasury bill', 'A short-term Treasury security that matures in one year or less; a 13-week bill is a common short maturity. Its quoted yield is not the same as a future guaranteed reinvestment rate.', 'bills treasurybillarchive treasuryarchive'),
+        ('Treasury note', 'A marketable Treasury security with a term including two years and fixed interest paid every six months; selling before maturity can expose the holder to price changes.', 'treasurynotes treasurypricing'),
+        ('Par yield', 'A constant-maturity yield-curve observation, not the realized return on a particular security bought and sold across time.', 'treasury2008curve treasurypricing'),
+        ('Reinvestment risk', 'The risk that proceeds from a maturing short security must be reinvested at a yield different from the prior one; the 2008 Treasury observations on the stress page illustrate changing rates, not future rates.', 'treasuryarchive treasury2008curve'),
+        ('Sequence / entry risk', 'The order and level of market movements around purchases can change the value of a phased-entry path. The site’s paths are scenarios, not probabilities or a forecast.', 'stocks erp2026stocks fed1929'),
+        ('Phased entry', 'Investing a cash pool in planned installments instead of putting it all into stocks at once. It can reduce dependence on one entry date, but can lag in a steadily rising market and does not remove loss risk.', 'stocks'),
+        ('Mixed path', 'A partial-now allocation to stocks while the balance remains in the Treasury bridge and enters later; the adjustable share in the stress lab is hypothetical.', 'stocks treasuryarchive'),
+        ('Price index vs. total return', 'A price-index level tracks index prices; it is not a total-return series with dividends reinvested. The 2008 path here uses price-index observations only.', 'erp2026stocks'),
+        ('Sensitivity, not forecast', 'An adjustable model input used to see how results respond. It is not a verified future rent, Treasury yield, stock return, tax rate or property value.', 'treasuryarchive stocks cbo'),
+    ]
+    return callout('Plain-language terms used in this brief',
+        'These short explanations help a meeting stay precise. They are not legal or tax definitions and do not replace the cited statute, agency guidance or adviser review.') + table(
+        'Glossary', ['Term', 'Working definition', 'Use in this decision'], [
+        ([term, definition, 'See the linked official source for the governing rule or data scope.'], 'Guidance', source)
+        for term, definition, source in terms],
+        'The linked sources support the legal rule, security feature or historical data named. They do not verify household-specific facts.')

@@ -37,6 +37,34 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
   await page.click('#reset-reviews');
   assert.equal(await page.locator(`.review-choice[data-id="${first}"]`).inputValue(), 'Not reviewed');
   assert.match(await page.locator('#review-summary').textContent(), new RegExp('0 of ' + total));
+  // The phased-entry calculator updates locally, exposes a synthetic scenario,
+  // and never stores the selected amount or market path.
+  await page.goto('http://127.0.0.1:8000/pages/black-swan.html');
+  assert.equal(await page.locator('#phase-staged-value').textContent(), '$113,840');
+  await page.selectOption('#phase-sequence', '1929');
+  const drawdownValue = await page.locator('#phase-staged-value').textContent();
+  assert.equal(drawdownValue, '$84,030');
+  await page.selectOption('#phase-wait', '36');
+  const bridge36Value = await page.locator('#phase-staged-value').textContent();
+  assert.equal(bridge36Value, '$111,030');
+  await page.selectOption('#phase-immediate', '0.25');
+  assert.notEqual(await page.locator('#phase-staged-value').textContent(), bridge36Value);
+  await page.locator('#phase-yield').fill('7');
+  assert.match(await page.locator('#phase-error').textContent(), /gross yield from 0% to 6%/);
+  await page.locator('#phase-yield').fill('3');
+  assert.equal(await page.locator('#phase-error').textContent(), '');
+  assert.deepEqual(await page.evaluate(() => Object.keys(localStorage)), []);
+  await page.goto('http://127.0.0.1:8000/pages/advisor-brief.html');
+  assert.equal(await page.locator('body').getAttribute('class'), 'advisor-print');
+  await page.emulateMedia({media:'print'});
+  assert.equal(await page.locator('.page-heading').evaluate(el => getComputedStyle(el).display), 'none');
+  const briefPdf = path.join(__dirname, '../_7eff7e24/browser/advisor-brief-print-test.pdf');
+  await page.pdf({path:briefPdf, format:'Letter', printBackground:true, preferCSSPageSize:true});
+  const pdfText = fs.readFileSync(briefPdf, 'latin1');
+  const printedPages = pdfText.split('/Type /Page').length - 1 - (pdfText.split('/Type /Pages').length - 1);
+  assert.equal(printedPages, 1, 'advisor briefing sheet should print as one page');
+  fs.unlinkSync(briefPdf);
+  await page.emulateMedia({media:'screen'});
   await page.setViewportSize({width:390,height:844});
   for (const file of manifest) {
     await page.goto('http://127.0.0.1:8000/'+file);
