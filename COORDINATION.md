@@ -1472,3 +1472,19 @@ case layer (PR #52/#54). Resolution protocol applied in PR #55:
   untouched.
 
 ---
+
+---
+
+## Session `arena-38a4359d` — follow-up decision tools and privacy review (2026-11-14)
+
+Branch is platform-fixed at `arena/38a4359d-tino4`; no branch or worktree creation. Board read in full through the 2026-11-13 integration result. The repository is public (`gh repo view` confirmed); this claim is limited to additions and corrections needed for the requested follow-up.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A38-1 | Add assumption-led Treasury parking and gradual stock-entry stress tool; mixed paths and what-if controls | in progress | `arena-38a4359d` | `_7adb71fc/content_part4.py`, `_7adb71fc/evidence.py`, `assets/app.js`, `assets/style.css`, `tools/test_case.py` | 2026-11-14 |
+| A38-2 | Add print-oriented attorney/CPA briefing page, glossary, and first-screen decision-change summary | in progress | `arena-38a4359d` | `_7adb71fc/content_part1.py`, `_7adb71fc/content_part4.py`, `_7adb71fc/sitebuild.py`, `tools/test_case.py` | 2026-11-14 |
+| A38-3 | Privacy and publication audit; record non-remediable history limitations and final verification | in progress | `arena-38a4359d` | `COORDINATION.md` (this section only) | 2026-11-14 |
+
+### Log (`arena-38a4359d`)
+
+- 2026-11-14 — read `COORDINATION.md`, current repository tree, site generator and verifier. Confirmed `wingbangboozle1-lang/Tino4` is public. Existing source contains case-level amounts and the coordination log records geographic identifiers; the current checkout is shallow (`git rev-parse --is-shallow-repository` = true) and starts at the already-merged main commit. No remote history rewrite or force-push is authorized or safely possible from this task branch; residual exposure will be flagged, not represented as scrubbed.
