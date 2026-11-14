@@ -1489,3 +1489,23 @@ Board read on `main` @ `0112ebb9` (PR #56 merged; live site at https://wingbangb
 ### Log (`arena/93ca1648-tino4`)
 
 - 2026-11-14 — claim recorded above; committing and pushing immediately.
+
+## Session `arena-56279d0a` — post-PR #65 audit and privacy regression containment (2026-11-14)
+
+Arena-fixed branch: `arena/56279d0a-tino4` (initial base `0112ebb9a48adc8efbedb572a09c0dd40f73bc48`). The user-requested scope is a privacy-first audit, not a household-specific analysis. PR #69 already aligned the README, so the proposed A562-2 README edit was withdrawn and is not revived.
+
+| Task ID | Task | Status | Owner | Exclusive file scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A562-1 | Audit public artifacts, privacy, sources, phased-investing/timeline wording, tests and deployment; record verified gaps without private figures | in progress | `arena-56279d0a` | `COORDINATION.md` (this session section only), `_s56279d0a/**` | 2026-11-14 22:09 |
+| A562-3 | Contain the privacy regression introduced by merged PR #71 by exactly reverting merge `6815e458d13658810c903d8a5919d37a9222e5a1` to the privacy-safe generic first-parent baseline; no history rewrite and no household-specific replacement content | in progress | `arena-56279d0a` | Exact inverse of PR #71's merge diff (38 paths), plus this session's coordination/report files | 2026-11-14 22:29 |
+
+### Verified urgent finding and coordination
+
+- **CR-A562-01 — PR #71 (now merged):** its Pages run completed successfully and the Pages API reported `built` for merge `6815e45`. A live page fetch showed owner-supplied property, tax, rent, and individualized decision details in public output. This violates the standing privacy constraint. The test workflow for that merge failed at “Unit and regression tests” before build/verify steps. The exact merge revert below is containment, not a proposal to restore those details. No values or identifiers are repeated in this log.
+- PR #71 also described an illustrative crash sequence; the surviving generic phased-investing page describes a stress-test proposal, not a verified historical total-return replay. Do not label a synthetic path as a 1929/2008 replay.
+- No Git history rewrite is attempted. The merged objects, PR diffs, forks, caches, and clones remain outside the reach of a normal revert; history remediation still requires repository-owner coordination.
+
+### Log (`arena-56279d0a`)
+
+- 2026-11-14 22:09–22:25 UTC — claimed the independent post-PR #65 audit; preserved upstream coordination entries through PR #73. The proposed README change was not started; PR #69 had already corrected it.
+- 2026-11-14 22:27–22:29 UTC — main advanced through PR #71 while the audit was in progress. Verified the merge, successful Pages deployment, live case-specific content, and failing required verification workflow. Rebased the audit branch on current main and claimed A562-3 to roll back only the merged regression. This is a content rollback on a feature branch, not a rewrite of `main` history.
