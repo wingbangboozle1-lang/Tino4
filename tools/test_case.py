@@ -21,6 +21,15 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("Blank early / midpoint / late transfer scenarios", (ROOT / "pages/projections.html").read_text(encoding="utf-8"))
         subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
 
+    def test_privacy_pages_disclose_current_tree_and_history_boundary(self):
+        privacy = (ROOT / "pages/privacy.html").read_text(encoding="utf-8")
+        flagged = (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8")
+        self.assertIn("The repository is public", privacy)
+        self.assertIn("historical Git objects", privacy)
+        self.assertIn("Current branch tree", privacy)
+        self.assertIn("GitHub reports this repository is public", flagged)
+        self.assertIn("Treat historic material as exposed", flagged)
+
     def test_browser_controls_do_not_send_or_store_calculator_inputs(self):
         script = (ROOT / "assets/app.js").read_text(encoding="utf-8")
         self.assertNotRegex(script, r"\b(fetch|XMLHttpRequest|sendBeacon)\b")
