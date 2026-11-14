@@ -1472,3 +1472,20 @@ case layer (PR #52/#54). Resolution protocol applied in PR #55:
   untouched.
 
 ---
+
+## Session `arena/93ca1648-tino4` — 2026-11-14 (branch `arena/93ca1648-tino4`, platform-fixed; IR-001 applies)
+
+Board read on `main` @ `0112ebb9` (PR #56 merged; live site at https://wingbangboozle1-lang.github.io/Tino4/). All prior shared-output claims are done or stale; this session takes the shared outputs for the remaining owner brief items: a phased Treasury-then-equity path under black-swan conditions, mixed paths beyond live/rent/sell, reinvestment risk shown beside the headline, what-if controls, the one-page printable Attorney & CPA briefing sheet, a glossary, the "what would change the answer" line on the first screen, the deadlines timeline, and range-or-real-figure presentation of assumptions. All prior board entries are preserved byte-for-byte; this session edits only the shared output files listed below plus this section. No name, address, ZIP code, parcel identifier, or unrounded owner figure is added anywhere.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T93-1 | Evidence ledger additions: Fed H.15 Treasury rates (3-month bill, 2-year note) and RTC 63.2 allowance indexing | in progress | arena/93ca1648-tino4 | `_7adb71fc/evidence.py`, this COORDINATION section | 2026-11-14 |
+| T93-2 | Model: phased-investing path (Treasury bills 24-36 months, then phase into stocks), live-then-sell mixed path, ranges for assumptions | in progress | arena/93ca1648-tino4 | `_7eff7e24/case_data.py`, `_7eff7e24/case_model.py` | 2026-11-14 |
+| T93-3 | Black-swan page: phased vs immediate entry under a 2008-style crash entry; index page: what-would-change-the-answer box and reinvestment risk beside the headline | in progress | arena/93ca1648-tino4 | `_7adb71fc/content_part1.py` | 2026-11-14 |
+| T93-4 | New pages: printable Attorney & CPA one-page briefing sheet; glossary; deadline timeline on the inheritance-process page | in progress | arena/93ca1648-tino4 | `_7adb71fc/content_part3.py`, `sitebuild.py`, `assets/style.css` | 2026-11-14 |
+| T93-5 | What-if controls (client-side sliders on the decision page); assumptions shown as ranges or real figures | in progress | arena/93ca1648-tino4 | `assets/app.js`, `_7adb71fc/content_part1.py` | 2026-11-14 |
+| T93-6 | Build, verify, unit tests, privacy scan; commit, push, PR to main, merge without waiting, confirm Pages deployment, record result here | in progress | arena/93ca1648-tino4 | shared outputs listed above | 2026-11-14 |
+
+### Log (`arena/93ca1648-tino4`)
+
+- 2026-11-14 — claim recorded above; committing and pushing immediately.
