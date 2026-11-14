@@ -22,6 +22,7 @@
 ### Log (`arena-2c2d483d`)
 
 - 2026-11-14 — while rebasing the claim before work began, `origin/main` advanced to feature and privacy follow-up commits. Preserved those changes and yielded the overlapping feature claim. This session did not edit those files. The current public pages are now generic after PR #58/#59; the public repository still contains legacy case-specific input/model source and historical Git refs may retain older details. The audit and current state are documented in `_2c2d483d/privacy-review.md`. No history rewrite or force-push was attempted from this pinned shallow branch.
+- 2026-11-14 — PR #60 (https://github.com/wingbangboozle1-lang/Tino4/pull/60) merged to `main` as `4a29086bd46b849e7799ee373bd10102574f5015`. Verify run 43646927347 passed; Pages deployment run 43646956696 completed successfully and the Pages API reported `built`, `error: null`. Cache-busted live checks returned the generic decision workspace, phased-investing framework, and attorney/CPA brief. A normal cached fetch initially showed the previous artifact; the cache-busted response confirmed the new deployment. Repository/history remediation remains open and is not claimed complete.
 
 ---
 
