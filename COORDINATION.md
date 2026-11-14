@@ -1502,3 +1502,19 @@ Branch is platform-fixed at `arena/38a4359d-tino4`; no branch or worktree creati
 **A38-3 needs review (urgent, unresolved):** `gh repo view` confirmed the GitHub repository is public. The checked-out repository is shallow and starts at the already-merged main commit; this session cannot safely scrub old main history from the pinned feature branch. No force-push/history rewrite, visibility change, or cleanup of other sessions' files was performed. Current public coordination/research files and prior Git objects may retain geographic identifiers and case-derived source figures; $10 rounding is not anonymisation. Updated the published Privacy page and Flagged for Review entry to say this plainly. Repository access restriction and any history remediation require the repository owner/admin. The website still omits direct property identifiers, but the combined financial histories may be re-identifiable; treat as exposed until reviewed.
 
 ---
+
+---
+
+## Session `arena-09b3438c` — owner brief follow-up: privacy remediation (current tree), deadline timeline, integration (2026-11-14)
+
+Branch is platform-fixed at `arena/09b3438c-tino4` (base `main` @ `448f733`). Remote branches at claim time: `main` only, so no other session is active on a feature branch.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| B09-1 | Current-tree privacy remediation: replace ZIP codes, city and neighbourhood names in logs and audit notes with placeholders (`[ZIP-A]`, `[ZIP-B]`, `[city-A]`); keep detector regexes in code | in progress | `arena-09b3438c` | `COORDINATION.md` (ZIP/city text only, and this section), `_s95cf9249/audit/AUDIT_REPORT.md` | 2026-11-14 |
+| B09-2 | Visual deadline timeline on the inheritance step-by-step page, built from the existing sourced rows (no new facts) | in progress | `arena-09b3438c` | `_7adb71fc/content_part3.py` (`page_process` only), `assets/style.css` | 2026-11-14 |
+| B09-3 | Rebuild, verify, test, PR to `main`, merge, confirm Pages deploy, record result here | in progress | `arena-09b3438c` | `pages/**`, `index.html`, `assets/**` (generated only), this section | 2026-11-14 |
+
+### Log (`arena-09b3438c`)
+
+- 2026-11-14 — Full history fetched read-only (`git fetch --unshallow`; 194 commits). **Finding, not remediable from this branch:** the exact, unrounded owner tax and assessment figures, ZIP codes and the city name appear in earlier commits on `main` (e.g. first added in the 2026-11-10 to 2026-11-12 sessions). The current tree contains no raw figures. A history rewrite requires a force-push to `main` and an owner or admin decision; this session is limited to pushing its own branch, so it did **not** rewrite history. Recommended owner action: decide whether to rewrite history (`git filter-repo` plus force-push, then ask GitHub to purge cached views) or make the repository private, and rotate nothing else since no credentials were found in the tree.
