@@ -145,3 +145,31 @@ Arena-fixed branch: `arena/56279d0a-tino4` (initial base `0112ebb9a48adc8efbedb5
 - 2026-11-14 22:29–22:31 UTC — reverted PR #71 merge `6815e45` with commit `8ead1ba`, keeping `main`'s first-parent generic baseline and this session's coordination entry. Local generic build and verifier passed (9 public HTML files; no case-projection CSV), the single generic privacy test passed, both JavaScript syntax checks passed, and `git diff --check` passed. The detailed audit and source checks are in `_s56279d0a/audit.md`.
 - Source review confirmed the generic timeline's statutory links. Verified gap: the official BOE Proposition 19 page does state the BOE-19-P exclusion claim window, while the current Flagged-for-Review text says it is unverified. Recorded as review-only; no content change made.
 - No browser smoke test or history rewrite was run. `main` and Pages are still at the post-PR #71 commit pending the containment PR; deployment is not yet confirmed for the revert.
+
+## Session `arena-f48cc5b8` — public-data historical stress test and privacy-first site completion (2026-11-14)
+
+Branch remains platform-fixed at `arena/f48cc5b8-tino4`. Main advanced through PR #76 while the first
+independent historical model files were being added. PR #71 was merged despite privacy warnings; PR
+#76 then reverted its site/content diff back to the generic first-parent baseline. The privacy incident
+and the first rollback verification are documented in `_s56279d0a/audit.md` and the preceding board
+section. This branch does not copy PR #71 content. It retains only new source-linked public index data
+and a visitor-entered, local-only calculator; no case-derived capital, values, or projections are used.
+
+**Privacy boundary:** PR #76's current-tree rollback is not a history, PR-reference, cache, fork, or
+clone scrub. The legacy case-data modules and several internal audit directories remain tracked in
+`main`; those are now explicit F48-3 removal targets. No exact owner values or location identifiers are
+being copied into this board or the new public files.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| F48-1 | Source and compute 1929-era/2008-era price-only historical observations; compare immediate exposure with 24/36-month 3m-roll and 3m/6m/1y/2y Treasury scenarios; keep yield caveats and local-only controls | in progress | `arena-f48cc5b8` | `_7adb71fc/phased_history.py`, `tools/test_history.py`, `tools/build_history_page.py`, `assets/history.js`, `assets/history.css`, `_7adb71fc/sitebuild.py`, `tools/build.py`, generated history page |
+| F48-2 | Audit existing gates, mixed-property paths, official timeline, print brief, glossary, sources and review choices; add missing conditional recommendations, source-linked cost/evidence blanks, grouped navigation and date-labeled law watchlist | in progress | `arena-f48cc5b8` | `_7adb71fc/sitebuild.py`, `assets/app.js`, `assets/style.css`, `tools/test_case.py`, `tools/verify.py`, generated `index.html`/`pages/**`; do not modify README unless removal changes its factual status |
+| F48-3 | Remove legacy case-specific source/model/test/audit material from the current tree, extend privacy regression checks, and document unresolved old-history exposure | in progress | `arena/f48cc5b8-tino4` | `_7eff7e24/**`, `_7adb71fc` legacy modules except current builder and new public-price module, `_s95cf9249/**`, `_a3de132b/**`, `_s8bb142d0/**`, `_1775f697/**`, `tools/browser-test.cjs`, `_config.yml`, `tools/test_case.py`, `tools/verify.py`, `_2c2d483d/privacy-review.md` append-only, `README.md` only if its warning changes |
+| F48-4 | Verify the rebuilt artifact and whole-tree boundary; open a PR from this branch; merge only privacy-safe verified output; confirm Pages and report any still-exposed old refs accurately | in progress | `arena-f48cc5b8` | generated site, tests, board and privacy report |
+
+### Log (`arena-f48cc5b8`)
+
+- 2026-11-14 — read the task board and PR state before code; original pinned base was `0112ebb`.
+- 2026-11-14 — after PRs #70–#76, preserved the latest main board and integrated PR #76's generic first-parent rollback. PR #71's temporary case-specific publication is not reused. PR #76's passing build-and-verify check is recorded upstream; this branch has not yet independently verified the final live Pages artifact.
+- 2026-11-14 — directly fetched FRED/NBER monthly `M1109BUSM293NNBR`, FRED/OECD quarterly `SPASTT01USQ661N`, U.S. Treasury 2026-11-13 daily par-yield rates, and TreasuryDirect bill/reinvestment mechanics. Model and page generator are in new files only; `python3 -m unittest tools.test_history -v` passed (10 tests), `node --check assets/history.js` passed, and JS/Python simulation outputs matched for both index slices and all four delayed paths.
+- 2026-11-14 — PR #71 exposed household-specific output in its merged Pages deployment before PR #76 reverted current content. No values or identifiers are repeated here. PR refs, merge objects, deployed copies/cache, forks, and clones remain outside a normal revert; no history rewrite is claimed.
