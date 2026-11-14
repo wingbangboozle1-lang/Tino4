@@ -37,6 +37,20 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
   await page.click('#reset-reviews');
   assert.equal(await page.locator(`.review-choice[data-id="${first}"]`).inputValue(), 'Not reviewed');
   assert.match(await page.locator('#review-summary').textContent(), new RegExp('0 of ' + total));
+  // Phased-entry controls update locally and are not persisted.
+  await page.goto('http://127.0.0.1:8000/pages/phased-investing.html');
+  const deepResult = await page.locator('#phase-phased-value').textContent();
+  await page.selectOption('#phase-stress-preset', 'sharp');
+  const sharpResult = await page.locator('#phase-phased-value').textContent();
+  assert.notEqual(sharpResult, deepResult, 'stress preset should recalculate');
+  await page.fill('#phase-crash-month', '36');
+  assert.match(await page.locator('#phase-status').textContent(), /Scenario only/);
+  assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(k => k.startsWith('phase-'))), []);
+  await page.goto('http://127.0.0.1:8000/pages/attorney-cpa-brief.html');
+  assert.equal(await page.locator('h1').count(), 1, 'brief has one title');
+  await page.emulateMedia({media:'print'});
+  assert.equal(await page.locator('.sidebar').evaluate(el => getComputedStyle(el).display), 'none');
+  await page.emulateMedia({media:'screen'});
   await page.setViewportSize({width:390,height:844});
   for (const file of manifest) {
     await page.goto('http://127.0.0.1:8000/'+file);

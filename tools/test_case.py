@@ -129,9 +129,12 @@ class EvidenceTests(unittest.TestCase):
         self.assertGreaterEqual(len(FAILED), 5)
 
     def test_no_source_copied_without_fetch(self):
-        # The ledger records the retrieval date this session used.
-        from evidence import DATE
+        # Historical ledger checks are dated separately from the new Treasury fetches.
+        from evidence import DATE, CHECKED
         self.assertEqual(DATE, '2026-11-13')
+        self.assertEqual(CHECKED['treasnotes'], '2026-11-14')
+        self.assertEqual(CHECKED['bills'], '2026-11-14')
+        self.assertEqual(set(CHECKED), set(SOURCES))
 
 
 class PrivacyTests(unittest.TestCase):
@@ -207,6 +210,61 @@ class ContentTests(unittest.TestCase):
             html = getattr(mod, name)()
             self.assertGreater(len(html), 2000, name)
             self.assertNotIn('KeyError', html)
+
+
+class PhasedInvestingTests(unittest.TestCase):
+    def test_early_crash_can_soften_the_staging_drawdown(self):
+        from content_part4 import compare_paths
+        result = compare_paths(crash_month=0, drawdown=0.50, recovery_months=60)
+        self.assertLess(result['immediate_drawdown'], result['phased_drawdown'])
+        self.assertGreater(result['phased_terminal'], result['immediate_terminal'])
+
+    def test_crash_after_staging_can_reverse_the_outcome(self):
+        from content_part4 import compare_paths
+        result = compare_paths(crash_month=60, drawdown=0.50, recovery_months=60)
+        self.assertLess(result['phased_terminal'], result['immediate_terminal'])
+
+    def test_longer_phasing_horizon_and_yields_are_sensitive(self):
+        from content_part4 import compare_paths
+        short = compare_paths(phase_months=24, treasury_net=0.01)
+        long = compare_paths(phase_months=36, treasury_net=0.05)
+        self.assertNotEqual(short['phased_terminal'], long['phased_terminal'])
+        self.assertEqual(len(short['phased_series']), 121)
+
+    def test_phased_tool_discloses_synthetic_assumptions_and_controls(self):
+        from content_part4 import page_phased
+        html = page_phased()
+        for token in ('phase-principal', 'phase-months', 'phase-treasury', 'phase-equity',
+                      'phase-drawdown', 'phase-crash-month', 'phase-recovery', 'phase-horizon',
+                      'phase-stress-preset', 'reinvestment risk', 'pretax', 'not a historical replay', 'TreasuryDirect notes'):
+            self.assertIn(token.lower(), html.lower())
+        self.assertIn('inspired by, but do not reconstruct, the 1929', html)
+        self.assertIn('2008-crisis-inspired sharp stress', html)
+
+    def test_brief_and_glossary_are_source_linked_and_anonymous(self):
+        from content_part4 import page_attorney_brief, page_glossary
+        brief = page_attorney_brief()
+        glossary = page_glossary()
+        for token in ('Attorney &amp; CPA Briefing Sheet', 'Questions for counsel',
+                      'Questions for the CPA', '60 days', '150 days', '9 months',
+                      'Treasury parking/phased equity entry'):
+            self.assertIn(token, brief)
+        for page in (brief, glossary):
+            self.assertNotRegex(page, re.compile(r'95014|94122|Cupertino|Outer Sunset|San Francisco metro', re.I))
+        self.assertIn('Reinvestment risk', glossary)
+
+    def test_homepage_shows_answer_changing_factors_above_the_fold(self):
+        from content_part1 import page_overview
+        html = page_overview()
+        self.assertIn('What would change the answer?', html)
+        self.assertIn('CONDITIONAL STARTING POINT', html)
+        self.assertIn('public repository is not a secure vault', html)
+
+    def test_generated_pages_have_one_main_heading(self):
+        from sitebuild import PAGES
+        for key, _title, _category, _page in PAGES:
+            path = ROOT / 'index.html' if key == 'index' else ROOT / 'pages' / f'{key}.html'
+            self.assertEqual(len(re.findall(r'<h1\b', path.read_text())), 1, key)
 
 
 if __name__ == '__main__':

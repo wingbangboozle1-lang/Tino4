@@ -12,9 +12,9 @@ sys.path.insert(0, str(ROOT / '_7adb71fc'))
 import content_part1 as c1
 import content_part2 as c2
 import content_part3 as c3
+import content_part4 as c4
 from case_model import projection, money as M, rounded
 from case_data import P
-from evidence import DATE
 
 PAGES = [
     ('index', 'Decision overview', 'Start here', c1.page_overview),
@@ -26,10 +26,13 @@ PAGES = [
     ('property-tax', 'Property tax & history', 'The numbers', c2.page_tax),
     ('operating-costs', 'Costs & insurance', 'The numbers', c2.page_cost),
     ('black-swan', 'Black-swan conditions', 'Stress', c1.page_black_swan),
+    ('phased-investing', 'Treasury parking & phased stocks', 'Stress', c4.page_phased),
     ('estate-thresholds', 'Estate tax & headroom', 'Tax & process', c3.page_estate),
     ('inheritance-process', 'Inheritance step by step', 'Tax & process', c3.page_process),
     ('law-watchlist', 'Law watchlist', 'Tax & process', c3.page_law),
+    ('attorney-cpa-brief', 'Attorney & CPA briefing sheet', 'Adviser handoff', c4.page_attorney_brief),
     ('flagged-for-review', 'Flagged for review', 'Evidence', c3.page_flagged),
+    ('glossary', 'Glossary', 'Evidence', c4.page_glossary),
     ('sources', 'Official source ledger', 'Evidence', c3.page_sources),
     ('privacy', 'Privacy & rounding', 'Evidence', c3.page_privacy),
 ]
@@ -69,15 +72,16 @@ def build():
         prefix = '' if home else '../'
         target = ROOT / 'index.html' if home else ROOT / 'pages' / f'{key}.html'
         body = fn()
-        heading = '' if home else (
+        heading = '' if home or key == 'attorney-cpa-brief' else (
             f'<div class="page-heading"><span class="eyebrow">{E(cat.upper())}</span><h1>{E(title)}</h1>'
             f'<p class="lead">Current law, owner figures, stated assumptions and open questions, kept apart on purpose.</p></div>')
+        body_class = ' class="print-brief"' if key == 'attorney-cpa-brief' else ''
         html = HEAD.format(title=E(title), prefix=prefix) + f'''
-<body><a class="skip" href="#main">Skip to content</a><div class="layout">
+<body{body_class}><a class="skip" href="#main">Skip to content</a><div class="layout">
 <aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">&#9672;</span><span>TWO-PROPERTY<br>DECISION BRIEF</span></a>
 <p class="sidebar-note">A home to inherit.<br>A home already owned.</p>
 <nav aria-label="Main navigation">{nav_html(key, prefix)}</nav>
-<div class="sidebar-bottom">Figures rounded to $10 &middot; no private identity<br>Sources checked {DATE}</div></aside>
+<div class="sidebar-bottom">A/B labels &middot; direct identifiers omitted<br>Source dates in ledger</div></aside>
 <div class="workspace"><header class="topbar"><span>BRIEF / {E(cat.upper())}</span>
 <div><span class="privacy-dot" aria-hidden="true"></span> Privacy first
 <button class="print-button" id="print-page" type="button">Print</button></div></header>

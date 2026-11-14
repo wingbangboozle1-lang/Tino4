@@ -4,17 +4,19 @@ A static site answering one question: for a house that is expected to arrive by
 trust, and a house that is already owned, is it better to live in the inherited
 home, rent it out, or sell it and reinvest?
 
-The published site contains only rounded figures, anonymous property labels
-(Property A and Property B), and no addresses, parcel numbers, names or balances.
-Every table row carries a link to the official source that supports the rule it
-rests on, and a badge saying what kind of evidence the row is.
+The generated pages use anonymous property labels (Property A and Property B) and
+omit direct names, addresses and parcel identifiers. They still contain rounded,
+case-derived values and histories that could be re-identified; $10 rounding is
+not anonymisation. The repository is public and its coordination notes/history
+have not been scrubbed. Do not treat it as a secure store. Every published data
+table row carries a source link and an evidence-status badge.
 
 ## What is here
 
 | Path | Purpose |
 | --- | --- |
 | `index.html` | Dashboard: the recommendation, the four numbers behind it, and links to each section |
-| `pages/*.html` | The fifteen section pages, plus short redirects for retired URLs |
+| `pages/*.html` | The 18 section pages, including phased-investing controls, an attorney/CPA print sheet and glossary, plus short redirects for retired URLs |
 | `assets/case-projections.csv` | The year-by-year table as data, every value rounded to $10 |
 | `_7adb71fc/` | Generator: official evidence ledger, replay engine, projection engine, page text |
 | `_7eff7e24/case_data.py`, `case_model.py` | The case inputs and the cash-flow model |
@@ -31,7 +33,9 @@ python3 -m unittest discover -s tools -p 'test_*.py'
 
 Everything is standard library. There is no network call, no analytics, no
 external asset and no build step beyond Python. Pages are served with a strict
-Content-Security-Policy and `noindex`.
+Content-Security-Policy and `noindex`. The phased-entry what-if calculator runs
+locally; its inputs are not stored or sent anywhere. The attorney/CPA briefing
+sheet is formatted for print or browser Save as PDF.
 
 ## How the numbers are handled
 
