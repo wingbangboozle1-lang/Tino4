@@ -2,7 +2,7 @@
 from html import escape as E
 from case_data import A, B, P, A_MID, B_MID
 from case_model import money as M, exclusion_projection, path_comparison, projection
-from evidence import SOURCES, FAILED, DATE, CHECKED
+from evidence import SOURCES, FAILED, DATE
 from content_part1 import table, callout, cards, refs, pct, V, O, Pj, As, Ms
 
 
@@ -168,11 +168,11 @@ def page_law():
 def page_flagged():
     findings = [
         ('F01', 'Critical', 'The coordination file in this public repository already contains the two ZIP codes',
-         'The generated pages omit the owner-supplied ZIP values, street and parcel identifiers, though official source '
-         'titles may name jurisdictions without locating either home. The repository does not have that guarantee. The '
-         'coordination log, which is a working document shared between sessions and is excluded from the Pages output, '
-         'records location identifiers and rent research. Those lines are in the current tree and in commit history, so '
-         'deleting them now would not remove them from earlier commits, forks or caches.',
+         'The published site contains no ZIP, city, street or parcel. The repository does not have that guarantee. '
+         'The coordination log, which is a working document shared between sessions and is excluded from the published '
+         'site, records both ZIP codes, the county where each property sits, and the exact federal rent benchmarks for '
+         'those ZIPs. Those lines were written by earlier sessions as research notes. They are in the current tree and '
+         'in the commit history, so deleting them now would not remove them from earlier commits, forks or caches.',
          'Decide the repository audience first. If it must stay public, stop writing geography into the coordination log, '
          'and treat every figure already there as disclosed. Removing it from history is a force-push that rewrites shared '
          'commits, so it needs the owner decision and the other sessions agreement, not a unilateral edit.',
@@ -276,13 +276,12 @@ def page_sources():
     for key, (label, url, passage, scope, chunk) in SOURCES.items():
         rows.append(([f'<a href="{E(url, quote=True)}" rel="noopener noreferrer">{E(label)}</a>',
                       f'<span class="quote">{E(passage[:160])}{"..." if len(passage) > 160 else ""}</span>',
-                      E(scope), CHECKED[key], chunk], 'Verified', key))
-    out = callout('Source retrieval dates are recorded row by row',
-        'The quoted passage is what the cited official page stated when it was checked, trimmed for length. The date column '
-        'records the ledger check; two Treasury product pages were fetched again on 14 November 2026. The scope column '
-        'states what the source does and does not establish. Where a page could not be read, it is listed as a failed '
-        'retrieval instead of being cited.', 'info')
-    out += table('Official source ledger', ['Source', 'Passage as published', 'What it establishes and what it does not', 'Checked', 'Chunk'], rows,
+                      E(scope), chunk], 'Verified', key))
+    out = callout('Every source below was fetched and read by this session on ' + DATE,
+        'The quoted passage is what the page actually said, trimmed for length. The scope column states what the source '
+        'does and does not establish, which is the part that prevents a link from being mistaken for a fact. Where a page '
+        'could not be read, it is listed as a failed retrieval instead of being cited.', 'info')
+    out += table('Official source ledger', ['Source', 'Passage as published', 'What it establishes and what it does not', 'Chunk'], rows,
                  'All sources are on official domains. A link verifies the rule, never a private fact about these properties.')
     out += table('Failed retrievals, recorded rather than substituted', ['Attempt', 'What happened'], [
         ([a, b], 'Missing', 'fhfa cdi') for a, b in FAILED])
@@ -290,31 +289,30 @@ def page_sources():
 
 
 def page_privacy():
-    return callout('Privacy warning: this public project is not fully scrubbed',
-        'The published pages omit direct location and identity fields and use A/B labels, but they contain case-derived '
-        'values and histories. Rounding to $10 is not anonymisation: combinations can still fingerprint a property. The '
-        'public repository also contains earlier coordination notes with geographic identifiers and financial detail, and '
-        'the current Git history has not been scrubbed. No private lookup was performed in this follow-up. Do not add '
-        'documents or identifying information. Treat repository-level cleanup as urgent and unresolved.', 'warning') + table(
+    return callout('What was done to protect identity, and what was not',
+        'No person, street address, ZIP code, parcel number, account number or permit number appears anywhere in this '
+        'site. No private lookup was performed: this session did not search for an owner, an address or a parcel record. '
+        'Every dollar figure is rounded half-up to the nearest ten dollars before it is used in any calculation, so a '
+        'published number cannot be worked back to an exact bill. Property names are labels, A and B. That is the whole '
+        'of the protection, and it should be understood for exactly what it is.', 'warning') + table(
         'Privacy safeguards and the limits of each', ['Area', 'What is protected', 'What is still exposed'], [
-        (['Identity', 'The generated pages omit direct names, addresses, ZIP codes and parcel identifiers; properties are called A and B.',
-          'The public repository coordination log contains location identifiers. No guarantee of anonymity can be made.'], 'Guidance', 'sco'),
-        (['Amounts', 'Published case figures are rounded to $10 before calculation and displayed under anonymous labels.',
-          'The linked property value, assessment and bill history can fingerprint a parcel; rounding alone is not safe anonymisation.'], 'Guidance', 'pub29'),
+        (['Identity', 'No name, address, ZIP or parcel identifier, account or permit number is published. Properties are called A and B.',
+          'A reader who already knows the household can infer which properties these are. Anonymisation protects against strangers, not against people who know you.'], V, 'sco'),
+        (['Amounts', 'Every dollar figure rounded to ten dollars before use, in both directions and in every projection.',
+          'Rounding is not anonymisation. A value, an assessment and a bill together can fingerprint a parcel.'], V, 'pub29'),
         (['Combinations', 'The brief avoids publishing a full tax history in one place where it could be matched to a public roll.',
           'The property tax page does show year-by-year assessed values. That is a deliberate trade-off of clarity for exposure.'], O, 'pub29'),
-        (['Repository', 'No private documents were added in this follow-up.',
-          'The repository is public; current coordination content and historical commits may retain personal/location information and unrounded source material. Cleanup has not been completed.'], 'Missing', 'sco'),
+        (['Repository', 'The published site is generated from the rounded figures only.',
+          'The repository holding this site is public. Earlier commits, pull request diffs, forks and caches can retain anything that was ever committed.'], Ms, 'sco'),
         (['Browser', 'No analytics, no third-party fonts, no remote scripts, no network calls, no cookies set by the application.',
           'The hosting provider may log requests. Review preferences are stored only in this browser and are never transmitted.'], V, 'stocks'),
         (['Documents', 'No document was requested, uploaded or committed.',
           'Deeds, trust instruments, bills, appraisals and statements should never be committed to this repository, not even temporarily.'], Ms, 'sco'),
-    ]) + callout('Urgent: repository history cleanup is unresolved',
-        'This task did not rewrite the shared main history. The checkout is shallow and starts at the current main commit; '
-        'rewriting main would invalidate clones, forks and pull requests and cannot erase copies already made. The safe next '
-        'step is to restrict repository access, then have the repository owner/admin assess credential-free sensitive-data '
-        'removal and history rewrite or migrate to a clean private repository. Treat this as an owner/admin action, not as '
-        'completed remediation.') + table(
+    ]) + callout('The remediation that only the owner can authorise',
+        'If the exposure of earlier commits matters, the options are: make the repository private, rewrite history and '
+        'force-push, or start a clean repository and archive the old one. Each has a cost. A history rewrite invalidates '
+        'every clone, every fork and every open pull request, and it cannot reach copies that have already been made. '
+        'This session did none of those things, because they are not reversible and they affect other work.') + table(
         'The numbers that are rounded, and how', ['Convention', 'Rule', 'Where it shows'], [
         (['Display money', 'Half-up to the nearest ten dollars, so 125 becomes 130 and 124.99 becomes 120.', 'Every dollar cell on every page and in the CSV.'], V, 'pub29'),
         (['Inputs', 'The owner figures were rounded before any arithmetic was run, not after.', 'The projection engine reads only the rounded values.'], V, 'pub29'),

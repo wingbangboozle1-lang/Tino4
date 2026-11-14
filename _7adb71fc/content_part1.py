@@ -3,6 +3,7 @@ from html import escape as E
 from case_data import A, B, A_HISTORY, B_HISTORY, A_MID, B_MID, P, assess_check, CA_HPI
 from case_model import (money as M, rounded, projection, sale_proceeds,
                         after_tax_reinvest, hold_after_tax, path_comparison,
+                        path_phased, path_live_then_sell,
                         allowance, exclusion_projection)
 from evidence import SOURCES, FAILED, DATE, LABELS
 import swan
@@ -67,26 +68,35 @@ def page_overview():
 Property B is a three-unit building you already own and partly rent. Every figure below is rounded to the nearest
 ten dollars before it is used, every rule is linked to the official page that states it, and every gap is left blank.</p>
 <a class="button" href="pages/executive-summary.html">Read the executive summary <span>&#8599;</span></a></div>
-<div class="hero-panel"><span class="eyebrow">CONDITIONAL STARTING POINT — NOT A FINAL ANSWER</span>
-<h2>Occupy if eligible.<br>Otherwise compare selling and renting.</h2>
-<p>The inherited home is a future trust transfer; the other home is already owned and must remain a separate baseline. The current model is assumption-led, not a professional recommendation.</p>
-<strong>What would change the answer?</strong><ul><li>The trust terms require sale or restrict occupancy.</li><li>Prop 19 eligibility or the whole-estate tax position differs.</li><li>Written rent, insurance, repairs, debt and utility evidence changes net cash flow.</li><li>The inheritor cannot or does not want to live there.</li></ul>
-<div class="signal"><span></span> Privacy caution: rounded values and histories may still identify a household. This public repository is not a secure vault.</div></div></div>''' + cards([
+<div class="hero-panel"><span class="eyebrow">THE ANSWER, STATED PLAINLY</span>
+<h2>Live in it,<br>or sell it.<br>Do not rent it.</h2>
+<p>On these rounded inputs, renting Property A after transfer loses money every year for two decades while a
+sell-and-reinvest path compounds. Renting only wins if rent is far higher than assumed, and that case fails on a
+rent-to-price ratio the local rent caps make hard to reach.</p>
+<div class="signal"><span></span> Privacy first &middot; no name, address, ZIP or parcel is published</div></div></div>''' + cards([
         ('01 / The bottom line', 'Executive summary', 'Eight findings, one recommendation, and what would overturn it', 'pages/executive-summary.html'),
         ('02 / The numbers', 'Year-by-year projections', 'Both homes, 2026 to 2076, with both assessment cases', 'pages/projections.html'),
         ('03 / The stress test', 'Black-swan conditions', 'Official 1975-2026 replay plus invented adverse paths', 'pages/black-swan.html'),
         ('04 / The gaps', 'Questions and missing evidence', 'Twenty-two questions, who can answer each, and what unlocks it', 'pages/questions.html'),
         ('05 / Before you change anything', 'Suggestions for review', 'Nineteen proposals, review-only, nothing auto-applied', 'pages/suggestions.html'),
         ('06 / The paperwork', 'Inheritance step by step', 'Month 0 to month 36, with the statutory clocks', 'pages/inheritance-process.html'),
-        ('07 / Mixed investing path', 'Treasuries then phased stocks', 'Test 24–36 month staging against a lump sum under synthetic crash scenarios', 'pages/phased-investing.html'),
-        ('08 / Adviser handoff', 'Attorney & CPA briefing sheet', 'Print a one-page fact-finding brief without identifiers', 'pages/attorney-cpa-brief.html'),
-    ]) + callout('Privacy warning before using the numbers',
-        'The repository is public. Omitting names, addresses and ZIP codes and rounding dollars to $10 does not prove anonymity: a distinctive combination of property values, assessments and tax history can still be matched. Do not add private documents or identifying details. History cleanup needs a separate, authorized repository-wide action.', 'warning') + callout('The one comparison that decides this',
+    ]) + callout('The one comparison that decides this', 
         f'If the trust distributes in 2045 and A is worth {M(c45["sale_price"])} on that date, selling nets '
         f'{M(c45["sale_net"])} after selling costs and the county transfer tax. Left invested for twenty years at the '
         'assumptions on the methods page it is worth ' + M(c45['reinvest_after_tax']) + ' after tax. Renting for the same '
         'twenty years and then selling is worth ' + M(c45['rental_total']) + ' after tax, because the running costs and the '
-        'reassessment at transfer exceed the rent. That gap is the whole decision.', 'warning') + table(
+        'reassessment at transfer exceed the rent. That gap is the whole decision.', 'warning') + callout(
+        'What would change this answer',
+        'The recommendation flips if any of these holds: achievable rent clears about '
+        + M(c45['horizon_row']['cash_cost_rental'] / 0.95) + ' a year in the transfer year '
+        '(well above the ' + pct(P['rent_yield_default'] * 100) + ' yield assumed); you cannot or will not occupy A; '
+        'insurance comes back above roughly ' + M(12000) + ' a year; or the trust instrument directs a sale. The federal '
+        'estate exclusion matters only if the whole estate is far above it.', 'warning') + callout(
+        'Reinvestment risk beside the headline',
+        'The sell-and-reinvest figure assumes the full proceeds stay invested for twenty years. Parking them in '
+        'Treasury bills for 24-36 months and phasing into equities avoids the full loss if markets fall right after '
+        'the sale, but forgoes gains while markets rise and carries reinvestment risk if yields fall. The staged test '
+        'is on the black-swan page.', 'info') + table(
         'At a glance', ['Item', 'What the evidence says', 'What it means for the decision'], [
         ([ 'Property A, value', M(A['value_2026']) + ' as of November 2026. Owner estimate; no appraisal has been read.',
            'An appraisal at the transfer date sets both the sale price and the new tax base. Until then every value here is a projection.'], O, 'pub29'),
@@ -183,19 +193,17 @@ def page_exec():
 # --------------------------------------------------------------------------- decision analysis
 def page_decision():
     c45 = path_comparison(2045)
+    phased = path_phased(2045)
+    mixed = path_live_then_sell(2045)
     rows = []
     for name, kinds, result, status in [
         ('Sell A at transfer and reinvest in a diversified portfolio',
          'Equity market risk, taxed dividends and a terminal gain.',
          M(c45['reinvest_after_tax']) + ' after tax, modelled at a constant ' + pct(P['equity']*100) + ' return. That rate is an assumption, not a forecast.',
          Pj),
-        ('Sell A, park in 3-month to 2-year Treasuries, then phase into stocks',
-         'Entry-timing risk, cash drag, inflation, federal tax on Treasury interest and reinvestment risk when maturities roll.',
-         '<a href="phased-investing.html">Open the local what-if tool</a>. It compares a generic starting amount under synthetic early/late crash paths; it is not this property’s after-tax proceeds or a return forecast.',
-         Pj),
-        ('Occupy A briefly, then sell and phase proceeds into stocks',
-         'Sale timing and gain tax; short occupancy may change the tax/property-tax result; the value of housing and the already-owned B must stay separate.',
-         'Not yet modelled as a household net outcome. The date-of-sale basis, occupancy facts, costs avoided and B rental/occupancy plan are missing; do not infer a winner from the generic calculator.',
+        ('Sell A at transfer and hold Treasury bills',
+         'Inflation and reinvestment risk, federal tax on interest, no state tax.',
+         'Not modelled, because no verified forward bill rate exists. The bill market prices a rate for months, not for twenty years.',
          Ms),
         ('Sell A and leave the proceeds in insured deposits',
          'Inflation risk and deposit insurance limits, but no market loss.',
@@ -217,8 +225,16 @@ def page_decision():
          'No rent, no exclusion unless eligible, and both bills continue.',
          'Not modelled. Losing principal-residence status forfeits the family-home exclusion, and the full reassessment arrives with no rent to pay it.',
          Ms),
+        ('Sell A at transfer and stage the proceeds into equities over 24-36 months through Treasury bills',
+         'Principal is preserved while staged; the market can fall while the money sits in bills, but reinvestment risk means gains are missed if markets rise.',
+         M(phased['after_tax']) + ' after tax at the twenty-year horizon under baseline growth, with ' + str(phased['treasury_months']) + ' months in Treasury bills at ' + pct(P['treasury_bill_3m'] * 100) + ' (observed H.15 yield, 12 Nov 2026) and ' + str(phased['phase_months']) + ' months of equal monthly steps into equities. The crash-entry test is on the black-swan page.',
+         Pj),
+        ('Live in A for five years, then sell and reinvest (mixed path)',
+         'Occupancy first captures part of the family-home assessment treatment, then the sale proceeds are reinvested for the remaining fifteen years.',
+         M(mixed['total']) + ' after tax at the twenty-year horizon: ' + M(mixed['occupancy_savings']) + ' of occupancy tax savings plus sale proceeds reinvested after the exit sale. Only appreciation after transfer is taxed.',
+         Pj),
     ]:
-        rows.append(([name, kinds, result], status, 'basis ab1482 rental pub801 bills treasnotes stocks'))
+        rows.append(([name, kinds, result], status, 'basis ab1482 rental pub801'))
     return callout('This page compares paths, it does not choose for you',
         'The three modelled columns use the same transfer year, the same selling costs and the same tax assumptions. '
         'Property B\'s own value and rent are deliberately excluded from all of them, so the columns measure only the '
@@ -235,7 +251,27 @@ def page_decision():
         (['Rental path total', M(c45['rental_income_20y']), M(c45['rental_total']), 'Operating cash plus the net sale, after tax.'], Pj, 'rental capgains'),
         (['Tax saved by occupying instead of renting', None, M(c45['move_in_savings']), 'The difference between the reassessed bill and the family-home bill over twenty years.'], Pj, 'pub801'),
         (['Value of A at the horizon if you still hold it', None, M(c45['move_in_value']), 'Owner estimate grown at ' + pct(P['home_growth_default']*100) + '. Not reduced by selling costs, because nothing is being sold.'], As, 'fhfa'),
-    ]) + table('Break-even rules, not opinions', ['Question', 'How to test it', 'The number that settles it'], [
+    ]) + table(
+        'Staged versus immediate entry at the 2045 transfer', ['Approach', 'What happens to the proceeds', 'Value after 20 years after tax', 'What it tests'],
+        [
+          (['Immediate full equity',
+            'All of ' + M(c45['sale_net']) + ' invested at transfer.',
+            M(c45['reinvest_after_tax']) + '.',
+            'Full sequence risk: a fall right after the sale hits the whole amount.'], Pj, 'h15 bills stocks'),
+          (['Treasury stage of ' + str(phased['treasury_months']) + ' months, then ' + str(phased['phase_months']) + '-month phase-in',
+            'Bills at ' + pct(P['treasury_bill_3m'] * 100) + ' (H.15 observed, 12 Nov 2026), then equal monthly steps into equities.',
+            M(phased['after_tax']) + '.',
+            'Softer crash entry, but reinvestment risk if bill yields fall before the money reaches equities.'], Pj, 'h15 bills stocks'),
+          (['Occupy first, sell after five years',
+            'Live in A while the exclusion applies, then sell and reinvest for fifteen years.',
+            M(mixed['total']) + '.',
+            'Captures part of the tax base before exiting; a compromise between the pure paths.'], Pj, 'pub801 basis'),
+        ], 'H.15 observed yields (12 Nov 2026); Proposition 19 family-home treatment') + callout(
+        'Why the staged path is shown beside the headline number',
+        'Immediate investment earns more in a smooth market. Staging earns less when markets rise steadily, but loses '
+        'less when they fall right after the sale. Neither outcome is predictable, which is why both appear with the '
+        'same assumptions instead of a single recommendation.', 'info') + table(
+        'Break-even rules, not opinions', ['Question', 'How to test it', 'The number that settles it'], [
         (['What rent makes renting as good as selling?',
           'Solve for the gross yield that makes operating cash plus the terminal net sale equal the reinvested proceeds.',
           'About ' + pct(((c45['reinvest_after_tax']/1.0)**(1/20)-1)*100, 1) + ' a year of after-tax total return is what the sale path must beat, and rent has to clear its own running costs first.'], Pj, 'stocks rental'),
@@ -334,7 +370,68 @@ def page_black_swan():
             (('Rates up, prices flat for a decade', swan.SHOCKS['Rates up, prices flat for a decade']), 'The CBO higher-rate scenario applied to housing. Ten years of nothing.'),
             (('Insurance withdrawal and repair bulge', swan.SHOCKS['Insurance withdrawal and repair bulge']), 'A carrier leaves the state, the FAIR Plan replaces it, and a roof and sewer arrive together.'),
         ]])
-    out += table('Three things that would break a fifty-year projection', ['Condition', 'Evidence it is real', 'What to do about it'], [
+    c45bs = path_comparison(2045)
+    sale_net = c45bs['sale_net']
+    months = 240
+    tm, pm = P['treasury_hold_months'], P['phase_months']
+    bill_m = P['treasury_bill_3m'] / 12 * (1 - P['tax_interest'])
+    eq_m = P['equity'] / 12
+    div_m = P['div_yield'] / 12
+
+    def staged(year_shock):
+        """Illustrative monthly arithmetic: bills first, then phased into equities.
+        year_shock gives the equity factor in year 1, year 2, and after (synthetic, not a forecast)."""
+        bal_b, bal_e, basis = sale_net, 0.0, 0.0
+        for m in range(1, months + 1):
+            if m <= tm:
+                bal_b *= 1 + bill_m
+            if tm < m <= tm + pm:
+                s = bal_b / (tm + pm - m + 1)
+                bal_b -= s
+                bal_e += s
+            if bal_e > 0:
+                y = m / 12
+                f = year_shock[0] if y <= 1 else (year_shock[1] if y <= 2 else year_shock[2])
+                d = bal_e * div_m
+                bal_e = bal_e * f - d * P['tax_div']
+                basis += d * (1 - P['tax_div'])
+        return bal_b + bal_e - max(0.0, bal_e - basis) * P['tax_gain']
+
+    def immediate(year_shock):
+        """Illustrative annual arithmetic: everything in equities at transfer."""
+        bal, basis = sale_net, sale_net
+        for y in range(1, 21):
+            f = year_shock[0] if y == 1 else (year_shock[1] if y == 2 else year_shock[2])
+            d = bal * P['div_yield']
+            bal = bal * f - d * P['tax_div']
+            basis += d * (1 - P['tax_div'])
+        return bal - max(0.0, bal - basis) * P['tax_gain']
+
+    base = (1.06, 1.06, 1.06)
+    crash = (0.78, 0.90, 1.06)  # invented equity sequence: -22%, -10%, then +6% a year
+    sc, ic = staged(base), staged(crash)
+    imc, imk = immediate(base), immediate(crash)
+    out += table(
+        'Phased entry versus immediate entry — the crash-entry test',
+        ['Structure', 'First 30 months after the sale', 'After 20 years, smooth growth',
+         'After 20 years, crash entry', 'What it shows'],
+        [
+          (['Invest everything in equities at transfer',
+            'Fully exposed from month 1 at ' + pct(P['equity'] * 100) + ' (assumption)',
+            M(imc), M(imk),
+            'Full sequence risk: a fall right after the sale hits the whole amount.'], Pj, 'h15 bills stocks'),
+          (['Stage in Treasury bills, then phase into equities',
+            'Bills at ' + pct(P['treasury_bill_3m'] * 100) + ' (H.15 observed, 12 Nov 2026), taxed as it accrues; ' +
+            'equities only as they are phased in over ' + str(pm) + ' months',
+            M(sc), M(ic),
+            'Softer crash entry: the shock reaches only the phased-in part. Reinvestment risk remains if bill yields fall.'], Pj, 'h15 bills stocks'), 
+        ], 'H.15 observed yields (12 Nov 2026); equity stress sequences are synthetic') + callout(
+        'What this test can and cannot say',
+        'The official California house-price series begins in 1975, so 1929 is not in the published record and is not '
+        'replayed here; the deepest official episode is 2006-2012, down 41.0%. The equity shapes above are invented '
+        'stress sequences, labelled Synthetic, and the bill yield is one observed day, not a forward commitment. The '
+        'staged path loses to immediate investment in a smooth market and wins in a crash entry; neither is predictable.', 'info') + table(
+        'Three things that would break a fifty-year projection', ['Condition', 'Evidence it is real', 'What to do about it'], [
         (['A single uninsured catastrophic loss',
           'The insurance regulator publishes no policy and no premium. No coverage has been verified for either home.',
           'Read both policies line by line and quote earthquake separately. This is the only item on this page that can wipe out every modelled gain.'], Ms, 'cdi'),

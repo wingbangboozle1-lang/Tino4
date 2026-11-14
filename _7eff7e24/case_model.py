@@ -203,6 +203,83 @@ def path_comparison(transfer=None, horizon_years=20):
     )
 
 
+def path_phased(transfer=None, horizon_years=20, treasury_months=None,
+                phase_months=None):
+    """Sell A at transfer, park the net proceeds in Treasury bills for a staging
+    period, then phase into equities in equal monthly steps.
+
+    Interest on the staged balance is taxed as it accrues at the assumed combined
+    rate. The equity leg grows monthly; dividends are taxed as they arise and the
+    appreciated part is taxed at the horizon. Nothing here is a forecast: the bill
+    rate is one observed H.15 auction-market yield, and the equity path is the
+    constant assumption used everywhere else on this site.
+
+    Returns after-tax household value at the horizon, plus the legs for display.
+    """
+    transfer = P['transfer_default'] if transfer is None else transfer
+    tm = P['treasury_hold_months'] if treasury_months is None else treasury_months
+    pm = P['phase_months'] if phase_months is None else phase_months
+    months = horizon_years * 12
+    rows = projection('A', transfer=transfer)
+    at_transfer = next(r for r in rows if r['year'] == transfer)
+    sale = sale_proceeds(at_transfer, 'A')
+    proceeds = sale['net']
+    bill_rate = P['treasury_bill_3m'] / 12
+    eq_month = P['equity'] / 12
+    div_month = P['div_yield'] / 12
+    bal_bills = proceeds
+    bal_eq = 0.0
+    basis_eq = 0.0
+    for m in range(1, months + 1):
+        if m <= tm:
+            interest = bal_bills * bill_rate
+            bal_bills += interest - interest * P['tax_interest']
+        if tm < m <= tm + pm:
+            slice_ = bal_bills / (tm + pm - m + 1)
+            bal_bills -= slice_
+            bal_eq += slice_
+        if bal_eq > 0:
+            div = bal_eq * div_month
+            bal_eq = bal_eq * (1 + eq_month) - div * P['tax_div']
+            basis_eq += div * (1 - P['tax_div'])
+    gain = max(0.0, bal_eq - basis_eq)
+    return dict(
+        transfer=transfer, horizon_years=horizon_years,
+        treasury_months=tm, phase_months=pm,
+        price=at_transfer['value'], sale_net=sale['net'],
+        bills_final=bal_bills, equity_pre_tax=bal_eq,
+        equity_gain_tax=gain * P['tax_gain'],
+        after_tax=bal_bills + bal_eq - gain * P['tax_gain'])
+
+
+def path_live_then_sell(transfer=None, occupy_years=5, horizon_years=20):
+    """Mixed path: occupy A as a principal residence for occupy_years (capturing
+    the family-home assessment treatment), then sell and reinvest the net
+    proceeds for the rest of the horizon. Basis is the date-of-death value, so
+    only appreciation after transfer is taxable; no depreciation is claimed
+    while the home is owner-occupied. All tax events are assumptions, not quotes."""
+    transfer = P['transfer_default'] if transfer is None else transfer
+    rows = projection('A', transfer=transfer)
+    at_transfer = next(r for r in rows if r['year'] == transfer)
+    exit_row = next(r for r in rows if r['year'] == transfer + occupy_years)
+    sale = sale_proceeds(at_transfer, 'A')
+    exit_sale = sale_proceeds(exit_row, 'A')
+    savings = sum(r['savings_qualified'] for r in rows
+                  if transfer < r['year'] <= transfer + occupy_years)
+    gain = max(0.0, exit_sale['price'] - at_transfer['value'])
+    gain_tax = gain * P['tax_gain']
+    reinvest = after_tax_reinvest(exit_sale['net'] - gain_tax,
+                                  horizon_years - occupy_years)
+    return dict(
+        transfer=transfer, occupy_years=occupy_years,
+        horizon_years=horizon_years,
+        price=at_transfer['value'], sale_net=sale['net'],
+        occupancy_savings=savings, exit_price=exit_row['value'],
+        exit_net=exit_sale['net'], gain_tax=gain_tax,
+        after_tax=reinvest['after_tax'],
+        total=reinvest['after_tax'] + savings)
+
+
 def exclusion_projection(years=(2040, 2050)):
     """Federal estate exclusion: published 2027 anchor, then assumed indexation."""
     out = []
