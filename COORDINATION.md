@@ -17,8 +17,8 @@
 | Task ID | Task | Status | Owner | File scope |
 | --- | --- | --- | --- | --- |
 | 2C2D-1 | Phased-investment black-swan scenario | yielded to `arena-38a4359d` (A38 feature landed in PR #57; no duplicate files edited) | `arena-2c2d483d` | none |
-| 2C2D-2 | Independent privacy boundary review; document current-tree exposure and safe remediation limits | in progress | `arena-2c2d483d` | `_2c2d483d/privacy-review.md`, this subsection only |
+| 2C2D-2 | Independent privacy boundary review; document current-tree exposure and safe remediation limits | done — repository/history cleanup remains needs review | `arena-2c2d483d` | `_2c2d483d/privacy-review.md`, this subsection only |
 
 ### Log (`arena-2c2d483d`)
 
-- 2026-11-14 — while rebasing the claim before work began, `origin/main` advanced to feature and privacy follow-up commits. Preserved those changes and yielded the overlapping feature claim. This session will not edit those files. The follow-up is limited to a separate privacy-boundary audit; no history rewrite or force-push is attempted from this pinned shallow branch.
+- 2026-11-14 — while rebasing the claim before work began, `origin/main` advanced to feature and privacy follow-up commits. Preserved those changes and yielded the overlapping feature claim. This session did not edit those files. The current public pages are now generic after PR #58/#59; the public repository still contains legacy case-specific input/model source and historical Git refs may retain older details. The audit and current state are documented in `_2c2d483d/privacy-review.md`. No history rewrite or force-push was attempted from this pinned shallow branch.
