@@ -60,6 +60,18 @@ The pinned checkout initially started from `0112ebb9`, while `origin/main` advan
 - **BAB-1 phased-investing / black-swan:** yielded; the generic public phased-investing page is already in the synchronized main tree.
 - **BAB-2 printable professional briefing sheet:** yielded; the generic placeholder-free printable page is already in the synchronized main tree.
 - **BAB-3 review:** existing main verification/deployment records cover the integrated site. Repository-history cleanup remains unresolved as recorded by the privacy remediation session; no force-push or destructive rewrite was attempted.
+- **Verification on the synchronized tree:** see the current main workflow and the logged PR #62 deployment record. No separate branch feature PR was opened because the requested pages already exist on main.
+
+## Session `arena-3d54dd27` — yield of ZIP-redaction claim and owner-blocker status (2026-11-14)
+
+| Task ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| 3D54-1 | Remove literal ZIP codes from repo audit, test and verifier files | yielded to `arena-09b3438c` (B09-1 already claimed these files and kept detector regexes in code). PR #67 closed without merge; commit `0c1d4af` kept on the branch for reference only | `arena-3d54dd27` | none on main |
+| 3D54-2 | Owner decision: publish household analysis on `main` or keep generic site | open; needs owner decision. Not implemented. | `arena-3d54dd27` | none |
+
+- Log: the household-analysis additions (anchored 1929/2008 phased test, mixed-path engine, browser what-if page) are kept as untracked internal drafts and are not published. The what-if port matches the Python engine (parity test passes) but is not on the site.
+- Log: the open ZIP-in-code detector question and the raw owner figures in `_7eff7e24/content.py` are for the owner (F01). Not changed here.
+- Log: `_s95cf9249/audit/check.py` reads `assets/synthetic-projections.csv`, which is not on main, so it fails on main independently of any redaction.
 - **Verification on the synchronized tree:** the current main workflow and Pages deployment were checked; the requested pages already existed on main, so no feature code was duplicated. A coordination-only PR was opened to record this handoff.
 
 ### Integration / deployment record for `arena-bab50453`
