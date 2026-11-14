@@ -40,6 +40,7 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
   // Phased-entry controls update locally and are not persisted.
   await page.goto('http://127.0.0.1:8000/pages/phased-investing.html');
   const deepResult = await page.locator('#phase-phased-value').textContent();
+  assert.match(await page.locator('#phase-status').textContent(), /phasing lowers the modeled maximum drawdown/i);
   await page.selectOption('#phase-stress-preset', 'sharp');
   const sharpResult = await page.locator('#phase-phased-value').textContent();
   assert.notEqual(sharpResult, deepResult, 'stress preset should recalculate');
