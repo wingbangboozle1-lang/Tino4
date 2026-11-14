@@ -126,10 +126,9 @@ SOURCES = {
  'bills': ('TreasuryDirect - Treasury bills', 'https://treasurydirect.gov/marketable-securities/treasury-bills/',
   'Federal tax due on interest earned',
   'Terms of 4 to 52 weeks, a $100 minimum, and federal tax with no state or local tax on the interest.', '0'),
- 'h15': ('Federal Reserve Board - H.15 Selected Interest Rates, release of 13 November 2026',
-  'https://www.federalreserve.gov/releases/h15/current/',
-  'Treasury bills (secondary market), 3-month: 4.14 on 12 November 2026. Treasury constant maturities, nominal, 2-year: 4.86 on 12 November 2026.',
-  'Observed secondary-market and constant-maturity yields on one day; auction yields change at every auction and are not a forward commitment. Bills are federally taxable; see bills for state/local treatment.', '0'),
+ 'treasnotes': ('TreasuryDirect - Treasury notes', 'https://treasurydirect.gov/marketable-securities/treasury-notes/',
+  'Treasury notes are issued in terms of 2, 3, 5, 7, and 10 years',
+  'Official product description for notes, including the 2-year maturity. A current yield does not predict a future inheritance-date yield.', '0'),
  'fhfa': ('FHFA - House Price Index datasets', 'https://www.fhfa.gov/hpi/download/quarterly_datasets/hpi_at_state.txt',
   'California, all-transactions index, 1975Q1 to 2026Q2',
   'The full published quarterly series used for the replay on the black-swan page. The index is a state average, not a valuation of any one parcel.', '1-2'),
@@ -138,6 +137,11 @@ SOURCES = {
   '42 Prohibits New State Personal Property Taxes And Certain Retroactive State Taxes. Initiative Constitutional Amendment. 6,378,156 51.4% 6,040,829 48.6%',
   'Unofficial results as of 12 November 2026, to be certified by 11 December 2026. Proposition 42 was leading. It constrains state personal property taxes, not real property tax or rent law.', '0'),
 }
+
+# Per-source retrieval dates. Historical ledger entries were re-audited on the
+# recorded date; the two Treasury product pages were fetched again on Nov 14.
+CHECKED = {key: DATE for key in SOURCES}
+CHECKED.update({'bills': '2026-11-14', 'treasnotes': '2026-11-14'})
 
 FAILED = [
  ('congress.gov H.R. 5336 detail', 'Fetched, but the page reported status Introduced and a summary in progress. Treated as introduced only, not enacted, and therefore not used for any numeric claim.'),
@@ -165,6 +169,6 @@ LABELS = {
  'rental': 'IRS publication 527', 'cdi': 'Dept of Insurance', 'cpucnem': 'CPUC solar tariffs',
  'eia': 'EIA electricity prices', 'bls2022': 'BLS 2022 inflation',
  'blsrent': 'BLS area rent index', 'cbo': 'CBO rate projection', 'stocks': 'SEC investor education',
- 'bills': 'TreasuryDirect bills', 'fhfa': 'FHFA house price index', 'h15': 'Federal Reserve H.15',
+ 'bills': 'TreasuryDirect bills', 'treasnotes': 'TreasuryDirect notes', 'fhfa': 'FHFA house price index',
  'sos2026': 'Secretary of State results',
 }
