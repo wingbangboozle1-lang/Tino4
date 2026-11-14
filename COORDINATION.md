@@ -72,3 +72,10 @@ The pinned checkout initially started from `0112ebb9`, while `origin/main` advan
 - Log: the household-analysis additions (anchored 1929/2008 phased test, mixed-path engine, browser what-if page) are kept as untracked internal drafts and are not published. The what-if port matches the Python engine (parity test passes) but is not on the site.
 - Log: the open ZIP-in-code detector question and the raw owner figures in `_7eff7e24/content.py` are for the owner (F01). Not changed here.
 - Log: `_s95cf9249/audit/check.py` reads `assets/synthetic-projections.csv`, which is not on main, so it fails on main independently of any redaction.
+- **Verification on the synchronized tree:** the current main workflow and Pages deployment were checked; the requested pages already existed on main, so no feature code was duplicated. A coordination-only PR was opened to record this handoff.
+
+### Integration / deployment record for `arena-bab50453`
+
+- PR #64 (coordination-only): https://github.com/wingbangboozle1-lang/Tino4/pull/64 — merged 2026-11-14 22:18:23 UTC as `4557ef23e2c65c13085dfddfdc668e19a64ca4be`. The PR verification run 43647357616 passed. Its first Pages run was cancelled because a higher-priority deployment was queued; this was not a build failure.
+- Subsequent current-main verification run 43647411822 passed. Pages deployment run 43647411127 succeeded for commit `37c05db22fb8c71843e6746958aaeca7973ec386` (after concurrent PR #65); Pages API status is `built` at https://wingbangboozle1-lang.github.io/Tino4/.
+- Live page fetch checks: `/pages/phased-investing.html` serves the Treasury staging model with local what-if controls and risk disclosures; `/pages/attorney-cpa-brief.html` serves the printable adviser handout and sourced statutory references.
