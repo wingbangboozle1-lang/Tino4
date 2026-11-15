@@ -59,4 +59,51 @@
     document.getElementById('phase-equity').value = '';
     document.getElementById('phase-result').textContent = 'Inputs cleared.';
   });
+
+  const sellRun = document.getElementById('sell-run');
+  const sellClear = document.getElementById('sell-clear');
+  const sellResult = document.getElementById('sell-result');
+  const sellFmt = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.max(0, Math.round(value / 10) * 10));
+  if (sellRun && sellResult) {
+    sellRun.addEventListener('click', () => {
+      const value = Number(document.getElementById('sell-value')?.value);
+      const basis = Number(document.getElementById('sell-basis')?.value);
+      const costsPct = Number(document.getElementById('sell-costs')?.value);
+      const dttPct = Number(document.getElementById('sell-dtt')?.value);
+      const otherRaw = document.getElementById('sell-other')?.value.trim() ?? '';
+      const other = otherRaw === '' ? 0 : Number(otherRaw);
+      const timing = document.getElementById('sell-timing')?.value ?? 'later';
+      const exclusion = Number(document.getElementById('sell-121')?.value);
+      if (!(value > 0) || !Number.isFinite(basis) || basis < 0 || !Number.isFinite(costsPct) || costsPct < 0 || costsPct > 30 || !Number.isFinite(dttPct) || dttPct < 0 || dttPct > 10 || !Number.isFinite(other) || other < 0) {
+        sellResult.textContent = 'Enter a positive sale value, a non-negative basis, and valid percentage assumptions.';
+        return;
+      }
+      const costs = value * (costsPct / 100);
+      const transferTax = value * (dttPct / 100);
+      const realized = value - costs - basis;
+      const modeledGain = timing === 'transfer' ? 0 : Math.max(0, realized);
+      const gainAfterExclusion = Math.max(0, modeledGain - exclusion);
+      const taxable = Math.max(0, gainAfterExclusion + other);
+      const excess = Math.max(0, taxable - 1000000);
+      const addOn = excess * 0.01;
+      const lines = [
+        `Estimated sale transaction costs: $${sellFmt(costs)}.`,
+        `Estimated documentary transfer tax at the entered rate: $${sellFmt(transferTax)} (recording fees are additional; use the property's official schedule).`,
+      ];
+      if (timing === 'transfer') {
+        lines.push('Transfer-year sale: gain is modeled at $0 because inherited basis is generally date-of-death value; a later sale adds post-death appreciation.');
+      } else {
+        lines.push(`Modeled gain before exclusion: $${sellFmt(modeledGain)}.`);
+        lines.push(`Modeled gain after the entered section 121 amount: $${sellFmt(gainAfterExclusion)} (eligibility requires ownership and use tests).`);
+      }
+      lines.push(`Illustrative California 1% add-on on taxable income above $1,000,000: $${sellFmt(addOn)} (computed with the entered other income; not a complete tax return).`);
+      sellResult.textContent = lines.join(' ');
+    });
+  }
+  sellClear?.addEventListener('click', () => {
+    ['sell-value', 'sell-basis', 'sell-costs', 'sell-dtt', 'sell-other'].forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const sel = document.getElementById('sell-121');
+    if (sel) sel.value = '0';
+    if (sellResult) sellResult.textContent = 'Inputs cleared.';
+  });
 })();
