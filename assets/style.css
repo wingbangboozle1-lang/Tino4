@@ -203,19 +203,11 @@ footer a { white-space: nowrap; }
   .twhen { font-size: 9pt; }
   .twhat { font-size: 9pt; }
 }
-<<<<<<< HEAD
-/* Deadline timeline (inheritance process) */
-.timeline { list-style: none; display: flex; gap: 10px; padding: 14px 4px 8px; margin: 4px 0 14px; overflow-x: auto; }
-.timeline li { flex: 1 1 150px; min-width: 150px; border: 1px solid var(--line, #d8d3c8); border-radius: 10px; padding: 10px 12px; background: #fffdf8; position: relative; }
-.timeline .tl-when { display: block; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #7a6a4f; }
-.timeline .tl-what { display: block; margin-top: 4px; font-size: 0.82rem; line-height: 1.35; }
-@media (max-width: 700px) { .timeline { flex-wrap: wrap; } .timeline li { flex: 1 1 45%; } }
-@media print { .timeline { overflow: visible; flex-wrap: wrap; } .timeline li { flex: 1 1 30%; box-shadow: none; } }
-=======
-
-
-/* Proposal badge (introduced bills, not enacted law) */
-.badge.proposal { color: #76510a; background: #fff3d7; }
+/* Proposal and evidence-state badges */
+.badge.proposal, .badge.assumption { color: #76510a; background: #fff3d7; }
+.badge.rule, .badge.verified, .badge.verified-rule { color: var(--green); background: var(--green-bg); }
+.badge.historical, .badge.guidance, .badge.official-reference { color: #146269; background: #e7f4f5; }
+.badge.missing, .badge.unverified, .badge.not-verified { color: var(--red); background: var(--red-bg); }
 
 /* Compact one-page print for the attorney & CPA brief */
 @media print {
@@ -233,25 +225,11 @@ footer a { white-space: nowrap; }
   .brief-page th, .brief-page td { padding: 2px 3px; }
   .brief-page .source { font-size: 5.8pt; }
   .brief-page .badge { font-size: 5.3pt; padding: 1px 3px; }
-  .brief-page .prose h2 { font-size: 8.5pt; margin-bottom: 2px; }
-  .brief-page .prose p { margin: 2px 0; line-height: 1.15; }
   .brief-page footer { margin-top: 2px; padding-top: 2px; font-size: 6.5pt; }
 }
->>>>>>> 5fe1463 (Integrate parallel sessions' features: decision log, Treasury ladder panel, regime map baselines, proposal watchlist rows, brief print compaction)
 
-/* Distribution chart (projections page) */
-.dist-chart { display: grid; gap: 0.55rem; margin: 1rem 0 1.4rem; }
-.dist-chart-title { font-size: 0.85rem; color: var(--muted); margin: 0 0 0.35rem; }
-.dist-row { display: grid; grid-template-columns: minmax(11rem, 22rem) 1fr minmax(6.5rem, auto); gap: 0.75rem; align-items: center; }
-.dist-label { font-size: 0.85rem; }
-.dist-track { background: var(--line); border-radius: 5px; height: 1.05rem; overflow: hidden; }
-.dist-fill { display: block; height: 100%; border-radius: 5px; min-width: 2px; }
-.dist-gross { background: var(--teal); }
-.dist-cost { background: var(--amber); }
-.dist-net { background: var(--green); }
-.dist-zero { background: repeating-linear-gradient(45deg, var(--line), var(--line) 4px, var(--panel) 4px, var(--panel) 8px); }
-.dist-amount { font-variant-numeric: tabular-nums; font-size: 0.85rem; text-align: right; }
-@media (max-width: 720px) {
-  .dist-row { grid-template-columns: 1fr; gap: 0.25rem; }
-  .dist-amount { text-align: left; }
-}
+.calculator, .review-queue { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); align-items: end; margin: 14px 0; }
+.calculator label, .review-queue label { display: grid; gap: 5px; font-weight: 650; }
+.calculator input, .review-queue select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
+.calculator button { min-height: 40px; border: 0; border-radius: 8px; padding: 8px 14px; background: var(--teal-dark); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
+#phase-result { grid-column: 1 / -1; }
