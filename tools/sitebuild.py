@@ -561,9 +561,9 @@ FBYY_2045 = a_assessed(INHERIT_YEAR)
 
 def staging_model(proceeds: float, staging_months: int, drawdown: float,
                   trough_months: int, drift: float, yield1: float, yield2: float,
-                  crash_start):
+                  crash_start, min_horizon: int = 0):
     """Mirror of the browser staging tool, in dollars, for the static table."""
-    horizon = max(staging_months, (crash_start if crash_start is not None else 0) + trough_months)
+    horizon = max(staging_months, (crash_start if crash_start is not None else 0) + trough_months, min_horizon)
 
     def index_at(month: int) -> float:
         if crash_start is None or month < crash_start:
@@ -597,9 +597,10 @@ def staging_rows() -> list[dict]:
     ]
     for label, drawdown, y1, y2, drift, trough in scenarios:
         crash = 15 if drawdown else None
-        lump = staging_model(SELL_NET_2045, 0, drawdown, trough, drift, y1, y2, crash)[1]
-        p24 = staging_model(SELL_NET_2045, 24, drawdown, trough, drift, y1, y2, crash)[0]
-        p36 = staging_model(SELL_NET_2045, 36, drawdown, trough, drift, y1, y2, crash)[0]
+        horizon = max(36, (crash or 0) + trough)
+        lump = staging_model(SELL_NET_2045, 0, drawdown, trough, drift, y1, y2, crash, min_horizon=horizon)[1]
+        p24 = staging_model(SELL_NET_2045, 24, drawdown, trough, drift, y1, y2, crash, min_horizon=horizon)[0]
+        p36 = staging_model(SELL_NET_2045, 36, drawdown, trough, drift, y1, y2, crash, min_horizon=horizon)[0]
         rows.append({"cells": [label, money10(lump), money10(p24), money10(p36)],
                      "status": "Assumption", "sources": ["treasury_bills", "treasury_notes", "cbo_rates", "fed_2008", "fed_1929"]})
     return rows
@@ -615,10 +616,13 @@ NAV_GROUPS = [
         ("pages/questions.html", "Questions & missing evidence"),
         ("pages/suggestions.html", "Suggestions for review"),
     ]),
+    ("Properties", [
+        ("pages/property-profiles.html", "Property profiles (rounded figures)"),
+        ("pages/operating-costs.html", "Costs & coverage"),
+    ]),
     ("Numbers", [
         ("pages/projections.html", "Projection worksheet"),
         ("pages/property-tax.html", "Property-tax rules"),
-        ("pages/operating-costs.html", "Costs & coverage"),
     ]),
     ("Stress tests", [
         ("pages/black-swan.html", "Black-swan conditions"),
@@ -643,6 +647,7 @@ EXPECTED_PAGES = [
     "index.html",
     "pages/executive-summary.html",
     "pages/decision-analysis.html",
+    "pages/property-profiles.html",
     "pages/questions.html",
     "pages/suggestions.html",
     "pages/projections.html",
@@ -684,6 +689,9 @@ def badge(status: str) -> str:
         "Verified": "verified",
         "Missing": "missing",
         "Owner-supplied": "owner",
+        "Owner-supplied (privacy-rounded)": "owner",
+        "Cross-checked": "guidance",
+        "Projection": "projection",
         "Projection": "projection",
         "Assumption": "assumption",
         "Guidance": "guidance",
@@ -788,10 +796,10 @@ def render_page(path: str, title: str, intro: str, body: str, eyebrow: str = "DE
 <aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">◈</span><span>PRIVATE<br>DECISION BRIEF</span></a>
 <p class="sidebar-note">Trust transfer +<br>already-owned property</p>
 <nav aria-label="Main navigation">{build_nav(path)}</nav>
-<div class="sidebar-bottom">No addresses or case amounts<br>Source dates in register</div></aside>
+<div class="sidebar-bottom">No names, addresses or parcel numbers<br>Figures rounded to the nearest $10<br>Source dates in register</div></aside>
 <div class="workspace"><header class="topbar"><span>RESEARCH / DECISION SUPPORT</span><div><span class="privacy-dot" aria-hidden="true"></span> Privacy-first <button class="print-button no-print" id="print-page" type="button">Print</button></div></header>
 <main id="main"><div class="page-heading"><span class="eyebrow">{esc(eyebrow)}</span><h1>{esc(title)}</h1><p class="lead">{esc(intro)}</p></div>{body}</main>
-<footer><strong>Planning framework only.</strong> Not legal, tax, insurance, appraisal or investment advice. A source supports only its stated scope, not a private fact. Blank means unknown, not zero. The public site intentionally contains no property-specific dollar values or locations.<br>
+<footer><strong>Planning framework only.</strong> Not legal, tax, insurance, appraisal or investment advice. A source supports only its stated scope, not a private fact. Owner-supplied figures are privacy-rounded to the nearest $10 at the owner's direction and flagged; blanks mean unknown, not zero.<br>
 <a href="{prefix}pages/privacy.html">Privacy &amp; limits</a> · <a href="{prefix}pages/sources.html">Official sources</a> · <a href="{prefix}pages/flagged-for-review.html">Flagged for review</a></footer>
 </div></div></body></html>'''
 
@@ -884,6 +892,101 @@ def build_executive_summary() -> str:
         ("Risk", "Historical stress anchors and a local-only Treasury phasing comparison.", "pages/black-swan.html"),
     ], current="pages/executive-summary.html")
     return render_page("pages/executive-summary.html", "Executive summary", "The short version: separate the assets, verify the rules that can change the answer, and leave private numbers blank until documents establish them.", body, "EXECUTIVE SUMMARY")
+
+
+def build_property_profiles() -> str:
+    a_hist_rows = []
+    for year in range(2014, 2027):
+        assessed = PROPERTY_A["assessed"].get(year)
+        tax = PROPERTY_A["tax"].get(year)
+        if year == 2026:
+            tax_cell = money10(PROPERTY_A["assessed"][2026] * RATE_A)
+            tax_status = "Projection"
+        else:
+            tax_cell = money10(tax) if tax else "—"
+            tax_status = "Owner-supplied (privacy-rounded)"
+        a_hist_rows.append({
+            "cells": [year, money10(assessed) if assessed else "—", tax_cell],
+            "status": tax_status if year != 2026 else "Projection",
+            "sources": ["owner_a", "boe_pub29"],
+        })
+    b_hist_rows = []
+    for year in range(2016, 2027):
+        assessed = PROPERTY_B["assessed"].get(year)
+        tax = PROPERTY_B["tax"].get(year)
+        if year == 2026:
+            b_hist_rows.append({
+                "cells": [year, money10(assessed) if assessed else "—", money10(b_assessed(2026) * RATE_B)],
+                "status": "Projection",
+                "sources": ["owner_b", "boe_pub29"],
+            })
+        else:
+            b_hist_rows.append({
+                "cells": [year, money10(assessed) if assessed else "—", money10(tax) if tax else "—"],
+                "status": "Owner-supplied (privacy-rounded)",
+                "sources": ["owner_b", "boe_pub29"],
+            })
+    profile_rows = [
+        {"cells": ["Role", "Anticipated future trust transfer to the current generation; the decision analysis must assume the transfer is a parent-child change in ownership.", "Property-tax treatment at transfer depends on the Proposition 19 family-home conditions; income-tax basis is separate."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "ca_rtc63", "irs_basis"]},
+        {"cells": ["Region", PROPERTY_A["region"] + ". No street address, parcel number or name is published.", "Region-level context only; it supports insurance, utility and tax-rule research and cannot locate the property."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "sjw_rates"]},
+        {"cells": ["Estimated market value — Nov 2026", money10(PROPERTY_A["value_2026"]), "Owner-supplied estimate. A defensible valuation for any real decision needs an appraisal at the relevant date."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "fhfa_hpi"]},
+        {"cells": ["Current assessed value (2026 roll)", money10(PROPERTY_A["assessed"][2026]), "Owner-supplied, rounded. Under Proposition 13 the assessed value can grow at most 2% per year absent a change in ownership or new construction."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "boe_pub29", "ca_rtc51"]},
+        {"cells": ["Derived effective tax rate", f"about {RATE_A * 100:.2f}% of assessed value (2025 tax divided by 2025 assessment)", "Derived from owner-supplied rounded figures; the actual bill includes voter-approved measures and direct charges that can change it."], "status": "Assumption", "sources": ["owner_a", "boe_pub29"]},
+        {"cells": ["Water", f"{PROPERTY_A['water_month'][0]} to {PROPERTY_A['water_month'][1]} per month (owner-supplied)", "Provider for the region publishes tariffs; the actual bill depends on metered usage and approved rates."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "sjw_rates"]},
+        {"cells": ["Electricity / solar", f"net credit of about {PROPERTY_A['solar_credit_month'][0]} to {PROPERTY_A['solar_credit_month'][1]} per month (owner-supplied)", "A generation credit depends on the tariff (legacy NEM vs net billing) and interconnection date; confirm from the account records."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "cpuc_solar"]},
+        {"cells": ["Homeowners insurance", f"owner estimate about {money10(PROPERTY_A['insurance_owner_estimate'])} per year — unverified", "No official source sets a household premium; the 2025-26 California market is stressed and the FAIR Plan raised dwelling rates in late 2026. Obtain written quotes for the intended use."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "cdi", "cdi_news"]},
+        {"cells": ["Maintenance", "owner reports lower repair intensity than Property B; no band is established", "Inspection findings and licensed bids are the evidence; the projection model carries an assumption band of " + money10(MAINT_A_BAND[0]) + " to " + money10(MAINT_A_BAND[1]) + " per year, labeled as an assumption."], "status": "Assumption", "sources": ["owner_a", "cslb"]},
+    ]
+    profile_rows_b = [
+        {"cells": ["Role", "Already owned by the inheritor; three livable units, two currently rented, and the owner reports the property can serve as a residence without losing rental income.", "The already-owned role matters: no reassessment occurs from the future inheritance, and keeping B lets the household retain rental income whichever way Property A goes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "ca_rent"]},
+        {"cells": ["Region", PROPERTY_B["region"] + ". No street address, parcel number or name is published.", "Region-level context only."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "sfpuc_water"]},
+        {"cells": ["Estimated market value — Nov 2026", money10(PROPERTY_B["value_2026"]), "Owner-supplied estimate; obtain an appraisal for any real transaction."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "fhfa_hpi"]},
+        {"cells": ["Current assessed value (2025 roll)", money10(PROPERTY_B["assessed"][2025]), "Owner-supplied, rounded; the low base reflects long ownership under Proposition 13."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "boe_pub29"]},
+        {"cells": ["Derived effective tax rate", f"about {RATE_B * 100:.2f}% of assessed value (2025 tax divided by 2025 assessment)", "Derived from owner-supplied rounded figures; San Francisco bills include voter-approved measures on top of the 1% base levy."], "status": "Assumption", "sources": ["owner_b", "boe_pub29"]},
+        {"cells": ["Rental income", f"about {money10(PROPERTY_B['rent_month'])} per month from {PROPERTY_B['rented_units']} rented units (owner-supplied)", "Gross rent is not net income: vacancy, water, electricity, insurance, repairs, management and income tax all reduce it. Rent increases for covered units are capped by the local rent ordinance."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "irs_rental", "sf_rent_board"]},
+        {"cells": ["Water / electricity", f"water {PROPERTY_B['water_month'][0]} to {PROPERTY_B['water_month'][1]} and electricity {PROPERTY_B['electric_month'][0]} to {PROPERTY_B['electric_month'][1]} per month for the building (owner-supplied)", "Combined-building figures; metering configuration determines how costs would be allocated if occupancy changes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "sfpuc_water", "pge_tariffs"]},
+        {"cells": ["Landlord insurance", f"owner estimate about {money10(PROPERTY_B['insurance_owner_estimate'])} per year — unverified", "A landlord/dwelling-fire policy is underwritten per property; no official premium table exists. Obtain written quotes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "cdi"]},
+        {"cells": ["Rent-increase rule", "The Rent Board states a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027.", "Coverage depends on the building (units with a certificate of occupancy before June 13, 1979 are generally covered, with exceptions); confirm the unit status before modeling increases."], "status": "Verified", "sources": ["sf_rent_board", "ca_rent"]},
+    ]
+    body = callout(
+        "Rounded figures, labeled evidence",
+        "At the owner's written direction, property figures on this site are privacy-rounded to the nearest ten dollars so they cannot be searched back to a source record. No name, street address or parcel number is published. Every owner-supplied row carries an Owner-supplied (privacy-rounded) badge and a link to the official record that can confirm it. Values the owner has not supplied remain blank — blank means unknown, not zero.",
+        "info",
+    )
+    body += make_table(
+        "Property A — anticipated trust transfer profile",
+        ["Attribute", "Value (privacy-rounded)", "Meaning and limits"],
+        profile_rows,
+        "The 2040-2050 trust-transfer window is the owner's stated plan, not a confirmed date. All forward numbers live on the projection page and are labeled assumptions.",
+    )
+    body += make_table(
+        "Property A — assessment and tax history (owner-supplied, privacy-rounded)",
+        ["Year", "Assessed value", "Property tax"],
+        a_hist_rows,
+        "The 2026 tax cell is a projection: 2026 assessed value times the derived effective rate. Historical rows are owner-supplied and rounded; verify against the county roll.",
+    )
+    body += make_table(
+        "Property B — already-owned property profile",
+        ["Attribute", "Value (privacy-rounded)", "Meaning and limits"],
+        profile_rows_b,
+    )
+    body += make_table(
+        "Property B — assessment and tax history (owner-supplied, privacy-rounded)",
+        ["Year", "Assessed value", "Property tax"],
+        b_hist_rows,
+        "The 2026 tax cell is a projection: 2026 assessed value times the derived effective rate. Historical rows are owner-supplied and rounded.",
+    )
+    body += paragraph(
+        "Why the two roles change the analysis",
+        "Property B is already owned, so the future inheritance does not reassess it and its rental income continues under any plan for Property A. Property A's treatment at transfer is the decisive lever: if it can qualify as the transferee's principal residence under the family-home rules, the long-held base carries over; if it cannot, the taxable value resets toward market value minus the statutory exclusion amount. Keep the two assets' costs, basis and records separate in every calculation.",
+    )
+    return render_page(
+        "pages/property-profiles.html",
+        "Property profiles — rounded figures",
+        "Side-by-side profiles of the anticipated trust transfer and the already-owned property, using owner-supplied figures rounded to the nearest ten dollars, with every row linked to the official record that can confirm it.",
+        body,
+        "PROPERTIES",
+    )
 
 
 def build_decisions() -> str:
@@ -1487,6 +1590,7 @@ def build_page(path: str) -> str:
         "index.html": build_index,
         "pages/executive-summary.html": build_executive_summary,
         "pages/decision-analysis.html": build_decisions,
+        "pages/property-profiles.html": build_property_profiles,
         "pages/questions.html": build_questions,
         "pages/projections.html": build_projections,
         "pages/property-tax.html": build_property_tax,
