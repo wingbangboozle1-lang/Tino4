@@ -52,3 +52,29 @@ The guide links to official IRS and U.S. Code materials; California BOE and stat
 ## Prior work
 
 Earlier sessions built a household-specific model and identified historical exposure. This current tree is being generalized; prior public history is not represented as scrubbed. No old values or place identifiers are repeated in this board.
+
+## Session `arena/4841e117` — decision-completeness rules, source re-verification, consolidation
+
+Branch: `arena/4841e117-tino4` (platform-fixed). Status: merged resolution recorded below.
+
+| Task ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| 4841-1 | Baseline verification and official-source research | done | `arena/4841e117` | research; source scopes |
+| 4841-2 | Decision-completeness rules published generically | done | `arena/4841e117` | `tools/sitebuild.py`, `assets/app.js`, generated pages |
+| 4841-3 | Enacted-vs-proposal tracking and flagged corrections | done | `arena/4841e117` | law-watchlist, flagged, glossary |
+| 4841-4 | Consolidation of superseded generator modules | done | `arena/4841e117` | `tools/sections.py`, `tools/models.py` deleted (covered by the canonical builder; git history retains them) |
+| 4841-5 | Rebuild, verify, tests, PR and deployment record | done | `arena/4841e117` | release checks and this board |
+
+### 4841 results
+
+- **Merge resolution (recorded per protocol):** this branch initially carried a household-model branch of the generator. When `main` advanced with the B784-1/2 privacy containment, the branch merged `origin/main` and **adopted the privacy-first tree as the baseline** — no household figures, locations or derived recommendations were restored. The decision-completeness work was re-applied in generalized form only.
+- Published as generic rules: the sale-proceeds waterfall order (gross → transaction costs → documentary transfer tax → recording fees → sale-year income tax → net), transfer-year-sale framing on date-of-death basis, unrecaptured section 1250 gain at the maximum 25% federal rate, California ordinary-rate capital gains and the 1% add-on above $1,000,000 of taxable income (with a generic per-$100,000 sensitivity), like-kind-exchange decision and deadline rules, main-home exclusion switching, Prop 19 per-transfer value-limit with **no carry-forward** (statutory correction, flagged), claim timing and late-claim relief, tax-rate-area lookup method, estate payment calendar and liquidity plan, five-year capital-plan windows, pre-commitment criteria table, residential-vacancy-tax and transfer-tax-proposal tracking rows (proposals labeled “not enacted law”), and a blank-input local-only sale-tax overlay tool.
+- **“Prop H” research resolution (private):** the official measure behind the owner's shorthand was identified and its litigation status reviewed on 2026-11-15. Jurisdiction and terms are intentionally not named in this board or the public site, consistent with the B784 containment; the identification is recorded in the private workpaper. Public rows state only that it is resolved privately and must be re-confirmed with the property's own tax authority.
+- Superseded modules `tools/sections.py` and `tools/models.py` are deleted from the active tree; their content is covered by the canonical builder and preserved in git history.
+- **Verification:** build 22 pages; `tools/verify.py` pass; 10 unit tests pass; `node --check assets/app.js` pass. No household markers, browser storage, remote resources, or non-allowlisted source hosts.
+- **Exposure note for the owner's remediation list:** intermediate commits and PR #105's earlier commits on this session branch contain pre-containment drafts consistent with the already-flagged historical exposure; the merged tree on `main` is privacy-clean. This remains an owner/admin history-remediation item together with the earlier public history.
+
+### Release record (4841-5)
+
+- PR: https://github.com/wingbangboozle1-lang/Tino4/pull/105 — merged with `gh pr merge 105 --merge`.
+- Live site: https://wingbangboozle1-lang.github.io/Tino4/ (Pages status recorded at merge time below if changed).
