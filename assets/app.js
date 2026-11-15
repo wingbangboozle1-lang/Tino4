@@ -1,568 +1,401 @@
-/* Local-only behaviour for the inheritance decision workspace.
- *
- * Everything here runs in the reader's browser. There is no network request, no
- * analytics, no remote font, no remote script and no form submission. Review
- * choices are stored in this browser's local storage only and can be cleared
- * with the reset button.
- *
- * The projection and staging calculators are illustrations built from explicit
- * assumptions. They are not forecasts, backtests or investment advice.
- */
-(function () {
-  'use strict';
+'use strict';
 
-  var REVIEW_KEY = 'inheritance-review-choices-v1';
+// Local interactions only: no analytics, API calls, third-party assets, or
+// household-specific financial input storage.
+document.getElementById('print-page')?.addEventListener('click', () => window.print());
 
-  /* ----------------------------------------------------------------- utils */
-  function round10(value) {
-    if (!isFinite(value)) return 0;
-    return Math.round(value / 10) * 10;
-  }
-
-  function money(value) {
-    var n = Math.round(value);
-    var sign = n < 0 ? '-' : '';
-    var digits = Math.abs(n).toString();
-    var out = '';
-    for (var i = 0; i < digits.length; i++) {
-      if (i > 0 && (digits.length - i) % 3 === 0) out += ',';
-      out += digits.charAt(i);
-    }
-    return sign + '$' + out;
-  }
-
-  function pct(value, places) {
-    var p = places === undefined ? 1 : places;
-    return (value * 100).toFixed(p) + '%';
-  }
-
-  function el(id) {
-    return document.getElementById(id);
-  }
-
-  function payload() {
-    var node = document.getElementById('runtime-payload');
-    if (!node) return null;
+// Review choices are intentionally client-local and contain no case details.
+const reviewStorageKey = 'public-suggestion-review-v2';
+const reviewChoices = [...document.querySelectorAll('.review-choice')];
+const reviewSummary = document.getElementById('review-summary');
+let reviewState = {};
+let reviewStorageAvailable = true;
+try {
+  const saved = JSON.parse(localStorage.getItem(reviewStorageKey) || '{}');
+  if (saved && typeof saved === 'object' && !Array.isArray(saved)) reviewState = saved;
+} catch (_) {
+  reviewStorageAvailable = false;
+}
+const allowedChoices = new Set(['Not reviewed', 'Investigate', 'Selected for testing', 'Defer']);
+function updateReviewSummary() {
+  if (!reviewSummary) return;
+  const count = reviewChoices.filter(choice => choice.value !== 'Not reviewed').length;
+  reviewSummary.textContent = `${count} of ${reviewChoices.length} suggestions reviewed. ${reviewStorageAvailable ? 'Saved only in this browser.' : 'Browser storage is unavailable; choices last only for this page.'} No change was applied.`;
+}
+reviewChoices.forEach(choice => {
+  const value = reviewState[choice.dataset.id];
+  if (allowedChoices.has(value)) choice.value = value;
+  choice.addEventListener('change', () => {
+    reviewState = Object.fromEntries(reviewChoices.map(item => [item.dataset.id, item.value]));
     try {
-      return JSON.parse(node.getAttribute('data-payload'));
-    } catch (err) {
-      return null;
+      localStorage.setItem(reviewStorageKey, JSON.stringify(reviewState));
+      reviewStorageAvailable = true;
+    } catch (_) {
+      reviewStorageAvailable = false;
     }
+    updateReviewSummary();
+  });
+});
+document.getElementById('reset-reviews')?.addEventListener('click', () => {
+  reviewChoices.forEach(choice => { choice.value = 'Not reviewed'; });
+  reviewState = {};
+  try {
+    localStorage.removeItem(reviewStorageKey);
+    reviewStorageAvailable = true;
+  } catch (_) {
+    reviewStorageAvailable = false;
   }
+  updateReviewSummary();
+});
+updateReviewSummary();
 
-  function num(id) {
-    var node = el(id);
-    if (!node) return 0;
-    var v = parseFloat(node.value);
-    return isFinite(v) ? v : 0;
-  }
+// Local-only Treasury-ladder / phased-equity scenario tool. Starting capital
+// is normalized to 100 units; values are not currency amounts. Nothing is
+// stored, transmitted, or read from a network.
+const phaseForm = document.getElementById('phase-tool');
+if (phaseForm) {
+  const element = id => document.getElementById(id);
+  const numeric = (id, fallback, min, max) => {
+    const raw = Number(element(id)?.value);
+    const value = Number.isFinite(raw) ? raw : fallback;
+    return Math.max(min, Math.min(value, max));
+  };
+  const pct = value => `${value.toFixed(1)}%`;
+  const units = value => `${value.toFixed(2)} units`;
 
-  function setOutput(id, text) {
-    var out = el(id + '-out');
-    if (out) out.textContent = text;
-  }
+  function simulateScenario(crashStart, stagingMonths, drawdown, troughMonths, drift, firstYield, renewalYield) {
+    const starting = 100;
+    const horizon = Math.max(stagingMonths, crashStart + troughMonths);
+    const peakAtCrash = Math.pow(1 + drift, crashStart / 12);
+    const indexAt = month => {
+      if (month < crashStart) return Math.pow(1 + drift, month / 12);
+      const elapsed = Math.min(1, Math.max(0, (month - crashStart) / troughMonths));
+      return peakAtCrash * (1 - drawdown * elapsed);
+    };
 
-  /* -------------------------------------------------------------- printing */
-  function wirePrint() {
-    var button = el('print-page');
-    if (!button) return;
-    button.addEventListener('click', function () {
-      window.print();
-    });
-  }
+    let reserve = starting;
+    let phasedShares = 0;
+    const immediateShares = starting;
+    let immediatePeak = starting;
+    let phasedPeak = starting;
+    let immediateWorst = 0;
+    let phasedWorst = 0;
 
-  /* ----------------------------------------------------------- review queue */
-  function loadReviews() {
-    try {
-      var raw = window.localStorage.getItem(REVIEW_KEY);
-      return raw ? JSON.parse(raw) : {};
-    } catch (err) {
-      return {};
-    }
-  }
-
-  function saveReviews(store) {
-    try {
-      window.localStorage.setItem(REVIEW_KEY, JSON.stringify(store));
-    } catch (err) {
-      /* Storage may be unavailable; the page still works without it. */
-    }
-  }
-
-  function wireReviews() {
-    var selects = document.querySelectorAll('select.review-choice');
-    if (!selects.length) return;
-    var store = loadReviews();
-
-    function summary() {
-      var counts = { 'Not reviewed': 0, 'Investigate': 0, 'Selected': 0, 'Defer': 0 };
-      Array.prototype.forEach.call(selects, function (select) {
-        var key = select.getAttribute('data-id');
-        var value = store[key] || select.value;
-        counts[value] = (counts[value] || 0) + 1;
-      });
-      var node = el('review-summary');
-      if (!node) return;
-      var parts = [];
-      Object.keys(counts).forEach(function (key) {
-        parts.push(counts[key] + ' ' + key.toLowerCase());
-      });
-      node.textContent = 'Review queue: ' + parts.join(', ') + '. Saved in this browser only.';
-    }
-
-    Array.prototype.forEach.call(selects, function (select) {
-      var key = select.getAttribute('data-id');
-      if (store[key]) select.value = store[key];
-      select.addEventListener('change', function () {
-        store[key] = select.value;
-        saveReviews(store);
-        summary();
-      });
-    });
-
-    var reset = el('reset-reviews');
-    if (reset) {
-      reset.addEventListener('click', function () {
-        store = {};
-        try {
-          window.localStorage.removeItem(REVIEW_KEY);
-        } catch (err) {
-          /* ignore */
+    for (let month = 1; month <= horizon; month += 1) {
+      if (month <= stagingMonths) {
+        const annualYield = (month <= 12 ? firstYield : renewalYield) / 100;
+        reserve *= Math.pow(1 + annualYield, 1 / 12);
+        const scheduledPurchase = starting / stagingMonths;
+        const purchase = Math.min(scheduledPurchase, reserve);
+        phasedShares += purchase / Math.max(indexAt(month), 0.000001);
+        reserve -= purchase;
+        if (month === stagingMonths && reserve > 0) {
+          phasedShares += reserve / Math.max(indexAt(month), 0.000001);
+          reserve = 0;
         }
-        Array.prototype.forEach.call(selects, function (select) {
-          select.value = 'Not reviewed';
-        });
-        summary();
-      });
+      }
+      const index = indexAt(month);
+      const immediateValue = immediateShares * index;
+      const phasedValue = phasedShares * index + reserve;
+      immediatePeak = Math.max(immediatePeak, immediateValue);
+      phasedPeak = Math.max(phasedPeak, phasedValue);
+      immediateWorst = Math.min(immediateWorst, immediateValue / immediatePeak - 1);
+      phasedWorst = Math.min(phasedWorst, phasedValue / phasedPeak - 1);
     }
-    summary();
-  }
-
-  /* ------------------------------------------------------------ projections */
-  /* Mirrors tools/casedata.py. Any change here must be made there too. */
-  function makeModel(data, inputs) {
-    var HOX = data.homeownersExemption;
-
-    function growth(base, rate, years) {
-      return base * Math.pow(1 + rate, years);
-    }
-    function marketA(year) {
-      return round10(growth(data.a.valueNow, inputs.aApp, year - data.baseYear));
-    }
-    function marketB(year) {
-      return round10(growth(data.b.valueNow, inputs.bApp, year - data.baseYear));
-    }
-    function assessedA(year) {
-      return round10(growth(data.a.assessed2026, inputs.assessedGrowth, year - data.baseYear));
-    }
-    function assessedB(year) {
-      return round10(growth(data.b.assessed2026, inputs.assessedGrowth, year - data.baseYear));
-    }
-    function limit(year) {
-      return round10(growth(data.prop19LimitNow, inputs.prop19Growth, year - data.prop19LimitBaseYear));
-    }
-    function taxable(fmv, base, cap) {
-      return round10(base + Math.max(0, fmv - (base + cap)));
-    }
-    function tax(value, rate, applyHox) {
-      var base = value - (applyHox ? HOX : 0);
-      return round10(Math.max(0, base) * rate);
-    }
-    function mid(band) {
-      return (band[0] + band[1]) / 2;
-    }
-    function opA(year) {
-      var y = year - data.baseYear;
-      var water = round10(round10(mid(data.a.waterBand) * 12) * Math.pow(1 + inputs.inflation, y));
-      var electric = -round10(round10(mid(data.a.electricCreditBand) * 12) * Math.pow(1 + inputs.inflation, y));
-      var insurance = round10(data.a.insurance * Math.pow(1 + inputs.insuranceGrowth, y));
-      var maintenance = round10(marketA(year) * inputs.maintenanceA);
-      return { water: water, electric: electric, insurance: insurance, maintenance: maintenance,
-               total: round10(water + electric + insurance + maintenance) };
-    }
-    function opB(year) {
-      var y = year - data.baseYear;
-      var water = round10(round10(mid(data.b.waterBand) * 12) * Math.pow(1 + inputs.inflation, y));
-      var electric = round10(round10(mid(data.b.electricBand) * 12) * Math.pow(1 + inputs.inflation, y));
-      var insurance = round10(data.b.insurance * Math.pow(1 + inputs.insuranceGrowth, y));
-      var maintenance = round10(marketB(year) * inputs.maintenanceB);
-      return { water: water, electric: electric, insurance: insurance, maintenance: maintenance,
-               total: round10(water + electric + insurance + maintenance) };
-    }
-    function rentB(year) {
-      return round10(data.b.rentIncomeMonthly * 12 * Math.pow(1 + inputs.rentGrowth, year - data.baseYear));
-    }
-
+    const finalIndex = indexAt(horizon);
     return {
-      marketA: marketA, marketB: marketB, assessedA: assessedA, assessedB: assessedB,
-      limit: limit, taxable: taxable, tax: tax, opA: opA, opB: opB, rentB: rentB
+      months: horizon,
+      immediate: immediateShares * finalIndex,
+      phased: phasedShares * finalIndex + reserve,
+      immediateDrawdown: immediateWorst * 100,
+      phasedDrawdown: phasedWorst * 100,
     };
   }
 
-  function readInputs() {
-    return {
-      transferYear: num('transfer_year'),
-      aApp: num('a_appreciation') / 100,
-      bApp: num('b_appreciation') / 100,
-      inflation: num('inflation') / 100,
-      assessedGrowth: num('assessed_growth') / 100,
-      prop19Growth: num('prop19_growth') / 100,
-      insuranceGrowth: num('insurance_growth') / 100,
-      rentGrowth: num('rent_growth') / 100,
-      maintenanceA: num('maintenance_a') / 100,
-      maintenanceB: num('maintenance_b') / 100,
-      sellingCost: num('selling_cost') / 100,
-      equityReturn: num('equity_return') / 100,
-      treasuryYield: num('treasury_yield') / 100,
-      stagingMonths: num('staging_months'),
-      horizonYears: num('horizon_years')
+  function displayScenario(prefix, result, inflation) {
+    const inflationFactor = Math.pow(1 + inflation / 100, result.months / 12);
+    element(`${prefix}-immediate-value`).textContent = units(result.immediate);
+    element(`${prefix}-phased-value`).textContent = units(result.phased);
+    element(`${prefix}-immediate-real`).textContent = units(result.immediate / inflationFactor);
+    element(`${prefix}-phased-real`).textContent = units(result.phased / inflationFactor);
+    element(`${prefix}-immediate-dd`).textContent = pct(result.immediateDrawdown);
+    element(`${prefix}-phased-dd`).textContent = pct(result.phasedDrawdown);
+    element(`${prefix}-months`).textContent = `${result.months} months`;
+  }
+
+  function simulate() {
+    const stagingMonths = numeric('phase-months', 30, 1, 120);
+    const drawdown = numeric('phase-drawdown', 57, 0, 99) / 100;
+    const troughMonths = numeric('phase-trough', 17, 1, 120);
+    const drift = numeric('phase-drift', 0, -20, 30) / 100;
+    const firstYield = numeric('phase-yield1', 0, -5, 20);
+    const renewalYield = numeric('phase-yield2', 0, -5, 20);
+    const inflation = numeric('phase-inflation', 0, -5, 20);
+    const earlyStart = Math.max(0, Math.floor(stagingMonths / 2));
+    const lateStart = stagingMonths;
+    const early = simulateScenario(earlyStart, stagingMonths, drawdown, troughMonths, drift, firstYield, renewalYield);
+    const late = simulateScenario(lateStart, stagingMonths, drawdown, troughMonths, drift, firstYield, renewalYield);
+    displayScenario('early', early, inflation);
+    displayScenario('late', late, inflation);
+
+    const status = element('phase-status');
+    const earlyDiff = early.phased - early.immediate;
+    const lateDiff = late.phased - late.immediate;
+    const earlyResult = Math.abs(earlyDiff) < 0.01 ? 'is nearly even with' : earlyDiff > 0 ? 'ends above' : 'ends below';
+    const lateResult = Math.abs(lateDiff) < 0.01 ? 'is nearly even with' : lateDiff > 0 ? 'ends above' : 'ends below';
+    status.textContent = `At the modeled early-crash trough, phasing ${earlyResult} immediate investment; after staging, phasing ${lateResult} immediate investment. These are assumption-driven scenarios, not forecasts or probabilities. See the stated model limits.`;
+  }
+
+  // Ladder reinvestment risk: split the reserve across term slots and reprice
+  // each slot at a different renewal yield so the user can see how a falling
+  // short-rate path changes the staged reserve before it is spent.
+  function ladderScenario(stagingMonths, drawdown, troughMonths, drift, yield1, yieldPath) {
+    const starting = 100;
+    const horizon = Math.max(stagingMonths, troughMonths);
+    const peakAtCrash = 1;
+    const indexAt = month => {
+      const elapsed = Math.min(1, Math.max(0, month / troughMonths));
+      return peakAtCrash * (1 - drawdown * elapsed);
     };
+    const slots = 4; // 3-, 6-, 12- and 24-month style rungs, normalized
+    let reserve = starting;
+    let shares = 0;
+    let interest = 0;
+    const monthlyRate = (annual, month) => {
+      const slot = Math.min(slots - 1, Math.floor(((month - 1) * slots) / Math.max(stagingMonths, 1)));
+      return Math.pow(1 + yieldPath[slot] / 100, 1 / 12);
+    };
+    for (let month = 1; month <= stagingMonths; month += 1) {
+      const growth = monthlyRate(month <= 12 ? yield1 : yieldPath[0], month);
+      const earned = reserve * (growth - 1);
+      interest += earned;
+      reserve += earned;
+      const purchase = starting / stagingMonths;
+      shares += purchase / Math.max(indexAt(month), 0.000001);
+      reserve -= purchase;
+    }
+    if (reserve > 0) { shares += reserve / Math.max(indexAt(stagingMonths), 0.000001); reserve = 0; }
+    return { interest, finalIndex: indexAt(horizon), shares, months: horizon };
   }
 
-  function wireProjections() {
-    var form = el('control-form');
-    if (!form) return;
-    var data = payload();
-    if (!data) return;
+  function displayLadder(prefix, result, inflation) {
+    const inflationFactor = Math.pow(1 + inflation / 100, result.months / 12);
+    element(`${prefix}-interest`).textContent = units(result.interest);
+    element(`${prefix}-value`).textContent = units(result.shares * result.finalIndex);
+    element(`${prefix}-real`).textContent = units((result.shares * result.finalIndex) / inflationFactor);
+  }
 
-    var spec = [
-      ['transfer_year', function (v) { return String(v); }],
-      ['a_appreciation', function (v) { return v.toFixed(1) + '%'; }],
-      ['b_appreciation', function (v) { return v.toFixed(1) + '%'; }],
-      ['inflation', function (v) { return v.toFixed(1) + '%'; }],
-      ['assessed_growth', function (v) { return v.toFixed(1) + '%'; }],
-      ['prop19_growth', function (v) { return v.toFixed(1) + '%'; }],
-      ['insurance_growth', function (v) { return v.toFixed(1) + '%'; }],
-      ['rent_growth', function (v) { return v.toFixed(1) + '%'; }],
-      ['maintenance_a', function (v) { return v.toFixed(1) + '%'; }],
-      ['maintenance_b', function (v) { return v.toFixed(1) + '%'; }],
-      ['selling_cost', function (v) { return v.toFixed(1) + '%'; }],
-      ['equity_return', function (v) { return v.toFixed(1) + '%'; }],
-      ['treasury_yield', function (v) { return v.toFixed(1) + '%'; }],
-      ['staging_months', function (v) { return String(v); }],
-      ['horizon_years', function (v) { return String(v); }]
-    ];
-
-    function syncOutputs() {
-      spec.forEach(function (pair) {
-        var node = el(pair[0]);
-        if (node) setOutput(pair[0], pair[1](parseFloat(node.value)));
-      });
+  function simulateLadder() {
+    const stagingMonths = numeric('ladder-months', 30, 6, 60);
+    const drawdown = numeric('ladder-drawdown', 57, 0, 99) / 100;
+    const troughMonths = numeric('ladder-trough', 17, 1, 120);
+    const drift = numeric('ladder-drift', 0, -20, 30) / 100;
+    const yield1 = numeric('ladder-yield1', 0, -5, 20);
+    const renewal1 = numeric('ladder-renewal1', 0, -5, 20);
+    const renewal2 = numeric('ladder-renewal2', 0, -5, 20);
+    const renewal3 = numeric('ladder-renewal3', 0, -5, 20);
+    const inflation = numeric('ladder-inflation', 0, -5, 20);
+    const flat = ladderScenario(stagingMonths, drawdown, troughMonths, drift, yield1, [yield1, yield1, yield1, yield1]);
+    const falling = ladderScenario(stagingMonths, drawdown, troughMonths, drift, yield1, [renewal1, renewal2, renewal3, renewal3]);
+    element('ladder-flat-year').textContent = '0.00 units (baseline)';
+    element('ladder-falling-year').textContent = units(Math.max(0, flat.interest - falling.interest));
+    displayLadder('ladder-flat', flat, inflation);
+    displayLadder('ladder-falling', falling, inflation);
+    const status = element('ladder-status');
+    if (status) {
+      const gap = flat.interest - falling.interest;
+      status.textContent = gap > 0.005
+        ? `Repricing the later rungs at lower yields removes ${units(gap)} of accrued reserve interest over ${stagingMonths} months before the crash outcome is applied. This is reinvestment risk, not a forecast of yields.`
+        : 'The renewal path is not below the first-year yield, so this run shows no reinvestment penalty. Lower a renewal yield to isolate the effect.';
     }
+  }
 
-    function renderStats(model, inputs) {
-      var t = inputs.transferYear;
-      var fmv = model.marketA(t);
-      var base = model.assessedA(t);
-      var cap = model.limit(t);
-      var occ = model.taxable(fmv, base, cap);
-      var rented = round10(fmv);
-      var net = round10(fmv * (1 - inputs.sellingCost));
-      var stagingYears = inputs.stagingMonths / 12;
-      var afterStage = round10(net * Math.pow(1 + inputs.treasuryYield, stagingYears));
-      var remaining = Math.max(0, inputs.horizonYears - stagingYears);
-      var staged = round10(afterStage * Math.pow(1 + inputs.equityReturn, remaining));
-      var immediate = round10(net * Math.pow(1 + inputs.equityReturn, inputs.horizonYears));
-      var taxNow = model.tax(model.assessedA(data.baseYear), data.effectiveRateA, true);
-
-      var values = {
-        'Value of A at transfer': money(fmv),
-        'Assessment of A at transfer': money(base),
-        'New taxable value if occupied': money(occ),
-        'New taxable value if rented': money(rented),
-        'Annual tax if occupied': money(model.tax(occ, data.effectiveRateA, true)),
-        'Annual tax if rented': money(model.tax(rented, data.effectiveRateA, false)),
-        'Net proceeds if sold': money(net),
-        'Staged ending value': money(staged),
-        'Immediate-entry ending value': money(immediate)
-      };
-      var nodes = document.querySelectorAll('#scenario-stats .stat');
-      Array.prototype.forEach.call(nodes, function (node) {
-        var key = node.getAttribute('data-stat');
-        if (values[key]) {
-          var target = node.querySelector('.stat-value');
-          if (target) target.textContent = values[key];
-        }
-      });
-      var note = el('tax-multiple-note');
-      if (note && taxNow > 0) {
-        note.textContent =
-          'The step-up is about ' +
-          (model.tax(occ, data.effectiveRateA, true) / taxNow).toFixed(1) + 'x if occupied and ' +
-          (model.tax(rented, data.effectiveRateA, false) / taxNow).toFixed(1) + 'x if rented.';
-      }
-    }
-
-    function renderTables(model, inputs) {
-      var tables = document.querySelectorAll('.table-section table');
-      if (tables.length < 2) return;
-      var rowA = tables[0].querySelectorAll('tbody tr');
-      var rowB = tables[1].querySelectorAll('tbody tr');
-      Array.prototype.forEach.call(rowA, function (tr) {
-        var year = parseInt(tr.children[0].textContent, 10);
-        if (!isFinite(year)) return;
-        var fmv = model.marketA(year);
-        var base = model.assessedA(year);
-        var cap = model.limit(year);
-        var occ = model.taxable(fmv, base, cap);
-        tr.children[1].textContent = money(fmv);
-        tr.children[2].textContent = money(base);
-        tr.children[3].textContent = year <= inputs.transferYear
-          ? money(model.tax(base, data.effectiveRateA, true))
-          : 'transferred';
-        tr.children[4].textContent = money(model.tax(occ, data.effectiveRateA, true));
-        tr.children[5].textContent = money(model.tax(round10(fmv), data.effectiveRateA, false));
-      });
-      Array.prototype.forEach.call(rowB, function (tr) {
-        var year = parseInt(tr.children[0].textContent, 10);
-        if (!isFinite(year)) return;
-        var assessed = model.assessedB(year);
-        tr.children[1].textContent = money(model.marketB(year));
-        tr.children[2].textContent = money(assessed);
-        tr.children[3].textContent = money(model.tax(assessed, data.effectiveRateB, false));
-        tr.children[4].textContent = money(model.rentB(year));
-        tr.children[5].textContent = money(model.opB(year).total);
-      });
-    }
-
-    function recalc() {
-      syncOutputs();
-      var inputs = readInputs();
-      var model = makeModel(data, inputs);
-      renderStats(model, inputs);
-      renderTables(model, inputs);
-    }
-
-    form.addEventListener('input', recalc);
-    form.addEventListener('reset', function () {
-      window.setTimeout(recalc, 0);
+  if (document.getElementById('ladder-tool')) {
+    document.getElementById('ladder-tool').querySelectorAll('input, select').forEach(control => {
+      control.addEventListener('input', simulateLadder);
+      control.addEventListener('change', simulateLadder);
     });
-    recalc();
-  }
-
-  /* ------------------------------------------------------- staging tool */
-  function monthEquityReturn(month, params) {
-    if (month < params.fallStart) return params.equity / 12;
-    if (month < params.fallStart + params.fallMonths) {
-      return Math.pow(1 - params.fallDepth, 1 / params.fallMonths) - 1;
-    }
-    return params.recover / 12;
-  }
-
-  function simulate(plan, params) {
-    var cash = params.start;
-    var equity = 0;
-    var worst = params.start;
-    var months = Math.max(1, Math.round(params.horizon * 12));
-    for (var m = 0; m < months; m++) {
-      var target;
-      if (plan === 'cash') {
-        target = 0;
-      } else if (plan === 'immediate') {
-        target = 1;
-      } else {
-        if (m < params.staging) target = 0;
-        else if (m < params.staging + params.phase && params.phase > 0) {
-          target = (m - params.staging + 1) / params.phase;
-        } else {
-          target = 1;
-        }
-      }
-      var total = cash + equity;
-      var want = total * target;
-      if (want > equity) {
-        var move = Math.min(cash, want - equity);
-        cash -= move;
-        equity += move;
-      }
-      var yieldMonthly = (m < params.staging ? params.yield : params.yieldAfter) / 12;
-      cash *= 1 + yieldMonthly;
-      equity *= 1 + monthEquityReturn(m, params);
-      var now = cash + equity;
-      if (now < worst) worst = now;
-    }
-    return { end: cash + equity, worst: worst };
-  }
-
-  function wireCalculator() {
-    var form = el('calc-form');
-    if (!form) return;
-    var data = payload();
-    var scalePerUnit = data && data.saleNetProceeds ? data.saleNetProceeds / 100 : 0;
-
-    var spec = [
-      ['calc-proceeds', function (v) { return String(v); }],
-      ['calc-staging', function (v) { return String(v); }],
-      ['calc-phase', function (v) { return String(v); }],
-      ['calc-yield', function (v) { return v.toFixed(1); }],
-      ['calc-yield-after', function (v) { return v.toFixed(1); }],
-      ['calc-equity', function (v) { return v.toFixed(1); }],
-      ['calc-drop', function (v) { return v.toFixed(1); }],
-      ['calc-drop-start', function (v) { return String(v); }],
-      ['calc-drop-months', function (v) { return String(v); }],
-      ['calc-recover', function (v) { return v.toFixed(1); }],
-      ['calc-horizon', function (v) { return String(v); }]
-    ];
-
-    function params() {
-      return {
-        start: num('calc-proceeds'),
-        staging: num('calc-staging'),
-        phase: num('calc-phase'),
-        yield: num('calc-yield') / 100,
-        yieldAfter: num('calc-yield-after') / 100,
-        equity: num('calc-equity') / 100,
-        fallDepth: num('calc-drop') / 100,
-        fallStart: num('calc-drop-start'),
-        fallMonths: num('calc-drop-months'),
-        recover: num('calc-recover') / 100,
-        horizon: num('calc-horizon')
-      };
-    }
-
-    function amount(units) {
-      var text = units.toFixed(0) + ' units';
-      if (scalePerUnit > 0) {
-        text += ' (' + money(round10(units * scalePerUnit)) + ')';
-      }
-      return text;
-    }
-
-    function recalc() {
-      spec.forEach(function (pair) {
-        var node = el(pair[0]);
-        if (node) setOutput(pair[0], pair[1](parseFloat(node.value)));
-      });
-
-      var p = params();
-      var immediate = simulate('immediate', p);
-      var staged = simulate('staged', p);
-      var cash = simulate('cash', p);
-
-      var rows = [
-        ['Immediate entry', immediate, 0],
-        ['Staged entry', staged, staged.end - immediate.end],
-        ['All Treasury paper', cash, cash.end - immediate.end]
-      ];
-      var body = el('calc-rows');
-      if (body) {
-        body.innerHTML = '';
-        rows.forEach(function (row) {
-          var tr = document.createElement('tr');
-          [row[0], amount(row[1].end), amount(row[1].worst),
-           row[2] === 0 ? 'baseline' : (row[2] > 0 ? '+' : '') + amount(row[2])].forEach(function (text, index) {
-            var td = document.createElement(index === 0 ? 'th' : 'td');
-            if (index === 0) td.setAttribute('scope', 'row');
-            td.textContent = text;
-            tr.appendChild(td);
-          });
-          body.appendChild(tr);
-        });
-      }
-
-      /* Reinvestment risk, computed, never asserted. */
-      var quiet = {
-        start: p.start, staging: p.staging, phase: p.phase, yield: p.yield,
-        yieldAfter: p.yieldAfter, equity: p.equity, fallDepth: 0, fallStart: 0,
-        fallMonths: 1, recover: p.recover, horizon: p.horizon
-      };
-      var quietImmediate = simulate('immediate', quiet);
-      var quietStaged = simulate('staged', quiet);
-      var quietStagedHighYield = simulate('staged', {
-        start: p.start, staging: p.staging, phase: p.phase, yield: p.yield,
-        yieldAfter: p.yield, equity: p.equity, fallDepth: 0, fallStart: 0,
-        fallMonths: 1, recover: p.recover, horizon: p.horizon
-      });
-      var waitBenefit = simulate('staged', {
-        start: p.start, staging: p.staging, phase: p.phase, yield: p.yield,
-        yieldAfter: p.yieldAfter, equity: p.equity, fallDepth: p.fallDepth,
-        fallStart: Math.max(0, Math.min(Math.floor(p.staging / 2), p.staging)),
-        fallMonths: p.fallMonths, recover: p.recover, horizon: p.horizon
-      });
-      var immediateHalfWait = simulate('immediate', {
-        start: p.start, staging: p.staging, phase: p.phase, yield: p.yield,
-        yieldAfter: p.yieldAfter, equity: p.equity, fallDepth: p.fallDepth,
-        fallStart: Math.max(0, Math.min(Math.floor(p.staging / 2), p.staging)),
-        fallMonths: p.fallMonths, recover: p.recover, horizon: p.horizon
-      });
-      var lateFall = simulate('staged', {
-        start: p.start, staging: p.staging, phase: p.phase, yield: p.yield,
-        yieldAfter: p.yieldAfter, equity: p.equity, fallDepth: p.fallDepth,
-        fallStart: p.staging + p.phase, fallMonths: p.fallMonths,
-        recover: p.recover, horizon: p.horizon
-      });
-      var immediateLate = simulate('immediate', {
-        start: p.start, staging: p.staging, phase: p.phase, yield: p.yield,
-        yieldAfter: p.yieldAfter, equity: p.equity, fallDepth: p.fallDepth,
-        fallStart: p.staging + p.phase, fallMonths: p.fallMonths,
-        recover: p.recover, horizon: p.horizon
-      });
-
-      var notes = [];
-      notes.push('If nothing falls, staging ends ' +
-        amount(Math.abs(quietStaged.end - quietImmediate.end)) +
-        (quietStaged.end >= quietImmediate.end ? ' ahead of' : ' behind') +
-        ' immediate entry. That gap is the price of the protection.');
-      notes.push('If the Treasury yield available after the wait falls from ' +
-        pct(p.yield) + ' to ' + pct(p.yieldAfter) + ', the staged path ends ' +
-        amount(Math.abs(quietStaged.end - quietStagedHighYield.end)) +
-        (quietStaged.end >= quietStagedHighYield.end ? ' better off' : ' worse off') +
-        ' than if the yield had held.');
-      notes.push('If the fall begins during the staging window, staged entry ends ' +
-        amount(Math.abs(waitBenefit.end - immediateHalfWait.end)) +
-        (waitBenefit.end >= immediateHalfWait.end ? ' ahead of' : ' behind') +
-        ' immediate entry. This is the case staging is designed for.');
-      notes.push('If the fall begins after the money is fully invested, staged entry ends ' +
-        amount(Math.abs(lateFall.end - immediateLate.end)) +
-        (lateFall.end >= immediateLate.end ? ' ahead of' : ' behind') +
-        ' immediate entry. Staging does not protect against this case.');
-      notes.push('The deepest point reached under immediate entry is ' +
-        amount(immediate.worst) + ' against ' + amount(staged.worst) +
-        ' under staging. A plan that must spend inside the trough fails even if it ends well.');
-
-      var list = el('calc-risk');
-      if (list) {
-        list.innerHTML = '';
-        notes.forEach(function (text) {
-          var li = document.createElement('li');
-          li.textContent = text;
-          list.appendChild(li);
-        });
-      }
-    }
-
-    form.addEventListener('input', recalc);
-    form.addEventListener('reset', function () {
-      window.setTimeout(recalc, 0);
+    element('ladder-reset')?.addEventListener('click', () => {
+      element('ladder-months').value = '30';
+      element('ladder-drawdown').value = '57';
+      element('ladder-trough').value = '17';
+      element('ladder-drift').value = '0';
+      element('ladder-yield1').value = '4.0';
+      element('ladder-renewal1').value = '3.0';
+      element('ladder-renewal2').value = '2.5';
+      element('ladder-renewal3').value = '2.0';
+      element('ladder-inflation').value = '2.5';
+      simulateLadder();
     });
-    recalc();
+    simulateLadder();
   }
 
-  /* ------------------------------------------------------------------ init */
-  function init() {
-    wirePrint();
-    wireReviews();
-    wireProjections();
-    wireCalculator();
-  }
-
-  if (typeof document !== 'undefined') {
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', init);
+  element('phase-event')?.addEventListener('change', () => {
+    if (element('phase-event').value === '1929') {
+      element('phase-drawdown').value = '89';
+      element('phase-trough').value = '36';
     } else {
-      init();
+      element('phase-drawdown').value = '57';
+      element('phase-trough').value = '17';
+    }
+    simulate();
+  });
+  phaseForm.querySelectorAll('input, select').forEach(control => {
+    control.addEventListener('input', simulate);
+    control.addEventListener('change', simulate);
+  });
+  element('phase-reset')?.addEventListener('click', () => {
+    element('phase-event').value = '2008';
+    element('phase-months').value = '30';
+    element('phase-drawdown').value = '57';
+    element('phase-trough').value = '17';
+    element('phase-drift').value = '0';
+    element('phase-yield1').value = '0';
+    element('phase-yield2').value = '0';
+    element('phase-inflation').value = '0';
+    simulate();
+  });
+  simulate();
+}
+
+/* Working-figure projection controls. Uses the pure engine in
+   assets/projection-engine.js so the browser and Python implementations can be
+   kept in step by tools/engine_check.cjs. */
+(function wireProjectionTool() {
+  const engine = window.ProjectionEngine;
+  const form = document.getElementById('projection-tool');
+  const payloadNode = document.getElementById('runtime-payload');
+  if (!engine || !form || !payloadNode) return;
+
+  let data;
+  try {
+    data = JSON.parse(payloadNode.dataset.payload);
+  } catch (error) {
+    return;
+  }
+  if (!data || !data.a) return;
+
+  const fields = [
+    ['transfer_year', v => String(v)],
+    ['a_appreciation', v => v.toFixed(1) + '% a year'],
+    ['b_appreciation', v => v.toFixed(1) + '% a year'],
+    ['inflation', v => v.toFixed(1) + '% a year'],
+    ['assessed_growth', v => v.toFixed(1) + '% a year'],
+    ['prop19_growth', v => v.toFixed(1) + '% a year'],
+    ['insurance_growth', v => v.toFixed(1) + '% a year'],
+    ['rent_growth', v => v.toFixed(1) + '% a year'],
+    ['maintenance_a', v => v.toFixed(1) + '% of value a year'],
+    ['maintenance_b', v => v.toFixed(1) + '% of value a year'],
+    ['selling_cost', v => v.toFixed(1) + '% of price'],
+    ['equity_return', v => v.toFixed(1) + '% a year'],
+    ['treasury_yield', v => v.toFixed(1) + '% a year'],
+    ['staging_months', v => String(v) + ' months'],
+    ['horizon_years', v => String(v) + ' years']
+  ];
+
+  const defaults = {};
+  fields.forEach(([id]) => {
+    const node = document.getElementById(id);
+    if (node) defaults[id] = node.value;
+  });
+
+  const value = (id, fallback) => {
+    const node = document.getElementById(id);
+    if (!node) return fallback;
+    const parsed = Number(node.value);
+    return Number.isFinite(parsed) ? parsed : fallback;
+  };
+
+  const readInputs = () => ({
+    transferYear: value('transfer_year', 2045),
+    aApp: value('a_appreciation', 3.5) / 100,
+    bApp: value('b_appreciation', 3.0) / 100,
+    inflation: value('inflation', 2.5) / 100,
+    assessedGrowth: value('assessed_growth', 2.0) / 100,
+    prop19Growth: value('prop19_growth', 2.0) / 100,
+    insuranceGrowth: value('insurance_growth', 3.0) / 100,
+    rentGrowth: value('rent_growth', 3.0) / 100,
+    maintenanceA: value('maintenance_a', 0.5) / 100,
+    maintenanceB: value('maintenance_b', 1.0) / 100,
+    sellingCost: value('selling_cost', 6.0) / 100,
+    equityReturn: value('equity_return', 6.0) / 100,
+    treasuryYield: value('treasury_yield', 3.6) / 100,
+    stagingMonths: value('staging_months', 30),
+    horizonYears: value('horizon_years', 20)
+  });
+
+  const tableByCaption = prefix =>
+    [...document.querySelectorAll('table')].find(
+      table => table.querySelector('caption') &&
+        table.querySelector('caption').textContent.trim().startsWith(prefix)
+    );
+
+  function recalculate() {
+    fields.forEach(([id, format]) => {
+      const node = document.getElementById(id);
+      const out = document.getElementById(id + '-out');
+      if (node && out) out.textContent = format(Number(node.value));
+    });
+
+    const inputs = readInputs();
+    const model = engine.projectionModel(data, inputs);
+
+    const tableA = tableByCaption('Property A — value');
+    if (tableA) {
+      [...tableA.querySelectorAll('tbody tr')].forEach(row => {
+        const year = Number(row.children[0].textContent.trim());
+        if (!Number.isFinite(year)) return;
+        const fmv = model.marketA(year);
+        const base = model.assessedA(year);
+        const occ = model.taxable(fmv, base, model.limit(year));
+        row.children[1].textContent = engine.moneyWhole(fmv);
+        row.children[2].textContent = engine.moneyWhole(base);
+        row.children[3].textContent =
+          year <= inputs.transferYear
+            ? engine.moneyWhole(model.tax(base, data.effectiveRateA, true))
+            : 'transferred';
+        row.children[4].textContent = engine.moneyWhole(model.tax(occ, data.effectiveRateA, true));
+        row.children[5].textContent = engine.moneyWhole(model.tax(fmv, data.effectiveRateA, false));
+      });
+    }
+
+    const tableB = tableByCaption('Property B — value');
+    if (tableB) {
+      [...tableB.querySelectorAll('tbody tr')].forEach(row => {
+        const year = Number(row.children[0].textContent.trim());
+        if (!Number.isFinite(year)) return;
+        const assessed = model.assessedB(year);
+        row.children[1].textContent = engine.moneyWhole(model.marketB(year));
+        row.children[2].textContent = engine.moneyWhole(assessed);
+        row.children[3].textContent = engine.moneyWhole(model.tax(assessed, data.effectiveRateB, false));
+        row.children[4].textContent = engine.moneyWhole(model.rentB(year));
+        row.children[5].textContent = engine.moneyWhole(model.opB(year));
+      });
+    }
+
+    const status = document.getElementById('projection-status');
+    if (status) {
+      const transfer = inputs.transferYear;
+      const fmv = model.marketA(transfer);
+      const base = model.assessedA(transfer);
+      const occ = model.taxable(fmv, base, model.limit(transfer));
+      const occupied = model.tax(occ, data.effectiveRateA, true);
+      const rented = model.tax(fmv, data.effectiveRateA, false);
+      const today = model.tax(model.assessedA(data.baseYear), data.effectiveRateA, true);
+      status.textContent =
+        `At a ${transfer} transfer: value ${engine.moneyWhole(fmv)}, assessment ${engine.moneyWhole(base)}, ` +
+        `property tax about ${engine.moneyWhole(occupied)} a year if occupied or ${engine.moneyWhole(rented)} ` +
+        `if rented, against about ${engine.moneyWhole(today)} today. Rounded to ten dollars, computed in this browser.`;
     }
   }
 
-  /* Exposed only for the offline parity test. The browser never sees a module
-     object, so this branch is inert on the published site. */
-  if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
-    module.exports = {
-      round10: round10,
-      money: money,
-      makeModel: makeModel,
-      simulate: simulate,
-      monthEquityReturn: monthEquityReturn
-    };
-  }
+  form.addEventListener('input', recalculate);
+  document.getElementById('projection-reset')?.addEventListener('click', () => {
+    Object.keys(defaults).forEach(id => {
+      const node = document.getElementById(id);
+      if (node) node.value = defaults[id];
+    });
+    recalculate();
+  });
+  recalculate();
 })();

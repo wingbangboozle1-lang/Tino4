@@ -1,11 +1,13 @@
 #!/usr/bin/env node
 /* Offline DOM and script check.
 
-   Loads every generated page, runs the local stylesheet-free script, and
-   asserts structure, sourcing, and interactive behaviour. It runs without a
-   browser engine so it can run anywhere Node is available; the fuller Playwright
-   smoke test in tools/browser-test.cjs additionally checks layout where the
-   optional browser dependencies are installed.
+   Loads every generated page, evaluates the local scripts, and asserts
+   structure, sourcing and interactive behaviour. It runs without a browser
+   engine so it can run anywhere Node is available; the fuller Playwright smoke
+   test in tools/browser-test.cjs additionally checks layout where the optional
+   browser dependencies are installed.
+
+   Usage: node tools/dom-test.cjs   (needs jsdom in tools/browser/node_modules)
 */
 'use strict';
 
@@ -27,12 +29,12 @@ const { JSDOM } = require(path.join(found, 'jsdom'));
 
 const root = path.join(__dirname, '..');
 const manifest = JSON.parse(fs.readFileSync(path.join(__dirname, 'site-manifest.json'), 'utf8'));
-const problems = [];
 
+/* External resource loading is disabled, so the deferred local scripts are
+   evaluated directly after parsing. This still exercises the real scripts. */
+const engineScript = fs.readFileSync(path.join(root, 'assets', 'projection-engine.js'), 'utf8');
 const appScript = fs.readFileSync(path.join(root, 'assets', 'app.js'), 'utf8');
 
-/* External resource loading is disabled, so the deferred local script is
-   evaluated directly after parsing. This still exercises the real script. */
 function load(relative) {
   const file = path.join(root, relative);
   const dom = new JSDOM(fs.readFileSync(file, 'utf8'), {
@@ -42,9 +44,12 @@ function load(relative) {
       window.requestAnimationFrame = (callback) => setTimeout(callback, 0);
     },
   });
+  dom.window.eval(engineScript);
   dom.window.eval(appScript);
   return dom;
 }
+
+const problems = [];
 
 for (const relative of manifest) {
   const dom = load(relative);
@@ -55,12 +60,8 @@ for (const relative of manifest) {
   if (document.querySelectorAll('nav a[aria-current="page"]').length !== 1) {
     problems.push(`${relative}: expected exactly one active navigation link`);
   }
-  const rows = [...document.querySelectorAll('table tbody tr')];
-  for (const [index, row] of rows.entries()) {
+  for (const [index, row] of [...document.querySelectorAll('table tbody tr')].entries()) {
     if (row.querySelectorAll('td').length === 0) continue;
-    // Rows produced in the browser from reader-supplied controls carry no
-    // evidence badge by design; they are arithmetic, not sourced figures.
-    if (row.closest('table[data-generated="client"]')) continue;
     if (row.querySelectorAll('a.source').length < 1) {
       problems.push(`${relative}: row ${index + 1} has no source link`);
     }
@@ -74,75 +75,117 @@ for (const relative of manifest) {
   dom.window.close();
 }
 
-/* Suggestions: review choices persist locally and reset cleanly. */
+/* Working figures: every published amount is a multiple of ten dollars. */
 {
-  const dom = load('pages/suggestions.html');
+  let checked = 0;
+  for (const relative of manifest) {
+    const { document } = load(relative).window;
+    for (const cell of document.querySelectorAll('td')) {
+      const text = cell.textContent.trim();
+      const match = /^\$([0-9][0-9,]*)$/.exec(text);
+      if (!match) continue;
+      const value = Number(match[1].replace(/,/g, ''));
+      if (value % 10 !== 0) {
+        problems.push(`${relative}: "${text}" is not rounded to ten dollars`);
+      }
+      checked += 1;
+    }
+  }
+  assert.ok(checked > 50, `expected published working figures, scanned ${checked}`);
+}
+
+/* Suggestions and decision log: review choices persist locally and reset. */
+for (const relative of ['pages/suggestions.html', 'pages/decision-log.html']) {
+  const dom = load(relative);
   const { document, window } = dom.window;
   const selects = [...document.querySelectorAll('.review-choice')];
-  assert.ok(selects.length >= 20, `expected a populated review queue, found ${selects.length}`);
+  assert.ok(selects.length >= 10, `${relative}: expected a populated queue, found ${selects.length}`);
+  const first = selects[0].dataset.id;
   selects[0].value = 'Investigate';
   selects[0].dispatchEvent(new window.Event('change', { bubbles: true }));
-  assert.match(document.getElementById('review-summary').textContent, /1 investigate/i);
-  assert.ok(window.localStorage.getItem('inheritance-review-choices-v1'));
+  assert.match(
+    document.getElementById('review-summary').textContent,
+    new RegExp(`1 of ${selects.length} suggestions reviewed`),
+    `${relative}: summary did not update`
+  );
+  assert.ok(window.localStorage.getItem('public-suggestion-review-v2'), `${relative}: not persisted`);
   document.getElementById('reset-reviews').click();
-  assert.match(document.getElementById('review-summary').textContent, /0 investigate/i);
+  assert.match(
+    document.getElementById('review-summary').textContent,
+    new RegExp(`0 of ${selects.length} suggestions reviewed`),
+    `${relative}: reset did not clear the queue`
+  );
   dom.window.close();
 }
 
-/* Projections: moving a control recomputes the stats and the tables. */
-{
-  const dom = load('pages/projections.html');
-  const { document, window } = dom.window;
-  const stat = () => document.querySelector('#scenario-stats .stat .stat-value').textContent;
-  const cell = () => document.querySelector('.table-section table tbody tr:last-child td:nth-child(2)').textContent;
-  const statBefore = stat();
-  const cellBefore = cell();
-  const slider = document.getElementById('transfer_year');
-  slider.value = '2050';
-  slider.dispatchEvent(new window.Event('input', { bubbles: true }));
-  assert.notEqual(stat(), statBefore, 'transfer year did not change the scenario stats');
-  const growth = document.getElementById('a_appreciation');
-  growth.value = '6';
-  growth.dispatchEvent(new window.Event('input', { bubbles: true }));
-  assert.notEqual(cell(), cellBefore, 'growth rate did not change the projection table');
-  assert.match(stat(), /^\$[\d,]+$/, 'scenario stat should render a rounded dollar amount');
-  dom.window.close();
-}
-
-/* Staging tool: three cases and five risk statements, all computed locally. */
+/* Treasury staging tool: both scenarios compute and the ladder reports the
+   reinvestment penalty. */
 {
   const dom = load('pages/phased-investing.html');
   const { document, window } = dom.window;
-  const rows = document.querySelectorAll('#calc-rows tr');
-  assert.equal(rows.length, 3, 'expected three entry cases');
-  const risks = document.querySelectorAll('#calc-risk li');
-  assert.equal(risks.length, 5, 'expected five reinvestment-risk statements');
-  const stagedValue = () => document.querySelectorAll('#calc-rows tr')[1].querySelector('td').textContent;
-  const immediateValue = () => document.querySelectorAll('#calc-rows tr')[0].querySelector('td').textContent;
+  const text = id => document.getElementById(id).textContent;
+  assert.notEqual(text('early-phased-value').trim(), '—', 'early scenario never computed');
+  assert.notEqual(text('late-phased-value').trim(), '—', 'late scenario never computed');
+  const before = text('early-phased-value');
+  const select = document.getElementById('phase-event');
+  select.value = '1929';
+  select.dispatchEvent(new window.Event('change', { bubbles: true }));
+  assert.notEqual(text('early-phased-value'), before, 'changing the anchor did not recompute');
+  assert.match(text('phase-status'), /assumption-driven scenarios/i);
+  assert.notEqual(text('early-months'), text('late-months'), 'early and late horizons should differ');
+  assert.deepEqual(
+    Object.keys(window.localStorage).filter(key => key.startsWith('phase-')),
+    [],
+    'staging inputs must not be stored'
+  );
+  dom.window.close();
+}
+
+/* Working-figure projection controls recompute the year-by-year tables locally. */
+{
+  const dom = load('pages/projections.html');
+  const { document, window } = dom.window;
+  const form = document.getElementById('projection-tool');
+  assert.ok(form, 'missing the projection controls');
+  const tableByCaption = prefix =>
+    [...document.querySelectorAll('table')].find(
+      table => table.querySelector('caption') &&
+        table.querySelector('caption').textContent.trim().startsWith(prefix)
+    );
+  const tableA = tableByCaption('Property A — value');
+  const tableB = tableByCaption('Property B — value');
+  assert.ok(tableA && tableB, 'missing the year-by-year projection tables');
+
+  const lastA = () => [...tableA.querySelectorAll('tbody tr')].pop().children[1].textContent;
+  const lastB = () => [...tableB.querySelectorAll('tbody tr')].pop().children[4].textContent;
+  const status = () => document.getElementById('projection-status').textContent;
+
+  const aBefore = lastA();
+  const bBefore = lastB();
+  const statusBefore = status();
+
   const set = (id, value) => {
     const node = document.getElementById(id);
     node.value = String(value);
     node.dispatchEvent(new window.Event('input', { bubbles: true }));
   };
 
-  // A fall that lands inside the staging window moves the immediate case.
-  const immediateBefore = immediateValue();
-  set('calc-drop', 89);
-  assert.notEqual(immediateValue(), immediateBefore, 'fall depth did not change the immediate case');
+  set('a_appreciation', 6);
+  assert.notEqual(lastA(), aBefore, 'growth rate did not move the Property A table');
+  set('rent_growth', 7);
+  assert.notEqual(lastB(), bBefore, 'rent growth did not move the Property B table');
+  set('transfer_year', 2050);
+  assert.notEqual(status(), statusBefore, 'transfer year did not update the summary');
+  assert.match(status(), /^\$[\d,]+$|transfer/i, 'summary should describe the transfer year');
+  assert.match(lastA(), /^\$[\d,]+$/);
 
-  // The same fall is fully avoided by the staged case while it is still in cash.
-  set('calc-drop-start', 6);
-  const stagedInWait = stagedValue();
-  set('calc-drop', 20);
-  assert.equal(stagedValue(), stagedInWait, 'a fall inside the wait should not move the staged case');
-
-  // Once the money is invested, the same fall does move the staged case.
-  set('calc-drop-start', 40);
-  set('calc-drop', 89);
-  const stagedAfterEntry = stagedValue();
-  set('calc-drop', 20);
-  assert.notEqual(stagedValue(), stagedAfterEntry, 'a fall after entry did not move the staged case');
-  assert.match(document.getElementById('calc-risk').textContent, /yield/i);
+  document.getElementById('projection-reset').click();
+  assert.equal(lastA(), aBefore, 'reset did not restore the defaults');
+  assert.deepEqual(
+    Object.keys(window.localStorage).filter(key => key.startsWith('proj')),
+    [],
+    'projection inputs must not be stored'
+  );
   dom.window.close();
 }
 
@@ -151,4 +194,4 @@ if (problems.length) {
   problems.forEach(line => console.error('  ' + line));
   process.exit(1);
 }
-console.log(`DOM check passed: ${manifest.length} pages; every row sourced and badged; review queue; projection controls; staging calculator.`);
+console.log(`DOM check passed: ${manifest.length} pages; every row sourced and badged; working figures rounded to ten dollars; review queues; staging tool; projection controls.`);

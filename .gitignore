@@ -7,3 +7,7 @@ node_modules/
 *.log
 /tools/browser/node_modules/
 /tools/browser/screenshots/
+
+# optional local browser/DOM test dependencies (never published)
+/tools/browser/package.json
+/tools/browser/package-lock.json

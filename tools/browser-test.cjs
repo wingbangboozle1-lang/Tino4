@@ -81,6 +81,28 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
     assert.match(await page.locator('#calc-risk').textContent(), /yield/i);
     assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('calc-'))), []);
 
+    // Ladder panel: reinvestment penalty appears and remains local-only.
+    const flatInterest = await page.locator('#ladder-flat-interest').textContent();
+    const fallingInterest = await page.locator('#ladder-falling-interest').textContent();
+    assert.notEqual(flatInterest, '—');
+    assert.notEqual(fallingInterest, '—');
+    assert.match(await page.locator('#ladder-status').textContent(), /reinvestment risk|no reinvestment penalty/i);
+    await page.fill('#ladder-renewal3', '0');
+    const afterCut = await page.locator('#ladder-falling-interest').textContent();
+    assert.notEqual(afterCut, fallingInterest);
+    await page.click('#ladder-reset');
+    assert.equal(await page.locator('#ladder-renewal3').inputValue(), '2.0');
+    assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ladder-'))), []);
+
+    // Decision log carries its own independent review queue.
+    await page.goto('http://127.0.0.1:8000/pages/decision-log.html');
+    const logTotal = await page.locator('.review-choice').count();
+    assert.equal(logTotal, 12, `expected 12 decision-log items, found ${logTotal}`);
+    await page.selectOption('.review-choice[data-id="D07"]', 'Selected');
+    assert.match(await page.locator('#review-summary').textContent(), /1 of 12 suggestions reviewed/);
+    await page.click('#reset-reviews');
+    assert.equal(await page.locator('.review-choice[data-id="D07"]').inputValue(), 'Not reviewed');
+
     await page.goto('http://127.0.0.1:8000/pages/attorney-cpa-brief.html');
     await page.emulateMedia({ media: 'print' });
     assert.equal(await page.locator('.sidebar').evaluate(element => getComputedStyle(element).display), 'none');

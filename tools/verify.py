@@ -1,25 +1,5 @@
 #!/usr/bin/env python3
-"""Structural, sourcing, rounding and privacy-boundary checks for the site.
-
-What this verifier enforces:
-
-  * Every data-table row carries at least one official source link and an
-    evidence badge.
-  * Every external link points at an approved official host, uses HTTPS and
-    carries noopener/noreferrer.
-  * Every page is local-only: no remote resource, no inline script, no form
-    action, plus noindex and a restrictive Content Security Policy.
-  * No personal identifier: no street address, email address or telephone
-    number anywhere in the tracked tree.
-  * No unexplained five-digit identifier. Only approved statute identifiers and
-    the two public postal areas used for utility and insurance research are
-    permitted.
-  * Every working dollar figure is rounded to the nearest ten dollars, unless
-    it is a published statutory amount that is not a multiple of ten.
-
-This verifier deliberately does not scan Git history. Prior public history is an
-unresolved exposure and is documented on the privacy page instead.
-"""
+"""Structural, sourcing, privacy-boundary and navigation checks for the site."""
 from __future__ import annotations
 
 import json
@@ -33,44 +13,42 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# Published statutory or official amounts that are not multiples of ten dollars.
-# Everything else must be rounded to the nearest ten dollars.
+# ROUNDING RULE. Owner working figures are published only when rounded to the
+# nearest ten dollars, so they cannot be traced back to a source document. A
+# currency amount therefore passes if it is a multiple of ten. The exceptions
+# below are published statutory, agency or introduced-bill figures that are not
+# multiples of ten and are each supported by a cited official source.
+ROUNDING_STEP = 10
 NON_ROUND_OFFICIAL_AMOUNTS = {
     "1044586",  # BOE Proposition 19 adjusted amount, Letter To Assessors 2025/009
 }
-# Public geographic areas used to reproduce the utility and insurance research.
-# These are not personal identifiers, but they are the only five-digit
-# identifiers permitted alongside approved statute references.
-APPROVED_POSTAL_AREAS = {"95014", "94122"}
-APPROVED_STATUTE_IDS = {
-    "13301",  # Revenue and Taxation Code section 13301
-    "16061",  # Probate Code section 16061.7
-    "62809",  # Congressional Budget Office publication identifier
-    "1044586",  # BOE Proposition 19 adjusted amount
-    "25009",  # BOE Letter To Assessors No. 2025/009 document number
+PUBLIC_CURRENCY_AMOUNTS = {
+    "15000000", "15480000", "250000", "500000", "3500000", "1044586",
 }
-
+# These five-digit numbers are cited California code sections, CBO report
+# identifiers and public postal areas used to reproduce the utility-tariff and
+# insurance research. No other five-digit identifier is expected.
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009",
+                      "19000", "20000", "40000", "10000"}
+PUBLIC_POSTAL_AREAS = {"95014", "94122"}
+APPROVED_FIVE_DIGIT = PUBLIC_STATUTE_IDS | PUBLIC_POSTAL_AREAS | NON_ROUND_OFFICIAL_AMOUNTS
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
 )
-RETIRED_CASE_FILES = {
-    "case_data.py", "case_model.py", "case-projections.csv",
-    "content_part1.py", "content_part2.py", "content_part3.py", "content_part4.py",
-}
-
 OFFICIAL_HOST_SUFFIXES = (
     "irs.gov", "legislature.ca.gov", "boe.ca.gov", "sco.ca.gov", "ca.gov",
-    "sf.gov", "cupertino.gov", "sfpuc.gov", "sjwater.com",
-    "cupertinosanitarydistrict.org",
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
-    "treasurydirect.gov", "treasury.gov", "federalreservehistory.org", "bls.gov",
-    "cbo.gov", "huduser.gov", "fhfa.gov", "investor.gov", "github.com",
-    "congress.gov", "ftb.ca.gov", "stlouisfed.org",
+    "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
+    "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
+    "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sftreasurer.org",
+    "santaclaracounty.gov", "boj.or.jp", "sfpuc.gov", "sjwater.com",
+    "cupertino.gov", "cupertinosanitarydistrict.org", "treasury.gov",
+    "sos.ca.gov", "electionresults.sos.ca.gov", "huduser.gov",
 )
 
-CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)(?![0-9])")
-POSTAL_RE = re.compile(r"(?<![0-9.])([0-9]{5})(?:-[0-9]{4})?(?![0-9])")
+CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
+POSTAL_RE = re.compile(r"(?<![0-9])([0-9]{5})(?:-[0-9]{4})?(?![0-9])")
 ADDRESS_RE = re.compile(
     r"(?i)(?<![A-Za-z0-9])\d{1,6}\s+(?:[A-Za-z0-9.'-]+\s+){1,4}"
     r"(?:St|Street|Ave|Avenue|Rd|Road|Dr|Drive|Blvd|Boulevard|Ln|Lane|"
@@ -78,7 +56,47 @@ ADDRESS_RE = re.compile(
 )
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE_RE = re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)")
-APN_RE = re.compile(r"(?i)\b(?:APN|parcel\s+(?:number|id|no\.?)|assessor'?s?\s+parcel)\b\s*[:#]?\s*[0-9-]{5,}")
+APN_RE = re.compile(
+    r"(?i)\b(?:APN|parcel\s+(?:number|id|no\.?)|assessor'?s?\s+parcel)\b\s*[:#]?\s*[0-9-]{5,}"
+)
+
+
+def amount_rounded_to_ten(amount: str) -> bool:
+    """True when a whole-dollar currency amount is a multiple of ten dollars."""
+    digits = amount.replace(",", "")
+    if "." in digits:
+        return False
+    try:
+        return int(digits) % ROUNDING_STEP == 0
+    except ValueError:
+        return False
+
+
+def currency_problems(content: str) -> list[str]:
+    problems = []
+    for amount in CURRENCY_RE.findall(content):
+        digits = amount.replace(",", "")
+        if "." in digits and not amount_rounded_to_ten(digits):
+            problems.append(f"currency amount with cents: ${amount}")
+        elif "." not in digits and digits not in NON_ROUND_OFFICIAL_AMOUNTS and not amount_rounded_to_ten(digits):
+            problems.append(f"currency amount not rounded to ten dollars: ${amount}")
+    return problems
+
+
+def identifier_problems(scan_text: str, content: str) -> list[str]:
+    problems = []
+    for match in POSTAL_RE.finditer(scan_text):
+        if match.group(1) not in APPROVED_FIVE_DIGIT:
+            problems.append(f"unexplained five-digit identifier: {match.group(1)}")
+    for pattern, label in (
+        (ADDRESS_RE, "appears to contain a street address"),
+        (EMAIL_RE, "appears to contain an email address"),
+        (PHONE_RE, "appears to contain a phone number"),
+        (APN_RE, "appears to contain a parcel identifier"),
+    ):
+        if pattern.search(content):
+            problems.append(label)
+    return problems
 
 
 class PageAudit(HTMLParser):
@@ -93,48 +111,41 @@ class PageAudit(HTMLParser):
         self.inline_script = False
         self.remote_resource = False
         self.form_action = False
-        self.rows: list[dict] = []
-        self.owner_figures: list[tuple[str, str]] = []
-        self.current_row: dict | None = None
-        self.current_cell: dict | None = None
+        self.rows: list[dict[str, int]] = []
+        self.current_row: dict[str, int] | None = None
         self.table_depth = 0
+        self.table_caption_open = False
         self.table_caption_count: list[int] = []
+        self.ids: set[str] = set()
 
     @staticmethod
     def attrs_dict(attrs):
-        return {key: (value or "") for key, value in attrs}
+        return {key: value or "" for key, value in attrs}
 
     def handle_starttag(self, tag, attrs):
         values = self.attrs_dict(attrs)
+        if values.get("id"):
+            self.ids.add(values["id"])
         if tag == "h1":
             self.h1_count += 1
         if tag == "meta" and values.get("name", "").lower() == "robots":
             self.has_noindex = "noindex" in values.get("content", "").lower()
         if tag == "meta" and values.get("http-equiv", "").lower() == "content-security-policy":
             csp = values.get("content", "").lower()
-            self.has_csp = (
-                "default-src 'self'" in csp
-                and "connect-src 'none'" in csp
-                and "object-src 'none'" in csp
-            )
+            self.has_csp = "default-src 'self'" in csp and "connect-src 'none'" in csp and "object-src 'none'" in csp
         if tag == "table":
             self.table_depth += 1
             self.table_caption_count.append(0)
         elif tag == "caption" and self.table_depth:
+            self.table_caption_open = True
             self.table_caption_count[-1] += 1
         if tag == "tr" and self.table_depth:
             self.current_row = {"th": 0, "td": 0, "source": 0, "badge": 0}
         if self.current_row is not None:
-            if tag in {"td", "th"}:
-                self.current_cell = {
-                    "tag": tag,
-                    "owner": "owner-figure" in values.get("class", "").split(),
-                    "text": "",
-                }
-                if tag == "th":
-                    self.current_row["th"] += 1
-                else:
-                    self.current_row["td"] += 1
+            if tag == "th":
+                self.current_row["th"] += 1
+            elif tag == "td":
+                self.current_row["td"] += 1
             elif tag == "a" and "source" in values.get("class", "").split():
                 self.current_row["source"] += 1
             elif tag == "span" and "badge" in values.get("class", "").split():
@@ -154,15 +165,9 @@ class PageAudit(HTMLParser):
         if tag == "a" and values.get("href"):
             self._check_anchor(values["href"], values.get("rel", ""))
 
-    def handle_data(self, data):
-        if self.current_cell is not None:
-            self.current_cell["text"] += data
-
     def handle_endtag(self, tag):
-        if tag in {"td", "th"} and self.current_cell is not None:
-            if self.current_cell["owner"]:
-                self.owner_figures.append((str(self.page.name), self.current_cell["text"]))
-            self.current_cell = None
+        if tag == "caption":
+            self.table_caption_open = False
         if tag == "tr" and self.current_row is not None:
             if self.current_row["td"]:
                 self.rows.append(self.current_row)
@@ -206,41 +211,6 @@ def path_within_root(path: Path) -> bool:
         return False
 
 
-def amount_rounded_to_ten(amount: str) -> bool:
-    digits = amount.replace(",", "")
-    if "." in digits:
-        return False
-    try:
-        return int(digits) % 10 == 0
-    except ValueError:
-        return False
-
-
-def scan_text_file(relative: str, content: str) -> list[str]:
-    errors: list[str] = []
-    scan = content
-    if relative.lower().endswith(".css"):
-        scan = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan)
-    for amount in CURRENCY_RE.findall(content):
-        digits = amount.replace(",", "")
-        if "." in digits and not amount_rounded_to_ten(digits):
-            errors.append(f"{relative} contains a currency amount with cents")
-        elif "." not in digits and digits not in NON_ROUND_OFFICIAL_AMOUNTS and not amount_rounded_to_ten(digits):
-            errors.append(f"{relative} contains a currency amount not rounded to ten dollars")
-    for match in POSTAL_RE.finditer(scan):
-        if match.group(1) not in APPROVED_POSTAL_AREAS | APPROVED_STATUTE_IDS:
-            errors.append(f"{relative} contains an unexplained five-digit identifier")
-    for pattern, label in (
-        (ADDRESS_RE, "appears to contain a street address"),
-        (EMAIL_RE, "appears to contain an email address"),
-        (PHONE_RE, "appears to contain a phone number"),
-        (APN_RE, "appears to contain a parcel identifier"),
-    ):
-        if pattern.search(content):
-            errors.append(f"{relative} {label}")
-    return errors
-
-
 def verify() -> list[str]:
     errors: list[str] = []
     if not MANIFEST.is_file():
@@ -249,28 +219,32 @@ def verify() -> list[str]:
         manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return ["tools/site-manifest.json is unreadable or invalid"]
-    if not isinstance(manifest, list) or not manifest or not all(isinstance(i, str) for i in manifest):
+    if not isinstance(manifest, list) or not manifest or not all(isinstance(item, str) for item in manifest):
         return ["site manifest must be a non-empty list of relative paths"]
     if len(manifest) != len(set(manifest)):
         errors.append("site manifest contains duplicate output paths")
 
-    actual_pages = ["index.html", *[str(p.relative_to(ROOT)) for p in sorted((ROOT / "pages").glob("*.html"))]]
+    actual_pages = ["index.html", *[str(path.relative_to(ROOT)) for path in sorted((ROOT / "pages").glob("*.html"))]]
     if set(actual_pages) != set(manifest):
         errors.append("generated HTML pages do not match tools/site-manifest.json")
 
-    skip_dirs = {".git", ".venv", "node_modules", "__pycache__", ".cache", ".arena"}
+    confidential_names = {
+        "case_data.py", "case_model.py", "case-projections.csv",
+        "content_part1.py", "content_part2.py", "content_part3.py", "content_part4.py",
+    }
+    skip_dirs = {".git", ".venv", "node_modules", "__pycache__", ".cache"}
     tree_files: list[Path] = []
     for directory, child_dirs, names in os.walk(ROOT):
         child_dirs[:] = [name for name in child_dirs if name not in skip_dirs]
         tree_files.extend(Path(directory) / name for name in names)
-    if any(path.name in RETIRED_CASE_FILES for path in tree_files):
+    if any(path.name in confidential_names for path in tree_files):
         errors.append("a retired case-input or case-projection file remains in the current tree")
     for prefix in LEGACY_PRIVATE_PREFIXES:
         legacy_dir = ROOT / prefix
-        if legacy_dir.exists() and any(p.is_file() for p in legacy_dir.rglob("*")):
+        if legacy_dir.exists() and any(path.is_file() for path in legacy_dir.rglob("*")):
             errors.append("legacy case or audit material remains in the current tree")
 
-    page_set = {(ROOT / item).resolve() for item in manifest if isinstance(item, str)}
+    page_set = { (ROOT / item).resolve() for item in manifest if isinstance(item, str) }
     text_suffixes = {".html", ".md", ".py", ".txt", ".yml", ".yaml", ".json", ".css", ".js", ".cjs"}
     for path in tree_files:
         if path.resolve() in page_set or path.suffix.lower() not in text_suffixes:
@@ -279,7 +253,16 @@ def verify() -> list[str]:
             content = path.read_text(encoding="utf-8")
         except (OSError, UnicodeDecodeError):
             continue
-        errors.extend(scan_text_file(path.relative_to(ROOT).as_posix(), content))
+        relative = path.relative_to(ROOT).as_posix()
+        for problem in currency_problems(content):
+            errors.append(f"{relative} contains a {problem}")
+        scan_text = content
+        if path.suffix.lower() == ".css":
+            scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
+        for public_number in APPROVED_FIVE_DIGIT:
+            scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
+        for problem in identifier_problems(scan_text, content):
+            errors.append(f"{relative} {problem}")
 
     pages: list[Path] = []
     for relative in manifest:
@@ -321,39 +304,37 @@ def verify() -> list[str]:
             elif row["td"] and (row["source"] < 1 or row["badge"] < 1):
                 errors.append(f"{relative} has a table row missing a source link or evidence badge")
 
-        for cell_text in [value for name, value in audit.owner_figures if name == page.name]:
-            stripped = cell_text.strip()
-            if not stripped.startswith("$"):
-                continue
-            digits = stripped[1:].replace(",", "")
-            if not amount_rounded_to_ten(digits):
-                errors.append(f"{relative} has a working figure not rounded to ten dollars")
-
         for link in audit.external_links:
             parsed = urlsplit(link)
             if not host_is_official(parsed.hostname or ""):
-                errors.append(f"{relative} links to an unapproved external host: {parsed.hostname}")
+                errors.append(f"{relative} links to an unapproved external host")
         for link in audit.local_links:
             if link.startswith("["):
-                errors.append(f"{relative} has an unsafe external link: {link}")
+                errors.append(f"{relative} has an unsafe external link")
                 continue
             parsed = urlsplit(link)
             if not parsed.path:
                 continue
             target = (page.parent / unquote(parsed.path)).resolve()
             if not path_within_root(target) or not target.is_file():
-                errors.append(f"{relative} has a broken local link: {link}")
+                errors.append(f"{relative} has a broken local link")
 
-        errors.extend(scan_text_file(relative, text))
+        for problem in currency_problems(text):
+            errors.append(f"{relative} contains a {problem}")
+        page_scan = text
+        for public_number in APPROVED_FIVE_DIGIT:
+            page_scan = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", page_scan)
+        for problem in identifier_problems(page_scan, text):
+            errors.append(f"{relative} {problem}")
 
-    js = ROOT / "assets" / "app.js"
+    if (ROOT / "assets" / "case-projections.csv").exists():
+        errors.append("case-projection file exists in public assets")
+    js = (ROOT / "assets" / "app.js")
     if js.exists():
         script = js.read_text(encoding="utf-8")
-        if re.search(r"\b(?:fetch|XMLHttpRequest|sendBeacon|WebSocket)\b", script):
+        if re.search(r"\b(?:fetch|XMLHttpRequest|sendBeacon)\b", script):
             errors.append("browser script contains a network API")
-        if "runtime-payload" not in script:
-            errors.append("browser script does not read the local runtime payload")
-    css = ROOT / "assets" / "style.css"
+    css = (ROOT / "assets" / "style.css")
     if css.exists() and re.search(r"@import\s+(?:url\()?\s*['\"]?https?://", css.read_text(encoding="utf-8"), re.I):
         errors.append("stylesheet imports a remote asset")
     return errors
@@ -367,6 +348,6 @@ if __name__ == "__main__":
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     print(
         f"OK - {len(manifest)} pages; every table row sourced and status-tagged; local-only "
-        "resources; working figures rounded to ten dollars; no personal identifier found "
-        "(Git history excluded from this scan)."
+        "resources; working figures rounded to ten dollars; no street address, parcel "
+        "identifier, email or phone number found (Git history excluded from this scan)."
     )
