@@ -126,6 +126,12 @@ td a.source { display: inline-block; margin: 0 0 4px; font-size: .78rem; font-we
 .scenario-card dt { color: var(--muted); font-size: .83rem; }
 .scenario-card dd { margin: 0; color: var(--teal-dark); font-size: .88rem; font-weight: 800; text-align: right; }
 .tool-status, .review-summary { margin: 16px 0 5px; padding: 12px 14px; border-radius: 9px; background: #eff7f6; color: #264d4e; font-weight: 650; }
+
+/* Step-by-step inheritance timeline */
+.timeline { list-style: none; counter-reset: step; display: grid; gap: 9px; margin: 14px 0 6px; padding: 0; }
+.timeline li { counter-increment: step; position: relative; padding: 11px 14px 11px 52px; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+.timeline li::before { content: counter(step); position: absolute; left: 12px; top: 11px; width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: var(--teal); color: #fff; font-weight: 800; font-size: .8rem; }
+.timeline strong { color: var(--teal-dark); }
 .review-choice { min-width: 150px; font-size: .78rem; }
 footer { max-width: 1500px; margin: 0 auto; padding: 24px 42px 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }
 footer strong { color: #40595b; }
@@ -188,5 +194,20 @@ footer a { white-space: nowrap; }
   a { color: #000; text-decoration: underline; overflow-wrap: anywhere; }
   .source { font-size: 7pt; }
   footer { border-top: 1px solid #aaa; font-size: 8pt; }
+  .timeline { gap: 4px; margin: 6px 0; }
+  .timeline li { padding: 5px 8px 5px 34px; font-size: 8pt; break-inside: avoid; }
+  .timeline li::before { width: 20px; height: 20px; left: 7px; top: 5px; font-size: 7pt; }
+  .brief-page h1 { font-size: 17pt; }
+  .brief-page .lead { font-size: 9pt; }
+  .brief-page .page-heading { margin: 0 0 7px; }
+  .brief-page .callout { padding: 7px 9px; }
+  .brief-page .callout strong { font-size: 8.5pt; }
+  .brief-page .callout p, .brief-page .prose p { font-size: 8pt; }
+  .brief-page .table-section { padding: 5px; margin: 5px 0; }
+  .brief-page .prose { padding: 5px; margin: 5px 0; }
+  .brief-page .prose h2 { font-size: 10pt; margin: 3px 0; }
+  .brief-page table { font-size: 6.4pt; }
+  .brief-page th, .brief-page td { padding: 2.5px 3.5px; }
+  .brief-page .table-note { font-size: 7pt; margin: 3px 0; }
   @page { margin: .55in; }
 }

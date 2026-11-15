@@ -37,6 +37,32 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertNotIn('localStorage.setItem("phase', script)
         self.assertIn("public-suggestion-review-v2", script)
 
+    def test_every_public_currency_amount_is_rounded_to_10(self):
+        """Owner rule: case figures are multiples of $10; only explicitly
+        allowed official agency amounts may differ."""
+        import re
+
+        official = {"1074", "519", "1044586"}
+        pattern = re.compile(r"\$([0-9][0-9,]*)")
+        manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
+        for path in [ROOT / item for item in manifest]:
+            for match in pattern.finditer(path.read_text(encoding="utf-8")):
+                digits = match.group(1).replace(",", "")
+                self.assertTrue(
+                    int(digits) % 10 == 0 or digits in official,
+                    f"{path.name} contains unrounded amount ${match.group(1)}",
+                )
+
+    def test_case_tables_and_rounding_disclosure_are_published(self):
+        index = (ROOT / "index.html").read_text(encoding="utf-8")
+        projections = (ROOT / "pages/projections.html").read_text(encoding="utf-8")
+        flagged = (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8")
+        self.assertIn("rounded to the nearest $10", index)
+        self.assertIn("Working recommendation", index)
+        self.assertIn("Property A — market value scenarios by year", projections)
+        self.assertIn("property tax at the transfer, by state", projections)
+        self.assertIn("F-09 — Property B rate discrepancy", flagged)
+
     def test_manifest_has_no_duplicate_output_paths(self):
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(len(manifest), len(set(manifest)))

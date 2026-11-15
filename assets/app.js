@@ -166,8 +166,8 @@ if (phaseForm) {
     element('phase-drawdown').value = '57';
     element('phase-trough').value = '17';
     element('phase-drift').value = '0';
-    element('phase-yield1').value = '0';
-    element('phase-yield2').value = '0';
+    element('phase-yield1').value = '3.55';
+    element('phase-yield2').value = '3.47';
     element('phase-inflation').value = '0';
     simulate();
   });

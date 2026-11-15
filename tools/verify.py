@@ -13,13 +13,15 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# The only dollar figures allowed in public pages are year-specific federal
-# statutory/exclusion figures and annual gift exclusions sourced from IRS pages.
-# Any property-specific or otherwise unsourced currency amount fails closed.
-PUBLIC_CURRENCY_AMOUNTS = {"15000000", "15480000", "19000", "20000"}
-# These five-digit numbers are cited California code sections and a CBO report
-# identifier, not postal codes. No other five-digit identifier is expected.
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809"}
+# Owner rounding rule: every currency amount in public output must be a
+# multiple of $10. These three official published amounts are not multiples
+# of $10 but are agency/statutory figures, never case data, and are allowed
+# explicitly. Any other unrounded amount fails closed.
+OFFICIAL_UNROUNDED_AMOUNTS = {"1074", "519", "1044586"}
+# These five-digit numbers are cited California code sections, BOE letter
+# identifiers and a CBO report identifier, not postal codes. No other
+# five-digit identifier is expected.
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "17041", "17043", "26026", "25009"}
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
@@ -29,8 +31,22 @@ OFFICIAL_HOST_SUFFIXES = (
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
-    "ftb.ca.gov", "stlouisfed.org",
+    "ftb.ca.gov", "stlouisfed.org", "sftreasurer.org", "santaclaracounty.gov",
+    "sf.gov", "federalreserve.gov", "treasury.gov",
 )
+
+
+def currency_ok(raw: str) -> bool:
+    """A currency amount passes only if it is a multiple of $10 (the owner's
+    rounding rule for all case figures) or an explicitly allowed official
+    published amount."""
+    digits = raw.replace(",", "")
+    if digits in OFFICIAL_UNROUNDED_AMOUNTS:
+        return True
+    try:
+        return int(digits) % 10 == 0
+    except ValueError:
+        return False
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
 POSTAL_RE = re.compile(r"(?<![0-9])([0-9]{5})(?:-[0-9]{4})?(?![0-9])")
@@ -198,12 +214,12 @@ def verify() -> list[str]:
         except (OSError, UnicodeDecodeError):
             continue
         relative = path.relative_to(ROOT).as_posix()
-        if any(amount.group(1).replace(",", "") not in PUBLIC_CURRENCY_AMOUNTS for amount in CURRENCY_RE.finditer(content)):
-            errors.append(f"{relative} contains an unapproved currency amount")
+        if any(not currency_ok(amount.group(1)) for amount in CURRENCY_RE.finditer(content)):
+            errors.append(f"{relative} contains a currency amount that is not rounded to $10")
         scan_text = content
         if path.suffix.lower() == ".css":
             scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
-        for public_number in PUBLIC_CURRENCY_AMOUNTS | PUBLIC_STATUTE_IDS:
+        for public_number in OFFICIAL_UNROUNDED_AMOUNTS | PUBLIC_STATUTE_IDS:
             scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
         if any(match.group(1) not in PUBLIC_STATUTE_IDS for match in POSTAL_RE.finditer(scan_text)):
             errors.append(f"{relative} contains an unexplained five-digit identifier")
@@ -270,9 +286,8 @@ def verify() -> list[str]:
                 errors.append(f"{relative} has a broken local link")
 
         for match in CURRENCY_RE.finditer(text):
-            amount = match.group(1).replace(",", "")
-            if amount not in PUBLIC_CURRENCY_AMOUNTS:
-                errors.append(f"{relative} contains an unapproved currency amount")
+            if not currency_ok(match.group(1)):
+                errors.append(f"{relative} contains a currency amount that is not rounded to $10")
         for match in POSTAL_RE.finditer(text):
             if match.group(1) not in PUBLIC_STATUTE_IDS:
                 errors.append(f"{relative} contains an unexplained five-digit identifier")
