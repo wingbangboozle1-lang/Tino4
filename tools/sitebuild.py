@@ -425,16 +425,45 @@ SOURCES = {
         "scope": "Official adjustments of the Proposition 19 $1,000,000 amount: $1,000,000 (transfers 2/16/2021–2/15/2023), $1,022,600 (2/16/2023–2/15/2025), $1,044,586 (2/16/2025–2/15/2027), adjusted every other February by the FHFA House Price Index for California (2024 change: 2.15%). Next adjustment February 2027. Application detail: Property Tax Rule 462.520 and LTA 2022/012.",
         "verified": True,
     },
-    "ftb_404": {
-        "label": "FTB inheritance-information URL — retrieval failed",
-        "url": "https://www.ftb.ca.gov/file/personal/income-types/income-from-gifts-and-inheritances.html",
-        "scope": "Direct retrieval returned a 404 on 2026-11-14. No California income-tax claim is based on this unavailable page.",
-        "verified": False,
+    "ftb_gifts": {
+        "label": "FTB — Gifts and inheritance (personal income types)",
+        "url": "https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html",
+        "scope": "Read 2026-11-15 (page 'last updated 09/24/2025'). States that a gift or inheritance is not included in income, but income it later produces (interest, dividends, rent, pension, gain on a real-property sale) is taxable. Replaces the retired inheritance-information URL that returned 404.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ca_rtc17043": {
+        "label": "California Revenue and Taxation Code §17043 — 1% tax above $1,000,000",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC",
+        "scope": "Read 2026-11-15. Imposes an additional 1% tax on that portion of taxable income in excess of $1,000,000 for taxable years beginning on or after January 1, 2005 (added by Proposition 63, 2004). The amount is a statutory dollar threshold, not indexed in the section text.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ftb_540es_2025": {
+        "label": "FTB — 2025 Instructions for Form 540-ES (Behavioral Health Services Tax worksheet)",
+        "url": "https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.html",
+        "scope": "Read 2026-11-15. Worksheet: if taxable income (Form 540 line 19) is more than $1,000,000, subtract $1,000,000 and multiply by 1% for the Behavioral Health Services Tax (previously Mental Health Services Tax). Section C: taxpayers with 2025 California AGI of $1,000,000 or more must base estimated tax on their 2025 tax.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ftb_cap_gains": {
+        "label": "FTB — Capital gains and losses",
+        "url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
+        "scope": "Read 2026-11-15 (page 'last updated 01/28/2026'). States: 'California does not have a lower rate for capital gains. All capital gains are taxed as ordinary income.' Gain on a sale of inherited real property is therefore taxed at ordinary California rates in the year of sale.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "boe_countycontacts": {
+        "label": "California BOE — Listing of County Assessors, Auditors and Tax Collectors",
+        "url": "https://www.boe.ca.gov/proptaxes/countycontacts.htm",
+        "scope": "Read 2026-11-15. Official BOE directory of county assessor offices, with links to each county's assessor site. Replaces the retired county-assessor directory URL that returned 404. It lists contacts only; it contains no assessment, rate or parcel data.",
+        "verified": True,
+        "checked": "2026-11-15",
     },
     "boe_assessor_404": {
-        "label": "BOE county-assessor directory URL — retrieval failed",
+        "label": "BOE county-assessor directory URL — retrieval failed (superseded by the BOE contacts listing)",
         "url": "https://www.boe.ca.gov/proptaxes/county-assessors.htm",
-        "scope": "Direct retrieval returned a 404 on 2026-11-14. No local assessor record or local tax rate is inferred from this URL.",
+        "scope": "Direct retrieval returned a 404 on 2026-11-14 and again on 2026-11-15. Superseded by the BOE county contacts listing above. No local assessor record or local tax rate is inferred from this URL.",
         "verified": False,
     },
     "boe_pub801_404": {
@@ -444,10 +473,17 @@ SOURCES = {
         "verified": False,
     },
     "cpuc_water_404": {
-        "label": "CPUC water-utilities URL — retrieval failed",
+        "label": "CPUC water-utilities URL — retrieval failed (superseded by the CPUC water list)",
         "url": "https://www.cpuc.ca.gov/industries-and-topics/water/water-utilities",
-        "scope": "Direct retrieval redirected to a 404 on 2026-11-14. No household water-rate figure is based on this URL.",
+        "scope": "Direct retrieval returned a 404 on 2026-11-14 and 2026-11-15. Superseded by the CPUC water and sewer utility list below for listing purposes only. No household water-rate figure is based on this URL.",
         "verified": False,
+    },
+    "cpuc_water_list": {
+        "label": "CPUC — Water Utility List (regulated utilities by service area)",
+        "url": "https://docs.cpuc.ca.gov/published/Report/7995.htm",
+        "scope": "Read 2026-11-15. Lists San Jose Water Co. (WTA 168) with service area 'in and about San Jose, Los Gatos, Saratoga, Monte Sereno, Campbell, Cupertino, and Santa Clara'. The file title is dated '5-7-01', so it confirms only the listing, not current tariffs, rates or service boundaries. A current tariff must come from the utility.",
+        "verified": True,
+        "checked": "2026-11-15",
     },
     "sos_ballot": {
         "label": "California Secretary of State — Qualified statewide ballot measures",
@@ -1449,6 +1485,8 @@ def build_estate_thresholds() -> str:
         {"cells": ["Annual gift exclusion — 2026", "$19,000 per donor/recipient", "A gift-tax annual exclusion is separate from the lifetime estate/gift basic exclusion and is not an inheritance allowance."], "status": "Verified", "sources": ["irs_2027"]},
         {"cells": ["Annual gift exclusion — 2027", "$20,000 per donor/recipient", "The annual exclusion does not cap an inheritance and does not determine estate tax by itself."], "status": "Verified", "sources": ["irs_2027"]},
         {"cells": ["California state/local death-transfer tax", "Current RTC §13301 bars a state or political subdivision tax on a transfer by reason of death; the Controller says no CA Estate Tax return is required for deaths on/after 2005-01-01.", "Current law only; no future exemption or tax amount can be forecast for a later death."], "status": "Verified", "sources": ["ca_rtc13301", "ca_death_tax"]},
+        {"cells": ["California income tax — 1% Behavioral Health Services Tax", "1% of taxable income above $1,000,000 in a taxable year (RTC §17043; FTB 2025 Form 540-ES worksheet). The $1,000,000 is a fixed statutory amount in the section text.", "The inheritance itself is not income. The surcharge applies to income in the year of a sale or other income event that pushes taxable income above $1,000,000, on the excess only, on top of ordinary California tax. Sale-year timing therefore matters; the household figure requires a CPA computation."], "status": "Verified", "sources": ["ca_rtc17043", "ftb_540es_2025", "ftb_gifts"]},
+        {"cells": ["California capital gains", "California has no lower rate for capital gains; all capital gains are taxed as ordinary income (FTB, updated 01/28/2026).", "A gain on the sale of inherited real property is ordinary California income in the sale year, and it counts toward the $1,000,000 surcharge threshold above. Federal capital-gain rates and the federal basis rules are a separate calculation."], "status": "Verified", "sources": ["ftb_cap_gains", "ftb_gifts"]},
         {"cells": ["Household estate headroom", "—", "No gross-estate inventory, adjusted taxable gifts, specific gift-tax exemption, debts, deductions, spouse/portability facts or valuation date is published; the remaining headroom cannot be calculated."], "status": "Missing", "sources": ["irs_estate", "irs_estate_faq"]},
     ]
     body = callout("The threshold is not per heir", "Federal estate tax is an estate-level transfer tax. The IRS filing test uses the decedent's gross estate, adjusted taxable gifts and specific gift-tax exemption; a portability election can require a return below the threshold. A recipient's share alone cannot establish whether a return is required or tax is due.", "info")
@@ -1667,12 +1705,12 @@ def build_flagged() -> str:
         {"cells": ["F-04 — Water and solar costs", "The state water program is not a household tariff; the CPUC page describes NEM/NBT but not an individual account's net bill.", "Use private bills and signed service/solar documents. No credit or monthly cost is filled in."], "status": "Missing", "sources": ["water_board", "cpuc_solar"]},
         {"cells": ["F-05 — Rental legality and local rules", "No unit permit, local rent-board determination, lease or tenant notice is public here.", "Confirm lawful unit count and all applicable state/local rules with counsel before projecting rent or occupancy."], "status": "Missing", "sources": ["ca_rent", "hud_fmr"]},
         {"cells": ["F-06 — Future law and market path", "The verified CBO forecast runs through 2036; the public site does not disclose a transfer date or model a household-specific future path.", "No future exclusion, house-price, CPI, rent, insurance or portfolio-return value is invented."], "status": "Missing", "sources": ["cbo_rates", "irs_2027", "fhfa_hpi"]},
-        {"cells": ["F-07 — Failed official retrievals", "Direct page fetches returned 404 for the listed FTB inheritance page, BOE county-assessor directory, BOE Publication 801 PDF and CPUC water-utilities URL.", "No claim or property-specific value is based on those failed URLs; working alternative laws and guidance are linked in the source register."], "status": "Not verified", "sources": ["ftb_404", "boe_assessor_404", "boe_pub801_404", "cpuc_water_404"]},
+        {"cells": ["F-07 — Failed official retrievals", "Direct page fetches on 2026-11-15 still return 404 for the BOE Publication 801 PDF. The earlier FTB gifts/inheritance, BOE county-assessor directory and CPUC water-utilities URLs have been replaced with official pages that resolve (FTB gifts-and-inheritance, BOE county contacts, CPUC water list).", "No claim is based on Publication 801. The replacement pages support only the statements listed in the source register, each with its own verified date."], "status": "Not verified", "sources": ["boe_pub801_404", "ftb_gifts", "boe_countycontacts", "cpuc_water_list"]},
         {"cells": ["F-09 — SF vacancy-tax path", "The SF Treasurer page on vacancy/empty-homes tax returned 'Page Not Found' on 2026-11-15, so no current SF vacancy-tax rule or filing duty is verified here.", "Find the current official SF Treasurer or Tax Collector page for any vacancy tax; do not apply one until confirmed."], "status": "Not verified", "sources": ["sf_treasurer_vacancy_404"]},
         {"cells": ["F-10 — Santa Clara property-tax rate", "The Santa Clara Assessor homepage fetch failed and the reachable Assessor page lists contacts and services only. No county levy rate or direct charge is verified for any Santa Clara parcel.", "Obtain the parcel's own secured tax bill and the official county rate schedule before any tax projection."], "status": "Missing", "sources": ["scc_assessor_fetch"]},
         {"cells": ["F-11 — HUD Fair Market Rent values", "The FY2026 HUD FMR page returned 404, and the FY2027 documentation page did not yield extractable local values. No FMR figure is published.", "Retrieve the official HUD FMR table for the specific area and year; FMR is a program benchmark, not a lawful rent."], "status": "Missing", "sources": ["hud_fmr"]},
         {"cells": ["F-12 — Japan asset-bubble figures", "Historical discount-rate and Nikkei/land-price figures come from secondary sources that disagree on details. The official Bank of Japan source was not confirmed.", "Read the official Bank of Japan data or statements before any historical Japan figure is used; none is published here."], "status": "Not verified", "sources": ["boj_unverified"]},
-        {"cells": ["F-13 — California income-tax brackets", "The FTB page for brackets and rates was not fetched, so California income-tax bracket figures are not verified here. Secondary sites were not used for published values.", "Read the current FTB rate schedule for the tax year, and any additional tax that applies, before any California income-tax projection."], "status": "Not verified", "sources": ["ftb_404"]},
+        {"cells": ["F-13 — California income-tax brackets (partly verified)", "The FTB rate schedule (brackets and rates) was not fetched, so California bracket figures are not verified here. The 1% Behavioral Health Services Tax above $1,000,000 (RTC §17043) and the ordinary-rate treatment of capital gains are verified from FTB and leginfo pages read 2026-11-15.", "Read the current FTB rate schedule for the tax year before any California income-tax projection."], "status": "Not verified", "sources": ["ca_rtc17043", "ftb_540es_2025", "ftb_cap_gains"]},
         {"cells": ["F-14 — SF rent-control coverage cutoff", "Secondary coverage cites a pre-June 13, 1979 coverage cutoff; the sf.gov ordinance text confirming it was not read.", "Counsel should read the ordinance text and the Rent Board's coverage rules before relying on any unit's covered status."], "status": "Not verified", "sources": ["sf_rent_board"]},
         {"cells": ["F-15 — Nov 3, 2026 measure outcomes", "The Nov 3, 2026 election is before today's date. The qualified list was read, but certified results and full measure text were not read.", "Read the certified results and each voter guide before treating any of Props 3 or 40–43 as settled law."], "status": "Not verified", "sources": ["sos_ballot"]},
         {"cells": ["F-08 — Stress-tool simplification", "The calculator uses source-reported peak-to-trough endpoints with a synthetic straight-line decline and flat trough.", "It includes only the entered Treasury yields, pre-crash drift and constant inflation lens; it excludes dividends, fees, taxes, post-trough recovery, withdrawals, property costs, correlations and probabilities. It is not a historical backtest."], "status": "Assumption", "sources": ["fed_1929", "fed_2008", "treasury_bills", "bls_cpi"]},
@@ -1687,7 +1725,7 @@ def build_flagged() -> str:
     scan_rows = [
         {"cells": ["F-16 — Case-derived place identifiers remain in Git history", "A read-only scan of `git rev-list --all --objects` (251 commits, 1,384 unique blobs, 380 distinct paths) found CA-ZIP-shaped five-digit patterns in 95 paths, a property city name in 109 paths, a neighbourhood name in 96 paths and one specific five-digit place identifier in 55 paths. Affected paths include `README.md`, `VERIFICATION.md`, `COORDINATION.md`, `_7adb71fc/**`, `_7eff7e24/**`, `_c07ccf45/**`, `_s95cf9249/**`, `_s9ad1da71/**` and `_research/notes.jsonl`. No matched value is reproduced here.", "Path names and match counts were checked; the values themselves are not republished. A history rewrite, repository visibility change or GitHub Support coordination requires repository-owner/admin action and cannot be safely performed from a session-scoped token on a shared default branch. Treat the historical material as exposed until that is completed."], "status": "Missing", "sources": ["github_history"]},
         {"cells": ["F-17 — Rounding is applied, not a substitute for de-identification", "The public site publishes no household amount. A prior revision of the working notes circulated rounded figures; rounding to the nearest ten dollars does not anonymise an assessment history that can be matched to a parcel across years.", "Any future publication of an amount requires rounding to the nearest ten dollars and a separate check that the value cannot be re-identified from public records."], "status": "Guidance", "sources": ["github_history", "boe_pub29"]},
-        {"cells": ["F-18 — Official pages that no longer resolve", "Four previously cited URLs return 404 or redirect to an error page as of this check: the FTB gifts-and-inheritances page, the BOE county-assessor directory, the BOE Publication 801 PDF and the CPUC water-utilities page.", "None of these is used to support a rule or a number. Working alternatives are linked in their place, and the failures stay listed so they are not silently dropped."], "status": "Not verified", "sources": ["ftb_404", "boe_assessor_404", "boe_pub801_404", "cpuc_water_404"]},
+        {"cells": ["F-18 — Official pages that still do not resolve", "As of 2026-11-15 the BOE Publication 801 PDF returns 404 and the SF Treasurer vacancy-tax page returns Page Not Found. The FTB gifts page, BOE county directory and CPUC water page have been replaced by official pages that resolve (see F-07).", "Neither failing URL supports a rule or a number. Find the current official location of Publication 801 and the SF vacancy-tax rule, then update the register."], "status": "Not verified", "sources": ["boe_pub801_404", "sf_treasurer_vacancy_404"]},
         {"cells": ["F-19 — No official source covers the household's actual transfer year", "The longest official baseline cited stops in 2055 and assumes current law; the near-term baseline stops in 2036. No official source supplies a house-price, insurance, rent or portfolio return path for the household's actual year.", "Every projection beyond the published baseline is a labelled scenario with a stated assumption band, not a forecast."], "status": "Missing", "sources": ["cbo_outlook", "cbo_ltbo", "fhfa_hpi"]},
     ]
     body += make_table("Additional flagged items from this review", ["Flag", "What was found", "Required action"], scan_rows)

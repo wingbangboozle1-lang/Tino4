@@ -36,7 +36,8 @@ PUBLIC_CURRENCY_AMOUNTS = {
 # two owner-directed region ZIP codes. Region ZIPs carry no street address and
 # are used only for ZIP-specific insurance/utility/rate context.
 REGION_ZIP_CODES = {"95014", "94122"}
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912"}
+# 17043 = Cal. Rev. & Tax. Code §17043 (1% tax above $1,000,000), read on leginfo 2026-11-15.
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "17043"}
 FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
