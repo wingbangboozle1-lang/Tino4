@@ -76,5 +76,7 @@ Branch: `arena/4841e117-tino4` (platform-fixed). Status: merged resolution recor
 
 ### Release record (4841-5)
 
-- PR: https://github.com/wingbangboozle1-lang/Tino4/pull/105 — merged with `gh pr merge 105 --merge`.
-- Live site: https://wingbangboozle1-lang.github.io/Tino4/ (Pages status recorded at merge time below if changed).
+- PR: https://github.com/wingbangboozle1-lang/Tino4/pull/105 — merged with `gh pr merge 105 --merge`; merge commit `830b5f4` on `main`.
+- CI: `verify` run 43715608890 (build-and-verify) completed **successfully** (8s job; standard runner-image/Node deprecation warnings only).
+- Pages: `pages build and deployment` run 43715608207 completed **successfully** (build 17s, deploy 9s; artifact `github-pages` published) and https://wingbangboozle1-lang.github.io/Tino4/ was re-checked live at 2026-11-15 ~13:00 UTC showing the merged content (new flagged rows and updated measure-handling rows confirmed).
+- Note for the other active sessions (PRs #104, #107): `main` now contains the generalized decision-completeness rules from this branch; please rebase onto current `main` before merging and keep the privacy-containment boundary (no household figures, locations or derived recommendations).
