@@ -65,6 +65,44 @@ ADDRESS_RE = re.compile(
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE_RE = re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)")
 
+# Record identifiers. A parcel or assessor number is the single most direct
+# link from a published figure back to a named owner, so the build fails closed
+# on one even when every amount is rounded. The patterns are deliberately
+# narrow: they require the label or a recognisable county format, so ordinary
+# prose about "a parcel" or a statute section does not trip them.
+APN_RE = re.compile(
+    r"(?i)\b(?:APN|APN\s*#?|parcel\s*(?:number|no\.?|id|#)|"
+    r"assessor'?s?\s+parcel\s*(?:number|no\.?|#)?|APN\s*number)\b"
+    r"\s*[:#]?\s*([0-9][0-9\-.\s]{4,})"
+)
+# Santa Clara County: nnn-nn-nnn. San Francisco: block/lot and nnnn-nnn forms.
+APN_BARE_RE = re.compile(r"(?<![0-9-])\d{3}-\d{2}-\d{3}(?![0-9-])|(?<![0-9-])\d{4}-\d{3}(?![0-9-])")
+ACCOUNT_RE = re.compile(
+    r"(?i)\b(?:account\s*(?:number|no\.?|#)|acct\.?\s*(?:no\.?|#)?|"
+    r"trust\s*(?:number|no\.?\s*|#)\s*|escrow\s*(?:number|no\.?\s*|#)\s*|"
+    r"loan\s*(?:number|no\.?\s*|#)\s*|policy\s*(?:number|no\.?\s*|#)\s*)\b"
+    r"\s*[:#]?\s*([A-Z0-9][A-Z0-9-]{4,})"
+)
+DOB_RE = re.compile(
+    r"(?i)\b(?:date\s+of\s+birth|d\.?o\.?b\.?|born\s+on)\b\s*[:]?\s*"
+    r"([0-9]{1,2}\s*/\s*[0-9]{1,2}\s*/\s*[0-9]{2,4}|"
+    r"(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\s+\d{1,2},?\s+\d{4})"
+)
+
+
+def identifier_problems(content: str) -> list[str]:
+    """Record-identifier checks that must never be skipped by rounding."""
+    problems = []
+    for pattern, label in (
+        (APN_RE, "appears to contain a labelled parcel or assessor identifier"),
+        (APN_BARE_RE, "appears to contain a county parcel number"),
+        (ACCOUNT_RE, "appears to contain an account, trust, loan or policy number"),
+        (DOB_RE, "appears to contain a date of birth"),
+    ):
+        if pattern.search(content):
+            problems.append(label)
+    return problems
+
 
 class PageAudit(HTMLParser):
     def __init__(self, page: Path):
@@ -249,6 +287,8 @@ def verify() -> list[str]:
             errors.append(f"{relative} appears to contain an email address")
         if PHONE_RE.search(content):
             errors.append(f"{relative} appears to contain a phone number")
+        for problem in identifier_problems(content):
+            errors.append(f"{relative} {problem}")
 
     pages: list[Path] = []
     for relative in manifest:
@@ -317,6 +357,8 @@ def verify() -> list[str]:
             errors.append(f"{relative} appears to contain an email address")
         if PHONE_RE.search(text):
             errors.append(f"{relative} appears to contain a phone number")
+        for problem in identifier_problems(text):
+            errors.append(f"{relative} {problem}")
 
     if (ROOT / "assets" / "case-projections.csv").exists():
         errors.append("case-projection file exists in public assets")
