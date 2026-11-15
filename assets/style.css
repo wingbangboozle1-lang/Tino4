@@ -203,6 +203,7 @@ footer a { white-space: nowrap; }
   .twhen { font-size: 9pt; }
   .twhat { font-size: 9pt; }
 }
+<<<<<<< HEAD
 /* Deadline timeline (inheritance process) */
 .timeline { list-style: none; display: flex; gap: 10px; padding: 14px 4px 8px; margin: 4px 0 14px; overflow-x: auto; }
 .timeline li { flex: 1 1 150px; min-width: 150px; border: 1px solid var(--line, #d8d3c8); border-radius: 10px; padding: 10px 12px; background: #fffdf8; position: relative; }
@@ -210,3 +211,30 @@ footer a { white-space: nowrap; }
 .timeline .tl-what { display: block; margin-top: 4px; font-size: 0.82rem; line-height: 1.35; }
 @media (max-width: 700px) { .timeline { flex-wrap: wrap; } .timeline li { flex: 1 1 45%; } }
 @media print { .timeline { overflow: visible; flex-wrap: wrap; } .timeline li { flex: 1 1 30%; box-shadow: none; } }
+=======
+
+
+/* Proposal badge (introduced bills, not enacted law) */
+.badge.proposal { color: #76510a; background: #fff3d7; }
+
+/* Compact one-page print for the attorney & CPA brief */
+@media print {
+  .brief-page main { font-size: 8.2pt; }
+  .brief-page h1 { font-size: 17pt; margin-bottom: 4px; }
+  .brief-page .lead { font-size: 8.5pt; margin-bottom: 5px; }
+  .brief-page .page-heading { margin-bottom: 5px; }
+  .brief-page .callout, .brief-page .prose, .brief-page .table-section { margin: 3px 0; padding: 4px 5px; }
+  .brief-page table { table-layout: fixed; font-size: 7pt; }
+  .brief-page th:nth-child(1), .brief-page td:nth-child(1) { width: 14%; }
+  .brief-page th:nth-child(2), .brief-page td:nth-child(2) { width: 31%; }
+  .brief-page th:nth-child(3), .brief-page td:nth-child(3) { width: 28%; }
+  .brief-page th:nth-child(4), .brief-page td:nth-child(4) { width: 12%; }
+  .brief-page th:nth-child(5), .brief-page td:nth-child(5) { width: 15%; }
+  .brief-page th, .brief-page td { padding: 2px 3px; }
+  .brief-page .source { font-size: 5.8pt; }
+  .brief-page .badge { font-size: 5.3pt; padding: 1px 3px; }
+  .brief-page .prose h2 { font-size: 8.5pt; margin-bottom: 2px; }
+  .brief-page .prose p { margin: 2px 0; line-height: 1.15; }
+  .brief-page footer { margin-top: 2px; padding-top: 2px; font-size: 6.5pt; }
+}
+>>>>>>> 5fe1463 (Integrate parallel sessions' features: decision log, Treasury ladder panel, regime map baselines, proposal watchlist rows, brief print compaction)

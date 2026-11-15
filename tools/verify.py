@@ -29,7 +29,7 @@ MANIFEST = ROOT / "tools" / "site-manifest.json"
 WHITELISTED_CURRENCY = {"1044586"}
 # Five-digit identifiers that are cited statute/report numbers, not postal codes.
 # 13301 RTC estate tax; 16061 Probate Code; 62809 CBO report; 70106 P.L. 119-21 section; 18662 RTC withholding; 25009 BOE LTA 2025/009; 36084 fragment of the pinned branch name arena/a0d36084-tino4
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "70106", "18662", "25009", "36084"}
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "70106", "18662", "25009", "36084", "61270", "61882"}
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
@@ -41,7 +41,7 @@ OFFICIAL_HOST_SUFFIXES = (
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
     "ftb.ca.gov", "stlouisfed.org", "nyu.edu", "cafairplan.com",
     "sftreasurer.org", "santaclaracounty.gov", "sccassessor.org", "sfassessor.org",
-    "sfpuc.org",
+    "sfpuc.org", "sf.gov",
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")

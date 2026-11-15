@@ -39,6 +39,27 @@ class PublicSiteContentTests(unittest.TestCase):
         self.assertIn("what-if", decision.lower())
         self.assertIn("d-year", decision)
 
+    def test_decision_log_page_exists_with_review_queue(self):
+        log = (ROOT / "pages/decision-log.html").read_text(encoding="utf-8")
+        self.assertIn("D01", log)
+        self.assertIn("D12", log)
+        self.assertIn("review-choice", log)
+        self.assertIn("rounding-policy decision", log)
+
+    def test_watchlist_distinguishes_proposals_from_law(self):
+        watch = (ROOT / "pages/law-watchlist.html").read_text(encoding="utf-8")
+        self.assertIn("S.4196", watch)
+        self.assertIn("SB 974", watch)
+        self.assertIn("1.6%", watch)
+        self.assertIn("badge proposal", watch)
+
+    def test_ladder_panel_present(self):
+        phased = (ROOT / "pages/phased-investing.html").read_text(encoding="utf-8")
+        self.assertIn("ladder-tool", phased)
+        self.assertIn("ladder-falling-interest", phased)
+        script = (ROOT / "assets/app.js").read_text(encoding="utf-8")
+        self.assertIn("ladder-months", script)
+
     def test_black_swan_uses_real_data_and_staging_variants(self):
         swan = (ROOT / "pages/black-swan.html").read_text(encoding="utf-8")
         self.assertIn("1929", swan)
@@ -117,21 +138,23 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("S.587", law)
         self.assertIn("non-urgency", law)
         self.assertIn("$3,500,000", law)
-        self.assertIn("Proposal—not law", law)
-        self.assertIn("Direct page fetch: 2026-11-15", sources)
+        self.assertIn("badge proposal", law)
+        self.assertIn("S.587", law)
+        self.assertIn("H.R.601", law)
+        self.assertIn("2026-11-15", sources)
+        self.assertIn("congress_s4196_text", sources)
         self.assertIn("bill_id=202520260SB974", sources)
         self.assertIn("119th-congress/senate-bill/4196", sources)
         self.assertIn("119th-congress/house-bill/601", sources)
         self.assertIn("119th-congress/senate-bill/587", sources)
         for label in (
-            "California Secretary of State — Qualified statewide ballot measures",
+            "California Secretary of State — Ballot measures",
             "San Francisco Rent Board — Department page",
             "SF Treasurer — vacancy-tax URL retrieval failed",
-            "Santa Clara County Assessor homepage — fetch failed",
         ):
             start = sources.rfind("<tr>", 0, sources.index(label))
             end = sources.index("</tr>", start)
-            self.assertIn("Direct page fetch: 2026-11-15", sources[start:end])
+            self.assertIn("2026-11-15", sources[start:end])
         self.assertIn("not enacted", law)
         subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
 

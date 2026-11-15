@@ -246,8 +246,8 @@ SOURCES: dict[str, tuple[str, str, str]] = {
     ),
     "sos_ballot": (
         "California Secretary of State — Ballot measures",
-        "https://www.sos.ca.gov/elections/ballot-measures",
-        "Official status of qualifying initiatives, including any Proposition 19-related amendment or repeal effort. Verify status near the transfer date.",
+        "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures",
+        "Lists qualified statewide ballot measures by number and official title (the November 3, 2026 measures are listed there). A list only: full text, fiscal effects and certified results require the voter guide or certified results.",
     ),
     "cbo_rates": (
         "Congressional Budget Office — interest-rate outlook (report 62809)",
@@ -278,6 +278,81 @@ SOURCES: dict[str, tuple[str, str, str]] = {
         "GitHub — public repository (current tree and history)",
         "https://github.com/wingbangboozle1-lang/Tino4",
         "The public repository itself: the current tree is clean, while historical commits remain reachable and still require owner-coordinated cleanup.",
+    ),
+    "cbo_ltbo": (
+        "Congressional Budget Office — The Long-Term Budget Outlook: 2025 to 2055",
+        "https://www.cbo.gov/publication/61270",
+        "Thirty-year extended baseline: inflation slows to about the Federal Reserve's 2% goal through 2027 and stays near it to 2055; the 10-year Treasury rate stays close to its 30-year average; debt reaches 156% of GDP in 2055. A law-unchanged baseline, not a house-price or equity-return forecast.",
+    ),
+    "cbo_outlook": (
+        "Congressional Budget Office — The Budget and Economic Outlook: 2026 to 2036",
+        "https://www.cbo.gov/publication/61882",
+        "Ten-year baseline: PCE inflation returning to roughly 2% by 2030 and 10-year Treasury rates rising in 2027 then staying relatively stable. It is a ten-year baseline, not a 50-year forecast.",
+    ),
+    "fed_great_inflation": (
+        "Federal Reserve History — The Great Inflation (1965-1982)",
+        "https://www.federalreservehistory.org/essays/great-inflation",
+        "Documents a long regime of high and volatile inflation: a little more than 1% in 1964, more than 14% in 1980, about 3.5% average in the latter half of the 1980s. A regime observation, not a probability for a future period.",
+    ),
+    "congress_legislation": (
+        "Congress.gov — Advanced legislation search",
+        "https://www.congress.gov/advanced-search/legislation",
+        "Official search interface for federal bills and their status. Bill-specific examples in this register are introduced proposals, not current law unless enacted.",
+    ),
+    "ca_legislation": (
+        "California Legislative Information — Bill Search",
+        "https://leginfo.legislature.ca.gov/faces/billSearchClient.xhtml",
+        "Official search interface for California bills and chaptered laws. Verify status and operative date before applying a change.",
+    ),
+    "ca_sb974_status": (
+        "California Legislature — SB 974 status, Chapter 665 (2026)",
+        "https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260SB974",
+        "Records SB 974 as chaptered September 27, 2026 (Chapter 665, Statutes of 2026, non-urgency). Verify the operative date and assessor implementation before applying it to a transfer.",
+    ),
+    "ca_sb974_text": (
+        "California SB 974 — chaptered text",
+        "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB974",
+        "Chaptered amendment to RTC 63.2 that expressly treats a special-needs trust established under Probate Code 3604 as an eligible medium for the stated intergenerational exclusion; eligibility and claim requirements remain. Separate claim-timing relief is limited to qualifying property connected with specified 2025 wildfires.",
+    ),
+    "congress_s4196_status": (
+        "Congress.gov — S. 4196 status",
+        "https://www.congress.gov/bill/119th-congress/senate-bill/4196",
+        "Lists S. 4196 as introduced March 25, 2026 and referred to Senate Finance; no enactment shown as of the check date. Status can change.",
+    ),
+    "congress_s4196_text": (
+        "Congress.gov — S. 4196 introduced text",
+        "https://www.congress.gov/bill/119th-congress/senate-bill/4196/text",
+        "Introduced text proposes a $3,500,000 basic exclusion amount and changes to federal estate, gift and generation-skipping transfer tax rules, proposed to apply to deaths and gifts after December 31, 2026 if enacted. Not enacted law.",
+    ),
+    "congress_hr601_status": (
+        "Congress.gov — H.R. 601 status",
+        "https://www.congress.gov/bill/119th-congress/house-bill/601",
+        "Lists H.R. 601 as introduced January 22, 2025 and referred to House Ways and Means and Budget; no enactment shown as of the check date. Status can change.",
+    ),
+    "congress_hr601_text": (
+        "Congress.gov — H.R. 601 introduced text",
+        "https://www.congress.gov/bill/119th-congress/house-bill/601/text/ih",
+        "Introduced text proposes a 20% rate for estate, gift and generation-skipping transfer taxes, with a proposed effective date for transfers after December 31, 2024. Not enacted law.",
+    ),
+    "congress_s587_status": (
+        "Congress.gov — S. 587 status",
+        "https://www.congress.gov/bill/119th-congress/senate-bill/587",
+        "Lists S. 587 as introduced February 13, 2025 and referred to Senate Finance; no enactment shown as of the check date. Status can change.",
+    ),
+    "congress_s587_text": (
+        "Congress.gov — S. 587 introduced text",
+        "https://www.congress.gov/bill/119th-congress/senate-bill/587/text/is",
+        "Introduced text proposes to repeal federal estate and generation-skipping transfer taxes and separately changes gift-tax rules. Not enacted law.",
+    ),
+    "sf_rent_board": (
+        "San Francisco Rent Board — Department page",
+        "https://sf.gov/departments--rent-board",
+        "States a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027, and lists 2026 Rent Board news items. Ordinance coverage must be read in the linked notice.",
+    ),
+    "sf_treasurer_vacancy_404": (
+        "SF Treasurer — vacancy-tax URL retrieval failed",
+        "https://sftreasurer.org/empty-homes-tax",
+        "Returned Page Not Found on the check date. No San Francisco vacancy-tax rule, rate or filing duty is based on this URL; the current official path is unconfirmed.",
     ),
 }
 
@@ -596,6 +671,7 @@ BADGES = {
     "assumption": ("assumption", "Explicit assumption, adjustable in the what-if controls; not a forecast."),
     "missing": ("missing", "Unknown; left blank by policy. Blank means unknown, not zero."),
     "guidance": ("guidance", "General rule or process guidance; no private fact asserted."),
+    "proposal": ("proposal", "An introduced bill or circulating proposal. NOT enacted law and never a baseline."),
 }
 
 
@@ -643,6 +719,7 @@ NAV_GROUPS = [
     ("Decide", [
         ("pages/decision-analysis.html", "Compare paths"),
         ("pages/questions.html", "Questions &amp; missing evidence"),
+        ("pages/decision-log.html", "Decision log"),
         ("pages/suggestions.html", "Suggestions for review"),
     ]),
     ("Numbers", [
@@ -693,6 +770,7 @@ def render_page(path: str, title: str, intro: str, body: str, eyebrow: str = "DE
     current = path
     nav = build_nav(current)
     depth = "" if current == "index.html" else "../"
+    page_class = "brief-page" if path == "pages/attorney-cpa-brief.html" else ""
     if current == "index.html":
         body = body.replace('href="page:', 'href="pages/')
     else:
@@ -707,7 +785,7 @@ def render_page(path: str, title: str, intro: str, body: str, eyebrow: str = "DE
 <meta name="description" content="Privacy-first inheritance decision workspace: anonymized properties, figures rounded to the nearest $10, every row linked to an official source.">
 <title>{esc(title)} · Private inheritance decision workspace</title>
 <link rel="stylesheet" href="{stylesheet}"><script src="{script}" defer></script>
-</head><body class=""><a class="skip" href="#main">Skip to content</a>
+</head><body class="{page_class}"><a class="skip" href="#main">Skip to content</a>
 <div class="layout">
 <aside class="sidebar"><a class="brand" href="{root_href(current, 'index.html')}"><span class="brand-icon" aria-hidden="true">&#9672;</span><span>PRIVATE<br>DECISION BRIEF</span></a>
 <p class="sidebar-note">Trust transfer +<br>already-owned property</p>
@@ -1409,6 +1487,20 @@ def build_black_swan() -> str:
     body = (
         callout("Why a separate black-swan section", "A 2040-2050 transfer followed by a 30-plus-year horizon crosses many regimes: growth and inflation are never consistent for 50 years. This section uses verified historical observations (Federal Reserve History) and a transcribed 1928-2025 annual-return series (NYU Stern compilation, flagged secondary) to stress-test how each path behaves from a crash-time entry, instead of assuming an average year.", "warning")
         + make_table("Historical regimes and verified anchors", ["Regime", "What happened", "Return detail used in the stress tables"], scenario_rows)
+        + make_table("Regime map — real historical figures and official baselines", ["Regime", "Sourced observation", "What it does to this decision", "How to test it"], [
+            [cell("1965-1982 — Great Inflation", "verified", ["fed_great_inflation"]),
+             cell("Inflation a little above 1% in 1964, more than 14% in 1980, about 3.5% average in the later 1980s — a long regime, not a single-year shock", "verified", ["fed_great_inflation"]),
+             cell("A long high-inflation regime raises insurance, repair, utility and replacement costs unevenly and squeezes real cash flow from fixed-rate assets such as bills and notes", "guidance", ["fed_great_inflation"]),
+             cell("Run the carrying-cost projection with inflation above market-value growth for several consecutive years, not one bad year", "guidance", ["treasury_bills", "cbo_rates"])],
+            [cell("2026-2036 — official near-term baseline", "verified", ["cbo_outlook", "cbo_rates"]),
+             cell("CBO projects PCE inflation returning to about 2% by 2030, a 4.3% average 10-year Treasury rate, and 4.8%/5.8% higher-rate scenarios over 2026-2036", "verified", ["cbo_outlook", "cbo_rates"]),
+             cell("The only horizon with an official near-term baseline in this workspace; it does not reach the expected transfer window", "guidance", ["cbo_outlook"]),
+             cell("Use it as a starting anchor and label every assumption beyond 2036 as a scenario, not a forecast", "guidance", ["cbo_ltbo"])],
+            [cell("2025-2055 — official long-term baseline", "verified", ["cbo_ltbo"]),
+             cell("CBO's 30-year extended baseline has inflation near 2% after 2027 and a 10-year Treasury rate close to its 30-year average, with debt reaching 156% of GDP in 2055", "verified", ["cbo_ltbo"]),
+             cell("Even the longest official baseline stops in 2055 and assumes current law is unchanged; it contains no house-price, insurance, rent or portfolio-return path", "guidance", ["cbo_ltbo"]),
+             cell("Extend the horizon only with explicit low/base/high scenarios and a dated note that no official forecast exists for the household's actual year", "guidance", ["fhfa_hpi"])],
+        ])
         + make_table("Stress table: ending value with entry capital normalized to 1.00 (annual granularity; real historical returns)", ["Entry and horizon", "Strategy", "Ending value"], stress_rows)
         + prose(
             "What the stress table shows",
@@ -1486,6 +1578,26 @@ def build_phased_investing() -> str:
             "Decision rule of thumb",
             "Choose staging length by regime awareness, not prediction: the real-data table shows the phased path ahead for 1929- and 2000-shaped entries and near parity for 2008, while the fast 2020 recovery punished parking by roughly a quarter of the decade's outcome. The interactive stress tool on the black-swan page recomputes both variants locally; nothing is stored or sent anywhere.",
         )
+        + f"""<section class="tool-section" aria-labelledby="ladder-heading"><h2 id="ladder-heading">Ladder reinvestment risk — what maturing rungs cost you</h2>
+<p class="table-note">A 24-36 month parking plan is a ladder: several short Treasury rungs mature at different times and each one is reinvested at whatever auction rate exists then. This panel isolates that effect. It runs the same crash and the same staging schedule twice — once with every renewal at the first-year yield, once with the later rungs repriced lower — and reports the reserve interest earned before any equity outcome is applied. Starting capital is normalized to 100 units; yields are entered net of estimated federal tax, state tax is not applicable to Treasury interest, and fees are not modeled.</p>
+<form id="ladder-tool" class="tool-grid" novalidate>
+<label>Staging period<select id="ladder-months"><option value="24">24 months</option><option value="30" selected>30 months</option><option value="36">36 months</option></select></label>
+<label>Crash depth applied to purchases (%)<input id="ladder-drawdown" type="number" min="0" max="99" step="1" value="57" inputmode="decimal"></label>
+<label>Crash duration (months)<input id="ladder-trough" type="number" min="1" max="120" step="1" value="17" inputmode="numeric"></label>
+<label>Pre-crash equity drift (%/year)<input id="ladder-drift" type="number" min="-20" max="30" step="0.1" value="0" inputmode="decimal"></label>
+<label>First-year net yield (%)<input id="ladder-yield1" type="number" min="-5" max="20" step="0.1" value="4.0" inputmode="decimal"></label>
+<label>Renewal yield — rung 2 (%)<input id="ladder-renewal1" type="number" min="-5" max="20" step="0.1" value="3.0" inputmode="decimal"></label>
+<label>Renewal yield — rung 3 (%)<input id="ladder-renewal2" type="number" min="-5" max="20" step="0.1" value="2.5" inputmode="decimal"></label>
+<label>Renewal yield — rung 4 (%)<input id="ladder-renewal3" type="number" min="-5" max="20" step="0.1" value="2.0" inputmode="decimal"></label>
+<label>Inflation for purchasing-power lens (%)<input id="ladder-inflation" type="number" min="-5" max="20" step="0.1" value="2.5" inputmode="decimal"></label>
+<div class="tool-actions no-print"><button id="ladder-reset" type="button">Reset ladder assumptions</button><span class="tool-assumption">Default yields are illustrative round settings, not a Treasury quote. Read the current auction results before relying on any yield.</span></div>
+</form>
+<div class="scenario-grid" aria-live="polite">
+<article class="scenario-card"><h3>Constant yields (no reinvestment penalty)</h3><p>Every renewal earns the first-year yield, isolating the crash-timing effect alone.</p><dl><dt>Reserve interest earned during staging</dt><dd id="ladder-flat-interest">—</dd><dt>Interest lost versus constant-yield run</dt><dd id="ladder-flat-year">—</dd><dt>Ending value — nominal</dt><dd id="ladder-flat-value">—</dd><dt>Ending value — real units</dt><dd id="ladder-flat-real">—</dd></dl></article>
+<article class="scenario-card"><h3>Falling renewal yields (reinvestment risk)</h3><p>Later rungs renew at lower rates, as happens after a policy easing cycle.</p><dl><dt>Reserve interest earned during staging</dt><dd id="ladder-falling-interest">—</dd><dt>Interest lost versus constant-yield run</dt><dd id="ladder-falling-year">—</dd><dt>Ending value — nominal</dt><dd id="ladder-falling-value">—</dd><dt>Ending value — real units</dt><dd id="ladder-falling-real">—</dd></dl></article>
+</div>
+<p id="ladder-status" class="tool-status" role="status">Change a control to run the local-only ladder comparison.</p>
+</section>"""
         + f"""<section class="tool-section"><h2>Synthetic drawdown-path tool (local-only)</h2>
 <form id="phase-tool" novalidate>
 <div class="tool-grid">
@@ -1589,6 +1701,10 @@ def build_estate_thresholds() -> str:
             "What could change these numbers",
             "Congress can change the exclusion at any time; the IRS indexes it annually; the exclusion amount under Proposition 19 re-adjusts every two years by BOE letter. Re-verify all amounts at the actual transfer date and against the year-of-death threshold table in the IRS estate-tax pages.",
         )
+        + prose(
+            "Baseline discipline",
+            "Every comparison on this page is against a current-law baseline: whether the baseline is zero tax, current law, or a proposed change must be labeled, and unenacted proposals are excluded from the baseline. A bill or resolution is not law until enacted and effective; the official bill systems are the only acceptable evidence of status.",
+        )
     )
     return render_page("pages/estate-thresholds.html", "Estate-tax thresholds", intro="Federal exclusion amounts, rates, portability and Form 706 timing — verified for 2026 and 2027 — plus California's no-estate-tax status and an honest projection into the transfer window.", body=body, eyebrow="LAW & PROCESS")
 
@@ -1670,6 +1786,27 @@ def build_law_watchlist() -> str:
         [cell("Interest-rate environment", "secondary", ["cbo_rates", "treasury_bills"]),
          cell("CBO scenarios anchor Treasury-parking yield assumptions; actual auction results govern", "secondary", ["cbo_rates"]),
          cell("Update the staging analysis with then-current yields at the transfer window", "guidance", ["treasury_bills"])],
+        [cell("Federal proposal — S.4196", "proposal", ["congress_s4196_status", "congress_s4196_text"]),
+         cell("Introduced March 25, 2026, referred to Senate Finance; the draft would set a $3,500,000 basic exclusion and revise estate, gift and GST rules, proposed to apply to deaths and gifts after December 31, 2026 if enacted", "proposal", ["congress_s4196_text"]),
+         cell("This could materially change the estate-level calculation, but it is not enacted and must not replace the current IRS baseline", "guidance", ["congress_legislation", "irs_estate_tax"])],
+        [cell("Federal proposal — H.R.601", "proposal", ["congress_hr601_status", "congress_hr601_text"]),
+         cell("Introduced January 22, 2025; proposes a 20% rate for estate, gift and GST taxes with a proposed effective date for transfers after December 31, 2024", "proposal", ["congress_hr601_text"]),
+         cell("Not enacted. Re-check Congress.gov before using any tax rate or assuming the draft's effective date", "guidance", ["congress_legislation"])],
+        [cell("Federal proposal — S.587", "proposal", ["congress_s587_status", "congress_s587_text"]),
+         cell("Introduced February 13, 2025; proposes repealing federal estate and GST taxes and separately changing gift-tax rules", "proposal", ["congress_s587_text"]),
+         cell("Not enacted. Distinct from current law; confirm status and enacted text before relying on it", "guidance", ["congress_legislation"])],
+        [cell("California SB 974 — limited Proposition 19 amendment", "verified", ["ca_sb974_status", "ca_sb974_text"]),
+         cell("Chaptered September 27, 2026 (Chapter 665): amends RTC 63.2 to recognize a Probate Code 3604 special-needs trust as an eligible transfer medium; relationship, residence, occupancy, value and claim conditions remain; separate claim-timing relief is limited to qualifying property connected with specified 2025 wildfires", "verified", ["ca_sb974_text"]),
+         cell("Counsel should verify the operative date, exact trust qualification and current assessor guidance; not a general rule for all family transfers or ordinary trusts", "guidance", ["rtc_63_2", "ca_legislation"])],
+        [cell("Nov 3, 2026 tax-related statewide measures (Props 3, 40-43)", "missing", ["sos_ballot"]),
+         cell("Official titles: Prop 3 extends the existing high-income tax for schools and health care; 40 imposes a one-time tax on certain taxpayers; 41 prohibits new state taxes that exclude revenue from the spending limit and requires audits of new state special taxes; 42 prohibits new state personal property taxes and certain retroactive taxes; 43 limits voters' ability to raise local government revenue. Certified results were not read here", "missing", ["sos_ballot"]),
+         cell("Read the certified results and each measure's full text and fiscal analysis before relying on any tax effect; a ballot title is not a legal outcome", "guidance", ["sos_ballot", "ca_legislation"])],
+        [cell("SF rent-control allowable increase", "verified", ["sf_rent_board"]),
+         cell("The Rent Board states a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027; secondary articles citing a different figure are superseded by this official page", "verified", ["sf_rent_board"]),
+         cell("Re-check the Rent Board page each year; confirm whether a unit is covered before applying any increase", "guidance", ["civ_1947_12", "sf_rent_board"])],
+        [cell("SF Rent Board 2026 notices (demolition/major renovation protections; security-deposit interest)", "missing", ["sf_rent_board"]),
+         cell("The Rent Board page lists a January 23, 2026 item on tenant protections for demolition and major renovation and a security-deposit interest change effective March 1, 2026; their substance was not extracted into this site", "missing", ["sf_rent_board"]),
+         cell("Read the linked notice text and confirm whether it applies to the specific units before any tenant or deposit decision", "guidance", ["sf_rent_board", "civ_1947_12"])],
     ]
     body = (
         callout("Proposed, not enacted", "Everything on this page is either current law (linked) or a watch item (proposals and trends). Nothing here is treated as enacted law; no proposal is assumed to pass. Re-verify each item at the actual transfer date.", "warning")
@@ -1731,6 +1868,104 @@ def build_brief() -> str:
     return render_page("pages/attorney-cpa-brief.html", "Attorney &amp; CPA briefing sheet", intro="A one-page printable brief: the decision, the verified law, the rounded numbers, and the signature decisions requested — no identifying details required.", body=body, eyebrow="ADVISER")
 
 
+def build_decision_log() -> str:
+    def dcell(meta: list[tuple[str, str]]) -> str:
+        text = " &middot; ".join(f"{esc(label)}: {esc(value)}" for label, value in meta)
+        return f"<td>{text}</td>"
+    rows_def = [
+        ("D01", "Structure the site around decisions, not topics",
+         "Lead with the one question (live, rent, sell, or a mix) and the facts that would change the answer; keep background material behind it.",
+         "A reader can act on the first screen instead of reading eighteen pages to reach the same conclusion.",
+         [("Decision quality", "High"), ("Effort", "Medium"), ("Privacy impact", "None")],
+         ["github_repo"]),
+        ("D02", "Show low/base/high bands, never a single round number",
+         "Every future amount is a range with a stated source and date. Ranges are the honest form for a transfer that may be a decade or more away.",
+         "A point estimate implies precision the evidence does not support and hides the decision-flipping cases.",
+         [("Decision quality", "High"), ("Effort", "Medium"), ("Privacy impact", "None")],
+         ["fhfa_hpi", "cbo_ltbo"]),
+        ("D03", "Keep the two ownership roles permanently separate",
+         "One asset is anticipated through a trust; the other is already owned with its own basis, leases and assessment. No combined total-value line.",
+         "Combining them silently imports one asset's tax basis and costs into the other's economics.",
+         [("Decision quality", "High"), ("Effort", "Low"), ("Privacy impact", "None")],
+         ["irs_p551", "const_13a"]),
+        ("D04", "Put reinvestment risk on the same line as the staging headline",
+         "Every park-the-proceeds-for-24-36-months statement carries the renewal-yield penalty and the rising-market cost beside it.",
+         "Staging changes the timing of risk; presenting only the favourable crash case is misleading.",
+         [("Decision quality", "High"), ("Effort", "Medium"), ("Privacy impact", "None")],
+         ["treasury_bills", "treasury_notes"]),
+        ("D05", "Model mixed paths before pure ones",
+         "Occupying one lawful unit while renting another, retaining the already-owned asset, or selling only one asset are first-class options.",
+         "The real choice is rarely all-or-nothing; forcing three pure options produces a false ranking.",
+         [("Decision quality", "High"), ("Effort", "Medium"), ("Privacy impact", "None")],
+         ["irs_p527", "civ_1947_12"]),
+        ("D06", "Treat the property-tax claim as the largest single lever",
+         "Model the qualifying and non-qualifying assessment cases side by side and put both filing deadlines on the timeline.",
+         "A missed claim can multiply the annual tax for the whole holding period, which dwarfs investment-return differences.",
+         [("Decision quality", "High"), ("Effort", "Low"), ("Privacy impact", "None")],
+         ["rtc_63_2", "boe_pub801"]),
+        ("D07", "Record the rounding-policy decision explicitly and re-test it periodically",
+         "The owner's latest instruction chose publishing figures rounded to the nearest $10 over blanking them; an earlier session argued blank-only because a rounded year-by-year assessment series can still fingerprint a parcel. Both positions are recorded; the rounded policy is flagged for owner re-confirmation on the flagged page.",
+         "A policy this consequential should be a recorded decision with its dissent visible, not a silent default.",
+         [("Privacy", "Critical"), ("Effort", "Low"), ("Privacy impact", "Decision recorded")],
+         ["github_repo", "page:privacy.html"]),
+        ("D08", "Make every table row prove its own sourcing",
+         "Each row carries an evidence badge and at least one official link, and the build fails when either is missing.",
+         "A row without a source is an opinion that will be mistaken for a finding.",
+         [("Decision quality", "High"), ("Effort", "Low"), ("Privacy impact", "None")],
+         ["github_repo"]),
+        ("D09", "Separate current law from proposals and scenarios",
+         "Current statutes and agency tables sit in their own rows; bills, stress cases and assumptions are labelled as such.",
+         "A proposal promoted to a baseline quietly rewrites the answer without anyone deciding to.",
+         [("Decision quality", "High"), ("Effort", "Medium"), ("Privacy impact", "None")],
+         ["congress_legislation", "ca_legislation"]),
+        ("D10", "Give the attorney and CPA a one-page handoff",
+         "A printable sheet listing the question, the private records to bring and the deadline for each adviser.",
+         "The binding constraints are legal and tax facts; the meeting is where they get resolved.",
+         [("Decision quality", "High"), ("Effort", "Medium"), ("Privacy impact", "None")],
+         ["irs_estate_faq", "probate_16061_7"]),
+        ("D11", "Show the deadlines as a timeline, not a list",
+         "Each clock starts from a different trigger; the timeline names the trigger, the deadline, the responsible party and the record to keep.",
+         "Readers conflate the 60-day trustee notice, the 150-day ownership statement and the 9-month return.",
+         [("Decision quality", "Medium"), ("Effort", "Low"), ("Privacy impact", "None")],
+         ["probate_16061_7", "rtc_480", "irs_estate_faq", "boe_pub801"]),
+        ("D12", "Record review choices in the browser only",
+         "A local-only review queue records which suggestions are selected, deferred or to be investigated; nothing is transmitted.",
+         "It makes the improvement process auditable without creating a new data-collection channel.",
+         [("Privacy", "High"), ("Effort", "Low"), ("Privacy impact", "Protective")],
+         ["github_repo"]),
+    ]
+    table_rows = []
+    for ident, title, action, why, meta, sources in rows_def:
+        select = (
+            f'<select class="review-choice" data-id="{esc(ident)}" aria-label="Review decision for {esc(ident)}">'
+            '<option value="Not reviewed">Not reviewed</option>'
+            '<option value="Investigate">Investigate</option>'
+            '<option value="Selected">Selected for testing</option>'
+            '<option value="Defer">Defer</option></select>'
+        )
+        table_rows.append([
+            cell(f"{ident} — {title}", "guidance", sources),
+            cell(action, "guidance", sources),
+            cell(why, "guidance", sources),
+            f"<td>{' &middot; '.join(f'{esc(label)}: {esc(value)}' for label, value in meta)}</td>",
+            f'<td>{select}</td>',
+        ])
+    body = (
+        callout("A review queue, not an automatic change", "Each suggestion below records the decision quality it improves, the effort, and its privacy impact. Choosing an option changes nothing on the site and sends nothing anywhere; it only records your own review state in this browser. Implement a change only after the relevant owner has reviewed it and the necessary private records exist.", "info")
+        + make_table("Choose a path before implementing anything", ["Suggestion", "What it would change", "Why it improves the decision", "Quality / effort / privacy", "Review choice"], table_rows)
+        + f'<p class="review-summary" id="review-summary" aria-live="polite"></p>'
+        + '<section class="tool-section"><h2>Apply the reviewed choices</h2><div class="tool-actions">'
+        + '<button type="button" id="reset-reviews">Reset all review choices</button>'
+        + "<span class=\"tool-assumption\">Resetting clears only this browser's stored choices. No server, no analytics, no network.</span>"
+        + "</div></section>"
+        + prose(
+            "Suggested approval gates",
+            "Do not implement a change until the owner has reviewed it, the private records that the change depends on exist, a professional has confirmed the applicable law for the actual year, and the result can be reproduced from the stated assumptions. Nothing here is applied automatically.",
+        )
+    )
+    return render_page("pages/decision-log.html", "Decision log and review queue", "Twelve suggestions for improving decision quality, each with its effort, privacy impact and a local-only review choice — including the recorded rounding-policy decision. Nothing is applied automatically.", body, "DECIDE")
+
+
 def build_flagged() -> str:
     rows = [
         [cell("Policy change: figures published (rounded to $10) instead of blank", "guidance", ["page:privacy.html"]),
@@ -1769,6 +2004,12 @@ def build_flagged() -> str:
         [cell("Prop 19 move-out consequence depends on county administration", "verified", ["rtc_63_2"]),
          cell("The statute removes the exclusion and enrolls the change-in-ownership-date base value, adjusted annually, from the next lien date; county practice details should be confirmed with the assessor", "verified", ["rtc_63_2", "scc_assessor_transfer"]),
          cell("Ask the county assessor how the enrolled value is computed in practice", "guidance", ["scc_assessor_transfer"])],
+        [cell("SF vacancy-tax official URL retrieval failed", "missing", ["sf_treasurer_vacancy_404"]),
+         cell("The sftreasurer.org empty-homes-tax URL returned Page Not Found on the check date; no vacancy-tax rule, rate or filing duty for Property B is based on it", "missing", ["sf_treasurer_vacancy_404"]),
+         cell("Find the current official page before modeling any vacancy-tax exposure", "guidance", ["sf_treasurer"])],
+        [cell("Rental legality and local rules for both properties", "missing", ["civ_1947_12", "sf_rent_board"]),
+         cell("No unit permit, local rent-board determination, lease or tenant notice is public here; SF rent-board coverage rules are linked but unit-level applicability is unknown", "missing", ["sf_rent_board"]),
+         cell("Confirm lawful unit count and applicable state/local rules with counsel before projecting rent or occupancy", "guidance", ["civ_1947_12", "ca_legislation"])],
         [cell("San Francisco secured rate quoted from the FY 2025-26 figure", "verified", ["sf_treasurer"]),
          cell("The 1.18268325% figure is corroborated by multiple sources referencing the Treasurer's page; confirm on the parcel's bill each year", "verified", ["sf_treasurer"]),
          cell("Re-check annually", "guidance", ["sf_treasurer"])],
@@ -1885,6 +2126,7 @@ PAGES = [
     ("pages/inheritance-process.html", build_process),
     ("pages/law-watchlist.html", build_law_watchlist),
     ("pages/attorney-cpa-brief.html", build_brief),
+    ("pages/decision-log.html", build_decision_log),
     ("pages/flagged-for-review.html", build_flagged),
     ("pages/glossary.html", build_glossary),
     ("pages/sources.html", build_sources),
