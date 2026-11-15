@@ -261,14 +261,14 @@ Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd5
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| C77-1 | Claim record and board maintenance | in progress | `arena/c2c77c64-tino4` | `COORDINATION.md` (this section only) | 2026-11-15 |
-| C77-2 | Sale/tax layer page: documentary transfer tax + recording fees priced into the sell path, §121 primary-residence exclusion for living-then-sell, same-tax-year sale, depreciation & recapture, CA MHST/capital-gains | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py` (new builder + SOURCES), `pages/sale-tax-layer.html` | 2026-11-15 |
-| C77-3 | Prop H + local rules page: model SF Measure H with official terms; Property A tax rate area from the Santa Clara Compilation of Tax Rates | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/prop-h-local-rules.html`, `pages/law-watchlist.html` | 2026-11-15 |
-| C77-4 | Five-year maintenance & capital plan for both buildings | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/maintenance-and-capital.html` | 2026-11-15 |
-| C77-5 | Investing policy, estate liquidity plan, 1031 like-kind exchange decision | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/investing-policy.html` | 2026-11-15 |
-| C77-6 | Imputed-rent input + tax-aware sensitivities in decision-analysis; distribution chart in projections; pre-commitment path-selection table | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/decision-analysis.html`, `pages/projections.html`, `assets/app.js`, `assets/style.css` | 2026-11-15 |
+| C77-1 | Claim record and board maintenance | done | `arena/c2c77c64-tino4` | `COORDINATION.md` (this section only) | 2026-11-15 |
+| C77-2 | Sale/tax layer page: documentary transfer tax + recording fees priced into the sell path, §121 primary-residence exclusion for living-then-sell, same-tax-year sale, depreciation & recapture, CA MHST/capital-gains | done | `arena/c2c77c64-tino4` | `tools/sitebuild.py` (new builder + SOURCES), `pages/sale-tax-layer.html` | 2026-11-15 |
+| C77-3 | Prop H + local rules page: model SF Measure H with official terms; Property A tax rate area from the Santa Clara Compilation of Tax Rates | done | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/prop-h-local-rules.html`, `pages/law-watchlist.html` | 2026-11-15 |
+| C77-4 | Five-year maintenance & capital plan for both buildings | done | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/maintenance-and-capital.html` | 2026-11-15 |
+| C77-5 | Investing policy, estate liquidity plan, 1031 like-kind exchange decision | done | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/investing-policy.html` | 2026-11-15 |
+| C77-6 | Imputed-rent input + tax-aware sensitivities in decision-analysis; distribution chart in projections; pre-commitment path-selection table | done (partial — see note) | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/decision-analysis.html`, `pages/projections.html`, `assets/app.js`, `assets/style.css` | 2026-11-15 |
 | C77-7 | Fix the committed merge-conflict markers in `assets/style.css` and align timeline CSS to the rendered HTML | done | `arena/c2c77c64-tino4` | `assets/style.css` | 2026-11-15 |
-| C77-8 | Update verifier allowlists (official figures, statute IDs, sfelections.org host); rebuild, verify, tests, PR to main, merge, confirm Pages deploy | pending | `arena/c2c77c64-tino4` | `tools/verify.py`, `tools/test_case.py`, release verification, final board update | 2026-11-15 |
+| C77-8 | Update verifier allowlists (official figures, statute IDs, sfelections.org host); rebuild, verify, tests, PR to main, merge, confirm Pages deploy | in progress | `arena/c2c77c64-tino4` | `tools/verify.py`, `tools/test_case.py`, release verification, final board update | 2026-11-15 |
 
 ### C77 irregularity found and fixed (2026-11-15)
 

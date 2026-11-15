@@ -1186,6 +1186,81 @@ def build_decisions() -> str:
 <p class="table-note">Model: exclusion branch taxes the carried-over base grown at the cap; reassessed branch taxes (market value minus exclusion) grown at the cap; both at the entered effective rate. The rent hurdle divides the ten-year difference by ten years, twelve months, and (1 − load). Sale branch subtracts 7% assumed costs and compounds 6%/yr, both labeled assumptions. This is not tax advice.</p>
 </section>'''
 
+    # ---- C77-6: imputed-rent input, tax-aware sensitivities, pre-commitment ----
+    sens_rows = []
+    for label, year, inherit in (("Transfer at 2040 (early)", 2040, 2040),
+                                 ("Transfer at 2045 (base midpoint)", 2045, 2045),
+                                 ("Transfer at 2050 (late)", 2050, 2050)):
+        excl = a_tax_exclusion(year)
+        re_tax = a_tax_reassessed(year, inherit)
+        delta = (re_tax - excl) if re_tax is not None else None
+        sens_rows.append({
+            "cells": [label, money10(excl) + " per year",
+                      money10(re_tax) + " per year" if re_tax is not None else "—",
+                      money10(delta) + " per year" if delta is not None else "—",
+                      money10(sum(a_tax_reassessed(y, inherit) - a_tax_exclusion(y) for y in range(inherit, inherit + 10))) + " over 10 years" if delta is not None else "—"],
+            "status": "Projection",
+            "sources": ["owner_a", "boe_prop19", "ca_rtc63", "boe_lta_2025_009"],
+        })
+    for label, growth in (("Growth — low 2%/yr", 0.02), ("Growth — base 4%/yr", 0.04), ("Growth — high 6%/yr", 0.06)):
+        market = PROPERTY_A["value_2026"] * (1 + growth) ** (INHERIT_YEAR - BASE_YEAR)
+        base = max(market - excl_amount(INHERIT_YEAR), 0)
+        re_tax = base * RATE_A
+        sell_net = market * (1 - SELL_COST)
+        sens_rows.append({
+            "cells": [label, money10(a_tax_exclusion(INHERIT_YEAR)) + " per year (exclusion branch, flat)",
+                      money10(re_tax) + " per year (reassessed branch)",
+                      money10(re_tax - a_tax_exclusion(INHERIT_YEAR)) + " per year",
+                      money10(sell_net) + " net sale proceeds"],
+            "status": "Projection",
+            "sources": ["owner_a", "fhfa_hpi", "boe_prop19"],
+        })
+    sens_rows.append({
+        "cells": ["Exclusion indexing — 0% / 3% / 6% per year",
+                  money10(a_tax_exclusion(INHERIT_YEAR)) + " per year (exclusion branch unaffected by indexing)",
+                  " — ",
+                  " — ",
+                  "Indexing changes only the reassessed base (market value minus the exclusion), not the carried-over base."],
+        "status": "Assumption",
+        "sources": ["boe_lta_2025_009", "owner_a"],
+    })
+    body += make_table(
+        "Tax-aware sensitivities — how the key outputs move (baseline assumptions)",
+        ["Sensitivity", "Exclusion-claimed tax", "Reassessed tax", "Annual difference", "Ten-year / sale anchor"],
+        sens_rows,
+        "All values are derived from owner-supplied rounded figures and the labeled assumptions, rounded to the nearest ten dollars. They show direction and magnitude, not a forecast of any actual year.",
+    )
+    imputed_rows = [
+        {"cells": ["What imputed rent is", "The market rent a home would fetch is a housing-cost proxy for the live path: occupying the home consumes housing value that the household would otherwise pay for (or forgo as rental income).", "It is an input to the live path, not a tax or an expense reported on any return."], "status": "Guidance", "sources": ["irs_rental", "hud_fmr"]},
+        {"cells": ["Why it matters for the live path", "A live path that looks cheap on property tax can be costly once the imputed rent (or the rent the household gives up) is counted against a rent or sell path.", "The comparison must hold housing cost constant across paths; do not compare property tax alone."], "status": "Guidance", "sources": ["irs_rental", "irs_rental"]},
+        {"cells": ["Imputed rent for Property A", "—", "No market rent for Property A is verified or published; the model carries a derived rent hurdle instead. Use written comparables to set the input."], "status": "Missing", "sources": ["hud_fmr", "irs_rental"]},
+        {"cells": ["Imputed rent for Property B", "The household already owns B; if B is lived in, its imputed rent is the forgone rental income from the units.", "B's current rent is owner-supplied and rounded; confirm the actual lease ledger and any vacancy."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "irs_rental"]},
+    ]
+    body += make_table("Imputed-rent input for the living paths", ["Item", "Meaning", "Limit / input needed"], imputed_rows)
+    precommit_rows = [
+        {"cells": ["If the family-home exclusion is confirmed as available", "Pre-commit to: live in A, occupy within one year, file the homeowners' exemption within one year, file the claim within three years.", "Written assessor confirmation of eligibility before the transfer; a missed deadline reassesses the home."], "status": "Guidance", "sources": ["boe_prop19", "ca_rtc63"]},
+        {"cells": ["If the exclusion is unavailable or rejected", "Pre-commit to: compare rent-A and sell-A against the reassessed tax, with the imputed-rent input held constant.", "Obtain a written assessor determination; the ranking then depends on rent comparables and sale costs."], "status": "Guidance", "sources": ["boe_prop19", "irs_rental"]},
+        {"cells": ["If rent comparables for A exceed the derived hurdle", "Pre-commit to: model the rent-A path first, then the sell path, before any occupancy decision.", "The hurdle is a planning figure; written rent comparables are the evidence."], "status": "Guidance", "sources": ["hud_fmr", "irs_rental"]},
+        {"cells": ["If the estate approaches or exceeds the federal filing threshold", "Pre-commit to: estate-liquidity planning before any sale; confirm the Form 706 position and prior gifts with a CPA.", "The threshold is estate-level and year-of-death-specific; confirm with the IRS year-of-death table."], "status": "Guidance", "sources": ["irs_estate", "irs_estate_faq"]},
+        {"cells": ["If sale proceeds will be invested", "Pre-commit to: a written allocation, staging rule, liquidity reserve and review cadence before the sale closes.", "See the investing-policy page; staging adds reinvestment risk and is not a guarantee."], "status": "Guidance", "sources": ["treasury_bills", "sec_stocks"]},
+        {"cells": ["If an exchange is under consideration", "Pre-commit to: written advice on 1031 feasibility and on its interaction with basis, recapture and the primary-residence exclusion before the sale.", "A principal residence is not an exchange candidate; gain is deferred, not eliminated."], "status": "Guidance", "sources": ["irs_1031", "irs_121"]},
+    ]
+    body += make_table("Pre-commitment path-selection table", ["Condition (confirmed before committing)", "Pre-committed path or action", "Evidence that must confirm it"], precommit_rows)
+    body += '''<section class="tool-section" aria-labelledby="impu-tool-heading">
+<h2 id="impu-tool-heading">Imputed-rent input — local only</h2>
+<p class="table-note">Enter the market rent for the home you would live in, and the number of months occupied per year. The tool computes the annual imputed-rent value of the live path, a planning input to compare against the rent or sell path. Defaults are placeholders, not verified values. Nothing is stored or transmitted.</p>
+<form id="impu-tool" class="tool-grid">
+<label>Market rent per month<input id="impu-rent" type="number" min="0" max="999999" step="10" value="7150" inputmode="numeric"></label>
+<label>Months occupied per year<input id="impu-months" type="number" min="0" max="12" step="1" value="12" inputmode="numeric"></label>
+<div class="tool-actions no-print"><button id="impu-reset" type="button">Reset to placeholder</button><span class="tool-assumption">Derived values are rounded to the nearest $10 in the display.</span></div>
+</form>
+<div class="scenario-grid" aria-live="polite">
+<article class="scenario-card"><h3>Imputed-rent value</h3><dl><dt>Annual imputed rent (live path)</dt><dd id="impu-annual">—</dd><dt>Monthly equivalent</dt><dd id="impu-monthly">—</dd></dl></article>
+<article class="scenario-card"><h3>Use</h3><dl><dt>Input to</dt><dd>live-path comparison</dd><dt>Not a tax or expense</dt><dd>housing-cost proxy</dd></dl></article>
+</div>
+<p id="impu-status" class="tool-status" role="status">Change a control to rerun the local imputed-rent comparison.</p>
+<p class="table-note">Model: annual imputed rent = market rent per month × months occupied per year. This is a housing-cost proxy for the live path only; it is not a verified rent, not a tax, and not an investment return.</p>
+</section>'''
     body += paragraph("Comparison rule", "For every path, show after-tax cash flows, one-time sale or transfer costs, debt, vacancy, repairs, insurance, utilities, property tax, rent legality, liquidity and reinvestment risk. Compare the same time horizon and disclose every assumption.")
     body += paragraph("Where the deeper layers live", "Two path-level layers are now source-verified and linked. Before ranking the sell path, read the sale & income-tax layer for the documentary transfer tax, recording, the Section 121 exclusion, depreciation/recapture and the California income-tax layer on the gain. Before committing sale proceeds, read the investing policy for the documented allocation, staging, liquidity reserve and the 1031 exchange decision. Both are additive to the property-tax and occupancy facts above, not substitutes for them.")
     return render_page("pages/decision-analysis.html", "Compare live, rent, sell and mixed paths", "The comparison is deliberately conditional. It does not assume that the trust asset and the already-owned asset have the same tax basis, title, rent, occupancy or costs.", body, "DECISION")
@@ -1292,6 +1367,70 @@ def build_projections() -> str:
         {"cells": ["Equity returns", "One expected return and no dispersion", "Crash-during, crash-after, flat and rising cases from sourced drawdown anchors", "The SEC states stock prices can fall and investors can lose money; no official expected-return figure is asserted here."], "status": "Verified", "sources": ["sec_stocks", "fed_1929", "fed_2008"]},
     ]
     body += make_table("Round-number replacements — what to use instead", ["Input", "Round-number shortcut to retire", "Range or real-figure method", "Why the shortcut fails"], range_rows, "Every future amount in a private model should be shown as a low/base/high band, dated, and rounded to the nearest ten dollars before publication so no figure can be traced back to a source document.")
+    # Distribution chart: ten-year cumulative property tax for the exclusion
+    # branch and the reassessed branch, as a range across the three market-growth
+    # scenarios. Single quantity (ten-year property tax), so the bars are
+    # directly comparable. Derived from owner-supplied rounded figures plus the
+    # labeled assumptions; not a forecast.
+    def _r10(value: float) -> int:
+        return int(round(value / 10.0) * 10)
+
+    growth_bands = (("Low — 2%/yr", 0.02), ("Base — 4%/yr", 0.04), ("High — 6%/yr", 0.06))
+    exclusion_2045 = excl_amount(INHERIT_YEAR)
+
+    def _excl_cum_10() -> int:
+        return _r10(sum(a_tax_exclusion(y) for y in range(INHERIT_YEAR, INHERIT_YEAR + 10)))
+
+    def _reassessed_cum_10(growth: float) -> int:
+        market = PROPERTY_A["value_2026"] * (1 + growth) ** (INHERIT_YEAR - 2026)
+        base = max(market - exclusion_2045, 0)
+        tax1 = base * RATE_A
+        total = sum(tax1 * (1 + ASSESS_CAP) ** k for k in range(10))
+        return _r10(total)
+
+    excl_bar = _excl_cum_10()
+    re_low = min(_reassessed_cum_10(g) for _, g in growth_bands)
+    re_high = max(_reassessed_cum_10(g) for _, g in growth_bands)
+    re_base = _reassessed_cum_10(0.04)
+    scale_max = max(re_high, excl_bar)
+
+    def _bar(label: str, low: int, high: int, base: int, note: str) -> str:
+        lo = low / scale_max * 100.0
+        hi = high / scale_max * 100.0
+        b = base / scale_max * 100.0
+        return (
+            '<div class="dist-row">'
+            f'<div class="dist-label">{label}</div>'
+            '<div class="dist-track">'
+            f'<div class="dist-range" style="left:{lo:.2f}%;width:{hi-lo:.2f}%"></div>'
+            f'<div class="dist-base" style="left:{b:.2f}%" title="Base scenario"></div>'
+            '</div>'
+            f'<div class="dist-value">{money10(low)} – {money10(high)}</div>'
+            '</div>'
+            f'<p class="dist-note">{note}</p>'
+        )
+
+    dist_note = (
+        "Each bar spans the low-to-high market-growth scenarios; the tick marks the "
+        "base 4%/yr scenario. Values are ten-year cumulative property tax for Property A, "
+        "rounded to the nearest ten dollars, derived from owner-supplied rounded figures "
+        "and the labeled assumptions. The exclusion branch is flat across growth because it "
+        "carries the base-year value; the reassessed branch varies with the market value at "
+        "transfer. This is a decision aid, not a forecast."
+    )
+    dist_html = (
+        '<section class="tool-section" aria-labelledby="dist-heading">'
+        '<h2 id="dist-heading">Outcome distribution — ten-year property tax (range across growth scenarios)</h2>'
+        '<div class="dist-chart">'
+        + _bar("1 — Live in A, exclusion claimed", excl_bar, excl_bar, excl_bar,
+               "Ten-year cumulative property tax on the carried-over base-year value, grown at the 2% cap.")
+        + _bar("2 — Rent or sell A, reassessed", re_low, re_high, re_base,
+               "Ten-year cumulative property tax on (market value at transfer minus the indexed exclusion), grown at the 2% cap.")
+        + "</div>"
+        + f'<p class="table-note">{dist_note}</p>'
+        + "</section>"
+    )
+    body += dist_html
     body += paragraph("Horizon and limits", "The owner's stated transfer window is 2040-2050; the model uses the 2045 midpoint. CBO's cited outlooks run through 2036 (rates) and 2055 (inflation) and cannot be extended as house-price, insurance, rent or stock-return forecasts. The projection table is a decision aid: it shows which branch of the property-tax rule matters, not what any year will actually bring. Re-check every input with professionals at the actual transfer date.")
     return render_page("pages/projections.html", "Projection worksheet", "A transparent projection framework with intentionally blank private fields. It is not a substitute for a private, source-backed spreadsheet prepared from the actual estate and property records.", body, "NUMBERS")
 

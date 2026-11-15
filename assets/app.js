@@ -396,3 +396,41 @@ if (saleTaxForm) {
   });
   runSaleTaxTool();
 }
+
+// Local-only imputed-rent input tool (decision-analysis page). Computes the
+// annual housing-cost proxy for the live path from a market rent and months
+// occupied. Nothing is stored or transmitted and no network API is used.
+const impuForm = document.getElementById('impu-tool');
+if (impuForm) {
+  const ipu = id => document.getElementById(id);
+  const ipuNum = (id, min, max) => {
+    const raw = Number(ipu(id)?.value);
+    const value = Number.isFinite(raw) ? raw : min;
+    return Math.max(min, Math.min(value, max));
+  };
+  const ipuMoney = value => {
+    const rounded = Math.round(value / 10) * 10;
+    return '$' + Math.abs(rounded).toLocaleString('en-US');
+  };
+
+  function runImputedTool() {
+    const rent = ipuNum('impu-rent', 0, 999999);
+    const months = ipuNum('impu-months', 0, 12);
+    const annual = rent * months;
+    ipu('impu-annual').textContent = ipuMoney(annual) + ' / year';
+    ipu('impu-monthly').textContent = ipuMoney(annual / 12) + ' / month';
+    ipu('impu-status').textContent = 'Local imputed-rent value recomputed. This is a housing-cost ' +
+      'proxy for the live path, not a verified rent, tax or investment return.';
+  }
+
+  impuForm.querySelectorAll('input').forEach(control => {
+    control.addEventListener('input', runImputedTool);
+    control.addEventListener('change', runImputedTool);
+  });
+  ipu('impu-reset')?.addEventListener('click', () => {
+    ipu('impu-rent').value = '7150';
+    ipu('impu-months').value = '12';
+    runImputedTool();
+  });
+  runImputedTool();
+}
