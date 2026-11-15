@@ -12,7 +12,7 @@ This repository builds a public, source-linked guide to inheritance planning, pr
 
 ## Site map
 
-The 20 generated pages group the work into decision criteria, private inventory and cost checklists, property-tax and estate law, deadlines, black-swan conditions, Treasury staging, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items.
+The 22 generated pages group the work into executive/decision summaries, the full requirements tracker, private inventory and cost checklists, property-tax and estate law, deadlines, black-swan conditions, Treasury staging, a draft investment policy, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items.
 
 The homepage puts **what would change the answer** on the first screen. The project does not choose a household path from absent or unverified evidence. The comparison framework covers live, rent, sell in the transfer year, live-then-sell, mixed paths, and sell-and-reinvest; it requires identical transfer dates and horizons, with taxes, debt, occupancy, costs, liquidity and reinvestment risk treated explicitly.
 

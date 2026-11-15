@@ -18,7 +18,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertFalse((ROOT / "models.py").exists())
         sitebuild.build()
         manifest = json.loads((ROOT / "site-manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(manifest), 20)
+        self.assertEqual(len(manifest), 22)
         self.assertTrue(all((ROOT.parent / path).is_file() for path in manifest))
 
     def test_every_published_table_row_has_official_source_and_status(self):
@@ -52,6 +52,24 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("Enacted federal law", page)
         self.assertIn("Pending federal proposals", page)
         self.assertIn("Not verified", page)
+
+    def test_requirement_tracker_and_investment_policy_cover_requested_gates(self):
+        reqs = sitebuild.render("pages/requirements-tracker.html", "Requirements tracker", "Decision")
+        self.assertIn("same tax year as inheritance", reqs)
+        self.assertIn("Imputed rent", reqs)
+        self.assertIn("Prop H", reqs)
+        self.assertIn("Transfer tax and recording fees", reqs)
+        policy = sitebuild.render("pages/investment-policy.html", "Investment policy draft", "Stress tests")
+        self.assertIn("3-month to 2-year Treasuries", policy)
+        self.assertIn("24–36 months", policy)
+        self.assertIn("Agree before the figures arrive", policy)
+
+    def test_california_surcharge_and_capital_gains_sources_are_explicit(self):
+        page = sitebuild.render("pages/estate-thresholds.html", "Estate-tax thresholds", "Law & process")
+        self.assertIn("$1,000,000", page)
+        self.assertIn("ordinary income", page)
+        self.assertIn("ca_rtc17043", str(sitebuild.SOURCES))
+        self.assertIn("ftb_540es", str(sitebuild.SOURCES))
 
 if __name__ == "__main__":
     unittest.main()

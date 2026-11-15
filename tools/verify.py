@@ -15,7 +15,7 @@ OFFICIAL_HOSTS = {
     "congress.gov", "uscode.house.gov", "treasurydirect.gov", "treasury.gov",
     "federalreservehistory.org", "bls.gov", "cbo.gov", "fhfa.gov", "sec.gov",
     "insurance.ca.gov", "cslb.ca.gov", "ftb.ca.gov", "sos.ca.gov",
-    "huduser.gov", "investor.gov",
+    "huduser.gov", "investor.gov", "github.com",
 }
 OFFICIAL_AMOUNTS = {
     "15000000", "15480000", "20000", "1044586", "1022600", "1000000",
@@ -93,8 +93,8 @@ def verify() -> list[str]:
         paths = json.loads(MANIFEST.read_text(encoding="utf-8"))
     except Exception as exc:
         return [f"manifest unavailable or invalid: {exc}"]
-    if not isinstance(paths, list) or len(paths) != 20 or len(set(paths)) != len(paths):
-        return ["manifest must contain exactly 20 unique page paths"]
+    if not isinstance(paths, list) or len(paths) != 22 or len(set(paths)) != len(paths):
+        return ["manifest must contain exactly 22 unique page paths"]
     for relative in paths:
         target = (ROOT / relative).resolve()
         if not target.is_relative_to(ROOT.resolve()) or not target.is_file():
@@ -150,4 +150,4 @@ if __name__ == "__main__":
     if failures:
         for failure in failures: print(f"FAIL: {failure}")
         raise SystemExit(1)
-    print("OK — 20 pages; every table row has an official source and status; no household model, browser storage, or remote resource.")
+    print("OK — 22 pages; every table row has an official source and status; no household model, browser storage, or remote resource.")
