@@ -203,19 +203,21 @@ footer a { white-space: nowrap; }
   .twhen { font-size: 9pt; }
   .twhat { font-size: 9pt; }
 }
-<<<<<<< HEAD
-/* Deadline timeline (inheritance process) */
-.timeline { list-style: none; display: flex; gap: 10px; padding: 14px 4px 8px; margin: 4px 0 14px; overflow-x: auto; }
-.timeline li { flex: 1 1 150px; min-width: 150px; border: 1px solid var(--line, #d8d3c8); border-radius: 10px; padding: 10px 12px; background: #fffdf8; position: relative; }
-.timeline .tl-when { display: block; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #7a6a4f; }
-.timeline .tl-what { display: block; margin-top: 4px; font-size: 0.82rem; line-height: 1.35; }
-@media (max-width: 700px) { .timeline { flex-wrap: wrap; } .timeline li { flex: 1 1 45%; } }
-@media print { .timeline { overflow: visible; flex-wrap: wrap; } .timeline li { flex: 1 1 30%; box-shadow: none; } }
-=======
-
-
 /* Proposal badge (introduced bills, not enacted law) */
 .badge.proposal { color: #76510a; background: #fff3d7; }
+
+/* Deadline timeline (inheritance-process page). The builder emits
+   <ol class="timeline"> with <li class="timeline-item"> and spans
+   .timeline-when / .timeline-what / .timeline-who / .timeline-evidence;
+   these rules match that markup exactly. */
+.timeline { list-style: none; display: grid; gap: 0; margin: 4px 0 14px; padding: 0; }
+.timeline-item { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: 14px; padding: 12px 4px; border-top: 1px dashed #dfe8e5; }
+.timeline-item:first-child { border-top: 0; }
+.timeline-when { color: var(--teal-dark); font-weight: 800; font-size: .84rem; line-height: 1.35; }
+.timeline-what { color: #334a4d; font-size: .9rem; line-height: 1.5; }
+.timeline-who, .timeline-evidence { display: block; margin-top: 3px; font-size: .8rem; color: var(--muted); }
+@media (max-width: 640px) { .timeline-item { grid-template-columns: 1fr; gap: 3px; } }
+@media print { .timeline-item { break-inside: avoid; padding: 5px 0; } .timeline-when { font-size: 9pt; } .timeline-what { font-size: 9pt; } }
 
 /* Compact one-page print for the attorney & CPA brief */
 @media print {
@@ -237,4 +239,3 @@ footer a { white-space: nowrap; }
   .brief-page .prose p { margin: 2px 0; line-height: 1.15; }
   .brief-page footer { margin-top: 2px; padding-top: 2px; font-size: 6.5pt; }
 }
->>>>>>> 5fe1463 (Integrate parallel sessions' features: decision log, Treasury ladder panel, regime map baselines, proposal watchlist rows, brief print compaction)

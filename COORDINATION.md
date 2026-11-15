@@ -253,3 +253,37 @@ Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd5
 - **CI after merge:** `verify` and `pages build and deployment` both report `completed/success` for `9e1dedd`.
 - **Pages:** the GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`. The live URL could not be fetched directly from this sandbox because outbound access is limited to GitHub, npm and PyPI hosts, so the deployment is confirmed through the Pages API and the `pages build and deployment` workflow rather than by reading the served HTML.
 - **Rebase record:** two rebases were needed because `main` advanced through PR #94 while this branch was open. The `COORDINATION.md` conflicts were resolved by preserving the incoming board in full and appending this session's section.
+
+## Session `arena/c2c77c64-tino4` — sale/tax layer, Prop H, local rate area, capital plan, investing policy, distribution chart (2026-11-15)
+
+- Branch is platform-fixed at `arena/c2c77c64-tino4`, currently at `origin/main` `60a054e` (PR #96). No other branch or worktree was created. This session read the whole board first and found no active conflicting claim on this branch.
+- Status: active.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C77-1 | Claim record and board maintenance | in progress | `arena/c2c77c64-tino4` | `COORDINATION.md` (this section only) | 2026-11-15 |
+| C77-2 | Sale/tax layer page: documentary transfer tax + recording fees priced into the sell path, §121 primary-residence exclusion for living-then-sell, same-tax-year sale, depreciation & recapture, CA MHST/capital-gains | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py` (new builder + SOURCES), `pages/sale-tax-layer.html` | 2026-11-15 |
+| C77-3 | Prop H + local rules page: model SF Measure H with official terms; Property A tax rate area from the Santa Clara Compilation of Tax Rates | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/prop-h-local-rules.html`, `pages/law-watchlist.html` | 2026-11-15 |
+| C77-4 | Five-year maintenance & capital plan for both buildings | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/maintenance-and-capital.html` | 2026-11-15 |
+| C77-5 | Investing policy, estate liquidity plan, 1031 like-kind exchange decision | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/investing-policy.html` | 2026-11-15 |
+| C77-6 | Imputed-rent input + tax-aware sensitivities in decision-analysis; distribution chart in projections; pre-commitment path-selection table | in progress | `arena/c2c77c64-tino4` | `tools/sitebuild.py`, `pages/decision-analysis.html`, `pages/projections.html`, `assets/app.js`, `assets/style.css` | 2026-11-15 |
+| C77-7 | Fix the committed merge-conflict markers in `assets/style.css` and align timeline CSS to the rendered HTML | done | `arena/c2c77c64-tino4` | `assets/style.css` | 2026-11-15 |
+| C77-8 | Update verifier allowlists (official figures, statute IDs, sfelections.org host); rebuild, verify, tests, PR to main, merge, confirm Pages deploy | pending | `arena/c2c77c64-tino4` | `tools/verify.py`, `tools/test_case.py`, release verification, final board update | 2026-11-15 |
+
+### C77 irregularity found and fixed (2026-11-15)
+
+- `assets/style.css` contained **unresolved Git merge-conflict markers** (`<<<<<<< HEAD`, `=======`, `>>>>>>> 5fe1463`) committed to the tree, and the surrounding timeline CSS (`.tstep`/`.twhen`/`.twhat`, `.timeline li`/`.tl-when`) did not match the actual rendered HTML classes (`.timeline-item`/`.timeline-when`/`.timeline-what`/`.timeline-who`/`.timeline-evidence`). The conflict is resolved and the timeline CSS now matches the builder's markup exactly; the proposal badge and the attorney/CPA brief print rules are retained. Verified: no conflict markers remain and `python3 tools/verify.py` still passes.
+
+### C77 source verification (2026-11-15, direct fetches)
+
+- **SF Measure H (Prop H) — San Francisco Department of Elections (sfelections.org), official results page** (`https://www.sfelections.org/results/20261103/index.html`): Measure H is titled "PARCEL TAX TO FUND MUNI OPERATIONS"; preliminary results **YES 244,760 (74.4%) / NO 84,209 (25.6%) — passed** (50%+1 required). The measure funds Muni through a new annual real-estate parcel tax, $129 to $400,000 per parcel by type/size, inflation-adjusted, for an estimated $177,000,000/year for 15 years. The rate schedule (single-family $129 base for the first 3,000 sq ft plus 42 cents/sq ft for 3,001–5,000 and $1.99/sq ft above 5,000; multifamily $249 base for the first 5,000 sq ft plus 19.5 cents/sq ft above 5,000 capped at $50,000; non-residential $799 base plus marginal rates capped at $400,000; 65+ primary-residence and SRO exemptions; rent-controlled pass-through up to 50% capped at $65/unit) is the official measure text as reproduced in the City and County of San Francisco Office of Elections title/summary. Effective July 1, 2027 to June 30, 2042. This is a **passed local measure**, not a proposal; treat the operative implementation and any ordinance as requiring confirmation.
+- **Santa Clara County Compilation of Tax Rates & Information, Fiscal Year 2025-2026** (`https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf`, County Controller-Treasurer, official): confirms the 1% maximum levy, the 0.03880 county retirement levy, voter-approved debt by Tax Rate Area, the SCVWD State Water Project 0.00390 (land and improvements), 816 tax rate areas, and the installment due dates (first installment Nov 1, delinquent Dec 10; second installment Feb 1, delinquent Apr 10). **Cupertino's exact TRA number and total rate are beyond the retrievable pages of this PDF** (the B-section TRA blocks continue past the 30-page retrieval limit), so the parcel-specific Cupertino TRA total is **not** stated here and is flagged (F-24) for reading from the parcel's own TRA block in the official book.
+- **R&TC §17043** (`leginfo.legislature.ca.gov`, official): additional 1% tax on the portion of taxable income over $1,000,000, for taxable years beginning on/after Jan 1, 2005, added by Proposition 63. Confirms the Mental Health Services / Behavioral Health Services Tax.
+- **R&TC §17041** (`leginfo.legislature.ca.gov`, official): California personal income tax is imposed by ordinary bracket schedule; California does not impose a preferential capital-gains rate. Capital gains are taxed as ordinary income under this schedule.
+- **R&TC §11911** (Documentary Transfer Tax Act): county boards of supervisors may impose a documentary transfer tax of 55 cents per $500 (or fractional part) of the consideration/value on transfers over $100; confirm the county/city ordinance and any family-transfer exclusions at the actual recording.
+- **IRS Publication 544** (`irs.gov`): Section 1031 like-kind exchanges apply only to real property held for business or investment (post-2017), require a qualified intermediary, and defer gain rather than eliminate it; 45-day identification / 180-day acquisition deadlines. Registered as a new source.
+- Existing registered sources retained for depreciation/recapture (IRS Pub 527, Pub 551) and the §121 exclusion (IRS Topic 701).
+
+### C77 release (C77-8)
+
+Release steps (PR to `main`, merge, GitHub Pages deploy confirmation) are recorded below once executed.
