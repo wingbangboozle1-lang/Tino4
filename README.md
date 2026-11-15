@@ -22,7 +22,7 @@ This repository builds a static, source-linked decision framework for two proper
 - `pages/inheritance-process.html` — step-by-step process and the deadline timeline (60-day trust notice, 150-day change-in-ownership statement, 9-month Form 706, 1-year exemption/occupancy, 3-year claim, payment dates).
 - `pages/law-watchlist.html`, `pages/questions.html`, `pages/suggestions.html`, `pages/decision-log.html` — law and market watchlist; the question-by-question register of missing information with discovery steps; reviewable suggestion queues.
 - `pages/attorney-cpa-brief.html` — one-page printable adviser handoff (Print button; no identifying details).
-- `pages/flagged-for-review.html`, `pages/glossary.html`, `pages/sources.html`, `pages/privacy.html` — flags F-01..F-23, glossary, the official source register, and privacy boundaries.
+- `pages/flagged-for-review.html`, `pages/glossary.html`, `pages/sources.html`, `pages/privacy.html` — flags F-01..F-26, glossary, the official source register, and privacy boundaries.
 
 ## Build and verify
 
@@ -33,6 +33,8 @@ python3 -m unittest discover -s tools -p 'test_*.py' -v
 ```
 
 CI (`.github/workflows/verify.yml`) runs the tests, rebuilds, verifies, and confirms the committed site matches a fresh build on every push and PR.
+
+`tools/sitebuild.py` is the single canonical generator. Earlier draft modules `tools/sections.py` and `tools/models.py` (an alternate page-drafting layer and projection engine from parallel sessions) were consolidated into `sitebuild.py` and deleted on 2026-11-15; their content is preserved in Git history and, in evolved form, in the generated pages. Do not reintroduce parallel generators — edit `sitebuild.py` and rebuild.
 
 The site uses no remote scripts, fonts, images, APIs, analytics or form submission. Calculator inputs stay in browser memory; suggestion review choices stay in this browser's local storage. Official links open only when a reader follows them.
 
