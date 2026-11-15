@@ -108,6 +108,13 @@ This branch therefore does not merge cleanly in policy terms, only in code terms
 - **Kept from this session:** the rounded-figures content layer, the Prop 19 value-limit correction, the sell-path pages and tools, and this repository's existing verifier and test suite. The owner-supplied-figure ban was not carried over, because it contradicts the owner's written instruction recorded as D07 on the decision log.
 - **Not done:** no merge to `main`. Merging this branch would re-publish household-derived figures that another session removed and deployed hours earlier, on the axis the owner ranked as top priority. The two postures cannot both be live, so the choice is surfaced for one owner decision instead of being resolved by an agent that can see only one side of the instruction history.
 
+### Post-merge integration detail (this session, 2026-11-15)
+
+- Resolved the merge as a deliberate policy choice, not a textual one: `-X ours` produced a broken hybrid (main's 441-line generator + this branch's 24-page manifest), so the tree was reset to this session's generator and main's additive work was ported by hand — the requirements tracker was rewritten as `build_requirements_tracker()` inside `tools/sitebuild.py` with its rows re-pointed at the pages that now answer each requirement, plus main's orphan-module deletions, scrub-script refresh and `.gitignore` change. `tools/dom-test.cjs` (which covers the model main deleted) is kept; `tools/browser-test.cjs` stays deleted.
+- Tracker statuses were normalized into `badge()` (`Handled`, `Handled with a flag`, `Open — owner action`, `Open — private step`, `Result uncertified`) so the register shows evidence state instead of an unstyled label.
+- The collision is published on the site: **F-29** on `pages/flagged-for-review.html`, a boundary row on `pages/privacy.html`, and a top-of-README section. Page count is now 24 (`index.html` + 23 pages).
+- PR #104 opened with the conflict and the one-command reversal (`git revert -m 1 <merge>`) stated in the body.
+
 ## Prior work
 
 Earlier sessions built a household-specific model and identified historical exposure. This current tree is being generalized; prior public history is not represented as scrubbed. No old values or place identifiers are repeated in this board.
