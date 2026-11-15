@@ -253,3 +253,15 @@ Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd5
 - **CI after merge:** `verify` and `pages build and deployment` both report `completed/success` for `9e1dedd`.
 - **Pages:** the GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`. The live URL could not be fetched directly from this sandbox because outbound access is limited to GitHub, npm and PyPI hosts, so the deployment is confirmed through the Pages API and the `pages build and deployment` workflow rather than by reading the served HTML.
 - **Rebase record:** two rebases were needed because `main` advanced through PR #94 while this branch was open. The `COORDINATION.md` conflicts were resolved by preserving the incoming board in full and appending this session's section.
+
+---
+
+## Session `arena/a897a17d-tino4` — official-source refresh, California income-tax surcharge and capital-gain treatment (2026-11-15)
+
+Branch: `arena/a897a17d-tino4` (platform-fixed; branched from `main` `60a054e`, PR #96). Status: active. No other session was active on the board at claim time.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A897-1 | Replace the four retrieval-failed official URLs with verified official replacements where they exist (FTB gifts/inheritance, BOE county-assessor directory, CPUC water list); keep unresolved items flagged | in progress | `arena/a897a17d-tino4` | `tools/sitebuild.py` (SOURCES + flagged rows F-07/F-18 only) | 2026-11-15 |
+| A897-2 | Add the verified California 1% Behavioral Health Services Tax above $1,000,000 taxable income and the capital-gain treatment to the estate/income-tax page and source register | in progress | `arena/a897a17d-tino4` | `tools/sitebuild.py` (`build_estate_thresholds`, SOURCES) | 2026-11-15 |
+| A897-3 | Rebuild, verify, test, PR to `main`, merge after checks pass, confirm Pages deploy, record result | pending | `arena/a897a17d-tino4` | release | 2026-11-15 |
