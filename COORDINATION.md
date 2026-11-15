@@ -56,3 +56,14 @@ Branch: `arena/fdd082b5-tino4` (platform-fixed; created from `main` at `c9530a3d
 - **Pre-rounding Git history:** NOT scrubbed. The platform pins this branch; no force-push or history rewrite is performed, and `origin/main` remains public with historical objects intact. Owner/admin coordination is still required for any access restriction or supported history cleanup (see the existing E428 limitation in this board).
 - **External source verification:** official sources were last fetched and recorded in the prior session record (2026-11-14). This session did not re-fetch them because sandbox outbound access is limited to github.com/api.github.com; re-verify law, thresholds, and costs at the actual transfer date.
 - Features already present and retained: executive summary, mixed and pure paths, what-if Treasury-staging controls, reinvestment risk beside headline, "what would change the answer" on the first screen, deadline timeline, grouped navigation, glossary, one-page printable Attorney & CPA briefing sheet, suggestions review queue, questions/information/answer register, estate-tax thresholds, inheritance-process steps, black-swan economic conditions, and the official source register.
+
+- **Release handoff:** PR #78 (`https://github.com/wingbangboozle1-lang/Tino4/pull/78`) is open. `gh pr checks 78` reported no checks on the branch, so there is no GitHub CI result and the PR has not been merged. The local build, verifier, unit/regression, diff, and browser results are recorded above. Do not describe the public history as scrubbed. Repository-owner/admin history cleanup is still required, and the access-control 403 must be resolved separately. After the PR is merged, verify the Pages build on `main` and append the deployment result here.
+---
+
+## Session `96b5208b` — inheritance decision site (2026-11-15)
+
+- Branch: `arena/96b5208b-tino4`. The platform fixed this branch name and it cannot be renamed. The `session-<id>/<task>` convention is therefore not applied; this is logged here and no alternate branch was created.
+- Task ID: IH-1 — extend the generic decision site (law watchlist rows for Nov 3, 2026 tax measures, Treasury bill terms, flagged-for-review rows), run build/tests/verify, open PR to `main`, merge, confirm Pages deploy, and record the result here.
+- Status: in progress.
+- File scope (exclusive to this session): `COORDINATION.md` (this section only), `pages/law-watchlist.html`, `pages/phased-investing.html`, `pages/flagged-for-review.html`, `pages/sources.html`, `tools/sitebuild.py`, `tools/site-manifest.json`, `index.html`, `README.md`.
+- Constraints: no personal or property-specific figures on the public site; every table row keeps an official source link; unverified values are blank and flagged; no history rewrite or force-push.
