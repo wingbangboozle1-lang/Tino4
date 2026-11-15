@@ -27,12 +27,16 @@ PUBLIC_CURRENCY_AMOUNTS = {
     "250000", "500000", "7000", "3500000",             # §121 exclusion, homeowners' exemption, S.4196 proposal
     "1044586", "1022600", "1000000",                   # BOE Prop 19 exclusion amounts (official)
     "49450", "98900", "545500", "613700", "200000",    # 2026 LTCG brackets / NIIT MAGI (Rev. Proc. 2025-32)
+    # Published statutory/tariff amounts that do not end in $10, shown exactly
+    # as published (ported from session 377ea96a / PR #88):
+    "16000", "11700", "3300", "16250",                 # Rev. Proc. 2025-32 estate/trust brackets
+    "171", "189", "212",                               # SFPUC Prop 218 notice — published average combined bills FYE 2026-2028
 }
 # Five-digit identifiers: cited code sections, CBO report identifiers, and the
 # two owner-directed region ZIP codes. Region ZIPs carry no street address and
 # are used only for ZIP-specific insurance/utility/rate context.
 REGION_ZIP_CODES = {"95014", "94122"}
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270"}
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912"}
 FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
@@ -48,7 +52,7 @@ OFFICIAL_HOST_SUFFIXES = (
     # Owner-directed official-context hosts (2026-11-15): the official daily
     # Treasury yield curve, the statute text, and the utility providers that
     # serve the two regions discussed on the site.
-    "treasury.gov", "uscode.house.gov", "sjwater.com", "pge.com", "sfpuc.org",
+    "treasury.gov", "uscode.house.gov", "sjwater.com", "pge.com", "sfpuc.gov", "sfpuc.org",
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")

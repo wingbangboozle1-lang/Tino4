@@ -376,6 +376,55 @@ SOURCES = {
         "scope": "Owner-provided valuation, assessment, tax and rent figures for Property B, rounded to the nearest ten dollars per the owner's written privacy instruction. Not independently verifiable here; confirm against the Assessor-Recorder's records, the tax bill and the leases.",
         "verified": False,
     },
+    # --- Ported from session 377ea96a / PR #88 (fetched and verified there on 2026-11-15) ---
+    "sfpuc_rates": {
+        "label": "SFPUC — Proposition 218 water and sewer rate notice (2026)",
+        "url": "https://www.sfpuc.gov/accounts-services/water-power-sewer-rates/proposed-water-sewer-rates-2026/proposition-218-notice",
+        "scope": "Published rate schedule effective July 1, 2026: average San Francisco single-family combined water/sewer bill about $171 per month (FYE 2026) rising to about $189 (FYE 2027) and $212 (FYE 2028); two-tier volumetric water rates; multi-family tier 1 covers the first 3 units per dwelling per month. A utility's own rate notice, not a specific account's bill.",
+        "verified": True,
+    },
+    "cdi_sis": {
+        "label": "California Department of Insurance — Sustainable Insurance Strategy",
+        "url": "https://www.insurance.ca.gov/01-consumers/180-climate-change/upload/Sustainable-Insurance-Strategy-CDI-Summary-10-14-25.pdf",
+        "scope": "CDI's summary of the market-rebuild program: approved wildfire catastrophe models, insurer commitments to write a minimum share of business in distressed areas, FAIR Plan modernization and depopulation goals, rate-review streamlining. Confirms the market is under active regulatory change; states no household premium.",
+        "verified": True,
+    },
+    "fred_cpi": {
+        "label": "FRED (Federal Reserve Bank of St. Louis) — CPI-U, annual averages 1929–2025",
+        "url": "https://fred.stlouisfed.org/series/CPIAUCNS",
+        "scope": "Official BLS CPI-U (NSA) series. Decade inflation rates and cumulative changes shown on this site are computed from the published annual averages, not estimated.",
+        "verified": True,
+    },
+    "irs_rp2532": {
+        "label": "IRS — Rev. Proc. 2025-32 (2026 inflation adjustments)",
+        "url": "https://www.irs.gov/pub/irs-drop/rp-25-32.pdf",
+        "scope": "Official 2026 amounts: OBBBA §70106 sets the basic exclusion at $15,000,000 for 2026 with inflation adjustment for 2027 and later; estates and trusts keep four rates (10/24/35/37%) with the top bracket beginning over $16,000; 20% capital-gains rate for trusts begins over $16,250. Does not forecast later-year law.",
+        "verified": True,
+    },
+    "irs_topic701": {
+        "label": "IRS Topic no. 701 — Sale of your home",
+        "url": "https://www.irs.gov/taxtopics/tc701",
+        "scope": "Section 121 exclusion of up to $250,000 ($500,000 on a joint return) of gain on a principal residence, with 2-of-5-year ownership and use tests and a once-per-2-years limit. Publication 523 has the full rules.",
+        "verified": True,
+    },
+    "sos_initiatives": {
+        "label": "California Secretary of State — Initiative status (failure memo, May 2026)",
+        "url": "https://elections.cdn.sos.ca.gov/ccrov/2026/may/26138jh.pdf",
+        "scope": "Official CC/ROV Memorandum #26138 (May 18, 2026): the initiative titled 'Repeals voter-enacted changes to property tax rules for transfers between family members' (Prop 19 repeal) failed — signatures filed were below the number required. Current Proposition 19 rules were not changed by this attempt.",
+        "verified": True,
+    },
+    "sos_qualified": {
+        "label": "California Secretary of State — Qualified statewide ballot measures",
+        "url": "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures",
+        "scope": "Read 2026-11-15. Lists the November 3, 2026 statewide measures by number and official ballot title, and notes ACA 13 was removed. The page is a list only: it does not state full measure text, fiscal effects or certified results. Those require the linked voter guide or certified results.",
+        "verified": True,
+    },
+    "boe_lta25009": {
+        "label": "California BOE Letter to Assessors 2025/009",
+        "url": "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf",
+        "scope": "Official adjustments of the Proposition 19 $1,000,000 amount: $1,000,000 (transfers 2/16/2021–2/15/2023), $1,022,600 (2/16/2023–2/15/2025), $1,044,586 (2/16/2025–2/15/2027), adjusted every other February by the FHFA House Price Index for California (2024 change: 2.15%). Next adjustment February 2027. Application detail: Property Tax Rule 462.520 and LTA 2022/012.",
+        "verified": True,
+    },
     "ftb_404": {
         "label": "FTB inheritance-information URL — retrieval failed",
         "url": "https://www.ftb.ca.gov/file/personal/income-types/income-from-gifts-and-inheritances.html",
@@ -503,6 +552,12 @@ REINVEST_RETURN = 0.06         # assumption: nominal return on sale proceeds
 STAGING_YIELD = 0.043          # CBO 2026-2036 average 10-year Treasury (sourced anchor)
 RENT_LOAD = 0.35               # assumption: operating+tax load absorbed from gross rent
 MAINT_A_BAND = (8000, 15_000)  # assumption band: annual maintenance (owner reports less than B)
+# Bands ported from models.py (session 377ea96a / PR #88) — planning assumptions, not quotes:
+A_INS_BAND = (3000, 7000)      # market planning band for A insurance (owner guess likely low)
+B_INS_BAND = (2500, 5000)      # landlord planning band for B insurance
+B_UNIT3_RENT_BAND = (3300, 3800)  # unrented unit scenario band, not a quote
+B_MAINT_BAND = (9000, 18_000)  # older 3-unit building maintenance band
+A_INS_OWNER_FLAG = "owner guess — flagged as likely low"
 
 
 def a_value(year: int) -> float:
@@ -934,8 +989,8 @@ def build_property_profiles() -> str:
         {"cells": ["Derived effective tax rate", f"about {RATE_A * 100:.2f}% of assessed value (2025 tax divided by 2025 assessment)", "Derived from owner-supplied rounded figures; the actual bill includes voter-approved measures and direct charges that can change it."], "status": "Assumption", "sources": ["owner_a", "boe_pub29"]},
         {"cells": ["Water", f"{PROPERTY_A['water_month'][0]} to {PROPERTY_A['water_month'][1]} per month (owner-supplied)", "Provider for the region publishes tariffs; the actual bill depends on metered usage and approved rates."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "sjw_rates"]},
         {"cells": ["Electricity / solar", f"net credit of about {PROPERTY_A['solar_credit_month'][0]} to {PROPERTY_A['solar_credit_month'][1]} per month (owner-supplied)", "A generation credit depends on the tariff (legacy NEM vs net billing) and interconnection date; confirm from the account records."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "cpuc_solar"]},
-        {"cells": ["Homeowners insurance", f"owner estimate about {money10(PROPERTY_A['insurance_owner_estimate'])} per year — unverified", "No official source sets a household premium; the 2025-26 California market is stressed and the FAIR Plan raised dwelling rates in late 2026. Obtain written quotes for the intended use."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "cdi", "cdi_news"]},
-        {"cells": ["Maintenance", "owner reports lower repair intensity than Property B; no band is established", "Inspection findings and licensed bids are the evidence; the projection model carries an assumption band of " + money10(MAINT_A_BAND[0]) + " to " + money10(MAINT_A_BAND[1]) + " per year, labeled as an assumption."], "status": "Assumption", "sources": ["owner_a", "cslb"]},
+        {"cells": ["Homeowners insurance", f"owner estimate about {money10(PROPERTY_A['insurance_owner_estimate'])} per year — flagged as likely low; market planning band {money10(A_INS_BAND[0])} to {money10(A_INS_BAND[1])} per year", "No official source sets a household premium; the 2025-26 California market is under active regulatory change (Sustainable Insurance Strategy) and the FAIR Plan raised dwelling rates in late 2026. Obtain written quotes for the intended use."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "cdi", "cdi_sis", "cdi_news"]},
+        {"cells": ["Maintenance", "owner reports lower repair intensity than Property B; no band is established", "Inspection findings and licensed bids are the evidence; the projection model carries an assumption band of " + money10(MAINT_A_BAND[0]) + " to " + money10(MAINT_A_BAND[1]) + " per year (about 0.5% to 1.0% of value for older systems), labeled as an assumption."], "status": "Assumption", "sources": ["owner_a", "cslb"]},
     ]
     profile_rows_b = [
         {"cells": ["Role", "Already owned by the inheritor; three livable units, two currently rented, and the owner reports the property can serve as a residence without losing rental income.", "The already-owned role matters: no reassessment occurs from the future inheritance, and keeping B lets the household retain rental income whichever way Property A goes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "ca_rent"]},
@@ -945,7 +1000,7 @@ def build_property_profiles() -> str:
         {"cells": ["Derived effective tax rate", f"about {RATE_B * 100:.2f}% of assessed value (2025 tax divided by 2025 assessment)", "Derived from owner-supplied rounded figures; San Francisco bills include voter-approved measures on top of the 1% base levy."], "status": "Assumption", "sources": ["owner_b", "boe_pub29"]},
         {"cells": ["Rental income", f"about {money10(PROPERTY_B['rent_month'])} per month from {PROPERTY_B['rented_units']} rented units (owner-supplied)", "Gross rent is not net income: vacancy, water, electricity, insurance, repairs, management and income tax all reduce it. Rent increases for covered units are capped by the local rent ordinance."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "irs_rental", "sf_rent_board"]},
         {"cells": ["Water / electricity", f"water {PROPERTY_B['water_month'][0]} to {PROPERTY_B['water_month'][1]} and electricity {PROPERTY_B['electric_month'][0]} to {PROPERTY_B['electric_month'][1]} per month for the building (owner-supplied)", "Combined-building figures; metering configuration determines how costs would be allocated if occupancy changes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "sfpuc_water", "pge_tariffs"]},
-        {"cells": ["Landlord insurance", f"owner estimate about {money10(PROPERTY_B['insurance_owner_estimate'])} per year — unverified", "A landlord/dwelling-fire policy is underwritten per property; no official premium table exists. Obtain written quotes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "cdi"]},
+        {"cells": ["Landlord insurance", f"owner estimate about {money10(PROPERTY_B['insurance_owner_estimate'])} per year — flagged as likely low; landlord planning band {money10(B_INS_BAND[0])} to {money10(B_INS_BAND[1])} per year", "A landlord/dwelling-fire policy is underwritten per property; no official premium table exists. Obtain written quotes."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "cdi", "cdi_sis"]},
         {"cells": ["Rent-increase rule", "The Rent Board states a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027.", "Coverage depends on the building (units with a certificate of occupancy before June 13, 1979 are generally covered, with exceptions); confirm the unit status before modeling increases."], "status": "Verified", "sources": ["sf_rent_board", "ca_rent"]},
     ]
     body = callout(
@@ -1625,7 +1680,7 @@ def build_flagged() -> str:
         {"cells": ["F-20 — Owner-supplied figures are not independently verifiable", "Every row badged Owner-supplied (privacy-rounded) carries the owner's own figures rounded to the nearest ten dollars. This session could not and did not verify them against assessor, utility, insurer or lease records.", "Verify each against the linked official record (county assessor roll, provider account, written quotes) before relying on it. No value was inferred to fill a gap."], "status": "Not verified", "sources": ["owner_a", "owner_b"]},
         {"cells": ["F-21 — Rounded-figures policy change (owner-directed, 2026-11-15)", "Earlier sessions published no household figures at any rounding. The owner's latest written instruction directs that rounded figures be reported in the decision analysis. The change is recorded in the decision log (D07) and enforced by the verifier (all published currency amounts end in 0; names, street addresses and parcel identifiers stay banned; region ZIPs allowed for insurance/utility context).", "Review D07 and the privacy page. If the owner prefers the stricter posture, revert by removing the owner-supplied tables — no structural change needed."], "status": "Guidance", "sources": ["owner_a", "owner_b"]},
         {"cells": ["F-22 — FAIR Plan dwelling rate increase (market-stress context)", "Third-party reporting (multiple outlets, August-October 2026) says the Department of Insurance approved an average 29.1% FAIR Plan dwelling rate increase effective October 15, 2026; the official CDI newsroom page was not retrieved directly in this session.", "Treat California insurance costs as a stressed input: obtain quotes, and budget for renewal increases. Confirm the rate approval at the CDI newsroom link."], "status": "Not verified", "sources": ["cdi_news", "cdi"]},
-        {"cells": ["F-23 — Public Git history: pattern audit reconfirmed", "A read-only audit of the full reachable history (256 commits) found privacy-sensitive figure and place-identifier patterns recurring across hundreds of commit/path pairs (for example, one exact assessment figure appears along 13 unique historical paths; the two region ZIPs along more than 70 each). Counts only; no values were printed and no determination was made that every match is personal data. History remains unscrubbed.", "Repository-owner/admin coordinated cleanup is still required (visibility review, backup, filter-repo/BFG rewrite of all refs, GitHub Support for cached and PR copies). The platform pins this session to one branch, so no rewrite or force-push was performed."], "status": "Not verified", "sources": ["github_history"]},
+        {"cells": ["F-23 — Public Git history: pattern audit reconfirmed", "A read-only audit of the full reachable history (256 commits) found privacy-sensitive figure and place-identifier patterns recurring across hundreds of commit/path pairs (for example, one exact assessment figure appears along 13 unique historical paths; the two region ZIPs along more than 70 each). Counts only; no values were printed and no determination was made that every match is personal data. History remains unscrubbed.", "Repository-owner/admin coordinated cleanup is still required. A ready-to-run procedure exists in the tree (tools/history_scrub.sh + tools/history_scrub_runbook.md: private archive first, filter-repo/BFG rewrite of all refs, force-push coordination, GitHub Support for cached and PR copies) but requires owner/admin action. The platform pins this session to one branch, so no rewrite or force-push was performed."], "status": "Not verified", "sources": ["github_history"]},
     ]
     body = callout("Privacy issue remains urgent", "The current website avoids case-specific figures and locations. The GitHub repository is public, and history cleanup has not been completed. A noindex tag and a cleaned current tree do not erase old commits, PR diffs, forks, caches or clones.", "warning")
     body += make_table("Flagged for review — unresolved items do not imply a verified answer", ["Flag", "What is unresolved", "Required action"], rows)
