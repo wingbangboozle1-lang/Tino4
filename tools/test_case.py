@@ -56,6 +56,15 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("119th-congress/senate-bill/4196", sources)
         self.assertIn("119th-congress/house-bill/601", sources)
         self.assertIn("119th-congress/senate-bill/587", sources)
+        for label in (
+            "California Secretary of State — Qualified statewide ballot measures",
+            "San Francisco Rent Board — Department page",
+            "SF Treasurer — vacancy-tax URL retrieval failed",
+            "Santa Clara County Assessor homepage — fetch failed",
+        ):
+            start = sources.rfind("<tr>", 0, sources.index(label))
+            end = sources.index("</tr>", start)
+            self.assertIn("Direct page fetch: 2026-11-15", sources[start:end])
         self.assertIn("not enacted", law)
         subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
 

@@ -333,24 +333,28 @@ SOURCES = {
         "url": "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures",
         "scope": "Read 2026-11-15. Lists the November 3, 2026 statewide measures by number and official ballot title, and notes ACA 13 was removed. The page is a list only: it does not state full measure text, fiscal effects or certified results. Those require the linked voter guide or certified results.",
         "verified": True,
+        "checked": "2026-11-15",
     },
     "sf_rent_board": {
         "label": "San Francisco Rent Board — Department page",
         "url": "https://sf.gov/departments--rent-board",
         "scope": "Read 2026-11-15. States the 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027, and lists 2026 Rent Board news items. Item text and ordinance coverage must be read in the linked notice.",
         "verified": True,
+        "checked": "2026-11-15",
     },
     "sf_treasurer_vacancy_404": {
         "label": "SF Treasurer — vacancy-tax URL retrieval failed",
         "url": "https://sftreasurer.org/empty-homes-tax",
         "scope": "Returned 'Page Not Found' on 2026-11-15. No SF vacancy-tax rule, rate or filing duty is based on this URL; the current official path is unconfirmed.",
         "verified": False,
+        "checked": "2026-11-15",
     },
     "scc_assessor_fetch": {
         "label": "Santa Clara County Assessor homepage — fetch failed",
         "url": "https://assessor.santaclaracounty.gov/",
         "scope": "Fetch failed on 2026-11-15. The reachable Assessor page (asr.santaclaracounty.gov) lists contacts and online services only and has no tax-rate table. No Santa Clara property-tax rate is based on these pages.",
         "verified": False,
+        "checked": "2026-11-15",
     },
     "boj_unverified": {
         "label": "Bank of Japan — official source not confirmed for bubble figures",
