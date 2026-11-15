@@ -211,8 +211,36 @@ Note on FDD-4: PR #80 is observed merged at `7006c79`; this session rebased onto
 - **Verification:** build (20 pages), verifier, 6 unit tests, all pass; repeated rebases over PRs #79-#88 resolved preserving both sessions' rows; flag numbering kept unambiguous (mine F-20..F-23; PR #88's distinct rows live in reference modules, their live-page flags F-01..F-19 from earlier sessions retained).
 - **Release:** PR #89 reopened/re-pushed with the full integration; merge and Pages confirmation recorded below.
 
-### Session `arena/3d3e1c75-tino4` — release result (2026-11-15)
 
-- **PR #89** (`https://github.com/wingbangboozle1-lang/Tino4/pull/89`) merged to `main` at merge commit `c8cdd51`. Pre-merge CI `build-and-verify` passed (run 43675565442); post-merge `verify` run 43675640623 and `pages build and deployment` run 43675640132 both completed successfully.
-- **Pages live check:** direct fetch of `https://wingbangboozle1-lang.github.io/Tino4/pages/property-profiles.html` after deployment renders the owner-supplied privacy-rounded profiles (A: Cupertino area ZIP 95014, $3,100,000 Nov 2026 estimate, $550,540 assessed, 1.34% derived rate, water $100-$150/mo; B: Outer Sunset ZIP 94122, $1,800,000, $114,250 assessed, $7,150/mo rent) with per-row evidence badges and official links. The 20-page set, projection table, 2045 path comparison, staging dollar table, what-if tools, estate-threshold path and flags F-20..F-23 are served.
-- **Follow-ups recorded for the next session:** consolidate or remove the reference modules (`tools/sections.py`, `tools/models.py`, superseded by the active builder); repository visibility/history cleanup remains owner/admin-only (F-01/F-16/F-23, runbook in tree, still NOT performed).
+
+## Session `arena/666008be-tino4` — identifier release-check and privacy-page correction (2026-11-15)
+
+Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd51` (PR #89) after a scope overlap was found.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 666-1 | Publish the anonymized, ten-dollar-rounded working figures as a decision layer | superseded by PR #89 | `arena/666008be-tino4` | — | 2026-11-15 |
+| 666-2 | Add record-identifier release checks (parcel/assessor, account/trust/loan/policy, date of birth) to the verifier | done | `arena/666008be-tino4` | `tools/verify.py`, `tools/test_case.py` | 2026-11-15 |
+| 666-3 | Correct the privacy-page rows that contradicted what the site now publishes | done | `arena/666008be-tino4` | `tools/sitebuild.py` (privacy rows only) | 2026-11-15 |
+| 666-4 | Rebuild, verify, test, PR to `main`, merge, confirm Pages deploy | in progress | `arena/666008be-tino4` | release | 2026-11-15 |
+
+### Scope overlap and how it was resolved
+
+- This session originally built a full rounded-figures integration (anonymized case module, year-by-year tables, eight priced paths, what-if controls, ten new flags). It was developed in parallel with session `arena/3d3e1c75-tino4`, whose PR #89 merged the equivalent integration into `main` first.
+- PR #93 was closed as superseded rather than merged. Merging it would have replaced the canonical 20-page build with a 19-page variant, duplicated the property-profiles and projection work, and collided with that session's flag IDs F-20..F-23.
+- The branch was reset onto `origin/main` `c8cdd51` and re-scoped to what PR #89 does not already cover. No rewrite of `main` was performed; this branch's abandoned commits are discarded rather than force-pushed over another session's work.
+
+### What this session found and fixed
+
+- **Gap: no record-identifier release check.** The verifier enforced rounding, region-ZIP allowlisting, street addresses, emails and phone numbers, but nothing stopped a parcel number, assessor number, account, trust, loan or policy number, or a date of birth from being published. A parcel identifier is the single most direct link from a rounded figure back to a named owner, so this was a real hole in the privacy gate. `tools/verify.py` now fails closed on labelled parcel and assessor identifiers, bare county parcel formats, account/trust/escrow/loan/policy numbers, and dates of birth. The patterns are narrow and were tested against ordinary prose so they do not false-positive.
+- **Gap: the privacy page contradicted the site.** Five rows still described the pre-rounding policy after PR #89 changed it, including claims that no household amount and no assessment history are published. Those rows now state what the site actually does and name the assessment history as the most re-identifiable element of the published layer.
+
+### Verification
+
+- `python3 tools/build.py` (20 pages), `python3 tools/verify.py`, `python3 -m unittest discover -s tools -p 'test_*.py'` (11 tests, including 5 new identifier tests) and `node tools/dom-test.cjs` all pass. `git diff --check` is clean.
+- Public repository visibility and the unscrubbed Git history are unchanged and remain owner/admin items; `tools/history_scrub_runbook.md` records the supported path.
+
+### Still open, for a follow-up
+
+- `tools/sections.py` and `tools/models.py` are reference modules that no active build path reads; a follow-up could consolidate or delete them.
+- The failing official URLs (FTB, BOE assessor directory, BOE Publication 801, CPUC water page, SF Treasurer vacancy-tax) remain unverified, as recorded on the flagged page.
