@@ -203,7 +203,10 @@ footer a { white-space: nowrap; }
   .twhen { font-size: 9pt; }
   .twhat { font-size: 9pt; }
 }
-<<<<<<< HEAD
+
+/* Proposal badge (introduced bills, not enacted law) */
+.badge.proposal { color: #76510a; background: #fff3d7; }
+
 /* Deadline timeline (inheritance process) */
 .timeline { list-style: none; display: flex; gap: 10px; padding: 14px 4px 8px; margin: 4px 0 14px; overflow-x: auto; }
 .timeline li { flex: 1 1 150px; min-width: 150px; border: 1px solid var(--line, #d8d3c8); border-radius: 10px; padding: 10px 12px; background: #fffdf8; position: relative; }
@@ -211,7 +214,6 @@ footer a { white-space: nowrap; }
 .timeline .tl-what { display: block; margin-top: 4px; font-size: 0.82rem; line-height: 1.35; }
 @media (max-width: 700px) { .timeline { flex-wrap: wrap; } .timeline li { flex: 1 1 45%; } }
 @media print { .timeline { overflow: visible; flex-wrap: wrap; } .timeline li { flex: 1 1 30%; box-shadow: none; } }
-=======
 
 
 /* Proposal badge (introduced bills, not enacted law) */
@@ -237,4 +239,3 @@ footer a { white-space: nowrap; }
   .brief-page .prose p { margin: 2px 0; line-height: 1.15; }
   .brief-page footer { margin-top: 2px; padding-top: 2px; font-size: 6.5pt; }
 }
->>>>>>> 5fe1463 (Integrate parallel sessions' features: decision log, Treasury ladder panel, regime map baselines, proposal watchlist rows, brief print compaction)
