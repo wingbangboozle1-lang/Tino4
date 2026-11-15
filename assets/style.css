@@ -188,5 +188,9 @@ footer a { white-space: nowrap; }
   a { color: #000; text-decoration: underline; overflow-wrap: anywhere; }
   .source { font-size: 7pt; }
   footer { border-top: 1px solid #aaa; font-size: 8pt; }
+  .brief-page .table-section { padding: 8px; margin: 7px 0; }
+  .brief-page table { font-size: 7pt; }
+  .brief-page th, .brief-page td { padding: 4px 5px; }
+  .brief-page .prose p, .brief-page .callout p { font-size: 8.5pt; }
   @page { margin: .55in; }
 }

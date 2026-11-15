@@ -7,3 +7,4 @@ node_modules/
 *.log
 /tools/browser/node_modules/
 /tools/browser/screenshots/
+/tools/browser/

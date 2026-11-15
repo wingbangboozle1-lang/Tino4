@@ -29,7 +29,7 @@ OFFICIAL_HOST_SUFFIXES = (
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
-    "ftb.ca.gov", "stlouisfed.org",
+    "ftb.ca.gov", "stlouisfed.org", "federalreserve.gov", "oag.ca.gov",
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")

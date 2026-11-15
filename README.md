@@ -4,14 +4,16 @@ This repository builds a static, source-linked decision framework for a home exp
 
 ## Privacy and exposure — read first
 
-The current generated website is generic. It does not publish a property address, locality, parcel identifier, private valuation, assessment, rent, lease, utility bill, insurance premium, repair estimate, household tax projection or property-specific recommendation. Unknown values are left blank and labeled for review. Property A (anticipated trust transfer) and Property B (already owned) are analyzed as separate assets.
+The generated website is generic. It does not publish a property address, locality, parcel identifier, private valuation, assessment, rent, lease, utility bill, insurance premium, repair estimate, household tax projection or property-specific recommendation. Unknown values are left blank and labeled for review. Property A (anticipated trust transfer) and Property B (already owned) are analyzed as separate assets.
 
-The repository is currently public. A `noindex` directive is not access control. Case-derived source and audit files have been removed from the current tree, but old Git commits, pull-request diffs, forks, caches and clones have **not** been scrubbed. Treat prior case data as exposed. Repository-owner/admin coordination is still required for any access restriction and supported history-cleanup process. Do not store deeds, trust documents, statements, tax bills, leases, utility bills, quotes or other identifying records in this repository.
+What the site *does* publish is public market and statutory information that is available to everyone: Treasury constant-maturity yields, state house-price index changes, inflation observations, federal estate-tax thresholds and California statutes. Those figures are dated observations with an explicit check date, not forecasts and not household facts.
+
+The repository is currently public. A `noindex` directive is not access control. The published branch history has been rewritten so that no commit reachable from the branch contains the earlier case-derived material, but a branch rewrite cannot retract pull-request diffs, forks, cached views or clones that already copied the material. Repository-owner/admin coordination and a GitHub Support request are still required to purge those copies, and the owner should decide whether the repository should be private. Do not store deeds, trust documents, statements, tax bills, leases, utility bills, quotes or other identifying records in this repository.
 
 ## Site contents
 
 - `index.html` — decision-changing facts and next steps.
-- `pages/` — 18 sections covering the executive summary, live/rent/sell/mixed paths, missing facts, blank projection scenarios, California property-tax rules, operating costs, historical stress regimes, Treasury staging, legal thresholds and deadlines, law watchlist, attorney/CPA brief, flagged items, glossary, source register and privacy limits.
+- `pages/` — 18 sections covering the executive summary, live/rent/sell/mixed paths, conditional decision logic, missing facts, blank projection scenarios with official benchmark inputs, California property-tax rules, operating costs, historical stress regimes, the 3M-to-2Y Treasury staging tool, legal thresholds and deadlines, law watchlist, the attorney and tax-adviser brief, flagged items, glossary, source register and privacy limits.
 - `assets/` — local-only stylesheet and JavaScript. Review choices stay in this browser; the investment scenario inputs are transient and are not transmitted or persisted.
 - `tools/sitebuild.py` — generic page builder. It does not import or read household inputs.
 - `tools/site-manifest.json` — the exact list of public HTML outputs.
@@ -28,12 +30,12 @@ python3 tools/verify.py
 python3 -m unittest discover -s tools -p 'test_*.py' -v
 ```
 
-The site uses no remote scripts, fonts, images, APIs, analytics or form submission. Official links open only when a reader follows them. The calculator normalizes the starting portfolio to 100 units, uses historical drawdown endpoints with a clearly synthetic path, and includes adjustable yield, pre-crash drift and inflation assumptions. It is a stress illustration, not a historical backtest, forecast or personal investment recommendation.
+The site uses no remote scripts, fonts, images, APIs, analytics or form submission. Official links open only when a reader follows them. The calculator normalizes the starting portfolio to 100 units, splits the parking period between 2-year notes and rolling 3-month bills, uses historical drawdown endpoints with a clearly synthetic path, and includes adjustable yields, ladder mix, pre-crash drift, a renewal-yield stress and inflation assumptions. It is a stress illustration, not a historical backtest, forecast or personal investment recommendation.
 
 ## Evidence and limitations
 
-- Current rules and public history are linked to official IRS, California, Treasury, Federal Reserve, BLS, CBO, HUD, FHFA and SEC sources in the source register.
-- Every data-table row has a source link and an evidence-status label. The linked source supports only its stated scope; it does not validate private property facts.
+- Every data-table row has a source link and an evidence-status label, and the source register records the check date and the narrow scope each source supports.
+- Current rules and public history are linked to official IRS, California, Treasury, Federal Reserve, BLS, CBO, HUD, FHFA, SEC and GitHub sources in the source register.
 - The pages distinguish current law, official historical observations, assumptions and missing evidence. No proposal is treated as enacted law.
-- Local rent, property-tax, insurance, utility and building requirements cannot be verified without a private jurisdiction and property records; they remain flagged rather than inferred.
+- Local rent rules, property-tax bills, insurance, utility and building requirements cannot be verified without a private jurisdiction and property records; they remain flagged rather than inferred.
 - Re-check laws, deadlines, assessments, insurance availability and market inputs with qualified advisers and the relevant agencies at the actual transfer date.
