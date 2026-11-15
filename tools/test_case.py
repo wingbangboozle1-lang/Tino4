@@ -6,6 +6,8 @@ import unittest
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+TOOLS = ROOT / "tools"
+sys.path.insert(0, str(TOOLS))
 
 
 class PublicSitePrivacyTests(unittest.TestCase):
@@ -93,6 +95,79 @@ class PublicSitePrivacyTests(unittest.TestCase):
         for path in manifest:
             self.assertFalse(path.startswith("/"))
             self.assertFalse(".." in Path(path).parts)
+
+
+class RecordIdentifierTests(unittest.TestCase):
+    """Record identifiers must fail closed even when every amount is rounded.
+
+    The sample strings are assembled from fragments at run time so that this
+    file itself never contains a literal identifier that the verifier would
+    flag in the repository tree.
+    """
+
+    def setUp(self):
+        import verify
+        self.verify = verify
+
+    @staticmethod
+    def apn(first="316", middle="05", last="012"):
+        return "-".join((first, middle, last))
+
+    def test_parcel_and_assessor_identifiers_are_caught(self):
+        apn = self.apn()
+        other = self.apn("123", "45", "678")
+        for text in (
+            "APN: " + apn,
+            "assessor's parcel number " + apn,
+            "Parcel No " + apn,
+            "The lots are " + other + " and " + self.apn("999", "88", "777"),
+        ):
+            self.assertTrue(self.verify.identifier_problems(text), text)
+        self.assertTrue(self.verify.APN_BARE_RE.search(apn))
+        self.assertTrue(self.verify.APN_BARE_RE.search(other))
+
+    def test_account_trust_and_escrow_numbers_are_caught(self):
+        for text in (
+            "Account number " + "12" + "345678",
+            "trust no. AB-" + "123456",
+            "Escrow # " + "8842113",
+            "Loan Number " + "55443322",
+            "Policy number X-" + "9987" + "1",
+        ):
+            self.assertTrue(self.verify.identifier_problems(text), text)
+
+    def test_dates_of_birth_are_caught(self):
+        for text in (
+            "Date of birth: 04/12/" + "1958",
+            "DOB 4/12/" + "1958",
+            "born on March 3, " + "1949",
+        ):
+            self.assertTrue(self.verify.identifier_problems(text), text)
+
+    def test_ordinary_prose_is_not_flagged(self):
+        for text in (
+            "The owner's own tax history, rounded to the nearest ten dollars.",
+            "Owner-supplied figures are badged as such and are never verified.",
+            "A change in ownership generally re-establishes the base-year value.",
+            "Form 706 is generally due nine months after the date of death.",
+            "Sections 13301 and 16061 of the California codes.",
+            "Postal area 95014 (Cupertino)",
+            "Chaptered September 27, 2026 as Chapter 665, Statutes of 2026.",
+            "Round to the nearest ten dollars before publication.",
+            "The transferee must file for the homeowners' exemption within one year.",
+        ):
+            self.assertEqual(self.verify.identifier_problems(text), [], text)
+
+    def test_no_published_page_exposes_a_record_identifier(self):
+        import verify as v
+        manifest = json.loads((TOOLS / "site-manifest.json").read_text(encoding="utf-8"))
+        for pattern in (v.APN_RE, v.APN_BARE_RE, v.ACCOUNT_RE, v.DOB_RE):
+            for name in manifest:
+                text = (ROOT / name).read_text(encoding="utf-8")
+                self.assertIsNone(
+                    pattern.search(text),
+                    f"{name} matched {pattern.pattern[:40]!r}",
+                )
 
 
 if __name__ == "__main__":
