@@ -13,12 +13,11 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# The only dollar figures allowed in public pages are published statutory or
-# agency figures: federal estate/gift exclusions (IRS), the $7,000 homeowners'
-# property-tax exemption (RTC section 218), and the $250,000/$500,000 main-home
-# gain exclusion (IRS Topic 701). Any property-specific or otherwise unsourced
-# currency amount fails closed.
-PUBLIC_CURRENCY_AMOUNTS = {"15000000", "15480000", "19000", "20000", "250000", "500000", "7000"}
+# Public currency figures must be explicitly allowlisted and supported by an
+# official source. This includes IRS thresholds and exclusions, other published
+# statutory/agency figures, and the proposed $3,500,000 exclusion in S.4196's
+# introduced text. Any property-specific or otherwise unsourced amount fails.
+PUBLIC_CURRENCY_AMOUNTS = {"15000000", "15480000", "19000", "20000", "250000", "500000", "7000", "3500000"}
 # These five-digit numbers are cited California code sections and CBO report
 # identifiers, not postal codes. No other five-digit identifier is expected.
 PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270"}

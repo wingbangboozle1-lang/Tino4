@@ -37,6 +37,28 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertNotIn('localStorage.setItem("phase', script)
         self.assertIn("public-suggestion-review-v2", script)
 
+    def test_law_watchlist_distinguishes_chaptered_change_from_unenacted_bills(self):
+        subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
+        law = (ROOT / "pages/law-watchlist.html").read_text(encoding="utf-8")
+        sources = (ROOT / "pages/sources.html").read_text(encoding="utf-8")
+        self.assertIn("SB 974", law)
+        self.assertIn("Chapter 665, Statutes of 2026", law)
+        self.assertIn("special-needs trust", law)
+        self.assertIn("not a general rule for all family transfers", law)
+        self.assertIn("S.4196", law)
+        self.assertIn("H.R.601", law)
+        self.assertIn("S.587", law)
+        self.assertIn("non-urgency", law)
+        self.assertIn("$3,500,000", law)
+        self.assertIn("Proposal—not law", law)
+        self.assertIn("Direct page fetch: 2026-11-15", sources)
+        self.assertIn("bill_id=202520260SB974", sources)
+        self.assertIn("119th-congress/senate-bill/4196", sources)
+        self.assertIn("119th-congress/house-bill/601", sources)
+        self.assertIn("119th-congress/senate-bill/587", sources)
+        self.assertIn("not enacted", law)
+        subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
+
     def test_manifest_has_no_duplicate_output_paths(self):
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(len(manifest), len(set(manifest)))

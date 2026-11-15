@@ -15,9 +15,10 @@ ROOT = Path(__file__).resolve().parent.parent
 CHECKED = "2026-11-14"
 SITE_TITLE = "Private inheritance decision workspace"
 
-# Links were fetched directly on CHECKED. The scope is intentionally narrow:
-# a source may establish a legal rule or a public historical observation, but
-# never a private property's value, bill, lease, premium, title, or tax position.
+# Sources are fetched directly on the date shown in their register row. Older
+# entries without an individual date use CHECKED. The scope is intentionally
+# narrow: a source may establish a rule or public observation, never a private
+# property's value, bill, lease, premium, title, or tax position.
 SOURCES = {
     "irs_estate": {
         "label": "IRS — Estate tax",
@@ -208,14 +209,70 @@ SOURCES = {
     "congress_legislation": {
         "label": "Congress.gov — Advanced legislation search",
         "url": "https://www.congress.gov/advanced-search/legislation",
-        "scope": "Official search interface for federal bills and resolutions and their status. A proposal is not current law unless enacted; no specific pending bill is treated as law here.",
+        "scope": "Official search interface for federal bills and resolutions and their status. The bill-specific examples in this register are introduced proposals, not current law unless enacted.",
         "verified": True,
     },
     "ca_legislation": {
         "label": "California Legislative Information — Bill Search",
         "url": "https://leginfo.legislature.ca.gov/faces/billSearchClient.xhtml",
-        "scope": "Official search interface for California bills and their status. A bill or proposal is not current law unless chaptered and effective; no specific pending bill is treated as law here.",
+        "scope": "Official search interface for California bills and chaptered laws. Verify status, operative date, enacted code and agency guidance before applying a change.",
         "verified": True,
+    },
+    "ca_sb974_status": {
+        "label": "California Legislature — SB 974 status, Chapter 665 (2026)",
+        "url": "https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260SB974",
+        "scope": "Status page records SB 974 as chaptered September 27, 2026, Chapter 665, Statutes of 2026, and marks it non-urgency. Verify its operative date and the assessor's implementation before applying it to a transfer.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ca_sb974_text": {
+        "label": "California SB 974 — chaptered text",
+        "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB974",
+        "scope": "Chaptered amendment to RTC §63.2 expressly treats a special-needs trust established under Probate Code §3604 as an eligible medium for the stated intergenerational property-tax exclusion; eligibility and claim requirements remain. Separate claim-timing relief is limited to qualifying property connected with specified 2025 wildfires.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "congress_s4196_status": {
+        "label": "Congress.gov — S. 4196 status",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/4196",
+        "scope": "Congress.gov lists S. 4196 as introduced March 25, 2026 and referred to Senate Finance; no enactment is shown as of the check date. Status can change.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "congress_s4196_text": {
+        "label": "Congress.gov — S. 4196 introduced text",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/4196/text",
+        "scope": "Introduced text proposes a $3,500,000 basic exclusion amount and changes to federal estate, gift and generation-skipping transfer tax rules, with a proposed effective date for deaths and gifts after December 31, 2026. This is not enacted law.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "congress_hr601_status": {
+        "label": "Congress.gov — H.R. 601 status",
+        "url": "https://www.congress.gov/bill/119th-congress/house-bill/601",
+        "scope": "As checked 2026-11-15, Congress.gov lists H.R. 601 as introduced January 22, 2025 and referred to House Ways and Means and Budget; no enactment is shown. Status can change.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "congress_hr601_text": {
+        "label": "Congress.gov — H.R. 601 introduced text",
+        "url": "https://www.congress.gov/bill/119th-congress/house-bill/601/text/ih",
+        "scope": "Introduced text proposes a 20% rate for estate, gift and generation-skipping transfer taxes and states a proposed effective date for transfers after December 31, 2024. This is not enacted law.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "congress_s587_status": {
+        "label": "Congress.gov — S. 587 status",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/587",
+        "scope": "As checked 2026-11-15, Congress.gov lists S. 587 as introduced February 13, 2025 and referred to Senate Finance; no enactment is shown. Status can change.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "congress_s587_text": {
+        "label": "Congress.gov — S. 587 introduced text",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/587/text/is",
+        "scope": "Introduced text proposes to repeal federal estate and generation-skipping transfer taxes and separately changes gift-tax rules. The proposal is not enacted law.",
+        "verified": True,
+        "checked": "2026-11-15",
     },
     "cbo_outlook": {
         "label": "Congressional Budget Office — The Budget and Economic Outlook: 2026 to 2036",
@@ -368,12 +425,12 @@ def esc(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
-def source_link(key: str) -> str:
+def source_link(key: str, label: str | None = None) -> str:
     source = SOURCES[key]
     return (
         f'<a class="source" href="{esc(source["url"])}" '
         f'title="{esc(source["scope"])}" rel="noopener noreferrer">'
-        f'{esc(source["label"])}</a>'
+        f'{esc(label or source["label"])}</a>'
     )
 
 
@@ -388,6 +445,8 @@ def badge(status: str) -> str:
         "Not verified": "missing",
         "Action needed": "guidance",
         "Historical": "verified",
+        "Chaptered": "verified",
+        "Proposal—not law": "proposal",
     }.get(status, "guidance")
     return f'<span class="badge {css}">{esc(status)}</span>'
 
@@ -398,7 +457,7 @@ def cell(value: object) -> str:
     return f"<td>{esc(value)}</td>"
 
 
-def make_table(title: str, headers: list[str], rows: list[dict], note: str = "") -> str:
+def make_table(title: str, headers: list[str], rows: list[dict], note: str = "", source_labels: dict[str, str] | None = None) -> str:
     if not rows:
         raise ValueError(f"Table {title!r} has no rows")
     head = "".join(f"<th scope=\"col\">{esc(h)}</th>" for h in headers)
@@ -409,7 +468,10 @@ def make_table(title: str, headers: list[str], rows: list[dict], note: str = "")
         if not keys or any(key not in SOURCES for key in keys):
             raise ValueError(f"Every row in {title!r} needs a registered source")
         cells = "".join(cell(value) for value in row["cells"])
-        links = ' <span aria-hidden="true">·</span> '.join(source_link(key) for key in keys)
+        labels = source_labels or {}
+        links = ' <span aria-hidden="true">·</span> '.join(
+            source_link(key, labels.get(key)) for key in keys
+        )
         body_rows.append(
             f"<tr>{cells}<td>{badge(row.get('status', 'Guidance'))}</td><td>{links}</td></tr>"
         )
@@ -481,7 +543,7 @@ def render_page(path: str, title: str, intro: str, body: str, eyebrow: str = "DE
 <aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">◈</span><span>PRIVATE<br>DECISION BRIEF</span></a>
 <p class="sidebar-note">Trust transfer +<br>already-owned property</p>
 <nav aria-label="Main navigation">{build_nav(path)}</nav>
-<div class="sidebar-bottom">No addresses or case amounts<br>Sources checked {CHECKED}</div></aside>
+<div class="sidebar-bottom">No addresses or case amounts<br>Source dates in register</div></aside>
 <div class="workspace"><header class="topbar"><span>RESEARCH / DECISION SUPPORT</span><div><span class="privacy-dot" aria-hidden="true"></span> Privacy-first <button class="print-button no-print" id="print-page" type="button">Print</button></div></header>
 <main id="main"><div class="page-heading"><span class="eyebrow">{esc(eyebrow)}</span><h1>{esc(title)}</h1><p class="lead">{esc(intro)}</p></div>{body}</main>
 <footer><strong>Planning framework only.</strong> Not legal, tax, insurance, appraisal or investment advice. A source supports only its stated scope, not a private fact. Blank means unknown, not zero. The public site intentionally contains no property-specific dollar values or locations.<br>
@@ -911,9 +973,11 @@ def build_process() -> str:
 def build_law_watchlist() -> str:
     rows = [
         {"cells": ["Federal estate and gift amounts", "Use only official year-of-death IRS thresholds and annual gift tables; current 2026/2027 amounts do not determine later law.", "Check enacted federal law and the IRS annual adjustment/revenue procedure near the transfer."], "status": "Guidance", "sources": ["irs_estate", "irs_2027"]},
-        {"cells": ["Federal bills and proposals", "No specific pending federal proposal is incorporated into this decision framework. A bill or resolution is not current law merely because it is introduced or debated.", "Search Congress.gov near the event; confirm enactment, effective date and IRS implementation before changing a calculation."], "status": "Not verified", "sources": ["congress_legislation", "irs_estate"]},
+        {"cells": ["Federal proposal — S.4196", "Congress.gov lists the bill as introduced and referred to Senate Finance as of 2026-11-15. The draft would set a $3,500,000 basic exclusion and revise estate, gift and generation-skipping transfer tax rules; its text proposes applying to deaths and gifts after December 31, 2026 if enacted.", "This could materially change the estate-level calculation, but it is not enacted and must not replace the current IRS baseline."], "status": "Proposal—not law", "sources": ["congress_s4196_status", "congress_s4196_text", "irs_estate"]},
+        {"cells": ["Federal proposal — H.R.601", "As checked 2026-11-15, Congress.gov lists H.R. 601 as introduced and referred to House Ways and Means and Budget. The draft proposes a 20% rate for estate, gift and generation-skipping transfer taxes, with a proposed effective date for transfers after December 31, 2024 if enacted.", "Not enacted. Re-check Congress.gov before using any tax rate or assuming the draft's proposed effective date would apply."], "status": "Proposal—not law", "sources": ["congress_hr601_status", "congress_hr601_text"]},
+        {"cells": ["Federal proposal — S.587", "As checked 2026-11-15, Congress.gov lists S. 587 as introduced and referred to Senate Finance. The draft proposes repealing federal estate and generation-skipping transfer taxes and separately changing gift-tax rules.", "Not enacted. This proposal is distinct from current federal estate and gift tax law; confirm status and enacted text before relying on it."], "status": "Proposal—not law", "sources": ["congress_s587_status", "congress_s587_text"]},
         {"cells": ["California property-tax transfer rules", "Review RTC §§480 and 63.2, BOE guidance, any later amendments and the assessor's written determination.", "Check filing forms, value limit, occupancy, relationship and transfer date."], "status": "Guidance", "sources": ["ca_rtc480", "ca_rtc63", "boe_prop19"]},
-        {"cells": ["California bills and proposals", "No specific pending California bill is relied on as law. A proposal becomes relevant only after its status, chaptering and effective date are verified.", "Search the official bill system and re-check the enacted code, regulations and BOE guidance at transfer."], "status": "Not verified", "sources": ["ca_legislation", "boe_prop19"]},
+        {"cells": ["California SB 974 — limited Proposition 19 amendment", "Chaptered as Chapter 665, Statutes of 2026; official status page marks it non-urgency. It amends RTC §63.2 to recognize a Probate Code §3604 special-needs trust as an eligible transfer medium for the specified exclusion; relationship, residence, occupancy, value and claim conditions remain. Separate claim-timing relief applies only to qualifying property connected with specified 2025 wildfires.", "Counsel should verify the operative date, exact trust qualification, remaining eligibility and current assessor guidance. This is not a general rule for all family transfers or ordinary trusts."], "status": "Chaptered", "sources": ["ca_sb974_status", "ca_sb974_text", "ca_rtc63"]},
         {"cells": ["California death-transfer tax", "Current RTC §13301 and State Controller information describe the current rule; do not assume it cannot change.", "Re-check state law for the actual year of death."], "status": "Guidance", "sources": ["ca_rtc13301", "ca_death_tax"]},
         {"cells": ["Rent and tenant protections", "Statewide Civil Code rules have coverage conditions and exemptions; local rules may be more restrictive. The property's jurisdiction is intentionally not published, so a local ordinance cannot be identified here.", "Counsel should check the actual city/county code, rent registry, unit status, lease and tenant rights before occupancy or a rent change."], "status": "Missing", "sources": ["ca_rent", "ca_legislation"]},
         {"cells": ["Insurance availability and coverage", "Market conditions, underwriting, wildfire/flood risk, exclusions and reconstruction costs may change independently of taxes.", "Refresh written quotes and coverage terms; do not extrapolate an old premium."], "status": "Missing", "sources": ["cdi"]},
@@ -925,27 +989,44 @@ def build_law_watchlist() -> str:
     ]
     body = callout("Watch enacted law, not headlines", "The pages distinguish current statutes and agency tables from bills, stress assumptions and future uncertainty. No bill or proposal is represented as current law. The inherited transfer is far in the future; refresh federal, state and actual local rules near the event.", "info")
     body += make_table("Law and market watchlist", ["Topic", "Current official baseline / proposal status", "What to re-check"], rows)
-    body += paragraph("No future-year legal projection", "This site intentionally does not extrapolate federal thresholds or California property-tax allowances to a future year. Pending bills are not incorporated as law. Search the official federal and California bill systems and verify enactment and effective dates; the actual local code cannot be identified without a private jurisdiction.")
+    body += paragraph("No future-year legal projection", "This site intentionally does not extrapolate federal thresholds or California property-tax allowances to a future year. S.4196, H.R.601 and S.587 are introduced proposals only; SB 974 is a chaptered state amendment with limited scope, and its operative date must be confirmed before application. None predicts the law at a future transfer. Search official bill systems and verify enacted text, effective dates, local code and agency implementation near the event.")
     return render_page("pages/law-watchlist.html", "Law and market watchlist", "A short list of rules and market inputs that can change the decision, without treating a proposed change or long-run projection as settled fact.", body, "LAW & PROCESS")
 
 
 def build_brief() -> str:
     rows = [
-        {"cells": ["Attorney / trustee", "What does the executed trust permit: who may occupy, rent or sell, when does title change, and what debts or notices apply?", "Trust, all amendments, deed, trustee authority, debt and lease documents", "Action needed"], "status": "Action needed", "sources": ["ca_prob160617", "ca_rtc480"]},
-        {"cells": ["Estate attorney / CPA", "What is the whole estate's gross value, adjusted taxable gifts, deductions, and is Form 706 required or a portability election wanted?", "Private asset and debt inventory, prior gifts, valuation reports, spouse facts", "Action needed"], "status": "Action needed", "sources": ["irs_estate", "irs_estate_faq"]},
-        {"cells": ["CPA / appraiser", "What is the date-of-death value and basis, and what is the tax result if the home is sold or rented?", "Appraisal, executor basis statement, improvement and depreciation records, sale estimate", "Action needed"], "status": "Action needed", "sources": ["irs_basis", "irs_basis_pub", "irs_121"]},
-        {"cells": ["Property-tax adviser", "Does an intergenerational exclusion apply, and which statements, occupancy evidence and claims are due and by when?", "Relationship, deed or trust, prior assessment, occupancy proof, exemption and claim dates", "Action needed"], "status": "Action needed", "sources": ["boe_prop19", "ca_rtc63", "ca_rtc218"]},
-        {"cells": ["Landlord-tenant counsel", "Which units are legal, what do the leases require, and which mixed occupancy options are lawful while a tenancy continues?", "Permits, certificates of occupancy, leases, deposits, rent history", "Action needed"], "status": "Action needed", "sources": ["ca_rent", "hud_fmr", "irs_rental"]},
-        {"cells": ["Insurance broker", "Can each intended use be insured, at what replacement cost, with which exclusions, and what is the nonrenewal fallback?", "Separate owner-occupied and landlord quotes, coverage forms, DIC or FAIR Plan options", "Action needed"], "status": "Action needed", "sources": ["cdi"]},
-        {"cells": ["Contractor / inspector", "Which repairs are imminent, and what are the itemised bids?", "Inspection report and licensed bids", "Action needed"], "status": "Action needed", "sources": ["cslb"]},
-        {"cells": ["Utility / solar provider", "What are the actual water and electric bills, the tariff, the export credits and the true-up date?", "Twelve to twenty-four months of bills, interconnection and tariff documents", "Action needed"], "status": "Action needed", "sources": ["water_board", "cpuc_solar"]},
-        {"cells": ["Investment adviser / CPA", "What is the net investable cash after costs and tax, and how do immediate, Treasury-ladder and phased entry compare after fees and tax?", "After-tax proceeds, liquidity plan, current net yields, fee schedule, allocation policy", "Action needed"], "status": "Action needed", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
+        {"cells": ["Trustee / attorney", "Confirm trust/deed authority, title, debts, occupancy/sale rights and notice clocks.", "Executed trust/amendments, deed, loan, notices and leases."], "status": "Action needed", "sources": ["ca_prob160617", "ca_rtc480"]},
+        {"cells": ["Estate CPA / appraiser", "Review whole-estate Form 706/portability. Confirm Asset A's date-of-death basis and exceptions; analyze Asset B's existing basis, rent/depreciation and tax separately.", "Private estate/prior-gift records; separate A/B deeds and tax/basis files; valuation and rent records."], "status": "Action needed", "sources": ["irs_estate", "irs_estate_faq", "irs_basis", "irs_rental"]},
+        {"cells": ["Property-tax / housing counsel", "Test A's conditional family-home exclusion and deadlines. Verify B's residence role, legal units, leases and local tenant rules.", "Relationship/residence/occupancy evidence, assessments, claims, permits, leases and local code."], "status": "Action needed", "sources": ["boe_prop19", "ca_rtc63", "ca_rent"]},
+        {"cells": ["Insurer / contractor / utility", "Price separate owner-occupied and landlord coverage; identify exclusions, urgent repairs, actual utility and solar tariff costs.", "Use-specific written quotes, inspections/bids, actual bills and signed interconnection/tariff documents."], "status": "Action needed", "sources": ["cdi", "cslb", "water_board", "cpuc_solar"]},
+        {"cells": ["Investment adviser / CPA", "Compare conditional live, rent, sell and mixed paths; calculate after-tax proceeds/reserves and stress 24–36-month Treasury staging, lower renewal yields and a crash after staging.", "Private sale estimates/costs, reserve, current yields, fees and risk policy."], "status": "Action needed", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
     ]
-    body = callout("Meeting objective", "Leave with a written conditional recommendation that states each assumption, the source, the deadline, the tax and insurance reserve, and the specific fact that would reverse the answer. Bring the private documents; do not upload them to the public site.", "info")
-    body += make_table("One-page adviser handoff checklist", ["Adviser", "Question to answer", "Private records to bring", "Status"], rows)
-    body += """<section class="prose brief-block"><h2>Print settings for a true one-pager</h2><p class="table-note">This page is built for one sheet: the print stylesheet hides navigation, the sidebar, buttons and the footer beyond a single attribution line, and reduces table type to fit. Print or save as PDF in portrait with default margins. If the table spills to a second page, print the first page only for the meeting and keep the source register for the file.</p></section>"""
-    body += paragraph("Decision boundary", "Property A is the anticipated trust transfer and Property B is already owned. Keep B's rent ledger, leases, assessment, basis and insurance separate from A, and test whether B can serve as a residence without assuming tenant obligations disappear. Compare live, rent, sell, mixed-occupancy and phased-investing alternatives only after counsel and the CPA confirm the legal and tax inputs.")
-    body += paragraph("Privacy", "This printable sheet contains no address, locality, valuation, rent, utility amount, insurance premium, parcel identifier or household name. Completed adviser notes belong in an access-controlled file outside this repository.")
+    body = callout("Meeting objective", "Obtain a written conditional recommendation, assumptions, sources, deadlines, reserves and facts that could reverse it.", "info")
+    body += make_table(
+        "One-page adviser handoff checklist",
+        ["Adviser", "Question to resolve", "Private records to bring"],
+        rows,
+        source_labels={
+            "ca_prob160617": "Probate Code §16061.7",
+            "ca_rtc480": "RTC §480",
+            "irs_estate": "IRS estate tax",
+            "irs_estate_faq": "IRS estate FAQ",
+            "irs_basis": "IRS basis FAQ",
+            "irs_rental": "IRS rental property",
+            "boe_prop19": "BOE Proposition 19",
+            "ca_rtc63": "RTC §63.2",
+            "ca_rent": "CA tenant law",
+            "cdi": "CA insurance department",
+            "cslb": "CA contractor board",
+            "water_board": "CA water program",
+            "cpuc_solar": "CPUC NEM/NBT",
+            "treasury_bills": "Treasury bills",
+            "treasury_notes": "Treasury notes",
+            "sec_stocks": "SEC stocks guide",
+        },
+    )
+    body += paragraph("Asset boundary", "Asset A is an anticipated trust transfer; Asset B is already owned and may have rent or an occupancy role. Keep each asset's title, basis, assessment, income and costs separate; choose no path until records are verified.")
+    body += paragraph("Privacy", "This brief contains no address, locality, valuation, rent, utility amount, premium or parcel identifier. Store completed notes outside the public repository.")
     return render_page("pages/attorney-cpa-brief.html", "Attorney & CPA briefing sheet", "One-page, print-ready meeting checklist. No identifying details or household-specific amounts are included.", body, "ADVISER HANDOFF")
 
 
@@ -1085,13 +1166,13 @@ def build_sources() -> str:
     rows = []
     for key, item in SOURCES.items():
         rows.append({
-            "cells": [item["label"], item["scope"], f"Direct page fetch: {CHECKED}"],
+            "cells": [item["label"], item["scope"], f"Direct page fetch: {item.get('checked', CHECKED)}"],
             "status": "Verified" if item["verified"] else "Not verified",
             "sources": [key],
         })
     body = callout("Source scope matters", "Every source is an official government, regulator, or platform documentation page. A link verifies only the scope shown in its description; it never verifies a private property fact. Failed fetches are included and visibly marked.", "info")
     body += make_table("Official source register", ["Source", "What it supports / does not support", "Checked"], rows)
-    body += paragraph("Verification method", "Sources listed as verified were fetched directly on the check date and read for the narrow statement shown. Failed sources remain flagged rather than silently replaced with secondary material. Re-check legal text and agency guidance at the actual transfer date.")
+    body += paragraph("Verification method", "Sources listed as verified were fetched directly on the date shown in that row and read for the narrow statement shown. Failed sources remain flagged rather than silently replaced with secondary material. Bill status can change after the listed check date. Re-check legal text, bill status and agency guidance at the actual transfer date.")
     return render_page("pages/sources.html", "Official source register", "A direct-source ledger with retrieval date, verification status and a clear statement of each source's limits.", body, "EVIDENCE")
 
 
