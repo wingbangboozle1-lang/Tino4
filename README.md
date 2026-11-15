@@ -32,14 +32,16 @@ returns, and prints the deadlines that decide the money.
 - `pages/decision-analysis.html` — path matrix, cash flows, wealth horizons and
   local-only what-if controls.
 - `pages/questions.html` — 24 questions with discovery steps and impact ratings.
+- `pages/decision-log.html` — twelve decision-quality suggestions with a local-only review queue.
 - `pages/suggestions.html` — reviewable suggestion queue (choices stay local).
 - `pages/projections.html` — year-by-year value, tax and cash-flow projections.
 - `pages/property-tax.html` — Prop 13/19 rules plus rounded assessment histories.
 - `pages/operating-costs.html` — water, solar, insurance, maintenance lines.
-- `pages/black-swan.html` — verified crash history plus a real-data stress
-  table for five entry strategies including 24-36 month Treasury parking.
-- `pages/phased-investing.html` — the Treasury staging plan mechanics and a
-  synthetic-path simulator.
+- `pages/black-swan.html` — verified crash history, a regime map with CBO
+  2036/2055 official baselines, and a real-data stress table for five entry
+  strategies including 24-36 month Treasury parking.
+- `pages/phased-investing.html` — the Treasury staging plan mechanics, a ladder
+  reinvestment-risk panel and a synthetic-path simulator.
 - `pages/estate-thresholds.html` — 2026/2027 federal amounts and California status.
 - `pages/inheritance-process.html` — deadline timeline from death to filings.
 - `pages/law-watchlist.html` — current law vs live proposals.

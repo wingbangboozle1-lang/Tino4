@@ -1621,6 +1621,7 @@ def build_phased_investing() -> str:
 <dt>Staged real value</dt><dd id="early-phased-real">—</dd>
 <dt>Immediate worst drawdown</dt><dd id="early-immediate-dd">—</dd>
 <dt>Staged worst drawdown</dt><dd id="early-phased-dd">—</dd>
+<dt>Months simulated</dt><dd id="early-months">—</dd>
 </dl></div>
 <div class="scenario-card"><h3>Late-crash entry</h3><p>Crash begins as staging completes.</p><dl>
 <dt>Immediate (lump) value</dt><dd id="late-immediate-value">—</dd>
@@ -1629,6 +1630,7 @@ def build_phased_investing() -> str:
 <dt>Staged real value</dt><dd id="late-phased-real">—</dd>
 <dt>Immediate worst drawdown</dt><dd id="late-immediate-dd">—</dd>
 <dt>Staged worst drawdown</dt><dd id="late-phased-dd">—</dd>
+<dt>Months simulated</dt><dd id="late-months">—</dd>
 </dl></div>
 </div>
 <p class="tool-status" id="phase-status" aria-live="polite"></p>
