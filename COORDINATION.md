@@ -152,3 +152,9 @@ This platform-pinned branch began at PR #78's merge. PR #79 and PRs #80–#84 su
 - Each new legal source has its own 2026-11-15 date in the source register; older source dates remain unchanged. Regression coverage checks SB 974 scope, all three proposal labels, official URLs and proposal status. No address, locality, parcel identifier, owner-supplied amount or property-specific projection was added.
 - Rebuild/check commands: `python3 -m py_compile tools/*.py`, `python3 tools/build.py` (19 pages), `python3 tools/verify.py`, `python3 -m unittest discover -s tools -p 'test_*.py' -v` (5 tests), and `git diff --check` all pass. After rebasing, the browser smoke test passed all 19 desktop and 19 mobile pages, review save/reset and calculator controls, with no JavaScript errors or third-party requests; the attorney/CPA brief prints as one US Letter page.
 - The repository remains public; historic Git objects, prior PRs, forks, caches and clones have not been scrubbed. Owner/admin coordination remains required. Current-tree verification does not resolve or erase that historic exposure; do not describe Git history as scrubbed.
+
+### Release result (2026-11-15)
+
+- PR #85 (`https://github.com/wingbangboozle1-lang/Tino4/pull/85`) merged with `gh pr merge 85 --merge` at 2026-11-15T03:42:01Z; merge commit `78cc13b2b06057a1f03c02749a7f183379269d12`.
+- PR verification run `43673498931` passed before merge. Post-merge `verify` run `43673530938` and Pages build/deployment run `43673530315` both completed successfully. GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`.
+- Direct live fetch after deployment confirmed the law-watchlist rows distinguish SB 974's limited chaptered scope from S.4196, H.R.601 and S.587 as introduced, not-enacted proposals; the source register shows the new 2026-11-15 verification dates.
