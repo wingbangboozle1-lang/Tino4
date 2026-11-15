@@ -1,6 +1,28 @@
 # COORDINATION.md — Shared Task Board
 
-## Current session: privacy-first public site remediation
+## Current session: rounded-figure case analysis, projections and integration (2026-11-15)
+
+- Session ID: `arena-31c6277d`.
+- Branch: `arena/31c6277d-tino4` (platform-pinned; no alternate branch or worktree was created; base commit `9ef9d48` equals `origin/main` at claim time).
+- Status: in progress.
+- Scope (exclusive): `COORDINATION.md` (this section only), `README.md`, `index.html`, `pages/**`, `assets/**`, `tools/**`, `.github/workflows/verify.yml`.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| T31C-1 | Official-source verification pass: re-fetch load-bearing sources and add county property-tax-rate, San Francisco rent, federal capital-gain, Treasury-yield, Federal Reserve inflation-target, BLS inflation-history, HUD FMR and Proposition 19 claim-form sources with per-row scope notes | in progress | `arena-31c6277d` | `tools/sitebuild.py` (SOURCES register), `pages/sources.html` (generated) | 2026-11-15 |
+| T31C-2 | Add owner-supplied case figures rounded to the nearest $10 (assessment/tax history, values, rents, utilities), year-by-year projections for market value, assessed value and property tax, and operating-cost tables with researched/blank insurance rows | in progress | `arena-31c6277d` | `tools/sitebuild.py`, `pages/projections.html`, `pages/property-tax.html`, `pages/operating-costs.html` (generated) | 2026-11-15 |
+| T31C-3 | Conditional working recommendation, mixed-path comparison, reinvestment-risk-beside-headline, and a published worked example for the 24–36 month Treasury staging path against 1929/2008 entry risk | in progress | `arena-31c6277d` | `tools/sitebuild.py`, `pages/decision-analysis.html`, `pages/executive-summary.html`, `pages/black-swan.html`, `pages/phased-investing.html` (generated) | 2026-11-15 |
+| T31C-4 | Attorney & CPA one-page printable brief with rounded figures, deadline timeline, executive summary, grouped menu and glossary refresh | in progress | `arena-31c6277d` | `tools/sitebuild.py`, `pages/attorney-cpa-brief.html`, `pages/inheritance-process.html`, `index.html` (generated) | 2026-11-15 |
+| T31C-5 | Questions/answers register, suggestions review queue and Flagged-for-Review additions (tax-rate discrepancy, unverified insurance, residual re-identification risk, scenario-not-forecast labeling) | in progress | `arena-31c6277d` | `tools/sitebuild.py`, `pages/questions.html`, `pages/suggestions.html`, `pages/flagged-for-review.html` (generated) | 2026-11-15 |
+| T31C-6 | Verification tooling: enforce nearest-$10 rounding rule for every public currency amount, update regression tests, build, verify, browser smoke test | in progress | `arena-31c6277d` | `tools/verify.py`, `tools/test_case.py`, `tools/site-manifest.json` | 2026-11-15 |
+| T31C-7 | Final integration: PR `arena/31c6277d-tino4` → `main`, merge after checks pass, confirm GitHub Pages deploy, record PR link and merge result here | in progress | `arena-31c6277d` | `COORDINATION.md` (this section only), release verification | 2026-11-15 |
+| T31C-8 | Pre-rounding Git history scrub — remains blocked: platform pins this session to one branch, no force-push/history rewrite is performed here; repository-owner/admin coordination required (see prior session records) | needs review | `arena-31c6277d` (recording only) | none (record only) | 2026-11-15 |
+
+Notes for this session: owner-supplied financial figures are published only rounded to the nearest $10 per the current owner instruction, always badged Owner-supplied/Projection/Assumption, never presented as officially verified; no name, address, ZIP, parcel, account or document identifier is published. Parallel sessions: no other session has claimed this scope; any request to touch files outside this scope must be logged here instead of edited.
+
+---
+
+## Previous session: privacy-first public site remediation
 
 - Branch: `arena/e1ea4bef-tino4` (platform-fixed; no alternate branch/worktree was created).
 - Status: completed in this branch; publication/history cleanup still requires repository-owner coordination.
