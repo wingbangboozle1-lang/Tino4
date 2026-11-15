@@ -30,14 +30,14 @@ PUBLIC_CURRENCY_AMOUNTS = {
     # Published statutory/tariff amounts that do not end in $10, shown exactly
     # as published (ported from session 377ea96a / PR #88):
     "16000", "11700", "3300", "16250",                 # Rev. Proc. 2025-32 estate/trust brackets
-    "171", "189", "212",                               # SFPUC Prop 218 notice — published average combined bills FYE 2026-2028
+    "171", "189", "212", "129",                               # SFPUC Prop 218 notice — published average combined bills FYE 2026-2028
 }
 # Five-digit identifiers: cited code sections, CBO report identifiers, and the
 # two owner-directed region ZIP codes. Region ZIPs carry no street address and
 # are used only for ZIP-specific insurance/utility/rate context.
 REGION_ZIP_CODES = {"95014", "94122"}
-# 17043 = Cal. Rev. & Tax. Code §17043 (1% tax above $1,000,000), read on leginfo 2026-11-15.
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "17043"}
+# 17039/17041/17045 = Cal. Rev. & Tax. Code sections cited by name in the surcharge note (§17039 credits, §17041 filing status, §17045 joint returns), read on leginfo 2026-11-15.
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "17043", "17039", "17041", "17045"}
 FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
@@ -48,7 +48,7 @@ OFFICIAL_HOST_SUFFIXES = (
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
-    "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sftreasurer.org",
+    "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sfelections.org", "sftreasurer.org",
     "santaclaracounty.gov", "boj.or.jp",
     # Owner-directed official-context hosts (2026-11-15): the official daily
     # Treasury yield curve, the statute text, and the utility providers that

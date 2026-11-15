@@ -280,3 +280,38 @@ Branch: `arena/a897a17d-tino4` (platform-fixed; branched from `main` `60a054e`, 
 - **Irregularity noted:** the request describes the 1% as a "Form 540 tax above one million dollars" for inherited-property capital gains. The verified text shows it is a surcharge on taxable income above $1,000,000 in any year, not an estate or inheritance tax. The site now states it that way.
 - **Checks:** `python3 tools/build.py`, `python3 tools/verify.py`, `python3 -m unittest discover -s tools -p 'test_*.py'` (11 tests) all pass.
 
+
+## Session `arena/9830a6d0-tino4` — requirements register, investment-policy draft and ballot/statute verification (2026-11-15)
+
+Branch: `arena/9830a6d0-tino4` (platform-pinned; base `60a054e` = `origin/main` at PR #96). Status: active. No other branch or worktree was created. Scope is the files listed below; no other session's rows were edited.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 9830-1 | Requirements register: map each owner requirement to what the site does, the open gap, and a registered source | done | `arena/9830a6d0-tino4` | `tools/sitebuild.py` (new builder + nav/page list), `pages/requirements-tracker.html` | 2026-11-15 |
+| 9830-2 | Draft investment policy for sale/inheritance proceeds (template; owner and adviser fields left blank) | done | `arena/9830a6d0-tino4` | `tools/sitebuild.py`, `pages/investment-policy.html` | 2026-11-15 |
+| 9830-3 | Verify ballot and state/federal rules cited in the owner requests (Prop H, Prop 40, §17043 surcharge, §1014 basis, §1031 exchange) and register sources | done | `arena/9830a6d0-tino4` | `tools/sitebuild.py` SOURCES, flags F-24..F-28, law watchlist rows | 2026-11-15 |
+| 9830-4 | Verifier/test updates for the new statute IDs, the SF Elections host and the $129 official measure rate; test count 20 → 22 | done | `arena/9830a6d0-tino4` | `tools/verify.py`, `tools/test_case.py` | 2026-11-15 |
+| 9830-5 | Rebuild, verify, test, PR to `main`, merge after checks, confirm Pages | in progress | `arena/9830a6d0-tino4` | release | 2026-11-15 |
+
+### Sources read directly on 2026-11-15
+
+- **Verified (official host, fetched):** leginfo RTC §17043 (1% additional tax on taxable income above $1,000,000); SF Department of Elections preliminary results, Nov 3, 2026 (Measure H: 74.4% yes, 25.6% no of counted votes, update of Nov 10; certification up to 30 days); Secretary of State list of qualified statewide measures (Props 1–5, 37–45, incl. Prop 40 one-time tax; Prop 3 extends the high-income tax); SF Department of Elections home page (preliminary status).
+- **Registered unverified:** uscode.house.gov §1014 and §1031 (official page returned "Page Not Found" in its temporary format; text read through a public mirror, so the rows say so); FTB 2025 Form 540 booklet (404).
+- **Failed or not fetched:** FTB Form 540 booklet; SOS Prop 40 voter guide and certified results; SF measure text for Measure H (rates per category). These are flags, not published values.
+
+### Findings and irregularities (flagged, not resolved)
+
+- **F-24 Prop H (SF Measure H):** preliminary official pass (74.4% yes). Certification pending. The measure title gives rates from $129 per parcel to a $400,000 maximum for 15 years; Property B's category was not determined, so no parcel-tax amount is published.
+- **F-25 Prop 40:** on the Nov 3, 2026 ballot per the SOS list. The one billion dollars net-worth threshold appears in press reports and was not confirmed in the measure text.
+- **F-26 California 1% surcharge:** the statute is read (1% of taxable income above $1,000,000). The FTB form line and the California capital-gain computation were not verified from an official FTB page. The surcharge is kept out of the base case.
+- **F-27 Federal basis and exchange statutes:** §1014 (date-of-death basis) and §1031 (real-property exchanges) were read through a mirror, not the official House page.
+- **F-28 Imputed rent and depreciation recapture:** not modelled; no official rule supports an imputed-rent figure, and Property B's depreciation history is not public.
+- **Correction to the prior watchlist row:** the Props 3/40–43 row said the official titles were not read; the SOS list now confirms them. Results remain unread.
+- **Requests in the owner list that are not met by this session** (kept as Missing or Action needed on the requirements page, not inferred): Property A tax-rate area and published rate (needs the tax bill or county parcel record); market rent and comparables; date-of-death appraisal; five-year maintenance plan; estate liquidity plan; transfer-tax pricing; a separate same-year sale model; the Form 540 sensitivity value.
+
+### Verification
+
+- `python3 tools/build.py` → 22 pages; `python3 tools/verify.py` → OK (currency rounding, identifier checks, official hosts, local links); `python3 -m unittest discover -s tools -p 'test_*.py'` → 11 tests OK.
+- `tools/dom-test.cjs` requires optional `jsdom` and is not part of CI; not run this session.
+- Privacy: no names, addresses, parcel IDs, account numbers or unrounded household amounts were added. Vote counts were removed from the source scope text; only percentages are published. The $129 and $400,000 Measure H figures are official ballot-measure titles and are registered in the verifier's allowlist with their source.
+- Repository history remains unscrubbed (flag F-01); this session does not change that.
