@@ -13,7 +13,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         files = [ROOT / path for path in manifest]
-        self.assertEqual(len(files), 18)
+        self.assertEqual(len(files), 19)
         self.assertTrue(all(path.is_file() for path in files))
         self.assertFalse((ROOT / "assets/case-projections.csv").exists())
         self.assertIn("Attorney &amp; CPA briefing sheet", (ROOT / "pages/attorney-cpa-brief.html").read_text(encoding="utf-8"))

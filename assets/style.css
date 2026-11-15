@@ -167,6 +167,21 @@ footer a { white-space: nowrap; }
   table { min-width: 700px; }
   td:last-child { min-width: 210px; }
 }
+.brief-page .callout { break-inside: avoid; }
+@media print {
+  .brief-page main { font-size: 9.4pt; }
+  .brief-page h1 { font-size: 17pt; margin-bottom: 6px; }
+  .brief-page .lead { font-size: 9.4pt; margin-bottom: 8px; }
+  .brief-page .page-heading { margin-bottom: 8px; }
+  .brief-page .callout, .brief-page .prose, .brief-page .table-section { margin: 6px 0; padding: 7px 8px; }
+  .brief-page table { font-size: 6.9pt; }
+  .brief-page th, .brief-page td { padding: 3px 4px; }
+  .brief-page .source { font-size: 6.4pt; }
+  .brief-page .badge { font-size: 6.4pt; padding: 1px 5px; }
+  .brief-page .prose h2 { font-size: 10pt; }
+  .brief-page .brief-block { display: block; }
+  .brief-page footer { margin-top: 4px; padding-top: 4px; }
+}
 @media print {
   :root { --ink: #000; --muted: #333; --line: #bbb; }
   body { background: #fff; color: #000; font-size: 10pt; }
@@ -189,4 +204,19 @@ footer a { white-space: nowrap; }
   .source { font-size: 7pt; }
   footer { border-top: 1px solid #aaa; font-size: 8pt; }
   @page { margin: .55in; }
+}
+
+/* Deadline timeline */
+.timeline { display: grid; gap: 12px; margin: 18px 0 0; padding: 0; list-style: none; }
+.timeline-item { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 4px 16px; padding: 14px 16px; border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: 11px; background: #fbfdfc; }
+.timeline-when { grid-row: span 3; color: var(--teal-dark); font-weight: 800; font-size: .9rem; }
+.timeline-what { color: var(--ink); font-weight: 640; }
+.timeline-who, .timeline-evidence { color: var(--muted); font-size: .84rem; }
+@media (max-width: 640px) {
+  .timeline-item { grid-template-columns: 1fr; }
+  .timeline-when { grid-row: auto; }
+}
+@media print {
+  .timeline { gap: 6px; }
+  .timeline-item { break-inside: avoid; padding: 6px 8px; }
 }

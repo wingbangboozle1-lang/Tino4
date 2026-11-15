@@ -146,6 +146,90 @@ if (phaseForm) {
     status.textContent = `At the modeled early-crash trough, phasing ${earlyResult} immediate investment; after staging, phasing ${lateResult} immediate investment. These are assumption-driven scenarios, not forecasts or probabilities. See the stated model limits.`;
   }
 
+  // Ladder reinvestment risk: split the reserve across term slots and reprice
+  // each slot at a different renewal yield so the user can see how a falling
+  // short-rate path changes the staged reserve before it is spent.
+  function ladderScenario(stagingMonths, drawdown, troughMonths, drift, yield1, yieldPath) {
+    const starting = 100;
+    const horizon = Math.max(stagingMonths, troughMonths);
+    const peakAtCrash = 1;
+    const indexAt = month => {
+      const elapsed = Math.min(1, Math.max(0, month / troughMonths));
+      return peakAtCrash * (1 - drawdown * elapsed);
+    };
+    const slots = 4; // 3-, 6-, 12- and 24-month style rungs, normalized
+    let reserve = starting;
+    let shares = 0;
+    let interest = 0;
+    const monthlyRate = (annual, month) => {
+      const slot = Math.min(slots - 1, Math.floor(((month - 1) * slots) / Math.max(stagingMonths, 1)));
+      return Math.pow(1 + yieldPath[slot] / 100, 1 / 12);
+    };
+    for (let month = 1; month <= stagingMonths; month += 1) {
+      const growth = monthlyRate(month <= 12 ? yield1 : yieldPath[0], month);
+      const earned = reserve * (growth - 1);
+      interest += earned;
+      reserve += earned;
+      const purchase = starting / stagingMonths;
+      shares += purchase / Math.max(indexAt(month), 0.000001);
+      reserve -= purchase;
+    }
+    if (reserve > 0) { shares += reserve / Math.max(indexAt(stagingMonths), 0.000001); reserve = 0; }
+    return { interest, finalIndex: indexAt(horizon), shares, months: horizon };
+  }
+
+  function displayLadder(prefix, result, inflation) {
+    const inflationFactor = Math.pow(1 + inflation / 100, result.months / 12);
+    element(`${prefix}-interest`).textContent = units(result.interest);
+    element(`${prefix}-value`).textContent = units(result.shares * result.finalIndex);
+    element(`${prefix}-real`).textContent = units((result.shares * result.finalIndex) / inflationFactor);
+  }
+
+  function simulateLadder() {
+    const stagingMonths = numeric('ladder-months', 30, 6, 60);
+    const drawdown = numeric('ladder-drawdown', 57, 0, 99) / 100;
+    const troughMonths = numeric('ladder-trough', 17, 1, 120);
+    const drift = numeric('ladder-drift', 0, -20, 30) / 100;
+    const yield1 = numeric('ladder-yield1', 0, -5, 20);
+    const renewal1 = numeric('ladder-renewal1', 0, -5, 20);
+    const renewal2 = numeric('ladder-renewal2', 0, -5, 20);
+    const renewal3 = numeric('ladder-renewal3', 0, -5, 20);
+    const inflation = numeric('ladder-inflation', 0, -5, 20);
+    const flat = ladderScenario(stagingMonths, drawdown, troughMonths, drift, yield1, [yield1, yield1, yield1, yield1]);
+    const falling = ladderScenario(stagingMonths, drawdown, troughMonths, drift, yield1, [renewal1, renewal2, renewal3, renewal3]);
+    element('ladder-flat-year').textContent = '0.00 units (baseline)';
+    element('ladder-falling-year').textContent = units(Math.max(0, flat.interest - falling.interest));
+    displayLadder('ladder-flat', flat, inflation);
+    displayLadder('ladder-falling', falling, inflation);
+    const status = element('ladder-status');
+    if (status) {
+      const gap = flat.interest - falling.interest;
+      status.textContent = gap > 0.005
+        ? `Repricing the later rungs at lower yields removes ${units(gap)} of accrued reserve interest over ${stagingMonths} months before the crash outcome is applied. This is reinvestment risk, not a forecast of yields.`
+        : 'The renewal path is not below the first-year yield, so this run shows no reinvestment penalty. Lower a renewal yield to isolate the effect.';
+    }
+  }
+
+  if (document.getElementById('ladder-tool')) {
+    document.getElementById('ladder-tool').querySelectorAll('input, select').forEach(control => {
+      control.addEventListener('input', simulateLadder);
+      control.addEventListener('change', simulateLadder);
+    });
+    element('ladder-reset')?.addEventListener('click', () => {
+      element('ladder-months').value = '30';
+      element('ladder-drawdown').value = '57';
+      element('ladder-trough').value = '17';
+      element('ladder-drift').value = '0';
+      element('ladder-yield1').value = '4.0';
+      element('ladder-renewal1').value = '3.0';
+      element('ladder-renewal2').value = '2.5';
+      element('ladder-renewal3').value = '2.0';
+      element('ladder-inflation').value = '2.5';
+      simulateLadder();
+    });
+    simulateLadder();
+  }
+
   element('phase-event')?.addEventListener('change', () => {
     if (element('phase-event').value === '1929') {
       element('phase-drawdown').value = '89';

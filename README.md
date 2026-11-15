@@ -11,7 +11,7 @@ The repository is currently public. A `noindex` directive is not access control.
 ## Site contents
 
 - `index.html` — decision-changing facts and next steps.
-- `pages/` — 18 sections covering the executive summary, live/rent/sell/mixed paths, missing facts, blank projection scenarios, California property-tax rules, operating costs, historical stress regimes, Treasury staging, legal thresholds and deadlines, law watchlist, attorney/CPA brief, flagged items, glossary, source register and privacy limits.
+- `pages/` — 19 sections covering the executive summary, live/rent/sell/mixed paths, missing facts, blank projection scenarios, California property-tax rules, operating costs, historical and official economic regimes, Treasury staging with a reinvestment-risk panel, legal thresholds, a deadline timeline, law watchlist, attorney/CPA brief, decision log, flagged items, glossary, source register and privacy limits.
 - `assets/` — local-only stylesheet and JavaScript. Review choices stay in this browser; the investment scenario inputs are transient and are not transmitted or persisted.
 - `tools/sitebuild.py` — generic page builder. It does not import or read household inputs.
 - `tools/site-manifest.json` — the exact list of public HTML outputs.
@@ -29,6 +29,14 @@ python3 -m unittest discover -s tools -p 'test_*.py' -v
 ```
 
 The site uses no remote scripts, fonts, images, APIs, analytics or form submission. Official links open only when a reader follows them. The calculator normalizes the starting portfolio to 100 units, uses historical drawdown endpoints with a clearly synthetic path, and includes adjustable yield, pre-crash drift and inflation assumptions. It is a stress illustration, not a historical backtest, forecast or personal investment recommendation.
+
+## Ranges, not round numbers
+
+No household amount is published. Where an official figure is quoted it is a published statutory amount (the federal estate and gift exclusions, the $7,000 homeowners' property-tax exemption and the $250,000/$500,000 main-home gain exclusion) and it carries a source link. Everything else is a formula, a blank scenario column or a stated range. If a figure is ever republished in a private or public document, round it to the nearest ten dollars first and then check separately whether the value can still be re-identified from public records; rounding alone is not de-identification.
+
+## Repository history is not scrubbed
+
+A read-only scan of `git rev-list --all --objects` (251 commits, 1,384 unique blobs, 380 distinct paths) found case-derived place identifiers in historical commits: CA-ZIP-shaped patterns in 95 paths, a property city name in 109 paths, a neighbourhood name in 96 distinct files, plus one specific location identifier in 55 files, including `README.md`, `VERIFICATION.md`, `COORDINATION.md`, several `_*/` audit directories and `_research/notes.jsonl`. No matched value is reproduced in this repository's current tree or on the published site. Removing it from history requires a coordinated rewrite, a visibility decision and possibly GitHub Support; neither is performed by a normal commit. Until the repository owner or administrator completes that work, treat the historical material as exposed. See `pages/privacy.html` and `pages/flagged-for-review.html`.
 
 ## Evidence and limitations
 

@@ -13,13 +13,15 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# The only dollar figures allowed in public pages are year-specific federal
-# statutory/exclusion figures and annual gift exclusions sourced from IRS pages.
-# Any property-specific or otherwise unsourced currency amount fails closed.
-PUBLIC_CURRENCY_AMOUNTS = {"15000000", "15480000", "19000", "20000"}
-# These five-digit numbers are cited California code sections and a CBO report
-# identifier, not postal codes. No other five-digit identifier is expected.
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809"}
+# The only dollar figures allowed in public pages are published statutory or
+# agency figures: federal estate/gift exclusions (IRS), the $7,000 homeowners'
+# property-tax exemption (RTC section 218), and the $250,000/$500,000 main-home
+# gain exclusion (IRS Topic 701). Any property-specific or otherwise unsourced
+# currency amount fails closed.
+PUBLIC_CURRENCY_AMOUNTS = {"15000000", "15480000", "19000", "20000", "250000", "500000", "7000"}
+# These five-digit numbers are cited California code sections and CBO report
+# identifiers, not postal codes. No other five-digit identifier is expected.
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270"}
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
