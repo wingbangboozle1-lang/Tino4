@@ -77,3 +77,34 @@ Branch: `arena/fdd082b5-tino4` (platform-fixed; created from `main` at `c9530a3d
 - **Branch sync note:** the first claim push was rebased onto `origin/main` at `7006c79` (PR #80). A stale earlier claim commit on this branch was replaced by a claim-only commit via `--force-with-lease` on this session's own branch; no other branch or `main` was modified.
 - **Pending:** PR to `main`, merge result, and GitHub Pages deploy result will be recorded below after the merge.
 - **Release result (2026-11-15):** IH-1 PR `https://github.com/wingbangboozle1-lang/Tino4/pull/81` merged to `main` at `a10c91b` (merge commit). `verify` (run after the identifier fix, `pass`) and `pages build and deployment` both completed with `success` for `a10c91b`. The live page `pages/flagged-for-review.html` shows the new F-09 to F-15 rows. Public-history exposure, the Santa Clara rate, HUD FMR values, Japan bubble figures, CA FTB brackets and Nov 3, 2026 certified results remain open and are flagged, not resolved.
+---
+
+### CC44 rebase conflict log (2026-11-15)
+
+- `origin/main` advanced twice while this session worked: to `9ef9d48` (PR #79) and then to `993236f` (PRs #80, #81, #82 from sessions `arena/fdd082b5`, `arena/96b5208b`). This branch was rebased onto `origin/main`; the rebase conflicted in `COORDINATION.md` and `tools/sitebuild.py`.
+- Resolution: the entire incoming board and all incoming site work are preserved (law-watchlist rows for the Nov 3, 2026 measures, the SF rent rows, flagged rows F-09 to F-15, the source records and the added host allowlist entries). This session's records are appended after them. No incoming work was discarded and no incoming row was renumbered; this session's new flags were relabelled F-16 to F-19 to avoid colliding with the existing F-09 to F-15.
+- `tools/verify.py`: the incoming session added four official host suffixes; this session additionally allows the published statutory amounts `$7,000`, `$250,000`, `$500,000`, the CBO publication identifiers `61882` and `61270`, and documents each allowance in a comment. Nothing was removed from the incoming allowlist.
+
+---
+
+## Session `arena/cc44a347-tino4` — decision-content build, privacy and Pages deploy (2026-11-15)
+
+Branch is platform-fixed at `arena/cc44a347-tino4`, branched from `main` at `c9530a3` and fast-forwarded locally to `origin/main` `9ef9d48` before any content edit. No other branch or worktree was created. This session claims the scopes below exclusively; it read the whole board first and found no active conflicting claim (PR #19 is a stale coordination PR from session `arena/ec965fac` dated 2026-11-11 and is left open, untouched).
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| CC44-1 | Claim record and board maintenance | done | `arena/cc44a347` | `COORDINATION.md` (this section only) | 2026-11-15 |
+| CC44-2 | Black-swan regimes: real historical figures plus official CBO/HUD/FHFA baselines, replacing single-constant-growth framing; phased Treasury ladder with reinvestment risk and crash-during/crash-after entry | in progress | `arena/cc44a347` | `tools/sitebuild.py` (`SOURCES`, `build_black_swan`, `build_phased_investing`), `assets/app.js` (ladder panel only) | 2026-11-15 |
+| CC44-3 | Ranges instead of round numbers, reinvestment risk beside the headline, "what would change the answer" first screen, mixed paths, deadlines timeline, grouped menu/glossary, executive summary, suggestions review queue | in progress | `arena/cc44a347` | `tools/sitebuild.py` (all builders except the ones in CC44-2), `assets/style.css`, `pages/**`, `index.html` | 2026-11-15 |
+| CC44-4 | Privacy: pre-rounding range discipline, anonymised placeholders, history scan report, repository visibility handling, enforceable release checks | in progress | `arena/cc44a347` | `tools/verify.py`, `tools/test_case.py`, `tools/sitebuild.py` (`SOURCES`/privacy/flagged builders), `README.md`, `_config.yml` | 2026-11-15 |
+| CC44-5 | One-page printable attorney & CPA briefing sheet | in progress | `arena/cc44a347` | `tools/sitebuild.py` (`build_brief`), `assets/style.css` (print rules only) | 2026-11-15 |
+| CC44-6 | Integration and release: rebuild, verify, browser smoke test, PR to `main`, merge, confirm GitHub Pages deploy, record result | in progress | `arena/cc44a347` | `COORDINATION.md` (this section only) | 2026-11-15 |
+
+Rules this session follows: sources are fetched directly and cited by scope; no case value, place identifier or household amount is added to the public tree; any fact that cannot be confirmed from an official source is left blank and listed on the "Flagged for review" page. This session is the only one editing the claimed files, so no cross-session handoff is required.
+
+### CC44-4 findings so far — history and privacy (read before any history rewrite)
+
+- The checkout was shallow. `git fetch --unshallow` was run read-only; the repository now has 251 reachable commits and `origin/main` moved from `c9530a3` to `9ef9d48` (PR #79). The branch was fast-forwarded; no history was rewritten and no force-push was performed.
+- A read-only blob scan of `git rev-list --all --objects` (1,384 unique blobs, 380 distinct paths) shows that **historical commits still contain case-derived material**: place identifiers appear in 95 paths (CA-ZIP-shaped five-digit patterns), a property-city name in 109 paths, a neighbourhood name in 96 paths, and one specific five-digit place identifier in 55 paths, including `README.md`, `VERIFICATION.md`, `COORDINATION.md`, `_7adb71fc/**`, `_7eff7e24/**`, `_c07ccf45/**`, `_s95cf9249/**`, `_s9ad1da71/**` and `_research/notes.jsonl`. No matched value is reproduced here or on the website; only paths and counts are reported.
+- Consequence: the earlier board's statement that the public tree needed cleanup is correct for the tree, but the **history is not scrubbed**. This session does not rewrite `main`, does not force-push and does not claim the history is clean; it publishes the finding on the "Privacy & limits" and "Flagged for review" pages and in `README.md`.
+- `gh api` reports `visibility: public`, `private: false`, default branch `main`, Pages `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`. Repository visibility and any history rewrite require repository-owner/admin action and GitHub Support coordination; a session-scoped token cannot safely perform an irreversible rewrite of a shared default branch.
