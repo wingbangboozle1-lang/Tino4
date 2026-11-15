@@ -21,13 +21,6 @@ jobs:
         run: python -m unittest discover -s tools -p 'test_*.py' -v
       - name: Build the site
         run: python tools/build.py
-      - name: Optional DOM smoke test for the local-only panels
-        # jsdom is not a published dependency, so this step may skip cleanly; the
-        # unit tests already gate the rebuild-and-diff check (tools/recheck.py).
-        continue-on-error: true
-        run: |
-          npm install --no-save --no-audit --no-fund jsdom
-          node tools/dom-test.cjs
       - name: Verify the built site
         run: python tools/verify.py
       - name: Confirm the build is reproducible

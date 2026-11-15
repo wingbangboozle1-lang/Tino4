@@ -1,64 +1,17 @@
-# Git history remediation runbook (repository owner action required)
+# Repository history privacy runbook
 
-Status as of 2026-11-15: **NOT DONE.** The current tree and generated site are
-anonymized and $10-rounded, but the public Git history of
-`wingbangboozle1-lang/Tino4` still contains pre-rounding case material from
-earlier revisions. Until the steps below are completed by the repository
-owner/admin, **treat all historic values as exposed.**
+**Status: owner/admin follow-up required.** Current-site cleanup cannot erase earlier commits, pull-request diffs, forks, caches, downloads or clones. Treat anything previously public as potentially retained.
 
-Why this was not done from the working session: history rewrites require
-force-pushing refs other than the session's feature branch, which the session
-is forbidden to touch, and they must be coordinated across open PRs and
-concurrent sessions. GitHub documents history rewrites as disruptive and
-notes that pull requests, forks, caches and clones may retain copies
-(https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository).
+## Before a history change
 
-## Before anything else
+- Preserve an encrypted private archive outside GitHub.
+- Coordinate with repository collaborators and stop concurrent pushes.
+- Review GitHub's current sensitive-data removal documentation and contact GitHub Support about pull-request diffs and cached views.
+- Identify all affected refs and clones without copying sensitive content into public notes.
+- Decide whether public Pages and repository visibility remain appropriate; test the impact before changing settings.
 
-1. Preserve a **private, encrypted archive** of the current repository
-   (including history) somewhere other than GitHub. The scrub destroys
-   pre-scrub objects; you cannot retrieve them after a GC.
-2. Close or merge all open PRs and coordinate with any concurrent sessions so
-   no branch is mid-push during the rewrite.
-3. Identify the material to remove: pre-rounding property values, exact tax
-   and assessed-value figures, rent amounts, and any postal-code/parcel/name
-   fragments that ever appeared in any commit.
+## If an administrator authorizes a rewrite
 
-## Option A — GitHub Support (recommended for this repo)
+Use a fresh, full-history mirror and a reviewed, access-controlled remediation plan. Remove or redact affected objects across every ref, not only the default branch. Verify the rewrite in a fresh clone, coordinate collaborator re-clones, and ask GitHub Support about server-side cached content. Do not force-push until the archive and recovery plan have been approved.
 
-Ask GitHub Support to remove the sensitive objects from pull-request diffs and
-cached views. This is the only route that reaches PR diffs and GitHub's caches.
-Follow the current instructions in the GitHub docs link above (the support
-form references specific commit/object identifiers).
-
-## Option B — local rewrite with git-filter-repo
-
-The helper `tools/history_scrub.sh` wraps the standard procedure:
-
-1. Fresh clone + private backup.
-2. `git filter-repo` (installed via pip) with replace-text expressions that map
-   each pre-rounding figure to its published rounded value, plus removal of any
-   file path that only ever held private inputs.
-3. Force-push every ref: `git push --force --all origin &&
-   git push --force --tags origin`.
-4. Coordinate with GitHub Support about PR diffs/caches (Option A still needed).
-5. Ask any fork owners to re-clone or hard-reset; delete and recreate forks if
-   simpler.
-6. Verify from a clean browser/incognito: raw.githubusercontent URLs for old
-   commit SHAs must 404 after GC.
-
-Build the replace-text rules yourself, in a private file kept outside every
-clone, from `git log -p` output on your own copy. A rule missed is a value that
-stays. **Never commit that file and never paste its contents into an issue, a
-PR, this repository or the runbook** — a rounded-to-unrounded map defeats the
-rounding policy for the whole published site, which is why
-`tools/history_scrub.sh` contains no numbers at all and `tools/verify.py`
-fails the build if a mapping ever appears in the tree.
-
-## After the scrub
-
-- Re-run `python3 tools/build.py && python3 tools/verify.py` and the test suite.
-- Update the privacy page and the COORDINATION.md record: change the
-  "history is not scrubbed" state to the scrub date, method and verification
-  result. Keep this runbook until GitHub Support confirms PR/caches are clean.
-- Announce to collaborators: old clones are unsafe; everyone re-clones.
+No command or branch-level site update can recall copies already downloaded or retained by third parties. Record only high-level completion status and date here; do not add the affected values, identities or locations.
