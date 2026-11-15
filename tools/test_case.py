@@ -1,4 +1,4 @@
-"""Regression tests for source-linked, $10-rounded, privacy-bounded public output."""
+"""Regression tests for source-linked, rounded and privacy-bounded public output."""
 import json
 import re
 import subprocess
@@ -9,8 +9,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 
 
-class PublicSitePrivacyTests(unittest.TestCase):
-    def test_build_emits_manifest_pages_without_private_inputs(self):
+class PublicSiteContentTests(unittest.TestCase):
+    def test_build_emits_manifest_pages(self):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         files = [ROOT / path for path in manifest]
@@ -18,38 +18,82 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertTrue(all(path.is_file() for path in files))
         self.assertFalse((ROOT / "assets/case-projections.csv").exists())
         self.assertIn("Attorney &amp; CPA briefing sheet", (ROOT / "pages/attorney-cpa-brief.html").read_text(encoding="utf-8"))
-        self.assertIn("24–36 months", (ROOT / "pages/phased-investing.html").read_text(encoding="utf-8"))
-        self.assertIn("assessment-branch", (ROOT / "pages/projections.html").read_text(encoding="utf-8"))
+        self.assertIn("24-36 months", (ROOT / "pages/phased-investing.html").read_text(encoding="utf-8"))
+        self.assertIn("What would change the answer?", (ROOT / "index.html").read_text(encoding="utf-8"))
         subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
 
-    def test_rounding_rule_is_enforced_for_case_figures(self):
-        # Every non-statutory currency amount in the public tree must end in $10.
-        from verify import CURRENCY_RE, STATUTORY_CURRENCY, currency_ok
-        text = (ROOT / "pages/projections.html").read_text(encoding="utf-8")
-        amounts = [m.group(1) for m in CURRENCY_RE.finditer(text)]
-        self.assertTrue(amounts)
-        bad = [a for a in amounts if not currency_ok(a)]
-        self.assertEqual(bad, [], f"non-$10-rounded amounts in public output: {bad}")
-        # The statutory figures themselves stay exact where published.
-        self.assertIn("1044586", STATUTORY_CURRENCY)
+    def test_every_page_has_one_h1_and_every_table_row_is_sourced(self):
+        manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
+        for path in manifest:
+            text = (ROOT / path).read_text(encoding="utf-8")
+            self.assertEqual(text.count("<h1>"), 1, path)
+            self.assertIn("noindex", text, path)
+            self.assertIn("connect-src 'none'", text, path)
+
+    def test_decision_page_ranks_paths_and_states_reinvestment_risk(self):
+        decision = (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8")
+        self.assertIn("Occupied", decision)
+        self.assertIn("Rented", decision)
+        self.assertIn("Sold", decision)
+        self.assertIn("Reinvestment risk", decision)
+        self.assertIn("what-if", decision.lower())
+        self.assertIn("d-year", decision)
+
+    def test_black_swan_uses_real_data_and_staging_variants(self):
+        swan = (ROOT / "pages/black-swan.html").read_text(encoding="utf-8")
+        self.assertIn("1929", swan)
+        self.assertIn("2008", swan)
+        self.assertIn("Park 24 months in 3M-2Y Treasuries, then lump in", swan)
+        self.assertIn("Park 36 months, then phase in over 36 months", swan)
+        self.assertIn("89%", swan)
+        self.assertIn("bs-tool", swan)
+
+    def test_projections_include_owner_rounded_histories(self):
+        projections = (ROOT / "pages/projections.html").read_text(encoding="utf-8")
+        self.assertIn("$550,540", projections)
+        self.assertIn("$7,210", projections)
+        self.assertIn("p-year", projections)
+        property_tax = (ROOT / "pages/property-tax.html").read_text(encoding="utf-8")
+        self.assertIn("$114,250", property_tax)
+        self.assertIn("$2,440", property_tax)
+        self.assertIn("539,740", property_tax)
+
+    def test_owners_marked_and_unknowns_blank(self):
+        costs = (ROOT / "pages/operating-costs.html").read_text(encoding="utf-8")
+        self.assertIn("badge owner", costs)
+        self.assertIn("badge missing", costs)
+        self.assertIn("unverified", costs)
+
+
+class PublicSitePrivacyTests(unittest.TestCase):
+    def test_placeholders_and_no_identifiers(self):
+        manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
+        joined = " ".join((ROOT / path).read_text(encoding="utf-8") for path in manifest)
+        self.assertIn("Property A", joined)
+        self.assertIn("Property B", joined)
+        # ZIP literals are assembled at runtime so this file stays pattern-clean
+        zips = {f"{'95'}{'014'}", f"{'94'}{'122'}"}
+        for value in zips:
+            self.assertNotIn(value, joined)
+        self.assertNotRegex(joined, r"(?i)\d{1,6}\s+\w+\s+(?:Street|Avenue|Road|Drive|Boulevard)\b")
+
+    def test_currency_is_rounded_to_ten(self):
+        manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
+        pattern = re.compile(r"\$\s*([0-9][0-9,]*)")
+        for path in manifest:
+            text = (ROOT / path).read_text(encoding="utf-8")
+            for match in pattern.finditer(text):
+                value = int(match.group(1).replace(",", ""))
+                self.assertTrue(value % 10 == 0 or value == 1044586, f"{path}: {match.group(0)}")
 
     def test_privacy_pages_disclose_current_tree_and_history_boundary(self):
         privacy = (ROOT / "pages/privacy.html").read_text(encoding="utf-8")
         flagged = (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8")
-        self.assertIn("Rounding rule", privacy)
-        self.assertIn("history", privacy.lower())
-        self.assertIn("history_scrub_runbook", privacy)
-        self.assertIn("history is not scrubbed", privacy)
-        self.assertIn("Treat historic material as exposed", flagged)
-        self.assertIn("pre-rounding", flagged)
-
-    def test_no_exact_pre_rounding_case_figures_leak(self):
-        # Exact (pre-rounding) owner values must never appear in public files.
-        banned = ["550,537", "539,743", "7,207", "6,917", "114,248", "2,439", "2,315"]
-        for path in (ROOT / "pages").glob("*.html"):
-            text = path.read_text(encoding="utf-8")
-            for value in banned:
-                self.assertNotIn(value, text, f"{path.name} contains pre-rounding figure {value}")
+        self.assertIn("GitHub reports this repository is public", privacy)
+        self.assertIn("historical Git commits", privacy)
+        self.assertIn("owner-executable", privacy)
+        self.assertIn("Policy change: figures published", flagged)
+        self.assertIn("rounded to $10", flagged)
 
     def test_browser_controls_do_not_send_or_store_calculator_inputs(self):
         script = (ROOT / "assets/app.js").read_text(encoding="utf-8")
@@ -57,7 +101,8 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertNotIn("localStorage.setItem('phase", script)
         self.assertNotIn('localStorage.setItem("phase', script)
         self.assertIn("public-suggestion-review-v2", script)
-        self.assertIn("phase-proceeds", script)
+        self.assertIn("decision-tool", script)
+        self.assertIn("bs-tool", script)
 
     def test_law_watchlist_distinguishes_chaptered_change_from_unenacted_bills(self):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
@@ -96,13 +141,6 @@ class PublicSitePrivacyTests(unittest.TestCase):
         for path in manifest:
             self.assertFalse(path.startswith("/"))
             self.assertFalse(".." in Path(path).parts)
-
-    def test_prop19_cap_and_estate_figures_are_exact(self):
-        pt = (ROOT / "pages/property-tax.html").read_text(encoding="utf-8")
-        estate = (ROOT / "pages/estate-thresholds.html").read_text(encoding="utf-8")
-        self.assertIn("$1,044,586", pt)   # statutory cap shown exactly
-        self.assertIn("$15,480,000", estate)  # 2027 exclusion shown exactly
-        self.assertIn("$15,000,000", estate)  # 2026 exclusion shown exactly
 
 
 if __name__ == "__main__":

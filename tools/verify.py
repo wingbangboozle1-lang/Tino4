@@ -1,5 +1,17 @@
 #!/usr/bin/env python3
-"""Structural, sourcing, privacy-boundary and navigation checks for the site."""
+"""Structural, sourcing, privacy-boundary and navigation checks for the site.
+
+Policy v3 (owner instruction, 2026-11-15):
+- Property figures ARE published but MUST be rounded to the nearest $10
+  (the owner's anti-tracing rule). Any currency amount that is not a multiple
+  of $10 fails, except the whitelisted statutory figure $1,044,586 (BOE
+  Letter to Assessors 2025/009).
+- Unrounded pre-rounding case figures therefore fail closed: they were not
+  multiples of $10 and are not whitelisted.
+- Addresses, postal codes (except cited statute/section identifiers), emails,
+  and phone numbers remain banned everywhere in tracked text files.
+- External links must be HTTPS, official, and safe; resources local-only.
+"""
 from __future__ import annotations
 
 import json
@@ -13,39 +25,11 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# Two currency classes are allowed in public files:
-#  (1) case/cost figures rounded to the nearest $10 (the owner's de-
-#      identification rule — enforced mechanically below); and
-#  (2) published statutory/tariff figures, registered here with their source,
-#      shown exactly as published. Other published agency figures (for example
-#      the $7,000 homeowners' exemption or the $3,500,000 exclusion proposed in
-#      S.4196's introduced text) pass class (1) when they end in $10.
-STATUTORY_CURRENCY = {
-    "1044586": "BOE LTA 2025/009 — Prop 19 cap 2/16/2025–2/15/2027",
-    "1022600": "BOE LTA 2025/009 — Prop 19 cap 2/16/2023–2/15/2025",
-    "1000000": "BOE LTA 2025/009 — Prop 19 cap 2/16/2021–2/15/2023",
-    "15000000": "IRS — 2026 basic exclusion / filing threshold",
-    "15480000": "IRS IR-2026-133 — 2027 basic exclusion",
-    "19000": "IRS IR-2026-133 — 2026 annual gift exclusion",
-    "20000": "IRS IR-2026-133 — 2027 annual gift exclusion",
-    "16000": "Rev. Proc. 2025-32 Table 5 — trust top bracket threshold",
-    "11700": "Rev. Proc. 2025-32 Table 5 — trust 35% bracket threshold",
-    "3300": "Rev. Proc. 2025-32 Table 5 — trust 24% bracket threshold",
-    "16250": "Rev. Proc. 2025-32 §4.03 — trust 20% capital-gains threshold",
-    "171": "SFPUC Prop 218 notice — avg single-family combined bill, FYE 2026",
-    "189": "SFPUC Prop 218 notice — avg combined bill, FYE 2027",
-    "212": "SFPUC Prop 218 notice — avg combined bill, FYE 2028",
-}
-# Five-digit numeric fragments that are statute/CBO/docket identifiers or
-# numeric fragments inside official URLs — not postal codes.
-PUBLIC_STATUTE_IDS = {
-    "13301", "16061", "62809",   # CA RTC §13301; Prob. §16061.7; CBO pub 62809
-    "61270", "61882",            # CBO publication ids
-    "25009",                     # BOE LTA 2025/009 filename fragment
-    "26138",                     # SOS CC/ROV memo 26138 filename fragment
-    "70106",                     # OBBBA §70106 (basic exclusion)
-    "65912",                     # Gov. Code §65912.155 et seq. (SB 79)
-}
+# Statutory figures that legitimately are not multiples of $10.
+WHITELISTED_CURRENCY = {"1044586"}
+# Five-digit identifiers that are cited statute/report numbers, not postal codes.
+# 13301 RTC estate tax; 16061 Probate Code; 62809 CBO report; 70106 P.L. 119-21 section; 18662 RTC withholding; 25009 BOE LTA 2025/009; 36084 fragment of the pinned branch name arena/a0d36084-tino4
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "70106", "18662", "25009", "36084"}
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
@@ -54,10 +38,10 @@ OFFICIAL_HOST_SUFFIXES = (
     "irs.gov", "legislature.ca.gov", "boe.ca.gov", "sco.ca.gov", "ca.gov",
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
-    "sfpuc.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
-    "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sftreasurer.org",
-    "santaclaracounty.gov", "boj.or.jp",
+    "ftb.ca.gov", "stlouisfed.org", "nyu.edu", "cafairplan.com",
+    "sftreasurer.org", "santaclaracounty.gov", "sccassessor.org", "sfassessor.org",
+    "sfpuc.org",
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
@@ -69,6 +53,17 @@ ADDRESS_RE = re.compile(
 )
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE_RE = re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)")
+
+
+def amount_is_public(amount: str) -> bool:
+    normalized = amount.replace(",", "").rstrip(".")
+    if not normalized or not normalized.replace(".", "").isdigit():
+        return False
+    if "." in normalized:
+        whole, _, frac = normalized.partition(".")
+        return (int(whole) % 10 == 0 and all(c == "0" for c in frac)) or frac.rstrip("0") in ("",) and int(whole) % 10 == 0
+    value = int(normalized)
+    return value % 10 == 0 or value in {int(item) for item in WHITELISTED_CURRENCY}
 
 
 class PageAudit(HTMLParser):
@@ -170,19 +165,6 @@ class PageAudit(HTMLParser):
             self.local_links.append(value)
 
 
-def currency_ok(raw: str) -> bool:
-    """Allowed: $10-rounded case/cost figures, or registered statutory amounts."""
-    amount = raw.replace(",", "")
-    if amount in STATUTORY_CURRENCY:
-        return True
-    if "." in amount:
-        return False  # cents are only allowed for registered published figures
-    try:
-        return int(amount) % 10 == 0
-    except ValueError:
-        return False
-
-
 def host_is_official(host: str) -> bool:
     host = host.lower().split(":", 1)[0].rstrip(".")
     return any(host == suffix or host.endswith("." + suffix) for suffix in OFFICIAL_HOST_SUFFIXES)
@@ -194,6 +176,27 @@ def path_within_root(path: Path) -> bool:
         return True
     except ValueError:
         return False
+
+
+def scan_text_for_violations(text: str, relative: str, errors: list[str], css_color_strip: bool = False) -> None:
+    scan_text = text
+    if css_color_strip:
+        scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
+    for public_number in PUBLIC_STATUTE_IDS:
+        scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
+        scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
+    for match in CURRENCY_RE.finditer(text):
+        if not amount_is_public(match.group(1)):
+            errors.append(f"{relative} contains a currency amount that is not a multiple of $10 and not a whitelisted statutory figure")
+    for match in POSTAL_RE.finditer(scan_text):
+        if match.group(1) not in PUBLIC_STATUTE_IDS:
+            errors.append(f"{relative} contains an unexplained five-digit identifier")
+    if ADDRESS_RE.search(text):
+        errors.append(f"{relative} appears to contain a street address")
+    if EMAIL_RE.search(text):
+        errors.append(f"{relative} appears to contain an email address")
+    if PHONE_RE.search(text):
+        errors.append(f"{relative} appears to contain a phone number")
 
 
 def verify() -> list[str]:
@@ -229,7 +232,7 @@ def verify() -> list[str]:
         if legacy_dir.exists() and any(path.is_file() for path in legacy_dir.rglob("*")):
             errors.append("legacy case or audit material remains in the current tree")
 
-    page_set = { (ROOT / item).resolve() for item in manifest if isinstance(item, str) }
+    page_set = {(ROOT / item).resolve() for item in manifest if isinstance(item, str)}
     text_suffixes = {".html", ".md", ".py", ".txt", ".yml", ".yaml", ".json", ".css", ".js", ".cjs"}
     for path in tree_files:
         if path.resolve() in page_set or path.suffix.lower() not in text_suffixes:
@@ -239,22 +242,7 @@ def verify() -> list[str]:
         except (OSError, UnicodeDecodeError):
             continue
         relative = path.relative_to(ROOT).as_posix()
-        bad = [amount.group(1) for amount in CURRENCY_RE.finditer(content) if not currency_ok(amount.group(1))]
-        if bad:
-            errors.append(f"{relative} contains an unapproved currency amount")
-        scan_text = content
-        if path.suffix.lower() == ".css":
-            scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
-        for public_number in set(STATUTORY_CURRENCY) | PUBLIC_STATUTE_IDS:
-            scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
-        if any(match.group(1) not in PUBLIC_STATUTE_IDS for match in POSTAL_RE.finditer(scan_text)):
-            errors.append(f"{relative} contains an unexplained five-digit identifier")
-        if ADDRESS_RE.search(content):
-            errors.append(f"{relative} appears to contain a street address")
-        if EMAIL_RE.search(content):
-            errors.append(f"{relative} appears to contain an email address")
-        if PHONE_RE.search(content):
-            errors.append(f"{relative} appears to contain a phone number")
+        scan_text_for_violations(content, relative, errors, css_color_strip=path.suffix.lower() == ".css")
 
     pages: list[Path] = []
     for relative in manifest:
@@ -309,20 +297,9 @@ def verify() -> list[str]:
                 continue
             target = (page.parent / unquote(parsed.path)).resolve()
             if not path_within_root(target) or not target.is_file():
-                errors.append(f"{relative} has a broken local link")
+                errors.append(f"{relative} has a broken local link: {link}")
 
-        for match in CURRENCY_RE.finditer(text):
-            if not currency_ok(match.group(1)):
-                errors.append(f"{relative} contains an unapproved currency amount")
-        for match in POSTAL_RE.finditer(text):
-            if match.group(1) not in PUBLIC_STATUTE_IDS:
-                errors.append(f"{relative} contains an unexplained five-digit identifier")
-        if ADDRESS_RE.search(text):
-            errors.append(f"{relative} appears to contain a street address")
-        if EMAIL_RE.search(text):
-            errors.append(f"{relative} appears to contain an email address")
-        if PHONE_RE.search(text):
-            errors.append(f"{relative} appears to contain a phone number")
+        scan_text_for_violations(text, relative, errors)
 
     if (ROOT / "assets" / "case-projections.csv").exists():
         errors.append("case-projection file exists in public assets")
@@ -343,4 +320,4 @@ if __name__ == "__main__":
         print("\n".join(problems))
         sys.exit(1)
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    print(f"OK — {len(manifest)} pages; all table rows sourced and status-tagged; local-only resources; current-tree privacy checks pass (Git history excluded).")
+    print(f"OK — {len(manifest)} pages; table rows sourced and status-tagged; currency limited to $10-rounded and whitelisted statutory figures; no addresses, postal codes, emails or phones; local-only resources (Git history excluded from scan).")
