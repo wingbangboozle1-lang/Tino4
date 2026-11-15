@@ -98,7 +98,7 @@ Branch is platform-fixed at `arena/cc44a347-tino4`, branched from `main` at `c95
 | CC44-3 | Ranges instead of round numbers, reinvestment risk beside the headline, "what would change the answer" first screen, mixed paths, deadlines timeline, grouped menu/glossary, executive summary, suggestions review queue | done | `arena/cc44a347` | `tools/sitebuild.py` (all builders except the ones in CC44-2), `assets/style.css`, `pages/**`, `index.html` | 2026-11-15 |
 | CC44-4 | Privacy: pre-rounding range discipline, anonymised placeholders, history scan report, repository visibility handling, enforceable release checks | done | `arena/cc44a347` | `tools/verify.py`, `tools/test_case.py`, `tools/sitebuild.py` (`SOURCES`/privacy/flagged builders), `README.md`, `_config.yml` | 2026-11-15 |
 | CC44-5 | One-page printable attorney & CPA briefing sheet | done | `arena/cc44a347` | `tools/sitebuild.py` (`build_brief`), `assets/style.css` (print rules only) | 2026-11-15 |
-| CC44-6 | Integration and release: rebuild, verify, browser smoke test, PR to `main`, merge, confirm GitHub Pages deploy, record result | in progress | `arena/cc44a347` | `COORDINATION.md` (this section only) | 2026-11-15 |
+| CC44-6 | Integration and release: rebuild, verify, DOM smoke test, PR to `main`, merge, confirm GitHub Pages deploy, record result | in progress | `arena/cc44a347` | `COORDINATION.md` (this section only) | 2026-11-15 |
 
 Rules this session follows: sources are fetched directly and cited by scope; no case value, place identifier or household amount is added to the public tree; any fact that cannot be confirmed from an official source is left blank and listed on the "Flagged for review" page. This session is the only one editing the claimed files, so no cross-session handoff is required.
 
@@ -122,4 +122,4 @@ Rules this session follows: sources are fetched directly and cited by scope; no 
 
 ### CC44-6 release
 
-Build, verifier, unit tests, DOM test and diff check pass on branch `arena/cc44a347-tino4`. Release steps (PR to `main`, merge, GitHub Pages deploy confirmation) are recorded below once executed.
+Build, verifier, unit tests, DOM test and diff check pass on branch `arena/cc44a347-tino4`, which was rebased onto `origin/main` `993236f` after the incoming sessions' work. The rebase conflict in `tools/sitebuild.py` was resolved by keeping every incoming law-watchlist, source and flagged row and adding this session's sections around them; this session's new flags were renumbered F-16 to F-19 so the incoming F-09 to F-15 keep their meaning. Optional test-dependency manifests were removed from the tree and ignored. Release steps (PR to `main`, merge, GitHub Pages deploy confirmation) are recorded below once executed.
