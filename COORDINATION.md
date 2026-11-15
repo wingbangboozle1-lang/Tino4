@@ -315,3 +315,11 @@ Branch: `arena/9830a6d0-tino4` (platform-pinned; base `60a054e` = `origin/main` 
 - `tools/dom-test.cjs` requires optional `jsdom` and is not part of CI; not run this session.
 - Privacy: no names, addresses, parcel IDs, account numbers or unrounded household amounts were added. Vote counts were removed from the source scope text; only percentages are published. The $129 and $400,000 Measure H figures are official ballot-measure titles and are registered in the verifier's allowlist with their source.
 - Repository history remains unscrubbed (flag F-01); this session does not change that.
+
+### 9830-5 release result (2026-11-15)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino4/pull/99 — "Requirements register, investment-policy draft, and verified ballot/statute rows". Merged with `gh pr merge 99 --merge` at 2026-11-15T11:53:20Z; merge commit `13c30cd` on `main`.
+- **Checks:** `build-and-verify` passed on the head commit before merge. After merge, `verify` and `pages build and deployment` both report `completed/success` for `13c30cd`.
+- **Pages:** the GitHub Pages API reports `built` at `https://wingbangboozle1-lang.github.io/Tino4/`; `pages/requirements-tracker.html` was fetched live and renders the register table with source links.
+- **Rebase record:** `main` advanced through PR #97 (a897a17d) while this branch was open. Conflicts in `COORDINATION.md`, `tools/verify.py`, `pages/flagged-for-review.html` and `pages/sources.html` were resolved without dropping either session's rows: both board sections are kept, the statute allowlist is the union, PR #97's verified CA sources are reused, and the generated pages were rebuilt from the merged source.
+- **Still open (owner or adviser action; see the requirements tracker):** Property A tax-rate area; market rent and comparables; date-of-death appraisal; five-year maintenance plan; estate liquidity plan; transfer-tax pricing; same-year sale model; imputed-rent and depreciation-recapture inputs; Prop H certified result and Property B's category; Prop 40 measure text and certified result; Git history scrub (F-01).
