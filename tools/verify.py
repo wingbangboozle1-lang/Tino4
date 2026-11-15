@@ -25,11 +25,17 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# Statutory figures that legitimately are not multiples of $10.
-WHITELISTED_CURRENCY = {"1044586"}
+# Statutory figures that legitimately are not multiples of $10, registered with
+# their official source (the $10-rounded class is enforced mechanically; these
+# exact published agency figures are allowed beside it).
+# BOE LTA 2025/009 Prop 19 caps; IRS exclusions and Rev. Proc. 2025-32 trust
+# brackets; SFPUC Prop 218 notice average combined-bill figures (FY2026-2028).
+WHITELISTED_CURRENCY = {"1044586", "1022600", "1000000", "16000", "11700", "3300", "16250", "171", "189", "212"}
 # Five-digit identifiers that are cited statute/report numbers, not postal codes.
 # 13301 RTC estate tax; 16061 Probate Code; 62809 CBO report; 70106 P.L. 119-21 section; 18662 RTC withholding; 25009 BOE LTA 2025/009; 36084 fragment of the pinned branch name arena/a0d36084-tino4
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "70106", "18662", "25009", "36084", "61270", "61882"}
+# identifiers: CA RTC 13301; Probate 16061; CBO 62809/61270/61882; OBBBA 70106; RTC 18662;
+# BOE LTA 25009; branch-name fragment 36084; SOS memo 26138; Gov. Code 65912
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "70106", "18662", "25009", "36084", "61270", "61882", "26138", "65912", "16000", "11700", "16250"}
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
