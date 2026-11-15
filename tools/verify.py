@@ -13,13 +13,37 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# The only dollar figures allowed in public pages are year-specific federal
-# statutory/exclusion figures and annual gift exclusions sourced from IRS pages.
-# Any property-specific or otherwise unsourced currency amount fails closed.
-PUBLIC_CURRENCY_AMOUNTS = {"15000000", "15480000", "19000", "20000"}
-# These five-digit numbers are cited California code sections and a CBO report
-# identifier, not postal codes. No other five-digit identifier is expected.
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809"}
+# Two currency classes are allowed in public files:
+#  (1) case/cost figures rounded to the nearest $10 (the owner's de-
+#      identification rule — enforced mechanically below); and
+#  (2) published statutory/tariff figures, registered here with their source,
+#      shown exactly as published.
+STATUTORY_CURRENCY = {
+    "1044586": "BOE LTA 2025/009 — Prop 19 cap 2/16/2025–2/15/2027",
+    "1022600": "BOE LTA 2025/009 — Prop 19 cap 2/16/2023–2/15/2025",
+    "1000000": "BOE LTA 2025/009 — Prop 19 cap 2/16/2021–2/15/2023",
+    "15000000": "IRS — 2026 basic exclusion / filing threshold",
+    "15480000": "IRS IR-2026-133 — 2027 basic exclusion",
+    "19000": "IRS IR-2026-133 — 2026 annual gift exclusion",
+    "20000": "IRS IR-2026-133 — 2027 annual gift exclusion",
+    "16000": "Rev. Proc. 2025-32 Table 5 — trust top bracket threshold",
+    "11700": "Rev. Proc. 2025-32 Table 5 — trust 35% bracket threshold",
+    "3300": "Rev. Proc. 2025-32 Table 5 — trust 24% bracket threshold",
+    "16250": "Rev. Proc. 2025-32 §4.03 — trust 20% capital-gains threshold",
+    "171": "SFPUC Prop 218 notice — avg single-family combined bill, FYE 2026",
+    "189": "SFPUC Prop 218 notice — avg combined bill, FYE 2027",
+    "212": "SFPUC Prop 218 notice — avg combined bill, FYE 2028",
+}
+# Five-digit numeric fragments that are statute/CBO/docket identifiers or
+# numeric fragments inside official URLs — not postal codes.
+PUBLIC_STATUTE_IDS = {
+    "13301", "16061", "62809",   # CA RTC §13301; Prob. §16061.7; CBO pub 62809
+    "61270",                     # CBO Long-Term Outlook publication id
+    "25009",                     # BOE LTA 2025/009 filename fragment
+    "26138",                     # SOS CC/ROV memo 26138 filename fragment
+    "70106",                     # OBBBA §70106 (basic exclusion)
+    "65912",                     # Gov. Code §65912.155 et seq. (SB 79)
+}
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
@@ -28,6 +52,7 @@ OFFICIAL_HOST_SUFFIXES = (
     "irs.gov", "legislature.ca.gov", "boe.ca.gov", "sco.ca.gov", "ca.gov",
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
+    "sfpuc.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
     "ftb.ca.gov", "stlouisfed.org",
 )
@@ -142,6 +167,19 @@ class PageAudit(HTMLParser):
             self.local_links.append(value)
 
 
+def currency_ok(raw: str) -> bool:
+    """Allowed: $10-rounded case/cost figures, or registered statutory amounts."""
+    amount = raw.replace(",", "")
+    if amount in STATUTORY_CURRENCY:
+        return True
+    if "." in amount:
+        return False  # cents are only allowed for registered published figures
+    try:
+        return int(amount) % 10 == 0
+    except ValueError:
+        return False
+
+
 def host_is_official(host: str) -> bool:
     host = host.lower().split(":", 1)[0].rstrip(".")
     return any(host == suffix or host.endswith("." + suffix) for suffix in OFFICIAL_HOST_SUFFIXES)
@@ -198,12 +236,13 @@ def verify() -> list[str]:
         except (OSError, UnicodeDecodeError):
             continue
         relative = path.relative_to(ROOT).as_posix()
-        if any(amount.group(1).replace(",", "") not in PUBLIC_CURRENCY_AMOUNTS for amount in CURRENCY_RE.finditer(content)):
+        bad = [amount.group(1) for amount in CURRENCY_RE.finditer(content) if not currency_ok(amount.group(1))]
+        if bad:
             errors.append(f"{relative} contains an unapproved currency amount")
         scan_text = content
         if path.suffix.lower() == ".css":
             scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
-        for public_number in PUBLIC_CURRENCY_AMOUNTS | PUBLIC_STATUTE_IDS:
+        for public_number in set(STATUTORY_CURRENCY) | PUBLIC_STATUTE_IDS:
             scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
         if any(match.group(1) not in PUBLIC_STATUTE_IDS for match in POSTAL_RE.finditer(scan_text)):
             errors.append(f"{relative} contains an unexplained five-digit identifier")
@@ -270,8 +309,7 @@ def verify() -> list[str]:
                 errors.append(f"{relative} has a broken local link")
 
         for match in CURRENCY_RE.finditer(text):
-            amount = match.group(1).replace(",", "")
-            if amount not in PUBLIC_CURRENCY_AMOUNTS:
+            if not currency_ok(match.group(1)):
                 errors.append(f"{relative} contains an unapproved currency amount")
         for match in POSTAL_RE.finditer(text):
             if match.group(1) not in PUBLIC_STATUTE_IDS:

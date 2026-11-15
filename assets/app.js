@@ -62,6 +62,7 @@ if (phaseForm) {
   };
   const pct = value => `${value.toFixed(1)}%`;
   const units = value => `${value.toFixed(2)} units`;
+  const dollars = value => `$${(Math.round(value / 10) * 10).toLocaleString('en-US')}`;
 
   function simulateScenario(crashStart, stagingMonths, drawdown, troughMonths, drift, firstYield, renewalYield) {
     const starting = 100;
@@ -112,10 +113,15 @@ if (phaseForm) {
     };
   }
 
-  function displayScenario(prefix, result, inflation) {
+  function displayScenario(prefix, result, inflation, proceeds) {
     const inflationFactor = Math.pow(1 + inflation / 100, result.months / 12);
     element(`${prefix}-immediate-value`).textContent = units(result.immediate);
     element(`${prefix}-phased-value`).textContent = units(result.phased);
+    const scale = proceeds / 100;
+    const immediateDollars = element(`${prefix}-immediate-dollars`);
+    const phasedDollars = element(`${prefix}-phased-dollars`);
+    if (immediateDollars) immediateDollars.textContent = dollars(result.immediate * scale);
+    if (phasedDollars) phasedDollars.textContent = dollars(result.phased * scale);
     element(`${prefix}-immediate-real`).textContent = units(result.immediate / inflationFactor);
     element(`${prefix}-phased-real`).textContent = units(result.phased / inflationFactor);
     element(`${prefix}-immediate-dd`).textContent = pct(result.immediateDrawdown);
@@ -131,12 +137,13 @@ if (phaseForm) {
     const firstYield = numeric('phase-yield1', 0, -5, 20);
     const renewalYield = numeric('phase-yield2', 0, -5, 20);
     const inflation = numeric('phase-inflation', 0, -5, 20);
+    const proceeds = numeric('phase-proceeds', 2945000, 100000, 20000000);
     const earlyStart = Math.max(0, Math.floor(stagingMonths / 2));
     const lateStart = stagingMonths;
     const early = simulateScenario(earlyStart, stagingMonths, drawdown, troughMonths, drift, firstYield, renewalYield);
     const late = simulateScenario(lateStart, stagingMonths, drawdown, troughMonths, drift, firstYield, renewalYield);
-    displayScenario('early', early, inflation);
-    displayScenario('late', late, inflation);
+    displayScenario('early', early, inflation, proceeds);
+    displayScenario('late', late, inflation, proceeds);
 
     const status = element('phase-status');
     const earlyDiff = early.phased - early.immediate;
@@ -149,7 +156,7 @@ if (phaseForm) {
   element('phase-event')?.addEventListener('change', () => {
     if (element('phase-event').value === '1929') {
       element('phase-drawdown').value = '89';
-      element('phase-trough').value = '36';
+      element('phase-trough').value = '34';
     } else {
       element('phase-drawdown').value = '57';
       element('phase-trough').value = '17';
@@ -169,6 +176,7 @@ if (phaseForm) {
     element('phase-yield1').value = '0';
     element('phase-yield2').value = '0';
     element('phase-inflation').value = '0';
+    element('phase-proceeds').value = '2945000';
     simulate();
   });
   simulate();
