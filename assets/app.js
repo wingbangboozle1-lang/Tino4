@@ -266,153 +266,75 @@ if (phaseForm) {
   simulate();
 }
 
-// ---------------------------------------------------------------------------
-// Decision what-if tool (local-only; mirrors tools/sitebuild.py constants).
-// Nothing is stored, transmitted, or read from a network.
-const decisionForm = document.getElementById('decision-tool');
-if (decisionForm) {
-  const A_VALUE = 3100000, A_BASE_2026 = 550540, CAP_2025 = 1044586;
-  const CAP_GROWTH = 0.022, INFLATION = 0.025, RENT_GROWTH = 0.03;
-  const INS_GROWTH = 0.04, UTIL_GROWTH = 0.03, MAINT_A = 0.009, VAC_MGMT = 0.08;
-  const UTIL_A_2026 = 1320; // (125 - 15) * 12, owner range midpoints
-  const element = id => document.getElementById(id);
-  const numeric = (id, fallback, min, max) => {
-    const raw = Number(element(id)?.value);
-    const value = Number.isFinite(raw) ? raw : fallback;
+// Local-only path what-if tool (decision-analysis page). Defaults mirror the
+// published baseline assumptions; nothing is stored or transmitted and no
+// network API is used.
+const pathForm = document.getElementById('path-tool');
+if (pathForm) {
+  const pathEl = id => document.getElementById(id);
+  const pathNum = (id, min, max) => {
+    const raw = Number(pathEl(id)?.value);
+    const value = Number.isFinite(raw) ? raw : min;
     return Math.max(min, Math.min(value, max));
   };
-  const money = x => '$' + (Math.round(x / 10) * 10).toLocaleString('en-US');
-  const money0 = x => (x < 0 ? '-' : '') + '$' + Math.abs(Math.round(x / 10) * 10).toLocaleString('en-US');
-
-  function recompute() {
-    const year = Math.round(numeric('d-year', 2045, 2040, 2050));
-    const g = numeric('d-growth', 4.5, 2, 7) / 100;
-    const levy = numeric('d-levy', 1.17, 1, 1.4) / 100;
-    const ret = numeric('d-return', 6.5, 3, 9) / 100;
-    const rent = numeric('d-rent', 7000, 5000, 9000);
-    const ins = numeric('d-ins', 1500, 1000, 6000);
-    const n = year - 2026;
-    const fmv = A_VALUE * Math.pow(1 + g, n);
-    const base = A_BASE_2026 * Math.pow(1.02, n);
-    const cap = CAP_2025 * Math.pow(1 + CAP_GROWTH, year - 2025);
-    const direct = (7210 - A_BASE_2026 * levy) * Math.pow(1 + INFLATION, n);
-    const newBase = Math.max(base, base + Math.min(cap, fmv - base));
-    const taxOcc = newBase * levy + direct;
-    const taxRe = fmv * levy + direct;
-    const gross = rent * 12 * Math.pow(1 + RENT_GROWTH, n);
-    const costs = taxRe + ins * Math.pow(1 + INS_GROWTH, n) + MAINT_A * fmv
-      + UTIL_A_2026 * Math.pow(1 + UTIL_GROWTH, n) + VAC_MGMT * gross;
-    const rentNet = gross - costs;
-    const portfolio = fmv * 0.94 * Math.pow(1 + ret, 2075 - year);
-    element('d-out-fmv').textContent = money(fmv);
-    element('d-out-base').textContent = money(base);
-    element('d-out-newbase').textContent = money(newBase);
-    element('d-out-tax-occ').textContent = money(taxOcc) + ' / yr';
-    element('d-out-tax-re').textContent = money(taxRe) + ' / yr';
-    element('d-out-rentnet').textContent = money0(rentNet) + ' / yr';
-    element('d-out-portfolio').textContent = money(portfolio) + ' at 2075';
-  }
-  decisionForm.querySelectorAll('input').forEach(control => {
-    control.addEventListener('input', recompute);
-    control.addEventListener('change', recompute);
-  });
-  element('d-reset')?.addEventListener('click', () => {
-    element('d-year').value = '2045';
-    element('d-growth').value = '4.5';
-    element('d-levy').value = '1.17';
-    element('d-return').value = '6.5';
-    element('d-rent').value = '7000';
-    element('d-ins').value = '1500';
-    recompute();
-  });
-  recompute();
-}
-
-// Projection what-if tool (local-only, same constants).
-const projectionForm = document.getElementById('projection-tool');
-if (projectionForm) {
-  const A_VALUE = 3100000, A_BASE_2026 = 550540, CAP_2025 = 1044586;
-  const element = id => document.getElementById(id);
-  const numeric = (id, fallback, min, max) => {
-    const raw = Number(element(id)?.value);
-    const value = Number.isFinite(raw) ? raw : fallback;
-    return Math.max(min, Math.min(value, max));
+  const pathMoney = value => {
+    const rounded = Math.round(value / 10) * 10;
+    const sign = rounded < 0 ? '-' : '';
+    return sign + '$' + Math.abs(rounded).toLocaleString('en-US');
   };
-  const money = x => '$' + (Math.round(x / 10) * 10).toLocaleString('en-US');
-  function recompute() {
-    const year = Math.round(numeric('p-year', 2045, 2026, 2075));
-    const g = numeric('p-growth', 4.5, 2, 7) / 100;
-    const infl = numeric('p-infl', 2.5, 1, 5) / 100;
-    const n = year - 2026;
-    const fmv = A_VALUE * Math.pow(1 + g, n);
-    const base = A_BASE_2026 * Math.pow(1.02, n);
-    const cap = CAP_2025 * Math.pow(1.022, year - 2025);
-    const direct = (7210 - A_BASE_2026 * 0.0117) * Math.pow(1 + infl, n);
-    const newBase = Math.max(base, base + Math.min(cap, fmv - base));
-    element('p-out-fmv').textContent = money(fmv);
-    element('p-out-base').textContent = money(base);
-    element('p-out-taxocc').textContent = money(newBase * 0.0117 + direct) + ' / yr';
-    element('p-out-taxre').textContent = money(fmv * 0.0117 + direct) + ' / yr';
-  }
-  projectionForm.querySelectorAll('input').forEach(control => {
-    control.addEventListener('input', recompute);
-    control.addEventListener('change', recompute);
-  });
-  element('p-reset')?.addEventListener('click', () => {
-    element('p-year').value = '2045';
-    element('p-growth').value = '4.5';
-    element('p-infl').value = '2.5';
-    recompute();
-  });
-  recompute();
-}
 
-// Black-swan stress tool: real annual S&P 500 total returns and average
-// 3-month T-bill rates (NYU Stern compilation, 1928-2025), applied locally.
-const SERIES = [[1928,43.81,3.08],[1929,-8.30,3.16],[1930,-25.12,4.55],[1931,-43.84,2.31],[1932,-8.64,1.07],[1933,49.98,0.96],[1934,-1.19,0.28],[1935,46.74,0.17],[1936,31.94,0.17],[1937,-35.34,0.28],[1938,29.28,0.07],[1939,-1.10,0.05],[1940,-10.67,0.04],[1941,-12.77,0.13],[1942,19.17,0.34],[1943,25.06,0.38],[1944,19.03,0.38],[1945,35.82,0.38],[1946,-8.43,0.38],[1947,5.20,0.60],[1948,5.70,1.05],[1949,18.30,1.12],[1950,30.81,1.20],[1951,23.68,1.52],[1952,18.15,1.72],[1953,-1.21,1.89],[1954,52.56,0.94],[1955,32.60,1.72],[1956,7.44,2.62],[1957,-10.46,3.22],[1958,43.72,1.77],[1959,12.06,3.39],[1960,0.34,2.87],[1961,26.64,2.35],[1962,-8.81,2.77],[1963,22.61,3.16],[1964,16.42,3.55],[1965,12.40,3.95],[1966,-9.97,4.86],[1967,23.80,4.29],[1968,10.81,5.34],[1969,-8.24,6.67],[1970,3.56,6.39],[1971,14.22,4.33],[1972,18.76,4.06],[1973,-14.31,7.04],[1974,-25.90,7.85],[1975,37.00,5.79],[1976,23.83,4.98],[1977,-6.98,5.26],[1978,6.51,7.18],[1979,18.52,10.05],[1980,31.74,11.39],[1981,-4.70,14.04],[1982,20.42,11.09],[1983,22.34,8.95],[1984,6.15,9.92],[1985,31.24,7.72],[1986,18.49,6.15],[1987,5.81,5.96],[1988,16.54,6.89],[1989,31.48,8.39],[1990,-3.06,7.75],[1991,30.23,5.54],[1992,7.49,3.51],[1993,9.97,3.07],[1994,1.33,4.37],[1995,37.20,5.66],[1996,22.68,5.15],[1997,33.10,5.20],[1998,28.34,4.91],[1999,20.89,4.78],[2000,-9.03,6.00],[2001,-11.85,3.48],[2002,-21.97,1.64],[2003,28.36,1.03],[2004,10.74,1.40],[2005,4.83,3.22],[2006,15.61,4.85],[2007,5.48,4.48],[2008,-36.55,1.40],[2009,25.94,0.15],[2010,14.82,0.14],[2011,2.10,0.05],[2012,15.89,0.09],[2013,32.15,0.06],[2014,13.52,0.03],[2015,1.38,0.05],[2016,11.77,0.32],[2017,21.61,0.95],[2018,-4.23,1.97],[2019,31.21,2.11],[2020,18.02,0.36],[2021,28.47,0.04],[2022,-18.04,2.09],[2023,26.06,5.28],[2024,24.88,5.18],[2025,17.78,4.21]];
-const bsForm = document.getElementById('bs-tool');
-if (bsForm) {
-  const element = id => document.getElementById(id);
-  const lookup = (year, col) => {
-    const row = SERIES.find(item => item[0] === year);
-    return row ? row[col] / 100 : 0;
-  };
-  const prod = (col, y0, y1) => {
-    let out = 1;
-    for (let y = Math.max(y0, 1928); y <= Math.min(y1, 2025); y += 1) out *= 1 + lookup(y, col);
-    return out;
-  };
-  function run() {
-    const entry = Number(element('bs-entry').value);
-    const horizon = Math.max(3, Math.min(Number(element('bs-horizon').value) || 10, 30));
-    const parkMonths = Math.max(0, Math.min(Number(element('bs-park').value) || 0, 60));
-    const dcaMonths = Math.max(1, Math.min(Number(element('bs-dca').value) || 1, 60));
-    const endYear = entry + horizon - 1;
-    const lump = prod(1, entry, endYear);
-    const parkYears = Math.floor(parkMonths / 12);
-    const tranches = Math.max(1, Math.round(dcaMonths / 12));
-    let parked = 0;
-    for (let i = 0; i < tranches; i += 1) {
-      const buyYear = entry + parkYears + i;
-      const share = prod(2, entry, buyYear - 1) / tranches;
-      parked += share * prod(1, buyYear, endYear);
-    }
-    const dcaImmediate = (() => {
+  function runPathTool() {
+    const marketValue = pathNum('path-value', 0, 99999999);
+    const carriedBase = pathNum('path-base', 0, 99999999);
+    const rate = pathNum('path-rate', 0, 5) / 100;
+    const cap = pathNum('path-cap', 0, 10) / 100;
+    const exclusion = pathNum('path-excl', 0, 99999999);
+    const load = pathNum('path-load', 0, 90) / 100;
+
+    const exclTax1 = carriedBase * rate;
+    const reassessedBase = Math.max(marketValue - exclusion, 0);
+    const reTax1 = reassessedBase * rate;
+    const cum = base => {
       let total = 0;
-      for (let i = 0; i < tranches; i += 1) {
-        total += (1 / tranches) * prod(2, entry, entry + i - 1) * prod(1, entry + i, endYear);
-      }
+      for (let year = 0; year < 10; year += 1) total += base * Math.pow(1 + cap, year);
       return total;
-    })();
-    const fmt = x => x.toFixed(2) + 'x';
-    element('bs-out-lump').textContent = fmt(lump);
-    element('bs-out-parked').textContent = fmt(parked);
-    element('bs-out-dca').textContent = fmt(dcaImmediate);
+    };
+    const exclCum = cum(exclTax1);
+    const reCum = cum(reTax1);
+    const delta1 = reTax1 - exclTax1;
+    const delta10 = reCum - exclCum;
+    const hurdle = load < 1 ? (delta10 / 10) / 12 / (1 - load) : NaN;
+    const sellNet = marketValue * 0.93;
+    const sell10 = sellNet * Math.pow(1.06, 10);
+
+    pathEl('path-tax-excl').textContent = pathMoney(exclTax1);
+    pathEl('path-tax-excl10').textContent = pathMoney(exclTax1 * Math.pow(1 + cap, 9));
+    pathEl('path-tax-exclcum').textContent = pathMoney(exclCum);
+    pathEl('path-tax-re').textContent = pathMoney(reTax1);
+    pathEl('path-tax-re10').textContent = pathMoney(reTax1 * Math.pow(1 + cap, 9));
+    pathEl('path-tax-recum').textContent = pathMoney(reCum);
+    pathEl('path-delta1').textContent = pathMoney(delta1);
+    pathEl('path-delta10').textContent = pathMoney(delta10);
+    pathEl('path-hurdle').textContent = Number.isFinite(hurdle) ? pathMoney(hurdle) + ' / month' : '—';
+    pathEl('path-sellnet').textContent = pathMoney(sellNet);
+    pathEl('path-sell10').textContent = pathMoney(sell10);
+    pathEl('path-status').textContent = 'Local scenario recomputed. Reassessed branch is ' +
+      (delta10 > 0 ? 'more expensive' : 'less expensive') +
+      ' over ten years under these assumptions. Assumptions are labeled on the page; this is not tax advice.';
   }
-  bsForm.querySelectorAll('input, select').forEach(control => {
-    control.addEventListener('input', run);
-    control.addEventListener('change', run);
+
+  pathForm.querySelectorAll('input').forEach(control => {
+    control.addEventListener('input', runPathTool);
+    control.addEventListener('change', runPathTool);
   });
-  element('bs-run')?.addEventListener('click', run);
-  run();
+  pathEl('path-reset')?.addEventListener('click', () => {
+    pathEl('path-value').value = '6531230';
+    pathEl('path-base').value = '802030';
+    pathEl('path-rate').value = '1.34';
+    pathEl('path-cap').value = '2';
+    pathEl('path-excl').value = '1886640';
+    pathEl('path-load').value = '35';
+    runPathTool();
+  });
+  runPathTool();
 }
