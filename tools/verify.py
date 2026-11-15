@@ -31,12 +31,13 @@ PUBLIC_CURRENCY_AMOUNTS = {
     # as published (ported from session 377ea96a / PR #88):
     "16000", "11700", "3300", "16250",                 # Rev. Proc. 2025-32 estate/trust brackets
     "171", "189", "212",                               # SFPUC Prop 218 notice — published average combined bills FYE 2026-2028
+    "0", "2", "3", "15", "25", "75", "102", "175",           # public fee/rate amounts: $0 modeled lines, SB2/AB1466 fees, 25% §1250 rate, $102 first page, $175 claim fee cap
 }
 # Five-digit identifiers: cited code sections, CBO report identifiers, and the
 # two owner-directed region ZIP codes. Region ZIPs carry no street address and
 # are used only for ZIP-specific insurance/utility/rate context.
 REGION_ZIP_CODES = {"95014", "94122"}
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912"}
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "17043", "11911", "27388"}
 FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",

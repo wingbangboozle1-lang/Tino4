@@ -304,26 +304,44 @@ if (pathForm) {
     const delta1 = reTax1 - exclTax1;
     const delta10 = reCum - exclCum;
     const hurdle = load < 1 ? (delta10 / 10) / 12 / (1 - load) : NaN;
-    const sellNet = marketValue * 0.93;
+    const imputed = pathNum('path-imputed', 0, 120000);
+    const sellYear = Number(pathEl('path-sellyear')?.value) || 0;
+    const sec121 = Number(pathEl('path-sec121')?.value) || 0;
+    const otherInc = pathNum('path-otherinc', 0, 99999999);
+    const sellGross = marketValue;
+    const transferTax = marketValue * 0.0011;
+    const recording = 100;
+    const sellCosts = transferTax + recording;
+    const sellNet = Math.max(sellGross * 0.93 - sellCosts, 0);
     const sell10 = sellNet * Math.pow(1.06, 10);
+    const futureValue = marketValue * Math.pow(1.04, sellYear);
+    const gain = sellYear === 0 ? 0 : Math.max(futureValue * 0.93 - marketValue, 0);
+    const gain121 = Math.max(gain - sec121, 0);
+    const mhst = Math.max(otherInc + gain121 - 1000000, 0) * 0.01;
 
     pathEl('path-tax-excl').textContent = pathMoney(exclTax1);
     pathEl('path-tax-excl10').textContent = pathMoney(exclTax1 * Math.pow(1 + cap, 9));
     pathEl('path-tax-exclcum').textContent = pathMoney(exclCum);
+    pathEl('path-imputed-year').textContent = pathMoney(imputed * 12);
     pathEl('path-tax-re').textContent = pathMoney(reTax1);
     pathEl('path-tax-re10').textContent = pathMoney(reTax1 * Math.pow(1 + cap, 9));
     pathEl('path-tax-recum').textContent = pathMoney(reCum);
     pathEl('path-delta1').textContent = pathMoney(delta1);
     pathEl('path-delta10').textContent = pathMoney(delta10);
     pathEl('path-hurdle').textContent = Number.isFinite(hurdle) ? pathMoney(hurdle) + ' / month' : '—';
+    pathEl('path-sellgross').textContent = pathMoney(sellGross);
+    pathEl('path-sellcosts').textContent = pathMoney(sellCosts);
     pathEl('path-sellnet').textContent = pathMoney(sellNet);
     pathEl('path-sell10').textContent = pathMoney(sell10);
+    pathEl('path-gain').textContent = pathMoney(gain);
+    pathEl('path-gain-121').textContent = pathMoney(gain121);
+    pathEl('path-mhst').textContent = pathMoney(mhst);
     pathEl('path-status').textContent = 'Local scenario recomputed. Reassessed branch is ' +
       (delta10 > 0 ? 'more expensive' : 'less expensive') +
       ' over ten years under these assumptions. Assumptions are labeled on the page; this is not tax advice.';
   }
 
-  pathForm.querySelectorAll('input').forEach(control => {
+  pathForm.querySelectorAll('input, select').forEach(control => {
     control.addEventListener('input', runPathTool);
     control.addEventListener('change', runPathTool);
   });
@@ -334,6 +352,10 @@ if (pathForm) {
     pathEl('path-cap').value = '2';
     pathEl('path-excl').value = '1886640';
     pathEl('path-load').value = '35';
+    pathEl('path-imputed').value = '4500';
+    pathEl('path-sellyear').value = '0';
+    pathEl('path-sec121').value = '500000';
+    pathEl('path-otherinc').value = '250000';
     runPathTool();
   });
   runPathTool();

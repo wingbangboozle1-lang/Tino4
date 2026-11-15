@@ -33,9 +33,10 @@ class PublicSitePrivacyTests(unittest.TestCase):
     def test_currency_amounts_are_rounded_or_official(self):
         import re
         pattern = re.compile(r"\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)(?![0-9,])")
-        allowed = {"15000000", "15480000", "19000", "20000", "250000", "500000", "7000",
+        allowed = {"15000000", "15480000", "19000", "20000", "250000", "500000", "7000", "3500000",
                    "1044586", "1022600", "1000000", "49450", "98900", "545500", "613700", "200000",
-                   "16000", "11700", "3300", "16250", "171", "189", "212"}
+                   "16000", "11700", "3300", "16250", "171", "189", "212",
+                   "0", "2", "3", "15", "25", "75", "102", "175"}
         for page in list((ROOT / "pages").glob("*.html")) + [ROOT / "index.html"]:
             for match in pattern.finditer(page.read_text(encoding="utf-8")):
                 digits = match.group(1).replace(",", "")
@@ -57,6 +58,45 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertNotIn("localStorage.setItem('phase", script)
         self.assertNotIn('localStorage.setItem("phase', script)
         self.assertIn("public-suggestion-review-v2", script)
+
+    def test_decision_completeness_updates_are_present(self):
+        decision = (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8")
+        self.assertIn("sale in the same tax year", decision)
+        self.assertIn("Depreciation and recapture overlay", decision)
+        self.assertIn("Like-kind exchange", decision)
+        self.assertIn("path-mhst", decision)
+        self.assertIn("Tax overlays", decision)
+        projections = (ROOT / "pages/projections.html").read_text(encoding="utf-8")
+        self.assertIn("Where the money goes", projections)
+        self.assertIn("dist-chart", projections)
+        self.assertIn("line 62", projections)
+        prop_tax = (ROOT / "pages/property-tax.html").read_text(encoding="utf-8")
+        self.assertIn("Tax rate area lookup and published rates", prop_tax)
+        self.assertIn("Proposition 19 allowance", prop_tax)
+        self.assertIn("no carry-forward of an unused value limit", prop_tax)
+        watchlist = (ROOT / "pages/law-watchlist.html").read_text(encoding="utf-8")
+        self.assertIn("Empty Homes Tax", watchlist)
+        self.assertIn("not law", watchlist)
+        flagged = (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8")
+        self.assertIn("F-25", flagged)
+        self.assertIn("F-26", flagged)
+        self.assertIn("F-24", flagged)
+        questions = (ROOT / "pages/questions.html").read_text(encoding="utf-8")
+        self.assertIn("Q20", questions)
+        log = (ROOT / "pages/decision-log.html").read_text(encoding="utf-8")
+        self.assertIn("Pre-commitment criteria", log)
+        costs = (ROOT / "pages/operating-costs.html").read_text(encoding="utf-8")
+        self.assertIn("Five-year maintenance and capital plan", costs)
+        estate = (ROOT / "pages/estate-thresholds.html").read_text(encoding="utf-8")
+        self.assertIn("Estate liquidity plan", estate)
+
+    def test_new_fee_and_tax_facts_are_sourced(self):
+        sources = (ROOT / "pages/sources.html").read_text(encoding="utf-8")
+        self.assertIn("resources/fee-schedule", sources)
+        self.assertIn("sectionNum=17043", sources)
+        self.assertIn("like-kind-exchanges", sources)
+        self.assertIn("empty-homes-tax-eht", sources)
+        self.assertIn("tax-rate-book-2025-2026", sources)
 
     def test_law_watchlist_distinguishes_chaptered_change_from_unenacted_bills(self):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
