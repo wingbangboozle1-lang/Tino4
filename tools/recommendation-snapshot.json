@@ -1,0 +1,26 @@
+{
+  "annual_tax_delta": "$51,330",
+  "b_depreciation_low_share_annual": "$36,000",
+  "b_recapture_low_share_10y": "$90,000",
+  "carryover_base_at_transfer": "$802,030",
+  "distribution_median_real": "$8,497,640",
+  "distribution_worst_real": "$5,249,000",
+  "estate_threshold_at_transfer": "$22,109,250",
+  "inherit_year": 2045,
+  "net_sale_proceeds": "$6,074,050",
+  "prop19_allowance_at_transfer": "$1,886,640",
+  "publish_assessment_levels": true,
+  "rent_hurdle_month": "$7,210",
+  "section121_excess_after_10y": "$2,886,590",
+  "sf_transfer_tax_on_property_b": "$13,500",
+  "staging_winning_scenarios": [
+    "Flat market: 0% drift, no crash",
+    "2008-style 57% decline BEGINS month 15 (during staging)",
+    "2008-style 57% decline BEGINS month 40 (after staging ends)",
+    "1929-style 89% decline BEGINS month 15 (during staging)",
+    "1929-style 89% decline BEGINS month 40 (after staging ends)"
+  ],
+  "ten_year_tax_delta": "$562,050",
+  "transfer_tax_exclusion_branch": "$10,710",
+  "transfer_tax_reassessed_branch": "$62,040"
+}

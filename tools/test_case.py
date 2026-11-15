@@ -15,7 +15,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         files = [ROOT / path for path in manifest]
-        self.assertEqual(len(files), 20)
+        self.assertEqual(len(files), 21)
         self.assertTrue(all(path.is_file() for path in files))
         self.assertFalse((ROOT / "assets/case-projections.csv").exists())
         self.assertIn("Attorney &amp; CPA briefing sheet", (ROOT / "pages/attorney-cpa-brief.html").read_text(encoding="utf-8"))
@@ -29,6 +29,60 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("Staging compared in dollars", (ROOT / "pages/phased-investing.html").read_text(encoding="utf-8"))
         self.assertIn("F-20 — Owner-supplied figures", (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8"))
         subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
+
+    def test_capital_tax_page_and_added_sections_are_published(self):
+        subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
+        page = (ROOT / "pages/capital-and-tax-model.html").read_text(encoding="utf-8")
+        for needle in (
+            "What depreciation and recapture do to each path",
+            "Computed depreciation illustration for Property B",
+            "The primary-residence switch, applied to a live-then-sell path",
+            "Transaction costs priced into a sell path",
+            "Five-year maintenance and capital plan for both buildings",
+            "Imputed rent — what living in the house is worth",
+        ):
+            self.assertIn(needle, page)
+        projections = (ROOT / "pages/projections.html").read_text(encoding="utf-8")
+        self.assertIn("Outcome spread for the sell-and-reinvest path", projections)
+        self.assertIn('<figure class="chart"', projections)   # distribution chart, inline SVG, no script
+        self.assertNotIn("<script", projections.split("</head>", 1)[1])
+        black = (ROOT / "pages/black-swan.html").read_text(encoding="utf-8")
+        self.assertIn("Crash-entry test for the phased path", black)
+        self.assertIn("BEGINS month 40 (after staging ends)", black)  # the downside case is shown, not hidden
+        tax = (ROOT / "pages/property-tax.html").read_text(encoding="utf-8")
+        self.assertIn("carried forward to each candidate transfer year", tax)
+        capital = (ROOT / "pages/capital-and-tax-model.html").read_text(encoding="utf-8")
+        self.assertIn("Rent comparables for Property A — recorded blank until documented", capital)
+        self.assertIn("Not published — no comparable has been confirmed", capital)
+        estate = (ROOT / "pages/estate-thresholds.html").read_text(encoding="utf-8")
+        for needle in ("Liquidity, gifts and portability", "adjusted taxable-gift total",
+                       "portability election was made", "Cash in the estate, stated plainly"):
+            self.assertIn(needle, estate)
+        style = (ROOT / "assets/style.css").read_text(encoding="utf-8")
+        self.assertIn(".chart-value", style)
+        law = (ROOT / "pages/law-watchlist.html").read_text(encoding="utf-8")
+        self.assertIn("Re-check cadence", law)
+        brief = (ROOT / "pages/attorney-cpa-brief.html").read_text(encoding="utf-8")
+        self.assertIn("Additional asks added with this release", brief)
+        questions = (ROOT / "pages/questions.html").read_text(encoding="utf-8")
+        for needle in ("Q16 —", "Q17 —", "Q18 —", "Q19 —", "Q20 —", "Q21 —"):
+            self.assertIn(needle, questions)
+        decisions = (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8")
+        self.assertIn('id="path-imputed"', decisions)      # imputed-rent input exists
+        self.assertIn('id="path-recapture"', decisions)
+        self.assertIn("Sell A in the same tax year as the transfer", decisions)
+        flagged = (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8")
+        for needle in ("F-24", "F-25", "F-26", "F-27"):
+            self.assertIn(needle, flagged)
+
+    def test_public_pages_publish_no_place_identifier(self):
+        """Assembled at run time so this test file never contains the tokens either."""
+        forbidden = ["95" + "014", "94" + "122", "Cup" + "ertino", "Outer " + "Sunset"]
+        manifest = json.loads((TOOLS / "site-manifest.json").read_text(encoding="utf-8"))
+        for name in manifest:
+            text = (ROOT / name).read_text(encoding="utf-8")
+            for token in forbidden:
+                self.assertNotIn(token, text, f"{name} publishes a place identifier")
 
     def test_currency_amounts_are_rounded_or_official(self):
         import re
@@ -157,6 +211,43 @@ class RecordIdentifierTests(unittest.TestCase):
             "The transferee must file for the homeowners' exemption within one year.",
         ):
             self.assertEqual(self.verify.identifier_problems(text), [], text)
+
+    def test_unrounded_comma_grouped_amounts_are_caught(self):
+        # The published rounded form is fine; the unrounded source value is not.
+        rounded = "assessed at $550,540 in 2026"
+        unrounded = "assessed at " + "550" + ",5" + "37" + " in 2026"
+        counts = "across 1,384 unique blobs and 252 historical paths"
+        self.assertEqual(self.verify.grouped_amount_problems(rounded), [])
+        self.assertEqual(self.verify.grouped_amount_problems(counts), [])
+        problems = self.verify.grouped_amount_problems(unrounded)
+        self.assertTrue(problems, "an unrounded amount must fail the tree scan")
+
+    def test_rounding_maps_are_caught(self):
+        arrow = "==" + ">"
+        mapping = "literal:3,08" + "0,00" + "0 " + arrow + " 3,080,000"
+        self.assertTrue(self.verify.ROUNDING_MAP_RE.search(mapping))
+        self.assertFalse(self.verify.ROUNDING_MAP_RE.search(
+            "The published figure is rounded; see the runbook for how to build rules privately."))
+        self.assertTrue(self.verify.SCRUB_RULES_NAME_RE.search("notes/scrub-rules.txt"))
+
+    def test_no_tracked_file_contains_a_rounding_map(self):
+        import verify as v
+        skip = {".git", ".venv", "node_modules", "__pycache__", ".cache"}
+        for path in ROOT.rglob("*"):
+            if any(part in skip for part in path.parts) or not path.is_file():
+                continue
+            if path.suffix.lower() not in {".html", ".md", ".py", ".txt", ".yml", ".yaml", ".json", ".css", ".js", ".cjs", ".sh"}:
+                continue
+            text = path.read_text(encoding="utf-8", errors="ignore")
+            self.assertFalse(v.ROUNDING_MAP_RE.search(text), f"{path} would re-publish a pre-rounding value")
+            for problem in v.grouped_amount_problems(text):
+                self.fail(f"{path} {problem}")
+
+    def test_recheck_fingerprint_reports_unchanged_after_a_clean_build(self):
+        self.assertEqual(
+            subprocess.run([sys.executable, str(ROOT / "tools/recheck.py")], cwd=ROOT).returncode, 0,
+            "the committed snapshot must match a clean build until an input change is reviewed",
+        )
 
     def test_no_published_page_exposes_a_record_identifier(self):
         import verify as v

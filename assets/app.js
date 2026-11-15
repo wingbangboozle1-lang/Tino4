@@ -290,6 +290,9 @@ if (pathForm) {
     const cap = pathNum('path-cap', 0, 10) / 100;
     const exclusion = pathNum('path-excl', 0, 99999999);
     const load = pathNum('path-load', 0, 90) / 100;
+    const imputedRent = pathNum('path-imputed', 0, 500000);
+    const recapture = pathNum('path-recapture', 0, 9999999);
+    const sellCost = pathNum('path-sellcost', 0, 20) / 100;
 
     const exclTax1 = carriedBase * rate;
     const reassessedBase = Math.max(marketValue - exclusion, 0);
@@ -304,8 +307,14 @@ if (pathForm) {
     const delta1 = reTax1 - exclTax1;
     const delta10 = reCum - exclCum;
     const hurdle = load < 1 ? (delta10 / 10) / 12 / (1 - load) : NaN;
-    const sellNet = marketValue * 0.93;
+    const sellNet = marketValue * (1 - sellCost);
     const sell10 = sellNet * Math.pow(1.06, 10);
+    // Imputed rent is the rent the household does not pay by owning the home it
+    // lives in: a comparison device, not income. Recapture is the depreciation a
+    // landlord carries into a sale, so the sell branch is shown net of it too.
+    const imputedTen = imputedRent * 10;
+    const liveAdjusted = -exclCum + imputedTen;
+    const sellAdjusted = sell10 - sellNet - recapture;
 
     pathEl('path-tax-excl').textContent = pathMoney(exclTax1);
     pathEl('path-tax-excl10').textContent = pathMoney(exclTax1 * Math.pow(1 + cap, 9));
@@ -318,9 +327,16 @@ if (pathForm) {
     pathEl('path-hurdle').textContent = Number.isFinite(hurdle) ? pathMoney(hurdle) + ' / month' : '—';
     pathEl('path-sellnet').textContent = pathMoney(sellNet);
     pathEl('path-sell10').textContent = pathMoney(sell10);
+    pathEl('path-imputed10').textContent = pathMoney(imputedTen);
+    pathEl('path-liveadj').textContent = pathMoney(liveAdjusted);
+    pathEl('path-sellnet2').textContent = pathMoney(sellNet);
+    pathEl('path-selladj').textContent = pathMoney(sellAdjusted);
+    const liveBeatsSell = liveAdjusted > sellAdjusted;
     pathEl('path-status').textContent = 'Local scenario recomputed. Reassessed branch is ' +
       (delta10 > 0 ? 'more expensive' : 'less expensive') +
-      ' over ten years under these assumptions. Assumptions are labeled on the page; this is not tax advice.';
+      ' over ten years under these assumptions, and the live-in path is currently ' +
+      (liveBeatsSell ? 'ahead of' : 'behind') +
+      ' the sell-and-reinvest path once imputed rent and recapture are counted. Enter zero for imputed rent to see the unadjusted comparison. Assumptions are labeled on the page; this is not tax advice.';
   }
 
   pathForm.querySelectorAll('input').forEach(control => {
@@ -334,6 +350,9 @@ if (pathForm) {
     pathEl('path-cap').value = '2';
     pathEl('path-excl').value = '1886640';
     pathEl('path-load').value = '35';
+    pathEl('path-imputed').value = '0';
+    pathEl('path-recapture').value = '0';
+    pathEl('path-sellcost').value = '7';
     runPathTool();
   });
   runPathTool();

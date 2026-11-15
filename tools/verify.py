@@ -31,6 +31,11 @@ PUBLIC_CURRENCY_AMOUNTS = {
     # as published (ported from session 377ea96a / PR #88):
     "16000", "11700", "3300", "16250",                 # Rev. Proc. 2025-32 estate/trust brackets
     "171", "189", "212",                               # SFPUC Prop 218 notice — published average combined bills FYE 2026-2028
+    # Published San Francisco Assessor-Recorder fee-schedule amounts, shown exactly as
+    # published (read 2026-11-15, session arena/79e0fd5e). These are official tariff
+    # figures, not household data; the tier rates themselves are written as
+    # "<rate> for each $500", which needs no allowance.
+    "14", "75", "225", "10", "20",
 }
 # Five-digit identifiers: cited code sections, CBO report identifiers, and the
 # two owner-directed region ZIP codes. Region ZIPs carry no street address and
