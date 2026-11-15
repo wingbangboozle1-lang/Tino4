@@ -1,5 +1,27 @@
 # COORDINATION.md — Shared Task Board
 
+## Current session: `arena-e8aa308e` — source re-verification, phased 3M–2Y path, history scrub, release
+
+- Branch: `arena/e8aa308e-tino4` (platform-fixed; work stays on this branch).
+- Scope owned by this session: `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`,
+  `tools/site-manifest.json`, `assets/app.js`, `assets/style.css`, generated `index.html` and
+  `pages/**`, `README.md`, and this board.
+- Status: in progress.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| E308-1 | Re-verify every cited official source line by line; replace failed retrievals with working official URLs; refresh the check date | in progress | `arena-e8aa308e` | `tools/sitebuild.py` (source register) | 2026-11-15 |
+| E308-2 | Add the 3M–2Y Treasury parking path with ladder-mix control and reinvestment risk shown beside the headline; anchor current yields to an official release | in progress | `arena-e8aa308e` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css` | 2026-11-15 |
+| E308-3 | Strengthen the deadline timeline, adviser brief (attorney + tax adviser), conditional decision logic, questions, suggestions, glossary and flagged-for-review pages | in progress | `arena-e8aa308e` | `tools/sitebuild.py` | 2026-11-15 |
+| E308-4 | Scrub pre-rounding case material from the published Git history and remove stale refs; document remaining server-side limits | in progress | `arena-e8aa308e` | Git history/refs (all branches), this board | 2026-11-15 |
+| E308-5 | Rebuild, run unit/verification/privacy checks, open the pull request, merge, confirm the Pages deployment and record the result | in progress | `arena-e8aa308e` | release verification | 2026-11-15 |
+
+No other session holds a claim on the files above. Sessions that need a change in this scope must
+log a request here instead of editing the files.
+
+---
+
+
 ## Current session: privacy-first public site remediation
 
 - Branch: `arena/e1ea4bef-tino4` (platform-fixed; no alternate branch/worktree was created).
