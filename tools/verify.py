@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
-"""Structural, sourcing, privacy-boundary and navigation checks for the site.
-
-Policy v3 (owner instruction, 2026-11-15):
-- Property figures ARE published but MUST be rounded to the nearest $10
-  (the owner's anti-tracing rule). Any currency amount that is not a multiple
-  of $10 fails, except the whitelisted statutory figure $1,044,586 (BOE
-  Letter to Assessors 2025/009).
-- Unrounded pre-rounding case figures therefore fail closed: they were not
-  multiples of $10 and are not whitelisted.
-- Addresses, postal codes (except cited statute/section identifiers), emails,
-  and phone numbers remain banned everywhere in tracked text files.
-- External links must be HTTPS, official, and safe; resources local-only.
-"""
+"""Structural, sourcing, privacy-boundary and navigation checks for the site."""
 from __future__ import annotations
 
 import json
@@ -25,17 +13,27 @@ from urllib.parse import unquote, urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools" / "site-manifest.json"
 
-# Statutory figures that legitimately are not multiples of $10, registered with
-# their official source (the $10-rounded class is enforced mechanically; these
-# exact published agency figures are allowed beside it).
-# BOE LTA 2025/009 Prop 19 caps; IRS exclusions and Rev. Proc. 2025-32 trust
-# brackets; SFPUC Prop 218 notice average combined-bill figures (FY2026-2028).
-WHITELISTED_CURRENCY = {"1044586", "1022600", "1000000", "16000", "11700", "3300", "16250", "171", "189", "212"}
-# Five-digit identifiers that are cited statute/report numbers, not postal codes.
-# 13301 RTC estate tax; 16061 Probate Code; 62809 CBO report; 70106 P.L. 119-21 section; 18662 RTC withholding; 25009 BOE LTA 2025/009; 36084 fragment of the pinned branch name arena/a0d36084-tino4
-# identifiers: CA RTC 13301; Probate 16061; CBO 62809/61270/61882; OBBBA 70106; RTC 18662;
-# BOE LTA 25009; branch-name fragment 36084; SOS memo 26138; Gov. Code 65912
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "70106", "18662", "25009", "36084", "61270", "61882", "26138", "65912", "16000", "11700", "16250"}
+# Currency policy (owner-directed, 2026-11-15): published dollar amounts are
+# either (a) exact official statutory/agency figures listed below — IRS
+# thresholds/exclusions, BOE Proposition 19 amounts, 2026 LTCG brackets and
+# NIIT MAGI thresholds, the homeowners' exemption, and the proposed
+# $3,500,000 exclusion in S.4196's introduced text — or (b) privacy-rounded
+# to the nearest ten dollars, i.e. the amount must end in 0. Owner-supplied
+# property figures are published only in rounded form and are badged
+# Owner-supplied; names, street addresses and parcel identifiers stay
+# forbidden. An unrounded or decimal amount fails closed.
+PUBLIC_CURRENCY_AMOUNTS = {
+    "15000000", "15480000", "19000", "20000",          # IRS estate/gift amounts
+    "250000", "500000", "7000", "3500000",             # §121 exclusion, homeowners' exemption, S.4196 proposal
+    "1044586", "1022600", "1000000",                   # BOE Prop 19 exclusion amounts (official)
+    "49450", "98900", "545500", "613700", "200000",    # 2026 LTCG brackets / NIIT MAGI (Rev. Proc. 2025-32)
+}
+# Five-digit identifiers: cited code sections, CBO report identifiers, and the
+# two owner-directed region ZIP codes. Region ZIPs carry no street address and
+# are used only for ZIP-specific insurance/utility/rate context.
+REGION_ZIP_CODES = {"95014", "94122"}
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270"}
+FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
@@ -45,9 +43,12 @@ OFFICIAL_HOST_SUFFIXES = (
     "waterboards.ca.gov", "cpuc.ca.gov", "insurance.ca.gov", "cslb.ca.gov",
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
-    "ftb.ca.gov", "stlouisfed.org", "nyu.edu", "cafairplan.com",
-    "sftreasurer.org", "santaclaracounty.gov", "sccassessor.org", "sfassessor.org",
-    "sfpuc.org", "sf.gov",
+    "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sftreasurer.org",
+    "santaclaracounty.gov", "boj.or.jp",
+    # Owner-directed official-context hosts (2026-11-15): the official daily
+    # Treasury yield curve, the statute text, and the utility providers that
+    # serve the two regions discussed on the site.
+    "treasury.gov", "uscode.house.gov", "sjwater.com", "pge.com", "sfpuc.org",
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
@@ -59,17 +60,6 @@ ADDRESS_RE = re.compile(
 )
 EMAIL_RE = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE_RE = re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)")
-
-
-def amount_is_public(amount: str) -> bool:
-    normalized = amount.replace(",", "").rstrip(".")
-    if not normalized or not normalized.replace(".", "").isdigit():
-        return False
-    if "." in normalized:
-        whole, _, frac = normalized.partition(".")
-        return (int(whole) % 10 == 0 and all(c == "0" for c in frac)) or frac.rstrip("0") in ("",) and int(whole) % 10 == 0
-    value = int(normalized)
-    return value % 10 == 0 or value in {int(item) for item in WHITELISTED_CURRENCY}
 
 
 class PageAudit(HTMLParser):
@@ -171,6 +161,19 @@ class PageAudit(HTMLParser):
             self.local_links.append(value)
 
 
+def currency_amount_ok(amount: str) -> bool:
+    digits = amount.replace(",", "")
+    if "." in digits:
+        return False
+    if digits in PUBLIC_CURRENCY_AMOUNTS:
+        return True
+    return len(digits) >= 2 and digits.endswith("0")
+
+
+def postal_code_ok(identifier: str) -> bool:
+    return identifier in FIVE_DIGIT_ALLOWED
+
+
 def host_is_official(host: str) -> bool:
     host = host.lower().split(":", 1)[0].rstrip(".")
     return any(host == suffix or host.endswith("." + suffix) for suffix in OFFICIAL_HOST_SUFFIXES)
@@ -182,27 +185,6 @@ def path_within_root(path: Path) -> bool:
         return True
     except ValueError:
         return False
-
-
-def scan_text_for_violations(text: str, relative: str, errors: list[str], css_color_strip: bool = False) -> None:
-    scan_text = text
-    if css_color_strip:
-        scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
-    for public_number in PUBLIC_STATUTE_IDS:
-        scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
-        scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
-    for match in CURRENCY_RE.finditer(text):
-        if not amount_is_public(match.group(1)):
-            errors.append(f"{relative} contains a currency amount that is not a multiple of $10 and not a whitelisted statutory figure")
-    for match in POSTAL_RE.finditer(scan_text):
-        if match.group(1) not in PUBLIC_STATUTE_IDS:
-            errors.append(f"{relative} contains an unexplained five-digit identifier")
-    if ADDRESS_RE.search(text):
-        errors.append(f"{relative} appears to contain a street address")
-    if EMAIL_RE.search(text):
-        errors.append(f"{relative} appears to contain an email address")
-    if PHONE_RE.search(text):
-        errors.append(f"{relative} appears to contain a phone number")
 
 
 def verify() -> list[str]:
@@ -238,7 +220,7 @@ def verify() -> list[str]:
         if legacy_dir.exists() and any(path.is_file() for path in legacy_dir.rglob("*")):
             errors.append("legacy case or audit material remains in the current tree")
 
-    page_set = {(ROOT / item).resolve() for item in manifest if isinstance(item, str)}
+    page_set = { (ROOT / item).resolve() for item in manifest if isinstance(item, str) }
     text_suffixes = {".html", ".md", ".py", ".txt", ".yml", ".yaml", ".json", ".css", ".js", ".cjs"}
     for path in tree_files:
         if path.resolve() in page_set or path.suffix.lower() not in text_suffixes:
@@ -248,7 +230,21 @@ def verify() -> list[str]:
         except (OSError, UnicodeDecodeError):
             continue
         relative = path.relative_to(ROOT).as_posix()
-        scan_text_for_violations(content, relative, errors, css_color_strip=path.suffix.lower() == ".css")
+        if any(not currency_amount_ok(amount.group(1)) for amount in CURRENCY_RE.finditer(content)):
+            errors.append(f"{relative} contains a non-rounded or unapproved currency amount")
+        scan_text = content
+        if path.suffix.lower() == ".css":
+            scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
+        for public_number in FIVE_DIGIT_ALLOWED | PUBLIC_CURRENCY_AMOUNTS:
+            scan_text = re.sub(rf"(?<![0-9]){public_number}(?![0-9])", "<public-number>", scan_text)
+        if any(not postal_code_ok(match.group(1)) for match in POSTAL_RE.finditer(scan_text)):
+            errors.append(f"{relative} contains an unexplained five-digit identifier")
+        if ADDRESS_RE.search(content):
+            errors.append(f"{relative} appears to contain a street address")
+        if EMAIL_RE.search(content):
+            errors.append(f"{relative} appears to contain an email address")
+        if PHONE_RE.search(content):
+            errors.append(f"{relative} appears to contain a phone number")
 
     pages: list[Path] = []
     for relative in manifest:
@@ -303,9 +299,20 @@ def verify() -> list[str]:
                 continue
             target = (page.parent / unquote(parsed.path)).resolve()
             if not path_within_root(target) or not target.is_file():
-                errors.append(f"{relative} has a broken local link: {link}")
+                errors.append(f"{relative} has a broken local link")
 
-        scan_text_for_violations(text, relative, errors)
+        for match in CURRENCY_RE.finditer(text):
+            if not currency_amount_ok(match.group(1)):
+                errors.append(f"{relative} contains a non-rounded or unapproved currency amount")
+        for match in POSTAL_RE.finditer(text):
+            if not postal_code_ok(match.group(1)):
+                errors.append(f"{relative} contains an unexplained five-digit identifier")
+        if ADDRESS_RE.search(text):
+            errors.append(f"{relative} appears to contain a street address")
+        if EMAIL_RE.search(text):
+            errors.append(f"{relative} appears to contain an email address")
+        if PHONE_RE.search(text):
+            errors.append(f"{relative} appears to contain a phone number")
 
     if (ROOT / "assets" / "case-projections.csv").exists():
         errors.append("case-projection file exists in public assets")
@@ -326,4 +333,4 @@ if __name__ == "__main__":
         print("\n".join(problems))
         sys.exit(1)
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
-    print(f"OK — {len(manifest)} pages; table rows sourced and status-tagged; currency limited to $10-rounded and whitelisted statutory figures; no addresses, postal codes, emails or phones; local-only resources (Git history excluded from scan).")
+    print(f"OK — {len(manifest)} pages; rows sourced and status-tagged; currency $10-rounded or officially listed; region-ZIP allowlist applied; local-only resources; current-tree privacy checks pass (Git history excluded).")
