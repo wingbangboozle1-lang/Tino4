@@ -1,5 +1,28 @@
 # COORDINATION.md — Shared Task Board
 
+
+## Session `arena-01baf28b` — household decision framework, black-swan phased investing, privacy-first public site (2026-11-15)
+
+- Branch: `arena/01baf28b-tino4`. The platform pins this session to that branch, so the `session-<id>/<task>` branch name in the request was not created; all work stays on the platform branch and the scope below is exclusive.
+- Status: in progress.
+- Scope (exclusive): `tools/**`, `assets/**`, `index.html`, `pages/**`, `README.md`, `_config.yml`, `.github/workflows/verify.yml`, and this `COORDINATION.md` section only. No other session currently holds these paths; the `arena-e428aa88` tasks above are recorded as completed/merged.
+
+| Task ID | Task | Status | Owner | Files touched |
+| --- | --- | --- | --- | --- |
+| A1 | Full requirements register published as a page (requirement → where answered → evidence → open gap) | in progress | `arena-01baf28b` | `pages/requirements.html`, `tools/sitebuild.py` |
+| A2 | Rounded (nearest $10) household input set plus a reproducible projection engine (value, assessment, tax, operating cost, path cash flow) | in progress | `arena-01baf28b` | `tools/model.py`, `tools/sitebuild.py` |
+| A3 | Site rebuild: first-screen flip points, headline with reinvestment risk, what-if controls, pure + mixed paths, black-swan regimes with the 3M–2Y Treasury staging path, deadline timeline, glossary, executive summary, printable attorney/CPA brief, suggestions register | in progress | `arena-01baf28b` | `index.html`, `pages/**`, `assets/**` |
+| A4 | Line-by-line source verification against official sites (IRS, BOE, CA Legislature, CA Courts, County/City, SFUSD, CPUC/PUC, DOI/FAIR Plan, Treasury, Fed, BLS, CBO, FHFA) | in progress | `arena-01baf28b` | `tools/sitebuild.py` (source register), `pages/sources.html`, `pages/flagged-for-review.html` |
+| A5 | Privacy-first history scrub of the public repository (unshallow, purge case-derived paths/blobs, force-push) plus an enforced tree privacy guard | pending | `arena-01baf28b` | `tools/verify.py`, `tools/history-scrub.py`, `.github/workflows/verify.yml` |
+| A6 | Pull request to `main`, merge, GitHub Pages deploy confirmation, results recorded here | pending | `arena-01baf28b` | `COORDINATION.md` (this section only) |
+
+### Privacy rule adopted by this session
+
+- No owner names, street address, parcel/APN, lease-party names, account numbers or document images are published.
+- City-level jurisdiction names are published because local, state and federal tax/insurance analysis requires them; ZIP codes are not published.
+- Every published household dollar figure is rounded to the nearest $10 so it cannot be matched back to a source record; ranges are used where a single rounded number would imply false precision.
+- The residual re-identification risk of publishing rounded figures alongside a public county assessor roll is recorded on the Flagged for Review page for owner review.
+
 ## Current session: privacy-first public site remediation
 
 - Branch: `arena/e1ea4bef-tino4` (platform-fixed; no alternate branch/worktree was created).
