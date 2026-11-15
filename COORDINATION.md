@@ -253,3 +253,19 @@ Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd5
 - **CI after merge:** `verify` and `pages build and deployment` both report `completed/success` for `9e1dedd`.
 - **Pages:** the GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`. The live URL could not be fetched directly from this sandbox because outbound access is limited to GitHub, npm and PyPI hosts, so the deployment is confirmed through the Pages API and the `pages build and deployment` workflow rather than by reading the served HTML.
 - **Rebase record:** two rebases were needed because `main` advanced through PR #94 while this branch was open. The `COORDINATION.md` conflicts were resolved by preserving the incoming board in full and appending this session's section.
+
+---
+
+## Session `arena/4841e117-tino4` — decision-completeness pass, source re-verification, and release (2026-11-15)
+
+Branch is platform-fixed at `arena/4841e117-tino4`, branched from `origin/main` `60a054e` (PR #96 merge). No other branch or worktree was created. This session read the whole board first; no active claim overlaps the scope below (FDD-4's release is complete via merged PR #80; T3D3-8's release is complete via merged PR #89; 666-4 is complete via merged PR #95/#96).
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 4841-1 | Claim record and board maintenance | in progress | `arena-4841e117` | `COORDINATION.md` (this section only) | 2026-11-15 |
+| 4841-2 | Decision-completeness pass: line-by-line audit of the owner's requirement list against the live builders; add the missing modeling (depreciation/recapture, Form 540 1% Mental Health Services Tax + capital-gain treatment sensitivity, Proposition H official terms, sell-path transfer tax + recording fees, same-tax-year sale branch, tax-rate-area lookup, projection distribution chart, imputed-rent input, §121 living-then-sell switch, §1031 advice item, pre-commitment criteria, estate liquidity plan, five-year capital plan, Prop 19 allowance carry-forward) | in progress | `arena-4841e117` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css`, generated `index.html`, `pages/**` | 2026-11-15 |
+| 4841-3 | Re-verify the flagged official URLs and the key statutory anchors by direct fetch; update the source register and flagged page | in progress | `arena-4841e117` | `tools/sitebuild.py` (`SOURCES`, sources/flagged builders) | 2026-11-15 |
+| 4841-4 | Consolidate the unused reference modules `tools/sections.py` / `tools/models.py` (port anything unique, then remove dead code) and keep the history-scrub runbook artifacts | pending | `arena-4841e117` | `tools/sections.py`, `tools/models.py`, `tools/test_case.py`, `tools/verify.py`, `README.md` | 2026-11-15 |
+| 4841-5 | Rebuild, verify, tests, DOM smoke test; PR to `main`, merge after checks pass, confirm GitHub Pages deploy, record result | pending | `arena-4841e117` | release verification | 2026-11-15 |
+
+Rules this session follows: sources are fetched directly and cited by scope; every published household amount stays `$10`-rounded and badged; names, street addresses and record identifiers stay forbidden; anything unconfirmed is left blank and listed on the "Flagged for review" page. History scrub and repository visibility remain owner/admin actions (`tools/history_scrub_runbook.md`); this session does not rewrite `main` history.
