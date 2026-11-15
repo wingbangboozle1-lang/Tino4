@@ -15,7 +15,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         files = [ROOT / path for path in manifest]
-        self.assertEqual(len(files), 20)
+        self.assertEqual(len(files), 22)
         self.assertTrue(all(path.is_file() for path in files))
         self.assertFalse((ROOT / "assets/case-projections.csv").exists())
         self.assertIn("Attorney &amp; CPA briefing sheet", (ROOT / "pages/attorney-cpa-brief.html").read_text(encoding="utf-8"))
@@ -35,7 +35,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         pattern = re.compile(r"\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)(?![0-9,])")
         allowed = {"15000000", "15480000", "19000", "20000", "250000", "500000", "7000",
                    "1044586", "1022600", "1000000", "49450", "98900", "545500", "613700", "200000",
-                   "16000", "11700", "3300", "16250", "171", "189", "212"}
+                   "16000", "11700", "3300", "16250", "171", "189", "212", "129"}
         for page in list((ROOT / "pages").glob("*.html")) + [ROOT / "index.html"]:
             for match in pattern.finditer(page.read_text(encoding="utf-8")):
                 digits = match.group(1).replace(",", "")

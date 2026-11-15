@@ -519,6 +519,30 @@ SOURCES = {
         "scope": "The official Bank of Japan source for the historical discount-rate and asset-price figures was not retrieved. Secondary sources conflict, so no Japan bubble figure is published here.",
         "verified": False,
     },
+    "irc_1014": {
+        "label": "U.S. Code — 26 U.S.C. §1014 (basis of property acquired from a decedent)",
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section1014&num=0&edition=prelim",
+        "scope": "Statute text read 2026-11-15 through a public mirror because the official House page returned 'Page Not Found' in its temporary format. Subsection (a)(1) sets basis at fair market value on the date of death. Registered unverified until the official page is read.",
+        "verified": False,
+    },
+    "irc_1031": {
+        "label": "U.S. Code — 26 U.S.C. §1031 (like-kind exchange of real property)",
+        "url": "https://uscode.house.gov/view.xhtml?req=granuleid:USC-prelim-title26-section1031&num=0&edition=prelim",
+        "scope": "Statute text read 2026-11-15 through a public mirror; the official House page was unavailable. §1031(a)(1) covers real property only, held for productive use or investment; §1031(a)(2) excludes property held primarily for sale; §1031(a)(3) sets the 45-day identification and 180-day completion limits. Registered unverified until the official page is read.",
+        "verified": False,
+    },
+    "sf_elections_results": {
+        "label": "San Francisco Department of Elections — Nov 3, 2026 results (preliminary)",
+        "url": "https://www.sfelections.org/results/20261103w/index.html",
+        "scope": "Official preliminary results, last update November 10, 2026, read 2026-11-15. Measure H (parcel tax to fund Muni operations): 74.4% yes and 25.6% no of counted votes; the measure required 50%+1. The Department may take up to 30 days to certify. Measure text and certified results still need reading.",
+        "verified": True,
+    },
+    "repo_board": {
+        "label": "Repository task board (internal — not a legal source)",
+        "url": "https://github.com/wingbangboozle1-lang/Tino4/blob/main/COORDINATION.md",
+        "scope": "Internal coordination and owner-directive record. It documents process decisions only and is not an official legal, tax or market source.",
+        "verified": False,
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -704,6 +728,7 @@ NAV_GROUPS = [
     ]),
     ("Decision", [
         ("pages/decision-analysis.html", "Compare paths"),
+        ("pages/requirements-tracker.html", "Requirements tracker"),
         ("pages/questions.html", "Questions & missing evidence"),
         ("pages/suggestions.html", "Suggestions for review"),
     ]),
@@ -718,6 +743,7 @@ NAV_GROUPS = [
     ("Stress tests", [
         ("pages/black-swan.html", "Black-swan conditions"),
         ("pages/phased-investing.html", "Treasury staging tool"),
+        ("pages/investment-policy.html", "Investment policy draft"),
     ]),
     ("Law & process", [
         ("pages/estate-thresholds.html", "Estate-tax thresholds"),
@@ -741,6 +767,8 @@ EXPECTED_PAGES = [
     "pages/property-profiles.html",
     "pages/questions.html",
     "pages/suggestions.html",
+    "pages/requirements-tracker.html",
+    "pages/investment-policy.html",
     "pages/projections.html",
     "pages/property-tax.html",
     "pages/operating-costs.html",
@@ -1565,7 +1593,8 @@ def build_law_watchlist() -> str:
         {"cells": ["Insurance availability and coverage", "Market conditions, underwriting, wildfire/flood risk, exclusions and reconstruction costs may change independently of taxes.", "Refresh written quotes and coverage terms; do not extrapolate an old premium."], "status": "Missing", "sources": ["cdi"]},
         {"cells": ["Investment yields and market entry", "Treasury rates are fixed at each auction for the selected security; stock prices can lose value.", "Reprice the ladder and compare reinvestment and sequence risk immediately before investment."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
         {"cells": ["Long-run economic assumptions", "CBO's cited interest-rate horizon is 2026–2036; no cited official source provides an individual 50-year house value, insurance price, rent or return forecast.", "Use several clearly labeled stress paths; never promote a scenario into a forecast."], "status": "Guidance", "sources": ["cbo_rates", "fhfa_hpi", "bls_cpi"]},
-        {"cells": ["Nov 3, 2026 tax-related statewide measures (Props 3, 40–43)", "The official titles are: 3 — extends the existing tax on high incomes for schools and health care; 40 — imposes a one-time tax on certain taxpayers; 41 — prohibits new state taxes that exclude revenue from the state spending limit and requires audits of new state special taxes; 42 — prohibits new state personal property taxes and certain retroactive state taxes; 43 — limits voters' ability to raise local government revenue. The election date (Nov 3, 2026) is before today's date (Nov 15, 2026); certified results were not read here.", "Read the certified results and each measure's full text and fiscal analysis before relying on any tax effect; a ballot title is not a legal outcome by itself."], "status": "Not verified", "sources": ["sos_ballot"]},
+        {"cells": ["Nov 3, 2026 tax-related statewide measures (Props 3, 40–43)", "The official titles are: 3 — extends the existing tax on high incomes for schools and health care; 40 — imposes a one-time tax on certain taxpayers; 41 — prohibits new state taxes that exclude revenue from the state spending limit and requires audits of new state special taxes; 42 — prohibits new state personal property taxes and certain retroactive state taxes; 43 — limits voters' ability to raise local government revenue. The election date (Nov 3, 2026) is before today's date (Nov 15, 2026). The official Secretary of State list, read 2026-11-15, confirms the numbers and titles; certified results and full texts were not read here.", "Read the certified results and each measure's full text and fiscal analysis before relying on any tax effect; a ballot title is not a legal outcome by itself."], "status": "Not verified", "sources": ["sos_ballot"]},
+        {"cells": ["SF Measure H (Prop H) — parcel tax to fund Muni", "The official SF Department of Elections preliminary results (November 10, 2026 update) show 74.4% yes on the new annual parcel tax for 15 years. The measure title sets rates from $129 per parcel up to a $400,000 maximum by property type and size, adjusted for inflation.", "Certification can take up to 30 days. Read the measure text and confirm the category for each property before any tax is modelled."], "status": "Action needed", "sources": ["sf_elections_results"]},
         {"cells": ["SF rent-control allowable increase", "The Rent Board page states a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027. Secondary articles that cite a different figure are superseded by this official page.", "Re-check the Rent Board page each year; confirm whether a unit is covered before applying any increase."], "status": "Verified", "sources": ["sf_rent_board"]},
         {"cells": ["SF Rent Board 2026 notices (demolition/major renovation protections; security-deposit interest)", "The Rent Board page lists a January 23, 2026 item on tenant protections for demolition and major renovation, and a security-deposit interest change effective March 1, 2026. Their substance was not extracted into this site.", "Counsel should read the linked notice text and confirm whether it applies to the specific units before any tenant or deposit decision."], "status": "Not verified", "sources": ["sf_rent_board"]},
     ]
@@ -1729,6 +1758,14 @@ def build_flagged() -> str:
         {"cells": ["F-19 — No official source covers the household's actual transfer year", "The longest official baseline cited stops in 2055 and assumes current law; the near-term baseline stops in 2036. No official source supplies a house-price, insurance, rent or portfolio return path for the household's actual year.", "Every projection beyond the published baseline is a labelled scenario with a stated assumption band, not a forecast."], "status": "Missing", "sources": ["cbo_outlook", "cbo_ltbo", "fhfa_hpi"]},
     ]
     body += make_table("Additional flagged items from this review", ["Flag", "What was found", "Required action"], scan_rows)
+    new_flags = [
+        {"cells": ["F-24 — Prop H (SF Measure H) result is preliminary", "The official SF Department of Elections preliminary results (November 10, 2026 update) show the parcel tax passing with 74.4% yes. Certification can take up to 30 days. The full measure text, per-parcel category and rate for Property B were not read, so no parcel-tax amount is published.", "Wait for certification, read the measure text, and confirm the category and rate for Property B with the Assessor-Recorder or Treasurer before including the tax."], "status": "Not verified", "sources": ["sf_elections_results"]},
+        {"cells": ["F-25 — Prop 40 (one-time tax) status and threshold", "The Secretary of State list confirms Prop 40 is on the November 3, 2026 ballot. Results and the measure text were not read here. The one-billion-dollar net-worth threshold comes from press reports, not from the text.", "Read the certified result and the measure text. Treat the tax as a proposal until enacted, and do not model it on press figures alone."], "status": "Not verified", "sources": ["sos_qualified"]},
+        {"cells": ["F-26 — Sale-year application of the California 1% surcharge", "The statute (R&TC §17043), the FTB 2025 Form 540-ES worksheet and the FTB capital-gains page are read: the 1% applies to taxable income above $1,000,000, and California taxes capital gains as ordinary income. The sale-year computation for the household is not modelled, and the Form 540 2025 booklet itself was not retrieved.", "CPA to compute the surcharge for the actual sale year from the FTB form for that year. The surcharge stays out of the base case until then."], "status": "Action needed", "sources": ["ca_rtc17043", "ftb_540es_2025", "ftb_cap_gains"]},
+        {"cells": ["F-27 — Federal basis and like-kind statutes read through a mirror", "26 U.S.C. §1014 (date-of-death basis) and §1031 (real-property like-kind exchange) were read through a public mirror. The official House page returned 'Page Not Found' in its temporary format on 2026-11-15.", "Re-open the official House or govinfo text before relying on either section. Counsel and a CPA must advise on basis and any exchange."], "status": "Not verified", "sources": ["irc_1014", "irc_1031"]},
+        {"cells": ["F-28 — Imputed rent and depreciation recapture are not modelled", "No official rule in the register defines imputed rent for a living path, and Property B's depreciation history is not public. The model therefore carries no imputed-rent or recapture amount.", "Owner records and a CPA opinion are required before either input is added. The requirements tracker lists the rows as open."], "status": "Missing", "sources": ["irs_rental"]},
+    ]
+    body += make_table("Flags added 2026-11-15 (ballot, state surcharge, federal statutes, open inputs)", ["Flag", "What is unresolved", "Required action"], new_flags)
     body += paragraph("History-remediation limitation", "GitHub's guidance describes history rewriting as a coordinated, disruptive operation and warns that other refs, pull requests, forks, cached views and clones may retain copies. This platform pins the session to one feature branch and prohibits pushing another branch; therefore this work does not force-push or claim to scrub main. The repository owner/admin should review visibility and coordinate a supported, all-ref cleanup if desired.")
     return render_page("pages/flagged-for-review.html", "Flagged for review", "Material uncertainties, failed official retrievals, and the unresolved privacy/history issue. No unverified value has been substituted.", body, "EVIDENCE")
 
@@ -1832,6 +1869,99 @@ def build_suggestions() -> str:
     return render_page("pages/suggestions.html", "Suggestions for review", "A selectable review queue for improving decision quality. Suggestions are proposals, not automatic changes or personalized advice.", body, "DECISION")
 
 
+def build_requirements() -> str:
+    """Owner-requirement register: what the site does, what is still open, and the source behind each row."""
+    rows = [
+        {"cells": ["Projections of value, assessed value and property tax by year", "Year-by-year table on the projections page (2026–2050). Owner-supplied tax and assessment history is rounded to $10.", "Replace the owner-derived rate with the official tax bill and roll figures. The history-based rate is a derivation, not an official rate."], "status": "Projection", "sources": ["boe_pub29", "ca_rtc51"]},
+        {"cells": ["Insurance, water, electricity, repair and maintenance costs projected", "Planning bands and owner-supplied rows on the costs page. Water and electricity are shown as owner-reported, not as tariffs.", "Written insurer quotes for both properties, provider bills and licensed repair bids. No premium or utility amount is inferred."], "status": "Guidance", "sources": ["cdi", "cpuc_solar", "sfpuc_rates"]},
+        {"cells": ["Ranges rather than point estimates", "Low, base and high scenarios appear across the decision and projection pages.", "Ranges are assumptions. Narrow them only with verified inputs."], "status": "Assumption", "sources": ["cbo_ltbo"]},
+        {"cells": ["Mixed paths compared beside the pure choices", "The decision-analysis page compares live, rent, sell and mixed paths at the modelled 2045 transfer.", "Re-run after each input change. The comparison depends on unverified rent and sale inputs."], "status": "Projection", "sources": ["boe_prop19"]},
+        {"cells": ["Reinvestment risk shown beside the headline", "Reinvestment and sequence-risk notes sit beside the headline on the overview and executive summary.", "Reprice Treasury yields immediately before any staging decision."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Black-swan conditions kept separate from the base case", "Stress regimes using the 1929, 2008 and 1970s inflation anchors on the black-swan page.", "The anchors are historical context, not forecasts. Add any new regime only with a cited source."], "status": "Assumption", "sources": ["fed_1929", "fed_2008", "fed_great_inflation"]},
+        {"cells": ["Phased investing: 3-month to 2-year Treasuries for 24–36 months before stocks", "Interactive staging tool and dollar-mode table, with crash-entry comparisons in the 1929 and 2008 frames.", "The owner must enter actual proceeds, yields and reserve. The tool is a simplified calculator, not a backtest (flag F-08)."], "status": "Projection", "sources": ["treasury_bills", "treasury_notes", "fed_1929", "fed_2008"]},
+        {"cells": ["Written investment policy before the money arrives", "Draft policy on the investment-policy page with rules and blanks for owner and adviser values.", "Owner and adviser must complete the blanks and sign off before any proceeds arrive."], "status": "Guidance", "sources": ["sec_stocks", "treasury_bills", "repo_board"]},
+        {"cells": ["Imputed-rent input for living paths", "Not in the model. No official source in the register defines imputed rent for these purposes.", "Add as an owner-set input only after a CPA confirms the treatment. Until then, living paths are not valued on imputed rent."], "status": "Missing", "sources": ["irs_rental"]},
+        {"cells": ["Market rent for Property A, or treat letting paths as a floor", "Letting paths are labelled as a floor. No market rent is published.", "Obtain written rental comparables or an appraisal. The HUD FMR table was not retrieved (flag F-11)."], "status": "Missing", "sources": ["hud_fmr"]},
+        {"cells": ["Comparables for the Cupertino house", "The rent path is ranked on a benchmark pending comparables.", "Obtain sold and rental comparables from a licensed appraiser or agent. Nothing is sourced here."], "status": "Missing", "sources": ["fhfa_hpi"]},
+        {"cells": ["Written valuation of Property A at the date of death", "Basis rule described. The value is not published.", "Commission a qualified appraisal as of the date of death. Inherited basis is generally fair market value on that date (flag F-27)."], "status": "Action needed", "sources": ["irc_1014", "irs_basis"]},
+        {"cells": ["Depreciation and recapture modelled", "Not modelled. Property B's depreciation history is not in any public record used here.", "CPA to model B's prior depreciation and any recapture from owner records. Analyse A and B separately, because inherited basis is reset at death."], "status": "Missing", "sources": ["irs_rental", "irc_1014"]},
+        {"cells": ["Like-kind exchange decided, with advice before any sale", "The §1031 rules are stated: real property only, held for business or investment, with the 45-day and 180-day limits.", "Decide with counsel and a CPA before any listing. The exchange is not applied in the model (flag F-27)."], "status": "Action needed", "sources": ["irc_1031"]},
+        {"cells": ["1% state tax above $1,000,000 and capital-gain treatment (Form 540)", "Read: the 1% applies to taxable income above $1,000,000 (R&TC §17043; FTB 2025 Form 540-ES worksheet), and California taxes capital gains as ordinary income (FTB). The sale-year computation is not modelled.", "CPA to compute the sale-year surcharge from the FTB form for that year. The sensitivity stays out of the base case until then (flag F-26)."], "status": "Action needed", "sources": ["ca_rtc17043", "ftb_540es_2025", "ftb_cap_gains"]},
+        {"cells": ["Prop 19: claim only if the heir will occupy the home long term", "The site models occupancy and non-occupancy branches. The BOE rule and the current exclusion amount are verified.", "Counsel to confirm eligibility. The occupancy requirement must be met before any claim."], "status": "Action needed", "sources": ["boe_prop19", "boe_lta_2025_009"]},
+        {"cells": ["Carry the Prop 19 exclusion allowance forward", "The BOE schedule is shown: $1,044,586 for February 16, 2025 to February 15, 2027.", "Re-check the BOE amount before the transfer date. The next adjustment is due February 16, 2027."], "status": "Verified", "sources": ["boe_lta_2025_009"]},
+        {"cells": ["Estate-tax thresholds, portability and prior taxable gifts", "Official 2026 and 2027 amounts and the Form 706 filing guidance are on the estate-thresholds page.", "Ask the estate CPA about the portability election and prior taxable gifts before any decision."], "status": "Verified", "sources": ["irs_2027", "irs_estate_faq"]},
+        {"cells": ["Estate liquidity plan if the estate may exceed the federal exclusion", "Not built. The threshold and the 9-month Form 706 due date are stated.", "Estate CPA to estimate liquidity needs and tax payment timing. No liquidity figure is inferred."], "status": "Missing", "sources": ["irs_estate_faq"]},
+        {"cells": ["Property A's tax-rate area and the published rate", "Owner-supplied tax and assessment history only. The county rate schedule and tax-rate area were not retrieved.", "Read the tax-rate area from the tax bill or the county assessor's parcel record. The Santa Clara assessor page did not confirm a levy rate (flag F-10)."], "status": "Missing", "sources": ["boe_pub29"]},
+        {"cells": ["Transfer tax and recording fees priced into the sell path", "Not priced in the model. The sell-cost band is an assumption.", "Obtain the county and city transfer-tax schedules and a title company estimate for the sale."], "status": "Missing", "sources": ["boe_pub29"]},
+        {"cells": ["Sale modelled in the same tax year as the inheritance", "Not modelled as a separate case. Occupancy and sale timing are discussed in the text.", "Model the sale year with the CPA. Taxable income in that year determines whether the 1% state surcharge applies."], "status": "Missing", "sources": ["ca_rtc17043", "ftb_cap_gains", "irs_estate_faq"]},
+        {"cells": ["Property B: Prop H parcel tax (SF Measure H)", "Official preliminary result: passed with 74.4% yes (November 10 update). Measure title gives rates from $129 per parcel up to a $400,000 maximum, for 15 years.", "Read the full measure text to determine B's category, wait for certification (up to 30 days), and include the tax in B's costs only once verified."], "status": "Action needed", "sources": ["sf_elections_results"]},
+        {"cells": ["Billionaire tax and other November 3 statewide tax measures (Props 3, 40–43)", "On the November 3, 2026 ballot per the Secretary of State list. Titles verified; results and measure text not yet read.", "Read the certified results and the measure text. A ballot measure is not law until enacted. The Prop 40 threshold is reported in the press, not in the measure text read here (flag F-25)."], "status": "Action needed", "sources": ["sos_qualified"]},
+        {"cells": ["Five-year maintenance and capital plan for both buildings", "Planning bands only. No inspection data.", "Written inspections and licensed bids for each building. The bands are assumptions."], "status": "Missing", "sources": ["cslb"]},
+        {"cells": ["Privacy: anonymise personal information and keep it off the public site", "Figures rounded to $10. Names, addresses, parcel IDs and account numbers are banned, and the verifier checks for them.", "Repository history is still public and unscrubbed. Owner or admin action is required (flag F-01)."], "status": "Missing", "sources": ["github_history"]},
+        {"cells": ["Decision and date written next to each item; what would change the answer", "Decision log and overview list the decision, date and reversal triggers.", "Update the log whenever an input changes."], "status": "Guidance", "sources": ["repo_board"]},
+        {"cells": ["Re-run the model every year; review extreme scenarios annually", "The process is documented. Nothing updates automatically.", "Owner or adviser re-runs with each year's inputs and reviews the extreme scenarios."], "status": "Action needed", "sources": ["cbo_ltbo"]},
+        {"cells": ["Recheck official sources; separate enacted changes from proposals", "The law watchlist separates chaptered law, introduced proposals and ballot measures.", "Re-check Congress.gov, leginfo and the Secretary of State before each use."], "status": "Verified", "sources": ["congress_legislation", "ca_legislation"]},
+        {"cells": ["Glossary, grouped menu and printable adviser brief", "Present in the navigation, the glossary and the attorney and CPA brief.", "Refresh with each new page."], "status": "Guidance", "sources": ["repo_board"]},
+    ]
+    open_count = sum(1 for row in rows if row["status"] == "Missing")
+    action_count = sum(1 for row in rows if row["status"] in {"Action needed", "Not verified"})
+    covered_count = len(rows) - open_count - action_count
+    body = callout(
+        "Status as of 2026-11-15",
+        f"{len(rows)} owner requirements are listed. {covered_count} have a page, model or verified rule; {action_count} need an adviser, an official record or a measure result; {open_count} are open because the data is missing. Open items are not filled with guesses.",
+        "warning",
+    )
+    body += make_table(
+        "Owner requirement register",
+        ["Owner requirement", "What the site does now", "Gap or next action"],
+        rows,
+        note="Status is from the evidence badge. Every row links to the official source behind its rule; internal rows link to the task board and are not legal sources.",
+    )
+    return render_page(
+        "pages/requirements-tracker.html",
+        "Requirements tracker",
+        "Every owner request, what the site does about it, and what is still open. Nothing here is a decision; it shows which inputs and advice are still needed.",
+        body,
+        "DECISION WORKSPACE",
+    )
+
+
+def build_investment_policy() -> str:
+    """Draft investment policy for proceeds. Rules are templates; owner and adviser values stay blank."""
+    rows = [
+        {"cells": ["Purpose", "Govern how sale or inheritance proceeds are held, staged, reviewed and, if needed, changed. Adopt the policy before any money arrives.", "Owner signs and dates the policy. Adviser reviews the draft."], "status": "Guidance", "sources": ["repo_board"]},
+        {"cells": ["Liquidity reserve", "Hold cash or short Treasuries sufficient for expected spending and any tax payment before any market exposure.", "Reserve in months of spending: [owner to set]. Tax payment dates: [CPA to confirm]."], "status": "Assumption", "sources": ["treasury_bills"]},
+        {"cells": ["Staging schedule", "Park proceeds in Treasuries of 3 months to 2 years. Move into stocks in equal steps over 24–36 months, unless a written trigger below applies.", "Schedule length and step size: [owner or adviser to set]. Test with the phased-investing page; it is not a backtest."], "status": "Assumption", "sources": ["treasury_bills", "fed_1929", "fed_2008"]},
+        {"cells": ["Treasury instruments", "Use Treasury bills or notes only. The yield is set at auction for the security held, and a later price can differ from the purchase price if sold early.", "Maturity ladder: [adviser to set]."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Equity exposure", "Use diversified funds, not single stocks. No leverage, margin or options without written adviser approval.", "Fund list and expense limit: [adviser to set]."], "status": "Guidance", "sources": ["sec_stocks"]},
+        {"cells": ["Rebalancing", "Rebalance on a fixed calendar, not in response to headlines.", "Calendar and tolerance band: [owner to set]."], "status": "Assumption", "sources": ["sec_stocks"]},
+        {"cells": ["Drawdown response", "A single price move does not trigger buying or selling. Any change requires a written review against the triggers below.", "Review threshold: [owner to set]."], "status": "Guidance", "sources": ["fed_2008"]},
+        {"cells": ["Tax-aware realisation", "Track cost basis and holding period for each lot. Check whether realised gains could lift a year's California taxable income above $1,000,000, where the 1% surcharge applies to the excess (R&TC §17043).", "CPA to confirm the California and federal treatment for the sale year (flag F-26)."], "status": "Not verified", "sources": ["ca_rtc17043", "ftb_540es_2025"]},
+        {"cells": ["Written triggers", "The plan changes only when a listed trigger occurs, such as a newly enacted law, a certified election result, a verified change in a property's status, or a change in household needs. Triggers are set before the money arrives.", "Triggers: [owner to list]."], "status": "Action needed", "sources": ["repo_board"]},
+        {"cells": ["Records and privacy", "Keep statements, cost-basis records and decisions in private storage, not in this public repository.", "Storage location: [owner to set]."], "status": "Guidance", "sources": ["repo_board"]},
+        {"cells": ["Review", "Review the policy annually and after any trigger. Re-check Treasury yields and official law before each stage.", "Reviewer and review date: [owner or adviser to set]."], "status": "Guidance", "sources": ["repo_board"]},
+    ]
+    body = callout(
+        "Draft template — not advice",
+        "This draft is not a recommendation and contains no household amount. Bracketed fields must be completed by the owner and reviewed by a qualified adviser before any proceeds arrive.",
+        "warning",
+    )
+    body += make_table(
+        "Draft investment policy for sale or inheritance proceeds",
+        ["Policy area", "Draft rule", "Owner or adviser must set"],
+        rows,
+        note="Rules are drafted from the staging and stress analysis in this site. The sources show what each instrument is and how it is taxed or priced; they do not recommend a product.",
+    )
+    body += paragraph("Use", "Adopt this policy in writing before the proceeds arrive, then date and sign it. Compare any later decision against the written triggers, not against a single projection.")
+    return render_page(
+        "pages/investment-policy.html",
+        "Investment policy draft",
+        "A template investment policy for the proceeds, with blanks for the owner and adviser to complete before any money arrives.",
+        body,
+        "DECISION WORKSPACE",
+    )
+
+
 def build_page(path: str) -> str:
     builders = {
         "index.html": build_index,
@@ -1854,6 +1984,8 @@ def build_page(path: str) -> str:
         "pages/sources.html": build_sources,
         "pages/privacy.html": build_privacy,
         "pages/suggestions.html": build_suggestions,
+        "pages/requirements-tracker.html": build_requirements,
+        "pages/investment-policy.html": build_investment_policy,
     }
     return builders[path]()
 
