@@ -304,8 +304,33 @@ if (pathForm) {
     const delta1 = reTax1 - exclTax1;
     const delta10 = reCum - exclCum;
     const hurdle = load < 1 ? (delta10 / 10) / 12 / (1 - load) : NaN;
-    const sellNet = marketValue * 0.93;
-    const sell10 = sellNet * Math.pow(1.06, 10);
+
+    // Transfer-cost and income-tax layers (T9806-5). Rate inputs mirror the
+    // published schedules; every derived figure stays rounded on screen.
+    const dttPer500 = pathNum('path-dtt', 0, 50);
+    const otherFees = pathNum('path-fees', 0, 99_99_99);
+    const imputedMonthly = pathNum('path-imputed', 0, 9_999, 3550);
+    const gainPct = pathNum('path-gainpct', 0, 100) / 100;
+    const caRate = pathNum('path-ca', 0, 20) / 100;
+    const depreciation = pathNum('path-depr', 0, 99_99_999);
+    const principal = Boolean(pathEl('path-principal')?.checked);
+
+    const transferTax = marketValue > 100 ? Math.ceil(marketValue / 500) * dttPer500 : 0;
+    const commissions = marketValue * 0.07;
+    const netProceeds = marketValue - commissions - transferTax - otherFees;
+    const rawGain = marketValue * gainPct;
+    const gain = principal ? Math.max(0, rawGain - 250_000) : rawGain;
+    const recaptured = Math.min(depreciation, gain);
+    const residual = Math.max(0, gain - recaptured);
+    const taxDue = recaptured * 0.25
+      + residual * 0.238
+      + gain * caRate
+      + Math.max(0, gain - 1_000_000) * 0.01;
+    const afterTax = netProceeds - taxDue;
+    const sell10 = afterTax * Math.pow(1.06, 10);
+    // A living path earns no rent but avoids housing cost: the imputed-rent
+    // line values the occupied unit, so the two branches can be compared.
+    const livingBenefit10 = imputedMonthly * 12 * 10 - exclCum;
 
     pathEl('path-tax-excl').textContent = pathMoney(exclTax1);
     pathEl('path-tax-excl10').textContent = pathMoney(exclTax1 * Math.pow(1 + cap, 9));
@@ -316,11 +341,20 @@ if (pathForm) {
     pathEl('path-delta1').textContent = pathMoney(delta1);
     pathEl('path-delta10').textContent = pathMoney(delta10);
     pathEl('path-hurdle').textContent = Number.isFinite(hurdle) ? pathMoney(hurdle) + ' / month' : '—';
-    pathEl('path-sellnet').textContent = pathMoney(sellNet);
+    if (pathEl('path-transfer-tax')) pathEl('path-transfer-tax').textContent = pathMoney(transferTax);
+    if (pathEl('path-closing')) pathEl('path-closing').textContent = pathMoney(commissions + otherFees);
+    if (pathEl('path-net')) pathEl('path-net').textContent = pathMoney(netProceeds);
+    if (pathEl('path-gain')) pathEl('path-gain').textContent = gain > 0 ? pathMoney(gain) : 'nil';
+    if (pathEl('path-recap')) pathEl('path-recap').textContent = recaptured > 0 ? pathMoney(recaptured * 0.25) + ' on ' + pathMoney(recaptured) : 'nil';
+    if (pathEl('path-taxes')) pathEl('path-taxes').textContent = taxDue > 0 ? pathMoney(taxDue) : 'nil';
+    if (pathEl('path-aftertax')) pathEl('path-aftertax').textContent = pathMoney(afterTax);
+    if (pathEl('path-imputed10')) pathEl('path-imputed10').textContent = pathMoney(livingBenefit10);
+    pathEl('path-sellnet').textContent = pathMoney(afterTax);
     pathEl('path-sell10').textContent = pathMoney(sell10);
     pathEl('path-status').textContent = 'Local scenario recomputed. Reassessed branch is ' +
       (delta10 > 0 ? 'more expensive' : 'less expensive') +
-      ' over ten years under these assumptions. Assumptions are labeled on the page; this is not tax advice.';
+      ' over ten years under these assumptions, and the sell branch nets ' + pathMoney(afterTax) +
+      ' after the transfer tax, fees and this gain sensitivity. Assumptions are labeled on the page; this is not tax advice.';
   }
 
   pathForm.querySelectorAll('input').forEach(control => {
@@ -334,7 +368,69 @@ if (pathForm) {
     pathEl('path-cap').value = '2';
     pathEl('path-excl').value = '1886640';
     pathEl('path-load').value = '35';
+    pathEl('path-imputed').value = '3550';
+    pathEl('path-dtt').value = '0.55';
+    pathEl('path-fees').value = '190';
+    pathEl('path-gainpct').value = '0';
+    pathEl('path-ca').value = '12.3';
+    pathEl('path-depr').value = '0';
+    if (pathEl('path-principal')) pathEl('path-principal').checked = false;
     runPathTool();
   });
   runPathTool();
+}
+
+// Local-only Proposition H parcel-charge estimator (rental-economics page).
+const propHForm = document.getElementById('prop-h-tool');
+if (propHForm) {
+  const phEl = id => document.getElementById(id);
+  const phNum = (id, min, max, fallback) => {
+    const raw = Number(phEl(id)?.value);
+    const value = Number.isFinite(raw) ? raw : fallback;
+    return Math.max(min, Math.min(value, max));
+  };
+  const phMoney = value => {
+    const rounded = Math.round(value / 10) * 10;
+    return (rounded < 0 ? '-' : '') + '$' + Math.abs(rounded).toLocaleString('en-US');
+  };
+  const SUNSET_YEAR = 2042;
+  const PASS_THROUGH = 65;
+
+  function runPropH() {
+    const base = phNum('ph-class', 0, 9_999, 249);
+    const year = Math.round(phNum('ph-year', 2024, SUNSET_YEAR, 2027));
+    const inflation = phNum('ph-infl', 0, 10, 2) / 100;
+    const units = phNum('ph-units', 0, 9, 0);
+    const chargeFor = y => (y < 2027 || y > SUNSET_YEAR ? 0 : base * Math.pow(1 + inflation, y - 2027));
+    let cumulative = 0;
+    let lifetime = 0;
+    for (let y = 2027; y <= SUNSET_YEAR; y += 1) {
+      lifetime += chargeFor(y);
+      if (y <= year) cumulative += chargeFor(y);
+    }
+    const passThrough = units * PASS_THROUGH;
+    const charge = chargeFor(year);
+    phEl('ph-charge').textContent = charge > 0 ? phMoney(charge) : 'no charge in this year';
+    phEl('ph-cum').textContent = phMoney(cumulative);
+    phEl('ph-life').textContent = phMoney(lifetime);
+    phEl('ph-pass').textContent = phMoney(passThrough);
+    phEl('ph-net').textContent = phMoney(Math.max(0, charge - passThrough));
+    phEl('ph-status').textContent = 'Fiscal year ' + year + '-' + String(year + 1).slice(2) +
+      ': modeled charge ' + phMoney(charge) + ', owner-borne after the pass-through ceiling ' +
+      phMoney(Math.max(0, charge - passThrough)) + '. The tax ends June 30, ' + SUNSET_YEAR +
+      '; eligibility for an exemption or credit is an owner application, not a model output.';
+  }
+
+  propHForm.querySelectorAll('input, select').forEach(control => {
+    control.addEventListener('input', runPropH);
+    control.addEventListener('change', runPropH);
+  });
+  phEl('ph-reset')?.addEventListener('click', () => {
+    phEl('ph-class').value = '249';
+    phEl('ph-year').value = '2027';
+    phEl('ph-infl').value = '2';
+    phEl('ph-units').value = '2';
+    runPropH();
+  });
+  runPropH();
 }

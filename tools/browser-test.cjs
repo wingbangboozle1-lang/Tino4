@@ -80,6 +80,38 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
     assert.equal(await page.locator('#ladder-renewal3').inputValue(), '2.0');
     assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('ladder-'))), []);
 
+    // Path tool: the priced sell branch reacts to the gain sensitivity and to depreciation.
+    await page.goto('http://127.0.0.1:8000/pages/decision-analysis.html');
+    assert.equal(await page.locator('#path-transfer-tax').textContent(), '$7,180');
+    assert.equal(await page.locator('#path-gain').textContent(), 'nil');
+    const beforeGain = await page.locator('#path-taxes').textContent();
+    await page.fill('#path-gainpct', '100');
+    const afterGain = await page.locator('#path-taxes').textContent();
+    assert.notEqual(afterGain, beforeGain, 'a full-price gain must change the modeled tax');
+    assert.ok(Number((await page.locator('#path-gain').textContent()).replace(/[$,]/g, '')) > 6000000);
+    await page.fill('#path-depr', '1500000');
+    assert.match(await page.locator('#path-recap').textContent(), /\$375,000 on \$1,500,000/);
+    await page.check('#path-principal');
+    assert.match(await page.locator('#path-status').textContent(), /Local scenario recomputed/);
+    await page.click('#path-reset');
+    assert.equal(await page.locator('#path-gain').textContent(), 'nil', 'reset must restore the baseline');
+    assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('path-'))), []);
+
+    // Proposition H estimator: class, sunset and the pass-through ceiling.
+    await page.goto('http://127.0.0.1:8000/pages/rental-economics.html');
+    assert.equal(await page.locator('#ph-charge').textContent(), '$250');
+    assert.equal(await page.locator('#ph-pass').textContent(), '$130');
+    await page.selectOption('#ph-class', '799');
+    assert.ok(Number((await page.locator('#ph-charge').textContent()).replace(/[$,]/g, '')) > 250);
+    await page.fill('#ph-year', '2042');
+    assert.equal(await page.locator('#ph-cum').textContent(), await page.locator('#ph-life').textContent());
+    await page.click('#ph-reset');
+    assert.equal(await page.locator('#ph-charge').textContent(), '$250');
+
+    // The projections distribution chart renders from the model.
+    await page.goto('http://127.0.0.1:8000/pages/projections.html');
+    assert.equal(await page.locator('svg.dist-chart rect.dist-bar').count(), 6);
+
     // Decision log carries its own independent review queue.
     await page.goto('http://127.0.0.1:8000/pages/decision-log.html');
     const logTotal = await page.locator('.review-choice').count();

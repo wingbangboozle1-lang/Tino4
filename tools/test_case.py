@@ -15,8 +15,14 @@ class PublicSitePrivacyTests(unittest.TestCase):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         files = [ROOT / path for path in manifest]
-        self.assertEqual(len(files), 20)
+        self.assertEqual(len(files), 23)
         self.assertTrue(all(path.is_file() for path in files))
+        for new_page in ("pages/sale-and-transfer.html", "pages/rental-economics.html", "pages/private-file.html"):
+            self.assertIn(new_page, manifest)
+            body = (ROOT / new_page).read_text(encoding="utf-8")
+            # every page must be reachable from the navigation, not just built
+            self.assertIn('<a href="../pages/' + Path(new_page).name + '"', body)
+            self.assertIn('aria-current="page"', body)
         self.assertFalse((ROOT / "assets/case-projections.csv").exists())
         self.assertIn("Attorney &amp; CPA briefing sheet", (ROOT / "pages/attorney-cpa-brief.html").read_text(encoding="utf-8"))
         self.assertIn("24–36 months", (ROOT / "pages/suggestions.html").read_text(encoding="utf-8"))
@@ -26,8 +32,63 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("Year-by-year projection, 2026-2050", (ROOT / "pages/projections.html").read_text(encoding="utf-8"))
         self.assertIn("Computed path comparison at the modeled 2045 transfer", (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8"))
         self.assertIn("id=\"path-tool\"", (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8"))
+        analysis = (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8")
+        for priced_label in ("Taxable gain as % of price", "Transfer tax (dollars per $500 of price)",
+                             "Accumulated depreciation if it was let first", "id=\"path-principal\""):
+            self.assertIn(priced_label, analysis)
         self.assertIn("Staging compared in dollars", (ROOT / "pages/phased-investing.html").read_text(encoding="utf-8"))
         self.assertIn("F-20 — Owner-supplied figures", (ROOT / "pages/flagged-for-review.html").read_text(encoding="utf-8"))
+        subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
+
+    def test_transfer_tax_and_rental_layers_are_priced_and_sourced(self):
+        """T9806-2/3: conveyance cost, gain sensitivity, recapture and the parcel charge.
+
+        Runs after the build test so the pages exist; asserts the priced sell path,
+        the corrected transfer-tax claim, and that the private file publishes no
+        currency amount at all.
+        """
+        subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
+        sale = (ROOT / "pages/sale-and-transfer.html").read_text(encoding="utf-8")
+        rental = (ROOT / "pages/rental-economics.html").read_text(encoding="utf-8")
+        private = (ROOT / "pages/private-file.html").read_text(encoding="utf-8")
+        glossary = (ROOT / "pages/glossary.html").read_text(encoding="utf-8")
+        # The conveyance charge is stated from the published schedule and statute.
+        self.assertIn("0.55 per 500 dollars", sale)
+        self.assertIn("11911", sale)
+        self.assertIn("1.10", sale)  # the county's own inconsistent page is disclosed, not hidden
+        # A later sale is priced with the transfer charge, not just the commission.
+        self.assertIn("SELL_NET_AFTER_TRANSFER", "".join(
+            (ROOT / "tools/sitebuild.py").read_text(encoding="utf-8").split("\n")))
+        # Property H is modelled per parcel class with the pass-through ceiling.
+        self.assertIn("65", rental)
+        self.assertIn("2042", rental)
+        self.assertIn("id=\"prop-h-tool\"", rental)
+        # The private file holds rules and blanks, and publishes no numbers.
+        self.assertIn("Pre-commitment", private)
+        private_main = private.split("<main", 1)[-1].split("</main>", 1)[0]
+        # The worksheet carries the rounding rule ("$10") but no amount.
+        self.assertNotRegex(private_main, r"\$[0-9]{3,}")
+        # The old glossary claim that family transfers are exempt is corrected.
+        self.assertIn("NO parent-child or family-conveyance exemption", glossary)
+        self.assertNotIn("certain family transfers are excluded by statute", glossary)
+        self.assertNotIn("certain family transfers are excluded by statute", sale)
+        # Every cited authority must appear by its register label, and every row
+        # on these pages must carry an evidence badge.
+        sys.path.insert(0, str(ROOT / "tools"))
+        import sitebuild
+        register = (ROOT / "pages/sources.html").read_text(encoding="utf-8")
+        self.assertIn("Direct page fetch: 2026-11-15", register)
+        for page, keys in (
+            (sale, ("scc_transfer_tax", "ca_rtc11911", "scc_measure_e", "irs_topic701", "irs_p551_basis")),
+            (rental, ("sfmta_prop_h", "sf_prop_h_text", "irs_topic409", "irs_p527_depr")),
+        ):
+            for key in keys:
+                # Match on the URL path, which the renderer leaves unescaped inside href.
+                needle = sitebuild.SOURCES[key]["url"].split("//", 1)[-1][:48]
+                self.assertIn(needle, page, key + " not cited on the page")
+                self.assertIn(needle, register, key + " not in the register")
+            rows = page.count('<span class="badge')
+            self.assertGreater(rows, 10, "rows must stay status-tagged")
         subprocess.run([sys.executable, str(ROOT / "tools/verify.py")], cwd=ROOT, check=True)
 
     def test_currency_amounts_are_rounded_or_official(self):

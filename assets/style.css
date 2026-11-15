@@ -125,6 +125,17 @@ td a.source { display: inline-block; margin: 0 0 4px; font-size: .78rem; font-we
 .scenario-card dl { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 8px 12px; margin: 0; }
 .scenario-card dt { color: var(--muted); font-size: .83rem; }
 .scenario-card dd { margin: 0; color: var(--teal-dark); font-size: .88rem; font-weight: 800; text-align: right; }
+.tool-check { grid-column: 1 / -1; display: flex; align-items: center; gap: 9px; font-size: .82rem; }
+.tool-check input { width: auto; accent-color: var(--teal); }
+.dist-chart { display: block; width: 100%; height: auto; margin: 14px 0 4px; overflow: visible; }
+.dist-axis { stroke: var(--line); stroke-width: 1; }
+.dist-bar { fill: var(--teal); }
+.dist-label { fill: var(--ink); font-size: 11px; }
+.dist-figure { margin: 0 0 6px; }
+.dist-note { color: var(--muted); font-size: .8rem; line-height: 1.45; }
+.dist-scale { fill: var(--muted); font-size: 10px; }
+.dist-scale-end, .dist-value { text-anchor: end; }
+.dist-value { fill: var(--teal-dark); font-size: 11px; font-weight: 700; }
 .tool-status, .review-summary { margin: 16px 0 5px; padding: 12px 14px; border-radius: 9px; background: #eff7f6; color: #264d4e; font-weight: 650; }
 .review-choice { min-width: 150px; font-size: .78rem; }
 footer { max-width: 1500px; margin: 0 auto; padding: 24px 42px 36px; border-top: 1px solid var(--line); color: var(--muted); font-size: .82rem; }

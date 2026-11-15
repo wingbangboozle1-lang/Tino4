@@ -1441,7 +1441,7 @@ def build_decisions() -> str:
     body += make_table("The ownership roles are different assets — keep them separate", ["Asset", "What is actually established", "Modelling rule"], role_rows, "Only the broad roles were supplied. Neither asset's value, basis, assessment, rent, lease, insurance or costs is verified here.")
     body += '''<section class="tool-section" aria-labelledby="path-tool-heading">
 <h2 id="path-tool-heading">Path what-if controls — local only</h2>
-<p class="table-note">Adjust the assumptions and the key numbers recompute in this browser. Defaults mirror the published baseline. Nothing is stored or transmitted; the tool does not calculate income tax, insurance, maintenance or rent.</p>
+<p class="table-note">Adjust the assumptions and the key numbers recompute in this browser. Defaults mirror the published baseline. Nothing is stored or transmitted. The tool now also prices the transfer tax, the recording fees, a gain-rate sensitivity and the recapture ceiling; it still does not prepare a tax return, and it does not know your insurance, maintenance or rent figures.</p>
 <form id="path-tool" class="tool-grid">
 <label>Market value at transfer<input id="path-value" type="number" min="0" max="99999999" step="10" value="6531230" inputmode="numeric"></label>
 <label>Assessed base carried over<input id="path-base" type="number" min="0" max="99999999" step="10" value="802030" inputmode="numeric"></label>
@@ -1449,16 +1449,26 @@ def build_decisions() -> str:
 <label>Assessed-value growth cap (%)<input id="path-cap" type="number" min="0" max="10" step="0.1" value="2" inputmode="decimal"></label>
 <label>Prop 19 exclusion at transfer<input id="path-excl" type="number" min="0" max="99999999" step="10" value="1886640" inputmode="numeric"></label>
 <label>Rent operating load (%)<input id="path-load" type="number" min="0" max="90" step="1" value="35" inputmode="decimal"></label>
+<label>Imputed rent on the unit you occupy (per month)<input id="path-imputed" type="number" min="0" max="9999" step="50" value="3550" inputmode="numeric"></label>
+<label>Transfer tax (dollars per $500 of price)<input id="path-dtt" type="number" min="0" max="50" step="0.05" value="0.55" inputmode="decimal"></label>
+<label>Recording and title fees (total)<input id="path-fees" type="number" min="0" max="9999999" step="10" value="190" inputmode="numeric"></label>
+<label>Taxable gain as % of price<input id="path-gainpct" type="number" min="0" max="100" step="1" value="0" inputmode="numeric"></label>
+<label>Assumed California marginal rate on the gain (%)<input id="path-ca" type="number" min="0" max="20" step="0.1" value="12.3" inputmode="decimal"></label>
+<label>Accumulated depreciation if it was let first<input id="path-depr" type="number" min="0" max="999999" step="1000" value="0" inputmode="numeric"></label>
+<label class="tool-check"><input id="path-principal" type="checkbox" value="1">Occupied 24 of the last 60 months (main-home exclusion)</label>
 <div class="tool-actions no-print"><button id="path-reset" type="button">Reset to baseline</button><span class="tool-assumption">Derived values are rounded to the nearest $10 in the display.</span></div>
 </form>
 <div class="scenario-grid" aria-live="polite">
 <article class="scenario-card"><h3>Exclusion claimed (live in A)</h3><dl><dt>Property tax, year 1</dt><dd id="path-tax-excl">—</dd><dt>Property tax, year 10</dt><dd id="path-tax-excl10">—</dd><dt>Ten-year cumulative</dt><dd id="path-tax-exclcum">—</dd></dl></article>
 <article class="scenario-card"><h3>Reassessed (rent or sell branch)</h3><dl><dt>Property tax, year 1</dt><dd id="path-tax-re">—</dd><dt>Property tax, year 10</dt><dd id="path-tax-re10">—</dd><dt>Ten-year cumulative</dt><dd id="path-tax-recum">—</dd></dl></article>
 <article class="scenario-card"><h3>Branch difference</h3><dl><dt>Annual difference, year 1</dt><dd id="path-delta1">—</dd><dt>Ten-year cumulative difference</dt><dd id="path-delta10">—</dd><dt>Rent hurdle per month</dt><dd id="path-hurdle">—</dd></dl></article>
-<article class="scenario-card"><h3>Sell branch</h3><dl><dt>Net proceeds (7% costs)</dt><dd id="path-sellnet">—</dd><dt>Proceeds at 6%/yr, year 10</dt><dd id="path-sell10">—</dd><dt>Reinvestment risk</dt><dd>see black-swan page</dd></dl></article>
+<article class="scenario-card"><h3>Sell branch</h3><dl><dt>Net after transfer costs and this gain sensitivity</dt><dd id="path-sellnet">—</dd><dt>Proceeds at 6%/yr, year 10</dt><dd id="path-sell10">—</dd><dt>Reinvestment risk</dt><dd>see black-swan page</dd></dl></article>
+<article class="scenario-card"><h3>Public charge on the conveyance</h3><dl><dt>Documentary transfer tax</dt><dd id="path-transfer-tax">—</dd><dt>Commission and other fees</dt><dd id="path-closing">—</dd><dt>Net before income tax</dt><dd id="path-net">—</dd></dl></article>
+<article class="scenario-card"><h3>Income-tax sensitivity</h3><dl><dt>Taxable gain after any exclusion</dt><dd id="path-gain">—</dd><dt>Recapture at the 25% ceiling</dt><dd id="path-recap">—</dd><dt>Federal + California + 1% line 62</dt><dd id="path-taxes">—</dd></dl></article>
+<article class="scenario-card"><h3>Living path, priced</h3><dl><dt>After-tax cash if sold</dt><dd id="path-aftertax">—</dd><dt>Ten-year imputed rent minus ten-year exclusion-branch tax</dt><dd id="path-imputed10">—</dd><dt>What this line is</dt><dd>rent avoided, not income earned</dd></dl></article>
 </div>
 <p id="path-status" class="tool-status" role="status">Change a control to rerun the local comparison.</p>
-<p class="table-note">Model: exclusion branch taxes the carried-over base grown at the cap; reassessed branch taxes (market value minus exclusion) grown at the cap; both at the entered effective rate. The rent hurdle divides the ten-year difference by ten years, twelve months, and (1 − load). Sale branch subtracts 7% assumed costs and compounds 6%/yr, both labeled assumptions. This is not tax advice.</p>
+<p class="table-note">Model: exclusion branch taxes the carried-over base grown at the cap; reassessed branch taxes (market value minus exclusion) grown at the cap; both at the entered effective rate. The rent hurdle divides the ten-year difference by ten years, twelve months, and (1 − load). Transfer tax is the entered rate per 500 dollars applied to the whole price (the county's published rate is 0.55, and a conforming city tax is credited, not added). Gain is the entered percentage of price, less 250,000 dollars when the main-home exclusion is switched on; tax on the gain is the 25% ceiling on the depreciation portion, the top federal long-term rate plus 3.8% on the rest, the entered California rate on the whole gain, and 1% on the part of California taxable income above 1,000,000 dollars. Imputed rent values the unit an owner occupies over ten years against ten years of the exclusion-branch tax. Every rate is an assumption at the top of the published schedule; this is not tax advice.</p>
 </section>'''
 
     body += paragraph("Comparison rule", "For every path, show after-tax cash flows, one-time sale or transfer costs, debt, vacancy, repairs, insurance, utilities, property tax, rent legality, liquidity and reinvestment risk. Compare the same time horizon and disclose every assumption.")
@@ -1487,6 +1497,39 @@ def build_questions() -> str:
     body += make_table("Questions, information required and answer status", ["Question", "Information available", "Answer from verified evidence", "Record needed to close the gap", "Who should confirm"], rows, "Status Owner-supplied means only that the broad role appeared in the request; the official source link verifies the cited rule, not the household fact.")
     body += paragraph("Discovery order", "First collect trust and title records, then confirm estate valuation/basis and property-tax deadlines, then verify lawful use and leases, then request independent insurance/repair/utility data, and only then compare after-tax alternatives.")
     return render_page("pages/questions.html", "Questions & missing evidence", "A clear register of what is known at a high level, what is not established, and the document or official rule needed to resolve each question.", body, "DECISION")
+
+
+def distribution_chart(width: int = 760, bar_height: int = 26) -> str:
+    """Ten-year outcome distribution for the sell path, computed not asserted.
+
+    One bar per labeled market regime from the reinvestment table; the length is
+    the worse of staged versus immediate entry in that regime, so the chart shows
+    dispersion instead of a single smooth-growth number.
+    """
+    data = outcome_distribution()
+    values = [value for _, value in data]
+    lo, hi = min(values), max(values)
+    span = (hi - lo) or 1.0
+    label_width = 250
+    plot_width = width - label_width - 110
+    row_gap = bar_height + 12
+    height = len(data) * row_gap + 40
+    parts = [
+        f'<svg class="dist-chart" viewBox="0 0 {width} {height}" width="100%" height="{height}" role="img" '
+        f'aria-label="Ten-year outcome distribution across labeled market regimes">',
+        '<title>Ten-year outcome distribution across labeled market regimes</title>',
+        f'<line x1="{label_width}" y1="26" x2="{label_width}" y2="{height - 30}" class="dist-axis" />',
+        f'<text x="{label_width}" y="16" class="dist-scale">floor {money10(lo)}</text>',
+        f'<text x="{width}" y="16" class="dist-scale dist-scale-end">ceiling {money10(hi)}</text>',
+    ]
+    for index, (label, value) in enumerate(data):
+        y = 34 + index * row_gap
+        bar_width = max(2.0, (value - lo) / span * plot_width)
+        parts.append(f'<text x="0" y="{y + bar_height * 0.7:.0f}" class="dist-label">{esc(label)}</text>')
+        parts.append(f'<rect x="{label_width}" y="{y}" width="{bar_width:.1f}" height="{bar_height}" rx="4" class="dist-bar" />')
+        parts.append(f'<text x="{width}" y="{y + bar_height * 0.7:.0f}" class="dist-value">{money10(value)}</text>')
+    parts.append('</svg>')
+    return "".join(parts)
 
 
 def build_projections() -> str:
@@ -1554,6 +1597,7 @@ def build_projections() -> str:
         proj_rows,
         "Columns 2-4 compound owner-supplied rounded figures under the baseline assumptions. Column 5 begins at the modeled 2045 transfer: market value minus the indexed exclusion, then the 2% cap. Columns 6-7 project Property B under its own cap and derived rate. Column 8 is an assumption path from the official 2026/2027 amounts, not a forecast. All values rounded to the nearest ten dollars.",
     )
+    body += '<section class="table-section"><h2>Distribution of modeled outcomes, not a single path</h2>' + '<p class="table-note">The owner asked for a distribution chart here. This is one: the same priced sell-and-reinvest proceeds run through six labeled regimes, staged entry against immediate entry, and the worse of the two taken for each regime. A single smooth-growth number would hide the spread between the floor and the ceiling, which is the part that decides whether the sell path is safe.</p>' + '<figure class="dist-figure">' + distribution_chart() + '<figcaption class="dist-note">Ten-year value of the priced sell-path proceeds, worse of staged and immediate entry. Reference: net proceeds at transfer ' + money10(SELL_NET_AFTER_TRANSFER_2045) + '. Bars are scenario endpoints from the labeled assumptions on this page, not probabilities, and no bar is a forecast.</figcaption></figure>' + '</section>'
     body += make_table("Blank early / midpoint / late transfer scenarios", ["Separate asset and metric", "Early scenario", "Midpoint scenario", "Late scenario", "Private evidence required"], horizon_rows, "These are relative planning checkpoints, not public dates or a claim about when a transfer occurs. All cells are intentionally blank. Map the stages to actual years only in a private model; do not infer zero or reuse one asset's costs for the other.")
     range_rows = [
         {"cells": ["Market value growth", "One growth number per year", "Low / base / high annual growth, each dated and anchored to a published index window", "FHFA publishes broad state and metro indexes; a metro index is not an appraisal of one parcel."], "status": "Verified", "sources": ["fhfa_hpi"]},
@@ -1759,7 +1803,7 @@ def build_phased_investing() -> str:
 </section>"""
     static_rows = staging_rows()
     body += make_table(
-        "Staging compared in dollars — modeled net proceeds of about " + money10(SELL_NET_2045) + " (baseline assumptions)",
+        "Staging compared in dollars — modeled net proceeds of about " + money10(SELL_NET_AFTER_TRANSFER_2045) + " after the assumed sale cost, the published county transfer tax and the recording fees (baseline assumptions)",
         ["Entry scenario", "Lump sum (invest all at receipt)", "24-month staging", "36-month staging"],
         static_rows,
         "Proceeds assume a 2045 sale at the 4% market-growth scenario minus 7% assumed costs. Reserve yield 4.3% per year (CBO 2026-2036 10-year average as the bill/note proxy); crash variants begin in month 15 with the source-calibrated declines and run to their troughs (36-month horizon, except the 1929 variant runs 51 months). No dividends, fees, taxes, post-trough recovery or probabilities. This is a stress illustration, not a backtest or advice — the interactive tool above runs the same model in normalized units with your own inputs.",
@@ -2047,7 +2091,7 @@ def build_glossary() -> str:
         {"cells": ["Net investment income tax", "A 3.8% tax on net investment income (including most rent and capital gains) above the $200,000/$250,000 MAGI thresholds.", "Applies on top of ordinary capital-gains tax; a CPA must confirm applicability."], "status": "Cross-checked", "sources": ["irs_niit"]},
         {"cells": ["FAIR Plan", "California's insurer of last resort for fire perils when the standard market will not write a policy; coverage is narrower than a standard homeowners form.", "Third-party reporting describes an average 29% dwelling rate increase from late 2026; treat insurance cost as a stressed input."], "status": "Cross-checked", "sources": ["cdi", "cdi_news"]},
         {"cells": ["Laddered / staged entry", "Splitting a lump sum into scheduled purchases over months (here, after parking in 3-month-to-2-year Treasuries for 24-36 months).", "Reduces the chance of buying everything at a pre-crash peak; costs relative performance in a steadily rising market and adds renewal-rate risk."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
-        {"cells": ["Documentary transfer tax", "A county/city tax on recorded property transfers (about 55 cents per $500 statewide base, with local variations); certain family transfers are excluded by statute.", "Confirm the current statutory exclusion and local rate with the recorder at the actual transfer."], "status": "Guidance", "sources": ["ca_rtc480"]},
+        {"cells": ["Documentary transfer tax", "A county tax of 0.55 dollars for each 500 dollars (or fractional part) of consideration above 100 dollars, measured exclusive of liens remaining at or created by the sale, per Revenue and Taxation Code §11911(a); a city inside the county may impose one-half that amount, and the county must credit a conforming city tax. Santa Clara County publishes 0.55 per 500 dollars for county parcels and 1.65 per 500 dollars for parcels in San Jose, Palo Alto and Mountain View. The Act's exemption chapter (§§11921–11930.5) contains NO parent-child or family-conveyance exemption: Prop 19 relief is a reassessment exclusion, not a transfer-tax exclusion.", "Confirm the county's current rate wording (one page still reads 1.10 per 500 dollars) and any city conveyance tax with the recorder before recording; if an exemption is claimed, the deed must recite it and the amount must appear on the face of the document."], "status": "Cross-checked", "sources": ["ca_rtc11911", "scc_transfer_tax", "scc_record_fees"]},
     ]
     body = make_table("Terms used in this workspace", ["Term", "Plain-language meaning", "Practical distinction"], rows)
     return render_page("pages/glossary.html", "Glossary", "Short definitions for the legal, tax, property and investment terms used in the decision process.", body, "EVIDENCE")
@@ -2102,6 +2146,11 @@ def suggestion_table() -> str:
         ("S08", "Markets", "Put reinvestment risk next to any staging headline", "Compare 24–36 months of Treasury staging under crash-during and crash-after entry, lower renewal yields, inflation and a rising market before the decline.", "Staging changes risk timing; it does not make equities safe or guarantee a better ending value.", ["treasury_bills", "treasury_notes", "fed_1929", "fed_2008", "bls_cpi"]),
         ("S09", "Governance", "Put reversal conditions on the first screen", "Track the facts that change the path: trust restrictions, estate threshold, Prop 19 eligibility, unit legality, net rent, insurance, repair reserve and liquidity.", "A recommendation should name evidence that would reverse it.", ["irs_estate", "boe_prop19", "cdi", "sec_stocks"]),
         ("S10", "Refresh", "Set annual legal and assumption review reminders", "Recheck enacted laws, assessor records, insurance availability, utilities, leases, market inputs and investment policy when the decision approaches.", "Today’s current rules do not determine a decision decades in the future.", ["irs_2027", "boe_prop19", "cbo_rates"]),
+        ("S11", "Taxes", "Confirm the county transfer-tax rate wording before escrow", "Two county publications disagree on the documentary transfer-tax rate (0.55 against 1.10 per 500 dollars); ask the Clerk-Recorder to confirm in writing and check the escrow estimate against the statute.", "The charge doubles under one reading, and the amount is written on a public recorded document, so getting it wrong is both expensive and visible.", ["ca_rtc11911", "scc_transfer_tax"]),
+        ("S12", "Taxes", "Ask Cupertino whether a city conveyance tax applies", "Read Chapter 3.04 of the municipal code with the city finance department and confirm whether the county credit applies to a transfer from an estate.", "A city tax credited against the county tax changes who is paid, not how much; an uncredited city tax is a real addition.", ["cupertino_fiscal_transfer", "ca_rtc11911"]),
+        ("S13", "Property", "Price the parcel charge on the already-owned building", "Confirm the building area and class with the assessor, check whether an exemption or the per-unit credit applies, and diarise the first bill.", "It is a new recurring charge that begins before the inheritance and ends before it, so it belongs in that building's operating costs.", ["sfmta_prop_h", "sf_prop_h_text"]),
+        ("S14", "Decision", "Sign the pre-commitment rules before any figure arrives", "Complete the pre-commitment table on the private file, date it, and store it with the trust documents; the decision log records any later change.", "The owner's instruction is that the outcome must not be reverse-engineered from one projection, and a signed rule is the only mechanism that enforces that.", ["boe_prop19", "irs_estate_faq"]),
+        ("S15", "Model", "Replace the illustrative recapture table with the CPA's schedule", "Ask for the placed-in-service dates, land allocation and accumulated depreciation, then re-run the normalized table against real basis.", "The published shape of recapture is a ceiling; only the actual depreciation schedule says how big it is.", ["irs_p527_depr", "irs_topic409"]),
     ]
     rows = []
     for ident, group, title, action, why, sources in suggestions:
@@ -2364,7 +2413,7 @@ def build_rental_economics() -> str:
 <option value="249" selected>Multifamily, up to 5,000 sq ft (249 dollars)</option>
 <option value="799">Nonresidential or mixed-use, up to 5,000 sq ft (799 dollars)</option>
 </select></label>
-<label>Charge year<input id="ph-year" type="number" min="2027" max="2042" step="1" value="2027" inputmode="numeric"></label>
+<label>Charge year (no charge before FY 2027-28)<input id="ph-year" type="number" min="2024" max="2042" step="1" value="2027" inputmode="numeric"></label>
 <label>Inflation assumption (%/yr)<input id="ph-infl" type="number" min="0" max="10" step="0.1" value="2" inputmode="decimal"></label>
 <label>Rent-controlled units eligible for pass-through<input id="ph-units" type="number" min="0" max="9" step="1" value="2" inputmode="numeric"></label>
 <div class="tool-actions no-print"><button id="ph-reset" type="button">Reset to published baseline</button><span class="tool-assumption">Amounts are rounded to the nearest $10 for display.</span></div>
