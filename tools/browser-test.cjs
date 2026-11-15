@@ -1,5 +1,7 @@
 // Optional Playwright smoke test. Serve the repository root on port 8000 first.
 // Browser dependencies are located via BROWSER_MODULES or tools/browser/node_modules.
+// Nothing here is required for the site to build; it is a rendering and script
+// check that runs only where the optional dependencies are installed.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -45,27 +47,39 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
     assert.ok(total >= 8, `expected populated review queue, found ${total}`);
     const first = await page.locator('.review-choice').first().getAttribute('data-id');
     await page.selectOption(`.review-choice[data-id="${first}"]`, 'Investigate');
-    assert.match(await page.locator('#review-summary').textContent(), new RegExp(`1 of ${total} suggestions reviewed`));
+    assert.match(await page.locator('#review-summary').textContent(), /1 investigate/i);
     await page.reload();
     assert.equal(await page.locator(`.review-choice[data-id="${first}"]`).inputValue(), 'Investigate');
     await page.click('#reset-reviews');
     assert.equal(await page.locator(`.review-choice[data-id="${first}"]`).inputValue(), 'Not reviewed');
-    assert.match(await page.locator('#review-summary').textContent(), new RegExp(`0 of ${total} suggestions reviewed`));
+    assert.match(await page.locator('#review-summary').textContent(), /0 investigate/i);
 
-    // Staging controls recalculate independently for early/late entry and inflation.
+    // Projection what-if controls recompute in the browser only.
+    await page.goto('http://127.0.0.1:8000/pages/projections.html');
+    const statBefore = await page.locator('#scenario-stats .stat .stat-value').first().textContent();
+    await page.locator('#transfer_year').fill('2050');
+    const statAfter = await page.locator('#scenario-stats .stat .stat-value').first().textContent();
+    assert.notEqual(statBefore, statAfter);
+    const tableBefore = await page.locator('.table-section table tbody tr td').nth(1).textContent();
+    await page.locator('#a_appreciation').fill('6');
+    const tableAfter = await page.locator('.table-section table tbody tr td').nth(1).textContent();
+    assert.notEqual(tableBefore, tableAfter);
+    assert.deepEqual(await page.evaluate(() => Object.keys(localStorage)), []);
+
+    // Staging calculator recalculates all three cases and reports the risk set.
     await page.goto('http://127.0.0.1:8000/pages/phased-investing.html');
-    const initial = await page.locator('#early-phased-value').textContent();
-    assert.notEqual(initial, '—');
-    const initialReal = await page.locator('#early-phased-real').textContent();
-    assert.match(await page.locator('#phase-status').textContent(), /assumption-driven scenarios/i);
-    await page.selectOption('#phase-event', '1929');
-    assert.equal(await page.locator('#phase-drawdown').inputValue(), '89');
-    assert.notEqual(await page.locator('#early-phased-value').textContent(), initial);
-    await page.fill('#phase-yield2', '1.5');
-    await page.fill('#phase-inflation', '3');
-    assert.notEqual(await page.locator('#early-phased-real').textContent(), initialReal);
-    assert.notEqual(await page.locator('#late-months').textContent(), await page.locator('#early-months').textContent());
-    assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('phase-'))), []);
+    const rowCount = await page.locator('#calc-rows tr').count();
+    assert.equal(rowCount, 3, 'expected three entry cases');
+    const initial = await page.locator('#calc-rows tr:nth-child(2) td').first().textContent();
+    assert.notEqual(initial.trim(), '');
+    await page.locator('#calc-drop').fill('89');
+    assert.notEqual(await page.locator('#calc-rows tr:nth-child(2) td').first().textContent(), initial);
+    await page.locator('#calc-yield-after').fill('1.5');
+    await page.locator('#calc-equity').fill('8');
+    const riskCount = await page.locator('#calc-risk li').count();
+    assert.equal(riskCount, 5, 'expected five reinvestment-risk statements');
+    assert.match(await page.locator('#calc-risk').textContent(), /yield/i);
+    assert.deepEqual(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('calc-'))), []);
 
     await page.goto('http://127.0.0.1:8000/pages/attorney-cpa-brief.html');
     await page.emulateMedia({ media: 'print' });
@@ -79,7 +93,7 @@ const { chromium: playwright } = require(path.join(modules, 'playwright-core'));
     }
     assert.deepEqual(errors, []);
     assert.deepEqual(unexpected, []);
-    console.log(`Browser passed: ${manifest.length} desktop + ${manifest.length} mobile pages; review save/reset; calculator controls; print layout; no JS errors or third-party requests.`);
+    console.log(`Browser passed: ${manifest.length} desktop + ${manifest.length} mobile pages; review save/reset; projection controls; staging calculator; print layout; no JS errors or third-party requests.`);
   } finally {
     await browser.close();
   }

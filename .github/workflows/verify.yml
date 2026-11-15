@@ -17,12 +17,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Unit and regression tests
         run: python -m unittest discover -s tools -p 'test_*.py' -v
       - name: Build the site
         run: python tools/build.py
       - name: Verify the built site
         run: python tools/verify.py
+      - name: Install the optional DOM-check dependency
+        run: npm install --prefix tools/browser --no-audit --no-fund jsdom
+      - name: DOM and script check
+        run: node tools/dom-test.cjs
       - name: Confirm the build is reproducible
         run: |
           git add -A

@@ -1,345 +1,144 @@
 #!/usr/bin/env python3
-"""Build a privacy-safe, source-linked inheritance decision workspace.
+"""Build the source-linked inheritance decision workspace.
 
-The public build is deliberately static and never imports household inputs.
-Every substantive table row has an evidence status and at least one official
-source link. Property-specific values are intentionally left blank.
+The build is static. It reads no network resource, ships no third-party asset,
+and stores nothing outside the reader's own browser. Every substantive table
+row carries an evidence badge and at least one official source link.
+
+Privacy: no owner name, street address, parcel or assessor identifier, trust
+name, account number or contact detail is written into any page. Working dollar
+figures are rounded to the nearest ten dollars. Owner-supplied figures are
+labeled as owner-supplied and are never presented as verified.
 """
 from __future__ import annotations
 
 import html
 import json
+import re
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent.parent
-CHECKED = "2026-11-14"
-SITE_TITLE = "Private inheritance decision workspace"
+import casedata as cd
+from sources import SOURCES, CHECKED
 
-# Links were fetched directly on CHECKED. The scope is intentionally narrow:
-# a source may establish a legal rule or a public historical observation, but
-# never a private property's value, bill, lease, premium, title, or tax position.
-SOURCES = {
-    "irs_estate": {
-        "label": "IRS — Estate tax",
-        "url": "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax",
-        "scope": "Defines the gross estate, allowable deductions and the year-of-death Form 706 filing threshold table through 2026. The threshold is not an amount per beneficiary.",
-        "verified": True,
-    },
-    "irs_2027": {
-        "label": "IRS IR-2026-133 — 2027 estate and gift adjustments",
-        "url": "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts",
-        "scope": "States the 2027 basic estate-tax exclusion and annual gift exclusion, and compares them with 2026 amounts. Does not forecast future law.",
-        "verified": True,
-    },
-    "irs_estate_faq": {
-        "label": "IRS — Estate-tax filing FAQs",
-        "url": "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes",
-        "scope": "Explains the filing test using gross estate plus adjusted taxable gifts and the specific gift-tax exemption, the 9-month Form 706 due date and the up-to-6-month filing extension request. It also describes filing for portability below the threshold; individual filing status still requires estate facts.",
-        "verified": True,
-    },
-    "irs_basis": {
-        "label": "IRS — Gifts and inheritances FAQ",
-        "url": "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances",
-        "scope": "States that inherited-property basis is generally date-of-death fair market value, subject to exceptions and consistent-basis rules; gain can arise on a later sale. It does not establish a property's value or tax basis.",
-        "verified": True,
-    },
-    "irs_1041": {
-        "label": "IRS — About Form 1041",
-        "url": "https://www.irs.gov/forms-pubs/about-form-1041",
-        "scope": "Describes Form 1041 reporting by fiduciaries for estate or trust income, deductions, gains, losses, and distributions. Whether a specific trust must file is not determined here.",
-        "verified": True,
-    },
-    "irs_rental": {
-        "label": "IRS Publication 527 — Residential Rental Property",
-        "url": "https://www.irs.gov/publications/p527",
-        "scope": "Covers rental income, expenses, personal use, repairs, improvements, vacancy and depreciation. It does not provide a rent amount or repair budget for a private property.",
-        "verified": True,
-    },
-    "ca_death_tax": {
-        "label": "California State Controller — Estate tax",
-        "url": "https://www.sco.ca.gov/ardtax_estate_tax.html",
-        "scope": "States that California Estate Tax returns are not required for deaths on or after January 1, 2005. The page is not a forecast of future law.",
-        "verified": True,
-    },
-    "ca_rtc13301": {
-        "label": "California Revenue and Taxation Code §13301",
-        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301.&lawCode=RTC",
-        "scope": "Current text bars the state and its political subdivisions from imposing a gift, inheritance, succession, legacy, income, or estate tax on a transfer by reason of death. Future legislatures can change law.",
-        "verified": True,
-    },
-    "boe_prop19": {
-        "label": "California BOE — Proposition 19",
-        "url": "https://www.boe.ca.gov/prop19/",
-        "scope": "Summarizes current intergenerational property-tax rules, principal-residence requirements, filing periods and the periodically adjusted value-limit formula. It cannot establish eligibility without the deed, relationship, occupancy and claim facts.",
-        "verified": True,
-    },
-    "ca_rtc63": {
-        "label": "California Revenue and Taxation Code §63.2",
-        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC",
-        "scope": "Statutory family-home/family-farm exclusion conditions, including parent-child or qualifying grandparent-grandchild relationship (with the statutory deceased-parent condition for grandchild transfers), transferor and transferee residence requirements, the one-year homeowners' exemption filing and the value-limit formula.",
-        "verified": True,
-    },
-    "ca_rtc480": {
-        "label": "California Revenue and Taxation Code §480",
-        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=480.&lawCode=RTC",
-        "scope": "Requires a change-in-ownership statement for real property transferred by reason of death, including through a trust, within 150 days after death in the specified nonprobate cases.",
-        "verified": True,
-    },
-    "ca_prob160617": {
-        "label": "California Probate Code §16061.7",
-        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB",
-        "scope": "Requires trustee notice in specified events, including when a revocable trust becomes irrevocable because of death; the statutory notice deadline is generally 60 days. Applicability depends on trust facts.",
-        "verified": True,
-    },
-    "boe_pub29": {
-        "label": "California BOE Publication 29 — California Property Tax",
-        "url": "https://www.boe.ca.gov/proptaxes/pdf/pub29.pdf",
-        "scope": "Overview of Proposition 13: a 1% general levy plus voter-approved bonded indebtedness and a general 2% limit on annual assessed-value growth, subject to reassessment rules and other bill components. It is not a parcel-specific tax rate.",
-        "verified": True,
-    },
-    "ca_rent": {
-        "label": "California Civil Code §1947.12",
-        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=1947.12.&lawCode=CIV",
-        "scope": "Current statewide rent-cap text and exemptions. Coverage, local ordinances, permitted use and tenant protections require property- and jurisdiction-specific review.",
-        "verified": True,
-    },
-    "cdi": {
-        "label": "California Department of Insurance — Residential insurance",
-        "url": "https://www.insurance.ca.gov/01-consumers/105-type/5-residential/index.cfm",
-        "scope": "Provides residential-insurance shopping tools and explains the limited perils covered by the FAIR Plan and the possible role of a Difference in Conditions policy. No individual premium is stated.",
-        "verified": True,
-    },
-    "cpuc_solar": {
-        "label": "California Public Utilities Commission — Net metering and net billing",
-        "url": "https://www.cpuc.ca.gov/industries-and-topics/electrical-energy/demand-side-management/customer-generation/net-energy-metering-and-net-billing",
-        "scope": "Explains NEM/NBT tariff differences; under net billing, export credits are usually below retail rates. Eligibility, tariff, interconnection date and a household bill determine actual credits.",
-        "verified": True,
-    },
-    "water_board": {
-        "label": "California State Water Resources Control Board — Drinking Water Program",
-        "url": "https://www.waterboards.ca.gov/drinking_water/programs/",
-        "scope": "Describes state oversight of public water systems. It does not publish an individual service address's water bill or tariff; the provider bill is required.",
-        "verified": True,
-    },
-    "hud_fmr": {
-        "label": "HUD — Fair Market Rents",
-        "url": "https://www.huduser.gov/portal/datasets/fmr.html",
-        "scope": "Describes annual FMR estimates used for specified housing programs. FMR is a benchmark, not a property appraisal, lawful rent determination or current lease amount.",
-        "verified": True,
-    },
-    "cslb": {
-        "label": "California Contractors State License Board — Check a license",
-        "url": "https://www.cslb.ca.gov/OnlineServices/CheckLicenseII/CheckLicense.aspx",
-        "scope": "Allows a reader to check a contractor license and complaint disclosure. It does not set or verify a repair estimate.",
-        "verified": True,
-    },
-    "treasury_bills": {
-        "label": "TreasuryDirect — Treasury bills",
-        "url": "https://treasurydirect.gov/marketable-securities/treasury-bills/",
-        "scope": "Bills have terms from 4 to 52 weeks, rates fixed at auction, may be held to maturity or sold earlier, and interest is federally taxable but exempt from state and local taxes.",
-        "verified": True,
-    },
-    "treasury_notes": {
-        "label": "TreasuryDirect — Treasury notes",
-        "url": "https://www.treasurydirect.gov/marketable-securities/treasury-notes/",
-        "scope": "Notes include a 2-year maturity, pay a fixed auction rate, may be held to maturity or sold earlier, and interest is federally taxable but exempt from state and local taxes.",
-        "verified": True,
-    },
-    "fed_1929": {
-        "label": "Federal Reserve History — Stock Market Crash of 1929",
-        "url": "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929",
-        "scope": "Reports the Dow's 89% peak-to-trough decline and that its pre-crash high was not regained until November 1954. This is a price-index history, not a diversified portfolio total return.",
-        "verified": True,
-    },
-    "fed_2008": {
-        "label": "Federal Reserve History — The Great Recession",
-        "url": "https://www.federalreservehistory.org/essays/great-recession-of-200709",
-        "scope": "Reports a 57% S&P 500 peak-to-trough decline and an approximately 30% average U.S. home-price decline in that episode. Neither is a local property forecast or a total-return estimate.",
-        "verified": True,
-    },
-    "bls_cpi": {
-        "label": "U.S. Bureau of Labor Statistics — CPI, June 2022",
-        "url": "https://www.bls.gov/opub/ted/2022/consumer-prices-up-9-1-percent-over-the-year-ended-june-2022-largest-increase-in-40-years.htm",
-        "scope": "Reports a 9.1% twelve-month CPI increase through June 2022, the largest twelve-month increase since November 1981. It is a historical observation, not a long-run inflation assumption.",
-        "verified": True,
-    },
-    "cbo_rates": {
-        "label": "Congressional Budget Office — Interest-rate scenarios, 2026–2036",
-        "url": "https://www.cbo.gov/publication/62809",
-        "scope": "CBO reports a 4.3% average 10-year Treasury rate in its 2026–2036 forecast and 4.8%/5.8% higher-rate scenarios. It is not a 50-year forecast, house-price forecast or household investment return.",
-        "verified": True,
-    },
-    "fhfa_hpi": {
-        "label": "Federal Housing Finance Agency — HPI summary tables",
-        "url": "https://www.fhfa.gov/data/hpi/summary-tables",
-        "scope": "Publishes broad state and metropolitan-area house-price indexes. Index history can inform scenario design but is not a valuation or forecast for an individual property.",
-        "verified": True,
-    },
-    "sec_stocks": {
-        "label": "SEC Investor.gov — Stocks FAQs",
-        "url": "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks",
-        "scope": "Explains stock risks, potential loss and diversification; it does not prescribe a return assumption or portfolio allocation.",
-        "verified": True,
-    },
-    "github_history": {
-        "label": "GitHub Docs — Removing sensitive data from a repository",
-        "url": "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository",
-        "scope": "Explains the coordination and side effects of history rewrites and warns that PRs, forks, caches and clones can retain data. GitHub Support or repository-owner action may be needed.",
-        "verified": True,
-    },
-    "congress_legislation": {
-        "label": "Congress.gov — Advanced legislation search",
-        "url": "https://www.congress.gov/advanced-search/legislation",
-        "scope": "Official search interface for federal bills and resolutions and their status. A proposal is not current law unless enacted; no specific pending bill is treated as law here.",
-        "verified": True,
-    },
-    "ca_legislation": {
-        "label": "California Legislative Information — Bill Search",
-        "url": "https://leginfo.legislature.ca.gov/faces/billSearchClient.xhtml",
-        "scope": "Official search interface for California bills and their status. A bill or proposal is not current law unless chaptered and effective; no specific pending bill is treated as law here.",
-        "verified": True,
-    },
-    "ftb_404": {
-        "label": "FTB inheritance-information URL — retrieval failed",
-        "url": "https://www.ftb.ca.gov/file/personal/income-types/income-from-gifts-and-inheritances.html",
-        "scope": "Direct retrieval returned a 404 on 2026-11-14. No California income-tax claim is based on this unavailable page.",
-        "verified": False,
-    },
-    "boe_assessor_404": {
-        "label": "BOE county-assessor directory URL — retrieval failed",
-        "url": "https://www.boe.ca.gov/proptaxes/county-assessors.htm",
-        "scope": "Direct retrieval returned a 404 on 2026-11-14. No local assessor record or local tax rate is inferred from this URL.",
-        "verified": False,
-    },
-    "boe_pub801_404": {
-        "label": "BOE Publication 801 URL — retrieval failed",
-        "url": "https://www.boe.ca.gov/pdf/pub801.pdf",
-        "scope": "Direct retrieval returned a 404 on 2026-11-14. Proposition 19 summaries in this site use the working BOE page and current statute instead.",
-        "verified": False,
-    },
-    "cpuc_water_404": {
-        "label": "CPUC water-utilities URL — retrieval failed",
-        "url": "https://www.cpuc.ca.gov/industries-and-topics/water/water-utilities",
-        "scope": "Direct retrieval redirected to a 404 on 2026-11-14. No household water-rate figure is based on this URL.",
-        "verified": False,
-    },
-}
+ROOT = Path(__file__).resolve().parent.parent
+SITE_TITLE = "Inheritance decision workspace"
 
 NAV_GROUPS = [
-    ("Start", [
-        ("index.html", "Decision overview"),
+    ("Start here", [
+        ("index.html", "What changes the answer"),
         ("pages/executive-summary.html", "Executive summary"),
     ]),
-    ("Decision", [
-        ("pages/decision-analysis.html", "Compare paths"),
-        ("pages/questions.html", "Questions & missing evidence"),
+    ("The decision", [
+        ("pages/decision-analysis.html", "Compare eight paths"),
+        ("pages/questions.html", "Questions and missing evidence"),
         ("pages/suggestions.html", "Suggestions for review"),
     ]),
-    ("Numbers", [
-        ("pages/projections.html", "Projection worksheet"),
-        ("pages/property-tax.html", "Property-tax rules"),
-        ("pages/operating-costs.html", "Costs & coverage"),
+    ("The numbers", [
+        ("pages/projections.html", "Projections and what-if"),
+        ("pages/property-tax.html", "Property tax and assessment"),
+        ("pages/operating-costs.html", "Operating costs"),
     ]),
     ("Stress tests", [
-        ("pages/black-swan.html", "Black-swan conditions"),
+        ("pages/black-swan.html", "Black swan conditions"),
         ("pages/phased-investing.html", "Treasury staging tool"),
     ]),
-    ("Law & process", [
-        ("pages/estate-thresholds.html", "Estate-tax thresholds"),
+    ("Law and process", [
+        ("pages/estate-thresholds.html", "Estate tax thresholds"),
         ("pages/inheritance-process.html", "Deadline timeline"),
         ("pages/law-watchlist.html", "Law watchlist"),
     ]),
-    ("Adviser & evidence", [
-        ("pages/attorney-cpa-brief.html", "Attorney & CPA brief"),
+    ("Advisers and evidence", [
+        ("pages/attorney-cpa-brief.html", "Attorney and CPA brief"),
         ("pages/flagged-for-review.html", "Flagged for review"),
         ("pages/glossary.html", "Glossary"),
         ("pages/sources.html", "Official source register"),
-        ("pages/privacy.html", "Privacy & limits"),
+        ("pages/privacy.html", "Privacy and limits"),
     ]),
 ]
 
-EXPECTED_PAGES = [
-    "index.html",
-    "pages/executive-summary.html",
-    "pages/decision-analysis.html",
-    "pages/questions.html",
-    "pages/suggestions.html",
-    "pages/projections.html",
-    "pages/property-tax.html",
-    "pages/operating-costs.html",
-    "pages/black-swan.html",
-    "pages/phased-investing.html",
-    "pages/estate-thresholds.html",
-    "pages/inheritance-process.html",
-    "pages/law-watchlist.html",
-    "pages/attorney-cpa-brief.html",
-    "pages/flagged-for-review.html",
-    "pages/glossary.html",
-    "pages/sources.html",
-    "pages/privacy.html",
-]
+EXPECTED_PAGES = [p for _, links in NAV_GROUPS for p, _ in links]
 
 
 class SafeHTML(str):
-    """A small explicit marker for trusted, locally generated HTML fragments."""
+    """Marker for trusted, locally generated HTML fragments."""
 
 
 def esc(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
+def money(value: float) -> str:
+    return f"${cd.money(value):,}"
+
+
 def source_link(key: str) -> str:
-    source = SOURCES[key]
+    s = SOURCES[key]
+    flag = "" if s["verified"] else ' <span class="src-warn" title="Retrieval failed or gateway only">unverified</span>'
     return (
-        f'<a class="source" href="{esc(source["url"])}" '
-        f'title="{esc(source["scope"])}" rel="noopener noreferrer">'
-        f'{esc(source["label"])}</a>'
+        f'<a class="source" href="{esc(s["url"])}" title="{esc(s["scope"])}" '
+        f'rel="noopener noreferrer">{esc(s["label"])}</a>{flag}'
     )
 
 
+BADGE_CSS = {
+    "Verified": "verified",
+    "Official": "verified",
+    "Historical": "verified",
+    "Owner-supplied": "owner",
+    "Projection": "projection",
+    "Assumption": "assumption",
+    "Derived": "assumption",
+    "Not verified": "missing",
+    "Action needed": "guidance",
+    "Guidance": "guidance",
+}
+
+
 def badge(status: str) -> str:
-    css = {
-        "Verified": "verified",
-        "Missing": "missing",
-        "Owner-supplied": "owner",
-        "Projection": "projection",
-        "Assumption": "assumption",
-        "Guidance": "guidance",
-        "Not verified": "missing",
-        "Action needed": "guidance",
-        "Historical": "verified",
-    }.get(status, "guidance")
-    return f'<span class="badge {css}">{esc(status)}</span>'
+    return f'<span class="badge {BADGE_CSS.get(status, "guidance")}">{esc(status)}</span>'
 
 
-def cell(value: object) -> str:
+NUMERIC_RE = re.compile(r"^-?\$?[\d,]+(\.\d+)?%?$")
+
+
+def cell(value: object, owner_figure: bool = False) -> str:
     if isinstance(value, SafeHTML):
-        return f"<td>{value}</td>"
-    return f"<td>{esc(value)}</td>"
+        return f'<td class="num owner-figure">{value}</td>'
+    text = str(value)
+    numeric = isinstance(value, (int, float)) and not isinstance(value, bool)
+    if not numeric and NUMERIC_RE.match(text.strip()):
+        numeric = True
+    classes = []
+    if numeric:
+        classes.append("num")
+    if owner_figure and numeric:
+        classes.append("owner-figure")
+    cls = f' class="{" ".join(classes)}"' if classes else ""
+    return f'<td{cls}>{esc(value)}</td>'
 
 
-def make_table(title: str, headers: list[str], rows: list[dict], note: str = "") -> str:
+def make_table(title: str, headers, rows, note: str = "") -> str:
     if not rows:
         raise ValueError(f"Table {title!r} has no rows")
-    head = "".join(f"<th scope=\"col\">{esc(h)}</th>" for h in headers)
-    head += '<th scope="col">Evidence status</th><th scope="col">Official source / scope</th>'
-    body_rows = []
+    head = "".join(f'<th scope="col">{esc(h)}</th>' for h in headers)
+    head += '<th scope="col">Evidence</th><th scope="col">Official source</th>'
+    body = []
     for row in rows:
         keys = row.get("sources", [])
-        if not keys or any(key not in SOURCES for key in keys):
-            raise ValueError(f"Every row in {title!r} needs a registered source")
-        cells = "".join(cell(value) for value in row["cells"])
-        links = ' <span aria-hidden="true">·</span> '.join(source_link(key) for key in keys)
-        body_rows.append(
-            f"<tr>{cells}<td>{badge(row.get('status', 'Guidance'))}</td><td>{links}</td></tr>"
+        if not keys or any(k not in SOURCES for k in keys):
+            raise ValueError(f"Every row in {title!r} needs registered sources; got {keys}")
+        cells = "".join(
+            cell(v, owner_figure=bool(row.get("owner_figures", False))) for v in row["cells"]
         )
-    caption = f'<caption>{esc(title)}</caption>'
+        links = ' <span aria-hidden="true">·</span> '.join(source_link(k) for k in keys)
+        body.append(f"<tr>{cells}<td>{badge(row.get('status', 'Guidance'))}</td><td>{links}</td></tr>")
+    caption = f"<caption>{esc(title)}</caption>"
     note_html = f'<p class="table-note">{esc(note)}</p>' if note else ""
     return (
         f'<section class="table-section"><h2>{esc(title)}</h2>{note_html}'
-        f'<div class="table-scroll" tabindex="0" aria-label="{esc(title)}">'
-        f'<table>{caption}<thead><tr>{head}</tr></thead><tbody>{"".join(body_rows)}</tbody></table>'
-        f'</div></section>'
+        f'<div class="table-scroll" tabindex="0" role="region" aria-label="{esc(title)}">'
+        f"<table>{caption}<thead><tr>{head}</tr></thead><tbody>{''.join(body)}</tbody></table>"
+        f"</div></section>"
     )
 
 
@@ -347,25 +146,24 @@ def callout(title: str, text: str, kind: str = "info") -> str:
     return f'<aside class="callout {esc(kind)}"><strong>{esc(title)}</strong><p>{esc(text)}</p></aside>'
 
 
-def paragraph(title: str, text: str) -> str:
-    return f'<section class="prose"><h2>{esc(title)}</h2><p>{esc(text)}</p></section>'
+def prose(title: str, *paragraphs: str) -> str:
+    body = "".join(f"<p>{esc(p)}</p>" for p in paragraphs)
+    return f'<section class="prose"><h2>{esc(title)}</h2>{body}</section>'
 
 
-def cards(title: str, items: list[tuple[str, str, str]], current: str = "index.html") -> str:
+def cards(title: str, items, current: str) -> str:
     body = []
     for heading, description, target in items:
         href = root_href(current, target)
         body.append(
             f'<article class="card"><h3><a href="{esc(href)}">{esc(heading)}</a></h3>'
-            f'<p>{esc(description)}</p></article>'
+            f"<p>{esc(description)}</p></article>"
         )
     return f'<section class="card-section"><h2>{esc(title)}</h2><div class="card-grid">{"".join(body)}</div></section>'
 
 
 def root_href(current: str, target: str) -> str:
-    if current == "index.html":
-        return target
-    return f"../{target}"
+    return target if current == "index.html" else f"../{target}"
 
 
 def build_nav(current: str) -> str:
@@ -383,436 +181,572 @@ def build_nav(current: str) -> str:
     return "".join(groups)
 
 
-def render_page(path: str, title: str, intro: str, body: str, eyebrow: str = "DECISION WORKSPACE", body_class: str = "") -> str:
+def render_page(path: str, title: str, intro: str, body: str,
+                eyebrow: str = "DECISION WORKSPACE", extra_class: str = "") -> str:
     is_root = path == "index.html"
     prefix = "" if is_root else "../"
-    page_class = "brief-page" if path == "pages/attorney-cpa-brief.html" else ""
-    page_class = (page_class + " " + body_class).strip()
+    cls = "brief-page" if path == "pages/attorney-cpa-brief.html" else ""
+    cls = (cls + " " + extra_class).strip()
     return f'''<!doctype html>
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="description" content="Privacy-safe, source-linked decision framework. No property addresses, locations, valuations, rents, or expense histories are published.">
+<meta name="description" content="Source-linked decision workspace for an anticipated trust transfer and a separate already-owned property.">
 <title>{esc(title)} · {esc(SITE_TITLE)}</title>
 <link rel="stylesheet" href="{prefix}assets/style.css"><script src="{prefix}assets/app.js" defer></script>
-</head><body class="{esc(page_class)}"><a class="skip" href="#main">Skip to content</a>
+</head><body class="{esc(cls)}"><a class="skip" href="#main">Skip to content</a>
+<div id="runtime-payload" hidden data-payload="{esc(cd.runtime_payload(cd.DEFAULT_INPUTS))}"></div>
 <div class="layout">
-<aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">◈</span><span>PRIVATE<br>DECISION BRIEF</span></a>
-<p class="sidebar-note">Trust transfer +<br>already-owned property</p>
+<aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">&#9672;</span><span>INHERITANCE<br>DECISION DESK</span></a>
+<p class="sidebar-note">Property A: trust transfer<br>Property B: already owned</p>
 <nav aria-label="Main navigation">{build_nav(path)}</nav>
-<div class="sidebar-bottom">No addresses or case amounts<br>Sources checked {CHECKED}</div></aside>
-<div class="workspace"><header class="topbar"><span>RESEARCH / DECISION SUPPORT</span><div><span class="privacy-dot" aria-hidden="true"></span> Privacy-first <button class="print-button no-print" id="print-page" type="button">Print</button></div></header>
+<div class="sidebar-bottom">Anonymized · rounded to $10<br>Sources checked {CHECKED}</div></aside>
+<div class="workspace"><header class="topbar"><span>RESEARCH AND DECISION SUPPORT</span><div><span class="privacy-dot" aria-hidden="true"></span> Privacy-first <button class="print-button no-print" id="print-page" type="button">Print</button></div></header>
 <main id="main"><div class="page-heading"><span class="eyebrow">{esc(eyebrow)}</span><h1>{esc(title)}</h1><p class="lead">{esc(intro)}</p></div>{body}</main>
-<footer><strong>Planning framework only.</strong> Not legal, tax, insurance, appraisal or investment advice. A source supports only its stated scope, not a private fact. Blank means unknown, not zero. The public site intentionally contains no property-specific dollar values or locations.<br>
-<a href="{prefix}pages/privacy.html">Privacy &amp; limits</a> · <a href="{prefix}pages/sources.html">Official sources</a> · <a href="{prefix}pages/flagged-for-review.html">Flagged for review</a></footer>
+<footer><strong>Planning framework only.</strong> Not legal, tax, insurance, appraisal or investment advice. A source supports only its stated scope, never a private fact. Blank means unknown, not zero. No personal identifier is published on this site.<br>
+<a href="{prefix}pages/privacy.html">Privacy and limits</a> · <a href="{prefix}pages/sources.html">Official sources</a> · <a href="{prefix}pages/flagged-for-review.html">Flagged for review</a></footer>
 </div></div></body></html>'''
 
 
+# ------------------------------------------------------------------ helpers
+def fmt_rate(rate: float) -> str:
+    return f"{rate * 100:.3f}%"
+
+
+def slider(ident: str, label: str, minimum, maximum, step, value, unit: str = "") -> str:
+    data_min, data_max = minimum, maximum
+    return (
+        f'<div class="control"><label for="{esc(ident)}">{esc(label)}'
+        f' <output id="{esc(ident)}-out" for="{esc(ident)}">{esc(value)}{esc(unit)}</output></label>'
+        f'<input type="range" id="{esc(ident)}" name="{esc(ident)}" min="{esc(data_min)}" '
+        f'max="{esc(data_max)}" step="{esc(step)}" value="{esc(value)}"></div>'
+    )
+
+
+# ==========================================================================
+# Page builders
+# ==========================================================================
 def build_index() -> str:
-    rows = [
-        {"cells": ["Trust, title and timing", "The actual trust, amendments, trustee authority, distribution trigger and debt are not public or independently confirmed.", "Obtain the executed trust/deed and a written trustee timeline before comparing any path."], "status": "Missing", "sources": ["ca_prob160617", "ca_rtc480"]},
-        {"cells": ["Property-tax exclusion eligibility", "A transfer by trust does not by itself establish eligibility for an intergenerational exclusion.", "Confirm the eligible relationship, transferor's principal residence, transferee occupancy and filings."], "status": "Missing", "sources": ["boe_prop19", "ca_rtc63"]},
-        {"cells": ["Federal estate-tax exposure", "The 2026 Form 706 filing test uses gross estate plus adjusted taxable gifts and the specific gift-tax exemption; a portability election can also require filing below the threshold.", "Obtain the full estate inventory, prior gifts, deductions and any spouse/portability facts; this is not a per-heir allowance."], "status": "Missing", "sources": ["irs_estate", "irs_estate_faq"]},
-        {"cells": ["Already-owned property: rental-income and residence tests", "Property B is separate from the trust transfer. Any current rent, lease, lawful use, net cash flow and ability to serve as a residence are private inputs and are not published or verified here.", "Include any B rent and tenant obligations in a private model, separately from A; confirm lawful use and residence suitability."], "status": "Missing", "sources": ["irs_rental", "ca_rent", "cdi"]},
-        {"cells": ["Live, rent, sell or mix", "No after-tax cash-flow comparison is possible without valuations, basis, sale costs, actual bills, leases and quotes.", "Compare whole-property and mixed-use paths only after the data checklist is complete."], "status": "Missing", "sources": ["irs_basis", "irs_rental", "hud_fmr"]},
-        {"cells": ["Insurance, repairs and utilities", "Official public sources do not determine a private premium, repair budget, water bill or solar credit.", "Obtain separate written owner-occupied / landlord insurance quotes, inspection bids, utility bills and solar tariff documents."], "status": "Missing", "sources": ["cdi", "cslb", "water_board", "cpuc_solar"]},
-        {"cells": ["Investment entry and reinvestment risk", "A 24–36 month Treasury staging plan changes exposure timing but adds reinvestment risk if yields fall; equity prices can fall during or after staging.", "Use the local-only stress tool, replace its explicit assumptions with then-current net yields, and compare crash-during-wait with crash-after-wait."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
-        {"cells": ["Long-range law and market conditions", "No official source can verify future estate thresholds, property values, insurance costs, rent or returns decades ahead.", "Re-check enacted law, official bills, valuations and quotes close to the transfer; do not extrapolate a single rate for fifty years."], "status": "Missing", "sources": ["irs_2027", "cbo_rates", "fhfa_hpi"]},
-    ]
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a = s["a"]
+    inputs = cd.DEFAULT_INPUTS
     body = callout(
-        "Current answer: no path can yet be responsibly ranked",
-        "The essential trust, tax-basis, estate, assessment, lease, insurance and operating-cost facts are not independently verified. The public website omits all case-specific amounts and locations to protect privacy; blanks are intentional, not zero.",
+        "Read this first: the answer is conditional",
+        "No path can be responsibly ranked until the trust terms, the transferor's occupancy at "
+        "transfer, the estate inventory and the actual insurance and repair quotes exist. The "
+        "figures below are the owner's own working numbers, rounded to the nearest ten dollars, "
+        "combined with rules read from official pages. They are a starting model, not a conclusion.",
         "warning",
     )
+
+    rows = [
+        {
+            "cells": [
+                "Is the home the transferor's principal residence at transfer?",
+                "Not known. The current intergenerational exclusion applies only to a principal residence of the transferor.",
+                "Get a written statement of the transferor's residence status from the trustee, and review the trust's occupancy terms.",
+            ],
+            "status": "Action needed",
+            "sources": ["rtc_63_2", "boe_prop19"],
+        },
+        {
+            "cells": [
+                "Can the home become the transferee's principal residence within one year?",
+                "Not decided. The exclusion requires occupancy within one year and a homeowners' exemption filing within one year.",
+                "Decide occupancy before the transfer, not after. A late decision forfeits the exclusion.",
+            ],
+            "status": "Action needed",
+            "sources": ["rtc_63_2", "rtc_218"],
+        },
+        {
+            "cells": [
+                "What is the post-transfer assessment?",
+                f"Modelled at {money(a['taxable_prop19'])} if occupied and {money(a['taxable_full'])} if not, using the {cd.DEFAULT_TRANSFER_YEAR} default year.",
+                "Recompute with the actual transfer date and the then-published limit; the limit is recalculated every other February.",
+            ],
+            "status": "Projection",
+            "sources": ["rtc_63_2", "boe_lta_2025_009"],
+        },
+        {
+            "cells": [
+                "How large is the property tax step-up?",
+                f"Modelled at {money(a['tax_now'])} today rising to {money(a['tax_prop19'])} occupied or {money(a['tax_full'])} rented at the default transfer year.",
+                "Confirm the tax-rate-area rate from the county; this model derives it from the owner's own bill.",
+            ],
+            "status": "Projection",
+            "sources": ["boe_pub29", "scc_rate_unverified"],
+        },
+        {
+            "cells": [
+                "What is the federal estate tax position?",
+                f"The 2026 Form 706 filing threshold is $15,000,000 and the 2027 basic exclusion is $15,480,000. Neither is an amount per beneficiary.",
+                "Obtain the full estate inventory, prior adjusted taxable gifts and any portability facts from the trustee and the CPA.",
+            ],
+            "status": "Verified",
+            "sources": ["irs_estate", "irs_2027", "irs_estate_faq"],
+        },
+        {
+            "cells": [
+                "Does California tax the inheritance?",
+                "Current statute bars the state and its political subdivisions from imposing any gift, inheritance, succession, legacy, income or estate tax on a transfer by reason of death.",
+                "Re-read the statute and any successor provision at the transfer date; voters and the Legislature can change it.",
+            ],
+            "status": "Official",
+            "sources": ["rtc_13301", "ca_leg_search"],
+        },
+        {
+            "cells": [
+                "What is market rent for Property A?",
+                "Not known. No rent figure is invented here.",
+                "Obtain three written rent opinions for the postal area, then compare with the break-even rent on the projections page.",
+            ],
+            "status": "Not verified",
+            "sources": ["hud_fmr", "irs_pub527"],
+        },
+        {
+            "cells": [
+                "Is insurance actually available and at what price?",
+                "Not known. The owner's figure is an estimate.",
+                "Obtain written owner-occupied and landlord quotes, including replacement cost, exclusions and any FAIR Plan fallback.",
+            ],
+            "status": "Action needed",
+            "sources": ["cdi_residential"],
+        },
+        {
+            "cells": [
+                "What will the law be in the 2040s?",
+                "Unknown. No official source forecasts it.",
+                "Re-check the estate exclusion, the Proposition 19 limit and local tax measures close to the transfer.",
+            ],
+            "status": "Not verified",
+            "sources": ["congress_search", "ca_leg_search", "irs_2027"],
+        },
+    ]
     body += make_table(
-        "What would change the answer?",
-        ["Decision-changing fact", "What is established now", "Next evidence / decision gate"],
+        "What would change the answer",
+        ["Decision-changing fact", "What is known now", "Next evidence or decision gate"],
         rows,
-        "This is the first-screen triage list. Official links support the rule or process shown; they do not verify private title, occupancy, cost or tax facts.",
+        "This is the first-screen triage list. Official links establish the rule or the process shown. They do not verify private title, occupancy, cost or tax facts.",
     )
+
+    body += '<section class="stat-grid">'
+    stats = [
+        ("Property A modelled value at transfer", money(a["value_at_transfer"]), "Projection"),
+        ("Annual property tax if occupied", money(a["tax_prop19"]), "Projection"),
+        ("Annual property tax if rented", money(a["tax_full"]), "Projection"),
+        ("Annual property tax today", money(a["tax_now"]), "Derived"),
+        ("Property B gross rent income", money(s["b"]["rent_income"]) + " / yr", "Owner-supplied"),
+        ("Net proceeds if sold at transfer", money(s["sale"]["net_proceeds"]), "Projection"),
+    ]
+    for label, value, status in stats:
+        body += (
+            f'<article class="stat"><p class="stat-label">{esc(label)}</p>'
+            f'<p class="stat-value">{esc(value)}</p>{badge(status)}</article>'
+        )
+    body += "</section>"
+
     body += callout(
-        "Keep the ownership roles distinct",
-        "Property A is the anticipated trust transfer. Property B is already owned. A choice to occupy, rent or sell one asset must not silently assume that the other asset has the same owner, tax basis, assessment, lease or operating costs.",
+        "Keep the two assets separate in every calculation",
+        "Property A is an anticipated transfer that the decision maker does not own today. "
+        "Property B is already owned, is the current residence, and carries its own basis, "
+        "assessment and tenancies. A choice about one must never silently assume the other's "
+        "basis, assessment, rent or operating cost.",
         "info",
     )
+
     body += cards("Use this workspace in order", [
-        ("1. Resolve the questions", "Collect the trust, tax, title, lease, assessment, insurance and utility records in a private vault.", "pages/questions.html"),
-        ("2. Compare complete paths", "Keep live, rent, sell, mixed occupancy and staged reinvestment alternatives separate.", "pages/decision-analysis.html"),
-        ("3. Review with advisers", "Print a one-page attorney and CPA briefing sheet; no identifying details are required on it.", "pages/attorney-cpa-brief.html"),
-    ])
-    body += paragraph("No invented round numbers", "This site does not invent property values, tax bills, rents, utility costs, insurance premiums or repair estimates. Any illustrative figure used only in a private working copy is rounded to the nearest ten dollars and treated as an assumption, never as evidence. Public pages leave property-specific values blank; blank means unknown, not zero.")
+        ("1. Resolve the questions", "Collect the trust, title, assessment, lease, insurance and utility evidence before choosing.", "pages/questions.html"),
+        ("2. Compare all eight paths", "Pure and mixed paths, including the staged Treasury route, side by side.", "pages/decision-analysis.html"),
+        ("3. Print the adviser brief", "A one-page sheet for the attorney and the CPA with no identifying detail on it.", "pages/attorney-cpa-brief.html"),
+    ], "index.html")
+
     return render_page(
         "index.html",
-        "Decision overview",
-        "A private planning framework for an anticipated trust transfer and a separate already-owned property. Locations, addresses, values, rent and expense histories are deliberately not published.",
+        "What changes the answer",
+        "A source-linked decision workspace for a home expected to transfer through a trust, and a "
+        "separate three-unit property the decision maker already owns. Working figures are rounded "
+        "to the nearest ten dollars and no personal identifier appears anywhere on this site.",
         body,
         "START HERE",
     )
 
 
 def build_executive_summary() -> str:
-    rows = [
-        {"cells": ["Asset roles", "Property A is an expected future trust transfer. Property B is separately already owned. Whether B has current rent, its amount, title and location are intentionally not published or independently verified.", "Confirm A's trust authority and title; include any B rental income as a private input and separately test whether B can serve as a residence."], "status": "Owner-supplied", "sources": ["ca_prob160617", "ca_rtc480", "irs_rental", "ca_rent"]},
-        {"cells": ["Federal estate exclusion — 2026", "$15,000,000 basic exclusion amount for 2026 deaths; the Form 706 filing test adds gross estate, adjusted taxable gifts and the specific gift-tax exemption.", "This is a federal estate-level threshold, not a per-beneficiary inheritance allowance; portability can require filing below it."], "status": "Verified", "sources": ["irs_estate", "irs_estate_faq"]},
-        {"cells": ["Federal estate exclusion — 2027", "$15,480,000 basic exclusion amount for 2027 deaths.", "This official amount says nothing about a future-year threshold."], "status": "Verified", "sources": ["irs_2027"]},
-        {"cells": ["Annual gift exclusion", "$19,000 for 2026 and $20,000 for 2027 per donor/recipient under the IRS announcement; it is not the estate-tax exclusion.", "Do not use the annual gift amount as the inheritance-tax threshold."], "status": "Verified", "sources": ["irs_2027"]},
-        {"cells": ["California death taxes", "Current RTC §13301 bars state and local gift, inheritance, succession, legacy, income or estate tax on a transfer by reason of death; the State Controller says a California Estate Tax return is not required for deaths on or after 2005-01-01.", "Re-check the law for the actual year of death; this is not a future-law guarantee."], "status": "Verified", "sources": ["ca_rtc13301", "ca_death_tax"]},
-        {"cells": ["California property tax", "Proposition 13 generally limits the general levy to 1% plus voter-approved bonded indebtedness and assessed-value growth to 2% per year; actual bills can include other components.", "The actual assessment, direct charges, ownership change and any Proposition 19 claim are unknown."], "status": "Verified", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Property-specific recommendation", "Not available from official public sources without the trust, title, estate inventory, basis, appraisal, leases, costs, local rental rules and written quotes.", "Do not choose live/rent/sell based on an unverified headline or a single growth rate."], "status": "Missing", "sources": ["irs_basis", "irs_rental", "cdi", "hud_fmr"]},
-    ]
-    body = callout(
-        "Executive conclusion",
-        "No defensible best path can be selected yet. First resolve the legal transfer and tax facts; then build after-tax cash-flow cases for Property A and Property B separately; then compare pure and mixed choices under adverse market, inflation, repair and insurance conditions.",
-        "warning",
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a, b, sale = s["a"], s["b"], s["sale"]
+    be_rent = cd.breakeven_rent(a["taxable_full"], cd.A_EFFECTIVE_RATE, a["operating"]["total"], cd.DEFAULT_INPUTS)
+
+    body = prose(
+        "The finding in one paragraph",
+        "The single largest number in this decision is not the sale price and not the rent. It is "
+        "the property tax step-up at the moment of transfer. Property A is modelled at "
+        f"{money(a['value_now'])} today and about {money(a['value_at_transfer'])} at the default "
+        f"transfer year of {cd.DEFAULT_TRANSFER_YEAR}. Under current rules the enrolled assessment "
+        f"moves from roughly {money(a['assessed_at_transfer'])} to about {money(a['taxable_prop19'])} "
+        f"if the home is occupied as a principal residence, or about {money(a['taxable_full'])} if "
+        f"it is not. That carries the annual bill from about {money(a['tax_now'])} to about "
+        f"{money(a['tax_prop19'])} or {money(a['tax_full'])}, a multiple of roughly "
+        f"{a['tax_multiple_prop19']}x or {a['tax_multiple_full']}x. Every other choice has to be "
+        "measured against that step.",
+        "Property B is a different asset with different economics. It is already owned, it is the "
+        f"current residence, and two of its three units produce about {money(b['rent_income'])} of "
+        "gross rent a year on the owner's figures. Its enrolled assessment and therefore its bill "
+        "are far lower relative to value. Property B is what makes a mixed path possible, because "
+        "it lets the household keep rental income while changing how Property A is used.",
     )
+
+    rows = [
+        {
+            "cells": ["Property tax step-up dominates", f"About {money(a['tax_now'])} today versus about {money(a['tax_prop19'])} occupied or {money(a['tax_full'])} rented at the default transfer year.", "Model the assessment first; the financing and rent questions come second."],
+            "status": "Projection",
+            "sources": ["rtc_63_2", "boe_lta_2025_009", "boe_pub29"],
+        },
+        {
+            "cells": ["Occupancy is worth real money", "The current exclusion requires the home to be the transferor's principal residence and to become the transferee's principal residence within one year, with an exemption filing within one year.", "Treat the one-year occupancy decision as a hard deadline, not a preference."],
+            "status": "Official",
+            "sources": ["rtc_63_2", "boe_prop19", "rtc_218"],
+        },
+        {
+            "cells": ["Move out later without losing the value", "The statute provides that when the exclusion stops applying, the base year value established at the change in ownership date, adjusted annually, is enrolled. Occupying for the qualifying year and renting afterwards is therefore a distinct path worth modelling.", "Confirm the wording and any county procedure with the attorney before relying on it."],
+            "status": "Official",
+            "sources": ["rtc_63_2"],
+        },
+        {
+            "cells": ["Basis resets at death", "Basis of inherited property is generally fair market value at date of death, or the alternate valuation date only if a return is filed and the election is made. A sale soon after transfer therefore usually produces little taxable gain.", "Get the date-of-death valuation documented; it sets the basis for every later path."],
+            "status": "Verified",
+            "sources": ["irs_basis", "irs_pub523"],
+        },
+        {
+            "cells": ["Selling is not automatically tax-free at the state level", "Current California statute bars a state inheritance or estate tax on a transfer by reason of death, but a later sale can still carry federal and state income tax consequences and local transfer charges.", "Have the CPA model the sale before assuming a net number."],
+            "status": "Official",
+            "sources": ["rtc_13301", "irs_basis", "irs_pub523"],
+        },
+        {
+            "cells": ["Federal estate tax is a threshold test, not a beneficiary allowance", f"The 2026 filing threshold is $15,000,000 and the 2027 basic exclusion is $15,480,000. The test uses the gross estate plus adjusted taxable gifts and the specific gift tax exemption.", "Obtain the estate inventory rather than assuming the home alone determines the answer."],
+            "status": "Verified",
+            "sources": ["irs_estate", "irs_2027", "irs_estate_faq"],
+        },
+        {
+            "cells": ["Renting Property A needs a rent number nobody has yet", f"Carrying cost if rented is modelled at about {money(a['tax_full'] + a['operating']['total'])} a year before any financing or management. The break-even gross rent, before financing, is about {money(be_rent)} a year.", "Get three written rent opinions before choosing a keep-and-rent path."],
+            "status": "Projection",
+            "sources": ["irs_pub527", "hud_fmr", "civ_1947_12"],
+        },
+        {
+            "cells": ["Sequence risk is the real reason to consider staging", "The Dow did not regain its 1929 high until November 1954, about 25 years later. The S&P 500 fell 57 percent from October 2007 to March 2009 while house prices fell about 30 percent.", "Compare crash-during-wait with crash-after-entry before trusting any headline."],
+            "status": "Historical",
+            "sources": ["fed_1929", "fed_2008"],
+        },
+        {
+            "cells": ["The deduction for property tax is capped", "An individual's state and local tax deduction is limited to a combined $40,000, or $20,000 if married filing separately, subject to a modified adjusted gross income limitation but not reduced below $10,000.", "Do not model the full property tax as deductible at the federal level."],
+            "status": "Verified",
+            "sources": ["irs_topic503"],
+        },
+        {
+            "cells": ["Today's rules will not be the 2040s rules", "The Proposition 19 limit is recalculated every other February from the California house price index, and the federal exclusion is indexed from 2027. Neither guarantees a future amount.", "Re-read every figure at the transfer date; nothing here is a promise about future law."],
+            "status": "Official",
+            "sources": ["boe_lta_2025_009", "fhfa_hpi", "irs_2027"],
+        },
+    ]
     body += make_table(
-        "Important facts and current limits",
-        ["Topic", "Verified rule or currently available information", "Decision implication"],
+        "Executive findings",
+        ["Finding", "What the model and the statutes show", "What to do with it"],
         rows,
+        "Owner-supplied figures are rounded to the nearest ten dollars. Projection rows use the default transfer year and the default growth assumptions; change them on the projections page.",
     )
-    body += cards("Next pages", [
-        ("Missing evidence", "A question-by-question record list for counsel, CPA, assessor, insurer and rental adviser.", "pages/questions.html"),
-        ("Current law", "Estate thresholds, California property-tax mechanics and transfer deadlines.", "pages/estate-thresholds.html"),
-        ("Risk", "Historical stress anchors and a local-only Treasury phasing comparison.", "pages/black-swan.html"),
-    ], current="pages/executive-summary.html")
-    return render_page("pages/executive-summary.html", "Executive summary", "The short version: separate the assets, verify the rules that can change the answer, and leave private numbers blank until documents establish them.", body, "EXECUTIVE SUMMARY")
+
+    body += prose(
+        "Conditional recommendation",
+        "On the evidence available today, and only if the home is the transferor's principal "
+        "residence at transfer, the path that preserves the most optionality is to take occupancy "
+        "within the one-year window, file the homeowners' exemption, file the exclusion claim within "
+        "three years, and only then decide whether to stay, rent or sell. That ordering preserves "
+        "the reduced assessment while the market, the insurance market and the household's own needs "
+        "become clearer. It does not require deciding now whether to keep the property for life.",
+        "If the home is not the transferor's principal residence at transfer, or if occupancy within "
+        "one year is not realistic, the exclusion is likely unavailable. In that case the comparison "
+        "narrows to a concentrated, low-yield asset with a heavy annual bill versus selling and "
+        "reinvesting, and the answer becomes much more sensitive to the reinvestment path than to "
+        "the property itself.",
+        "This is a conditional conclusion, not a recommendation to act. It reverses if the trust "
+        "restricts occupancy, if insurance becomes unavailable at a workable price, if the estate is "
+        "large enough to create a filing obligation, or if the household needs the proceeds.",
+    )
+
+    return render_page(
+        "pages/executive-summary.html",
+        "Executive summary",
+        "The important details in one place: what drives the answer, what the statutes actually "
+        "require, and what would reverse the conclusion.",
+        body,
+        "SUMMARY",
+    )
 
 
-def build_decisions() -> str:
-    rows = [
-        {"cells": ["Live in A; retain B", "Test whether A can qualify as a family home under current law; determine the separate rental/occupancy economics of B.", "Trust restrictions, eligibility, occupancy within the statutory period, current B leases and lost/retained rent must be documented.", "A family-home exclusion is conditional; rental and personal use can affect tax reporting and costs."], "status": "Guidance", "sources": ["boe_prop19", "ca_rtc63", "irs_rental"]},
-        {"cells": ["Use B as residence; rent, retain or sell A", "Keep A's transfer authority, occupancy, rental use and sale alternative separate from B.", "Include any B rent using its private rent ledger; verify tenant/lease obligations and whether B can lawfully and practically serve as a residence.", "B's current rent, net operating costs, residence suitability, insurance and any required lease transition are not independently confirmed or published."], "status": "Missing", "sources": ["irs_rental", "ca_rent", "cdi"]},
-        {"cells": ["Rent A; retain B",  "Treat A as a rental only after transfer authority, permitted use, tenant status, rent restrictions, insurance and basis are confirmed.", "Gross rent is not net return; include vacancy, tax, repairs, insurance, utilities, management and income taxes.", "Current local rent control, lawful unit count and property-specific rents are not verified."], "status": "Missing", "sources": ["irs_rental", "ca_rent", "hud_fmr", "cdi"]},
-        {"cells": ["Sell A; retain B", "Use a defensible date-of-death value/basis, sale costs, debt payoff and tax analysis before estimating reinvestable proceeds.", "A sale may create taxable gain above basis; estate tax is a separate whole-estate analysis.", "No sale value, basis, debt, transaction costs or after-tax proceeds are published."], "status": "Missing", "sources": ["irs_basis", "irs_estate", "irs_rental"]},
-        {"cells": ["Live in A; rent lawful units in A and/or B", "Model each legal unit and the owner's actual occupancy separately; do not assume the whole property can be rented or that one unit is lawful.", "Separate rental and personal-use expenses, leases, deposits, utilities and insurance; compare the net cash flow with full occupancy cost.", "Unit legality, leases, operating costs and relevant local rules are missing."], "status": "Missing", "sources": ["irs_rental", "ca_rent", "cdi"]},
-        {"cells": ["Short hold, then sell A", "Compare interim carrying costs and occupancy against the sale date, tax basis, property-tax status and sale expenses.", "A short hold can change both tax and property-tax treatment; calendar dates and use matter.", "No holding period, tax year, valuation, title condition or rule eligibility is confirmed."], "status": "Missing", "sources": ["irs_basis", "boe_prop19", "ca_rtc480"]},
-        {"cells": ["Sell A; park proceeds in short Treasuries; phase into stocks", "Compare immediate investment with a 24–36 month Treasury ladder and scheduled equity purchases, including early and late crash entry.", "Staging may reduce exposure during an early decline but can lag a rising market; maturing securities create reinvestment risk if yields fall.", "Net proceeds, future auction yields, tax status, liquidity, risk tolerance and investment policy are unknown."], "status": "Assumption", "sources": ["treasury_bills", "treasury_notes", "fed_1929", "fed_2008", "sec_stocks"]},
-        {"cells": ["Retain A; change B occupancy or rental pattern", "Keep A's expected trust transfer separate from B's current ownership, basis, leases and rental operations.", "This mixed path can avoid a forced all-or-nothing choice but may alter rent, tax reporting, insurance and tenant obligations.", "B's occupancy, lease ledger, legal unit count and cash flow are not verified here."], "status": "Missing", "sources": ["irs_rental", "ca_rent", "cdi"]},
+def build_decision_analysis() -> str:
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a, b, sale = s["a"], s["b"], s["sale"]
+    inputs = cd.DEFAULT_INPUTS
+    be_rent = cd.breakeven_rent(a["taxable_full"], cd.A_EFFECTIVE_RATE, a["operating"]["total"], inputs)
+    staging_gap = sale["invested_now_end"] - sale["invested_staged_end"]
+
+    paths = [
+        {
+            "id": "P1",
+            "name": "Occupy Property A, keep Property B unchanged",
+            "kind": "Mixed",
+            "tax": money(a["tax_prop19"]),
+            "income": money(b["rent_income"]),
+            "risk": "Concentration in one asset plus a large fixed annual bill. Liquidity is low.",
+            "reversal": "Reverses if the household cannot occupy within one year, or if insurance or the bill becomes unaffordable relative to income.",
+            "sources": ["rtc_63_2", "rtc_218", "irs_topic503"],
+        },
+        {
+            "id": "P2",
+            "name": "Occupy Property A and also let the third unit of Property B",
+            "kind": "Mixed",
+            "tax": money(a["tax_prop19"]),
+            "income": f"{money(b['rent_income'])} plus the third unit (unquoted)",
+            "risk": "Adds landlord exposure at B and changes the owner-occupancy profile at B. Local rules and lawful unit status govern.",
+            "reversal": "Reverses if the third unit is not lawfully lettable, or if the loss of owner-occupancy at B changes its tax or insurance treatment.",
+            "sources": ["rtc_63_2", "civ_1947_12", "irs_pub527"],
+        },
+        {
+            "id": "P3",
+            "name": "Occupy for the qualifying year, then let Property A and return to Property B",
+            "kind": "Mixed",
+            "tax": money(a["tax_prop19"]),
+            "income": "Market rent for A, unquoted",
+            "risk": "Depends on the statutory rule that the base year value established at the change in ownership date, adjusted annually, is enrolled when the exclusion stops applying. Needs legal confirmation.",
+            "reversal": "Reverses if counsel reads the statute differently, if the county requires continuing occupancy, or if rent does not clear the break-even.",
+            "sources": ["rtc_63_2", "irs_pub527", "hud_fmr"],
+        },
+        {
+            "id": "P4",
+            "name": "Let Property A from the start, keep living at Property B",
+            "kind": "Pure",
+            "tax": money(a["tax_full"]),
+            "income": "Market rent for A, unquoted",
+            "risk": "Pays the highest annual bill and keeps the largest concentration. Break-even gross rent before financing is about " + money(be_rent) + " a year.",
+            "reversal": "Reverses if market rent cannot clear break-even, or if insurance and repair reserves consume the margin.",
+            "sources": ["rtc_63_2", "irs_pub527", "hud_fmr", "cdi_residential"],
+        },
+        {
+            "id": "P5",
+            "name": "Sell Property A at transfer and invest the proceeds immediately",
+            "kind": "Pure",
+            "tax": "None after sale",
+            "income": f"{money(sale['net_proceeds'])} invested",
+            "risk": "Full exposure to entry-point risk. A crash immediately after the sale is the worst case for this path.",
+            "reversal": "Reverses if the household needs the housing service the property provides, or if a crash at entry would be unrecoverable within the horizon.",
+            "sources": ["irs_basis", "irs_pub523", "sec_stocks", "fed_2008"],
+        },
+        {
+            "id": "P6",
+            "name": "Sell Property A, park the proceeds in Treasury bills and notes, then phase into equities",
+            "kind": "Mixed",
+            "tax": "None after sale",
+            "income": f"{money(sale['net_proceeds'])} staged",
+            "risk": f"Trades entry-point risk for reinvestment risk. On the default assumptions this path ends about {money(staging_gap)} below immediate entry if markets do not fall. It wins when the fall happens during the wait.",
+            "reversal": "Reverses if yields fall while waiting, or if equities rise strongly during the staging window and never retrace.",
+            "sources": ["treasury_bills", "treasury_notes", "treasury_yield", "sec_stocks"],
+        },
+        {
+            "id": "P7",
+            "name": "Sell Property B, move into Property A, invest the Property B proceeds",
+            "kind": "Mixed",
+            "tax": money(a["tax_prop19"]),
+            "income": f"Proceeds from B, valued about {money(b['value_at_transfer'])} at transfer",
+            "risk": "Gives up an income-producing asset with a low relative assessment to secure the exclusion. Concentrates further in A.",
+            "reversal": "Reverses if Property B's low assessment and rental income are more valuable than the exclusion, or if the sale of B creates a large taxable gain.",
+            "sources": ["rtc_63_2", "irs_pub523", "boe_pub29"],
+        },
+        {
+            "id": "P8",
+            "name": "Sell both properties and invest everything",
+            "kind": "Pure",
+            "tax": "None after sale",
+            "income": f"About {money(sale['net_proceeds'] + b['value_at_transfer'] * (1 - inputs['selling_cost']))} invested",
+            "risk": "Maximum liquidity and maximum diversification, but gives up both the housing service and the low assessed values. Fully exposed to entry-point risk.",
+            "reversal": "Reverses if housing cost in the local area rises faster than the portfolio, or if the household wants a property anchor.",
+            "sources": ["irs_pub523", "sec_stocks", "hud_fmr"],
+        },
     ]
-    body = callout("No winner is being published", "Each path depends on facts not established by public records in this site. A conditional recommendation should be made only after the blank evidence rows are replaced by private documents and professional calculations.", "warning")
-    body += make_table("Mixed and pure paths to compare", ["Path", "Property A — anticipated trust transfer", "Property B — already owned", "Main uncertainty / risk"], rows, "The sources link to governing rules or official risk information. They do not establish whether a specific use, rent, exclusion or premium applies.")
-    body += paragraph("Comparison rule", "For every path, show after-tax cash flows, one-time sale or transfer costs, debt, vacancy, repairs, insurance, utilities, property tax, rent legality, liquidity and reinvestment risk. Compare the same time horizon and disclose every assumption.")
-    return render_page("pages/decision-analysis.html", "Compare live, rent, sell and mixed paths", "The comparison is deliberately conditional. It does not assume that the trust asset and the already-owned asset have the same tax basis, title, rent, occupancy or costs.", body, "DECISION")
+
+    rows = []
+    for p in paths:
+        rows.append({
+            "cells": [p["id"], p["kind"], p["name"], p["tax"], p["income"], p["risk"], p["reversal"]],
+            "status": "Projection",
+            "sources": p["sources"],
+        })
+    body = make_table(
+        "Eight paths, including five mixed paths",
+        ["ID", "Type", "Path", "Annual property tax on A after transfer", "Income or proceeds", "Principal risk", "What would reverse it"],
+        rows,
+        "All dollar cells use the default transfer year and default growth assumptions. Change them on the projections page. Nothing here ranks the paths; the ranking depends on facts not yet in evidence.",
+    )
+
+    body += callout(
+        "Why the mixed paths are modelled separately",
+        "Forcing a choice between live, rent and sell hides the paths that actually preserve optionality. "
+        "Occupying for the qualifying year and then letting the property is a different economic path "
+        "from occupying permanently, and selling one asset while keeping the other is different from "
+        "selling both. Each has its own tax trigger, its own liquidity profile and its own reversal condition.",
+        "info",
+    )
+
+    rows2 = [
+        {
+            "cells": ["Carrying cost of A if occupied", money(a["carrying_total"]), f"About {money(a['carrying_monthly'])} a month", "Property tax plus the owner's water, solar credit, insurance and maintenance figures."],
+            "status": "Projection",
+            "sources": ["rtc_63_2", "boe_pub29", "cdi_residential"],
+        },
+        {
+            "cells": ["Carrying cost of A if rented", money(a["tax_full"] + a["operating"]["total"]), f"About {money((a['tax_full'] + a['operating']['total']) / 12)} a month", "Same operating figures with the full reassessment and no homeowners' exemption."],
+            "status": "Projection",
+            "sources": ["rtc_63_2", "rtc_218"],
+        },
+        {
+            "cells": ["Break-even gross rent for A", money(be_rent), f"About {money(be_rent / 12)} a month", "Before any financing. Includes the vacancy and management assumptions; compare against three written rent opinions."],
+            "status": "Assumption",
+            "sources": ["irs_pub527", "hud_fmr"],
+        },
+        {
+            "cells": ["Property B gross rent", money(b["rent_income"]), f"About {money(b['rent_income'] / 12)} a month", "Owner-supplied figure for two of three units, grown at the rent growth assumption. Not verified against leases."],
+            "status": "Owner-supplied",
+            "sources": ["civ_1947_12", "irs_pub527"],
+        },
+        {
+            "cells": ["Net proceeds if A is sold", money(sale["net_proceeds"]), "After selling costs", "Gross value less the selling cost assumption. Local transfer charges and the exact commission are not verified."],
+            "status": "Assumption",
+            "sources": ["irs_basis", "irs_pub523"],
+        },
+        {
+            "cells": ["Staged versus immediate entry", money(sale["invested_staged_end"]), money(sale["invested_now_end"]), f"On the default assumptions staging ends about {money(staging_gap)} behind if markets do not fall. The gap is the price of the protection."],
+            "status": "Assumption",
+            "sources": ["treasury_bills", "treasury_notes", "treasury_yield"],
+        },
+    ]
+    body += make_table(
+        "Numbers the comparison depends on",
+        ["Measure", "Amount", "Per month or note", "How it is built and what is missing"],
+        rows2,
+        "Every figure here is either an owner-supplied figure rounded to the nearest ten dollars, or arithmetic on one. None is verified against an official record.",
+        )
+
+    body += prose(
+        "How to read this page",
+        "The paths are not ranked because the ranking depends on facts that are not yet in evidence. "
+        "Choose the reversal column first: pick the two or three paths whose reversal conditions you "
+        "could actually live with, then go and get the evidence that separates them. That inverts the "
+        "usual order and prevents analysing a path the trust, the county or the insurance market will "
+        "not permit.",
+    )
+    return render_page(
+        "pages/decision-analysis.html",
+        "Compare eight paths",
+        "Pure and mixed paths for the anticipated transfer, with the property tax treatment, the "
+        "principal risk and the condition that would reverse each one.",
+        body,
+        "DECISION",
+    )
 
 
 def build_questions() -> str:
-    rows = [
-        {"cells": ["Q1 — What exactly transfers, when, and under whose authority?", "Only the trust-transfer role is supplied; the instrument, amendments, distribution terms and trustee authority are absent.", "No verified answer; do not assume a beneficiary can occupy, rent or sell without trustee authority.", "Executed trust and amendments, deed, trustee contact, written distribution/sale/occupancy directions.", "Attorney / trustee"], "status": "Owner-supplied", "sources": ["ca_prob160617", "ca_rtc480"]},
-        {"cells": ["Q2 — What is the full gross estate, adjusted taxable-gift history and specific gift-tax exemption?", "The public site does not publish an estate inventory or cash amount.", "Federal threshold exposure cannot be calculated from one home or beneficiary share; portability may independently require filing.", "Asset/debt inventory, prior taxable gifts, specific gift-tax exemption, deductions, spouse/portability facts and valuation date.", "CPA / estate attorney"], "status": "Missing", "sources": ["irs_estate", "irs_estate_faq"]},
-        {"cells": ["Q3 — What is the income-tax basis and defensible transfer value?", "No appraisal, Form 706, Schedule A/Form 8971 or basis schedule is published.", "IRS says inherited basis is generally date-of-death FMV, subject to exceptions; later sale above basis may create gain.", "Date-of-death appraisal, executor basis statement, improvements, depreciation and prior transfer records.", "CPA / appraiser"], "status": "Missing", "sources": ["irs_basis", "irs_estate"]},
-        {"cells": ["Q4 — Does the transfer qualify for a California family-home exclusion?", "Relationship, transferor occupancy, trust title, transferee occupancy, value limit and claim status are not verified.", "Eligibility is conditional; occupancy and claim deadlines matter. Grandchild transfers have an additional statutory deceased-parent test.", "Deed/trust, family relationship, any intermediary-parent status, prior exemption, principal-residence proof, value-limit calculation, filed claim and dates.", "Assessor / property-tax adviser"], "status": "Missing", "sources": ["boe_prop19", "ca_rtc63"]},
-        {"cells": ["Q5 — What is the current assessed value and complete tax bill for each asset?", "No tax bill or assessor roll is published.", "A 1% base levy and 2% general assessed-value cap do not reveal special charges or reassessment treatment.", "Current roll, supplemental bill, direct assessments, bond charges, base-year value, appeal status.", "Assessor / CPA"], "status": "Missing", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Q6 — What is the legal unit count and rental-control coverage?", "No permit, certificate, lease or local determination is published.", "Do not assume all units are rentable or that statewide rules are the only applicable rules.", "Permits, certificates of occupancy, leases, rent registry, local ordinances and tenant notices.", "Landlord-tenant attorney / building authority"], "status": "Missing", "sources": ["ca_rent", "hud_fmr", "irs_rental"]},
-        {"cells": ["Q7 — What is Property B's rental income after vacancy, expenses and taxes?", "No private rent amount, lease ledger or tenant record is published; include any current rent as a private input.", "HUD FMR is a program benchmark, not B's actual collected rent or a lawful rent determination.", "B's leases, rent roll, deposits, vacancy/collection history, permitted unit status, expense ledger and tax return; evaluate A separately if rented.", "CPA / property manager"], "status": "Missing", "sources": ["hud_fmr", "irs_rental", "ca_rent"]},
-        {"cells": ["Q8 — What insurance is available for each intended use?", "No insurer quote, replacement-cost estimate or coverage form is published.", "Primary-residence and landlord/mixed-use underwriting can differ; a price cannot be derived from the state guide.", "Separate written quotes, exclusions, replacement-cost basis, liability, fire/earthquake and any FAIR Plan/DIC gap.", "Licensed insurance broker"], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Q9 — What are water, electricity, solar-credit and repair costs?", "No bills, tariff, interconnection agreement, inspection or bid is published.", "Solar export credits depend on tariff and interconnection; no household credit or cost can be inferred.", "At least 24 months of utility bills, solar/NEM/NBT agreement, roof/infrastructure inspections, licensed bids.", "Utility / solar provider / contractor"], "status": "Missing", "sources": ["water_board", "cpuc_solar", "cslb"]},
-        {"cells": ["Q10 — What are net sale proceeds and selling costs?", "No appraisal, debt payoff, sale contract, fee quote or local transfer-tax schedule is published.", "Do not treat gross sale value as investable cash; basis, debt, costs and tax all matter.", "Broker/closing estimate, debt statement, title search, transfer charges and tax calculation.", "CPA / escrow / attorney"], "status": "Missing", "sources": ["irs_basis", "irs_estate"]},
-        {"cells": ["Q11 — Can Property B serve as a residence, and how would any current rent affect the choice?", "The public site includes no B rent amount, lease, permit, inspection or occupancy record; do not infer these facts.", "Do not compare living in B with retaining/renting it until legal and physical suitability, tenant obligations and net rent are confirmed.", "B's lease/tenant records, lawful-unit permits, inspection, title/debt, use-specific insurance, utilities, rent ledger and occupancy plan.", "Landlord-tenant counsel / insurer / property adviser"], "status": "Missing", "sources": ["irs_rental", "ca_rent", "cdi"]},
-        {"cells": ["Q12 — What investment policy should apply to any sale proceeds?", "No distribution amount, tax reserve, portfolio or risk tolerance is published.", "The 24–36 month Treasury option is a scenario, not an individualized recommendation.", "Net proceeds, tax reserve, cash needs, allocation policy, fee schedule, net yields and withdrawal plan.", "Fee-only fiduciary investment adviser / CPA"], "status": "Missing", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
+    groups = [
+        ("Trust, title and timing", [
+            ("Is the trust revocable, and does it become irrevocable on death?", "Not in evidence", "Read the executed trust and any amendments. Ask the trustee to confirm in writing when the trust becomes irrevocable and who the successor trustee is."),
+            ("Does the trust restrict occupancy, sale or mortgaging of the home?", "Not in evidence", "Ask counsel for a written summary of trustee powers and any occupancy or distribution conditions."),
+            ("Is the home the transferor's principal residence at transfer?", "Not in evidence", "This determines whether the intergenerational exclusion is available at all. Obtain a written statement from the trustee and evidence of residence."),
+            ("Are there debts, liens, reverse mortgage or other encumbrances?", "Not in evidence", "Order a title report and a beneficiary demand; liens survive transfer and change the net proceeds."),
+            ("What is the expected transfer window?", "Owner expects 2040 to 2050", "Treat it as a window, not a date. Recompute the model at the early and late ends before committing to any path."),
+        ], ["prob_16061_7", "rtc_63_2", "boe_prop19", "irs_706_due"]),
+        ("Valuation and basis", [
+            ("What is the date-of-death fair market value?", "Not in evidence", "A date-of-death appraisal or a documented valuation is the single most important number; it sets basis for every later path."),
+            ("Was an alternate valuation date elected?", "Not in evidence", "Only available if a federal estate return is filed and the election is made on it. Ask the executor."),
+            ("Was a Form 8971 Schedule A issued to any beneficiary?", "Not in evidence", "If issued, basis may have to be reported consistently with the estate tax value."),
+            ("What is the current fair market value of Property B?", "Owner estimate only", "Order an appraisal or a broker price opinion; the model uses an owner estimate."),
+        ], ["irs_basis", "irs_estate_faq", "irs_pub523"]),
+        ("Federal and state transfer tax", [
+            ("What is the gross estate, including adjusted taxable gifts?", "Not in evidence", "The filing test adds lifetime taxable gifts to the gross estate; the home alone does not answer it. Obtain the inventory from the trustee."),
+            ("Is a portability election relevant?", "Not in evidence", "A portability election is made on a timely filed return; filing can matter even below the threshold."),
+            ("Will a federal estate return be required?", "Not in evidence", "Compare the gross estate plus adjusted taxable gifts with the year-of-death threshold, then confirm with the CPA."),
+            ("Does California impose any inheritance or estate tax?", "Current statute says no", "Statute bars a state inheritance or estate tax on a transfer by reason of death, but it can change. Re-read at the transfer date."),
+        ], ["irs_estate", "irs_2027", "irs_estate_faq", "rtc_13301"]),
+        ("Property tax and assessment", [
+            ("What is the tax-rate-area rate for Property A?", "Derived from the owner's bill", f"The model uses {fmt_rate(cd.A_EFFECTIVE_RATE)}, derived from the owner's own last bill. The official county rate was not retrieved."),
+            ("Why is Property B's implied rate so high?", "Flagged irregularity", f"The owner's figures imply {fmt_rate(cd.B_EFFECTIVE_RATE)}, far above the 1 percent base plus voter-approved debt described by the city. The bill likely includes direct assessments or parcel taxes, or the assessment figure is not the taxable value. Reconcile against the actual bill."),
+            ("What will the Proposition 19 limit be at transfer?", "Published only through February 15, 2027", f"The current amount is ${cd.PROP19_LIMIT_NOW:,}. It is recalculated every other February from the California house price index."),
+            ("Is a homeowners' exemption in place at Property A today?", "Not verified", "Confirm from the current bill; it affects the derived effective rate."),
+        ], ["boe_pub29", "boe_lta_2025_009", "rtc_218", "sf_gov_assess", "scc_rate_unverified"]),
+        ("Operating costs and insurance", [
+            ("What does insurance actually cost, and is it available?", "Owner estimate only", "Obtain written owner-occupied and landlord quotes with replacement cost, exclusions and any FAIR Plan fallback."),
+            ("What is the true maintenance and repair run rate?", "Owner estimate only", "Build a reserve schedule from inspection reports and three years of actual spend, not from a rule of thumb."),
+            ("Who supplies water to Property A and on what tariff?", "Not confirmed", "More than one provider serves the postal area. Read the provider and the tariff from the account or bill."),
+            ("What is the solar interconnection agreement and tariff?", "Not in evidence", "Export credits depend on the tariff and the interconnection date; the equipment alone does not establish a credit."),
+            ("What is the sewer charge at Property A?", "Provider identified, rate not retrieved", "The sanitary district posts its annual rate proceedings; read the current rate from the district or the bill."),
+        ], ["cdi_residential", "cupertino_water_unverified", "sjwc_tariff", "cupertino_sanitary", "cpuc_solar", "cslb"]),
+        ("Rental use", [
+            ("What is market rent for Property A?", "Not in evidence", "Obtain three written rent opinions, then compare with the break-even rent on the projections page."),
+            ("Is the third unit at Property B lawfully lettable?", "Not in evidence", "Confirm permits, unit legality and local registration before counting any additional rent."),
+            ("What are the existing leases and deposit balances at Property B?", "Not in evidence", "Read the leases; lawful rent, rent cap coverage and just-cause obligations depend on them."),
+            ("What rent increases are permitted on the two let units?", "Statutory cap applies, local rules may add", "The statewide cap is 5 percent plus the change in the cost of living, or 10 percent, whichever is lower, subject to exemptions and local rules."),
+        ], ["civ_1947_12", "hud_fmr", "irs_pub527", "sf_gov_assess"]),
+        ("Reinvestment", [
+            ("What is the household's real horizon and liquidity need?", "Not stated", "A staged plan only helps if the money is not needed during the staging window. State the horizon before choosing a path."),
+            ("What are current Treasury yields at the time of the decision?", "Published daily", "Read the 3-month and 2-year constant maturity rates from the Treasury par yield curve on the day of the decision."),
+            ("What is the household's tax position on interest and gains?", "Not in evidence", "Treasury interest is federally taxable but exempt from state and local tax; confirm the combined effect with the CPA."),
+        ], ["treasury_yield", "treasury_bills", "treasury_notes", "sec_stocks", "irs_topic503"]),
     ]
-    body = callout("Answers are intentionally bounded", "The only supplied case structure carried into the public site is that one property is expected through a trust and the other is already owned. No exact costs, valuations, locations, leases or estate amounts are published or inferred.", "info")
-    body += make_table("Questions, information required and answer status", ["Question", "Information available", "Answer from verified evidence", "Record needed to close the gap", "Who should confirm"], rows, "Status Owner-supplied means only that the broad role appeared in the request; the official source link verifies the cited rule, not the household fact.")
-    body += paragraph("Discovery order", "First collect trust and title records, then confirm estate valuation/basis and property-tax deadlines, then verify lawful use and leases, then request independent insurance/repair/utility data, and only then compare after-tax alternatives.")
-    return render_page("pages/questions.html", "Questions & missing evidence", "A clear register of what is known at a high level, what is not established, and the document or official rule needed to resolve each question.", body, "DECISION")
+
+    body = callout(
+        "How to use this register",
+        "Each question is stated with what is currently known and a concrete way to discover the "
+        "missing information. Nothing is inferred to fill a gap. Where a value is unknown it stays "
+        "unknown, and the model shows the break-even or the range instead of inventing a number.",
+        "info",
+    )
+    for title, items, sources in groups:
+        rows = [{
+            "cells": [q, known, action],
+            "status": "Action needed" if "Not in evidence" in known or "estimate" in known.lower() or "Derived" in known or "Flagged" in known or "Not confirmed" in known else "Verified",
+            "sources": sources,
+        } for q, known, action in items]
+        body += make_table(title, ["Question", "What is known now", "How to discover the missing information"], rows)
+
+    return render_page(
+        "pages/questions.html",
+        "Questions and missing evidence",
+        "Every question that needs an answer before a decision is reasonable, what is already known, "
+        "and the concrete step that would produce the missing information.",
+        body,
+        "DECISION",
+    )
 
 
-def build_projections() -> str:
-    rows = [
-        {"cells": ["Property A market value at transfer", "—", "Obtain a qualified valuation for the actual valuation date; a broad HPI is not a parcel appraisal.", "IRS estate valuation rules; FHFA HPI is only a broad index."], "status": "Missing", "sources": ["irs_estate", "fhfa_hpi"]},
-        {"cells": ["Property A income-tax basis", "—", "Get the executor's basis statement, appraisal and improvement/depreciation records; use the correct estate valuation rule.", "Inherited basis is generally date-of-death FMV, subject to exceptions."], "status": "Missing", "sources": ["irs_basis"]},
-        {"cells": ["Property A assessed value and full tax bill", "—", "Obtain current roll, base-year value, secured bill, supplemental bill and direct charges.", "Prop 13 and Proposition 19 rules do not reveal the parcel's actual charges."], "status": "Missing", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Property B market value, basis and assessed value", "—", "Keep existing ownership records separate from the future trust transfer; obtain current valuation, basis and tax roll privately.", "No property-specific value or basis is established by a statewide source."], "status": "Missing", "sources": ["irs_basis", "boe_pub29"]},
-        {"cells": ["Insurance premiums and coverage", "—", "Obtain separate written quotes for intended owner-occupied and landlord/mixed-use status.", "The state insurance page offers comparison tools but no household-specific premium."], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Water, electricity and solar credits", "—", "Use provider bills and the actual solar tariff/interconnection records; do not infer credits from equipment presence.", "CPUC explains tariff differences, not this account's rate or bill."], "status": "Missing", "sources": ["water_board", "cpuc_solar"]},
-        {"cells": ["Rent, vacancy, repairs and maintenance", "—", "Use leases, permitted-unit records, service history, inspection findings and written bids; HUD FMR is only a benchmark.", "No official source gives the rent or repair budget for a private property."], "status": "Missing", "sources": ["hud_fmr", "irs_rental", "cslb"]},
-        {"cells": ["Net sale proceeds and tax reserve", "—", "Subtract debt, transaction costs and taxes from a verified sale price; basis and the whole estate can change the result.", "A sale value is not equal to investable cash."], "status": "Missing", "sources": ["irs_basis", "irs_estate"]},
-        {"cells": ["Future estate-tax headroom", "—", "Calculate from the total gross estate, adjusted taxable gifts, deductions, credits and law in the year of death.", "Current IRS thresholds do not predict a future-year amount."], "status": "Missing", "sources": ["irs_estate", "irs_2027"]},
-    ]
-    body = callout("No household-specific annual dollars are published", "Publishing owner-level assessments, tax bills, expenses or projections could fingerprint a property. The public worksheet therefore leaves every private value blank. Nothing is treated as zero, and no future rate is invented.", "warning")
-    body += make_table("Private inputs required before a year-by-year model", ["Metric", "Public value", "What to obtain privately", "What the official source establishes"], rows)
-    formula_rows = [
-        {"cells": ["Market value", "Starting appraisal × (1 + selected scenario growth)^year", "Historical FHFA indexes may help build scenarios but are not a personalized forecast."], "status": "Assumption", "sources": ["fhfa_hpi", "cbo_rates"]},
-        {"cells": ["Assessed value / property tax", "Apply current assessment, ownership-change rules, approved exclusions and the bill's non-base components.", "California assessment rules are not equivalent to multiplying market value by one guessed rate."], "status": "Guidance", "sources": ["boe_pub29", "boe_prop19", "ca_rtc63"]},
-        {"cells": ["Net rental cash flow", "Collected rent − vacancy/collection loss − tax − insurance − utilities − repairs − management − income tax.", "Use the actual rental ledger, legal rent and tax allocation; separate personal-use and rental-use expenses."], "status": "Guidance", "sources": ["irs_rental", "ca_rent", "hud_fmr"]},
-        {"cells": ["Net sale cash", "Sale proceeds − debt payoff − fees − tax due − retained cash reserve.", "The capital-gain basis and estate-tax calculation are distinct analyses."], "status": "Guidance", "sources": ["irs_basis", "irs_estate"]},
-        {"cells": ["Real purchasing power", "Nominal future value ÷ cumulative inflation factor.", "Use multiple inflation regimes; one observed CPI year is not a 50-year assumption."], "status": "Guidance", "sources": ["bls_cpi", "cbo_rates"]},
-    ]
-    body += make_table("Model equations and limitations", ["Output", "Transparent method", "Limit"], formula_rows, "These are model structures, not a numeric forecast. A future-year model should use separate low/base/high assumptions and a dated source or a clearly labeled scenario for every rate.")
-    horizon_rows = [
-        {"cells": ["Property A — market value", "—", "—", "—", "Use an appraisal at the relevant date; broad FHFA history is a scenario aid, not a valuation."], "status": "Missing", "sources": ["irs_estate", "fhfa_hpi"]},
-        {"cells": ["Property A — assessed value and full property tax", "—", "—", "—", "Use the roll, supplemental assessments, direct charges and actual Prop 19 determination."], "status": "Missing", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Property A — owner-occupied / landlord insurance", "—", "—", "—", "Request quotes for each intended use, replacement cost, exclusions and coverage gap."], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Property A — utilities and solar credits", "—", "—", "—", "Use provider bills, account tariffs and signed interconnection documents."], "status": "Missing", "sources": ["water_board", "cpuc_solar"]},
-        {"cells": ["Property A — maintenance and capital repairs", "—", "—", "—", "Use inspections, service history, licensed bids and a separately stated reserve."], "status": "Missing", "sources": ["cslb", "irs_rental"]},
-        {"cells": ["Property A — lawful gross rent / net rental cash flow", "—", "—", "—", "Use legal-unit records, leases, vacancy history, operating costs and tax allocation."], "status": "Missing", "sources": ["hud_fmr", "ca_rent", "irs_rental"]},
-        {"cells": ["Property A — net sale proceeds after tax and costs", "—", "—", "—", "Use sale estimate, debt payoff, transaction fees, basis and tax advice."], "status": "Missing", "sources": ["irs_basis", "irs_estate"]},
-        {"cells": ["Property B — market value", "—", "—", "—", "Keep this existing asset separate from the expected trust transfer; use date-specific evidence, not a statewide index as appraisal."], "status": "Missing", "sources": ["fhfa_hpi"]},
-        {"cells": ["Property B — assessed value and full property tax", "—", "—", "—", "Use the current roll, bill, supplemental assessments, direct charges and any appeals."], "status": "Missing", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Property B — owner-occupied / landlord insurance", "—", "—", "—", "Request use-specific quotes and current coverage terms; no premium can be projected from a public source."], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Property B — utilities and solar credits", "—", "—", "—", "Use the actual provider bills and tariff/interconnection record."], "status": "Missing", "sources": ["water_board", "cpuc_solar"]},
-        {"cells": ["Property B — maintenance and capital repairs", "—", "—", "—", "Use its own inspection, service history, licensed bids and reserve; do not combine with Property A."], "status": "Missing", "sources": ["cslb", "irs_rental"]},
-        {"cells": ["Property B — lawful gross rent / net rental cash flow", "—", "—", "—", "Use its own permits, lease ledger, local rules, vacancy and tax allocation."], "status": "Missing", "sources": ["hud_fmr", "ca_rent", "irs_rental"]},
-        {"cells": ["Property B — net sale proceeds after tax and costs", "—", "—", "—", "Use its own sale estimate, debt payoff, transaction fees, basis and tax advice."], "status": "Missing", "sources": ["irs_basis", "irs_estate"]},
-    ]
-    body += make_table("Blank early / midpoint / late transfer scenarios", ["Separate asset and metric", "Early scenario", "Midpoint scenario", "Late scenario", "Private evidence required"], horizon_rows, "These are relative planning checkpoints, not public dates or a claim about when a transfer occurs. All cells are intentionally blank. Map the stages to actual years only in a private model; do not infer zero or reuse one asset's costs for the other.")
-    body += paragraph("Horizon", "The transfer date is long range and intentionally not published or confirmed in this public version. CBO's cited rate outlook runs only through 2036; it cannot responsibly be extended as a fifty-year house-price, inflation, insurance or stock-return forecast. Use annual scenario rows only after private source documents and adviser-approved assumptions are available.")
-    return render_page("pages/projections.html", "Projection worksheet", "A transparent projection framework with intentionally blank private fields. It is not a substitute for a private, source-backed spreadsheet prepared from the actual estate and property records.", body, "NUMBERS")
-
-
-def build_property_tax() -> str:
-    rows = [
-        {"cells": ["General levy", "California's general property-tax levy is 1% of assessed value, plus voter-approved bonded indebtedness; other charges may appear on the bill.", "Do not treat the 1% general levy as the complete effective bill rate."], "status": "Verified", "sources": ["boe_pub29"]},
-        {"cells": ["Annual assessed-value limit", "Proposition 13 generally limits annual assessed-value growth to no more than 2%, subject to the inflation factor and change-of-ownership/new-construction rules.", "The cap applies to assessed value, not every line of the tax bill; a downturn can also affect enrolled value under other rules."], "status": "Verified", "sources": ["boe_pub29"]},
-        {"cells": ["Trust transfer reporting", "RTC §480 requires a change-in-ownership statement within 150 days after death for specified real-property transfers through a trust.", "Trustee/transferee responsibility and the exact filing route must be confirmed for the actual transfer."], "status": "Verified", "sources": ["ca_rtc480"]},
-        {"cells": ["Parent-child / grandparent-grandchild family-home exclusion", "Eligibility depends on relationship, the transferor's principal residence, transferee occupancy within 1 year, a filed claim and the adjusted value limit; qualifying grandchild transfers also require the statutory deceased-parent condition.", "The homeowners' exemption generally must be filed within 1 year. A trust distribution alone does not prove an exclusion; a rental-only path may fail the residence condition."], "status": "Verified", "sources": ["boe_prop19", "ca_rtc63"]},
-        {"cells": ["Claim window", "BOE guidance says the exclusion claim is generally filed within 3 years of transfer or before a transfer to a third party; the homeowners' exemption has its own 1-year requirement.", "Calendar both deadlines independently; confirm the current form and assessor process at transfer."], "status": "Verified", "sources": ["boe_prop19", "ca_rtc63"]},
-        {"cells": ["Actual assessed value, parcel levy and tax bill", "—", "Latest roll, secured bill, supplemental bill, direct charges and any appeal are not publicly reproduced here."], "status": "Missing", "sources": ["boe_pub29", "boe_prop19"]},
-    ]
-    body = callout("Critical distinction", "Income-tax basis and property-tax assessed value are different systems. A date-of-death basis analysis does not by itself determine the assessed value or a Proposition 19 exclusion.", "info")
-    body += make_table("California property-tax rules and missing parcel facts", ["Issue", "Current source-backed rule", "What remains unknown"], rows, "The California BOE warns that statutes and rules change; verify the law and assessor's calculation at the actual transfer.")
-    body += paragraph("Private records to request", "For each asset separately, obtain the assessor roll, full secured tax bill, supplemental assessment history, deed and trust transfer documents, homeowners' exemption status, parcel-specific direct levies, and any filed Proposition 19 claims. Do not publish a parcel number or tax bill in this public repository.")
-    return render_page("pages/property-tax.html", "Property-tax rules", "California property-tax mechanics that matter for a future trust transfer, with no address, assessor record or property-specific tax history disclosed.", body, "NUMBERS")
-
-
-def build_costs() -> str:
-    rows = [
-        {"cells": ["Property tax", "—", "Use the current roll and complete bill for each asset; include bonds and direct charges, then evaluate reassessment/exclusion rules."], "status": "Missing", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Owner-occupied insurance", "—", "Request a current homeowners quote, replacement-cost basis, liability and named exclusions; no official price can be derived from location-free data."], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Landlord / mixed-use insurance", "—", "Request an underwriting review for actual legal units, occupancy, leases, vacancy and fire/earthquake/liability coverage."], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Water / wastewater", "—", "Use the actual provider bill, meter, account and current tariff. The statewide drinking-water program does not state a household rate."], "status": "Missing", "sources": ["water_board"]},
-        {"cells": ["Electricity / solar credits", "—", "Use the actual bill and interconnection/tariff documents. NEM and NBT credit rules differ; export credits under NBT are usually below retail."], "status": "Missing", "sources": ["cpuc_solar"]},
-        {"cells": ["Rent / vacancy / collections", "—", "Use lawful leases and rent ledger; HUD FMR is an annual program benchmark, not the market rent or lawful rent for a particular unit."], "status": "Missing", "sources": ["hud_fmr", "ca_rent", "irs_rental"]},
-        {"cells": ["Repairs / capital maintenance", "—", "Get inspection reports and itemized bids from appropriately licensed contractors; no universal government repair budget exists."], "status": "Missing", "sources": ["cslb", "irs_rental"]},
-        {"cells": ["Rental income tax / deductions", "—", "Ask a CPA to classify personal versus rental use, allowable expenses, depreciation, sale basis and reporting year."], "status": "Missing", "sources": ["irs_rental", "irs_1041"]},
-    ]
-    body = callout("No premiums or monthly cost estimates are published", "The exact quote or bill is private, provider-specific and time-sensitive. The previously supplied estimates are not reproduced or treated as verified. Obtain current written quotes and actual bills for each property's intended use.", "warning")
-    body += make_table("Operating-cost inputs and evidence needed", ["Cost / income line", "Public amount", "How to verify privately"], rows)
-    body += cards("Coverage and use checks", [
-        ("Insurance gap", "The state explains that the FAIR Plan has limited covered perils; compare standard coverage and any DIC policy rather than treating a FAIR Plan policy as complete coverage.", "pages/sources.html"),
-        ("Solar tariff", "Determine interconnection date, NEM/NBT tariff, true-up rules and export-credit treatment from the account records.", "pages/sources.html"),
-        ("Rental use", "Confirm permitted units, local rent restrictions, deposits and lease terms before applying projected gross rent.", "pages/questions.html"),
-    ], current="pages/operating-costs.html")
-    return render_page("pages/operating-costs.html", "Costs, insurance and utility evidence", "A source-linked checklist for the carrying costs that must be modeled without exposing or guessing any property-specific amount.", body, "NUMBERS")
-
-
-def build_black_swan() -> str:
-    rows = [
-        {"cells": ["1929–1954 equity collapse and recovery", "Federal Reserve History reports the Dow fell 89% from peak to trough and did not regain its previous high until November 1954.", "Long drawdowns and delayed nominal recovery are possible. The Dow is a price index, not an after-dividend diversified portfolio."], "status": "Historical", "sources": ["fed_1929"]},
-        {"cells": ["2007–2009 Great Recession", "Federal Reserve History reports an approximately 57% S&P 500 peak-to-trough decline and about a 30% average U.S. home-price decline from prior peaks.", "Equity and housing risk can overlap in a broad crisis; national averages do not predict a specific property."], "status": "Historical", "sources": ["fed_2008"]},
-        {"cells": ["Inflation shock", "BLS reports CPI rose 9.1% in the 12 months through June 2022, the largest 12-month increase since November 1981.", "A single high-inflation year can erode purchasing power and raise replacement/repair costs; it is not an annual forecast."], "status": "Historical", "sources": ["bls_cpi"]},
-        {"cells": ["Near-term interest-rate baseline and stress", "CBO's 2026–2036 outlook gives a 4.3% average 10-year Treasury rate, with 4.8% and 5.8% higher-rate scenarios.", "Useful only as a near-term macro anchor; not a 50-year bond yield, mortgage rate, housing-growth rate or portfolio return."], "status": "Verified", "sources": ["cbo_rates"]},
-        {"cells": ["Long-run housing variation", "FHFA publishes state and metro house-price indexes over different windows.", "An index is not an address-level forecast. Do not apply a metro return mechanically to a private parcel."], "status": "Verified", "sources": ["fhfa_hpi"]},
-    ]
-    regimes = [
-        {"cells": ["Inflation surge / purchasing-power loss", "CPI rose 9.1% over the year through June 2022; this is a single observed 12-month window.", "Stress one or more years at a user-selected inflation rate, but do not repeat 9.1% for decades as if it were a forecast. Higher replacement and repair costs can compress real cash flow."], "status": "Historical", "sources": ["bls_cpi", "cslb"]},
-        {"cells": ["Equity drawdown during staging", "The 1929 Dow and 2007–09 S&P 500 episodes supply two severe historical drawdown endpoints.", "The tool tests a synthetic crash starting halfway through staging. It does not replay either index's daily path or include dividends."], "status": "Historical", "sources": ["fed_1929", "fed_2008"]},
-        {"cells": ["Equity drawdown after staging", "The same source-reported drawdown can begin after all scheduled purchases are complete.", "Compare with the early-crash case; phasing no longer preserves as much uninvested Treasury cash when the loss starts."], "status": "Historical", "sources": ["fed_1929", "fed_2008", "treasury_bills"]},
-        {"cells": ["Lower short-rate renewals", "Each Treasury auction sets the rate for the new security; future renewal rates are not known today.", "Enter a lower second-year yield than first-year yield to expose reinvestment risk. This is a what-if, not a rate prediction."], "status": "Assumption", "sources": ["treasury_bills", "treasury_notes"]},
-        {"cells": ["Rising market before a crash", "No official source in this workspace establishes future equity returns or their sequence.", "Enter a positive pre-crash drift to test opportunity cost while staging; this is a scenario assumption, not an expected-return estimate."], "status": "Assumption", "sources": ["sec_stocks"]},
-        {"cells": ["Higher nominal rate regime", "CBO's near-term 2026–2036 outlook uses 4.3% average 10-year Treasury rates and 4.8%/5.8% higher-rate scenarios.", "Use only as a short-horizon macro reference; do not substitute these rates for far-future Treasury yields, mortgage costs or portfolio returns."], "status": "Verified", "sources": ["cbo_rates"]},
-        {"cells": ["Housing slump / flat property market", "Fed History reports about a 30% average U.S. home-price decline from mid-2006 to mid-2009; FHFA provides broad regional indexes.", "Use a separate low-growth/flat/decline housing scenario. National and regional indexes are not a parcel forecast."], "status": "Historical", "sources": ["fed_2008", "fhfa_hpi"]},
-        {"cells": ["Insurance availability / repair shock", "No public source establishes a future premium, local underwriting decision or repair bill for either asset.", "Treat coverage loss, deductible changes and large repairs as explicit blank or quote-based stress inputs; do not insert a generic percentage."], "status": "Missing", "sources": ["cdi", "cslb"]},
-    ]
-    body = callout("A single constant growth rate is not a 50-year economic model", "Inflation, interest rates, housing prices, insurance availability, rents and equity returns move in different regimes. The available official outlook cited here is at most a near-term baseline; no official source supplies the future household-specific path.", "warning")
-    body += '''<section class="phased-path" aria-labelledby="phased-path-heading">
-<h2 id="phased-path-heading">Phased-investing path: Treasury staging before equity entry</h2>
-<p class="table-note">Sale proceeds can be parked in short Treasuries across the 3-month bill to 2-year note band for 24–36 months after inheritance, then phased into stocks. This tests whether staging softens crash entry risk: a 1929-style equity collapse (Dow about 89 percent peak to trough, prior high not regained until November 1954) or a 2007–09-style collapse (S&amp;P 500 about 57 percent peak to trough) beginning while money is still staged leaves part of the proceeds in Treasuries; the same collapse beginning after staging ends exposes the full amount. The local-only tool on the Treasury staging page compares crash-during-staging with crash-after-staging and runs lower Treasury renewal-yield cases.</p>
-<p class="table-note"><strong>Reinvestment risk beside the headline.</strong> Each maturing bill or note must be reinvested at the next auction's rate, which may be lower. Staging changes when equity risk begins; it does not remove reinvestment risk, sequence risk, or the possibility of stock losses.</p>
-<p class="no-print"><a href="../pages/phased-investing.html">Run the Treasury staging and phased stock entry comparison</a></p>
-</section>'''
-    body += make_table("Measured historical anchors — not forecasts", ["Episode / source window", "Officially reported observation", "How to use it"], rows)
-    body += make_table("Economic regime stress map", ["Regime", "Evidence or status", "What to test"], regimes, "Historical episodes are observations, not probabilities. Assumption rows are user-controlled stress paths, not predictions. Property-specific costs remain blank until quoted.")
-    body += paragraph("Stress dimensions to combine", "Test equity declines before, during and after Treasury staging; lower renewal yields; high inflation; stagnant housing prices; property-tax reassessment; insurance nonrenewal or coverage gaps; repair spikes; vacancy and rent limits; and liquidity needs. Treat joint shocks as stress cases, not independent probabilities. The comparison tool models entry timing plus user-entered yields, pre-crash drift and inflation; it does not claim to replay the whole economy.")
-    body += cards("Run the entry-risk comparison", [
-        ("24–36 month Treasury staging", "Compare a historical crash during staging with one after staging, and change renewal yields locally in your browser.", "pages/phased-investing.html"),
-        ("Law and assumptions", "Use current official law only for present-day rules; refresh tax thresholds and costs at the actual event.", "pages/law-watchlist.html"),
-    ], current="pages/black-swan.html")
-    return render_page("pages/black-swan.html", "Black-swan economic conditions", "Historical evidence for uneven growth, inflation and market shocks, with strict limits on what those episodes can say about a future property or portfolio.", body, "STRESS TESTS")
-
-
-def build_phased_investing() -> str:
-    body = callout("Reinvestment risk belongs beside the headline", "Treasury bills and notes have fixed auction rates for their terms. When a short holding matures, the next auction yield may be lower; staging can therefore reduce early equity exposure yet leave more money earning less. A rising market can also make phased buying lag a lump-sum investment.", "warning")
-    instrument_rows = [
-        {"cells": ["Treasury bills", "4–52 week terms; rate fixed at auction; interest is federally taxable and exempt from state/local taxes; can be sold before maturity.", "A 3-month ladder requires reinvestment at future auction rates; early sale can have a different price."], "status": "Verified", "sources": ["treasury_bills"]},
-        {"cells": ["Treasury notes", "2-, 3-, 5-, 7- and 10-year terms; a 2-year note can span the staging horizon; interest is federally taxable and exempt from state/local taxes.", "A note sold before maturity may have a market price different from par; decide whether to hold to maturity or sell."], "status": "Verified", "sources": ["treasury_notes"]},
-    ]
-    body += make_table("Instrument facts", ["Instrument", "Official product terms", "Decision risk"], instrument_rows)
-    body += paragraph("Staging band used in the comparison", "The tool models a 3-month Treasury bill through a 2-year Treasury note band (3M–2Y) held for 24–36 months, followed by scheduled equity purchases. TreasuryDirect states that bill rates are fixed at auction for terms of 4–52 weeks and that a 2-year note is available among note maturities; interest is federally taxable and exempt from state and local taxes. Which specific securities and maturities suit the estate is an adviser decision, not an output of this tool.")
-    body += '''<section class="tool-section" aria-labelledby="tool-heading">
-<h2 id="tool-heading">Crash-entry what-if — normalized units, not dollars</h2>
-<p class="table-note">The starting portfolio is normalized to 100 index units so no household amount is embedded. Historical drawdown endpoints are sourced, but the path between peak and trough is synthetic and linear. Controls model a rising pre-crash market, separate first-year and renewal Treasury yields, and inflation-adjusted purchasing power. Enter the Treasury yield net of estimated taxes and fees; the tool does not calculate taxes. This is not a historical total-return replay and sends or stores no calculator inputs.</p>
-<form id="phase-tool" class="tool-grid">
-<label>Historical drawdown anchor<select id="phase-event"><option value="1929">1929 Dow episode</option><option value="2008" selected>2007–09 S&amp;P episode</option></select></label>
-<label>Purchase staging period<select id="phase-months"><option value="24">24 months</option><option value="30" selected>30 months</option><option value="36">36 months</option></select></label>
-<label>Peak-to-trough decline (%)<input id="phase-drawdown" type="number" min="0" max="99" step="1" value="57" inputmode="decimal"></label>
-<label>Peak-to-trough duration (months)<input id="phase-trough" type="number" min="1" max="120" step="1" value="17" inputmode="numeric"></label>
-<label>Pre-crash equity drift (%/year)<input id="phase-drift" type="number" min="-20" max="30" step="0.1" value="0" inputmode="decimal"></label>
-<label>Net Treasury yield, months 1–12 (%)<input id="phase-yield1" type="number" min="-5" max="20" step="0.1" value="0" inputmode="decimal"></label>
-<label>Net renewal yield, month 13 onward (%)<input id="phase-yield2" type="number" min="-5" max="20" step="0.1" value="0" inputmode="decimal"></label>
-<label>Annual inflation for purchasing-power lens (%)<input id="phase-inflation" type="number" min="-5" max="20" step="0.1" value="0" inputmode="decimal"></label>
-<div class="tool-actions no-print"><button id="phase-reset" type="button">Reset assumptions</button><span class="tool-assumption">0% rates are neutral isolation settings, not Treasury quotes or forecasts.</span></div>
-</form>
-<div class="scenario-grid" aria-live="polite">
-<article class="scenario-card"><h3>Crash begins during the staging window</h3><p>Crash starts halfway through staging; results are shown at the later of investment completion or the modeled trough.</p><dl><dt>Observation horizon</dt><dd id="early-months">—</dd><dt>Immediate investment — nominal</dt><dd id="early-immediate-value">—</dd><dt>Phased investment — nominal</dt><dd id="early-phased-value">—</dd><dt>Immediate investment — real units</dt><dd id="early-immediate-real">—</dd><dt>Phased investment — real units</dt><dd id="early-phased-real">—</dd><dt>Maximum drawdown — immediate</dt><dd id="early-immediate-dd">—</dd><dt>Maximum drawdown — phased</dt><dd id="early-phased-dd">—</dd></dl></article>
-<article class="scenario-card"><h3>Crash begins after staging completes</h3><p>All scheduled purchases are complete before the same decline begins.</p><dl><dt>Observation horizon</dt><dd id="late-months">—</dd><dt>Immediate investment — nominal</dt><dd id="late-immediate-value">—</dd><dt>Phased investment — nominal</dt><dd id="late-phased-value">—</dd><dt>Immediate investment — real units</dt><dd id="late-immediate-real">—</dd><dt>Phased investment — real units</dt><dd id="late-phased-real">—</dd><dt>Maximum drawdown — immediate</dt><dd id="late-immediate-dd">—</dd><dt>Maximum drawdown — phased</dt><dd id="late-phased-dd">—</dd></dl></article>
-</div>
-<p id="phase-status" class="tool-status" role="status">Change a control to run the local-only comparison.</p>
-<p class="table-note">Model boundary: equal monthly equity purchases from the initial 100 units; Treasury reserve accrues the entered yield by month and uses the renewal yield after month 12; the final purchase includes any accrued reserve. Equity grows at the entered drift until the crash, declines linearly to the selected drawdown, then stays flat at its trough. Real units divide by the selected constant annual inflation factor. There are no dividends, fees, taxes, post-trough recovery, withdrawals, property costs or probabilities. The zero-rate and zero-inflation defaults isolate timing only; they are not forecasts.</p>
-</section>'''
-    rows = [
-        {"cells": ["1929 anchor", "Federal Reserve History reports an 89% Dow peak-to-trough decline; the previous high was not regained until November 1954.", "The calculator starts from the Dow drawdown only; it does not copy daily prices or include dividends."], "status": "Historical", "sources": ["fed_1929"]},
-        {"cells": ["2008 anchor", "Federal Reserve History reports a 57% S&P 500 peak-to-trough decline from October 2007 to March 2009.", "The calculator uses this as a source-calibrated shock magnitude, not a forecast or a return series."], "status": "Historical", "sources": ["fed_2008"]},
-        {"cells": ["Reinvestment risk", "The next Treasury auction rate is not known when today's bill matures; Treasury product pages state the rate is fixed at auction.", "Run a lower renewal-yield case as well as the zero-yield isolation case."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes"]},
-        {"cells": ["Inflation / real-value lens", "BLS reports 9.1% CPI inflation over the year through June 2022; that was one observed year, not a long-run rate.", "Enter an explicit inflation stress and compare nominal units with purchasing-power units; do not repeat a single historical shock as a forecast."], "status": "Historical", "sources": ["bls_cpi"]},
-        {"cells": ["Equity risk", "The SEC warns stock prices can fall and stock investors can lose money.", "No expected return, probability, tax rate or personal allocation is inferred by this page."], "status": "Verified", "sources": ["sec_stocks"]},
-    ]
-    body += make_table("How to read the calculator", ["Point", "Source-backed fact", "Limit / next test"], rows)
-    body += paragraph("Interpretation", "A staged plan can buy more shares during an early falling market because later installments purchase at lower index values. If the same decline starts after staging ends, all proceeds are already exposed. A positive pre-crash drift control tests one rising-market opportunity-cost scenario, but it is a constant synthetic rate rather than a historical return series. Use actual after-tax yields and an adviser-approved investment policy before making a real allocation.")
-    return render_page("pages/phased-investing.html", "Treasury staging and phased stock entry", "A source-calibrated, assumption-led stress comparison for 24–36 month Treasury parking followed by gradual equity purchases. It is not an individualized investment recommendation.", body, "STRESS TESTS")
-
-
-def build_estate_thresholds() -> str:
-    rows = [
-        {"cells": ["Federal basic exclusion — 2026 deaths", "$15,000,000", "Filing threshold is tested against gross estate plus adjusted taxable gifts and specific gift-tax exemption; other filing triggers can apply."], "status": "Verified", "sources": ["irs_estate", "irs_estate_faq"]},
-        {"cells": ["Federal basic exclusion — 2027 deaths", "$15,480,000", "The IRS announced this amount for 2027. It is the next-year threshold, not a future-year projection."], "status": "Verified", "sources": ["irs_2027"]},
-        {"cells": ["Annual gift exclusion — 2026", "$19,000 per donor/recipient", "A gift-tax annual exclusion is separate from the lifetime estate/gift basic exclusion and is not an inheritance allowance."], "status": "Verified", "sources": ["irs_2027"]},
-        {"cells": ["Annual gift exclusion — 2027", "$20,000 per donor/recipient", "The annual exclusion does not cap an inheritance and does not determine estate tax by itself."], "status": "Verified", "sources": ["irs_2027"]},
-        {"cells": ["California state/local death-transfer tax", "Current RTC §13301 bars a state or political subdivision tax on a transfer by reason of death; the Controller says no CA Estate Tax return is required for deaths on/after 2005-01-01.", "Current law only; no future exemption or tax amount can be forecast for a later death."], "status": "Verified", "sources": ["ca_rtc13301", "ca_death_tax"]},
-        {"cells": ["Household estate headroom", "—", "No gross-estate inventory, adjusted taxable gifts, specific gift-tax exemption, debts, deductions, spouse/portability facts or valuation date is published; the remaining headroom cannot be calculated."], "status": "Missing", "sources": ["irs_estate", "irs_estate_faq"]},
-    ]
-    body = callout("The threshold is not per heir", "Federal estate tax is an estate-level transfer tax. The IRS filing test uses the decedent's gross estate, adjusted taxable gifts and specific gift-tax exemption; a portability election can require a return below the threshold. A recipient's share alone cannot establish whether a return is required or tax is due.", "info")
-    body += make_table("Current official thresholds and missing household calculation", ["Rule / year", "Official value or rule", "What it means here"], rows)
-    body += paragraph("Future law", "The expected transfer is decades away. Do not compound today's exclusion forward or assume it will remain in force. Re-check the Internal Revenue Code, annual IRS revenue procedures, California statutes and any enacted amendments in the actual year of death.")
-    return render_page("pages/estate-thresholds.html", "Estate tax, gift exclusion and headroom", "Federal thresholds currently verified from IRS sources, California death-tax law, and the specific facts still required to determine estate exposure.", body, "LAW & PROCESS")
-
-
-def build_process() -> str:
-    rows = [
-        {"cells": ["At death / trust becomes irrevocable", "If the statutory trigger applies, trustee notice is generally due within 60 days; the duty and recipients depend on Probate Code §16061.7.", "Trustee / counsel", "Collect trust, amendments, trustee authority and beneficiary notice records."], "status": "Verified", "sources": ["ca_prob160617"]},
-        {"cells": ["Within 150 days after death", "RTC §480 requires a change-in-ownership statement for specified real property transferred by reason of death, including a trust transfer.", "Trustee / transferee / assessor", "Confirm county filing route and obtain proof of filing; the actual responsibility depends on the transfer."], "status": "Verified", "sources": ["ca_rtc480"]},
-        {"cells": ["Within 9 months after death", "Form 706 is due if required. IRS says an extension request of up to 6 months can be made by filing Form 4768 by the due date.", "Executor / CPA", "Determine the filing requirement and tax-payment/election deadlines separately; this row states the filing clock only."], "status": "Verified", "sources": ["irs_estate_faq"]},
-        {"cells": ["Within 1 year of qualifying transfer", "For a qualifying family home, the transferee generally must establish principal residence and file the homeowners' or disabled veterans' exemption within one year.", "Transferee / assessor", "Verify the relationship, qualifying transferor residence, trust/title facts, occupancy and filed exemption."], "status": "Verified", "sources": ["boe_prop19", "ca_rtc63"]},
-        {"cells": ["Within 3 years of transfer, or before third-party transfer", "BOE guidance describes this claim window for the intergenerational exclusion; the separate one-year residence/exemption condition still matters.", "Transferee / assessor", "Calendar both claims; obtain current forms and written assessor confirmation."], "status": "Verified", "sources": ["boe_prop19", "ca_rtc63"]},
-        {"cells": ["Annual income-tax return, if required", "A fiduciary may need Form 1041 for estate/trust income, deductions, gains, losses and distributions; the applicable due date depends on the filing year and entity facts.", "Trustee / CPA", "Identify the tax year, EIN, income and distribution reporting; confirm the current form instructions."], "status": "Guidance", "sources": ["irs_1041"]},
-        {"cells": ["Before occupancy, rental, sale or reinvestment", "No single universal statutory date is asserted for this operational gate.", "Trustee / attorney / insurer / CPA", "Bind proper insurance, verify legal use and leases, reserve taxes/repairs, and approve a written path before taking on risk."], "status": "Guidance", "sources": ["cdi", "ca_rent", "irs_rental"]},
-    ]
-    body = callout("Start clocks only from their legal trigger", "These deadlines are not interchangeable. A trust-notice clock, county property-tax filing, federal estate return and Proposition 19 claims can have different triggers and responsible filers. Counsel should confirm the actual dates from the death and transfer records.", "warning")
-    body += make_table("Inheritance and decision timeline", ["Trigger / deadline", "Verified rule", "Responsible party to confirm", "Evidence to retain"], rows)
-    body += paragraph("No dates have been assigned", "The public page does not publish a personal transfer date. Once counsel confirms the date of death, date title changes, trust status and occupancy plan, replace these relative deadlines with calendar dates in a private checklist.")
-    return render_page("pages/inheritance-process.html", "Inheritance process and deadline timeline", "A relative step-by-step sequence for a trust-based transfer, with official clocks distinguished from operational checkpoints.", body, "LAW & PROCESS")
-
-
-def build_law_watchlist() -> str:
-    rows = [
-        {"cells": ["Federal estate and gift amounts", "Use only official year-of-death IRS thresholds and annual gift tables; current 2026/2027 amounts do not determine later law.", "Check enacted federal law and the IRS annual adjustment/revenue procedure near the transfer."], "status": "Guidance", "sources": ["irs_estate", "irs_2027"]},
-        {"cells": ["Federal bills and proposals", "No specific pending federal proposal is incorporated into this decision framework. A bill or resolution is not current law merely because it is introduced or debated.", "Search Congress.gov near the event; confirm enactment, effective date and IRS implementation before changing a calculation."], "status": "Not verified", "sources": ["congress_legislation", "irs_estate"]},
-        {"cells": ["California property-tax transfer rules", "Review RTC §§480 and 63.2, BOE guidance, any later amendments and the assessor's written determination.", "Check filing forms, value limit, occupancy, relationship and transfer date."], "status": "Guidance", "sources": ["ca_rtc480", "ca_rtc63", "boe_prop19"]},
-        {"cells": ["California bills and proposals", "No specific pending California bill is relied on as law. A proposal becomes relevant only after its status, chaptering and effective date are verified.", "Search the official bill system and re-check the enacted code, regulations and BOE guidance at transfer."], "status": "Not verified", "sources": ["ca_legislation", "boe_prop19"]},
-        {"cells": ["California death-transfer tax", "Current RTC §13301 and State Controller information describe the current rule; do not assume it cannot change.", "Re-check state law for the actual year of death."], "status": "Guidance", "sources": ["ca_rtc13301", "ca_death_tax"]},
-        {"cells": ["Rent and tenant protections", "Statewide Civil Code rules have coverage conditions and exemptions; local rules may be more restrictive. The property's jurisdiction is intentionally not published, so a local ordinance cannot be identified here.", "Counsel should check the actual city/county code, rent registry, unit status, lease and tenant rights before occupancy or a rent change."], "status": "Missing", "sources": ["ca_rent", "ca_legislation"]},
-        {"cells": ["Insurance availability and coverage", "Market conditions, underwriting, wildfire/flood risk, exclusions and reconstruction costs may change independently of taxes.", "Refresh written quotes and coverage terms; do not extrapolate an old premium."], "status": "Missing", "sources": ["cdi"]},
-        {"cells": ["Investment yields and market entry", "Treasury rates are fixed at each auction for the selected security; stock prices can lose value.", "Reprice the ladder and compare reinvestment and sequence risk immediately before investment."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
-        {"cells": ["Long-run economic assumptions", "CBO's cited interest-rate horizon is 2026–2036; no cited official source provides an individual 50-year house value, insurance price, rent or return forecast.", "Use several clearly labeled stress paths; never promote a scenario into a forecast."], "status": "Guidance", "sources": ["cbo_rates", "fhfa_hpi", "bls_cpi"]},
-    ]
-    body = callout("Watch enacted law, not headlines", "The pages distinguish current statutes and agency tables from bills, stress assumptions and future uncertainty. No bill or proposal is represented as current law. The inherited transfer is far in the future; refresh federal, state and actual local rules near the event.", "info")
-    body += make_table("Law and market watchlist", ["Topic", "Current official baseline / proposal status", "What to re-check"], rows)
-    body += paragraph("No future-year legal projection", "This site intentionally does not extrapolate federal thresholds or California property-tax allowances to a future year. Pending bills are not incorporated as law. Search the official federal and California bill systems and verify enactment and effective dates; the actual local code cannot be identified without a private jurisdiction.")
-    return render_page("pages/law-watchlist.html", "Law and market watchlist", "A short list of rules and market inputs that can change the decision, without treating a proposed change or long-run projection as settled fact.", body, "LAW & PROCESS")
-
-
-def build_brief() -> str:
-    rows = [
-        {"cells": ["Attorney / trustee", "What does the executed trust permit, who may occupy, rent or sell, when does title change, and what debts or notices apply?", "Trust, amendments, deed, trustee authority, debt/lease documents.", "Action needed"], "status": "Action needed", "sources": ["ca_prob160617", "ca_rtc480"]},
-        {"cells": ["CPA / estate attorney", "What is the whole estate's gross value, adjusted taxable gifts, deductions and any portability or Form 706 filing requirement?", "Private asset/debt inventory, prior gifts, valuation reports, spouse/portability facts.", "Action needed"], "status": "Action needed", "sources": ["irs_estate", "irs_estate_faq"]},
-        {"cells": ["CPA / appraiser", "What is the correct date-of-death value, basis, improvement/depreciation record and tax result if sold or rented?", "Appraisal, executor basis statement, improvements, depreciation and sale estimate.", "Action needed"], "status": "Action needed", "sources": ["irs_basis", "irs_rental"]},
-        {"cells": ["Property-tax adviser", "Does an eligible family-home exclusion apply, and what statements, occupancy and claims are due?", "Relationship, deed/trust, prior assessment, occupancy proof, exemption and claim dates.", "Action needed"], "status": "Action needed", "sources": ["boe_prop19", "ca_rtc63", "ca_rtc480"]},
-        {"cells": ["Landlord-tenant counsel", "Which units are legal, what local/state rules apply, what do current leases require, and which mixed-use options are lawful?", "Permits, certificate of occupancy, leases, deposits, rent history and local requirements.", "Action needed"], "status": "Action needed", "sources": ["ca_rent", "hud_fmr", "irs_rental"]},
-        {"cells": ["Insurance / property professionals", "Can each intended use be insured, for what replacement cost and exclusions, and what repairs are imminent?", "Separate written owner-occupied and landlord quotes, inspection reports and licensed bids.", "Action needed"], "status": "Action needed", "sources": ["cdi", "cslb"]},
-        {"cells": ["Utility / solar provider", "What are the actual water/electric bills, tariff, export credits, true-up and interconnection conditions?", "Bills, account tariff and signed solar/interconnection documents.", "Action needed"], "status": "Action needed", "sources": ["water_board", "cpuc_solar"]},
-        {"cells": ["Investment adviser / CPA", "What is net investable cash after costs and taxes; compare immediate, Treasury ladder, phased stock, mixed and reserve paths?", "After-tax proceeds, liquidity plan, current net yields, fees, policy allocation and risk tolerance.", "Action needed"], "status": "Action needed", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
-    ]
-    body = callout("Meeting objective", "Get a written conditional recommendation with the assumptions, sources, deadlines, tax and insurance reserves, and the specific facts that would reverse the answer. Keep personal records out of this public website.", "info")
-    body += make_table("One-page adviser handoff checklist", ["Adviser", "Question to answer", "Private records to bring", "Status"], rows)
-    body += paragraph("Decision boundary", "Property A is the anticipated trust transfer; Property B is already owned. Keep B's private rent ledger (if any), lease, assessment, basis and insurance separate from A, and test whether B can serve as a residence without assuming tenant obligations disappear. Compare live, rent, sell, mixed occupancy and phased-investing alternatives only after counsel and the CPA confirm the legal and tax inputs.")
-    body += paragraph("Privacy", "This printable public brief contains no property address, locality, valuation, rent, utility amount, insurance premium or parcel identifier. Print this page or use your browser's Save as PDF. Store completed adviser notes outside the public repository.")
-    return render_page("pages/attorney-cpa-brief.html", "Attorney & CPA briefing sheet", "One-page, print-ready meeting checklist. No identifying details or household-specific amounts are included.", body, "ADVISER HANDOFF")
-
-
-def build_flagged() -> str:
-    rows = [
-        {"cells": ["F-01 — Public Git history exposure", "GitHub reports this repository is public. The active site is generic, but reachable historical commits and PR material may retain earlier case-derived details. This task did not rewrite remote main history or claim a complete purge.", "Treat historic material as exposed. Repository-owner/admin coordination, access review, clean archive and any history rewrite/support request remain required."], "status": "Missing", "sources": ["github_history"]},
-        {"cells": ["F-02 — No case-specific projection", "Private base values, assessments, tax bills, basis, leases and costs are intentionally absent from the public build.", "No year-by-year dollar forecast or best-path ranking can be responsibly published without private records and explicit assumptions."], "status": "Missing", "sources": ["irs_basis", "boe_pub29", "cdi", "irs_rental"]},
-        {"cells": ["F-03 — Premiums and repairs", "No official public page provides an insurance quote or repair estimate for an individual home.", "Request property-specific insurer quotes, coverage forms, inspections and itemized licensed bids."], "status": "Missing", "sources": ["cdi", "cslb"]},
-        {"cells": ["F-04 — Water and solar costs", "The state water program is not a household tariff; the CPUC page describes NEM/NBT but not an individual account's net bill.", "Use private bills and signed service/solar documents. No credit or monthly cost is filled in."], "status": "Missing", "sources": ["water_board", "cpuc_solar"]},
-        {"cells": ["F-05 — Rental legality and local rules", "No unit permit, local rent-board determination, lease or tenant notice is public here.", "Confirm lawful unit count and all applicable state/local rules with counsel before projecting rent or occupancy."], "status": "Missing", "sources": ["ca_rent", "hud_fmr"]},
-        {"cells": ["F-06 — Future law and market path", "The verified CBO forecast runs through 2036; the public site does not disclose a transfer date or model a household-specific future path.", "No future exclusion, house-price, CPI, rent, insurance or portfolio-return value is invented."], "status": "Missing", "sources": ["cbo_rates", "irs_2027", "fhfa_hpi"]},
-        {"cells": ["F-07 — Failed official retrievals", "Direct page fetches returned 404 for the listed FTB inheritance page, BOE county-assessor directory, BOE Publication 801 PDF and CPUC water-utilities URL.", "No claim or property-specific value is based on those failed URLs; working alternative laws and guidance are linked in the source register."], "status": "Not verified", "sources": ["ftb_404", "boe_assessor_404", "boe_pub801_404", "cpuc_water_404"]},
-        {"cells": ["F-08 — Stress-tool simplification", "The calculator uses source-reported peak-to-trough endpoints with a synthetic straight-line decline and flat trough.", "It includes only the entered Treasury yields, pre-crash drift and constant inflation lens; it excludes dividends, fees, taxes, post-trough recovery, withdrawals, property costs, correlations and probabilities. It is not a historical backtest."], "status": "Assumption", "sources": ["fed_1929", "fed_2008", "treasury_bills", "bls_cpi"]},
-    ]
-    body = callout("Privacy issue remains urgent", "The current website avoids case-specific figures and locations. The GitHub repository is public, and history cleanup has not been completed. A noindex tag and a cleaned current tree do not erase old commits, PR diffs, forks, caches or clones.", "warning")
-    body += make_table("Flagged for review — unresolved items do not imply a verified answer", ["Flag", "What is unresolved", "Required action"], rows)
-    body += paragraph("History-remediation limitation", "GitHub's guidance describes history rewriting as a coordinated, disruptive operation and warns that other refs, pull requests, forks, cached views and clones may retain copies. This platform pins the session to one feature branch and prohibits pushing another branch; therefore this work does not force-push or claim to scrub main. The repository owner/admin should review visibility and coordinate a supported, all-ref cleanup if desired.")
-    return render_page("pages/flagged-for-review.html", "Flagged for review", "Material uncertainties, failed official retrievals, and the unresolved privacy/history issue. No unverified value has been substituted.", body, "EVIDENCE")
-
-
-def build_glossary() -> str:
-    rows = [
-        {"cells": ["Gross estate", "Property and interests included in the federal estate-tax calculation before allowable deductions; includes more than one house.", "Do not compare one inheritor's share alone with the federal filing threshold."], "status": "Verified", "sources": ["irs_estate"]},
-        {"cells": ["Basic exclusion amount", "Federal estate/gift tax amount available under current law for a given year, subject to the statute and prior taxable transfers.", "It is not the annual gift exclusion and not a guarantee about a later year."], "status": "Verified", "sources": ["irs_estate", "irs_2027"]},
-        {"cells": ["Income-tax basis", "A tax-accounting amount used to compute gain or loss on sale; inherited property basis is generally date-of-death fair market value, subject to exceptions.", "Keep separate from the county's property-tax assessed value."], "status": "Verified", "sources": ["irs_basis"]},
-        {"cells": ["Assessed value", "Value used in the property-tax system; California rules can constrain growth and change the base on a change in ownership, with specified exclusions.", "Not the same as current market value, sale price or income-tax basis."], "status": "Verified", "sources": ["boe_pub29", "boe_prop19"]},
-        {"cells": ["Proposition 19 family-home exclusion", "A conditional intergenerational property-tax rule with relationship, residence, occupancy and claim requirements.", "Trust title alone does not prove qualification."], "status": "Verified", "sources": ["ca_rtc63", "boe_prop19"]},
-        {"cells": ["Mixed path", "A combination such as occupying one lawful unit, renting another, retaining an already-owned property, or selling one asset and staging the proceeds.", "Model each asset, unit and tax position separately."], "status": "Guidance", "sources": ["irs_rental", "ca_rent"]},
-        {"cells": ["Sequence risk", "The effect of when returns occur; an early decline can matter more than the same decline later when funds are being invested or withdrawn.", "Stress both crash-during-staging and crash-after-staging cases; neither is a probability forecast."], "status": "Guidance", "sources": ["fed_1929", "fed_2008", "sec_stocks"]},
-        {"cells": ["Reinvestment risk", "The possibility that proceeds from a maturing investment must be reinvested at a lower yield.", "A short Treasury ladder can defer equity exposure but does not lock a future renewal yield."], "status": "Verified", "sources": ["treasury_bills", "treasury_notes"]},
-        {"cells": ["Fair Market Rent (FMR)", "HUD's annual 40th-percentile gross-rent benchmark used for specified housing programs.", "It is not a property appraisal, a lease amount or a determination of legal rent."], "status": "Verified", "sources": ["hud_fmr"]},
-    ]
-    body = make_table("Terms used in this workspace", ["Term", "Plain-language meaning", "Practical distinction"], rows)
-    return render_page("pages/glossary.html", "Glossary", "Short definitions for the legal, tax, property and investment terms used in the decision process.", body, "EVIDENCE")
-
-
-def build_sources() -> str:
-    rows = []
-    for key, item in SOURCES.items():
-        rows.append({
-            "cells": [item["label"], item["scope"], f"Direct page fetch: {CHECKED}"],
-            "status": "Verified" if item["verified"] else "Not verified",
-            "sources": [key],
-        })
-    body = callout("Source scope matters", "Every source is an official government, regulator, or platform documentation page. A link verifies only the scope shown in its description; it never verifies a private property fact. Failed fetches are included and visibly marked.", "info")
-    body += make_table("Official source register", ["Source", "What it supports / does not support", "Checked"], rows)
-    body += paragraph("Verification method", "Sources listed as verified were fetched directly on the check date and read for the narrow statement shown. Failed sources remain flagged rather than silently replaced with secondary material. Re-check legal text and agency guidance at the actual transfer date.")
-    return render_page("pages/sources.html", "Official source register", "A direct-source ledger with retrieval date, verification status and a clear statement of each source's limits.", body, "EVIDENCE")
-
-
-def build_privacy() -> str:
-    rows = [
-        {"cells": ["Public page content", "The active site uses Property A / Property B roles and publishes no home address, postal code, valuation, assessed-value history, rent amount, utility history, insurance premium or parcel identifier.", "The asset-role distinction is the minimum context requested for decision comparison; do not add identifying documents or amounts."], "status": "Guidance", "sources": ["github_history"]},
-        {"cells": ["Public hosting", "GitHub Pages is a public static website. Noindex discourages search indexing but does not restrict access or make a page private.", "Never put deeds, trust papers, tax bills, leases, statements or identifiable values here."], "status": "Guidance", "sources": ["github_history"]},
-        {"cells": ["Current branch tree", "Identified case-input, projection, and audit files have been removed from this branch's current tree. This does not erase earlier public commits or PR references.", "Do not use this public repository as a secure vault; keep private records outside GitHub."], "status": "Guidance", "sources": ["github_history"]},
-        {"cells": ["Git history / copies", "Earlier commits and PR diffs may remain accessible; forks, cached views and clones cannot be erased by a normal cleanup commit.", "Treat historical material as exposed until an owner/admin-coordinated history-removal process and GitHub support review are complete."], "status": "Missing", "sources": ["github_history"]},
-        {"cells": ["Browser controls", "The phased-investing calculator uses transient browser memory only; review choices are stored locally in this browser and are not transmitted by this static site.", "Clear browser site data to remove saved review choices; do not enter confidential values into a public computer."], "status": "Guidance", "sources": ["github_history"]},
-        {"cells": ["Anonymized placeholders only", "Any illustrative input used privately is anonymized and labeled as an assumption; no actual name, address, postal code, valuation, rent, bill, premium or parcel identifier is published.", "Keep personal records outside this public repository; treat historical Git material as exposed until owner-admin cleanup."], "status": "Guidance", "sources": ["github_history"]},
-    ]
-    body = callout("Privacy warning — history is not fully scrubbed", "The repository is public. The current branch tree and generated pages are generic, but historical Git objects, earlier public PRs, forks, caches and clones may retain case-derived material. This branch cannot rewrite public main history; repository-owner/admin coordination is required. Treat prior values as exposed.", "warning")
-    body += make_table("Privacy boundary and remaining exposure", ["Area", "Current state", "Safeguard / limitation"], rows)
-    body += paragraph("No third-party tracking", "The generated pages use local HTML, CSS and JavaScript only. They contain no analytics, remote fonts, remote scripts, API calls or form submissions. External official sources open only when a reader follows a link.")
-    return render_page("pages/privacy.html", "Privacy and limitations", "Privacy is the first release gate. No household-specific values or locations are published in the current site, but public history still needs owner/admin review.", body, "EVIDENCE")
-
-
-def suggestion_table() -> str:
+def build_suggestions() -> str:
     suggestions = [
-        ("S01", "Privacy", "Keep private records in an access-controlled vault", "Store executed trust/deed, tax returns, leases, bills, quotes and inspections outside the public repository; publish only generic conclusions.", "History removal and access control must be coordinated with the repository owner/admin.", ["github_history"]),
-        ("S02", "Decision", "Require a written trust and title summary before modeling", "Ask counsel to identify transfer authority, distribution conditions, occupancy rights, debts, title and the dates that start legal clocks.", "Prevents analyzing a path the trustee or title does not permit.", ["ca_prob160617", "ca_rtc480"]),
-        ("S03", "Tax", "Separate estate tax, income-tax basis and property-tax assessment", "Have the CPA prepare one schedule for the gross estate and adjusted gifts, one for inherited basis, and one for county assessment/Prop 19.", "These are distinct legal calculations, not interchangeable values.", ["irs_estate", "irs_basis", "boe_pub29", "boe_prop19"]),
-        ("S04", "Property", "Verify legal unit count and local rental rules", "Reconcile permits, leases, rent registration, tenant deposits, occupancy, and statewide/local rent limits before estimating net rent.", "Gross rent from an unverified unit is not a lawful or reliable return.", ["ca_rent", "hud_fmr", "irs_rental"]),
-        ("S05", "Operations", "Get separate current insurance and repair evidence", "Request written owner-occupied and landlord/mixed-use quotes, replacement-cost estimates, exclusions, inspections and itemized bids.", "Insurance availability and deferred repairs can reverse an apparent cash-flow winner.", ["cdi", "cslb"]),
-        ("S06", "Utilities", "Reconcile bills and solar tariff before assuming a credit", "Collect actual water/electric bills and the signed solar interconnection and tariff documents; note NEM/NBT and true-up dates.", "Equipment alone does not establish future net export compensation.", ["water_board", "cpuc_solar"]),
-        ("S07", "Model", "Compare mixed paths alongside pure choices", "Include occupancy of lawful units, existing-property retention, rent on other lawful units, short hold-then-sale, sale of one asset, and staged reinvestment.", "Avoids forcing a false live-versus-rent-versus-sell choice.", ["irs_rental", "ca_rent", "boe_prop19"]),
-        ("S08", "Markets", "Put reinvestment risk next to any staging headline", "Compare 24–36 months of Treasury staging under crash-during and crash-after entry, lower renewal yields, inflation and a rising market before the decline.", "Staging changes risk timing; it does not make equities safe or guarantee a better ending value.", ["treasury_bills", "treasury_notes", "fed_1929", "fed_2008", "bls_cpi"]),
-        ("S09", "Governance", "Put reversal conditions on the first screen", "Track the facts that change the path: trust restrictions, estate threshold, Prop 19 eligibility, unit legality, net rent, insurance, repair reserve and liquidity.", "A recommendation should name evidence that would reverse it.", ["irs_estate", "boe_prop19", "cdi", "sec_stocks"]),
-        ("S10", "Refresh", "Set annual legal and assumption review reminders", "Recheck enacted laws, assessor records, insurance availability, utilities, leases, market inputs and investment policy when the decision approaches.", "Today’s current rules do not determine a decision decades in the future.", ["irs_2027", "boe_prop19", "cbo_rates"]),
+        ("S01", "Privacy", "Keep every identifying record out of this repository", "Store the deed, the trust, tax bills, leases, statements and quotes in an access-controlled vault outside GitHub. Publish only anonymized, rounded figures.", "This repository is public. A noindex tag is not access control, and history, pull requests, forks, caches and clones can retain material.", ["gh_sensitive"]),
+        ("S02", "Site", "Default every table to a banded view with a one-click detail toggle", "Show ranges by default and reveal the ten-dollar-rounded working figures only when the reader asks for them.", "Reduces the chance of a casual reader linking a rounded assessment history to a public assessment roll.", ["gh_sensitive"]),
+        ("S03", "Decision", "Get the trust summary in writing before modelling anything", "Ask counsel to state the trustee's powers, distribution conditions, occupancy rights and the dates that start legal clocks.", "Prevents analysing a path the trust does not permit.", ["prob_16061_7", "rtc_480"]),
+        ("S04", "Site", "Add a printable evidence checklist", "One page listing every missing document with a checkbox and the official place to obtain it.", "Turns the questions page into something that can be taken to an adviser meeting.", ["rtc_480", "irs_706_due"]),
+        ("S05", "Tax", "Split the three separate tax calculations", "Ask the CPA for three schedules: federal gross estate and adjusted gifts, inherited basis, and county assessment with the Proposition 19 claim.", "These are different legal calculations with different deadlines; combining them produces wrong answers.", ["irs_estate", "irs_basis", "boe_prop19"]),
+        ("S06", "Tax", "Model the property tax step-up as its own line, before any financing or rent analysis", "Put the post-transfer assessment and bill at the top of every path comparison.", "On these figures the step-up dwarfs the other annual costs and drives the ranking.", ["rtc_63_2", "boe_lta_2025_009"]),
+        ("S07", "Model", "Show break-even rent instead of an invented market rent", "Publish the gross rent needed to cover carrying cost, vacancy and management, and let a real quote be compared against it.", "Avoids building a decision on a fabricated yield.", ["irs_pub527", "hud_fmr"]),
+        ("S08", "Model", "Keep reinvestment risk next to every staging headline", "Show the staging shortfall, the yield-fall case and the missed-rally case beside the crash-during-wait case.", "Staging changes the timing of risk; it does not make equities safe.", ["treasury_bills", "treasury_notes", "fed_1929"]),
+        ("S09", "Model", "Add a crash-immediately-after-entry case to the staging tool", "Model the drop starting one month after the money reaches equities, not only during the wait.", "That is the case the staged path handles worst, and it is easy to overlook.", ["fed_2008", "sec_stocks"]),
+        ("S10", "Operations", "Obtain written insurance quotes for both owner-occupied and landlord use", "Include replacement cost, exclusions, and a FAIR Plan and Differences in Conditions comparison.", "Availability and price can reverse an apparent cash-flow winner on its own.", ["cdi_residential"]),
+        ("S11", "Operations", "Reconcile the water provider and tariff from an actual bill", "Read the provider name, meter size and tariff from a bill rather than assuming a provider from the postal area.", "More than one provider serves the area, and rate structures differ materially.", ["cupertino_water_unverified", "sjwc_tariff", "sfpuc_rates"]),
+        ("S12", "Operations", "Read the solar interconnection agreement before counting a credit", "Confirm the tariff, the interconnection date and the true-up month.", "Export credits under net billing are usually below retail; the panels alone do not prove a credit.", ["cpuc_solar"]),
+        ("S13", "Legal", "Confirm the one-year occupancy and three-year claim windows in writing", "Ask the attorney to confirm the residency and filing conditions for the intergenerational exclusion.", "Missing either window likely removes the exclusion, which is the largest single lever in this decision.", ["rtc_63_2", "boe_prop19"]),
+        ("S14", "Legal", "Ask counsel to confirm the move-out-later rule before relying on it", "Confirm that when the exclusion stops applying, the base year value established at the change in ownership date, adjusted annually, is enrolled.", "If confirmed, occupying for the qualifying year and letting afterwards becomes a materially better path.", ["rtc_63_2"]),
+        ("S15", "Research", "Reconcile the Property B effective rate against the actual bill", f"The owner's figures imply {fmt_rate(cd.B_EFFECTIVE_RATE)}, far above the 1 percent base plus voter-approved debt. Identify the direct assessments or parcel taxes on the bill.", "A wrong rate corrupts every projection built on it.", ["sf_gov_assess", "boe_pub29"]),
+        ("S16", "Research", "Retrieve the official county tax-rate-area rate for Property A", "Ask the county for the composite rate, or read it from the bill's tax-rate area line.", "The model currently derives the rate from the owner's own bill, which is arithmetic, not an official figure.", ["scc_rate_unverified", "boe_pub29"]),
+        ("S17", "Governance", "Set a dated re-verification reminder", "Re-read the federal exclusion, the Proposition 19 limit, the local ballot measures and the insurance market every year, and again at the transfer.", "A transfer expected in the 2040s cannot be decided on 2026 law.", ["irs_2027", "boe_lta_2025_009", "sos_qualified"]),
+        ("S18", "Site", "Add a keyboard-first skip pattern and visible focus rings to every control", "Test the sliders and the review queue with a keyboard only, and confirm focus is always visible.", "The what-if controls are unusable without it on a keyboard or screen reader.", ["gh_sensitive"]),
+        ("S19", "Decision", "Write down the reversal conditions before choosing", "For each path, record the evidence that would reverse it, and review that list at least annually.", "A recommendation that cannot name its own reversal condition is not a recommendation.", ["rtc_63_2", "irs_estate"]),
+        ("S20", "Privacy", "Treat prior Git history as exposed until an owner-administered cleanup is complete", "Do not rely on this repository as a vault, and coordinate any history rewrite with the repository owner and GitHub Support.", "Earlier commits, pull-request diffs, forks, caches and clones can retain data that a normal cleanup commit does not remove.", ["gh_sensitive"]),
     ]
     rows = []
     for ident, group, title, action, why, sources in suggestions:
@@ -823,44 +757,955 @@ def suggestion_table() -> str:
             '<option value="Selected">Selected for testing</option>'
             '<option value="Defer">Defer</option></select>'
         )
-        rows.append({
-            "cells": [ident, group, title, action, why, select],
-            "status": "Guidance",
-            "sources": sources,
+        rows.append({"cells": [ident, group, title, action, why, select], "status": "Guidance", "sources": sources})
+    body = callout(
+        "Nothing here is applied automatically",
+        "Selecting an option records a review decision in this browser only. It changes no file, no "
+        "model and no page. Use the review summary to build an agenda before any change is made.",
+        "info",
+    )
+    body += '<p class="review-summary" id="review-summary" role="status" aria-live="polite">Loading review queue...</p>'
+    body += '<p class="no-print"><button id="reset-reviews" type="button">Reset review choices</button></p>'
+    body += make_table(
+        "Reviewable suggestions",
+        ["ID", "Category", "Suggestion", "What it would take", "Why it may improve the decision", "Review choice"],
+        rows,
+        "Twenty proposals covering privacy, evidence quality, modelling, operations and site usability. Each is a proposal only.",
+    )
+    body += prose(
+        "Approval gates before anything is implemented",
+        "Do not implement a financial or site change until the owner has reviewed it, the underlying "
+        "private records exist, a qualified professional has confirmed the applicable law, and the "
+        "model's result is reproducible from the stated assumptions. A suggestion selected here is a "
+        "candidate, not an instruction.",
+    )
+    return render_page(
+        "pages/suggestions.html",
+        "Suggestions for review",
+        "A selectable review queue. Choose what to investigate or adopt before anything is changed.",
+        body,
+        "DECISION",
+    )
+
+
+def build_projections() -> str:
+    inputs = cd.DEFAULT_INPUTS
+    s = cd.scenario(inputs)
+
+    body = callout(
+        "What-if controls stay in your browser",
+        "Moving a slider recalculates the tables below in this page only. Nothing is sent anywhere, "
+        "nothing is saved to a server, and the page makes no network request. Reloading restores the "
+        "default assumptions.",
+        "info",
+    )
+
+    controls = [
+        slider("transfer_year", "Transfer year", 2040, 2050, 1, inputs["transfer_year"]),
+        slider("a_appreciation", "Property A growth, percent a year", 0.0, 7.0, 0.1, round(inputs["a_appreciation"] * 100, 1), "%"),
+        slider("b_appreciation", "Property B growth, percent a year", 0.0, 7.0, 0.1, round(inputs["b_appreciation"] * 100, 1), "%"),
+        slider("inflation", "Inflation, percent a year", 0.0, 8.0, 0.1, round(inputs["inflation"] * 100, 1), "%"),
+        slider("assessed_growth", "Assessment growth cap, percent a year", 0.0, 2.0, 0.1, round(inputs["assessed_growth"] * 100, 1), "%"),
+        slider("prop19_growth", "Proposition 19 limit growth, percent a year", 0.0, 5.0, 0.1, round(inputs["prop19_growth"] * 100, 1), "%"),
+        slider("insurance_growth", "Insurance growth, percent a year", 0.0, 12.0, 0.1, round(inputs["insurance_growth"] * 100, 1), "%"),
+        slider("rent_growth", "Rent growth, percent a year", 0.0, 8.0, 0.1, round(inputs["rent_growth"] * 100, 1), "%"),
+        slider("maintenance_a", "Property A upkeep, percent of value a year", 0.0, 3.0, 0.1, round(inputs["maintenance_a"] * 100, 1), "%"),
+        slider("maintenance_b", "Property B upkeep, percent of value a year", 0.0, 3.0, 0.1, round(inputs["maintenance_b"] * 100, 1), "%"),
+        slider("selling_cost", "Selling costs, percent of price", 0.0, 10.0, 0.1, round(inputs["selling_cost"] * 100, 1), "%"),
+        slider("equity_return", "Equity return, percent a year", 0.0, 12.0, 0.1, round(inputs["equity_return"] * 100, 1), "%"),
+        slider("treasury_yield", "Treasury yield, percent a year", 0.0, 10.0, 0.1, round(inputs["treasury_yield"] * 100, 1), "%"),
+        slider("staging_months", "Staging window, months", 0, 60, 1, inputs["staging_months"]),
+        slider("horizon_years", "Horizon after transfer, years", 1, 40, 1, inputs["horizon_years"]),
+    ]
+    body += (
+        '<section class="controls-section"><h2>What-if controls</h2>'
+        '<form class="controls" id="control-form">' + "".join(controls) +
+        '<div class="control control-actions"><button type="reset" id="reset-controls">Reset to defaults</button></div>'
+        '</form>'
+        '<p class="table-note">All growth inputs are nominal and compound annually. The assessment '
+        'growth cap models the annual limit on base year value increases. The Proposition 19 limit '
+        'growth is an assumption: the published amount is recalculated every other February from the '
+        'California house price index.</p></section>'
+    )
+
+    body += '<section class="stat-grid" id="scenario-stats">'
+    stats = [
+        ("Value of A at transfer", money(s["a"]["value_at_transfer"]), "Projection"),
+        ("Assessment of A at transfer", money(s["a"]["assessed_at_transfer"]), "Projection"),
+        ("New taxable value if occupied", money(s["a"]["taxable_prop19"]), "Projection"),
+        ("New taxable value if rented", money(s["a"]["taxable_full"]), "Projection"),
+        ("Annual tax if occupied", money(s["a"]["tax_prop19"]), "Projection"),
+        ("Annual tax if rented", money(s["a"]["tax_full"]), "Projection"),
+        ("Net proceeds if sold", money(s["sale"]["net_proceeds"]), "Projection"),
+        ("Staged ending value", money(s["sale"]["invested_staged_end"]), "Assumption"),
+        ("Immediate-entry ending value", money(s["sale"]["invested_now_end"]), "Assumption"),
+    ]
+    for label, value, status in stats:
+        body += (
+            f'<article class="stat" data-stat="{esc(label)}"><p class="stat-label">{esc(label)}</p>'
+            f'<p class="stat-value">{esc(value)}</p>{badge(status)}</article>'
+        )
+    body += "</section>"
+
+    # Property A projection rows.
+    years = [2026, 2030, 2035, 2040, 2041, 2042, 2043, 2044, 2045, 2046, 2047, 2048, 2049, 2050]
+    rows_a = []
+    for year in years:
+        mkt = cd.market_value("A", year, inputs)
+        assessed = cd.assessed_value("A", year, inputs)
+        tax_pre = cd.property_tax(assessed, cd.A_EFFECTIVE_RATE, True)
+        limit = cd.prop19_limit(year, inputs)
+        taxable_p19 = cd.new_taxable_value(mkt, assessed, limit)
+        taxable_full = cd.money(mkt)
+        rows_a.append({
+            "cells": [
+                str(year),
+                money(mkt),
+                money(assessed),
+                money(tax_pre) if year <= inputs["transfer_year"] else "transferred",
+                money(cd.property_tax(taxable_p19, cd.A_EFFECTIVE_RATE, True)),
+                money(cd.property_tax(taxable_full, cd.A_EFFECTIVE_RATE, False)),
+            ],
+            "status": "Projection",
+            "sources": ["boe_pub29", "rtc_63_2", "boe_lta_2025_009"],
+            "owner_figures": True,
         })
-    return make_table("Reviewable suggestions — no change is applied automatically", ["ID", "Category", "Suggestion", "What to do", "Why it may improve the decision", "Review choice"], rows)
+    body += make_table(
+        "Property A: value, assessment and the two post-transfer tax paths",
+        ["Year", "Market value", "Enrolled assessment", "Tax before transfer", "Tax after transfer if occupied", "Tax after transfer if rented"],
+        rows_a,
+        "Pre-transfer rows show the property continuing under its current assessment. After the transfer year the two columns show the intergenerational exclusion outcome and the full reassessment outcome.",
+    )
+
+    rows_b = []
+    for year in years:
+        mkt = cd.market_value("B", year, inputs)
+        assessed = cd.assessed_value("B", year, inputs)
+        rows_b.append({
+            "cells": [
+                str(year),
+                money(mkt),
+                money(assessed),
+                money(cd.property_tax(assessed, cd.B_EFFECTIVE_RATE, False)),
+                money(cd.b_rent_income(year, inputs)),
+                money(cd.annual_operating("B", year, inputs)["total"]),
+            ],
+            "status": "Projection",
+            "sources": ["boe_pub29", "sf_gov_assess", "irs_pub527"],
+            "owner_figures": True,
+        })
+    body += make_table(
+        "Property B: value, assessment, tax, rent and operating cost",
+        ["Year", "Market value", "Enrolled assessment", "Property tax", "Gross rent, two units", "Operating cost"],
+        rows_b,
+        "Property B is already owned, so its assessment continues under the annual cap for as long as ownership does not change. Rent is grown at the rent growth input, which is an assumption and not a prediction of what the rent cap allows.",
+    )
+
+    body += prose(
+        "How to read these two tables",
+        "The two assets are deliberately separated because they have different owners, different "
+        "bases and different clocks. Property A's tax line is discontinuous: it is low and rising "
+        "slowly until the transfer, then it jumps once. Property B's line is continuous. A combined "
+        "table would hide exactly the discontinuity that drives the decision.",
+        "The assessment column for Property A is the factored base year value growing at the annual "
+        "cap. It is not the market value, and the gap between the two columns is the reason the "
+        "transfer matters so much.",
+    )
+    return render_page(
+        "pages/projections.html",
+        "Projections and what-if",
+        "Every projection on one page with live controls. Change an assumption and the tables "
+        "recalculate in your browser.",
+        body,
+        "NUMBERS",
+    )
 
 
-def build_suggestions() -> str:
-    body = callout("Choose what to review before implementing anything", "Each choice is saved only in this browser's local storage. Nothing is sent to a server and no change to the site or decision is made by selecting an option. Use Reset to clear the local review queue.", "info")
-    body += '<p class="review-summary" id="review-summary" role="status" aria-live="polite">Loading review queue…</p><p class="no-print"><button id="reset-reviews" type="button">Reset review choices</button></p>'
-    body += suggestion_table()
-    body += paragraph("Suggested approval gates", "Do not implement a financial or site change until the relevant owner has reviewed it, the necessary private records exist, a professional confirms applicable law, and the model's result is reproducible under stated assumptions.")
-    return render_page("pages/suggestions.html", "Suggestions for review", "A selectable review queue for improving decision quality. Suggestions are proposals, not automatic changes or personalized advice.", body, "DECISION")
+def build_property_tax() -> str:
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a = s["a"]
+    rows_hist_a = []
+    prev_tax = None
+    for year, tax, assessed in cd.A_HISTORY:
+        delta = ""
+        if prev_tax is not None and tax is not None:
+            delta = f"{(tax - prev_tax) / prev_tax * 100:+.1f}%"
+        if tax is not None:
+            prev_tax = tax
+        rows_hist_a.append({
+            "cells": [str(year), money(tax) if tax is not None else "not yet billed", delta or "-", money(assessed)],
+            "status": "Owner-supplied",
+            "sources": ["boe_pub29", "rtc_218"],
+            "owner_figures": True,
+        })
+    body = make_table(
+        "Property A: billed tax and enrolled assessment, rounded to ten dollars",
+        ["Year", "Property tax billed", "Change in bill", "Enrolled assessment"],
+        rows_hist_a,
+        "Owner's own tax history, rounded to the nearest ten dollars. The county assessment roll is the controlling record. The 2026 bill is shown as not yet billed because the owner did not supply a figure for it.",
+    )
+
+    rows_hist_b = []
+    prev = None
+    for year, tax, assessed in cd.B_HISTORY:
+        delta = ""
+        if prev is not None:
+            delta = f"{(tax - prev) / prev * 100:+.1f}%"
+        prev = tax
+        rows_hist_b.append({
+            "cells": [str(year), money(tax), delta, money(assessed)],
+            "status": "Owner-supplied",
+            "sources": ["boe_pub29", "sf_gov_assess"],
+            "owner_figures": True,
+        })
+    body += make_table(
+        "Property B: billed tax and enrolled assessment, rounded to ten dollars",
+        ["Year", "Property tax billed", "Change in bill", "Enrolled assessment"],
+        rows_hist_b,
+        "Owner's own tax history, rounded to the nearest ten dollars. The implied rate is flagged for review on the flagged page.",
+    )
+
+    rows_rules = [
+        {"cells": ["Base rate", "1 percent of assessed value, plus the rate needed to fund voter-approved bonded indebtedness", "Sets the ceiling on the ad valorem portion of the bill."],
+         "status": "Official", "sources": ["boe_pub29", "sf_gov_assess"]},
+        {"cells": ["Annual assessment growth", "Generally limited to 2 percent, or inflation if lower", "Explains why a long-held assessment drifts far below market value."],
+         "status": "Official", "sources": ["boe_pub29", "sf_gov_assess"]},
+        {"cells": ["Reassessment trigger", "Change in ownership or completion of new construction", "The transfer is the trigger; this is the moment the bill is reset."],
+         "status": "Official", "sources": ["boe_pub29", "sf_gov_assess"]},
+        {"cells": ["Homeowners' exemption", "$7,000 of full value, not available where the dwelling is rented, vacant or a secondary home", "Small in dollars but it is also the eligibility marker for the intergenerational exclusion."],
+         "status": "Official", "sources": ["rtc_218", "rtc_63_2"]},
+        {"cells": ["Intergenerational exclusion conditions", "Transferor's principal residence, transferee's principal residence within one year, exemption filing within one year, claim within three years", "Missing any one of these likely removes the exclusion."],
+         "status": "Official", "sources": ["rtc_63_2", "boe_prop19"]},
+        {"cells": ["Value limit formula", f"Prior taxable value plus any excess of fair market value over that value plus the adjusted amount, currently ${cd.PROP19_LIMIT_NOW:,} for transfers {cd.PROP19_LIMIT_FROM} through {cd.PROP19_LIMIT_TO}", "The adjusted amount is recalculated every other February from the California house price index."],
+         "status": "Official", "sources": ["rtc_63_2", "boe_lta_2025_009", "fhfa_hpi"]},
+        {"cells": ["If the exclusion later stops applying", "The base year value established at the change in ownership date, adjusted annually, is enrolled", "This is why occupying for the qualifying year and letting afterwards is a distinct path. Confirm with counsel."],
+         "status": "Official", "sources": ["rtc_63_2"]},
+        {"cells": ["Change-in-ownership statement", "Within 150 days after death for a transfer by reason of death outside probate, including through a trust", "A late filing can carry a penalty."],
+         "status": "Official", "sources": ["rtc_480"]},
+        {"cells": ["Lien date and installments", "January 1 lien date; first installment delinquent after December 10; second after April 10", "Timing matters for cash flow in the year of transfer."],
+         "status": "Official", "sources": ["boe_pub29"]},
+        {"cells": ["Appeal window", "Applications for reduction are filed with the clerk of the county board of supervisors, July 2 to September 15, or to November 30", "The route for disputing a reassessment the owner believes is wrong."],
+         "status": "Official", "sources": ["boe_pub29"]},
+    ]
+    body += make_table(
+        "The rules that set the bill",
+        ["Rule", "What the official sources say", "Why it matters here"],
+        rows_rules,
+        "Statutory text and official summaries are quoted narrowly. None of it establishes this property's eligibility.",
+    )
+
+    rows_math = [
+        {"cells": ["Market value at transfer", money(a["value_at_transfer"]), "Owner estimate grown at the appreciation assumption."], "status": "Projection", "sources": ["irs_basis"]},
+        {"cells": ["Enrolled assessment at transfer", money(a["assessed_at_transfer"]), "Factored base year value grown at the annual cap."], "status": "Projection", "sources": ["boe_pub29"]},
+        {"cells": ["Adjusted limit at transfer", money(a["prop19_limit"]), f"Published amount is ${cd.PROP19_LIMIT_NOW:,}; carrying it forward uses an assumption."], "status": "Assumption", "sources": ["boe_lta_2025_009", "fhfa_hpi"]},
+        {"cells": ["Taxable value if occupied", money(a["taxable_prop19"]), "Market value less the adjusted limit, because the excess is positive."], "status": "Projection", "sources": ["rtc_63_2"]},
+        {"cells": ["Taxable value if rented", money(a["taxable_full"]), "Full reassessment to market value, no homeowners' exemption."], "status": "Projection", "sources": ["rtc_63_2", "rtc_218"]},
+        {"cells": ["Annual tax if occupied", money(a["tax_prop19"]), f"About {money(a['tax_prop19'] / 12)} a month, using the rate derived from the owner's own bill."], "status": "Projection", "sources": ["scc_rate_unverified", "boe_pub29"]},
+        {"cells": ["Annual tax if rented", money(a["tax_full"]), f"About {money(a['tax_full'] / 12)} a month."], "status": "Projection", "sources": ["scc_rate_unverified", "boe_pub29"]},
+        {"cells": ["Annual tax today", money(a["tax_now"]), f"The step-up is about {a['tax_multiple_prop19']}x if occupied and {a['tax_multiple_full']}x if rented."], "status": "Derived", "sources": ["boe_pub29"]},
+    ]
+    body += make_table(
+        "The step-up arithmetic at the default transfer year",
+        ["Line", "Amount", "How it is built"],
+        rows_math,
+        "Every figure on this table is arithmetic on owner-supplied values plus published statutory amounts. None of it is an official determination.",
+    )
+
+    body += callout(
+        "The rate is not verified",
+        f"The model derives Property A's rate of {fmt_rate(cd.A_EFFECTIVE_RATE)} from the owner's own "
+        f"last bill, and Property B's rate of {fmt_rate(cd.B_EFFECTIVE_RATE)} the same way. Neither is "
+        "an official county rate. Property B's implied rate is far above the 1 percent base plus "
+        "voter-approved debt described by the city, which is flagged for review. Obtain the actual "
+        "tax-rate-area rate from the county before relying on any projection.",
+        "warning",
+    )
+    return render_page(
+        "pages/property-tax.html",
+        "Property tax and assessment",
+        "The owner's billed history, the rules that set the bill, and the arithmetic of the "
+        "post-transfer step-up.",
+        body,
+        "NUMBERS",
+    )
 
 
-def build_page(path: str) -> str:
-    builders = {
-        "index.html": build_index,
-        "pages/executive-summary.html": build_executive_summary,
-        "pages/decision-analysis.html": build_decisions,
-        "pages/questions.html": build_questions,
-        "pages/projections.html": build_projections,
-        "pages/property-tax.html": build_property_tax,
-        "pages/operating-costs.html": build_costs,
-        "pages/black-swan.html": build_black_swan,
-        "pages/phased-investing.html": build_phased_investing,
-        "pages/estate-thresholds.html": build_estate_thresholds,
-        "pages/inheritance-process.html": build_process,
-        "pages/law-watchlist.html": build_law_watchlist,
-        "pages/attorney-cpa-brief.html": build_brief,
-        "pages/flagged-for-review.html": build_flagged,
-        "pages/glossary.html": build_glossary,
-        "pages/sources.html": build_sources,
-        "pages/privacy.html": build_privacy,
-        "pages/suggestions.html": build_suggestions,
-    }
-    return builders[path]()
+def build_costs() -> str:
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a, b = s["a"], s["b"]
+    op_a, op_b = a["operating"], b["operating"]
+
+    rows = [
+        {"cells": ["Property A", "Water", f"${cd.OPERATING['a_water_low']} to ${cd.OPERATING['a_water_high']} a month", f"About {money(op_a['water'])} a year", "Owner-supplied range. The retail water provider for the parcel was not confirmed."],
+         "status": "Owner-supplied", "sources": ["cupertino_water_unverified", "sjwc_tariff"]},
+        {"cells": ["Property A", "Electricity, net of solar", f"About ${cd.OPERATING['a_electric_low']} to ${cd.OPERATING['a_electric_high']} a month in credit", f"About {money(abs(op_a['electric']))} a year credit", "Owner-supplied range. Export credits under net billing are usually below retail and depend on the tariff and interconnection date."],
+         "status": "Owner-supplied", "sources": ["cpuc_solar"]},
+        {"cells": ["Property A", "Insurance", f"About {money(cd.OPERATING['a_insurance'])} a year", f"Owner's estimate; not quoted", "The owner's figure sits near the low end of a wide market. Obtain written quotes for owner-occupied and landlord use."],
+         "status": "Not verified", "sources": ["cdi_residential"]},
+        {"cells": ["Property A", "Upkeep and repair", f"{cd.DEFAULT_INPUTS['maintenance_a'] * 100:.1f} percent of value a year", f"About {money(op_a['maintenance'])} a year", "Assumption only. The owner states the amount is lower than Property B. Replace with actual spend and an inspection-derived reserve."],
+         "status": "Assumption", "sources": ["cslb"]},
+        {"cells": ["Property B", "Water, three units", f"${cd.OPERATING['b_water_low']} to ${cd.OPERATING['b_water_high']} a month", f"About {money(op_b['water'])} a year", "Owner-supplied range. The city publishes multi-family water and wastewater schedules; the account's own usage is not known."],
+         "status": "Owner-supplied", "sources": ["sfpuc_rates", "sfpuc_prop218"]},
+        {"cells": ["Property B", "Electricity, common and vacant unit", f"${cd.OPERATING['b_electric_low']} to ${cd.OPERATING['b_electric_high']} a month", f"About {money(op_b['electric'])} a year", "Owner-supplied range. Not verified against bills."],
+         "status": "Owner-supplied", "sources": ["cpuc_solar"]},
+        {"cells": ["Property B", "Insurance", f"About {money(cd.OPERATING['b_insurance'])} a year", "Owner's estimate; not quoted", "A three-unit building occupied partly by the owner needs a landlord or mixed-use policy, not an owner-occupied one."],
+         "status": "Not verified", "sources": ["cdi_residential"]},
+        {"cells": ["Property B", "Upkeep and repair", f"{cd.DEFAULT_INPUTS['maintenance_b'] * 100:.1f} percent of value a year", f"About {money(op_b['maintenance'])} a year", "Assumption only, set higher than Property A because the building is older and has more units."],
+         "status": "Assumption", "sources": ["cslb"]},
+        {"cells": ["Property B", "Gross rent", f"{money(cd.OPERATING['b_rent_income'])} a month for {cd.OPERATING['b_rent_units_rented']} of {cd.OPERATING['b_rent_units_total']} units", f"About {money(b['rent_income'])} a year at the transfer year", "Owner-supplied figure. Not verified against leases. Future increases are subject to the statewide cap and any local rules."],
+         "status": "Owner-supplied", "sources": ["civ_1947_12", "irs_pub527", "hud_fmr"]},
+    ]
+    body = make_table(
+        "Operating costs, income and what is missing",
+        ["Property", "Item", "Owner's range or figure", "Modelled annual amount", "What is missing"],
+        rows,
+        "Owner-supplied figures are rounded to the nearest ten dollars. Nothing here is verified against a bill, a lease, a policy or a quote.",
+    )
+
+    rows_total = [
+        {"cells": ["Property A, occupied", money(a["tax_prop19"]), money(op_a["total"]), money(a["carrying_total"]), money(a["carrying_monthly"])],
+         "status": "Projection", "sources": ["rtc_63_2", "boe_pub29", "cdi_residential"]},
+        {"cells": ["Property A, rented", money(a["tax_full"]), money(op_a["total"]), money(a["tax_full"] + op_a["total"]), money((a["tax_full"] + op_a["total"]) / 12)],
+         "status": "Projection", "sources": ["rtc_63_2", "rtc_218", "cdi_residential"]},
+        {"cells": ["Property B today", money(cd.property_tax(cd.assessed_value("B", 2026, cd.DEFAULT_INPUTS), cd.B_EFFECTIVE_RATE, False)), money(op_b["total"]), money(cd.property_tax(cd.assessed_value("B", 2026, cd.DEFAULT_INPUTS), cd.B_EFFECTIVE_RATE, False) + op_b["total"]), money((cd.property_tax(cd.assessed_value("B", 2026, cd.DEFAULT_INPUTS), cd.B_EFFECTIVE_RATE, False) + op_b["total"]) / 12)],
+         "status": "Projection", "sources": ["sf_gov_assess", "boe_pub29"]},
+    ]
+    body += make_table(
+        "Annual carrying cost at the default transfer year",
+        ["Case", "Property tax", "Operating cost", "Total a year", "Total a month"],
+        rows_total,
+        "Excludes any financing, any management fee and any vacancy. Property B's rent income is shown separately and is not netted here.",
+    )
+
+    body += callout(
+        "Insurance is the largest unverified operating input",
+        "The owner's insurance figure is an estimate for both properties. Official sources publish "
+        "shopping tools and explain that the FAIR Plan covers only fire or lightning, internal "
+        "explosion and smoke, with theft and liability requiring a separate Differences in Conditions "
+        "policy. A three-unit building with a partial owner-occupancy needs a landlord or mixed-use "
+        "policy. Obtain written quotes before relying on any path.",
+        "warning",
+    )
+
+    rows_discover = [
+        {"cells": ["Water provider for Property A", "Read the provider name, meter size and tariff from a current bill", "More than one provider serves the postal area, and tariff structures differ."], "status": "Not verified", "sources": ["cupertino_water_unverified", "sjwc_tariff"]},
+        {"cells": ["Sewer charge for Property A", "Read the current rate from the sanitary district's posted rate proceedings or the bill", "The district posts annual rate hearings; the parcel's charge is not published here."], "status": "Not verified", "sources": ["cupertino_sanitary"]},
+        {"cells": ["City water and sewer schedules for Property B", "Apply the published multi-family schedules to the account's actual metered usage", "The city publishes rates, not bills. Usage for three units is not known."], "status": "Not verified", "sources": ["sfpuc_rates", "sfpuc_prop218"]},
+        {"cells": ["Solar tariff for Property A", "Read the interconnection agreement, the tariff name and the true-up month", "Export credits under net billing are usually below retail."], "status": "Not verified", "sources": ["cpuc_solar"]},
+        {"cells": ["Insurance quotes for both properties", "Request written quotes for owner-occupied, landlord and mixed-use, with replacement cost and exclusions", "Availability and price can reverse a cash-flow winner on their own."], "status": "Not verified", "sources": ["cdi_residential"]},
+        {"cells": ["Repair reserve for both properties", "Build from inspection reports plus three years of actual spend", "A percentage of value is a placeholder, not an estimate."], "status": "Not verified", "sources": ["cslb"]},
+    ]
+    body += make_table(
+        "How to replace every estimate with evidence",
+        ["Estimate to replace", "What to obtain", "Why the estimate is not good enough"],
+        rows_discover,
+        "Each row names an official place to start. This site does not fill any of these gaps with an inferred number.",
+    )
+    return render_page(
+        "pages/operating-costs.html",
+        "Operating costs",
+        "Water, power, insurance, upkeep and rent for both properties, each labelled by how much it "
+        "can be trusted.",
+        body,
+        "NUMBERS",
+    )
+
+
+def build_black_swan() -> str:
+    body = callout(
+        "Regimes, not averages",
+        "Growth and inflation are never a constant line for fifty years. This page describes four "
+        "officially documented regimes and what each one does to the decision. Every figure quoted is "
+        "a historical observation read from an official history page; none is a forecast.",
+        "info",
+    )
+
+    for regime in cd.REGIMES:
+        rows = [{"cells": [label, value], "status": "Historical" if regime["id"] in ("r1929", "r2008") else "Verified", "sources": [src]} for label, value, src in regime["facts"]]
+        body += (
+            f'<section class="regime"><h2>{esc(regime["name"])} <span class="muted">({esc(regime["window"])})</span></h2>'
+            + make_table(f"Official observations: {regime['name']}", ["Measure", "What the official source reports"], rows)
+            + f'<p class="regime-lesson"><strong>What it teaches:</strong> {esc(regime["lesson"])}</p></section>'
+        )
+
+    rows_risk = [
+        {"cells": ["Your entry point can dominate the outcome", "The Dow did not regain its 1929 high until November 1954, about 25 years after the peak", "A single lump-sum entry just before a drawn-out decline is the worst case for a sale-and-invest path."], "status": "Historical", "sources": ["fed_1929", "sec_stocks"]},
+        {"cells": ["Housing and equities can fall together", "Home prices fell about 30 percent on average while the S&P 500 fell 57 percent in the same episode", "Keeping the property is not automatically a hedge against an equity crash."], "status": "Historical", "sources": ["fed_2008"]},
+        {"cells": ["Inflation can run far above a planning assumption", "Twelve-month CPI reached 9.1 percent through June 2022, the largest since November 1981", "A nominal return assumption that ignores an inflation regime overstates real outcomes."], "status": "Historical", "sources": ["bls_cpi"]},
+        {"cells": ["Cash yields move, in both directions", "Treasury par yields are published daily and reprice with policy", "A staging plan can look safe going in and pay much less by the time it ends, or much more."], "status": "Verified", "sources": ["treasury_yield", "treasury_bills", "treasury_notes"]},
+        {"cells": ["A long flat period is a different failure from a crash", "The 1929 peak was not regained for about 25 years", "A plan that needs the money inside the flat period fails even without a further fall."], "status": "Historical", "sources": ["fed_1929"]},
+        {"cells": ["Long-run projections are scenarios, not forecasts", "The ten-year budget projection publishes rate scenarios to 2036; no official source forecasts to the 2040s", "Treat the default growth assumptions as one scenario among many and re-run the model at the extremes."], "status": "Verified", "sources": ["cbo_rates", "fhfa_hpi"]},
+    ]
+    body += make_table(
+        "What the regimes do to this decision",
+        ["Risk", "Official observation", "Consequence for the choice"],
+        rows_risk,
+        "Historical observations describe what happened in a named episode. They do not predict the next one.",
+    )
+
+    staged = [
+        {"cells": ["Stage in Treasury bills and notes for 24 to 36 months, then phase into equities over about a year", "Removes the risk that a crash lands in the first months of equity ownership", "Adds reinvestment risk: yields may be lower when the money moves, and equities may have risen during the wait"], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
+        {"cells": ["Bills have terms from 4 to 52 weeks and notes include a 2-year maturity; both may be held to maturity or sold earlier", "Matched to a 24 to 36 month window without taking credit or equity risk", "Selling before maturity can produce a gain or a loss; interest is federally taxable but exempt from state and local tax"], "status": "Official", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Crash during the wait", "The strongest case for staging", "Test it on the staging tool with the 1929 and 2008 depths"], "status": "Guidance", "sources": ["fed_1929", "fed_2008"]},
+        {"cells": ["Crash immediately after entry", "The weakest case for staging", "Staging does not protect against this; only a longer horizon or a lower equity weight does"], "status": "Guidance", "sources": ["fed_2008", "sec_stocks"]},
+        {"cells": ["Quiet rally during the wait", "The hidden cost", "The missed compounding appears as the staging shortfall shown beside the headline on the staging tool"], "status": "Guidance", "sources": ["treasury_yield", "sec_stocks"]},
+    ]
+    body += make_table(
+        "Where the staged path fits",
+        ["Design choice", "What it buys", "What it costs"],
+        staged,
+        "The staging tool on the next page puts numbers on each of these cases and shows the reinvestment risk beside the headline, not below it.",
+    )
+    return render_page(
+        "pages/black-swan.html",
+        "Black swan conditions",
+        "Four officially documented economic regimes, what each does to the decision, and where a "
+        "staged entry fits.",
+        body,
+        "STRESS TESTS",
+    )
+
+
+def build_phased_investing() -> str:
+    body = callout(
+        "A stress illustration, not a backtest",
+        "The calculator normalises the starting portfolio to 100 units and applies a clearly labelled "
+        "synthetic path. It uses historical drawdown endpoints as the depth of the fall, not as a "
+        "replay of history. It is not a forecast and not a personal investment recommendation.",
+        "warning",
+    )
+
+    body += '''
+<section class="calculator" id="calc">
+  <h2>Staged entry versus immediate entry</h2>
+  <form class="controls" id="calc-form">
+    <div class="control"><label for="calc-proceeds">Starting proceeds, units<output id="calc-proceeds-out" for="calc-proceeds">100</output></label>
+      <input type="range" id="calc-proceeds" min="10" max="1000" step="10" value="100"></div>
+    <div class="control"><label for="calc-staging">Staging window, months<output id="calc-staging-out" for="calc-staging">30</output></label>
+      <input type="range" id="calc-staging" min="0" max="60" step="1" value="30"></div>
+    <div class="control"><label for="calc-phase">Phasing period into equities, months<output id="calc-phase-out" for="calc-phase">12</output></label>
+      <input type="range" id="calc-phase" min="0" max="36" step="1" value="12"></div>
+    <div class="control"><label for="calc-yield">Treasury yield, percent a year<output id="calc-yield-out" for="calc-yield">3.6</output></label>
+      <input type="range" id="calc-yield" min="0" max="10" step="0.1" value="3.6"></div>
+    <div class="control"><label for="calc-yield-after">Treasury yield after the wait, percent<output id="calc-yield-after-out" for="calc-yield-after">2.0</output></label>
+      <input type="range" id="calc-yield-after" min="0" max="10" step="0.1" value="2.0"></div>
+    <div class="control"><label for="calc-equity">Equity return before any fall, percent a year<output id="calc-equity-out" for="calc-equity">6.0</output></label>
+      <input type="range" id="calc-equity" min="0" max="15" step="0.1" value="6.0"></div>
+    <div class="control"><label for="calc-drop">Fall depth, percent<output id="calc-drop-out" for="calc-drop">57.0</output></label>
+      <input type="range" id="calc-drop" min="0" max="90" step="1" value="57"></div>
+    <div class="control"><label for="calc-drop-start">Fall starts at month<output id="calc-drop-start-out" for="calc-drop-start">6</output></label>
+      <input type="range" id="calc-drop-start" min="0" max="60" step="1" value="6"></div>
+    <div class="control"><label for="calc-drop-months">Fall unfolds over, months<output id="calc-drop-months-out" for="calc-drop-months">18</output></label>
+      <input type="range" id="calc-drop-months" min="1" max="48" step="1" value="18"></div>
+    <div class="control"><label for="calc-recover">Recovery after the fall, percent a year<output id="calc-recover-out" for="calc-recover">8.0</output></label>
+      <input type="range" id="calc-recover" min="0" max="20" step="0.1" value="8.0"></div>
+    <div class="control"><label for="calc-horizon">Horizon, years<output id="calc-horizon-out" for="calc-horizon">20</output></label>
+      <input type="range" id="calc-horizon" min="1" max="40" step="1" value="20"></div>
+    <div class="control control-actions"><button type="reset" id="calc-reset">Reset</button></div>
+  </form>
+  <div class="calc-results">
+    <table class="calc-table" data-generated="client">
+      <caption>Staged entry versus immediate entry under the chosen path. Values are
+      arithmetic on the controls above, computed in this browser, and are not sourced figures.</caption>
+      <thead><tr><th scope="col">Case</th><th scope="col">Ending value, units</th><th scope="col">Worst point, units</th><th scope="col">Difference from immediate entry</th></tr></thead>
+      <tbody id="calc-rows"></tbody>
+    </table>
+    <div class="calc-note">
+      <h3>Reinvestment risk, shown beside the headline</h3>
+      <ul id="calc-risk"></ul>
+    </div>
+  </div>
+</section>'''
+
+    rows = [
+        {"cells": ["1929 endpoint", "The Dow closed 89 percent below its peak in July 1932 and did not regain the 1929 high until November 1954", "Use as the fall depth for a drawn-out, deflationary regime."], "status": "Historical", "sources": ["fed_1929"]},
+        {"cells": ["2008 endpoint", "The S&P 500 fell 57 percent from October 2007 to March 2009 while house prices fell about 30 percent", "Use as the fall depth for a shorter, sharper regime where housing also falls."], "status": "Historical", "sources": ["fed_2008"]},
+        {"cells": ["Instrument terms", "Bills run 4 to 52 weeks and notes include a 2-year maturity; both may be sold before maturity", "Match the instrument to the window rather than holding longer paper than the plan needs."], "status": "Official", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Tax character of the interest", "Treasury interest is federally taxable but exempt from state and local tax", "Changes the after-tax comparison against a taxable alternative."], "status": "Official", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Yield observation point", "The par yield curve is published daily, including the 3-month and 2-year constant maturity rates", "Replace the calculator's default with the rate on the day of the decision."], "status": "Verified", "sources": ["treasury_yield"]},
+        {"cells": ["Equity risk statement", "Stocks can lose value and diversification does not remove that risk", "Staging changes the timing of exposure; it does not remove it."], "status": "Verified", "sources": ["sec_stocks"]},
+    ]
+    body += make_table(
+        "Inputs the calculator uses, and where each comes from",
+        ["Input", "What the official source supports", "How to use it"],
+        rows,
+        "The fall depths are historical endpoints used as scenario depths. They are not a replay and not a prediction.",
+    )
+
+    body += prose(
+        "How to read the three cases",
+        "The calculator reports three cases side by side. Staged entry parks the proceeds in Treasury "
+        "paper for the staging window, then phases into equities over the phasing period. Immediate "
+        "entry puts the whole amount into equities at once. Cash simply stays in Treasury paper for "
+        "the whole horizon.",
+        "The fall can be timed to start during the staging window, during the phasing period, or after "
+        "the money is fully invested. Run all three. The case where the fall starts during the wait is "
+        "the best case for staging; the case where it starts right after entry is the worst. The "
+        "quiet-rally case, where nothing falls, is the one that shows the cost of the insurance.",
+    )
+    return render_page(
+        "pages/phased-investing.html",
+        "Treasury staging tool",
+        "Park the sale proceeds in 3-month to 2-year Treasury paper for 24 to 36 months, then phase "
+        "into equities, and see what that does to 1929 and 2008 style entry risk.",
+        body,
+        "STRESS TESTS",
+    )
+
+
+def build_estate_thresholds() -> str:
+    rows = [
+        {"cells": ["2026", "$15,000,000", "$19,000", "Form 706 filing threshold for the year of death and the annual gift exclusion."], "status": "Verified", "sources": ["irs_estate"]},
+        {"cells": ["2027", "$15,480,000", "$20,000", "Basic exclusion and annual gift exclusion published in IR-2026-133 on November 5, 2026."], "status": "Verified", "sources": ["irs_2027"]},
+        {"cells": ["2025", "$13,990,000", "$19,000", "Shown for comparison, read from the IRS filing-threshold table."], "status": "Verified", "sources": ["irs_estate"]},
+        {"cells": ["2024", "$13,610,000", "$18,000", "Shown for comparison, read from the IRS filing-threshold table."], "status": "Verified", "sources": ["irs_estate"]},
+    ]
+    body = make_table(
+        "Federal filing threshold and exclusions by year of death",
+        ["Year of death", "Form 706 threshold / basic exclusion", "Annual gift exclusion", "What the source states"],
+        rows,
+        "The threshold is not an amount per beneficiary. The filing test uses the gross estate plus adjusted taxable gifts and the specific gift tax exemption.",
+    )
+
+    rows2 = [
+        {"cells": ["What counts", "The gross estate includes cash and securities, real estate, insurance, trusts, annuities, business interests and other assets, valued at fair market value at death", "The home is only one line in the calculation."], "status": "Official", "sources": ["irs_estate"]},
+        {"cells": ["What is added back", "The value of lifetime taxable gifts beginning with gifts made in 1977 is added before the tax is computed", "Prior gifts can pull an estate over the threshold even when the remaining assets do not."], "status": "Official", "sources": ["irs_estate"]},
+        {"cells": ["When it is due", "Generally nine months after the date of death, with a six-month extension only if requested before the due date and the estimated correct tax is paid before the due date", "A late request loses the extension."], "status": "Official", "sources": ["irs_706_due"]},
+        {"cells": ["Portability", "Estates of decedents survived by a spouse may elect to pass unused exemption to the surviving spouse on a timely filed return", "Filing can matter below the threshold."], "status": "Official", "sources": ["irs_estate_faq", "irs_estate"]},
+        {"cells": ["California", "Current statute bars the state and its political subdivisions from imposing any gift, inheritance, succession, legacy, income or estate tax on a transfer by reason of death", "This is current statute, not a promise about future law."], "status": "Official", "sources": ["rtc_13301", "ca_leg_search"]},
+        {"cells": ["Basis", "Basis of inherited property is generally fair market value at date of death, or the alternate valuation date only if a return is filed and the election is made on it", "Sets the gain on any later sale."], "status": "Verified", "sources": ["irs_basis"]},
+        {"cells": ["Consistent basis reporting", "A recipient who receives a Schedule A to Form 8971 may have to report basis consistent with the estate tax value", "An accuracy-related penalty can apply to an overstated basis."], "status": "Verified", "sources": ["irs_basis"]},
+        {"cells": ["Deductibility of the tax itself", "Estate and inheritance taxes are listed as nondeductible, and the state and local tax deduction is capped at $40,000, or $20,000 if married filing separately, subject to a modified adjusted gross income limitation but not reduced below $10,000", "Do not model the property tax as fully deductible."], "status": "Verified", "sources": ["irs_topic503"]},
+    ]
+    body += make_table(
+        "How the federal calculation actually works",
+        ["Element", "What the official source says", "Why it matters"],
+        rows2,
+        "None of this determines whether this particular estate owes tax. That requires the inventory, the prior gift history and the deductions.",
+    )
+
+    rows3 = [
+        {"cells": ["Threshold beyond 2027", "No official source publishes an amount for the 2040s", "Blank by design", "Re-read the current exclusion in the year of death. Indexing does not bind a future Congress."], "status": "Not verified", "sources": ["irs_2027", "congress_search"]},
+        {"cells": ["State inheritance tax in the 2040s", "No official source forecasts it", "Blank by design", "Re-read the statute and the ballot measures in the year of death."], "status": "Not verified", "sources": ["rtc_13301", "ca_leg_search", "sos_qualified"]},
+        {"cells": ["Local transfer charges", "Not retrieved", "Blank by design", "Obtain the county and city transfer charge schedule at the time of a sale."], "status": "Not verified", "sources": ["boe_home", "irs_topic503"]},
+    ]
+    body += make_table(
+        "What is deliberately blank",
+        ["Item", "Published figure", "Value used here", "What to do instead"],
+        rows3,
+        "A blank cell is an unknown, not a zero. Nothing in this site fills a gap with an inferred number.",
+    )
+
+    body += callout(
+        "The inheritance is described as more than the exempt amount",
+        "The owner has said the inheritance includes a considerable sum that may exceed the amount "
+        "that can pass without tax. That makes the gross estate calculation, not the home, the "
+        "governing question. Obtain the estate inventory and the prior gift history from the trustee "
+        "before drawing any conclusion, and confirm the filing obligation with the CPA in the year of "
+        "death. The published amounts above are the only amounts this site will state.",
+        "warning",
+    )
+    return render_page(
+        "pages/estate-thresholds.html",
+        "Estate tax thresholds",
+        "What the federal and California rules actually say, the published amounts, and what is "
+        "deliberately left blank because no official source states it.",
+        body,
+        "LAW AND PROCESS",
+    )
+
+
+def build_process() -> str:
+    body = callout(
+        "Every clock runs from the date of death",
+        "The timeline below is built from statutory deadlines and the official property tax calendar. "
+        "It is a planning aid; the trustee and counsel control the actual dates and must confirm them.",
+        "info",
+    )
+    items = []
+    for i, step in enumerate(cd.PROCESS_STEPS, start=1):
+        links = " ".join(source_link(k) for k in step["sources"])
+        items.append(
+            f'<li class="timeline-item"><span class="timeline-marker" aria-hidden="true">{i}</span>'
+            f'<div class="timeline-body"><p class="timeline-offset">{esc(step["offset"])}</p>'
+            f'<h3>{esc(step["title"])}</h3><p>{esc(step["detail"])}</p>'
+            f'<p class="timeline-sources">{links}</p></div></li>'
+        )
+    body += f'<section class="timeline"><h2>Deadline timeline</h2><ol class="timeline-list">{"".join(items)}</ol></section>'
+
+    rows = [
+        {"cells": ["Step 1", "Confirm the trust and the trustee", "Read the executed trust and amendments; confirm who the successor trustee is and what powers they hold", "Nothing else can be planned until authority is confirmed."], "status": "Action needed", "sources": ["prob_16061_7"]},
+        {"cells": ["Step 2", "Receive the trustee notification", "The trustee must serve it within 60 days after the trust becomes irrevocable by reason of death", "This starts the beneficiary's own review window."], "status": "Official", "sources": ["prob_16061_7"]},
+        {"cells": ["Step 3", "Value the property as of the date of death", "Obtain a date-of-death valuation and keep the documentation", "It sets the basis for every later path."], "status": "Verified", "sources": ["irs_basis"]},
+        {"cells": ["Step 4", "Decide occupancy before the one-year deadline", "The exclusion requires the home to become the transferee's principal residence within one year", "This is a decision, not a formality, and it must be made early."], "status": "Official", "sources": ["rtc_63_2", "boe_prop19"]},
+        {"cells": ["Step 5", "File the change-in-ownership statement", "Within 150 days after death where the transfer is by reason of death outside probate, including through a trust", "A late filing can carry a penalty."], "status": "Official", "sources": ["rtc_480"]},
+        {"cells": ["Step 6", "Determine whether a federal estate return is due", "Compare the gross estate plus adjusted taxable gifts with the year-of-death threshold", "Due nine months after death; a six-month extension must be requested before the due date."], "status": "Official", "sources": ["irs_estate", "irs_706_due", "irs_estate_faq"]},
+        {"cells": ["Step 7", "Claim the homeowners' exemption", "File within one year of the transfer; the general exemption deadline is February 15 and a later filing can receive a reduced share by December 10", "The exemption is also the eligibility marker for the exclusion."], "status": "Official", "sources": ["rtc_63_2", "rtc_218", "boe_pub29"]},
+        {"cells": ["Step 8", "File the exclusion claim", "Within three years after the transfer, or before transfer to a third party, or before the transferee stops occupying it, whichever is earliest", "A late claim may be considered but generally applies only prospectively."], "status": "Official", "sources": ["rtc_63_2", "boe_prop19"]},
+        {"cells": ["Step 9", "Confirm insurance and utilities in the new owner's name", "Obtain written quotes and transfer accounts; read the solar tariff and the true-up month", "Coverage must exist from the date of transfer, not from the date of decision."], "status": "Action needed", "sources": ["cdi_residential", "cpuc_solar"]},
+        {"cells": ["Step 10", "Verify the assessment on the roll", "Check the enrolled value after the transfer, and use the appeal window if it looks wrong", "The appeal window runs July 2 to September 15, or to November 30."], "status": "Official", "sources": ["boe_pub29"]},
+    ]
+    body += make_table(
+        "The process step by step",
+        ["Step", "What happens", "Deadline or action", "Why it matters"],
+        rows,
+        "Deadlines are statutory or published by the agency named in the source column. Individual facts can change which deadline applies.",
+    )
+    return render_page(
+        "pages/inheritance-process.html",
+        "Deadline timeline",
+        "What the inheritance process looks like step by step, with every deadline traced to the "
+        "statute or the official calendar that sets it.",
+        body,
+        "LAW AND PROCESS",
+    )
+
+
+def build_law_watchlist() -> str:
+    rows = []
+    for item in cd.LAW_WATCH:
+        rows.append({
+            "cells": [item["title"], item["status"], item["detail"], item["result"], item["why"]],
+            "status": "Verified" if "current law" in item["status"].lower() or "every other" in item["status"].lower() or "indexed" in item["status"].lower() else "Action needed",
+            "sources": item["sources"],
+        })
+    body = make_table(
+        "Law and ballot measures to watch",
+        ["Measure or rule", "Status", "What the official source says", "Reported result or current amount", "Why it matters here"],
+        rows,
+        "Results reported before certification are unofficial. County elections officials must report final official results by December 4, 2026 and the Secretary of State certifies on December 11, 2026.",
+    )
+
+    body += callout(
+        "A proposal is not law",
+        "Nothing on this page is treated as enacted unless the source says it is. Ballot results "
+        "reported before certification can change during the canvass, and a bill is not law until it "
+        "is chaptered and effective. Re-read every item at the transfer date.",
+        "warning",
+    )
+
+    rows_how = [
+        {"cells": ["Federal bills", "Search the official legislation interface for the current status of any proposal", "A proposal is not law unless enacted."], "status": "Guidance", "sources": ["congress_search"]},
+        {"cells": ["California bills", "Search the official bill interface for status and chapter information", "A bill is not law unless chaptered and effective."], "status": "Guidance", "sources": ["ca_leg_search"]},
+        {"cells": ["Statewide ballot measures", "Read the qualified measures list and the official results page", "Results are unofficial until the Secretary of State certifies."], "status": "Guidance", "sources": ["sos_qualified", "sos_results"]},
+        {"cells": ["Property tax rules", "Read the statute and the official summaries, not secondary commentary", "A summary can lag a statutory amendment."], "status": "Guidance", "sources": ["rtc_63_2", "boe_prop19", "boe_pub29"]},
+    ]
+    body += make_table(
+        "Where to check, and how often",
+        ["Area", "Official place to check", "Caveat"],
+        rows_how,
+        "Set a dated reminder. A transfer expected in the 2040s cannot be decided on today's law.",
+    )
+    return render_page(
+        "pages/law-watchlist.html",
+        "Law watchlist",
+        "Measures and rules that could move the answer, with official sources and the caveat that "
+        "nothing is law until it is enacted and effective.",
+        body,
+        "LAW AND PROCESS",
+    )
+
+
+def build_brief() -> str:
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a = s["a"]
+    be_rent = cd.breakeven_rent(a["taxable_full"], cd.A_EFFECTIVE_RATE, a["operating"]["total"], cd.DEFAULT_INPUTS)
+    body = f'''
+<section class="brief-sheet">
+<p class="brief-print-hint no-print">This page is designed to print on one sheet. No name, address, parcel number, trust name or account number appears on it.</p>
+<h2>Briefing sheet for the attorney and the tax adviser</h2>
+<p class="brief-meta">Prepared from owner-supplied figures rounded to the nearest ten dollars, and from statutory and official sources read on {esc(CHECKED)}. Not legal, tax or investment advice. Every question below needs a professional answer before any action.</p>
+
+<h3>1. The two assets</h3>
+<ul>
+<li><strong>Property A.</strong> Anticipated transfer through a revocable trust, {esc(cd.PROPERTY_A['county'])}, {esc(cd.PROPERTY_A['area'])}. Not owned by the client today. Owner's estimate of value about {esc(money(a['value_now']))} as of November 2026. Expected transfer window 2040 to 2050.</li>
+<li><strong>Property B.</strong> Already owned, {esc(cd.PROPERTY_B['county'])}, {esc(cd.PROPERTY_B['area'])}. Three units, two currently let, about {esc(money(cd.OPERATING['b_rent_income']))} a month gross on the owner's figures. Owner's estimate of value about {esc(money(cd.PROPERTY_B['value_now']))}.</li>
+</ul>
+
+<h3>2. The number that drives everything</h3>
+<ul>
+<li>Modelled value of Property A at the {esc(str(cd.DEFAULT_TRANSFER_YEAR))} default transfer year: about {esc(money(a['value_at_transfer']))}.</li>
+<li>Enrolled assessment at that year: about {esc(money(a['assessed_at_transfer']))}.</li>
+<li>New taxable value if the intergenerational exclusion applies: about {esc(money(a['taxable_prop19']))}. If it does not: about {esc(money(a['taxable_full']))}.</li>
+<li>Annual property tax: about {esc(money(a['tax_now']))} today, about {esc(money(a['tax_prop19']))} if occupied, about {esc(money(a['tax_full']))} if rented. A multiple of about {esc(str(a['tax_multiple_prop19']))}x or {esc(str(a['tax_multiple_full']))}x.</li>
+</ul>
+
+<h3>3. Questions we need answered in writing</h3>
+<ol>
+<li>Was the home the transferor's principal residence at transfer, and can evidence of that be produced?</li>
+<li>Can the transferee occupy it as a principal residence within one year, and file the homeowners' exemption within one year?</li>
+<li>Does the trust permit occupancy, letting or sale, and who must consent?</li>
+<li>Confirm the statutory consequence if the exclusion later stops applying: is the base year value established at the change in ownership date, adjusted annually, the value that is enrolled?</li>
+<li>What is the gross estate, including adjusted taxable gifts, and is a federal estate return required?</li>
+<li>What is the date-of-death valuation, and was an alternate valuation date elected on a filed return?</li>
+<li>Was a Form 8971 Schedule A issued, and does a consistent-basis requirement apply?</li>
+<li>What is the tax-rate-area rate, and why does Property B's bill imply about {esc(fmt_rate(cd.B_EFFECTIVE_RATE))} when the city describes 1 percent plus voter-approved debt and direct assessments?</li>
+<li>What local transfer charges would apply on a sale?</li>
+<li>What insurance is actually available, for owner-occupied and for landlord use, and at what price?</li>
+</ol>
+
+<h3>4. Deadlines we are tracking</h3>
+<ul>
+<li>Trustee notification within 60 days after the trust becomes irrevocable by reason of death.</li>
+<li>Change-in-ownership statement within 150 days after death where the transfer is outside probate, including through a trust.</li>
+<li>Federal estate return generally due nine months after death; a six-month extension must be requested before the due date and the estimated tax paid before it.</li>
+<li>Occupancy as principal residence within one year; homeowners' exemption filed within one year.</li>
+<li>Exclusion claim within three years, or before transfer to a third party, or before occupancy ends, whichever is earliest.</li>
+<li>January 1 lien date; February 15 exemption deadline; December 10 and April 10 installment delinquency dates; July 2 to September 15, or November 30, appeal window.</li>
+</ul>
+
+<h3>5. Modelling notes the adviser should challenge</h3>
+<ul>
+<li>The effective tax rates are derived from the client's own bills, not from an official county rate. Property A about {esc(fmt_rate(cd.A_EFFECTIVE_RATE))}, Property B about {esc(fmt_rate(cd.B_EFFECTIVE_RATE))}.</li>
+<li>Upkeep is modelled as a share of value ({esc(f"{cd.DEFAULT_INPUTS['maintenance_a'] * 100:.1f}")} percent for A, {esc(f"{cd.DEFAULT_INPUTS['maintenance_b'] * 100:.1f}")} percent for B). That is a placeholder, not an estimate.</li>
+<li>Insurance is the client's own estimate of about {esc(money(cd.OPERATING['a_insurance']))} a year for each property and has not been quoted.</li>
+<li>Selling costs are assumed at {esc(f"{cd.DEFAULT_INPUTS['selling_cost'] * 100:.1f}")} percent of price. Local transfer charges are not verified.</li>
+<li>Market rent for Property A is unknown. The break-even gross rent before any financing is about {esc(money(be_rent))} a year. Please compare that with three written rent opinions.</li>
+<li>The state and local tax deduction is capped at $40,000, or $20,000 if married filing separately, subject to a modified adjusted gross income limitation but not reduced below $10,000.</li>
+<li>The Proposition 19 adjusted amount is ${cd.PROP19_LIMIT_NOW:,} for transfers {esc(cd.PROP19_LIMIT_FROM)} through {esc(cd.PROP19_LIMIT_TO)}, and is recalculated every other February.</li>
+</ul>
+
+<h3>6. What would change our recommendation</h3>
+<ul>
+<li>The home is not the transferor's principal residence at transfer.</li>
+<li>Occupancy within one year is not realistic.</li>
+<li>The trust restricts occupancy, letting or sale.</li>
+<li>Insurance is unavailable or unaffordable.</li>
+<li>Market rent cannot clear the break-even.</li>
+<li>The estate crosses the filing threshold and liquidity is needed to pay tax.</li>
+<li>The household needs the proceeds inside the staging window.</li>
+</ul>
+<p class="brief-foot">Sources for every statement on this sheet are listed on the source register. Owner-supplied amounts are rounded to the nearest ten dollars and are not verified. Blank means unknown, not zero.</p>
+</section>'''
+    return render_page(
+        "pages/attorney-cpa-brief.html",
+        "Attorney and CPA brief",
+        "One printable page covering the assets, the driver, the questions, the deadlines, the "
+        "assumptions to challenge, and the reversal conditions.",
+        body,
+        "ADVISERS",
+    )
+
+
+def build_flagged() -> str:
+    s = cd.scenario(cd.DEFAULT_INPUTS)
+    a = s["a"]
+    rows = [
+        {"cells": ["F01", "Property B implied effective rate is anomalous", f"The owner's figures imply about {fmt_rate(cd.B_EFFECTIVE_RATE)}, far above the 1 percent base plus voter-approved bonded indebtedness and direct assessments described by the city.", "Reconcile the bill line by line and identify the direct assessments, parcel taxes or supplemental items. Until then every Property B projection is unreliable.", "High"],
+         "status": "Action needed", "sources": ["sf_gov_assess", "boe_pub29"]},
+        {"cells": ["F02", "Property A tax rate is derived, not official", f"The model uses about {fmt_rate(cd.A_EFFECTIVE_RATE)}, derived from the owner's last bill. No county tax-rate-area rate was retrieved from an official page.", "Ask the county for the composite rate, or read it from the bill's tax-rate-area line.", "High"],
+         "status": "Not verified", "sources": ["scc_rate_unverified", "boe_pub29"]},
+        {"cells": ["F03", "Retail water provider for Property A is unconfirmed", "More than one provider serves the postal area. A filed tariff names the territory as portions of Cupertino among other cities, which does not confirm the parcel.", "Read the provider name and tariff from a current bill.", "Medium"],
+         "status": "Not verified", "sources": ["cupertino_water_unverified", "sjwc_tariff"]},
+        {"cells": ["F04", "Insurance premium is an estimate for both properties", "The owner's figure of about " + money(cd.OPERATING["a_insurance"]) + " a year for each property was not quoted. Property B is a three-unit building and needs a landlord or mixed-use policy, not an owner-occupied one.", "Obtain written quotes with replacement cost and exclusions, and compare against the FAIR Plan and a Differences in Conditions policy.", "High"],
+         "status": "Not verified", "sources": ["cdi_residential"]},
+        {"cells": ["F05", "Upkeep is a placeholder percentage, not an estimate", f"Modelled at {cd.DEFAULT_INPUTS['maintenance_a'] * 100:.1f} percent of value for A and {cd.DEFAULT_INPUTS['maintenance_b'] * 100:.1f} percent for B.", "Replace with inspection-derived reserve schedules and three years of actual spend.", "Medium"],
+         "status": "Assumption", "sources": ["cslb"]},
+        {"cells": ["F06", "Market rent for Property A is unknown", "No rent figure is published on this site because none has been verified.", "Obtain three written rent opinions and compare with the break-even rent.", "High"],
+         "status": "Not verified", "sources": ["hud_fmr", "irs_pub527"]},
+        {"cells": ["F07", "Solar credit depends on a tariff nobody has produced", "Export credits under net billing are usually below retail and depend on the tariff, the interconnection date and the true-up month.", "Produce the interconnection agreement and the tariff, and confirm the true-up month.", "Medium"],
+         "status": "Not verified", "sources": ["cpuc_solar"]},
+        {"cells": ["F08", "Selling costs are an assumption", f"Modelled at {cd.DEFAULT_INPUTS['selling_cost'] * 100:.1f} percent of price. Local transfer charges were not retrieved.", "Obtain the commission quote and the county and city transfer charge schedules.", "Medium"],
+         "status": "Assumption", "sources": ["boe_home", "irs_pub523"]},
+        {"cells": ["F09", "The Proposition 19 limit is carried forward by assumption", f"The published amount is ${cd.PROP19_LIMIT_NOW:,} for transfers {cd.PROP19_LIMIT_FROM} through {cd.PROP19_LIMIT_TO}. Carrying it to the 2040s uses an assumed rate.", "Re-read the published amount for the actual transfer period; it is recalculated every other February.", "High"],
+         "status": "Assumption", "sources": ["boe_lta_2025_009", "fhfa_hpi"]},
+        {"cells": ["F10", "Estate size is described but not quantified", "The owner states the inheritance includes a considerable sum that may exceed the exempt amount. No inventory was available.", "Obtain the estate inventory and the prior gift history; the home alone does not answer the filing test.", "High"],
+         "status": "Not verified", "sources": ["irs_estate", "irs_estate_faq"]},
+        {"cells": ["F11", "Transfer window is an expectation, not a date", "The 2040 to 2050 window is the owner's expectation. No document establishing it was available.", "Confirm from the trust; model both the early and the late end.", "Medium"],
+         "status": "Not verified", "sources": ["prob_16061_7"]},
+        {"cells": ["F12", "Lawful unit count at Property B is unverified", "The owner describes three liveable units with two let. Permits, registration and lawful use were not confirmed.", "Reconcile permits, registration and leases before counting any additional rent.", "High"],
+         "status": "Not verified", "sources": ["civ_1947_12", "sf_gov_assess"]},
+        {"cells": ["F13", "Prior public Git history is not scrubbed", "Earlier commits, pull-request diffs, forks, caches and clones may retain material that a cleanup commit does not remove.", "Coordinate a supported history cleanup with the repository owner and GitHub Support. Do not treat this repository as a vault.", "High"],
+         "status": "Action needed", "sources": ["gh_sensitive"]},
+        {"cells": ["F14", "Rounded working figures remain theoretically linkable", "An assessment history rounded to ten dollars, combined with a public postal area, could in principle be matched against a county assessment roll.", "Weigh the analytical benefit against that residual risk, and consider the banded default view proposed in the suggestions queue.", "Medium"],
+         "status": "Action needed", "sources": ["gh_sensitive", "boe_pub29"]},
+        {"cells": ["F15", "No official source was retrieved for a local transfer charge", "A sale would likely carry county and city transfer charges. No official schedule was read.", "Obtain the schedules at the time of a sale; the site leaves the value blank rather than inferring it.", "Medium"],
+         "status": "Not verified", "sources": ["boe_home"]},
+    ]
+    body = callout(
+        "Flagged items block nothing, but they are not resolved",
+        "This page lists every irregularity and every unverified value found during the build. Each "
+        "one is published with its official source so it can be reviewed and closed. Nothing here is "
+        "inferred to fill a gap: where a value is unknown, the model shows a break-even or a range "
+        "instead.",
+        "warning",
+    )
+    body += make_table(
+        "Flagged for review",
+        ["ID", "Irregularity", "What was found", "What to do", "Priority"],
+        rows,
+        "Priorities reflect how much the item can move the decision, not how difficult it is to resolve.",
+    )
+    return render_page(
+        "pages/flagged-for-review.html",
+        "Flagged for review",
+        "Every irregularity and unverified value found during the build, with the official source "
+        "that would resolve it.",
+        body,
+        "ADVISERS",
+    )
+
+
+GLOSSARY = [
+    ("Alternate valuation date", "A valuation date six months after death that may be used only if a federal estate return is filed and the election is made on it.", "irs_basis"),
+    ("Assessment appeal window", "The annual period, July 2 to September 15 or to November 30, during which an application for reduction in assessed value is filed with the clerk of the county board of supervisors.", "boe_pub29"),
+    ("Base year value", "The assessed value established when a property changes ownership or new construction is completed. It is generally increased by no more than 2 percent a year afterwards.", "boe_pub29"),
+    ("Break-even rent", "The gross annual rent needed to cover property tax, operating cost, vacancy and management before any financing. Used here instead of an invented market rent.", "irs_pub527"),
+    ("Change in ownership", "The event that triggers reassessment in California. A transfer by reason of death is a change in ownership unless an exclusion applies.", "boe_pub29"),
+    ("Change-in-ownership statement", "The signed statement filed with the county recorder or assessor. It is due within 150 days after death where the transfer is by reason of death outside probate, including through a trust.", "rtc_480"),
+    ("Consistent basis reporting", "A rule that can require a recipient's basis to match the value finally determined for federal estate tax purposes, tied to Form 8971 Schedule A.", "irs_basis"),
+    ("Equity return assumption", "The nominal annual return used to grow invested proceeds in the model. It is an input, not a forecast.", "sec_stocks"),
+    ("Factored base year value", "The base year value after the annual inflation adjustments permitted by the Constitution.", "rtc_63_2"),
+    ("FAIR Plan", "California's insurer of last resort. It covers fire or lightning, internal explosion and smoke, and other perils must usually be added through a Differences in Conditions policy.", "cdi_residential"),
+    ("Form 706", "The United States Estate and Generation-Skipping Transfer Tax Return. Generally due nine months after death, with a six-month extension only if requested before the due date.", "irs_706_due"),
+    ("Gross estate", "Everything the decedent owns or has certain interests in at death, valued at fair market value, before deductions.", "irs_estate"),
+    ("Homeowners' exemption", "A $7,000 reduction in the full value of an owner-occupied dwelling. It does not apply where the dwelling is rented, vacant or a secondary home.", "rtc_218"),
+    ("Intergenerational transfer exclusion", "The Proposition 19 exclusion for a transfer of a principal residence between parents and children, or in defined circumstances grandparents and grandchildren, subject to occupancy, filing and value conditions.", "rtc_63_2"),
+    ("Lien date", "January 1. The date on which property is valued and exemptions are determined for the following fiscal year.", "boe_pub29"),
+    ("Net billing tariff", "The solar export tariff under which credits are usually below retail rates, as opposed to the older net energy metering tariffs.", "cpuc_solar"),
+    ("Phasing", "Moving staged cash into equities gradually over a stated period rather than in one transaction.", "treasury_notes"),
+    ("Portability", "An election allowing a surviving spouse to use a deceased spouse's unused federal exclusion. It is made on a timely filed estate tax return.", "irs_estate_faq"),
+    ("Reinvestment risk", "The risk that the yield available when staged cash is finally invested is lower than the yield available when the plan started.", "treasury_yield"),
+    ("Sequence risk", "The risk that the order of returns matters, so a decline early in the period does more damage than the same decline later.", "fed_1929"),
+    ("Staging", "Holding sale proceeds in short-dated government paper for a stated window before investing in equities.", "treasury_bills"),
+    ("State and local tax deduction limit", "The cap on the itemized deduction for state and local taxes: $40,000, or $20,000 if married filing separately, subject to a modified adjusted gross income limitation but not reduced below $10,000.", "irs_topic503"),
+    ("Step-up in basis", "The general rule that the basis of inherited property is its fair market value on the date of death rather than the decedent's original cost.", "irs_basis"),
+    ("Tax-rate area", "The geographic combination of local agencies and voter-approved debt whose rates apply to a parcel. It sets the composite rate on the bill.", "boe_home"),
+    ("Trustee notification", "The notice a trustee must serve within 60 days after a revocable trust becomes irrevocable by reason of death.", "prob_16061_7"),
+    ("Value limit", "Under Proposition 19, the prior taxable value plus the inflation-adjusted amount. Any fair market value above it is added to the new taxable value.", "boe_lta_2025_009"),
+]
+
+
+def build_glossary() -> str:
+    rows = [{"cells": [term, definition], "status": "Official", "sources": [src]} for term, definition, src in GLOSSARY]
+    body = make_table(
+        "Glossary",
+        ["Term", "Meaning as used on this site"],
+        rows,
+        "Each definition is drawn from the official source linked beside it. Where a term is used loosely in the market, this glossary uses the statutory or official meaning.",
+    )
+    return render_page(
+        "pages/glossary.html",
+        "Glossary",
+        "Plain meanings for the terms this site uses, each tied to the official source that defines it.",
+        body,
+        "ADVISERS",
+    )
+
+
+def build_sources() -> str:
+    rows = []
+    for key, s in SOURCES.items():
+        rows.append({
+            "cells": [
+                s["label"],
+                "Verified" if s["verified"] else "Retrieval failed or gateway only",
+                s["scope"],
+                f'<a href="{esc(s["url"])}" rel="noopener noreferrer">{esc(s["url"])}</a>',
+            ],
+            "status": "Verified" if s["verified"] else "Not verified",
+            "sources": [key],
+        })
+    body = callout(
+        "Every source was read on " + CHECKED,
+        "Each page listed here was fetched and read directly during this build, and the figure or rule "
+        "attributed to it was compared against the text of that page. A source supports only the "
+        "scope written beside it. No source here establishes a private property's value, basis, "
+        "lease, bill, premium, title, occupancy or tax position.",
+        "info",
+    )
+    body += make_table(
+        "Official source register",
+        ["Source", "Retrieval status", "Scope of what it supports", "Address"],
+        rows,
+        "An entry marked as a retrieval failure or gateway only is never used to support a numeric claim.",
+    )
+    body += prose(
+        "How this register is maintained",
+        "Add a source only after reading the page and copying what it actually says. Write the scope "
+        "as narrowly as the page supports. If a page cannot be retrieved, record it as a failure and "
+        "leave the dependent value blank rather than substituting an unverified figure.",
+    )
+    return render_page(
+        "pages/sources.html",
+        "Official source register",
+        "Every source cited anywhere on this site, the exact scope each one supports, and its address.",
+        body,
+        "ADVISERS",
+    )
+
+
+def build_privacy() -> str:
+    rows = [
+        {"cells": ["Personal identifiers", "None published", "No owner name, street address, parcel or assessor identification number, trust name, account number, date of birth, document image, email address or telephone number appears on any page.", "Keep executed documents, bills, leases, statements, quotes and inspection reports out of this repository entirely."],
+         "status": "Guidance", "sources": ["gh_sensitive"]},
+        {"cells": ["Location", "County and public postal area only", "The postal area is published because the utility tariffs and the insurance market research cannot be reproduced without it. No street address or parcel is published.", "If the residual linkability is unacceptable, remove the postal area and re-run the research at county level."],
+         "status": "Guidance", "sources": ["gh_sensitive", "sfpuc_rates"]},
+        {"cells": ["Dollar figures", "Rounded to the nearest ten dollars", "Every working dollar figure in the owner's data is rounded to the nearest ten dollars before it is written into a page.", "Rounding does not guarantee anonymity. A rounded assessment history combined with a public postal area could in principle be matched against a county assessment roll."],
+         "status": "Action needed", "sources": ["gh_sensitive", "boe_pub29"]},
+        {"cells": ["Evidence labelling", "Owner-supplied is never called verified", "Owner figures, derived arithmetic, projections and assumptions carry different badges and are never mixed with figures read from official pages.", "If a figure's provenance is unclear, label it unverified rather than promoting it."],
+         "status": "Guidance", "sources": ["gh_sensitive"]},
+        {"cells": ["Browser behaviour", "Local only", "The pages use local HTML, CSS and JavaScript only. There is no analytics, remote font, remote script, API call or form submission. Slider values and review choices stay in this browser.", "Clear site data to remove saved review choices. Do not enter confidential values on a public computer."],
+         "status": "Guidance", "sources": ["gh_sensitive"]},
+        {"cells": ["Search indexing", "Discouraged, not prevented", "Every page carries a noindex, nofollow and noarchive directive and a restrictive content security policy.", "A noindex directive is not access control. Anyone with the address can still read the page."],
+         "status": "Guidance", "sources": ["gh_sensitive"]},
+        {"cells": ["Public repository", "Currently public", "The repository is public. Earlier sessions confirmed public visibility and could not change it without repository administrator permission.", "Repository owner or administrator action is required to change visibility."],
+         "status": "Action needed", "sources": ["gh_sensitive"]},
+        {"cells": ["Prior Git history", "Not scrubbed", "Earlier commits, pull-request diffs, forks, caches and clones may retain material that a cleanup commit does not remove. This session performed no force-push and no history rewrite.", "Treat prior material as exposed. Coordinate a supported history cleanup with the repository owner and GitHub Support, and preserve a secure private archive first."],
+         "status": "Action needed", "sources": ["gh_sensitive"]},
+    ]
+    body = callout(
+        "Privacy is the first release gate, and it is not fully closed",
+        "The published site contains no personal identifier and no unrounded private figure. It does "
+        "contain rounded working figures and a public postal area, which is a real but bounded "
+        "residual risk that is documented here rather than hidden. The larger unresolved exposure is "
+        "the public Git history, which this branch cannot rewrite.",
+        "warning",
+    )
+    body += make_table(
+        "Privacy boundary and remaining exposure",
+        ["Area", "Current state", "What this means", "Safeguard or limitation"],
+        rows,
+        "Read this page before sharing the site address with anyone.",
+    )
+    body += prose(
+        "What to do if the residual risk is not acceptable",
+        "Remove the postal areas and re-run the utility and insurance research at county level. "
+        "Widen the rounding to bands. Or keep the analysis in a private document and publish only the "
+        "generic framework. Any of these keeps the structure of the analysis while reducing what can "
+        "be matched against a public record.",
+        "Independently of the site, coordinate with the repository owner and GitHub Support about the "
+        "public history. A clone, a fork or a cached view is not fixed by changing the pages.",
+    )
+    return render_page(
+        "pages/privacy.html",
+        "Privacy and limits",
+        "What is published, what is withheld, what is rounded, and what exposure still remains.",
+        body,
+        "ADVISERS",
+    )
+
+
+BUILDERS = {
+    "index.html": build_index,
+    "pages/executive-summary.html": build_executive_summary,
+    "pages/decision-analysis.html": build_decision_analysis,
+    "pages/questions.html": build_questions,
+    "pages/suggestions.html": build_suggestions,
+    "pages/projections.html": build_projections,
+    "pages/property-tax.html": build_property_tax,
+    "pages/operating-costs.html": build_costs,
+    "pages/black-swan.html": build_black_swan,
+    "pages/phased-investing.html": build_phased_investing,
+    "pages/estate-thresholds.html": build_estate_thresholds,
+    "pages/inheritance-process.html": build_process,
+    "pages/law-watchlist.html": build_law_watchlist,
+    "pages/attorney-cpa-brief.html": build_brief,
+    "pages/flagged-for-review.html": build_flagged,
+    "pages/glossary.html": build_glossary,
+    "pages/sources.html": build_sources,
+    "pages/privacy.html": build_privacy,
+}
 
 
 def build() -> None:
@@ -873,10 +1718,11 @@ def build() -> None:
     for path in EXPECTED_PAGES:
         target = ROOT / path
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(build_page(path), encoding="utf-8")
-    manifest = ROOT / "tools" / "site-manifest.json"
-    manifest.write_text(json.dumps(EXPECTED_PAGES, indent=2) + "\n", encoding="utf-8")
-    print(f"Built {len(EXPECTED_PAGES)} privacy-safe pages with source-linked tables; no household inputs were read.")
+        target.write_text(BUILDERS[path](), encoding="utf-8")
+    (ROOT / "tools" / "site-manifest.json").write_text(
+        json.dumps(EXPECTED_PAGES, indent=2) + "\n", encoding="utf-8"
+    )
+    print(f"Built {len(EXPECTED_PAGES)} pages with source-linked tables and rounded working figures.")
 
 
 if __name__ == "__main__":
