@@ -291,8 +291,13 @@ if (pathForm) {
     const exclusion = pathNum('path-excl', 0, 99999999);
     const load = pathNum('path-load', 0, 90) / 100;
 
-    const exclTax1 = carriedBase * rate;
-    const reassessedBase = Math.max(marketValue - exclusion, 0);
+    // Corrected Proposition 19 branches (2026-11-15): a qualifying transfer preserves
+    // the factored base year value PLUS the amount by which value exceeds (that base +
+    // the value limit), i.e. max(base, value - limit); a non-qualifying transfer is
+    // reassessed to full value at the transfer. The limit is what caps the relief.
+    const qualifyBase = Math.max(carriedBase, Math.max(marketValue - exclusion, 0));
+    const exclTax1 = qualifyBase * rate;
+    const reassessedBase = marketValue;
     const reTax1 = reassessedBase * rate;
     const cum = base => {
       let total = 0;
@@ -337,4 +342,117 @@ if (pathForm) {
     runPathTool();
   });
   runPathTool();
+}
+
+// Local-only carry-and-sell tool (sale-timing page). It mirrors the server model on the
+// capital-plan and sale-timing pages: hold years change the gain, a rented hold adds
+// straight-line depreciation that later becomes unrecaptured section 1250 gain, meeting
+// the main-home tests adds the single-filer exclusion, and forwarding the base-year value
+// is the Proposition 19 replacement-home benefit. Rates and periods below are the labeled
+// assumptions of this site, not advice. Nothing is stored or transmitted; no network call.
+const carryForm = document.getElementById('carry-tool');
+if (carryForm) {
+  const cEl = id => document.getElementById(id);
+  const cNum = (id, min, max) => {
+    const raw = Number(cEl(id)?.value);
+    const value = Number.isFinite(raw) ? raw : min;
+    return Math.max(min, Math.min(value, max));
+  };
+  const cShow = (id, value) => {
+    const node = cEl(id);
+    if (!node) return;
+    const rounded = Math.round(value / 10) * 10;
+    if (rounded === 0) { node.textContent = 'none modeled'; return; }
+    const sign = rounded < 0 ? '-' : '';
+    node.textContent = sign + '$' + Math.abs(rounded).toLocaleString('en-US');
+  };
+
+  function runCarryTool() {
+    const value = cNum('carry-value', 0, 99999999);
+    const holdYears = cNum('carry-hold', 0, 30);
+    const growth = cNum('carry-growth', 0, 12) / 100;
+    const rate = cNum('carry-rate', 0, 5) / 100;
+    const limit = cNum('carry-limit', 0, 99999999);
+    const base = cNum('carry-base', 0, 99999999);
+    const rent = cNum('carry-rent', 0, 100000);
+    const load = cNum('carry-load', 0, 90) / 100;
+    const use = cEl('carry-use') ? cEl('carry-use').value : 'own';
+    const forward = cEl('carry-forward') ? cEl('carry-forward').checked : false;
+
+    const rented = use === 'rent';
+    const sec121 = use === 'own121';
+
+    // Income-tax side: sale price after the hold, basis from the transfer date.
+    const price = value * Math.pow(1 + growth, holdYears);
+    const depreciation = rented ? (value * 0.8 / 27.5) * holdYears : 0;
+    const basis = value - depreciation;
+    const gain = Math.max(price - basis, 0);
+    const recapture = Math.min(depreciation, gain);
+    let remainder = Math.max(gain - recapture, 0);
+    const excluded = sec121 ? Math.min(250000, remainder) : 0;
+    remainder = Math.max(remainder - excluded, 0);
+    const taxable = recapture + remainder;
+    const fed = recapture * 0.25 + remainder * 0.20;
+    const niit = taxable * 0.038;
+    const state = taxable * 0.133;
+    const taxes = fed + niit + state;
+    const costs = price * 0.07 + price * 0.0011;
+    const net = price - taxes - costs;
+
+    // Property-tax side: the Proposition 19 branches at the transfer date.
+    const qualifyBase = Math.max(base, Math.max(value - limit, 0));
+    const relief = (value - qualifyBase) * rate;
+    const relief10 = relief * ((Math.pow(1.02, 10) - 1) / 0.02);
+    const taxShare = rent > 0 ? Math.min((value * rate) / (rent * 12), load) : 0;
+    const breakeven = relief / 12 / Math.max(1 - (load - taxShare), 0.05);
+    const imputed = rent * 12 * 10 * (1 - load);
+
+    cShow('carry-price', price);
+    cShow('carry-gain', gain);
+    cShow('carry-recapture', recapture);
+    cShow('carry-excluded', excluded);
+    cShow('carry-taxes', taxes);
+    cShow('carry-costs', costs);
+    cShow('carry-net', net);
+    cShow('carry-relief', relief);
+    cShow('carry-relief10', relief10);
+    cShow('carry-breakeven', breakeven);
+    cShow('carry-imputed', imputed);
+    cShow('carry-forward-value', forward ? Math.max(relief, 0) : 0);
+
+    const status = cEl('carry-status');
+    if (status) {
+      const useLabel = {
+        own: 'occupied and the exclusion claimed',
+        own121: 'occupied, main-home tests met, then sold',
+        rent: 'rented during the hold',
+        vacant: 'held vacant, no exclusion',
+      }[use] || use;
+      status.textContent = 'Hold of ' + holdYears + ' year(s), ' + useLabel +
+        (forward ? ', allowance carried forward' : '') +
+        '. Proposition 19 relief is worth about ' + (Math.round(relief / 10) * 10).toLocaleString('en-US') +
+        ' dollars a year on these inputs; renting beats occupying on the tax comparison alone above about ' +
+        (Math.round(breakeven / 10) * 10).toLocaleString('en-US') +
+        ' dollars of gross monthly rent. Imputed rent is a modeling convention, not a taxable amount. Assumptions are labeled on the page and this is not tax or investment advice.';
+    }
+  }
+
+  carryForm.querySelectorAll('input, select').forEach(control => {
+    control.addEventListener('input', runCarryTool);
+    control.addEventListener('change', runCarryTool);
+  });
+  cEl('carry-reset')?.addEventListener('click', () => {
+    cEl('carry-value').value = '6531230';
+    cEl('carry-hold').value = '5';
+    cEl('carry-growth').value = '4';
+    cEl('carry-rate').value = '1.34';
+    cEl('carry-limit').value = '1886640';
+    cEl('carry-base').value = '802030';
+    cEl('carry-rent').value = '5550';
+    cEl('carry-load').value = '35';
+    cEl('carry-use').value = 'own';
+    cEl('carry-forward').checked = false;
+    runCarryTool();
+  });
+  runCarryTool();
 }

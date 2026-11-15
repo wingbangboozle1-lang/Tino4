@@ -238,3 +238,22 @@ footer a { white-space: nowrap; }
   .brief-page footer { margin-top: 2px; padding-top: 2px; font-size: 6.5pt; }
 }
 >>>>>>> 5fe1463 (Integrate parallel sessions' features: decision log, Treasury ladder panel, regime map baselines, proposal watchlist rows, brief print compaction)
+
+/* Inline-SVG scenario chart and the carry-or-sell tool (no external chart library). */
+.chart { margin: 20px 0; padding: 18px; border: 1px solid #d8e6e2; border-radius: 12px; background: #fbfdfc; }
+.chart svg { width: 100%; height: auto; display: block; }
+.chart figcaption { margin-top: 10px; color: var(--muted); font-size: .8rem; }
+.chart-label { fill: #345155; font-size: 13px; font-weight: 650; }
+.chart-value { fill: var(--ink); font-size: 13px; font-weight: 730; }
+.chart-axis { stroke: #c5d8d4; stroke-width: 1; }
+.chart-axis-label { fill: var(--muted); font-size: 11px; }
+.chart-bar.bar-a { fill: #1f7a72; }
+.chart-bar.bar-b { fill: #3f9c8b; }
+.chart-bar.bar-c { fill: #7bb8a3; }
+.chart-bar.bar-d { fill: #c47f5a; }
+.tool-check { display: flex; flex-direction: row; align-items: center; gap: 8px; font-size: .8rem; }
+.tool-check input { width: auto; }
+@media print {
+  .chart { border: 1px solid #bbb; background: #fff; }
+  .chart-bar.bar-a, .chart-bar.bar-b, .chart-bar.bar-c, .chart-bar.bar-d { fill: #444; }
+}

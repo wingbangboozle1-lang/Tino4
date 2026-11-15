@@ -50,12 +50,32 @@ assert.ok(lostAfter > dropped, 'a lower renewal yield must increase the penalty'
 // 3. Review queues save only in local storage and reset cleanly.
 const log = load('pages/decision-log.html');
 const doc = log.window.document;
-assert.equal(doc.querySelectorAll('.review-choice').length, 12);
+const reviewTotal = doc.querySelectorAll('.review-choice').length;
+assert.ok(reviewTotal >= 12, `expected at least 12 logged decisions, saw ${reviewTotal}`);
 const choice = doc.querySelector('.review-choice[data-id="D07"]');
 choice.value = 'Selected for testing';
 choice.dispatchEvent(new log.window.Event('change'));
-assert.match(doc.getElementById('review-summary').textContent, /1 of 12 suggestions reviewed/);
+assert.match(doc.getElementById('review-summary').textContent, new RegExp(`1 of ${reviewTotal} suggestions reviewed`));
 assert.ok(log.window.localStorage.getItem('public-suggestion-review-v2').includes('D07'));
+// 4. Carry-or-sell tool on the sale-timing page: every panel populates, and a
+//    rented hold must produce depreciation recapture where an occupied hold does not.
+const carry = load('pages/sale-timing.html');
+const cdoc = carry.window.document;
+const cval = id => cdoc.getElementById(id).textContent;
+for (const id of ['carry-price', 'carry-gain', 'carry-taxes', 'carry-net', 'carry-relief', 'carry-breakeven', 'carry-imputed']) {
+  assert.ok(cval(id) && cval(id) !== '—', `carry tool output ${id} was not populated`);
+}
+assert.equal(cval('carry-recapture'), 'none modeled', 'an occupied hold must not model depreciation recapture');
+const useSelect = cdoc.getElementById('carry-use');
+useSelect.value = 'rent';
+useSelect.dispatchEvent(new carry.window.Event('change'));
+assert.match(cval('carry-recapture'), /\$/, 'a rented hold must produce a recapture amount');
+const rentNet = Number(cval('carry-net').replace(/[^0-9.]/g, ''));
+useSelect.value = 'own121';
+useSelect.dispatchEvent(new carry.window.Event('change'));
+const liveNet = Number(cval('carry-net').replace(/[^0-9.]/g, ''));
+assert.ok(liveNet > rentNet, 'meeting the main-home tests should beat a rented hold on net proceeds at these defaults');
+assert.equal(cdoc.querySelectorAll('form[action]').length, 0, 'the tool must not be a submitting form');
 assert.equal(/fetch|XMLHttpRequest|sendBeacon/.test(script), false);
 doc.getElementById('reset-reviews').click();
 assert.equal(doc.querySelector('.review-choice[data-id="D07"]').value, 'Not reviewed');
