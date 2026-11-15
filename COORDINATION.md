@@ -244,3 +244,12 @@ Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd5
 
 - `tools/sections.py` and `tools/models.py` are reference modules that no active build path reads; a follow-up could consolidate or delete them.
 - The failing official URLs (FTB, BOE assessor directory, BOE Publication 801, CPUC water page, SF Treasurer vacancy-tax) remain unverified, as recorded on the flagged page.
+
+### 666-4 release result (2026-11-15)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino4/pull/95 — "Close the identifier gap in the privacy release check". Opened from `arena/666008be-tino4`, rebased onto `origin/main` `5c92dfe` (PR #94) before merge.
+- **Checks:** `build-and-verify` passed on the head commit `d830104` (run `43676396997`, job `132697381099`); `mergeStateStatus` was `CLEAN`.
+- **Merge:** merged with `gh pr merge 95 --merge` at 2026-11-15T04:22:41Z; merge commit `9e1deddec86dae7a66c151a7e347ce6b4736d4ad` on `main`.
+- **CI after merge:** `verify` and `pages build and deployment` both report `completed/success` for `9e1dedd`.
+- **Pages:** the GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`. The live URL could not be fetched directly from this sandbox because outbound access is limited to GitHub, npm and PyPI hosts, so the deployment is confirmed through the Pages API and the `pages build and deployment` workflow rather than by reading the served HTML.
+- **Rebase record:** two rebases were needed because `main` advanced through PR #94 while this branch was open. The `COORDINATION.md` conflicts were resolved by preserving the incoming board in full and appending this session's section.
