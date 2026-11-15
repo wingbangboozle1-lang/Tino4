@@ -1,5 +1,29 @@
 # COORDINATION.md — Shared Task Board
 
+## Session `arena-bce280ee` — pre-decision action register (owner's bolded 12-item list) + integration (2026-11-15)
+
+Branch: `arena/bce280ee-tino4` (platform-fixed; branched from `60a054e` = `origin/main` tip "Merge PR #96"). No other branch or worktree is created; no force-push to any other ref. This session acts as the **final integration session** for the items below: `origin/main` was at this session's base commit when the claim was written and the only open PR (#19, session `arena/ec965fac`, coordination-log-only) does not touch site files, so no scope collision is expected. Board state read before claiming: all prior sessions recorded as merged or superseded; `tools/sections.py` and `tools/models.py` recorded as orphan reference modules (open item from session 666).
+
+| Task ID | Task (owner's wording) | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| BCE-1 | Look up Property A's tax rate area and read the published rate | in progress | `arena-bce280ee` | `tools/sitebuild.py` (property-tax section), `tools/verify.py` (host allowlist only if required) | 2026-11-15 |
+| BCE-2 | Model a sale in the same tax year as the inheritance before deciding anything else | in progress | `arena-bce280ee` | `tools/sitebuild.py` (new `pages/sale-timing.html` + model functions), `tools/site-manifest.json` | 2026-11-15 |
+| BCE-3 | Claim Prop 19 only if the heir will occupy long term — make it an explicit rule with a break-even | in progress | `arena-bce280ee` | `tools/sitebuild.py` (property-tax + decision-analysis rows) | 2026-11-15 |
+| BCE-4 | Five-year maintenance and capital plan for both buildings | in progress | `arena-bce280ee` | `tools/sitebuild.py` (new `pages/capital-plan.html`), `tools/site-manifest.json` | 2026-11-15 |
+| BCE-5 | Written valuation of Property A at the date of death | in progress | `arena-bce280ee` | `tools/sitebuild.py` (sale-timing + inheritance-process rows) | 2026-11-15 |
+| BCE-6 | Decide whether a like-kind exchange is wanted; advice before selling | in progress | `arena-bce280ee` | `tools/sitebuild.py` (sale-timing section) | 2026-11-15 |
+| BCE-7 | Write an investment policy for the proceeds before the money arrives | in progress | `arena-bce280ee` | `tools/sitebuild.py` (new `pages/investment-policy.html`), `tools/site-manifest.json` | 2026-11-15 |
+| BCE-8 | Estate liquidity plan if the estate may exceed the federal exclusion | in progress | `arena-bce280ee` | `tools/sitebuild.py` (estate-thresholds section) | 2026-11-15 |
+| BCE-9 | Ask now about portability and prior taxable gifts | in progress | `arena-bce280ee` | `tools/sitebuild.py` (estate-thresholds + questions rows) | 2026-11-15 |
+| BCE-10 | Re-run the model every year with updated inputs | in progress | `arena-bce280ee` | `tools/sitebuild.py` (decision-log + law-watchlist rows) | 2026-11-15 |
+| BCE-11 | Put a market rent on Property A or accept letting paths as a floor | in progress | `arena-bce280ee` | `tools/sitebuild.py` (property-profiles + questions rows) | 2026-11-15 |
+| BCE-12 | Add a distribution chart to the projections | in progress | `arena-bce280ee` | `tools/sitebuild.py` (projections chart), `assets/style.css` (chart rules) | 2026-11-15 |
+| BCE-13 | Carry-over items still absent from the site: imputed-rent input for living paths, §121 switch for living-then-sell, depreciation/recapture model, Prop 19 replacement-home carry-forward, transfer tax + recording fees priced into the sell path, Form 540 1%-over-$1M sensitivity, Prop H terms | in progress | `arena-bce280ee` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css` | 2026-11-15 |
+| BCE-14 | Privacy: current-tree PII gate, exposure re-audit, history-scrub status | in progress | `arena-bce280ee` | `tools/privacy_gate.py` (new), `.github/workflows/verify.yml`, `pages/privacy.html` rows | 2026-11-15 |
+| BCE-15 | Rebuild, verify, test, PR to `main`, merge, confirm Pages deploy, record result | in progress | `arena-bce280ee` | release | 2026-11-15 |
+
+Rules observed: only the files above are edited; `COORDINATION.md` edits are append-only to this session's section; every new published currency figure is rounded to the nearest $10 or registered as an official figure; no address, parcel/APN, account number, name or unrounded value is published; the specific Tax Rate Area number for a property is treated as an identifier and is described by method, not printed.
+
 ## Current session: quantitative decision layer restored + sourced research (`arena-377ea96a`)
 
 - Branch: `arena/377ea96a-tino4` (platform-fixed; branched from `c9530a3` = main tip "Merge PR #78"; no other branch/worktree created).
