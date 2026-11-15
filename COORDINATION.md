@@ -264,7 +264,7 @@ Branch: `arena/a897a17d-tino4` (platform-fixed; branched from `main` `60a054e`, 
 | --- | --- | --- | --- | --- | --- |
 | A897-1 | Replace the four retrieval-failed official URLs with verified official replacements where they exist (FTB gifts/inheritance, BOE county-assessor directory, CPUC water list); keep unresolved items flagged | done | `arena/a897a17d-tino4` | `tools/sitebuild.py` (SOURCES + flagged rows F-07/F-18 only) | 2026-11-15 |
 | A897-2 | Add the verified California 1% Behavioral Health Services Tax above $1,000,000 taxable income and the capital-gain treatment to the estate/income-tax page and source register | done | `arena/a897a17d-tino4` | `tools/sitebuild.py` (`build_estate_thresholds`, SOURCES) | 2026-11-15 |
-| A897-3 | Rebuild, verify, test, PR to `main`, merge after checks pass, confirm Pages deploy, record result | pending | `arena/a897a17d-tino4` | release | 2026-11-15 |
+| A897-3 | Rebuild, verify, test, PR to `main`, merge after checks pass, confirm Pages deploy, record result | done | `arena/a897a17d-tino4` | release | 2026-11-15 |
 
 ### A897 findings and verification (2026-11-15)
 
@@ -323,3 +323,11 @@ Branch: `arena/9830a6d0-tino4` (platform-pinned; base `60a054e` = `origin/main` 
 - **Pages:** the GitHub Pages API reports `built` at `https://wingbangboozle1-lang.github.io/Tino4/`; `pages/requirements-tracker.html` was fetched live and renders the register table with source links.
 - **Rebase record:** `main` advanced through PR #97 (a897a17d) while this branch was open. Conflicts in `COORDINATION.md`, `tools/verify.py`, `pages/flagged-for-review.html` and `pages/sources.html` were resolved without dropping either session's rows: both board sections are kept, the statute allowlist is the union, PR #97's verified CA sources are reused, and the generated pages were rebuilt from the merged source.
 - **Still open (owner or adviser action; see the requirements tracker):** Property A tax-rate area; market rent and comparables; date-of-death appraisal; five-year maintenance plan; estate liquidity plan; transfer-tax pricing; same-year sale model; imputed-rent and depreciation-recapture inputs; Prop H certified result and Property B's category; Prop 40 measure text and certified result; Git history scrub (F-01).
+
+### A897 release result (2026-11-15)
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino4/pull/97 — opened from `arena/a897a17d-tino4`; `build-and-verify` passed on the head commit (run `43710778320`); merge state `CLEAN`.
+- **Merge:** `gh pr merge 97 --merge` — merged 2026-11-15T11:49:59Z; merge commit `a513bc4` on `main`.
+- **CI on the merge commit:** `verify` and `pages build and deployment` both `completed/success` (`a513bc4`).
+- **Pages:** API reports `status: built`; the live page `pages/estate-thresholds.html` was fetched and shows the new rows at https://wingbangboozle1-lang.github.io/Tino4/.
+- **Still open (flagged, not blocking):** BOE Publication 801; SF Treasurer vacancy-tax page; FTB rate schedule. Owner-supplied figures and Nov 2026 Cupertino comparables remain unverified and are not available from an official public source in this sandbox.
