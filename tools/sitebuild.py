@@ -483,6 +483,140 @@ SOURCES = {
         "scope": "The official Bank of Japan source for the historical discount-rate and asset-price figures was not retrieved. Secondary sources conflict, so no Japan bubble figure is published here.",
         "verified": False,
     },
+    # --- Added 2026-11-15 (session arena-bce280ee): sell path, transfer tax, Prop 19, Prop H ---
+    "scc_tax_rates": {
+        "label": "Santa Clara County — Compilation of Tax Rates FY 2025-26",
+        "url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+        "scope": "Published levy for 816 tax rate areas in fiscal 2025-26; the first two digits of a rate-area number identify the city or unsecured area, and each parcel's rate is its own area's total. Secured instalments are due November 1 and February 1 (delinquent December 10 and April 10, then 10% plus 1.5% per month). Confirms the levy structure only — it does not state a rate for any individual parcel.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "scc_assessor_2026": {
+        "label": "Santa Clara County Assessor — 2026 Assessment Information booklet",
+        "url": "https://files.santaclaracounty.gov/exjcpb1521/2026-04/assessment-information-2026-booklet-english-3-23-26-web.pdf",
+        "scope": "Worked example of a full bill: a 1.0000 general levy plus 0.0388 county retirement levy, 0.10 school bonds and 0.01 water district totals 1.1488 per dollar of assessed value for one example parcel. Also states base-value growth at the lesser of the CPI or 2%, that inheritance reassessment runs from the date of death rather than distribution, that supplemental bills are prorated to June 30, usually not escrowed and appealable within 60 days, and that ordinary maintenance is generally not assessable. An example parcel's rate is not any other parcel's rate.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "scc_recording": {
+        "label": "Santa Clara County Clerk-Recorder — Recording real estate",
+        "url": "https://www.clerkrecorder.santaclaracounty.gov/recording-documents/recording-real-estate",
+        "scope": "States that documentary transfer tax is collected at recording, that a deed claiming no tax owes a stated exemption reason and a zero tax line on the face of the document, and that a preliminary change-of-ownership report is required. Does not set a rate for, or grant an exemption to, any specific transfer.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "scc_recording_fees": {
+        "label": "Santa Clara County Clerk-Recorder — Recording document fees",
+        "url": "https://www.clerkrecorder.santaclaracounty.gov/recording-documents/recording-document-fees",
+        "scope": "Lists the recording fee schedule: the 55-cents-per-$500 documentary transfer tax, the higher combined rate for San Jose, Palo Alto and Mountain View, a 20-dollar penalty for a missing or incomplete preliminary change-of-ownership report, and the non-refundable 75-dollar per-title state charge with per-page add-ons.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "rtc_11911": {
+        "label": "California RTC §11911 — Documentary transfer tax rate",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11911.&lawCode=RTC",
+        "scope": "Authorises a county, board or city to tax each deed conveying realty sold at 55 cents per $500 of consideration or value exclusive of liens remaining, on instruments over 100 dollars, with a half-rate city add-on credited against the county tax. The section as read has three subdivisions only and states no exemption: the exemptions sit in Chapter 3 of the same act, where §11930 exempts a transfer of realty outright to, or in trust for, any person or entity by reason of an inter vivos gift or a death.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "rtc_11912": {
+        "label": "California RTC §11912 — Who owes the tax",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11912.&lawCode=RTC",
+        "scope": "Places the documentary transfer tax on the person who makes, signs or issues the instrument, or for whose benefit it is made.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "rtc_17043": {
+        "label": "California RTC §17043 — 1% surtax on income over $1,000,000",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC",
+        "scope": "Imposes an additional 1 percent of the portion of taxable income exceeding $1,000,000 (Proposition 63), and states that the credits and recomputation provisions do not reduce it. Bracket structure for the underlying tax is not published here.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "boe_lta_2026_026": {
+        "label": "California BOE — Letter to Assessors 2026/026 (Proposition 19)",
+        "url": "https://www.boe.ca.gov/proptaxes/pdf/lta26026.pdf",
+        "scope": "Confirms that a transfer includes transfers at death and through trusts; that a 'family home' is a dwelling eligible for the homeowners' or disabled veterans' exemption because of the transferor's ownership and occupation; that the excluded amount is the factored base year value immediately before transfer plus the adjusted limit, with any excess added to the base and indexed; that the transferee must make it a principal residence within one year with no exceptions; that losing occupancy removes the exclusion retroactively to a factored full-cash-value base; and that a quick post-death sale can still qualify if occupancy and both claims were timely. The BOE notes its summaries are not official guidance.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ftb_cg": {
+        "label": "California FTB — Capital gains and losses",
+        "url": "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html",
+        "scope": "States that California does not have a lower rate for capital gains and that all capital gains are taxed as ordinary income, with differences from the federal computation reported on Schedule D (540). Does not publish a household's bracket or tax.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_1031": {
+        "label": "IRS — Like-kind exchanges: real estate tax tips",
+        "url": "https://www.irs.gov/businesses/small-businesses-self-employed/like-kind-exchanges-real-estate-tax-tips",
+        "scope": "States that section 1031 applies only to real property held for productive use in a business or for investment, that property held primarily for sale never qualifies, that money or unlike property received triggers gain to that extent while losses are not recognized, that grade and quality differences do not defeat like-kind status, and that US and non-US real property are not like-kind. Reported on Form 8824. It does not determine any taxpayer's holding intent.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_409": {
+        "label": "IRS Tax Topic 409 — Capital gain and loss",
+        "url": "https://www.irs.gov/taxtopics/tc409",
+        "scope": "Publishes the 0/15/20 percent long-term rate structure with 2025 income breakpoints, the 25 percent maximum on unrecaptured section 1250 gain, the 28 percent rate on collectibles and section 1202 stock, short-term gains at ordinary rates, and the $3,000 net capital-loss deduction limit with carryover. Brackets change annually.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_1041sd": {
+        "label": "IRS — Instructions for Schedule D (Form 1041)",
+        "url": "https://www.irs.gov/instructions/i1041sd",
+        "scope": "States that property acquired from a decedent is treated as held for more than one year, that basis is generally fair market value at the date of death (or the alternate-valuation figure where elected), and that a sale soon after death usually produces little or no gain.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_706": {
+        "label": "IRS — About Form 706 (United States Estate Tax Return)",
+        "url": "https://www.irs.gov/forms-pubs/about-form-706",
+        "scope": "Describes the return and its schedules as read in this session — A (real estate, at fair market value), K (adjusted taxable gifts), M, O, PC, Q, T and U — the section 2032A special-use valuation election for qualifying family farm and closely held business real property, and portability of an unused exclusion. Form revised August 2025 with instructions revised July 2026, and a request for a closing letter carries a fee after October 26, 2026. It does not value any property or determine any estate's tax.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "sfmta_prop_h": {
+        "label": "SFMTA — Muni Proposition H parcel tax",
+        "url": "https://www.sfmta.com/getting-around/muni/parcel",
+        "scope": "Proposition H as approved by San Francisco voters on November 3, 2026: a 15-year annual parcel tax effective fiscal 2027-28 through 2041-42, billed with the property tax in two instalments, indexed for inflation after the first year. Multifamily: 249 dollars up to 5,000 square feet, then 19.5 cents per square foot, capped at 50,000 dollars. Single-family: 129 dollars up to 3,000 square feet, 42 cents per square foot to 5,000, then 969 dollars plus 1.99 dollars per square foot. Owners of rent-controlled units may pass through up to half the tax, capped at 65 dollars per unit per year, only where the initial base rent predates June 1, 2027. A seniors exemption/reduction requires an annual application.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "sf_elections_2026": {
+        "label": "San Francisco Elections — November 3, 2026 results",
+        "url": "https://sfelections.org/results/20261103/",
+        "scope": "Preliminary (uncertified) official returns for the November 3, 2026 municipal election, including Measure H at 244,760 yes (74.4%) and 84,209 no on 328,969 counted ballots. Preliminary results are subject to canvass and certification.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "sf_asr_page": {
+        "label": "San Francisco Assessor-Recorder — Department page",
+        "url": "https://www.sf.gov/departments--assessor-recorder",
+        "scope": "Canonical department page: the new community portal for exemptions, exclusions, change of address and informal review; the Planning property information map for parcel history; reassessment on change in ownership subject to exclusions; decline-in-value informal review January 2 to March 31 for one-to-four-unit properties and Assessment Appeals Board filing July 2 to September 15; the 2026-2027 roll released July 17, 2026; and a September 22, 2026 notice on an assessment backlog. It does not publish a transfer-tax rate schedule for any sale.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "rtc_11930": {
+        "label": "California RTC §11930 — gift and death transfers exempt",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11930.&lawCode=RTC",
+        "scope": "Chapter 3 of the Documentary Transfer Tax Act (Exemptions): the tax does not apply to a deed or other writing by which realty is transferred outright to, or in trust for the benefit of, any person or entity by reason of an inter vivos gift or by reason of the death of any person. Added by Stats. 1996, Ch. 862. It exempts the transfer at death or out of the trust; it does not exempt a later sale to a buyer.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "rtc_11927": {
+        "label": "California RTC §11927 — community-property division exempt",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11927.&lawCode=RTC",
+        "scope": "Exempts a deed dividing community, quasi-community or quasi-marital property between spouses where required by a dissolution, nullity or separation judgment or order, or by a written agreement executed in contemplation of one — and conditions the exemption on a written recital, signed by either spouse, stating that the instrument is entitled to the exemption. Read as the model for how an exemption must be claimed on the face of a document.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "rtc_11932": {
+        "label": "California RTC §11932 — tax shown on the face of the document",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11932.&lawCode=RTC",
+        "scope": "Where a county has imposed the tax, every document subject to tax that is submitted for recordation must show on its face the amount of tax due and the incorporated or unincorporated location of the realty described. Amended by Stats. 2014, Ch. 20 (AB 1888), effective January 1, 2015.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
 }
 
 # ---------------------------------------------------------------------------
@@ -503,6 +637,16 @@ def round10(value: float) -> int:
 
 def money10(value: float) -> str:
     return f"${round10(value):,}"
+
+
+def money10_zero(value: float, zero_text: str = "none modeled") -> str:
+    """money10() with an explicit word for a modeled zero.
+
+    The published-amount rule requires every dollar figure to end in 0, which a bare
+    zero cannot satisfy; a modeled zero is therefore printed as words rather than as a
+    bare dollar-and-zero, and no row is left looking merely blank (blank means unknown on this site).
+    """
+    return money10(value) if round10(value) else zero_text
 
 
 PROPERTY_A = {
@@ -569,18 +713,48 @@ def a_assessed(year: int) -> float:
 
 
 def a_tax_exclusion(year: int) -> float:
-    return a_assessed(year) * RATE_A
+    """Property tax on Property A when the transfer QUALIFIES for the Prop 19 exclusion."""
+    return prop19_base_qualify(year) * RATE_A
 
 
 def excl_amount(year: int) -> float:
     return PROP19_EXCL_2025 * (1 + EXCL_GROWTH) ** (year - 2025)
 
 
+def prop19_base_qualify(year: int, inherit: int = INHERIT_YEAR) -> float:
+    """Base year value preserved by a qualifying Proposition 19 family-home transfer.
+
+    Corrected model, 2026-11-15: under RTC §63.2 and BOE guidance the excluded amount is the
+    transferor's factored base year value PLUS the adjusted value-limit amount, and the excess of
+    full cash value over that sum is added to the transferred base and then indexed annually. A
+    home worth far more than base + limit therefore does not keep its old tax base, so the earlier
+    simplification (base = factored base year value) overstated the relief; the value limit is
+    what caps it.
+    """
+    if year < inherit:
+        return a_assessed(year)
+    base_at_transfer = max(a_assessed(inherit), a_value(inherit) - excl_amount(inherit))
+    return base_at_transfer * (1 + ASSESS_CAP) ** (year - inherit)
+
+
+def prop19_base_reassess(year: int, inherit: int = INHERIT_YEAR) -> float:
+    """Base year value after a NON-qualifying change in ownership: full cash value at transfer."""
+    if year < inherit:
+        return a_assessed(year)
+    return a_value(inherit) * (1 + ASSESS_CAP) ** (year - inherit)
+
+
+def prop19_excess(year: int = INHERIT_YEAR, inherit: int = INHERIT_YEAR) -> float:
+    """Amount by which full cash value exceeds (factored base year value + value limit)."""
+    if year < inherit:
+        return 0.0
+    return max(a_value(inherit) - (a_assessed(inherit) + excl_amount(inherit)), 0.0)
+
+
 def a_tax_reassessed(year: int, inherit: int = INHERIT_YEAR):
     if year < inherit:
         return None
-    base = max(a_value(inherit) - excl_amount(inherit), 0.0)
-    return base * (1 + ASSESS_CAP) ** (year - inherit) * RATE_A
+    return prop19_base_reassess(year, inherit) * RATE_A
 
 
 def b_assessed(year: int) -> float:
@@ -661,6 +835,257 @@ def staging_rows() -> list[dict]:
     return rows
 
 
+# ---------------------------------------------------------------------------
+# Session arena-bce280ee (2026-11-15): pre-decision action register.
+#
+# Adds the missing decision layers the owner asked for, each computed from the
+# same privacy-rounded inputs and labeled assumptions so every published amount
+# ends in 0: the published tax-rate-area decomposition, the same-tax-year sale
+# model, the Proposition 19 occupancy rule and carry-forward, the five-year
+# capital plan, Proposition H (San Francisco, approved November 3, 2026), the
+# depreciation/recapture model, imputed rent, the §121 switch, estate liquidity
+# and portability, and the annual re-run protocol.
+# ---------------------------------------------------------------------------
+
+# Published Santa Clara County rate structure (County Compilation of Tax Rates
+# FY 2025-26 and the Assessor's 2026 assessment booklet): 1.0000 general levy
+# + 0.0388 county retirement levy + voter-approved debt, expressed per $100 of
+# assessed value. The Assessor's own worked example totals 1.1488.
+SC_LEVY_TOTAL = 0.011488   # the booklet example: 1.0000 + 0.0388 + 0.10 + 0.01
+SC_HOMEEX = 7000            # RTC §218 homeowners' exemption (statutory amount)
+SC_DTT_RATE = 0.0011        # RTC §11911(a): 55 cents per $500 = 0.11% (Cupertino adds no city tax)
+FED_LTCG_TOP = 0.20         # 2025/2026 top long-term capital-gain rate band (IRS Topic 409)
+FED_RECAPTURE_TOP = 0.25    # unrecaptured section 1250 gain maximum rate (IRS Topic 409)
+NIIT_RATE = 0.038           # IRS net investment income tax
+CA_TOP = 0.133              # 12.3% top bracket + 1% over $1,000,000 (RTC §17043, Prop 63)
+SEC121_SINGLE = 250000      # IRC §121 exclusion, single filer (IRS Topic 701)
+DEPR_LIFE_YEARS = 27.5      # residential rental recovery period (IRS Publication 946)
+BUILDING_SHARE = 0.8        # assumption: land/value split for depreciation
+RENT_HURDLE_LOAD = RENT_LOAD
+
+# Third-party listing aggregates for the Cupertino area (not official, not
+# parcel-specific) used only as a scenario band until a written comparable study
+# exists. Published rounded, badged Not verified on the flagged page.
+A_RENT_BAND = (5550, 6400)
+
+
+# Proposition H — City and County of San Francisco parcel tax approved November 3,
+# 2026 (SFMTA official terms; FY 2027-28 amounts, indexed for inflation after that).
+PROP_H = {
+    "single_family": {"base_area": 3000, "base": 129, "mid_area": 5000, "mid_cents": 42, "high_dollars": 1.99, "high_base": 969},
+    "multifamily": {"base_area": 5000, "base": 249, "marginal_dollars": 0.195, "cap": 50_000},
+    "passthrough_share": 0.5,
+    "passthrough_cap_per_unit": 65,
+    "start_fy": 2027,
+    "end_fy": 2042,
+}
+
+
+def prop_h_multifamily(area: float, infl: float = 0.0, years: int = 0) -> float:
+    """Proposition H annual parcel tax for a multifamily residential parcel."""
+    factor = (1 + infl) ** years
+    if area <= PROP_H["multifamily"]["base_area"]:
+        return PROP_H["multifamily"]["base"] * factor
+    raw = PROP_H["multifamily"]["base"] + PROP_H["multifamily"]["marginal_dollars"] * (area - PROP_H["multifamily"]["base_area"])
+    return min(raw, PROP_H["multifamily"]["cap"]) * factor
+
+
+def prop_h_passthrough(tax: float, units: int) -> float:
+    """Recoverable share for rent-controlled units: half of the tax, capped per unit."""
+    return min(tax * PROP_H["passthrough_share"], PROP_H["passthrough_cap_per_unit"] * units)
+
+
+def a_bill_levy_only(year: int) -> float:
+    """The published-levy share of the owner-supplied rounded bill for Property A."""
+    return SC_LEVY_TOTAL * max(PROPERTY_A["assessed"][year] - SC_HOMEEX, 0)
+
+
+def a_bill_fixed_charge(year: int) -> float:
+    """Residual of the supplied bill after the published levy — special charges or a
+    higher rate-area total. Which it is must be read off the actual bill."""
+    return PROPERTY_A["tax"][year] - a_bill_levy_only(year)
+
+
+A_FIXED_CHARGE = a_bill_fixed_charge(2025)
+A_BLENDED_RATE = RATE_A
+A_LEVY_GAP_BPS = (RATE_A - SC_LEVY_TOTAL) * 10_000
+
+
+def a_assessed_reassessed(year: int, inherit: int = INHERIT_YEAR) -> float | None:
+    if year < inherit:
+        return None
+    return prop19_base_reassess(year, inherit)
+
+
+def a_assessed_qualify(year: int, inherit: int = INHERIT_YEAR) -> float:
+    return prop19_base_qualify(year, inherit)
+
+
+def a_tax_exclusion_decomp(year: int) -> float:
+    """Occupy-and-claim branch: published levy on (preserved base − homeowners' exemption) + fixed charges."""
+    return SC_LEVY_TOTAL * max(a_assessed_qualify(year) - SC_HOMEEX, 0.0) + A_FIXED_CHARGE
+
+
+def a_tax_reassessed_decomp(year: int, inherit: int = INHERIT_YEAR) -> float | None:
+    base = a_assessed_reassessed(year, inherit)
+    if base is None:
+        return None
+    return SC_LEVY_TOTAL * max(base - SC_HOMEEX, 0.0) + A_FIXED_CHARGE
+
+
+# Capital-reserve planning bands (assumption, expressed as a share of the modeled value):
+# a sinking fund is the only line that survives every path, so it is sized here rather than
+# guessed per item. Replace with licensed bids before use.
+A_RESERVE_PCT = (0.005, 0.010)
+A_RESERVE_BAND = (A_RESERVE_PCT[0] * PROPERTY_A["value_2026"], A_RESERVE_PCT[1] * PROPERTY_A["value_2026"])
+A_RESERVE_MID = sum(A_RESERVE_BAND) / 2
+B_RESERVE_PCT = (0.010, 0.015)
+B_RESERVE_BAND = (B_RESERVE_PCT[0] * PROPERTY_B["value_2026"], B_RESERVE_PCT[1] * PROPERTY_B["value_2026"])
+B_RESERVE_MID = sum(B_RESERVE_BAND) / 2
+
+
+def a_load_ex_tax(year: int = INHERIT_YEAR, rent: float = 0.0) -> float:
+    """Operating load on a rented Property A excluding the property-tax line.
+
+    RENT_LOAD is a blended assumption that already contains the tax line; the tax consequence
+    is priced separately by the Proposition 19 branch, so it must not be counted twice.
+    """
+    tax_share = a_tax_exclusion(year) / max(rent * 12.0, 1.0)
+    return max(RENT_LOAD - min(tax_share, RENT_LOAD), 0.05)
+
+
+def prop19_breakeven_rent(year: int = INHERIT_YEAR, load: float | None = None) -> float:
+    """Gross monthly rent at which letting the house exactly offsets the Prop 19 tax relief.
+
+    Above this rent, the carry-and-rent path wins on the tax-and-rent comparison alone; below it,
+    occupying wins. Only the relief term is modeled: the comparison ignores any outside rent the
+    occupant would otherwise pay, which is the term that usually reverses the ranking.
+    """
+    relief = tax_delta_decomp(year) or 0.0
+    load = RENT_LOAD if load is None else load
+    return relief / 12.0 / (1.0 - load)
+
+
+
+
+def tax_delta_decomp(year: int, inherit: int = INHERIT_YEAR) -> float | None:
+    reassessed = a_tax_reassessed_decomp(year, inherit)
+    if reassessed is None:
+        return None
+    return reassessed - a_tax_exclusion_decomp(year)
+
+
+DELTA_2045_DECOMP = tax_delta_decomp(INHERIT_YEAR)
+DELTA_10YR_DECOMP = sum(tax_delta_decomp(y) for y in range(INHERIT_YEAR, INHERIT_YEAR + 10))
+RENT_HURDLE_DECOMP = (DELTA_10YR_DECOMP / 10) / 12 / (1 - RENT_HURDLE_LOAD)
+BLENDED_MINUS_DECOMP = DELTA_10YR - DELTA_10YR_DECOMP
+
+# Proposition 19 occupancy economics, computed on the corrected value-limit model.
+PROP19_RELIEF_2045 = tax_delta_decomp(INHERIT_YEAR)
+PROP19_RELIEF_2045_BLENDED = DELTA_2045
+PROP19_EXCESS_2045 = prop19_excess()
+PROP19_LIMIT_2045 = a_assessed(INHERIT_YEAR) + excl_amount(INHERIT_YEAR)
+PROP19_BREAKEVEN_MONTH = prop19_breakeven_rent(load=a_load_ex_tax(rent=A_RENT_BAND[0]))
+PROP19_10YR_RELIEF = DELTA_10YR_DECOMP
+PROP19_10YR_RELIEF_BLENDED = DELTA_10YR
+A_TAX_SHARE_OF_LOAD = min(a_tax_exclusion(INHERIT_YEAR) / (A_RENT_BAND[0] * 12.0), RENT_LOAD)
+
+# Owner-supplied 2025 figures, restated against the published rate structure.
+IMPLIED_RATE_2025 = PROPERTY_A["tax"][2025] / PROPERTY_A["assessed"][2025]
+IMPLIED_RATE_WITH_EXEMPTION = PROPERTY_A["tax"][2025] / (PROPERTY_A["assessed"][2025] - SC_HOMEEX)
+
+def sale_case(hold_years: int = 0, rented: bool = False, sec121: bool = False,
+              inherit: int = INHERIT_YEAR) -> dict:
+    """After-cost, after-tax proceeds from selling Property A `hold_years` after transfer.
+
+    Inherited basis is generally date-of-death value (IRC §1014), so a sale in the
+    year of the transfer produces little or no gain. Renting in the meantime adds
+    depreciation, which becomes taxable recapture and permanently taxable gain.
+    """
+    sale_year = inherit + hold_years
+    price = a_value(sale_year)
+    basis = a_value(inherit)
+    depreciation = 0.0
+    if rented and hold_years > 0:
+        depreciation = a_value(inherit) * BUILDING_SHARE / DEPR_LIFE_YEARS * hold_years
+        basis -= depreciation
+    gain = max(price - basis, 0.0)
+    recapture = min(depreciation, gain) if depreciation else 0.0
+    remainder = max(gain - recapture, 0.0)
+    excluded = min(SEC121_SINGLE, remainder) if sec121 else 0.0
+    remainder = max(remainder - excluded, 0.0)
+    taxable = recapture + remainder
+    fed = recapture * FED_RECAPTURE_TOP + remainder * FED_LTCG_TOP
+    niit = taxable * NIIT_RATE
+    state = taxable * CA_TOP
+    selling = price * SELL_COST
+    dtt = price * SC_DTT_RATE
+    taxes = fed + niit + state
+    return {
+        "sale_year": sale_year,
+        "price": price,
+        "basis": basis,
+        "gain": gain,
+        "recapture": recapture,
+        "excluded": excluded,
+        "taxable": taxable,
+        "fed": fed,
+        "niit": niit,
+        "state": state,
+        "taxes": taxes,
+        "selling": selling,
+        "dtt": dtt,
+        "net": price - selling - dtt - taxes,
+        "tax_rate": (taxes / price) if price else 0.0,
+    }
+
+
+SALE_NOW = sale_case(0)
+SALE_LATER_RENT = sale_case(5, rented=True)
+SALE_LATER_LIVE = sale_case(5, sec121=True)
+SALE_LATER_IDLE = sale_case(5)
+COST_OF_WAITING_RENT = SALE_NOW["net"] - SALE_LATER_RENT["net"]
+
+# Property A carrying costs used by the capital plan (owner-supplied bands and
+# labeled planning bands; every published amount is rounded to the nearest $10).
+A_WATER_YEAR = sum(PROPERTY_A["water_month"]) / 2 * 12
+A_SOLAR_YEAR = -sum(PROPERTY_A["solar_credit_month"]) / 2 * 12
+A_INS_MID = sum(A_INS_BAND) / 2
+B_INS_MID = sum(B_INS_BAND) / 2
+A_MAINT_MID = sum(MAINT_A_BAND) / 2
+B_MAINT_MID = sum(B_MAINT_BAND) / 2
+B_WATER_YEAR = sum(PROPERTY_B["water_month"]) / 2 * 12
+B_ELEC_YEAR = sum(PROPERTY_B["electric_month"]) / 2 * 12
+
+CAPITAL_PLAN_A = [
+    (1, "Roof, flashing and gutter inspection; clear drainage", "Repair band", "Roof age and condition are unverified; a bid is required."),
+    (1, "Water heater age check and pressure/expansion tank", "Reserve", "Age unknown; plan replacement inside the band, not at zero."),
+    (1, "Solar array, inverter and interconnection document review", "Verify", "Inverter life is typically shorter than module life; the tariff governs credit."),
+    (2, "Seismic and structural review; water-consumptive fixture upgrade", "Reserve", "No public source prices this work for a specific house."),
+    (2, "Interior repaint and flooring refresh for letting or sale readiness", "Reserve", "Only needed if the path is rent or sell; skip if it delays a healthy sale."),
+    (3, "Exterior paint, deck and fence treatment", "Reserve", "Bay-area moisture and sun exposure shorten cycles."),
+    (3, "HVAC service contract or heat-pump replacement reserve", "Reserve", "Equipment age unverified."),
+    (4, "Electrical panel, wiring and EV/charger capacity", "Reserve", "Older Cupertino tract homes may need panel work before added load."),
+    (4, "Bathroom and kitchen caulk, grout, ventilation check", "Repair band", "Moisture damage is the common hidden cost in a rented or vacant home."),
+    (5, "Landscaping, trees, hardscape and fire-safety defensible space", "Reserve", "Tree work near structures is a recurring, uninsurable cost."),
+    (5, "Re-appraise the plan: compare actual spend to the reserve and re-set it", "Governance", "The plan is only useful if variance is reviewed annually."),
+]
+
+CAPITAL_PLAN_B = [
+    (1, "Rent Board registration, lease audit and unit-legality reconciliation", "Verify", "Uncounted or unlawful units must not carry projected rent."),
+    (1, "Roof, flashing, skylights and common-area water intrusion", "Repair band", "Older flat-roof SF buildings leak; deferred roof work is the usual large surprise."),
+    (1, "Knob-and-tube wiring, panel and GFCI audit (insurance-driven)", "Reserve", "Insurers frequently condition or price coverage on the electrical condition."),
+    (2, "Sewer lateral, cleanouts and lateral-line inspection", "Reserve", "Sidewalk/vault work is a city-permitted item; no public source prices it."),
+    (2, "Exterior paint, stucco and siding (lead-safe prep if pre-1978)", "Reserve", "Lead-safe surface prep and permit requirements raise cost and duration."),
+    (3, "Interior unit turnover: kitchens, bathrooms, flooring, appliances", "Reserve", "Turnover scope sets the achievable rent, and is the largest discretionary line."),
+    (3, "Life-safety: smoke/CO devices, egress, handrails, extinguishers", "Verify", "Required devices must be installed and documented before a rent increase is defensible."),
+    (4, "Seismic retrofit / sill plate and cripple-wall inspection", "Reserve", "Retrofit exclusion from reassessment must be confirmed with the assessor."),
+    (4, "Water heater(s), boiler/furnace and laundry equipment service", "Reserve", "Shared-equipment condition is an operating-expense and safety issue at once."),
+    (5, "Weatherization, insulation, windows, HVAC tune-up and solar feasibility", "Reserve", "Energy work also changes the tenant-absorbed cost split."),
+    (5, "Reconcile actual spend against reserves; refresh the five-year plan", "Governance", "A plan that is not reconciled becomes a guess."),
+]
+
+
 NAV_GROUPS = [
     ("Start", [
         ("index.html", "Decision overview"),
@@ -678,6 +1103,11 @@ NAV_GROUPS = [
     ("Numbers", [
         ("pages/projections.html", "Projection worksheet"),
         ("pages/property-tax.html", "Property-tax rules"),
+        ("pages/capital-plan.html", "Five-year capital plan"),
+    ]),
+    ("Sell path & timing", [
+        ("pages/sale-timing.html", "Sale timing & tax year"),
+        ("pages/investment-policy.html", "Investment policy"),
     ]),
     ("Stress tests", [
         ("pages/black-swan.html", "Black-swan conditions"),
@@ -707,6 +1137,9 @@ EXPECTED_PAGES = [
     "pages/suggestions.html",
     "pages/projections.html",
     "pages/property-tax.html",
+    "pages/capital-plan.html",
+    "pages/sale-timing.html",
+    "pages/investment-policy.html",
     "pages/operating-costs.html",
     "pages/black-swan.html",
     "pages/phased-investing.html",
@@ -1256,6 +1689,53 @@ def build_property_tax() -> str:
         {"cells": ["Value-limit test", "The exclusion applies to the transferor's principal residence subject to a value limit expressed as the current taxable value plus an adjusted amount, with the excess above the limit added to the transferred base.", "Eligibility is not all-or-nothing; a property above the limit can still receive partial relief, which changes the modelled tax materially."], "status": "Verified", "sources": ["boe_prop19", "ca_rtc63"]},
     ]
     body += make_table("Mechanics that drive a year-by-year tax projection", ["Mechanism", "What the official rule says", "Why it changes the model"], mech_rows, "No parcel's base-year value, enrolled value or bill is published. These rows describe the calculation structure only.")
+    rate_rows = [
+        {"cells": ["Read the tax rate area before using any rate", "Santa Clara County publishes a compilation of levy rates for 816 tax rate areas for fiscal 2025-26; the first two digits of the area number identify the city or unsecured area, and every parcel's rate is its own area's total, capped at the 1% general levy plus voter-approved debt.", "Find the rate-area number printed on the parcel's own secured bill, then read that area's total. This site deliberately publishes no rate-area number for Property A: the number is a parcel identifier and belongs in private records, not on a public page."],
+         "status": "Guidance", "sources": ["scc_tax_rates"]},
+        {"cells": ["The published example is not the parcel's rate", "The Assessor's 2026 booklet works one example bill as a 1.0000 general levy plus 0.0388 county retirement levy, 0.10 for school bonds and 0.01 for a water district: 1.1488 per dollar of assessed value, or about 11,500 dollars on a 1,000,000 dollar assessed value.", "Use the example to understand the structure of the bill, never as a rate to multiply a value by. Bonds and direct charges are parcel-specific."],
+         "status": "Verified", "sources": ["scc_assessor_2026"]},
+        {"cells": ["What the owner-supplied bill implies", "The supplied 2025 figures for Property A — an assessed value near " + money10(PROPERTY_A["assessed"][2025]) + " and a tax bill near " + money10(PROPERTY_A["tax"][2025]) + " — imply a total rate of about " + f"{IMPLIED_RATE_2025 * 100:.2f}" + " percent of assessed value, or about " + f"{IMPLIED_RATE_WITH_EXEMPTION * 100:.2f}" + " percent after the statutory homeowners' exemption. That is roughly " + f"{A_LEVY_GAP_BPS:.0f}" + " basis points above the 1.1488 example.",
+         "Either the bill includes parcel-specific charges the example does not, or one of the supplied figures is misremembered. Both cannot be right at the published levy, so the bill's line items decide; this site does not choose between them."],
+         "status": "Owner-supplied (privacy-rounded)", "sources": ["scc_assessor_2026", "owner_a", "scc_tax_rates"]},
+        {"cells": ["What a 10-dollar rounding policy cannot hide", "Rounding to the nearest ten dollars prevents a search hit on an exact figure, but a year-by-year assessed-value series can still be matched against a county roll by anyone who knows where to look.", "The privacy control that matters is not publishing the parcel number, address or owner name — which the release check enforces — combined with the owner's decision to publish rounded values."],
+         "status": "Guidance", "sources": ["owner_a", "boe_pub29"]},
+    ]
+    body += make_table("Property A's tax rate: read the bill's rate area first", ["Row", "What the official source says", "What to do with it"], rate_rows,
+                       "No tax rate area number, parcel number or address is published anywhere on this site. The rate-area lookup is the owner's private step, and the derived percentage above is computed only from owner-supplied rounded figures.")
+    body += callout(
+        "A question closed today: the transfer tax at death",
+        "Earlier sessions could not confirm whether the county charges documentary transfer tax when a house passes by death or out of a trust, because only commercial title and tax websites asserted the exemption. "
+        "The code has now been read directly: §11930 states that the tax does not apply where realty is transferred outright to, or in trust for the benefit of, any person or entity by reason of an inter vivos gift or by reason of a death, "
+        "and §11932 requires the tax to be shown on the face of any recorded document that is subject to it. The exemption covers the inheritance step only. A sale to a buyer afterwards is a separate, taxable instrument, which is why the "
+        "sell-path costing on this site keeps the transfer tax on the sale line and removes it from the transfer line.",
+        "info",
+    )
+    ph_rows = [
+        {"cells": ["What it is", "A 15-year annual parcel tax approved by San Francisco voters on November 3, 2026 to fund Muni service, billed on the property-tax bill in two instalments beginning in fiscal 2027-28 and indexed for inflation after the first year.", "It is a tax on owners, not a rent measure: it does not cap rents or change tenant rights, and it does not appear in the Property A analysis at all."],
+         "status": "Verified", "sources": ["sfmta_prop_h", "sf_elections_2026"]},
+        {"cells": ["Multifamily rate, as published", "249 dollars for a multifamily parcel up to 5,000 square feet of building area, then 19.5 cents per square foot, capped at 50,000 dollars a year.", "For Property B the modeled amount at an assumed 6,500 square feet is about " + money10(prop_h_multifamily(6500)) + " a year; the true figure depends on the parcel's measured area and classification, neither of which is verified here."],
+         "status": "Projection", "sources": ["sfmta_prop_h", "owner_b"]},
+        {"cells": ["Single-family comparison", "129 dollars up to 3,000 square feet, 42 cents per square foot to 5,000, then 969 dollars plus 1.99 dollars per square foot above 5,000.", "Classification matters: a three-unit building is taxed on the multifamily schedule, and each unit's status is a Roll question, not an assumption."],
+         "status": "Verified", "sources": ["sfmta_prop_h"]},
+        {"cells": ["Pass-through limit", "Owners of rent-controlled units may pass through up to half of the tax, capped at 65 dollars per unit per year, and only where the unit's initial base rent predates June 1, 2027.", "On the modeled figures the recoverable share is about " + money10(prop_h_passthrough(prop_h_multifamily(6500), PROPERTY_B["rented_units"])) + " a year across the two rented units — roughly a quarter of the tax, so most of it stays with the owner."],
+         "status": "Projection", "sources": ["sfmta_prop_h", "sf_rent_board"]},
+        {"cells": ["Seniors exemption", "Owners aged 65 or older who occupy the parcel may qualify for an exemption or reduction, applied for annually through a portal that opens December 1, 2026, with a June 1 deadline and automatic renewal.", "Not applicable to a rented building, but relevant if the household occupies a unit; the application is a recurring deadline."],
+         "status": "Verified", "sources": ["sfmta_prop_h"]},
+        {"cells": ["Cost context", "The Controller's estimate of the measure's revenue is about 177,000,000 dollars a year citywide; the tax is one line among many on a San Francisco parcel.", "Add it to the carrying-cost stack for Property B rather than treating it as a rounding item."],
+         "status": "Verified", "sources": ["sfmta_prop_h"]},
+    ]
+    body += make_table("San Francisco Proposition H — an enacted parcel tax on Property B", ["Element", "What the official source states", "Effect on the model"], ph_rows,
+                       "Proposition H was treated in earlier sessions as a possible rent measure and left as pending research. It is neither: it passed on November 3, 2026 with preliminary returns of 244,760 yes and 84,209 no, and it is an owner-paid parcel tax running through fiscal 2041-42. Amounts follow the SFMTA's published rate schedule for fiscal 2027-28, indexed for inflation thereafter; the uncertified election result is flagged.")
+    limit_rows = [
+        {"cells": ["The value limit is the binding constraint", "The excluded amount is the transferor's factored base year value immediately before the transfer plus the adjusted limit (the 2025-2027 amount is $1,044,586); the excess of full cash value over that sum is added to the base and then indexed annually.", "On the modeled 2045 Property A figures the value limit binds hard: the preserved base is about " + money10(a_assessed_qualify(INHERIT_YEAR)) + " against a full-cash-value base of about " + money10(a_assessed_reassessed(INHERIT_YEAR)) + ", so relief is worth roughly " + money10(PROP19_RELIEF_2045) + " a year — not the entire gap between the old and the new tax base."],
+         "status": "Projection", "sources": ["boe_lta_2026_026", "boe_prop19", "owner_a"]},
+        {"cells": ["Correction recorded on 2026-11-15", "Earlier pages in this workspace modeled the qualifying branch as keeping the factored base year value alone, and the non-qualifying branch as market value less the limit. Read together with §63.2 and the BOE letter, the correct pair is: qualifying base = factored base year value plus the excess over the limit; non-qualifying base = full cash value at the transfer.", "This session's model now uses the corrected pair everywhere, which lowers the modeled benefit of Proposition 19 and raises the modeled cost of failing to qualify. Re-read any conclusion drawn from the earlier headline figures."],
+         "status": "Guidance", "sources": ["ca_rtc63", "boe_lta_2026_026"]},
+        {"cells": ["Why partial relief still matters", "Because the excess is added rather than the exclusion denied, a high-value home can still receive partial relief — and the indexed 2% cap applies to the resulting base thereafter.", "Model the branches as continuous, not as a yes/no switch; and have the assessor's determination, not this page, settle it."],
+         "status": "Verified", "sources": ["boe_prop19", "ca_rtc51"]},
+    ]
+    body += make_table("The Proposition 19 value limit, corrected", ["Point", "What the official rule requires", "Modeled effect"], limit_rows,
+                       "Amounts come from the privacy-rounded owner-supplied value and the labeled growth assumptions on the projection worksheet; the official 2025-2027 limit figure is quoted as published. A future year's limit is adjusted biennially and must be read at transfer.")
     body += paragraph("Private records to request", "For each asset separately, obtain the assessor roll, full secured tax bill, supplemental assessment history, deed and trust transfer documents, homeowners' exemption status, parcel-specific direct levies, and any filed Proposition 19 claims. Do not publish a parcel number or tax bill in this public repository.")
     return render_page("pages/property-tax.html", "Property-tax rules", "California property-tax mechanics that matter for a future trust transfer, with no address, assessor record or property-specific tax history disclosed.", body, "NUMBERS")
 
@@ -1528,6 +2008,9 @@ def build_law_watchlist() -> str:
         {"cells": ["Investment yields and market entry", "Treasury rates are fixed at each auction for the selected security; stock prices can lose value.", "Reprice the ladder and compare reinvestment and sequence risk immediately before investment."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
         {"cells": ["Long-run economic assumptions", "CBO's cited interest-rate horizon is 2026–2036; no cited official source provides an individual 50-year house value, insurance price, rent or return forecast.", "Use several clearly labeled stress paths; never promote a scenario into a forecast."], "status": "Guidance", "sources": ["cbo_rates", "fhfa_hpi", "bls_cpi"]},
         {"cells": ["Nov 3, 2026 tax-related statewide measures (Props 3, 40–43)", "The official titles are: 3 — extends the existing tax on high incomes for schools and health care; 40 — imposes a one-time tax on certain taxpayers; 41 — prohibits new state taxes that exclude revenue from the state spending limit and requires audits of new state special taxes; 42 — prohibits new state personal property taxes and certain retroactive state taxes; 43 — limits voters' ability to raise local government revenue. The election date (Nov 3, 2026) is before today's date (Nov 15, 2026); certified results were not read here.", "Read the certified results and each measure's full text and fiscal analysis before relying on any tax effect; a ballot title is not a legal outcome by itself."], "status": "Not verified", "sources": ["sos_ballot"]},
+        {"cells": ["San Francisco Proposition H (Muni parcel tax) — ENACTED", "Approved by San Francisco voters on November 3, 2026 (preliminary official returns: 244,760 yes, 74.4%; 84,209 no, on 328,969 counted ballots) and NOT a rent measure: it is a 15-year annual parcel tax on property owners, billed with the property tax from fiscal 2027-28 through 2041-42 and indexed for inflation after the first year.", "Re-read the SFMTA schedule and the certified results, confirm the parcel's building area and classification, and check the seniors exemption/reduction application window (portal opens December 1, 2026; due June 1; auto-renews) and the 50% pass-through conditions for rent-controlled owners."], "status": "Verified", "sources": ["sfmta_prop_h", "sf_elections_2026"]},
+        {"cells": ["Documentary transfer tax on a death or trust transfer", "Verified against the code on 2026-11-15: §11911 sets only the rate (55 cents per 500 dollars of consideration over 100 dollars), while §11930 in the Act's exemptions chapter states that the tax does not apply where realty is transferred outright to, or in trust for the benefit of, any person or entity by reason of an inter vivos gift or a death. §11932 requires the tax, if any, to be shown on the face of the recorded document. A later sale to a buyer is a different instrument and is not exempt.", "Have the preparer state the statutory basis for the exemption on the deed before recording, and re-read §11930 and the county's exemption codes at transfer; this closes a question earlier sessions had to leave flagged on the strength of commercial title sites alone."], "status": "Verified", "sources": ["rtc_11930", "rtc_11932", "rtc_11911", "scc_recording"]},
+        {"cells": ["Federal capital-gain and recapture rates", "IRS Tax Topic 409 publishes the 0/15/20 percent long-term bands with 2025 income breakpoints, the 25 percent maximum on unrecaptured section 1250 gain and the 28 percent rate on collectibles; short-term gain is taxed as ordinary income. The rates are annual and several proposals would change them.", "Re-read Topic 409 and Publication 550 for the actual year of sale, and confirm the net investment income tax and any state surcharge that applies to the same gain."], "status": "Verified", "sources": ["irs_409", "ftb_cg", "irs_niit"]},
         {"cells": ["SF rent-control allowable increase", "The Rent Board page states a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027. Secondary articles that cite a different figure are superseded by this official page.", "Re-check the Rent Board page each year; confirm whether a unit is covered before applying any increase."], "status": "Verified", "sources": ["sf_rent_board"]},
         {"cells": ["SF Rent Board 2026 notices (demolition/major renovation protections; security-deposit interest)", "The Rent Board page lists a January 23, 2026 item on tenant protections for demolition and major renovation, and a security-deposit interest change effective March 1, 2026. Their substance was not extracted into this site.", "Counsel should read the linked notice text and confirm whether it applies to the specific units before any tenant or deposit decision."], "status": "Not verified", "sources": ["sf_rent_board"]},
     ]
@@ -1794,6 +2277,344 @@ def build_suggestions() -> str:
     return render_page("pages/suggestions.html", "Suggestions for review", "A selectable review queue for improving decision quality. Suggestions are proposals, not automatic changes or personalized advice.", body, "DECISION")
 
 
+def money(v: object) -> str:
+    """Alias used by the sell-path pages so every published amount is rounded the same way."""
+    return money10(float(v))
+
+
+def svg_bar_chart(title: str, series: list[tuple[str, float, str]], width: int = 720, height: int = 260) -> str:
+    """A dependency-free, inline-SVG scenario distribution chart.
+
+    `series` is (label, value, colour-class). Values are drawn as a horizontal distribution
+    so the chart stays readable at any width and needs no script, no canvas and no remote asset.
+    """
+    if not series:
+        return ""
+    top = max(value for _, value, _ in series) or 1.0
+    bar_h = 26
+    gap = 12
+    label_w = 250
+    value_w = 110
+    plot_w = width - label_w - value_w - 20
+    chart_h = height
+    bars = []
+    y = 24
+    step = (chart_h - 60) / max(len(series), 1)
+    for label, value, kind in series:
+        w = max(2.0, plot_w * (value / top))
+        bars.append(
+            f'<g class="chart-row"><text class="chart-label" x="{label_w - 12}" y="{y + 12}" text-anchor="end">{esc(label)}</text>'
+            f'<rect class="chart-bar {kind}" x="{label_w}" y="{y}" width="{w:.1f}" height="{bar_h}" rx="3"></rect>'
+            f'<text class="chart-value" x="{label_w + w + 10:.1f}" y="{y + 12}">{esc(money10(value))}</text></g>'
+        )
+        y += step
+    axis = (
+        f'<line class="chart-axis" x1="{label_w}" y1="{chart_h - 26}" x2="{label_w + plot_w}" y2="{chart_h - 26}"></line>'
+        f'<text class="chart-axis-label" x="{label_w}" y="{chart_h - 8}">0</text>'
+        f'<text class="chart-axis-label" x="{label_w + plot_w}" y="{chart_h - 8}" text-anchor="end">{esc(money10(top))}</text>'
+    )
+    return (
+        f'<figure class="chart"><svg viewBox="0 0 {width} {chart_h}" role="img" '
+        f'aria-label="{esc(title)}: horizontal bar chart of modeled amounts, all rounded to the nearest ten dollars">'
+        f'<title>{esc(title)}</title>{"".join(bars)}{axis}</svg>'
+        f'<figcaption>{esc(title)} — modeled amounts, rounded to the nearest ten dollars; '
+        'not a prediction. The figures below repeat the same numbers as text for screen readers and print.</figcaption></figure>'
+    )
+
+
+def build_sale_timing() -> str:
+    body = callout(
+        "Do this first: price a sale in the tax year of the inheritance",
+        "A sale in the same tax year as the transfer is modeled first because it is the only branch whose income-tax answer is close to settled before the numbers arrive. "
+        "Inherited property generally takes a date-of-death value as its income-tax basis, and the IRS states that a sale soon after the date of death therefore usually shows little or no gain. "
+        "Every later year of holding converts tax-free appreciation into a taxable gain, and renting the house converts part of that gain into depreciation recapture. Price the same-year sale first, "
+        "then ask what a later sale costs — not the other way round.",
+        "info",
+    )
+    rule_rows = [
+        {"cells": ["Income-tax basis at death", "Basis of property acquired from a decedent is generally its fair market value at the date of death, and the IRS adds that a sale soon after the date of death usually produces little or no gain.", "A sale in the transfer year is close to income-tax-free federally; do not assume the same for a later year."],
+         "status": "Verified", "sources": ["irs_basis", "irs_estate_faq"]},
+        {"cells": ["Holding period", "The Schedule D instructions for estates and trusts state that property acquired from a decedent is treated as held for more than one year.", "Any gain on an early sale is already long-term, so no waiting period is needed to reach the preferential federal rate."],
+         "status": "Verified", "sources": ["irs_1041sd"]},
+        {"cells": ["California has no preferential rate", "California does not have a lower rate for capital gains: all capital gains are taxed as ordinary income.", "A delayed sale moves post-death appreciation into ordinary-rate state income, which is where the timing cost concentrates."],
+         "status": "Verified", "sources": ["ftb_cg"]},
+        {"cells": ["The one-million-dollar surcharge", "An additional 1 percent tax applies to the portion of taxable income above $1,000,000, and the credits and recomputation provisions do not reduce it.", "On a large post-death gain the surcharge is a real layer; it is modeled on top of the top bracket here."],
+         "status": "Verified", "sources": ["rtc_17043"]},
+        {"cells": ["Rate bands that do apply federally", "Maximum federal long-term rates are 0, 15 and 20 percent by taxable income, and unrecaptured section 1250 gain is taxed at a maximum of 25 percent.", "The recapture rate is the number a rented path has to carry; it is not the same rate as the gain it sits beside."],
+         "status": "Verified", "sources": ["irs_409"]},
+        {"cells": ["Main-home exclusion", "Up to $250,000 of gain ($500,000 on a joint return) can be excluded on a main home when the ownership and use tests for the prior five years are met.", "The heir earns this only by living in the home for two of the five years before the sale; renting does not build it."],
+         "status": "Verified", "sources": ["irs_topic701"]},
+        {"cells": ["Assessment is set at death, not at distribution", "The Santa Clara County Assessor states that reassessment of property acquired by inheritance from an estate or living trust occurs as of the date of death rather than the distribution date, and that an assessment will be made in the name of the estate even if the property is sold instead of distributed.", "Delaying the sale does not defer the property-tax consequence of the transfer; a supplemental bill can be issued against the estate."],
+         "status": "Verified", "sources": ["scc_assessor_2026"]},
+        {"cells": ["Supplemental bills are separate and time-limited", "A supplemental assessment is issued whenever a change of ownership or new construction causes reassessment, measured against the prior value and prorated for the months left in the fiscal year ending June 30; it is billed separately, is usually not prorated in escrow and not paid from an impound account, and an appeal of the value or the reassessment decision is due within 60 days of the notice.", "Budget a possible supplemental bill in the transfer year and calendar the 60-day appeal window as a hard deadline."],
+         "status": "Verified", "sources": ["scc_assessor_2026"]},
+    ]
+    body += make_table("What a same-tax-year sale does — and does not do", ["Rule", "What the official source states", "Effect on the decision"], rule_rows,
+                       "These rows describe the tax system, not this household's tax position. Only the estate's actual valuation date, basis, deductions and the assessor's determination can settle a real sale.")
+
+    case_rows = []
+    for label, case, note in (
+        ("Sell in the transfer year (modeled 2045)", SALE_NOW, "Gain is the difference between the sale price and the date-of-death value; the model sets it to zero because both use the same date and the same value."),
+        ("Live in it five years, then sell — main-home tests met", SALE_LATER_LIVE, "Five more years of appreciation is taxable, but the exclusion removes the first $250,000 of the remaining gain for a single filer who meets the two-out-of-five-year tests."),
+        ("Hold five years and sell — never a principal residence", SALE_LATER_IDLE, "Identical appreciation to the row above with no exclusion available: this is the cost of a hold that never became a home."),
+        ("Rent it for five years, then sell", SALE_LATER_RENT, "Renting adds depreciation now and converts that depreciation into taxable unrecaptured section 1250 gain later, on top of the appreciation."),
+    ):
+        case_rows.append({
+            "cells": [label, str(case["sale_year"]), money10(case["price"]),
+                      money10_zero(case["gain"], "none (sale and basis share the modeled date)"),
+                      money10_zero(case["taxes"]),
+                      money10(case["selling"] + case["dtt"]), money10(case["net"]), note],
+            "status": "Projection", "sources": ["owner_a", "irs_basis", "ftb_cg", "irs_409", "irs_topic701", "scc_recording", "cbo_rates"],
+        })
+    body += make_table("Modeled exit years — same asset, same assumptions, different timing",
+                       ["Exit case", "Sale year", "Modeled sale price", "Taxable gain", "Income tax (federal + net investment income + California)",
+                        "Selling costs and transfer tax", "Modeled net proceeds", "What drives the difference"],
+                       case_rows,
+                       "Method, stated so it can be re-run: sale price = the 4% market-growth scenario applied to the owner-supplied rounded 2026 value; basis = the modeled 2045 date-of-death value; a rented hold reduces basis by straight-line depreciation of the building share (assumed 80% of value over 27.5 years); federal tax at 20% on long-term gain and 25% on unrecaptured section 1250 gain, plus the 3.8% net investment income tax; California at 13.3% (a 12.3% top bracket plus the additional 1% above $1,000,000); selling costs at the assumed 7%; Santa Clara County documentary transfer tax at 0.11% of the consideration. No deduction interactions, no state exclusion conformity analysis, no allocation between heirs and no alternate-valuation election are modeled, and every figure is rounded to the nearest ten dollars. This is an illustrative sensitivity, not a tax calculation.")
+    body += callout(
+        "The number the timing question turns on",
+        "Under these assumptions, waiting five years and renting costs about " + money10(COST_OF_WAITING_RENT) + " of net proceeds relative to selling in the transfer year — before counting five years of property tax, insurance, maintenance and vacancy on one side against five years of rent on the other. "
+        "Timing is decided before investing, because it sets how much of the proceeds are actually investable.",
+        "warning",
+    )
+    body += svg_bar_chart("Modeled net proceeds by exit year (Property A, same asset, same assumptions)",
+                          [(label, case["net"], kind) for (label, case, kind) in [
+                              ("Sell in the transfer year", SALE_NOW, "bar-a"),
+                              ("Live five years, then sell", SALE_LATER_LIVE, "bar-b"),
+                              ("Hold five years, no exclusion", SALE_LATER_IDLE, "bar-c"),
+                              ("Rent five years, then sell", SALE_LATER_RENT, "bar-d"),
+                          ]] )
+
+    cost_rows = [
+        {"cells": ["County documentary transfer tax", "The county and any participating board may tax each deed conveying realty sold at 55 cents for each $500 of consideration or value exclusive of liens that remain, on instruments over 100 dollars; a city inside a taxing county may add half that amount, credited against the county tax.", "About " + money10(SALE_NOW["dtt"]) + " on the modeled 2045 sale price"],
+         "status": "Verified", "sources": ["rtc_11911", "scc_recording"]},
+        {"cells": ["City conveyance add-on", "The recorder's fee schedule lists a higher combined rate for San Jose, Palo Alto and Mountain View; no city add-on is listed for the Cupertino area, so the county rate is the planning figure.", "None assumed"],
+         "status": "Verified", "sources": ["scc_recording_fees"]},
+        {"cells": ["Who owes it", "The statute places the tax on the person who makes, signs or issues the instrument, or for whose benefit it is made — which is why the seller customarily bears it at closing.", "Seller side of the ledger"],
+         "status": "Verified", "sources": ["rtc_11912"]},
+        {"cells": ["Recording and per-title charges", "Recorded documents carry per-page, indexing and title fees, including a state charge of 75 dollars for each real-estate title, plus an additional 20 dollars when a required preliminary change-of-ownership report is missing or incomplete.", "Budget a small fixed allowance, not zero"],
+         "status": "Verified", "sources": ["scc_recording_fees"]},
+        {"cells": ["The transfer at death or out of the trust", "Section 11930 of the Documentary Transfer Tax Act states that the tax does not apply to a deed or other writing by which realty is transferred outright to, or in trust for the benefit of, any person or entity by reason of an inter vivos gift or by reason of a death.", "No transfer tax is modeled on the inheritance step itself — but the exemption is for that step only, so it does not shelter the later sale to a buyer"],
+         "status": "Verified", "sources": ["rtc_11930"]},
+        {"cells": ["How an exemption has to be claimed", "Section 11932 requires every document subject to tax to show on its face the amount of tax due and the location of the realty; the spousal exemption in §11927 is expressly conditioned on a written recital signed by a spouse stating that the instrument is entitled to the exemption; and the recorder likewise requires a claimed exemption to be stated on the face of the deed with the tax shown as zero.", "Do not rely on an exemption being recognised after the fact: have the preparer write the statutory basis on the document before recording"],
+         "status": "Verified", "sources": ["rtc_11932", "rtc_11927", "scc_recording"]},
+        {"cells": ["San Francisco transfer tax, if Property B is ever sold", "San Francisco taxes real property transfers on a tiered schedule; the City's own rate pages returned 404 when fetched on 2026-11-15, so no rate, tier or exemption is stated here.", "—"],
+         "status": "Not verified", "sources": ["sf_asr_page"]},
+        {"cells": ["Commissions, escrow and title", "No public source sets a commission, management or escrow fee; the model carries an assumed 7% combined cost band and the real figure comes from the listing agreement and the closing statement.", "About " + money10(SALE_NOW["selling"]) + " under the 7% assumption"],
+         "status": "Assumption", "sources": ["owner_a"]},
+        {"cells": ["Possible supplemental tax bill", "Prorated to the months remaining in the fiscal year after the reassessment, billed separately from the regular bill, and generally not handled inside escrow.", "Model it; the amount depends on the assessor's value, not on the sale price"],
+         "status": "Projection", "sources": ["scc_assessor_2026"]},
+    ]
+    body += make_table("Price the sell path, line by line", ["Item", "What the official source says", "Modeled effect at the 2045 sale"], cost_rows,
+                       "Transfer taxes and recording charges are small beside the property-tax and income-tax branches, which is exactly why they belong in the same table: a sell path that ignores them is not fully priced.")
+
+    val_rows = [
+        {"cells": ["Who values it", "The estate reports fair market value on Schedule A of Form 706; the county assessor separately appraises to set a new base year value whenever a reassessment is required.", "Two valuations with two purposes and possibly two numbers — do not substitute one for the other."],
+         "status": "Verified", "sources": ["irs_706", "scc_assessor_2026"]},
+        {"cells": ["The standard to demand", "Fair market value is the price at which property would change hands between a willing buyer and a willing seller, neither under any compulsion and both having reasonable knowledge of relevant facts; the IRS adds that a forced-sale price is not fair market value.", "Require the valuation date, the comparable set and a written reasonableness range in the engagement letter."],
+        "status": "Verified", "sources": ["irs_estate_faq", "irs_706"]},
+        {"cells": ["Alternate valuation", "The estate may elect to value property as of six months after death — and as of the date of sale or distribution inside that window — only if doing so reduces both the gross estate and the combined estate and generation-skipping transfer tax; the trust Schedule D instructions state that basis follows the alternate-valuation figure.", "A sale signed inside the six-month window can tie the estate value and the heir's basis to one number, which is a further argument for pricing an early sale."],
+         "status": "Verified", "sources": ["irs_706", "irs_1041sd"]},
+        {"cells": ["Basis consistency", "Basis for inherited property is generally the date-of-death value and is subject to the consistent-basis rules that tie a beneficiary's basis to the value reported for estate-tax purposes.", "Do not spend an appreciated basis before the executor's statement arrives; ask the CPA which figure will govern."],
+         "status": "Verified", "sources": ["irs_basis"]},
+        {"cells": ["Special-use and family-farm valuation", "Form 706 provides for electing special-use valuation of qualifying family farm and closely held business real property, reported with the return; the schedules read in this session were A (real estate), K (adjusted taxable gifts), M, O, PC, Q, T and U.", "Not a residential planning tool; note it only if the trust holds qualifying land, and read the schedule text before assuming an election is available."],
+         "status": "Cross-checked", "sources": ["irs_706"]},
+        {"cells": ["What the appraisal is for", "The same written number feeds four analyses: the estate-tax computation, the heir's income-tax basis, the sale-timing sensitivity and the assessor's comparison.", "Commission one appraisal with a stated purpose covering all four, and record its date and assumptions in the decision log."],
+         "status": "Guidance", "sources": ["irs_706", "irs_basis"]},
+    ]
+    body += make_table("Obtain a written valuation of the inherited house at the date of death", ["Question", "What the official source establishes", "What to require in the engagement"], val_rows,
+                       "A written appraisal dated to the valuation date, with comparable sales and a reasonableness range, is the single document that makes the sale-timing, estate-tax and basis analyses comparable. A listing price, an insurance figure or an online estimate is not that document.")
+
+    kc_rows = [
+        {"cells": ["What survives today", "A like-kind exchange defers gain when real property used in a business or held for investment is exchanged solely for other business or investment real property; the Tax Cuts and Jobs Act limited it to real property, and property held primarily for sale never qualified.", "It is an investment-property tool, not a way to defer tax on selling an inherited family home for cash."],
+         "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["Why it is usually unnecessary here", "Because the inherited basis is generally the date-of-death value, an early sale produces little or no gain to defer; deferring zero gain buys nothing and adds intermediary fees and strict deadlines.", "Decide this before listing. The answer is probably no, and writing that down is the point."],
+         "status": "Guidance", "sources": ["irs_1031", "irs_basis"]},
+        {"cells": ["When it becomes attractive", "If the heir holds the house as a rental for years, accumulated appreciation and depreciation become taxable, and an exchange can defer them into replacement real property with the basis carried over; the deferral is reported on Form 8824.", "Only worth discussing after a rental decision is made, with a CPA and a qualified intermediary engaged before closing."],
+         "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["What it costs you", "Boot or cash received triggers gain to that extent, losses are not recognized in the exchange, and the replacement property inherits the old basis, so the deferred gain travels with it.", "Compare against simply paying tax on a stepped-up basis — often the cheaper option for inherited property."],
+         "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["The California layer", "California computes gain on its own schedule and taxes all capital gains as ordinary income, so a deferral analyzed only at the federal level is incomplete.", "Have the CPA confirm state treatment and any add-back before calling a deferral a saving."],
+         "status": "Verified", "sources": ["ftb_cg"]},
+    ]
+    body += make_table("Decide whether a like-kind exchange is wanted — before listing", ["Question", "Official rule", "Planning consequence"], kc_rows,
+                       "This table deliberately stops short of a recommendation: whether an exchange is available turns on the heir's use, holding intent and the property's role, all of which are professional determinations.")
+
+    carry_rows = [
+        {"cells": ["The occupancy rule, stated exactly", "The Proposition 19 family-home exclusion applies to a principal residence of the transferor, the transfer must be to a child or grandchild, the excluded amount is the factored base year value plus the adjusted value-limit amount, and the transferee must occupy the home as a principal residence within one year of the transfer — the BOE states plainly that there are no exceptions.", "So the exclusion is not a rental-planning tool: it is available only if the household intends to live in the house, long term."],
+         "status": "Verified", "sources": ["boe_prop19", "boe_lta_2026_026"]},
+        {"cells": ["Death and trust transfers count", "The BOE letter to assessors confirms that a transfer includes a transfer at death and a transfer through a trust, so the inherited-house path is inside the rule rather than beside it.", "The one-year occupancy clock runs from the date of death or the transfer, not from the day the paperwork is finished."],
+         "status": "Verified", "sources": ["boe_lta_2026_026"]},
+        {"cells": ["The value limit caps the benefit", "The excluded amount is the factored base year value immediately before the transfer plus the adjusted limit (the 2025-2027 amount is $1,044,586), and any excess of full cash value over that sum is added to the base and then indexed annually.", "On the modeled Property A figures the value limit is what does the work: the relief is worth about " + money10(PROP19_RELIEF_2045) + " a year, not the whole gap between the old and the new tax base."],
+         "status": "Projection", "sources": ["boe_prop19", "ca_rtc63", "owner_a"]},
+        {"cells": ["Occupancy must be continuous", "If the transferee stops using the home as a principal residence, the exclusion is removed at the next lien date and the enrolled value reverts to the date-of-transfer full cash value factored forward — the relief is pulled back retroactively, not merely stopped.", "A plan that occupies for three years and then rents is not a plan with a preserved base; it is a plan with a delayed reassessment."],
+         "status": "Verified", "sources": ["boe_lta_2026_026", "ca_rtc63"]},
+        {"cells": ["The claims, both of them", "The exclusion claim is generally filed within three years of the transfer or before a transfer to a third party, and the homeowners' or disabled veterans' exemption must be claimed within one year; a late claim generally gives relief only from the year of filing forward.", "Calendar both dates independently, and budget the higher bill until a claim is processed."],
+         "status": "Verified", "sources": ["boe_prop19", "ca_rtc218"]},
+        {"cells": ["The separate base-year-value transfer", "A claimant who sells a principal residence may transfer its factored base year value to a replacement principal residence purchased or newly built within two years, anywhere in California, with the value above the original added to the transferred base; up to three transfers are allowed, subject to the age-55, disability or disaster conditions.", "This is the allowance carried forward — a second, separate benefit with its own conditions, available to the heir as owner, not to the estate."],
+         "status": "Verified", "sources": ["boe_prop19"]},
+        {"cells": ["Break-even for occupying", "Occupying preserves about " + money10(PROP19_RELIEF_2045) + " a year of property tax under the modeled 2045 figures, roughly " + money10(PROP19_10YR_RELIEF) + " over ten years. Letting the house instead earns gross rent net of an operating load that already excludes the property-tax line, so the two paths cross at about " + money10(PROP19_BREAKEVEN_MONTH) + " of gross monthly rent.", "Above that rent the tax-and-carry arithmetic favors letting; below it, occupying wins. The comparison ignores the outside rent an occupant would otherwise pay, which is usually the larger term and points the other way."],
+         "status": "Projection", "sources": ["owner_a", "boe_prop19", "ca_rtc63", "irs_rental"]},
+        {"cells": ["Multi-unit buildings are tested per unit", "The BOE guidance states that each unit of a multi-unit property is separately eligible or ineligible, and that a property is tested as a family home only where the transferor owned and occupied it.", "Property B's rented units are not covered by the transferor's occupancy; do not carry a single-family conclusion across to a three-unit building."],
+         "status": "Verified", "sources": ["boe_lta_2026_026", "ca_rtc63"]},
+    ]
+    body += make_table("The Proposition 19 occupancy rule, and the allowance carried forward", ["Element", "Current official rule", "Why it matters to this decision"], carry_rows,
+                       "Read the exclusion and the base-year-value transfer as two different benefits with two different tests. Neither is available on paper alone, and neither survives a decision to rent immediately.")
+    body += paragraph("How to use this page", "Run the same-year sale case first. Then decide in writing whether the household wants the property-tax benefit of occupancy, the income-tax benefit of an early sale, or a mixed path — and only then write the investing policy for whatever money is actually left. Re-run this page with the real valuation date, the assessor's determination and the CPA's basis schedule before anything is signed.")
+    body += cards("Related pages", [
+        ("Property-tax rules", "The rate structure, the levy decomposition and the occupancy conditions behind the numbers above.", "pages/property-tax.html"),
+        ("Five-year capital plan", "What the house costs to hold while the decision stays open.", "pages/capital-plan.html"),
+        ("Investment policy", "The written policy the proceeds need before they arrive.", "pages/investment-policy.html"),
+        ("Deadline timeline", "The 60-day, 150-day, nine-month, one-year and three-year clocks in one view.", "pages/inheritance-process.html"),
+    ], current="pages/sale-timing.html")
+    return render_page("pages/sale-timing.html", "Sale timing and the tax year of the inheritance",
+                       "Why a sale in the same tax year as the transfer is modeled first, what the sale actually costs line by line, what a written valuation has to settle, and the exact Proposition 19 occupancy rule with its break-even.",
+                       body, "SELL PATH")
+
+
+def build_capital_plan() -> str:
+    body = callout(
+        "Two buildings, two plans, one reserve discipline",
+        "Maintenance and capital cost is the line most likely to move a projected winner into a loss — and the line with no official source: no government publication prices a private roof, sewer lateral or turnover package. "
+        "Each plan below is a scheduling and reserve tool with amount bands, not an estimate of this household's costs. Replace every band with a licensed bid before it enters a comparison.",
+        "warning",
+    )
+    body += callout(
+        "Why both buildings get a plan, not just the inherited one",
+        "Property B is already owned and already tenanted, so its capital needs are present-day cash flows that compete with whatever the household does about Property A. A plan that prices only the inherited house "
+        "implicitly assumes the other building costs nothing to hold, which is the assumption most likely to reverse a ranking.",
+        "info",
+    )
+
+    def plan_rows(plan):
+        return [{"cells": [str(year), item, kind, note], "status": "Assumption",
+                 "sources": ["irs_rental", "cslb"]} for year, item, kind, note in plan]
+
+    body += make_table("Property A (Cupertino-area house) — five-year maintenance and capital plan", ["Year", "Item", "Class", "Why it is in the plan"], plan_rows(CAPITAL_PLAN_A),
+                       "Owner-supplied context: the house is reported as a primary residence with solar generation and less maintenance demand than the San Francisco building. Repairs and improvements are separated because they are treated differently for tax, and because only improvements may add to basis.")
+    body += make_table("Property B (San Francisco three-unit) — five-year maintenance and capital plan", ["Year", "Item", "Class", "Why it is in the plan"], plan_rows(CAPITAL_PLAN_B),
+                       "A tenanted building carries legal and tenant-facing obligations a vacant house does not: registration, lawful rent, required devices and turnover standards all sit ahead of discretionary capital work.")
+
+    reserve_rows = [
+        {"cells": ["Property A — routine maintenance and repairs", money10(MAINT_A_BAND[0]) + " to " + money10(MAINT_A_BAND[1]), money10(A_MAINT_MID), "The owner reports lighter demand than the San Francisco building; a planning range, not a bid."], "status": "Assumption", "sources": ["owner_a", "cslb"]},
+        {"cells": ["Property A — capital reserve on top of repairs", money10(A_RESERVE_BAND[0]) + " to " + money10(A_RESERVE_BAND[1]), money10(A_RESERVE_MID), "Sized as 0.5% to 1.0% of the modeled value (an assumption). Fund it in every path, including a sale, so the plan does not depend on the outcome."], "status": "Assumption", "sources": ["owner_a", "irs_rental"]},
+        {"cells": ["Property A — insurance", money10(A_INS_BAND[0]) + " to " + money10(A_INS_BAND[1]), money10(A_INS_MID), "The owner's recollection sits at the bottom of the band; a written quote is required. California wildfire underwriting is volatile and renewal, not price, is the risk."], "status": "Owner-supplied (privacy-rounded)", "sources": ["cdi", "cdi_sis", "owner_a"]},
+        {"cells": ["Property A — water and sewer", money10(PROPERTY_A["water_month"][0] * 12) + " to " + money10(PROPERTY_A["water_month"][1] * 12), money10(A_WATER_YEAR), "Owner-supplied monthly band for a Cupertino-area house; the provider's current rate schedule and the actual bill are the record."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "sjw_rates"]},
+        {"cells": ["Property A — electricity net of the solar credit", money10(PROPERTY_A["solar_credit_month"][0] * 12) + " credit to " + money10(PROPERTY_A["solar_credit_month"][1] * 12) + " credit", money10(-A_SOLAR_YEAR), "Reported as a small monthly net credit rather than a bill. The tariff, the true-up and inverter age decide the number; a credit is not income."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "cpuc_solar"]},
+        {"cells": ["Property B — maintenance and repairs", money10(B_MAINT_BAND[0]) + " to " + money10(B_MAINT_BAND[1]), money10(B_MAINT_MID), "An older three-unit building with tenants; the band is deliberately wider than Property A's."], "status": "Assumption", "sources": ["owner_b", "cslb"]},
+        {"cells": ["Property B — capital reserve", money10(B_RESERVE_BAND[0]) + " to " + money10(B_RESERVE_BAND[1]), money10(B_RESERVE_MID), "Sized at 1.0% to 1.5% of value: an occupied building cannot defer a failed roof, boiler or lateral the way a vacant house can."], "status": "Assumption", "sources": ["owner_b", "irs_rental"]},
+        {"cells": ["Property B — insurance", money10(B_INS_BAND[0]) + " to " + money10(B_INS_BAND[1]), money10(B_INS_MID), "A landlord or mixed-use form, not a homeowners policy; the owner's recollection is treated as a low anchor."], "status": "Owner-supplied (privacy-rounded)", "sources": ["cdi", "owner_b"]},
+        {"cells": ["Property B — water for three units", money10(PROPERTY_B["water_month"][0] * 12) + " to " + money10(PROPERTY_B["water_month"][1] * 12), money10(B_WATER_YEAR), "Owner-supplied for the whole building. The SFPUC's 2026 rate notice publishes an average single-family combined bill near 171 dollars a month rising to 212 dollars by FYE 2028, and a multi-family tier structure; metering decides how much is recoverable."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "sfpuc_rates"]},
+        {"cells": ["Property B — common-area electricity", money10(PROPERTY_B["electric_month"][0] * 12) + " to " + money10(PROPERTY_B["electric_month"][1] * 12), money10(B_ELEC_YEAR), "Owner-supplied band for common area only; separately metered tenants carry their own usage."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_b", "pge_tariffs"]},
+        {"cells": ["Property B — Proposition H parcel tax from fiscal 2027-28", money10(prop_h_multifamily(5000)) + " up to " + money10(prop_h_multifamily(8000)), money10(prop_h_multifamily(6500)), "Approved by San Francisco voters on November 3, 2026 and effective through fiscal 2041-42; billed on the property-tax bill in two installments from fall 2027 and indexed for inflation. The exact amount depends on the parcel's building area and classification."], "status": "Projection", "sources": ["sfmta_prop_h", "sf_elections_2026"]},
+        {"cells": ["Property B — rent increase that Proposition H allows to be passed through", money10(prop_h_passthrough(prop_h_multifamily(6500), 2)) + " a year across the two rented units", money10(prop_h_passthrough(prop_h_multifamily(6500), 2)), "The measure allows up to half of the tax to be passed through, capped at 65 dollars per unit per year, and only where the initial base rent predates June 1, 2027. Where it applies it offsets roughly a quarter of the tax, not all of it."], "status": "Projection", "sources": ["sfmta_prop_h", "sf_rent_board"]},
+    ]
+    body += make_table("Annual carrying-cost and reserve lines to fund in every path", ["Line", "Low to high band", "Planned midpoint", "Basis and limit"], reserve_rows,
+                       "Bands are amounts a household can fund, not predictions. Every midpoint is an assumption to be replaced by a quote, a bid or a bill; property-specific amounts are rounded to the nearest ten dollars.")
+
+    tax_rows = [
+        {"cells": ["Repairs versus improvements", "IRS guidance on residential rental property separates deductible expenses and repairs from improvements, which are capitalized and recovered instead of deducted in the year paid.", "Classify every invoice in the year it is received; a misclassified repair becomes a basis error discovered years later."], "status": "Verified", "sources": ["irs_rental"]},
+        {"cells": ["Depreciating the inherited house if it is rented", "Residential rental property is recovered straight line over 27.5 years, measured from the basis established for the property with land excluded.", "Depreciation shelters rent now and becomes a taxable item at sale: a timing choice, not a saving."], "status": "Verified", "sources": ["irs_rental", "irs_basis"]},
+        {"cells": ["Recapture at sale", "Unrecaptured section 1250 gain — the portion of gain attributable to depreciation on real property — is taxed at a maximum federal rate of 25 percent, separate from the rate on other long-term gain.", "Model the recapture before assuming a rented path out-earns an early sale."], "status": "Verified", "sources": ["irs_409"]},
+        {"cells": ["What death does to prior depreciation", "Basis for inherited property is generally the fair market value at the date of death, so the heir starts from a fresh basis rather than from the decedent's depreciated one.", "The decedent's accumulated depreciation does not follow the house; only the heir's own does."], "status": "Verified", "sources": ["irs_basis"]},
+        {"cells": ["The California layer on the recapture", "California has no lower rate for capital gains and taxes all capital gains as ordinary income.", "Do not import a federal rate schedule into the state figure: at the modeled top rates the state adds 13.3% on the same gain."], "status": "Verified", "sources": ["ftb_cg", "rtc_17043"]},
+        {"cells": ["Personal-use allocation", "Renting part of a property, or using part of it personally, requires income and expenses to be separated between uses.", "An occupancy plan needs an explicit allocation rule in the model before any rent is counted."], "status": "Verified", "sources": ["irs_rental"]},
+        {"cells": ["Work that does not trigger reassessment", "The Santa Clara Assessor states that ordinary maintenance is generally not assessable, and that specific exclusions exist — including for seismic retrofit and certain disaster repairs — each requiring the applicable filing.", "Confirm the exclusion in writing with the assessor before assuming a repair is tax-neutral; a surprise addition to assessed value is permanent."], "status": "Verified", "sources": ["scc_assessor_2026"]},
+        {"cells": ["Who does the work", "A contractor must be licensed for the trade, and the state board's licence check is the only public verification of that; nothing in it prices the job.", "License-check and bid every vendor in the plan, and keep the bids with the reserve reconciliation."], "status": "Verified", "sources": ["cslb"]},
+    ]
+    body += make_table("Depreciation, recapture and the repair/improvement line", ["Issue", "Official rule", "How to apply it"], tax_rows,
+                       "Three systems must not be mixed: the depreciation schedule drives income tax, the assessor's base year value drives property tax, and the estate appraisal drives basis. Each has its own source and its own clock.")
+
+    rerun_rows = [
+        {"cells": ["Re-run the year-by-year model", "Once a year, on a fixed date", "Rebuild value, assessed value, tax, insurance, utilities and rent from the current documents; keep the prior year's output for comparison.", "A model that is not re-run silently converts an assumption into a fact."], "status": "Guidance", "sources": ["boe_pub29", "irs_estate"]},
+        {"cells": ["Re-read the tax bill, not the estimate", "When each new secured bill arrives", "Check the rate-area line, the total levy, the exemptions taken and every non-base charge against the model's tax line.", "The published levy example is not the parcel's levy; the bill is."], "status": "Guidance", "sources": ["scc_tax_rates", "scc_assessor_2026"]},
+        {"cells": ["Check the assessment against the appeal window", "Annually, inside the window", "San Francisco's informal review runs January 2 to March 31 for one-to-four-unit properties and an Assessment Appeals Board filing is due July 2 to September 15; Santa Clara supplemental appeals are due 60 days from the notice.", "A decline in value is only recovered if it is claimed; the window does not reopen."], "status": "Verified", "sources": ["sf_asr_page", "scc_assessor_2026"]},
+        {"cells": ["Re-price insurance", "At every renewal, and again before any change of use", "Obtain owner-occupied and landlord quotes separately; record the coverage form and the wildfire exposure treatment.", "Non-renewal is a market event in California, not a household failure — and it arrives without warning."], "status": "Guidance", "sources": ["cdi", "cdi_sis"]},
+        {"cells": ["Refresh the capital plan", "Annually, with the reconciliation", "Compare actual spend with the reserve, re-set the bands and move items between years only with a written reason.", "The plan earns its keep only when variance is reviewed."], "status": "Guidance", "sources": ["cslb", "irs_rental"]},
+        {"cells": ["Re-check the law that changed", "Quarterly, against the watchlist", "Separate enacted changes from proposals, and record the effective date, not the headline, for each.", "A proposed rate change modeled as law distorts every downstream number."], "status": "Guidance", "sources": ["irs_2027", "ca_legislation", "boe_prop19"]},
+    ]
+    body += make_table("Annual re-run protocol — the plan is a living document", ["Action", "Cadence", "What to do", "Why it fails if skipped"], rerun_rows,
+                       "This is the operating discipline the owner asked for: the model is only as good as the date it was last fed. Nothing here requires new data collection beyond the documents that already arrive each year.")
+    body += cards("Related pages", [
+        ("Property-tax rules", "How the assessed base, the levy and the exemptions build the tax line.", "pages/property-tax.html"),
+        ("Costs and coverage", "Insurance, utilities and rent evidence still missing for both buildings.", "pages/operating-costs.html"),
+        ("Sale timing and the tax year", "What holding costs at sale, and what an early sale avoids.", "pages/sale-timing.html"),
+        ("Compare paths", "Carrying costs and reserves folded into each path's cash flow.", "pages/decision-analysis.html"),
+    ], current="pages/capital-plan.html")
+    return render_page("pages/capital-plan.html", "Five-year maintenance and capital plan",
+                       "A dated, item-by-item plan for both buildings, the reserve lines that fund them, the depreciation and recapture rules that decide what a holding path earns, and the annual re-run protocol.",
+                       body, "NUMBERS")
+
+
+def build_investment_policy() -> str:
+    body = callout(
+        "Write it before the money arrives",
+        "An investment policy written after proceeds land is a document drafted under pressure: the market is moving, the house may still be unsold, and the temptation is to decide by headline. Written in advance, the same policy "
+        "settles the routine questions once — allocation, staging, rebalancing, cash reserve, tax handling and what would justify a change — and leaves only the genuinely unexpected to the review clause. Sign it, date it, and record "
+        "in the decision log which version applied on which date.",
+        "info",
+    )
+    policy_rows = [
+        {"cells": ["1. Purpose and scope", "One paragraph naming the proceeds the policy governs, who may act, and which accounts are in scope. Exclude anything the trust or estate has not yet distributed.", "A policy with no account list is not a policy"], "sources": ["irs_1041"]},
+        {"cells": ["2. Horizon and liquidity needs", "State the planned use of the money and the years until it is needed, plus the reserve held for property taxes, insurance, repairs and vacancies.", "A reserve that is not named gets invested anyway"], "sources": ["irs_rental"]},
+        {"cells": ["3. Staging rule", "Park proceeds in the short-bill to two-year-note range and buy the equity allocation on a written schedule — the number of purchases and their dates decided in advance, not later.", "Lump-sum and dollar-cost-averaging both fail when the choice is made mid-move"], "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["4. Renewal rule", "State what happens at each maturing rung: renew at the short end, extend duration, or accelerate the scheduled purchases if yields are higher and the schedule is behind.", "Reinvestment risk is the cost of a ladder and is invisible until it is decided at the counter"], "sources": ["treasury_bills", "cbo_rates"]},
+        {"cells": ["5. Allocation bands", "Target weights with rebalance bands, so the policy decides the trade and not the news cycle.", "No bands means every month looks like a month to act"], "sources": ["sec_stocks"]},
+        {"cells": ["6. Tax handling", "Prefer holding periods that qualify for long-term treatment, decide in advance how losses are used, and record that state gain is taxed as ordinary income rather than at the federal rate schedule.", "A federal-only analysis overstates the after-tax return of every taxable sale"], "sources": ["ftb_cg", "irs_1041sd"]},
+        {"cells": ["7. Prohibited actions", "No leverage, no single-position concentration beyond a stated limit, no illiquid commitments while the property decision is open, and no amendment outside the annual review except the written triggers.", "An exception granted under pressure becomes the new default"], "sources": ["sec_stocks"]},
+        {"cells": ["8. Review cadence", "One scheduled annual review plus event-driven review when a listed trigger fires, each recorded as a dated entry.", "A review that is not written down leaves no evidence the policy was followed"], "sources": ["cbo_outlook"]},
+        {"cells": ["9. Reversal conditions", "The specific, observable facts that change the plan: a materially different net yield on the staging band, a law change affecting the estate or the property tax, an insurance non-renewal or repair shock, or a failed Proposition 19 claim.", "A plan nothing could change is a wish, not a policy"], "sources": ["boe_prop19", "irs_estate", "cdi"]},
+        {"cells": ["10. Advice and authority", "Name the adviser and their standard of care, the fee basis, who is authorised to instruct, and state that the policy is reviewed with a tax adviser before implementation.", "Execution that runs ahead of documented advice is unverifiable afterwards"], "sources": ["sec_stocks"]},
+    ]
+    body += make_table("The ten sections to write, in order", ["Section", "What it must say", "Failure mode it prevents"],
+                       [{"cells": r["cells"], "status": "Guidance", "sources": r["sources"]} for r in policy_rows],
+                       "A policy is a set of decisions made in advance. Each row is written as a rule the owner could follow without further judgment in the moment, which is the entire point.")
+
+    yield_rows = [
+        {"cells": ["Staging band, first rung", "3-month bill", "About 4.3 percent (November 2026 par yield curve, cross-checked against market quotes of the same series)", "The rate is fixed at auction; the next auction's rate is unknown"],
+         "status": "Cross-checked", "sources": ["treasury_curve", "treasury_bills"]},
+        {"cells": ["Staging band, last rung", "2-year note", "About 4.9 percent (same curve)", "Held to maturity, or sold earlier at whatever price then applies"],
+         "status": "Cross-checked", "sources": ["treasury_curve", "treasury_notes"]},
+        {"cells": ["Ten-year anchor in the near-term outlook", "10-year note", "4.3 percent average across the CBO 2026-2036 baseline, with 4.8 and 5.8 percent higher-rate paths", "A macro baseline to 2036, not a promise and not a 50-year path"],
+         "status": "Verified", "sources": ["cbo_rates"]},
+        {"cells": ["State and local tax on the reserve", "Interest income", "TreasuryDirect states that interest is exempt from state and local income taxes and taxable federally", "Improves the after-tax yield of the staging sleeve relative to other cash holdings"],
+         "status": "Verified", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Equity side of the choice", "Scheduled purchases", "The SEC states that stock prices fall as well as rise and that investors can lose money; no official expected return is asserted anywhere on this site", "Staging changes when exposure begins; it does not remove the exposure"],
+         "status": "Verified", "sources": ["sec_stocks"]},
+        {"cells": ["Severity anchors for a crash during staging", "Historical drawdowns", "The 1929 Dow decline of about 89 percent peak to trough, with the prior high not regained until November 1954; the 2007-09 S&P 500 decline of about 57 percent", "Two severity anchors, not probabilities"],
+         "status": "Historical", "sources": ["fed_1929", "fed_2008"]},
+        {"cells": ["Inflation erosion of a long wait", "CPI path", "CBO's near-term outlook runs to 2036 and its long-term projection to 2055; neither reaches the household's horizon with any authority over it", "A policy that stages for years must say what it assumes about purchasing power"],
+         "status": "Verified", "sources": ["cbo_outlook", "cbo_ltbo"]},
+    ]
+    body += make_table("The yield and risk facts the policy has to state honestly", ["Element", "Instrument or rule", "Official figure or statement", "Caveat"],
+        [{"cells": r["cells"], "status": r["status"], "sources": r["sources"]} for r in yield_rows],
+        "Re-read the current auction results and the current curve at the moment of implementation: anything older than a few days in this table is context, not an input.")
+
+    band_rows = [
+        {"cells": ["Cash and reserve", "Hold the next twelve months of carrying costs in cash, then stage the remainder; the reserve is not investable", "Any month in which the reserve cannot be met from cash without selling a rung early", "The carrying-cost bands on the capital plan page are the reserve's size"], "status": "Projection", "sources": ["irs_rental", "cdi"]},
+        {"cells": ["Staged Treasury rungs", "Equal scheduled purchases over 24 to 36 months, laddered so a rung matures each month", "Yields rise enough that the waiting cash is a decided cost, or the property decision changes the amount being staged", "Reinvestment risk sits beside the headline yield and must be shown in the same table"], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Equity sleeve", "Diversified, low-turnover, held in taxable accounts where the long-term holding period matters", "Drift beyond the stated band, or a change in the horizon that the policy names", "No expected return is assumed anywhere in this document"], "status": "Guidance", "sources": ["sec_stocks"]},
+        {"cells": ["Real property held directly", "Treated as its own concentrated asset class with tax, leverage and insurance consequences of its own", "Insurance non-renewal, a repair shock, or a rent or occupancy rule change", "Depreciation and recapture are modeled, not assumed away"], "status": "Guidance", "sources": ["irs_rental", "cdi", "irs_409"]},
+        {"cells": ["Anything illiquid", "No commitments while the property decision is open", "A request to sign before the transfer facts are known", "The estate's own liquidity needs outrank any return story"], "status": "Guidance", "sources": ["irs_estate", "irs_estate_faq"]},
+    ]
+    body += make_table("Rebalance bands and review triggers", ["Sleeve", "Default rule", "What triggers a change", "What stays true either way"], band_rows,
+                       "Write the trigger, the date and the decision into the decision log whenever a band is breached, so a later reader can see that the policy was followed rather than invented after the fact.")
+
+    liquidity_rows = [
+        {"cells": ["Estate liquidity need", "A Form 706 filing is tested on the gross estate plus adjusted taxable gifts, and the estate must be able to pay tax without a forced sale of real property; the IRS notes the nine-month due date and the extension available on request.", "Estates whose assets are mostly one house solve this with life insurance, an existing cash reserve or a partial sale; the point of the policy is to decide which before the death."], "status": "Verified", "sources": ["irs_estate_faq", "irs_estate"]},
+        {"cells": ["Where the cash sits", "The owner reports the estate holds considerable cash in addition to both houses. Whether that is inside or outside the trust changes the liquidity analysis, the basis analysis and the gross-estate computation.", "Ask the trustee's counsel, in writing, which assets are inside the trust and which pass outside it."], "status": "Owner-supplied (privacy-rounded)", "sources": ["owner_a", "irs_estate"]},
+        {"cells": ["Portability", "An estate may elect to transfer any unused federal exclusion to a surviving spouse, and the IRS notes the election may require filing Form 706 even where no return would otherwise be required.", "Ask now whether a prior election was made, and on which return; portability is not automatic."], "status": "Verified", "sources": ["irs_estate_faq"]},
+        {"cells": ["Prior taxable gifts", "The filing test adds adjusted taxable gifts to the gross estate and reduces the exclusion by the specific gift-tax exemption used; Schedule K of Form 706 reports the gifts.", "Ask for every lifetime gift over the annual exclusion, in writing, before modeling the estate's headroom."], "status": "Verified", "sources": ["irs_estate_faq", "irs_706"]},
+        {"cells": ["What the policy must not assume", "Nothing published here forecasts the exclusion in a future year: the current figures are the 2026 and 2027 amounts, and the 2026 proposals to change the exclusion are not law.", "Write the policy to the law in force at implementation, and re-check it then — the policy is not a tax position."], "status": "Verified", "sources": ["irs_2027", "irs_estate"]},
+    ]
+    body += make_table("Liquidity clauses the policy has to contain while the estate is still open", ["Clause", "What the official source establishes", "What to write in the policy"], liquidity_rows,
+                       "An investment policy for inheritance proceeds is really two policies: how the estate pays what it owes, and what the heir does with what is left. They are written in that order.")
+    body += paragraph("Agreeing the answer before the figures arrive", "The owner's own discipline — agreeing in writing what would make the household choose each path before the projections are produced — is the difference between a decision and a rationalisation. Put the reversal conditions on the first screen, the signed policy here, and the dated record in the decision log. If the figures later argue for a different path, the written conditions show whether the answer moved because the facts moved or because the wish moved.")
+    return render_page("pages/investment-policy.html", "Investment policy for the proceeds",
+                       "A written policy prepared before any money arrives: staging and renewal rules, rebalance bands, tax handling, prohibited actions, the liquidity clauses that cover the estate itself, and the conditions that would change the plan.",
+                       body, "SELL PATH")
+
+
 def build_page(path: str) -> str:
     builders = {
         "index.html": build_index,
@@ -1803,6 +2624,9 @@ def build_page(path: str) -> str:
         "pages/questions.html": build_questions,
         "pages/projections.html": build_projections,
         "pages/property-tax.html": build_property_tax,
+        "pages/capital-plan.html": build_capital_plan,
+        "pages/sale-timing.html": build_sale_timing,
+        "pages/investment-policy.html": build_investment_policy,
         "pages/operating-costs.html": build_costs,
         "pages/black-swan.html": build_black_swan,
         "pages/phased-investing.html": build_phased_investing,
