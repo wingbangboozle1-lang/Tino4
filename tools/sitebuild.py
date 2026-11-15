@@ -477,6 +477,47 @@ SOURCES = {
         "verified": False,
         "checked": "2026-11-15",
     },
+    "sf_prop_h": {
+        "label": "San Francisco Department of Elections — Measure H results (Nov 3, 2026)",
+        "url": "https://www.sfelections.org/results/20261103/index.html",
+        "scope": "Official preliminary results: Measure H, 'Parcel Tax to Fund Muni Operations', passed 74.4% YES. The measure imposes an annual real-estate parcel tax ($129 to $400,000 per parcel by type and size, inflation-adjusted) to fund Muni for 15 years from July 1, 2027. A passed local measure, not a proposal; confirm the operative ordinance and implementation before applying it.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "scc_tax_rates": {
+        "label": "County of Santa Clara — Compilation of Tax Rates & Information, FY 2025-2026",
+        "url": "https://files.santaclaracounty.gov/exjcpb1531/2025-11/tax-rate-book-2025-2026.pdf",
+        "scope": "Official Controller-Treasurer compilation: the 1% maximum levy, the 0.03880 county retirement levy, voter-approved debt by Tax Rate Area, the SCVWD State Water Project 0.00390 (land and improvements), 816 tax rate areas, and installment due dates. Establishes the rate structure, not a parcel's own TRA total.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ca_rtc17043": {
+        "label": "California Revenue and Taxation Code §17043 — 1% tax over $1,000,000",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC",
+        "scope": "Imposes an additional 1% tax on the portion of a taxpayer's taxable income exceeding $1,000,000 for taxable years beginning on or after January 1, 2005 (Proposition 63). States the rate and threshold; it does not determine a household's taxable income.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ca_rtc17041": {
+        "label": "California Revenue and Taxation Code §17041 — income tax imposition",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17041.&lawCode=RTC",
+        "scope": "Imposes California personal income tax by an ordinary bracket schedule. California does not impose a preferential capital-gains rate; capital gains are taxed as ordinary income under this schedule. The statute sets the structure, not a household's rate.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "ca_rtc11911": {
+        "label": "California Revenue and Taxation Code §11911 — Documentary Transfer Tax",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11911.&lawCode=RTC",
+        "scope": "Authorizes county boards of supervisors to impose a documentary transfer tax of 55 cents per $500 (or fractional part) of the consideration or value on transfers over $100. Confirm the county/city ordinance rate and any family-transfer exclusions at the actual recording.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_1031": {
+        "label": "IRS Publication 544 — Sales and Other Dispositions of Assets",
+        "url": "https://www.irs.gov/publications/p544",
+        "scope": "Explains Section 1031 like-kind exchanges (real property held for business or investment only after 2017), the qualified intermediary requirement, and the 45-day identification / 180-day acquisition deadlines; gain is deferred, not eliminated. Does not value a specific property or recommend an exchange.",
+        "verified": True,
+    },
     "boj_unverified": {
         "label": "Bank of Japan — official source not confirmed for bubble figures",
         "url": "https://www.boj.or.jp/en/",
@@ -668,15 +709,18 @@ NAV_GROUPS = [
     ]),
     ("Decision", [
         ("pages/decision-analysis.html", "Compare paths"),
+        ("pages/investing-policy.html", "Investing policy & liquidity"),
         ("pages/questions.html", "Questions & missing evidence"),
         ("pages/suggestions.html", "Suggestions for review"),
     ]),
     ("Properties", [
         ("pages/property-profiles.html", "Property profiles (rounded figures)"),
         ("pages/operating-costs.html", "Costs & coverage"),
+        ("pages/maintenance-and-capital.html", "Maintenance & capital plan"),
     ]),
     ("Numbers", [
         ("pages/projections.html", "Projection worksheet"),
+        ("pages/sale-tax-layer.html", "Sale & income-tax layer"),
         ("pages/property-tax.html", "Property-tax rules"),
     ]),
     ("Stress tests", [
@@ -687,6 +731,7 @@ NAV_GROUPS = [
         ("pages/estate-thresholds.html", "Estate-tax thresholds"),
         ("pages/inheritance-process.html", "Deadline timeline"),
         ("pages/law-watchlist.html", "Law watchlist"),
+        ("pages/prop-h-local-rules.html", "Prop H & local rate area"),
     ]),
     ("Adviser & evidence", [
         ("pages/decision-log.html", "Decision log"),
@@ -702,17 +747,21 @@ EXPECTED_PAGES = [
     "index.html",
     "pages/executive-summary.html",
     "pages/decision-analysis.html",
+    "pages/investing-policy.html",
     "pages/property-profiles.html",
     "pages/questions.html",
     "pages/suggestions.html",
     "pages/projections.html",
+    "pages/sale-tax-layer.html",
     "pages/property-tax.html",
     "pages/operating-costs.html",
+    "pages/maintenance-and-capital.html",
     "pages/black-swan.html",
     "pages/phased-investing.html",
     "pages/estate-thresholds.html",
     "pages/inheritance-process.html",
     "pages/law-watchlist.html",
+    "pages/prop-h-local-rules.html",
     "pages/attorney-cpa-brief.html",
     "pages/decision-log.html",
     "pages/flagged-for-review.html",
@@ -898,6 +947,12 @@ def build_index() -> str:
         ("4. Review with advisers", "Print a one-page attorney and CPA briefing sheet; no identifying details are required on it.", "pages/attorney-cpa-brief.html"),
         ("5. Choose improvements", "Record which decision-quality suggestions you want investigated before anything is changed.", "pages/decision-log.html"),
     ])
+    body += cards("Deeper layers added this round", [
+        ("Price a sale", "Documentary transfer tax, recording, the Section 121 exclusion, depreciation/recapture and the California income-tax layer on any sale gain.", "pages/sale-tax-layer.html"),
+        ("Local rules", "The passed San Francisco Measure H parcel tax terms and Property A's Santa Clara tax rate area.", "pages/prop-h-local-rules.html"),
+        ("Maintenance & capital", "A five-year planning reserve for both buildings, built from labeled assumption bands.", "pages/maintenance-and-capital.html"),
+        ("Investing & liquidity", "A documented framework for sale proceeds, an estate liquidity plan and the 1031 exchange decision.", "pages/investing-policy.html"),
+    ])
     body += paragraph("Rounded-figure policy (owner-directed)", "At the owner's written instruction, the figures that drive this decision are published, rounded to the nearest ten dollars so they cannot be searched back to a source record: 'Costs and numbers should be used but rounded to the nearest $10 increments ... and should be reported in any decision analysis.' Owner-supplied rows are badged Owner-supplied (privacy-rounded) and linked to the official record that can confirm them; projections are badged Projection or Assumption; values that are simply unknown stay blank. Names, street addresses and parcel identifiers are never published.")
     return render_page(
         "index.html",
@@ -945,7 +1000,11 @@ def build_executive_summary() -> str:
         ("Missing evidence", "A question-by-question record list for counsel, CPA, assessor, insurer and rental adviser.", "pages/questions.html"),
         ("Current law", "Estate thresholds, California property-tax mechanics and transfer deadlines.", "pages/estate-thresholds.html"),
         ("Risk", "Historical stress anchors and a local-only Treasury phasing comparison.", "pages/black-swan.html"),
+        ("Sale & income tax", "Documentary transfer tax, Section 121 exclusion, depreciation/recapture and the California income-tax layer on a sale.", "pages/sale-tax-layer.html"),
+        ("Local rules", "The passed San Francisco Measure H parcel tax and Property A's Santa Clara tax rate area.", "pages/prop-h-local-rules.html"),
+        ("Investing policy", "A documented framework for sale proceeds, estate liquidity and the 1031 exchange decision.", "pages/investing-policy.html"),
     ], current="pages/executive-summary.html")
+    body += paragraph("What is new in the local and sale layers", "Three local and transaction facts are now source-verified. San Francisco Measure H (November 3, 2026, official Department of Elections results) passed with 74.4% YES and adds an annual real-estate parcel tax to Property B from July 1, 2027 for 15 years; it does not apply to Property A in Santa Clara County. A sale of Property A would incur the county documentary transfer tax (55 cents per $500 under RTC §11911), and a large sale gain is taxed as California ordinary income with the additional 1% surcharge above $1,000,000 of taxable income (R&TC §17043). Property A's own Santa Clara tax rate area total still must be read from the parcel's TRA block in the official Compilation of Tax Rates (flagged).")
     return render_page("pages/executive-summary.html", "Executive summary", "The short version: separate the assets, verify the rules that can change the answer, and leave private numbers blank until documents establish them.", body, "EXECUTIVE SUMMARY")
 
 
@@ -1128,6 +1187,7 @@ def build_decisions() -> str:
 </section>'''
 
     body += paragraph("Comparison rule", "For every path, show after-tax cash flows, one-time sale or transfer costs, debt, vacancy, repairs, insurance, utilities, property tax, rent legality, liquidity and reinvestment risk. Compare the same time horizon and disclose every assumption.")
+    body += paragraph("Where the deeper layers live", "Two path-level layers are now source-verified and linked. Before ranking the sell path, read the sale & income-tax layer for the documentary transfer tax, recording, the Section 121 exclusion, depreciation/recapture and the California income-tax layer on the gain. Before committing sale proceeds, read the investing policy for the documented allocation, staging, liquidity reserve and the 1031 exchange decision. Both are additive to the property-tax and occupancy facts above, not substitutes for them.")
     return render_page("pages/decision-analysis.html", "Compare live, rent, sell and mixed paths", "The comparison is deliberately conditional. It does not assume that the trust asset and the already-owned asset have the same tax basis, title, rent, occupancy or costs.", body, "DECISION")
 
 
@@ -1530,6 +1590,7 @@ def build_law_watchlist() -> str:
         {"cells": ["Nov 3, 2026 tax-related statewide measures (Props 3, 40–43)", "The official titles are: 3 — extends the existing tax on high incomes for schools and health care; 40 — imposes a one-time tax on certain taxpayers; 41 — prohibits new state taxes that exclude revenue from the state spending limit and requires audits of new state special taxes; 42 — prohibits new state personal property taxes and certain retroactive state taxes; 43 — limits voters' ability to raise local government revenue. The election date (Nov 3, 2026) is before today's date (Nov 15, 2026); certified results were not read here.", "Read the certified results and each measure's full text and fiscal analysis before relying on any tax effect; a ballot title is not a legal outcome by itself."], "status": "Not verified", "sources": ["sos_ballot"]},
         {"cells": ["SF rent-control allowable increase", "The Rent Board page states a 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027. Secondary articles that cite a different figure are superseded by this official page.", "Re-check the Rent Board page each year; confirm whether a unit is covered before applying any increase."], "status": "Verified", "sources": ["sf_rent_board"]},
         {"cells": ["SF Rent Board 2026 notices (demolition/major renovation protections; security-deposit interest)", "The Rent Board page lists a January 23, 2026 item on tenant protections for demolition and major renovation, and a security-deposit interest change effective March 1, 2026. Their substance was not extracted into this site.", "Counsel should read the linked notice text and confirm whether it applies to the specific units before any tenant or deposit decision."], "status": "Not verified", "sources": ["sf_rent_board"]},
+        {"cells": ["San Francisco Measure H — passed parcel tax", "The official SF Department of Elections results show Measure H (Parcel Tax to Fund Muni Operations) passed with 74.4% YES on the November 3, 2026 ballot (preliminary). It imposes an annual real-estate parcel tax of $129 to $400,000 per parcel by type and size, inflation-adjusted, from July 1, 2027 for 15 years, to fund Muni operations.", "Confirm the operative ordinance, implementation schedule, any tenant pass-through rules and the exact charge on Property B's building area before applying it; the results were preliminary and certification can take up to 30 days."], "status": "Verified", "sources": ["sf_prop_h"]},
     ]
     body = callout("Watch enacted law, not headlines", "The pages distinguish current statutes and agency tables from bills, stress assumptions and future uncertainty. No bill or proposal is represented as current law. The inherited transfer is far in the future; refresh federal, state and actual local rules near the event.", "info")
     body += make_table("Law and market watchlist", ["Topic", "Current official baseline / proposal status", "What to re-check"], rows)
@@ -1668,8 +1729,8 @@ def build_flagged() -> str:
         {"cells": ["F-05 — Rental legality and local rules", "No unit permit, local rent-board determination, lease or tenant notice is public here.", "Confirm lawful unit count and all applicable state/local rules with counsel before projecting rent or occupancy."], "status": "Missing", "sources": ["ca_rent", "hud_fmr"]},
         {"cells": ["F-06 — Future law and market path", "The verified CBO forecast runs through 2036; the public site does not disclose a transfer date or model a household-specific future path.", "No future exclusion, house-price, CPI, rent, insurance or portfolio-return value is invented."], "status": "Missing", "sources": ["cbo_rates", "irs_2027", "fhfa_hpi"]},
         {"cells": ["F-07 — Failed official retrievals", "Direct page fetches returned 404 for the listed FTB inheritance page, BOE county-assessor directory, BOE Publication 801 PDF and CPUC water-utilities URL.", "No claim or property-specific value is based on those failed URLs; working alternative laws and guidance are linked in the source register."], "status": "Not verified", "sources": ["ftb_404", "boe_assessor_404", "boe_pub801_404", "cpuc_water_404"]},
-        {"cells": ["F-09 — SF vacancy-tax path", "The SF Treasurer page on vacancy/empty-homes tax returned 'Page Not Found' on 2026-11-15, so no current SF vacancy-tax rule or filing duty is verified here.", "Find the current official SF Treasurer or Tax Collector page for any vacancy tax; do not apply one until confirmed."], "status": "Not verified", "sources": ["sf_treasurer_vacancy_404"]},
-        {"cells": ["F-10 — Santa Clara property-tax rate", "The Santa Clara Assessor homepage fetch failed and the reachable Assessor page lists contacts and services only. No county levy rate or direct charge is verified for any Santa Clara parcel.", "Obtain the parcel's own secured tax bill and the official county rate schedule before any tax projection."], "status": "Missing", "sources": ["scc_assessor_fetch"]},
+        {"cells": ["F-09 — SF vacancy-tax path", "The SF Treasurer page on vacancy/empty-homes tax returned 'Page Not Found' on 2026-11-15, so no current SF vacancy-tax rule or filing duty is verified here. Re-checked on 2026-11-15: the San Francisco November 3, 2026 Measure H is a Muni parcel tax, not a vacancy tax, so it does not resolve the vacancy-tax question.", "Find the current official SF Treasurer or Tax Collector page for any vacancy tax; do not apply one until confirmed. Confirm what the November 2026 measure actually taxed before assuming any vacancy-tax outcome."], "status": "Not verified", "sources": ["sf_treasurer_vacancy_404", "sf_prop_h"]},
+        {"cells": ["F-10 — Santa Clara property-tax rate", "The Santa Clara Assessor homepage fetch failed and the reachable Assessor page lists contacts and services only. The County Controller-Treasurer's official FY 2025-26 Compilation of Tax Rates confirms the county rate structure (the 1% maximum levy, the 0.03880 retirement levy, voter-approved debt by tax rate area, and the 0.00390 SCVWD SWP rate), but a specific parcel's own tax rate area total is not reproduced here.", "Obtain the parcel's own secured tax bill and read its tax rate area block from the official Compilation of Tax Rates before any tax projection; do not substitute a county average."], "status": "Missing", "sources": ["scc_assessor_fetch", "scc_tax_rates"]},
         {"cells": ["F-11 — HUD Fair Market Rent values", "The FY2026 HUD FMR page returned 404, and the FY2027 documentation page did not yield extractable local values. No FMR figure is published.", "Retrieve the official HUD FMR table for the specific area and year; FMR is a program benchmark, not a lawful rent."], "status": "Missing", "sources": ["hud_fmr"]},
         {"cells": ["F-12 — Japan asset-bubble figures", "Historical discount-rate and Nikkei/land-price figures come from secondary sources that disagree on details. The official Bank of Japan source was not confirmed.", "Read the official Bank of Japan data or statements before any historical Japan figure is used; none is published here."], "status": "Not verified", "sources": ["boj_unverified"]},
         {"cells": ["F-13 — California income-tax brackets", "The FTB page for brackets and rates was not fetched, so California income-tax bracket figures are not verified here. Secondary sites were not used for published values.", "Read the current FTB rate schedule for the tax year, and any additional tax that applies, before any California income-tax projection."], "status": "Not verified", "sources": ["ftb_404"]},
@@ -1681,6 +1742,7 @@ def build_flagged() -> str:
         {"cells": ["F-21 — Rounded-figures policy change (owner-directed, 2026-11-15)", "Earlier sessions published no household figures at any rounding. The owner's latest written instruction directs that rounded figures be reported in the decision analysis. The change is recorded in the decision log (D07) and enforced by the verifier (all published currency amounts end in 0; names, street addresses and parcel identifiers stay banned; region ZIPs allowed for insurance/utility context).", "Review D07 and the privacy page. If the owner prefers the stricter posture, revert by removing the owner-supplied tables — no structural change needed."], "status": "Guidance", "sources": ["owner_a", "owner_b"]},
         {"cells": ["F-22 — FAIR Plan dwelling rate increase (market-stress context)", "Third-party reporting (multiple outlets, August-October 2026) says the Department of Insurance approved an average 29.1% FAIR Plan dwelling rate increase effective October 15, 2026; the official CDI newsroom page was not retrieved directly in this session.", "Treat California insurance costs as a stressed input: obtain quotes, and budget for renewal increases. Confirm the rate approval at the CDI newsroom link."], "status": "Not verified", "sources": ["cdi_news", "cdi"]},
         {"cells": ["F-23 — Public Git history: pattern audit reconfirmed", "A read-only audit of the full reachable history (256 commits) found privacy-sensitive figure and place-identifier patterns recurring across hundreds of commit/path pairs (for example, one exact assessment figure appears along 13 unique historical paths; the two region ZIPs along more than 70 each). Counts only; no values were printed and no determination was made that every match is personal data. History remains unscrubbed.", "Repository-owner/admin coordinated cleanup is still required. A ready-to-run procedure exists in the tree (tools/history_scrub.sh + tools/history_scrub_runbook.md: private archive first, filter-repo/BFG rewrite of all refs, force-push coordination, GitHub Support for cached and PR copies) but requires owner/admin action. The platform pins this session to one branch, so no rewrite or force-push was performed."], "status": "Not verified", "sources": ["github_history"]},
+        {"cells": ["F-24 — Cupertino tax rate area total", "The County of Santa Clara FY 2025-26 Compilation of Tax Rates is the official source for a parcel's ad-valorem rate, but Cupertino's specific tax rate area block (the 042-prefixed area) lies beyond the retrievable pages of the official PDF. The county-wide structure is verified; the parcel's own TRA total is not.", "Read the parcel's own tax rate area block directly from the County Controller-Treasurer's Compilation of Tax Rates (or the secured tax bill) to get the total rate; do not infer a Cupertino TRA total from the county-wide components."], "status": "Missing", "sources": ["scc_tax_rates"]},
     ]
     body = callout("Privacy issue remains urgent", "The current website avoids case-specific figures and locations. The GitHub repository is public, and history cleanup has not been completed. A noindex tag and a cleaned current tree do not erase old commits, PR diffs, forks, caches or clones.", "warning")
     body += make_table("Flagged for review — unresolved items do not imply a verified answer", ["Flag", "What is unresolved", "Required action"], rows)
@@ -1714,6 +1776,12 @@ def build_glossary() -> str:
         {"cells": ["FAIR Plan", "California's insurer of last resort for fire perils when the standard market will not write a policy; coverage is narrower than a standard homeowners form.", "Third-party reporting describes an average 29% dwelling rate increase from late 2026; treat insurance cost as a stressed input."], "status": "Cross-checked", "sources": ["cdi", "cdi_news"]},
         {"cells": ["Laddered / staged entry", "Splitting a lump sum into scheduled purchases over months (here, after parking in 3-month-to-2-year Treasuries for 24-36 months).", "Reduces the chance of buying everything at a pre-crash peak; costs relative performance in a steadily rising market and adds renewal-rate risk."], "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
         {"cells": ["Documentary transfer tax", "A county/city tax on recorded property transfers (about 55 cents per $500 statewide base, with local variations); certain family transfers are excluded by statute.", "Confirm the current statutory exclusion and local rate with the recorder at the actual transfer."], "status": "Guidance", "sources": ["ca_rtc480"]},
+        {"cells": ["Measure H (San Francisco)", "A passed San Francisco ballot measure imposing an annual real-estate parcel tax to fund Muni operations, $129 to $400,000 per parcel by type and size, inflation-adjusted, from July 1, 2027 for 15 years.", "A San Francisco-only charge on Property B; it does not apply to a Santa Clara County parcel such as Property A."], "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["Mental-health services tax (MHST)", "A California additional 1% tax on the portion of taxable income over $1,000,000 (R&TC §17043, Proposition 63).", "Applies only above $1,000,000 of California taxable income; the threshold is not indexed."], "status": "Verified", "sources": ["ca_rtc17043"]},
+        {"cells": ["Tax rate area (TRA)", "A Santa Clara County subdivision that assigns each parcel a specific combination of taxing agencies and voter-approved debt, so the total ad-valorem rate varies by TRA.", "The parcel's own TRA total must be read from the County Controller-Treasurer's Compilation of Tax Rates; a county average is not authoritative."], "status": "Verified", "sources": ["scc_tax_rates"]},
+        {"cells": ["Section 1031 exchange", "A like-kind exchange that defers tax when qualifying real property held for business or investment is exchanged for other qualifying real property; after 2017 it applies only to real property.", "Gain is deferred, not eliminated; a qualified intermediary and strict 45-day/180-day deadlines apply, and a principal residence does not qualify."], "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["Depreciation recapture", "When a rental property is sold, previously claimed depreciation is generally recaptured and taxed as ordinary income (Section 1250), separate from capital gain on remaining appreciation.", "The amount depends on the property's depreciation history, which is not published here."], "status": "Verified", "sources": ["irs_rental", "irs_basis_pub"]},
+        {"cells": ["Estate liquidity plan", "A plan to hold liquid assets so an estate can pay any federal estate tax due when Form 706 is filed, avoiding a forced sale of illiquid assets.", "Needed especially when the estate may approach or exceed the federal basic exclusion; confirm the year-of-death law and the whole estate's composition."], "status": "Verified", "sources": ["irs_estate", "irs_estate_faq"]},
     ]
     body = make_table("Terms used in this workspace", ["Term", "Plain-language meaning", "Practical distinction"], rows)
     return render_page("pages/glossary.html", "Glossary", "Short definitions for the legal, tax, property and investment terms used in the decision process.", body, "EVIDENCE")
@@ -1794,6 +1862,375 @@ def build_suggestions() -> str:
     return render_page("pages/suggestions.html", "Suggestions for review", "A selectable review queue for improving decision quality. Suggestions are proposals, not automatic changes or personalized advice.", body, "DECISION")
 
 
+def build_sale_tax_layer() -> str:
+    """Documentary transfer tax, recording fees, the Section 121 exclusion,
+    same-tax-year sale, depreciation/recapture and the California income-tax
+    layer (MHST and ordinary-rate capital gains)."""
+    import math as _m
+
+    def dtt(value: float) -> float:
+        return _m.ceil(value / 500.0) * 0.55
+
+    sell_gross = FMV_2045
+    sell_dtt = dtt(sell_gross)
+    sell_dtt_rounded = money10(sell_dtt)
+    # Section 121 illustration uses the official exclusion amounts only.
+    excl_single = 250_000
+    excl_joint = 500_000
+    mhst_threshold = 1_000_000
+
+    transfer_rows = [
+        {"cells": ["Documentary transfer tax — legal formula",
+                   "55 cents per $500 (or fractional part) of the consideration or value on a transfer over $100, imposed by county ordinance under RTC §11911.",
+                   "Confirm the county/city ordinance rate and any family-transfer exclusions at the actual recording; the statute authorizes the tax but does not fix every county rate."],
+         "status": "Verified", "sources": ["ca_rtc11911"]},
+        {"cells": ["Documentary transfer tax — modeled on the sale",
+                   "On the modeled 2045 sale of about " + money10(sell_gross) + ", the formula yields about " + money10(sell_dtt) + " of documentary transfer tax.",
+                   "A derived planning figure from the labeled 4% growth assumption and the official formula; the actual tax depends on the recorded sale price and county rate."],
+         "status": "Projection", "sources": ["ca_rtc11911", "owner_a"]},
+        {"cells": ["Recording fees", "—",
+                   "County/city recording and filing fees are flat administrative charges that vary by jurisdiction and document type; no single official figure applies. Obtain the fee schedule from the county recorder before the sale."],
+         "status": "Missing", "sources": ["ca_rtc11911"]},
+        {"cells": ["Sell-path net proceeds (after costs and transfer tax)",
+                   "Gross sale " + money10(sell_gross) + " less assumed 7% sale costs and about " + money10(sell_dtt) + " documentary transfer tax.",
+                   "Recording fees and any debt payoff are additional and not included here; this is a planning illustration, not a closing statement."],
+         "status": "Assumption", "sources": ["owner_a", "ca_rtc11911"]},
+    ]
+    sec121_rows = [
+        {"cells": ["Section 121 — principal-residence exclusion",
+                   "Up to $250,000 ($500,000 on a joint return) of gain on the sale of a principal residence is excluded after the two-of-five-year ownership and use tests, once per two years.",
+                   "Whether the exclusion applies depends on the owner's ownership and use facts; a rented inherited home generally fails the use test unless the owner lived in it two of the last five years first."],
+         "status": "Verified", "sources": ["irs_121"]},
+        {"cells": ["Living-then-sell path",
+                   "If the household occupies Property A as a principal residence for at least two of the five years before selling, the Section 121 exclusion can shelter up to $250,000 (single) or $500,000 (joint) of gain.",
+                   "The exclusion reduces taxable gain on a later sale; it does not affect the property-tax base or the documentary transfer tax."],
+         "status": "Guidance", "sources": ["irs_121", "irs_basis"]},
+        {"cells": ["Same-tax-year sale at inheritance",
+                   "If the property is sold in the same tax year it is inherited, the two-of-five-year use test generally is not met, so Section 121 is unavailable. The gain is measured against the date-of-death basis, so a same-year sale near the valuation date may produce little gain.",
+                   "A same-year sale trades the Section 121 shelter for immediate liquidity; the income-tax result depends on the actual date-of-death value and sale price."],
+         "status": "Guidance", "sources": ["irs_121", "irs_basis"]},
+        {"cells": ["Inherited basis",
+                   "Inherited property basis is generally its date-of-death fair market value, so appreciation during the decedent's life is not taxed at transfer; a later sale can still create gain from post-death appreciation.",
+                   "Basis is an income-tax concept and is separate from the county's property-tax assessed value."],
+         "status": "Verified", "sources": ["irs_basis", "irs_basis_pub"]},
+    ]
+    deprec_rows = [
+        {"cells": ["Residential rental depreciation",
+                   "Rental dwellings are depreciated over 27.5 years; the cost of the building (not land) is recovered over that period, and repairs are deducted in the year paid while improvements are capitalized and depreciated.",
+                   "The method is a tax calculation, not a cash reserve; the actual depreciation schedule depends on the property's cost basis, improvement records and the applicable convention."],
+         "status": "Verified", "sources": ["irs_rental", "irs_basis_pub"]},
+        {"cells": ["Depreciation recapture on sale",
+                   "When a rental is sold, previously claimed depreciation is generally recaptured and taxed as ordinary income (Section 1250), separate from any capital gain on the remaining appreciation.",
+                   "Recapture can be a large ordinary-income item on a long-held rental; the exact amount depends on the depreciation history, which is not published here."],
+         "status": "Verified", "sources": ["irs_rental", "irs_basis_pub"]},
+        {"cells": ["Property B depreciation history", "—",
+                   "Property B's actual cost basis, improvement records and accumulated depreciation are private and unknown; the modeled recapture cannot be computed without them."],
+         "status": "Missing", "sources": ["irs_rental", "irs_basis_pub", "owner_b"]},
+        {"cells": ["Depreciation and the primary-residence path",
+                   "If Property A is occupied as a principal residence (not rented), rental depreciation does not apply; instead the Section 121 exclusion governs a later sale.",
+                   "The two treatments are mutually exclusive for a given use; do not apply rental depreciation to a home that is the owner's principal residence."],
+         "status": "Guidance", "sources": ["irs_rental", "irs_121"]},
+    ]
+    ca_tax_rows = [
+        {"cells": ["California capital gains are ordinary income",
+                   "California imposes personal income tax by an ordinary bracket schedule and does not offer a preferential capital-gains rate; a large sale gain is taxed at the ordinary rate.",
+                   "The statute sets the structure; the actual rate depends on the household's total California taxable income and bracket."],
+         "status": "Verified", "sources": ["ca_rtc17041"]},
+        {"cells": ["Behavioral Health Services Tax (1% over $1,000,000)",
+                   "An additional 1% tax applies to the portion of California taxable income exceeding $1,000,000 for taxable years beginning on or after January 1, 2005 (R&TC §17043, Proposition 63).",
+                   "If a sale gain pushes taxable income above $1,000,000, the 1% applies to the excess; the threshold is not indexed for inflation."],
+         "status": "Verified", "sources": ["ca_rtc17043"]},
+        {"cells": ["Sensitivity anchor",
+                   "The 1% surcharge begins above $1,000,000 of California taxable income, on top of the ordinary-rate capital-gain treatment.",
+                   "This is the value to re-test: a sale gain that crosses $1,000,000 changes the effective California rate on the excess by 1%."],
+         "status": "Verified", "sources": ["ca_rtc17043", "ca_rtc17041"]},
+        {"cells": ["Whole-estate income-tax position", "—",
+                   "Whether a sale, rental income or the MHST applies depends on the household's full California taxable income, filing status and the year of the sale; a CPA must compute the actual position."],
+         "status": "Missing", "sources": ["ca_rtc17043", "ca_rtc17041", "irs_121"]},
+    ]
+    body = callout(
+        "Three separate tax systems, one sale",
+        "A sale of Property A touches three distinct calculations at once: the county documentary transfer tax and recording fees (a transaction cost), the federal/California income tax on any gain (basis-driven, with the Section 121 exclusion only if the home was the owner's principal residence for two of five years), and the California 1% surcharge above $1,000,000 of taxable income. Property-tax reassessment is a fourth, separate system. Do not collapse them into one 'tax' number.",
+        "warning",
+    )
+    body += '''<section class="tool-section" aria-labelledby="sale-tax-tool-heading">
+<h2 id="sale-tax-tool-heading">Sale-tax what-if — local only</h2>
+<p class="table-note">Enter the gross sale price, the income-tax basis, whether the Section 121 use test is met, and the household's California taxable income. The tool prices the documentary transfer tax, the Section 121-shelterable gain, the remaining taxable gain, and the California 1% surcharge above $1,000,000. Defaults mirror the published baseline. Nothing is stored or transmitted; the tool does not calculate federal tax, recording fees, debt payoff or the property-tax reassessment.</p>
+<form id="sale-tax-tool" class="tool-grid">
+<label>Gross sale price<input id="st-price" type="number" min="0" max="99999999" step="10" value="6531400" inputmode="numeric"></label>
+<label>Income-tax basis<input id="st-basis" type="number" min="0" max="99999999" step="10" value="6531400" inputmode="numeric"></label>
+<label>Section 121 use test met?<select id="st-use"><option value="0">No (same-year sale)</option><option value="1" selected>Yes (lived in 2 of 5 years)</option></select></label>
+<label>Section 121 exclusion<select id="st-excl"><option value="250000">Single ($250,000)</option><option value="500000" selected>Joint ($500,000)</option></select></label>
+<label>California taxable income<input id="st-ca" type="number" min="0" max="99999999" step="10" value="1200000" inputmode="numeric"></label>
+<div class="tool-actions no-print"><button id="st-reset" type="button">Reset to baseline</button><span class="tool-assumption">Derived values are rounded to the nearest $10 in the display.</span></div>
+</form>
+<div class="scenario-grid" aria-live="polite">
+<article class="scenario-card"><h3>Transaction cost</h3><dl><dt>Documentary transfer tax (55c/$500)</dt><dd id="st-dtt">—</dd><dt>Gain before exclusion</dt><dd id="st-gain">—</dd></dl></article>
+<article class="scenario-card"><h3>Section 121 shelter</h3><dl><dt>Exclusion applied</dt><dd id="st-shelter">—</dd><dt>Taxable gain after exclusion</dt><dd id="st-taxgain">—</dd></dl></article>
+<article class="scenario-card"><h3>California income-tax layer</h3><dl><dt>Taxable income above $1,000,000</dt><dd id="st-over">—</dd><dt>1% surcharge (MHST)</dt><dd id="st-mhst">—</dd></dl></article>
+<article class="scenario-card"><h3>What to confirm</h3><dl><dt>Documentary transfer tax</dt><dd>county rate</dd><dt>Recording fees</dt><dd>recorder schedule</dd></dl></article>
+</div>
+<p id="st-status" class="tool-status" role="status">Change a control to rerun the local sale-tax comparison.</p>
+<p class="table-note">Model: documentary transfer tax = 55 cents per $500 (or fraction) of the sale price; gain = sale price − basis; Section 121 shelter = min(gain, selected exclusion) only if the use test is met; taxable gain = gain − shelter; MHST = 1% of the California taxable income above $1,000,000. These are labeled planning figures, not tax advice.</p>
+</section>'''
+    body += make_table("Documentary transfer tax and recording in the sell path", ["Item", "What the rule or model shows", "Limit / what to confirm"], transfer_rows)
+    body += make_table("Primary-residence exclusion for living-then-sell vs a same-year sale", ["Path", "What applies", "Decision implication"], sec121_rows)
+    body += make_table("Depreciation and depreciation recapture", ["Concept", "Source-backed rule", "Limit"], deprec_rows)
+    body += make_table("California income-tax layer on a sale gain", ["Item", "Source-backed rule", "Limit"], ca_tax_rows)
+    body += paragraph("Same-tax-year sale, before anything else", "If the household is considering a same-year sale, run the income-tax comparison first: with an inherited date-of-death basis, a same-year sale near the valuation date may produce little gain and no Section 121 shelter, while a living-then-sell path preserves the exclusion but delays liquidity. The documentary transfer tax and recording fees apply to either sale. Confirm the actual basis, sale price and California taxable income with a CPA before choosing.")
+    return render_page("pages/sale-tax-layer.html", "Sale & income-tax layer", "Documentary transfer tax, recording fees, the Section 121 exclusion, depreciation and recapture, and the California income-tax layer on a sale.", body, "NUMBERS")
+
+
+def build_prop_h_local_rules() -> str:
+    """SF Measure H (Prop H) with its official terms and Property A's tax rate area."""
+    prop_h_rows = [
+        {"cells": ["Measure H — title and status",
+                   "Measure H, 'Parcel Tax to Fund Muni Operations', appeared on the San Francisco November 3, 2026 ballot and passed with 74.4% YES (preliminary, official Department of Elections results).",
+                   "A passed local measure, not a proposal; confirm the operative ordinance, implementation and any tenant pass-through rules before applying it."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["What it taxes",
+                   "A new annual real-estate parcel tax on parcels of real property in San Francisco, at rates ranging from $129 per parcel up to a maximum of $400,000 per parcel by property type and size, adjusted annually for inflation.",
+                   "The tax is a flat parcel charge based on building area, not a percentage of value; it is separate from the property-tax roll."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["Duration and use",
+                   "The tax runs from July 1, 2027 to June 30, 2042 (15 years) and dedicates revenue to Muni (SFMTA) operations.",
+                   "The measure covers the planning window; confirm the exact operative dates and any extension or repeal in the ordinance."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["Single-family residential parcels",
+                   "Base tax of $129 for the first 3,000 square feet of building area, plus 42 cents per square foot for area between 3,001 and 5,000 square feet and 199 cents per square foot above 5,000 square feet.",
+                   "This is the official rate schedule for single-family parcels; it does not apply to a multifamily parcel such as Property B."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["Multifamily residential parcels",
+                   "Base tax of $249 for the first 5,000 square feet of building area, plus 19.5 cents per square foot of building area over 5,000 square feet, capped at $50,000 per parcel.",
+                   "Property B is a three-unit building; its Measure H tax depends on its total building area, which is not published here."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["Non-residential and mixed-use parcels",
+                   "Non-residential parcels carry a base tax of $799 for the first 5,000 square feet plus marginal rates by size, capped at $400,000 per parcel; mixed-use parcels carry a $799 base capped at $400,000.",
+                   "Confirm the parcel's classification and the applicable marginal rates from the operative ordinance."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+        {"cells": ["Exemptions and pass-through",
+                   "Most properties owned and occupied as a primary residence by a person at least 65 years old are exempt or reduced; single-room-occupancy building area is excluded. Owners of rent-controlled residential units may pass through up to 50% of the tax to tenants, capped at $65 per unit, if the initial base rent was set before June 1, 2027.",
+                   "Exemption eligibility and the pass-through cap depend on the unit's rent-control status and the base rent date; confirm with the City."],
+         "status": "Verified", "sources": ["sf_prop_h"]},
+    ]
+    prop_h_model_rows = [
+        {"cells": ["Property B — classification",
+                   "Property B is a three-unit residential building, so the multifamily residential rate schedule is the relevant one: $249 base for the first 5,000 sq ft plus 19.5 cents per square foot over 5,000 sq ft, capped at $50,000 per parcel.",
+                   "The building's total square footage is not published; obtain it from the property records or a permit to compute the exact charge."],
+         "status": "Assumption", "sources": ["sf_prop_h", "owner_b"]},
+        {"cells": ["Property B — modeled charge",
+                   "—",
+                   "The exact Measure H charge cannot be computed without the building area and the operative ordinance rate; it is an additive carrying cost on top of the property tax and does not change the ownership decision by itself."],
+         "status": "Missing", "sources": ["sf_prop_h"]},
+        {"cells": ["Property A — not subject to Measure H",
+                   "Property A is in Santa Clara County, not San Francisco, so Measure H does not apply to it.",
+                   "Measure H is a San Francisco-only parcel tax; it affects Property B only."],
+         "status": "Verified", "sources": ["sf_prop_h", "scc_tax_rates"]},
+    ]
+    rate_area_rows = [
+        {"cells": ["Property A — tax rate area (TRA)",
+                   "Santa Clara County divides the county into tax rate areas; each TRA has its own combination of taxing agencies and voter-approved debt, so the total ad-valorem rate varies by TRA. The County Controller-Treasurer publishes the Compilation of Tax Rates annually.",
+                   "The parcel's exact TRA number and total rate must be read from the parcel's own TRA block in the official book; they are not reproduced here."],
+         "status": "Verified", "sources": ["scc_tax_rates"]},
+        {"cells": ["Base components (all Santa Clara TRAs)",
+                   "The 1% maximum levy plus the 0.03880 county retirement levy apply across the county; voter-approved debt (school, city, community college, special districts) and the SCVWD State Water Project 0.00390 (land and improvements) vary by TRA.",
+                   "These are the verified components; the parcel's total also includes its specific voter-approved bonds."],
+         "status": "Verified", "sources": ["scc_tax_rates"]},
+        {"cells": ["County structure",
+                   "The FY 2025-2026 Compilation lists 816 tax rate areas and confirms the 1% maximum levy, the county retirement levy, and the installment due dates (first installment November 1, delinquent December 10; second installment February 1, delinquent April 10).",
+                   "The structure is official; the parcel's own TRA total is the parcel-specific figure to confirm."],
+         "status": "Verified", "sources": ["scc_tax_rates"]},
+        {"cells": ["Cupertino TRA total rate",
+                   "—",
+                   "Cupertino's exact TRA number and total rate are beyond the retrievable pages of the official Compilation PDF. Read the parcel's TRA block directly from the County Controller-Treasurer's book; do not substitute a county average."],
+         "status": "Missing", "sources": ["scc_tax_rates"]},
+        {"cells": ["Property B — San Francisco assessment",
+                   "Property B is assessed by the San Francisco Assessor-Recorder under the same Proposition 13 framework; its own roll and rate area determine its property tax.",
+                   "San Francisco's property-tax rate structure is separate from Measure H; confirm B's roll and any Measure H charge together."],
+         "status": "Missing", "sources": ["owner_b", "sf_prop_h"]},
+    ]
+    body = callout(
+        "A passed San Francisco parcel tax and a Santa Clara rate area",
+        "Measure H is a passed San Francisco parcel tax that adds a flat, building-area-based charge to Property B for 15 years from July 1, 2027. Property A sits in Santa Clara County, where its property tax is set by its own tax rate area in the County Controller-Treasurer's Compilation of Tax Rates. These are local, parcel-specific figures that must be read from the official records for each property.",
+        "info",
+    )
+    body += make_table("San Francisco Measure H (Prop H) — official terms", ["Item", "Official term", "Limit / what to confirm"], prop_h_rows)
+    body += make_table("Modeling Measure H on Property B", ["Line", "What applies", "Limit"], prop_h_model_rows)
+    body += make_table("Property A tax rate area — Santa Clara County Compilation of Tax Rates", ["Item", "Source-backed rule", "Limit"], rate_area_rows)
+    body += paragraph("How to read the local layer", "Measure H and the Santa Clara tax rate area are additive local costs, not a single rate. For Property B, obtain the building area and the operative Measure H ordinance to compute the exact parcel charge. For Property A, read the parcel's TRA block from the County Controller-Treasurer's Compilation of Tax Rates to get the total ad-valorem rate, then apply it to the carried-over or reassessed base on the projections page. Both figures re-check annually.")
+    return render_page("pages/prop-h-local-rules.html", "Prop H & local rate area", "The passed San Francisco Measure H parcel tax with its official terms, and Property A's Santa Clara County tax rate area from the official Compilation of Tax Rates.", body, "LAW & PROCESS")
+
+
+def build_maintenance_capital() -> str:
+    """A five-year maintenance and capital plan for both buildings."""
+    # A simple planning allocation of the annual assumption bands across a
+    # five-year horizon. Clearly labeled assumptions, not quotes.
+    years = [2027, 2028, 2029, 2030, 2031]
+    a_annual = (MAINT_A_BAND[0] + MAINT_A_BAND[1]) / 2
+    b_annual = (B_MAINT_BAND[0] + B_MAINT_BAND[1]) / 2
+
+    def r10(value: float) -> int:
+        return int(round(value / 10.0) * 10)
+
+    a_cap = r10(a_annual * 0.35)
+    b_cap = r10(b_annual * 0.35)
+    plan_rows = []
+    a_cum = b_cum = 0
+    for year in years:
+        a_maint_n = r10(a_annual * 0.65)
+        b_maint_n = r10(b_annual * 0.65)
+        a_total_n = a_maint_n + a_cap
+        b_total_n = b_maint_n + b_cap
+        a_cum += a_total_n
+        b_cum += b_total_n
+        plan_rows.append({
+            "cells": [year, money10(a_maint_n), money10(a_cap), money10(a_total_n),
+                      money10(b_maint_n), money10(b_cap), money10(b_total_n)],
+            "status": "Assumption",
+            "sources": ["owner_a", "owner_b", "cslb", "irs_rental"],
+        })
+    summary_rows = [
+        {"cells": ["Property A — five-year total (planning)",
+                   money10(a_cum),
+                   "Built from the owner-supplied maintenance context and the labeled assumption band of " + money10(MAINT_A_BAND[0]) + " to " + money10(MAINT_A_BAND[1]) + " per year. Solar-equipped and reported to need less repair intensity than Property B."],
+         "status": "Assumption", "sources": ["owner_a", "cslb"]},
+        {"cells": ["Property B — five-year total (planning)",
+                   money10(b_cum),
+                   "Built from the older three-unit building and the labeled assumption band of " + money10(B_MAINT_BAND[0]) + " to " + money10(B_MAINT_BAND[1]) + " per year. Multi-unit buildings carry more common-area and system risk."],
+         "status": "Assumption", "sources": ["owner_b", "cslb", "irs_rental"]},
+        {"cells": ["Combined five-year reserve (planning)",
+                   money10(a_cum + b_cum),
+                   "A planning reserve only; actual costs require inspections, service history and licensed bids. Repairs and improvements are treated differently for tax."],
+         "status": "Assumption", "sources": ["cslb", "irs_rental"]},
+    ]
+    scope_rows = [
+        {"cells": ["Roof and structure",
+                   "Inspect the roof, flashing and structure; a multi-unit building has more common-area exposure.",
+                   "Capitalize major replacements; deduct only current repairs. Get at least two licensed bids per item."],
+         "status": "Guidance", "sources": ["cslb", "irs_rental"]},
+        {"cells": ["HVAC, electrical and plumbing",
+                   "Service and replace aging systems; the solar array on Property A also needs periodic inspection and inverter/battery attention.",
+                   "Equipment age and warranty status drive the timing; a licensed contractor determines the real condition."],
+         "status": "Guidance", "sources": ["cslb", "cpuc_solar"]},
+        {"cells": ["Appliances, fixtures and interior",
+                   "Plan appliance and fixture replacement across units; paint and flooring on a schedule.",
+                   "Rental units may have different turnover cycles than an owner-occupied home."],
+         "status": "Guidance", "sources": ["irs_rental", "cslb"]},
+        {"cells": ["Common areas and exterior",
+                   "For Property B, plan hallway, exterior, and shared-system upkeep; for Property A, exterior and landscaping.",
+                   "Common-area costs scale with unit count and are part of the operating budget."],
+         "status": "Guidance", "sources": ["irs_rental", "cslb"]},
+        {"cells": ["Depreciation and tax treatment",
+                   "Repairs are deducted in the year paid; improvements are capitalized and depreciated (27.5 years for residential rental buildings).",
+                   "The tax treatment differs from the cash reserve; a CPA should classify each item."],
+         "status": "Verified", "sources": ["irs_rental", "irs_basis_pub"]},
+    ]
+    body = callout(
+        "A five-year plan, built from ranges",
+        "This is a five-year (2027-2031) maintenance and capital plan for both buildings, allocated from the labeled assumption bands and the owner's maintenance context. It is a planning reserve, not a quote: the actual plan requires inspections, service history and licensed bids for each property. Property A is anticipated to need less repair intensity; Property B is an older three-unit building with more system and common-area risk.",
+        "info",
+    )
+    # Recompute with numeric accumulation, then format at the end.
+    body += make_table(
+        "Five-year maintenance and capital plan (2027-2031, planning; privacy-rounded)",
+        ["Year", "A maintenance", "A capital reserve", "A annual total", "B maintenance", "B capital reserve", "B annual total"],
+        plan_rows,
+        "Columns allocate the midpoint of each labeled assumption band 65% to current maintenance and 35% to a capital reserve. All values are planning assumptions rounded to the nearest ten dollars, not bids or quotes.",
+    )
+    body += make_table("Five-year totals and reserve", ["Item", "Planning total", "Meaning and limits"], summary_rows)
+    body += make_table("Scope of a real maintenance plan", ["Category", "What to plan", "Tax and evidence notes"], scope_rows)
+    body += paragraph("Refreshing the plan", "Rebuild this plan annually from updated inspection findings, service records, warranty status and licensed bids. A large deferred repair can reverse an apparent cash-flow winner, so treat the capital reserve as a first-class input alongside property tax, insurance and utilities.")
+    return render_page("pages/maintenance-and-capital.html", "Maintenance & capital plan", "A five-year planning reserve for both buildings, built from labeled assumption bands and the owner's maintenance context, with the scope and tax treatment of each category.", body, "PROPERTIES")
+
+
+def build_investing_policy() -> str:
+    """A documented investing policy for sale proceeds, an estate liquidity plan,
+    and the 1031 like-kind exchange decision framework."""
+    policy_rows = [
+        {"cells": ["Objective",
+                   "Define the goal before the money arrives: total return, income, preservation, or a specific goal, with a stated time horizon and liquidity needs.",
+                   "The objective drives allocation and drawdown rules; it is a household decision, not a model output."],
+         "status": "Guidance", "sources": ["sec_stocks"]},
+        {"cells": ["Risk tolerance and capacity for loss",
+                   "State how much loss is acceptable and over what period; equity prices can fall and investors can lose money.",
+                   "A staged Treasury entry reduces early exposure but does not remove loss risk; the policy must state capacity for loss explicitly."],
+         "status": "Verified", "sources": ["sec_stocks", "treasury_bills"]},
+        {"cells": ["Allocation bands",
+                   "Set target allocation bands and a rebalancing rule rather than a single point allocation.",
+                   "Bands keep the portfolio from drifting; the specific bands are a fiduciary decision."],
+         "status": "Guidance", "sources": ["sec_stocks"]},
+        {"cells": ["Liquidity reserve",
+                   "Hold a cash/short-Treasury reserve for taxes, repairs and living costs before committing the rest to longer-term assets.",
+                   "The reserve size depends on the household's cash needs and the tax reserve; see the estate liquidity plan below."],
+         "status": "Guidance", "sources": ["treasury_bills", "treasury_notes"]},
+        {"cells": ["Entry and staging rule",
+                   "If the household chooses to invest sale proceeds, pre-commit the staging rule (immediate vs 24-36 month Treasury ladder) and the renewal-yield review before the money arrives.",
+                   "Staging changes timing and adds reinvestment risk; the rule should be written down before any proceeds land."],
+         "status": "Guidance", "sources": ["treasury_bills", "treasury_notes", "sec_stocks"]},
+        {"cells": ["Tax-aware drawdown",
+                   "Plan withdrawals and any tax reserve around the household's tax position, including the California 1% surcharge above $1,000,000.",
+                   "A CPA should set the tax reserve and the drawdown order; the policy should name the tax triggers."],
+         "status": "Guidance", "sources": ["ca_rtc17043", "irs_rental"]},
+        {"cells": ["Custody and review",
+                   "Use a documented custody and review process; re-check the policy annually and after any large market move.",
+                   "An annual review keeps the policy aligned with changed law, costs and goals."],
+         "status": "Guidance", "sources": ["sec_stocks", "irs_2027"]},
+    ]
+    liquidity_rows = [
+        {"cells": ["When liquidity matters",
+                   "If the estate may approach or exceed the federal basic exclusion ($15,000,000 for 2026), the estate needs liquid assets to pay any estate tax when Form 706 is due nine months after death.",
+                   "Liquidity needs depend on the whole estate's composition and the year-of-death law; this is not a per-asset rule."],
+         "status": "Verified", "sources": ["irs_estate", "irs_estate_faq"]},
+        {"cells": ["Assets that provide liquidity",
+                   "Cash, marketable securities and assets that can be sold or valued quickly can fund the tax; illiquid assets (real estate, closely-held business) may require special treatment.",
+                   "The liquidity mix is a household fact; confirm which assets are readily marketable."],
+         "status": "Guidance", "sources": ["irs_estate", "sec_stocks"]},
+        {"cells": ["Extension and elections",
+                   "The IRS allows an extension request of up to six months for Form 706 by filing Form 4768 by the due date; certain closely-held-business estates may elect to pay estate tax over time under IRC §6166.",
+                   "These are timing and payment options; eligibility depends on the estate's facts and requires counsel."],
+         "status": "Verified", "sources": ["irs_estate_faq"]},
+        {"cells": ["California layer",
+                   "California imposes no state estate or inheritance tax under current law (RTC §13301); liquidity planning is therefore a federal-estate-tax concern.",
+                   "Re-check state law for the actual year of death; a future legislature could change it."],
+         "status": "Verified", "sources": ["ca_rtc13301", "ca_death_tax"]},
+        {"cells": ["Household liquidity position", "—",
+                   "The estate's actual asset composition, debt, cash and marketable assets are private and unknown; the liquidity plan cannot be finalized without them."],
+         "status": "Missing", "sources": ["irs_estate", "irs_estate_faq"]},
+    ]
+    exchange_rows = [
+        {"cells": ["What a 1031 exchange is",
+                   "A Section 1031 like-kind exchange defers gain when qualifying real property held for business or investment is exchanged for other qualifying real property; since 2017 it applies only to real property.",
+                   "Gain is deferred, not eliminated; the replacement property's basis carries over the relinquished property's basis with adjustments."],
+         "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["Property eligibility",
+                   "Both the relinquished and replacement property must be held for productive use in a trade or business or for investment; property held primarily for sale or for personal use does not qualify.",
+                   "Whether Property A (inherited, possibly to be occupied or sold) qualifies depends on its actual use and intent; a principal residence does not qualify."],
+         "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["Process and deadlines",
+                   "A deferred exchange generally uses a qualified intermediary, requires identification of replacement property within 45 days and acquisition within 180 days, and must operate as an exchange rather than a sale followed by a purchase.",
+                   "Strict compliance is required; a disqualified intermediary or actual receipt of proceeds can convert the exchange into a taxable sale."],
+         "status": "Verified", "sources": ["irs_1031"]},
+        {"cells": ["Is an exchange wanted?",
+                   "The decision depends on whether the household wants to defer gain and reinvest in another investment property, or take the cash. A principal-residence sale is not an exchange candidate.",
+                   "Take advice before selling; the decision interacts with the primary-residence exclusion, the income-tax layer and the liquidity plan."],
+         "status": "Guidance", "sources": ["irs_1031", "irs_121"]},
+        {"cells": ["Advice before selling",
+                   "Before any sale, obtain written advice on whether a 1031 exchange is feasible and beneficial, and on the interaction with basis, depreciation recapture and the primary-residence exclusion.",
+                   "The exchange rules are technical; a tax adviser should review the specific facts before the sale is structured."],
+         "status": "Action needed", "sources": ["irs_1031", "irs_basis"]},
+    ]
+    body = callout(
+        "Write the policy before the money arrives",
+        "A documented investing policy, an estate liquidity plan and an exchange decision should all be settled in writing before sale proceeds or the inheritance arrive. Choosing them after the money lands risks reverse-engineering the decision from one projection. This page provides the framework and the decision gates; a fee-only fiduciary and a CPA should finalize the actual policy.",
+        "warning",
+    )
+    body += make_table("Investment policy framework for sale proceeds", ["Element", "What to document", "Why it matters"], policy_rows)
+    body += make_table("Estate liquidity plan (if the estate may exceed the federal exclusion)", ["Item", "Source-backed rule or framework", "Limit"], liquidity_rows)
+    body += make_table("1031 like-kind exchange — decision framework", ["Point", "Source-backed rule", "Limit / decision gate"], exchange_rows)
+    body += paragraph("Order of decisions", "Settle the trust and title facts and the whole-estate position first, then the investing policy and liquidity plan, then the exchange question, and only then the entry-timing rule. Each later decision depends on the earlier ones; changing the order risks an answer that is reverse-engineered from a single projection.")
+    return render_page("pages/investing-policy.html", "Investing policy & liquidity", "A documented framework for the sale proceeds, an estate liquidity plan, and the 1031 like-kind exchange decision — to be settled in writing before the money arrives.", body, "DECISION")
+
+
 def build_page(path: str) -> str:
     builders = {
         "index.html": build_index,
@@ -1804,6 +2241,10 @@ def build_page(path: str) -> str:
         "pages/projections.html": build_projections,
         "pages/property-tax.html": build_property_tax,
         "pages/operating-costs.html": build_costs,
+        "pages/maintenance-and-capital.html": build_maintenance_capital,
+        "pages/sale-tax-layer.html": build_sale_tax_layer,
+        "pages/investing-policy.html": build_investing_policy,
+        "pages/prop-h-local-rules.html": build_prop_h_local_rules,
         "pages/black-swan.html": build_black_swan,
         "pages/phased-investing.html": build_phased_investing,
         "pages/estate-thresholds.html": build_estate_thresholds,

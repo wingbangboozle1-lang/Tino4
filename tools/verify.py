@@ -31,13 +31,21 @@ PUBLIC_CURRENCY_AMOUNTS = {
     # as published (ported from session 377ea96a / PR #88):
     "16000", "11700", "3300", "16250",                 # Rev. Proc. 2025-32 estate/trust brackets
     "171", "189", "212",                               # SFPUC Prop 218 notice — published average combined bills FYE 2026-2028
+    # San Francisco Measure H parcel-tax schedule (SFDOE official results /
+    # ordinance terms, 2026-11-15): base charges and per-parcel caps are
+    # published exactly and do not end in $10.
+    "129", "249", "799", "65", "400000", "50000",
 }
+# Published tax-rate components from the Santa Clara County FY 2025-26
+# Compilation of Tax Rates (the retirement levy 0.03880 and the SCVWD State
+# Water Project rate 0.00390). These are official rate values, not identifiers.
+FIVE_DIGIT_RATE_COMPONENTS = {"03880", "00390"}
 # Five-digit identifiers: cited code sections, CBO report identifiers, and the
 # two owner-directed region ZIP codes. Region ZIPs carry no street address and
 # are used only for ZIP-specific insurance/utility/rate context.
 REGION_ZIP_CODES = {"95014", "94122"}
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912"}
-FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "11911", "17041", "17043"}
+FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES | FIVE_DIGIT_RATE_COMPONENTS
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
     "_s8bb142d0/audit", "_s95cf9249/audit",
@@ -48,10 +56,11 @@ OFFICIAL_HOST_SUFFIXES = (
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
     "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sftreasurer.org",
-    "santaclaracounty.gov", "boj.or.jp",
+    "santaclaracounty.gov", "boj.or.jp", "sfelections.org",
     # Owner-directed official-context hosts (2026-11-15): the official daily
-    # Treasury yield curve, the statute text, and the utility providers that
-    # serve the two regions discussed on the site.
+    # Treasury yield curve, the statute text, the utility providers that
+    # serve the two regions discussed on the site, and the San Francisco
+    # Department of Elections official election results.
     "treasury.gov", "uscode.house.gov", "sjwater.com", "pge.com", "sfpuc.gov", "sfpuc.org",
 )
 

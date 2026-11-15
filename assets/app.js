@@ -338,3 +338,61 @@ if (pathForm) {
   });
   runPathTool();
 }
+
+// Local-only sale-tax layer tool (sale-tax-layer page). Prices the documentary
+// transfer tax, the Section 121-shelterable gain, the remaining taxable gain
+// and the California 1% surcharge above $1,000,000. Nothing is stored or
+// transmitted and no network API is used.
+const saleTaxForm = document.getElementById('sale-tax-tool');
+if (saleTaxForm) {
+  const stEl = id => document.getElementById(id);
+  const stNum = (id, min, max) => {
+    const raw = Number(stEl(id)?.value);
+    const value = Number.isFinite(raw) ? raw : min;
+    return Math.max(min, Math.min(value, max));
+  };
+  const stMoney = value => {
+    const rounded = Math.round(value / 10) * 10;
+    const sign = rounded < 0 ? '-' : '';
+    return sign + '$' + Math.abs(rounded).toLocaleString('en-US');
+  };
+
+  function runSaleTaxTool() {
+    const price = stNum('st-price', 0, 99999999);
+    const basis = stNum('st-basis', 0, 99999999);
+    const useMet = Number(stEl('st-use')?.value) === 1;
+    const exclusion = Number(stEl('st-excl')?.value) || 0;
+    const caIncome = stNum('st-ca', 0, 99999999);
+
+    const dtt = Math.ceil(price / 500) * 0.55;
+    const gain = Math.max(price - basis, 0);
+    const shelter = useMet ? Math.min(gain, exclusion) : 0;
+    const taxableGain = Math.max(gain - shelter, 0);
+    const over = Math.max(caIncome - 1000000, 0);
+    const mhst = over * 0.01;
+
+    stEl('st-dtt').textContent = stMoney(dtt);
+    stEl('st-gain').textContent = stMoney(gain);
+    stEl('st-shelter').textContent = stMoney(shelter);
+    stEl('st-taxgain').textContent = stMoney(taxableGain);
+    stEl('st-over').textContent = stMoney(over);
+    stEl('st-mhst').textContent = stMoney(mhst);
+    stEl('st-status').textContent = 'Local sale-tax comparison recomputed. Documentary transfer tax uses the ' +
+      '55 cents per $500 formula; the 1% surcharge applies to California taxable income above $1,000,000. ' +
+      'Assumptions are labeled on the page; this is not tax advice.';
+  }
+
+  saleTaxForm.querySelectorAll('input, select').forEach(control => {
+    control.addEventListener('input', runSaleTaxTool);
+    control.addEventListener('change', runSaleTaxTool);
+  });
+  stEl('st-reset')?.addEventListener('click', () => {
+    stEl('st-price').value = '6531400';
+    stEl('st-basis').value = '6531400';
+    stEl('st-use').value = '1';
+    stEl('st-excl').value = '500000';
+    stEl('st-ca').value = '1200000';
+    runSaleTaxTool();
+  });
+  runSaleTaxTool();
+}
