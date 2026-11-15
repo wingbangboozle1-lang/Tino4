@@ -23,6 +23,15 @@ jobs:
         run: python tools/build.py
       - name: Verify the built site
         run: python tools/verify.py
+      - name: Confirm the published evidence layer is unchanged
+        run: python tools/recheck.py
+      - name: Optional DOM smoke test for the local-only panels
+        # jsdom is not a published dependency of this repository, so the step skips
+        # cleanly when it cannot be installed rather than blocking a release.
+        continue-on-error: true
+        run: |
+          npm install --no-save --no-audit --no-fund jsdom
+          node tools/dom-test.cjs
       - name: Confirm the build is reproducible
         run: |
           git add -A

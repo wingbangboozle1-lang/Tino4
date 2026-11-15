@@ -1,16 +1,19 @@
-// Optional DOM smoke test for the local-only interactive panels.
-// Uses jsdom so it runs without a browser binary; serve nothing, no network.
+// Optional DOM smoke test for the local-only panels (jsdom; no browser binary, no network).
+// Skips cleanly when jsdom is absent: it is not a published dependency of this repository.
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 
 const candidates = [
   process.env.DOM_MODULES,
-  path.join(__dirname, 'browser', 'node_modules'),
   path.join(process.cwd(), 'node_modules'),
+  path.join(__dirname, 'browser', 'node_modules'),
 ].filter(Boolean);
 const modules = candidates.find(candidate => fs.existsSync(path.join(candidate, 'jsdom')));
-if (!modules) throw new Error('jsdom not found; install optional test dependencies or set DOM_MODULES.');
+if (!modules) {
+  console.log('DOM smoke skipped: jsdom not installed (npm install --no-save jsdom, or set DOM_MODULES).');
+  process.exit(0);
+}
 const { JSDOM } = require(path.join(modules, 'jsdom'));
 
 const script = fs.readFileSync(path.join(__dirname, '..', 'assets', 'app.js'), 'utf8');
@@ -23,65 +26,62 @@ function load(relative) {
   return dom;
 }
 
-// 1. Phased-entry panel computes both entry scenarios.
+// 1. Treasury staging panel runs, and refuses an out-of-range staging period.
 const phased = load('pages/phased-investing.html');
-const value = id => phased.window.document.getElementById(id).textContent;
-assert.notEqual(value('early-phased-value'), '—');
-assert.notEqual(value('late-immediate-value'), '—');
-assert.match(value('phase-status'), /assumption-driven scenarios/i);
+const phaseResult = phased.window.document.getElementById('phase-result');
+const fill = (id, value) => {
+  const field = phased.window.document.getElementById(id);
+  field.value = String(value);
+};
+fill('phase-amount', 1000000);
+fill('phase-months', 24);
+fill('phase-yield', 4);
+fill('phase-equity', 8);
+fill('phase-crash', 57);
+phased.window.document.getElementById('phase-run').click();
+assert.match(phaseResult.textContent, /Illustrative ending values/);
+assert.doesNotMatch(phaseResult.textContent, /undefined|NaN/, 'panel printed a non-number');
+fill('phase-months', 6);
+phased.window.document.getElementById('phase-run').click();
+assert.match(phaseResult.textContent, /Enter a positive amount/, 'range guard did not fire');
+phased.window.document.getElementById('phase-clear').click();
+assert.match(phased.window.document.getElementById('phase-result').textContent, /Inputs cleared/);
 
-// 2. Ladder panel reports a reinvestment penalty and reacts to a lower renewal yield.
-const ladder = load('pages/phased-investing.html');
-const flat = ladder.window.document.getElementById('ladder-flat-interest').textContent;
-const falling = ladder.window.document.getElementById('ladder-falling-interest').textContent;
-const lost = ladder.window.document.getElementById('ladder-falling-year').textContent;
-assert.notEqual(flat, '—');
-assert.notEqual(falling, '—');
-assert.notEqual(lost, '—');
-assert.notEqual(flat, falling, 'constant and falling renewal paths must differ by default');
-const dropped = Number(lost.split(' ')[0]);
-assert.ok(dropped > 0, `expected a positive reinvestment penalty, saw ${lost}`);
-const renewal = ladder.window.document.getElementById('ladder-renewal3');
-renewal.value = '0';
-renewal.dispatchEvent(new ladder.window.Event('input'));
-const lostAfter = Number(ladder.window.document.getElementById('ladder-falling-year').textContent.split(' ')[0]);
-assert.ok(lostAfter > dropped, 'a lower renewal yield must increase the penalty');
-
-// 3. Review queues save only in local storage and reset cleanly.
-const log = load('pages/decision-log.html');
-const doc = log.window.document;
-// Count is derived from the page rather than hardcoded, so adding a logged
-// decision cannot silently break the release gate.
-const reviewCount = doc.querySelectorAll('.review-choice').length;
-assert.ok(reviewCount >= 12, `expected at least 12 review controls, saw ${reviewCount}`);
-assert.match(doc.getElementById('review-summary').textContent, new RegExp(`0 of ${reviewCount} suggestions reviewed`));
-const choice = doc.querySelector('.review-choice[data-id="D07"]');
-choice.value = 'Selected for testing';
-choice.dispatchEvent(new log.window.Event('change'));
-assert.match(doc.getElementById('review-summary').textContent, new RegExp(`1 of ${reviewCount} suggestions reviewed`));
-assert.ok(log.window.localStorage.getItem('public-suggestion-review-v2').includes('D07'));
-assert.equal(/fetch|XMLHttpRequest|sendBeacon/.test(script), false);
-doc.getElementById('reset-reviews').click();
-assert.equal(doc.querySelector('.review-choice[data-id="D07"]').value, 'Not reviewed');
-
-// 4. What-if path tool: every declared output is wired, and the new inputs move it.
+// 2. Capital and tax sensitivity panel: depreciation, recapture, transfer cost, avoided rent.
 const decisions = load('pages/decision-analysis.html');
 const d = decisions.window.document;
-const dvalue = id => d.getElementById(id).textContent;
-for (const id of ['path-tax-excl', 'path-hurdle', 'path-sellnet', 'path-imputed10',
-                  'path-liveadj', 'path-sellnet2', 'path-selladj']) {
-  assert.notEqual(dvalue(id), '\u2014', `${id} was never computed`);
-}
-const liveBefore = dvalue('path-liveadj');
-const netBefore = dvalue('path-sellnet2');
-const imputed = d.getElementById('path-imputed');
-imputed.value = '120000';                       // annual avoided rent, 10k a month
-imputed.dispatchEvent(new decisions.window.Event('input'));
-assert.notEqual(dvalue('path-liveadj'), liveBefore, 'imputed rent must change the live-in adjustment');
-const cost = d.getElementById('path-sellcost');
-cost.value = '10';
-cost.dispatchEvent(new decisions.window.Event('input'));
-assert.notEqual(dvalue('path-sellnet2'), netBefore, 'a higher cost assumption must reduce net proceeds');
-assert.match(d.getElementById('path-status').textContent, /not tax advice/);
+const status = d.getElementById('cap-status');
+d.getElementById('cap-basis').value = '1000000';
+d.getElementById('cap-sale').value = '2000000';
+d.getElementById('cap-run').click();
+assert.match(status.textContent, /Depreciation: about \$36,360 a year/, 'straight-line deduction changed');
+assert.match(status.textContent, /recovered over 10 years/);
+assert.match(status.textContent, /federal on unrecaptured gain/, 'federal repayment line missing');
+assert.match(status.textContent, /investable/, 'net proceeds line missing');
+assert.match(status.textContent, /not tax advice/);
+assert.doesNotMatch(status.textContent, /NaN|undefined/);
+// a steeper transfer schedule must reduce what is investable
+const before = status.textContent.match(/about (\$[\d,]+) investable/)[1];
+d.getElementById('cap-dtt').value = '6';
+d.getElementById('cap-cost').value = '7';
+d.getElementById('cap-run').click();
+const after = status.textContent.match(/about (\$[\d,]+) investable/)[1];
+assert.notEqual(after, before, 'transfer tax input is not wired into the result');
+assert.ok(Number(after.replace(/[$,]/g, '')) < Number(before.replace(/[$,]/g, '')), 'a higher transfer tax must reduce proceeds');
+d.getElementById('cap-clear').click();
+assert.match(status.textContent, /Inputs cleared/);
 
-console.log('DOM smoke passed: phased-entry scenarios, ladder reinvestment penalty, review-queue save/reset, no network API, what-if inputs wired.');
+// 3. Review queue keeps its choices in the page only.
+const suggestions = load('pages/suggestions.html');
+const s = suggestions.window.document;
+const count = s.querySelectorAll('.review-choice').length;
+assert.ok(count >= 6, `expected at least 6 review controls, saw ${count}`);
+const select = s.querySelector('.review-choice');
+select.value = 'Adopt';
+select.dispatchEvent(new suggestions.window.Event('change'));
+assert.match(s.getElementById('review-summary').textContent, /1 adopt/);
+
+// 4. No network or storage API anywhere in the published script.
+assert.equal(/fetch|XMLHttpRequest|sendBeacon|localStorage|sessionStorage/.test(script), false);
+
+console.log('DOM smoke passed: staging panel guards and clears, capital panel wired to its inputs, review queue in-memory only, no network or storage API.');

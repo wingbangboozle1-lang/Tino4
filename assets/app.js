@@ -60,3 +60,55 @@
     document.getElementById('phase-result').textContent = 'Inputs cleared.';
   });
 })();
+
+(() => {
+  'use strict';
+
+  // Local-only capital and tax sensitivity panel. Values never leave the page:
+  // no storage, no network call, no default that could be read as a household figure.
+  const capRun = document.getElementById('cap-run');
+  const capStatus = document.getElementById('cap-status');
+  if (!capRun || !capStatus) return;
+  const num = (id, fallback) => {
+    const raw = Number(document.getElementById(id)?.value);
+    return Number.isFinite(raw) && raw > 0 ? raw : fallback;
+  };
+  const money = (value) => {
+    if (!Number.isFinite(value)) return 'unavailable';
+    const rounded = Math.round(value / 10) * 10;
+    return (rounded < 0 ? '-' : '') + '$' + Math.abs(rounded).toLocaleString('en-US', { maximumFractionDigits: 0 });
+  };
+  capRun.addEventListener('click', () => {
+    const basis = num('cap-basis', 0);
+    const sale = num('cap-sale', 0);
+    const rent = num('cap-rent', 0);
+    if (!basis || !sale) {
+      capStatus.textContent = 'Enter a depreciable basis and a sale price; every other field has a stated default.';
+      return;
+    }
+    const years = num('cap-years', 10);
+    const period = num('cap-period', 27.5);
+    const rate = num('cap-rate', 40) / 100;
+    const annual = basis / period;
+    const recovered = Math.min(basis, annual * years);
+    const shelter = recovered * rate;
+    const federalRepay = Math.min(recovered * 0.25, recovered * rate);
+    const stateRepay = recovered * rate;
+    const dttRate = Number(document.getElementById('cap-dtt')?.value);
+    const transferTax = Number.isFinite(dttRate) && dttRate > 0 ? (sale / 500) * dttRate : 0;
+    const closingCost = sale * (num('cap-cost', 7) / 100);
+    const net = sale - transferTax - closingCost;
+    const avoidedRent = rent * years;
+    capStatus.textContent = `Depreciation: about ${money(annual)} a year, ${money(recovered)} recovered over ${years} years, worth about ${money(shelter)} at the entered rate. `
+      + `At sale the recovered amount is exposed to about ${money(federalRepay)} federal on unrecaptured gain plus about ${money(stateRepay)} state. `
+      + `Transfer tax ${transferTax ? money(transferTax) : 'not entered'} and other closing costs ${money(closingCost)} leave about ${money(net)} investable. `
+      + `Occupying the home avoids about ${money(avoidedRent)} of rent over the same years. Assumption-driven, rounded to the nearest ten dollars, not tax advice.`;
+  });
+  document.getElementById('cap-clear')?.addEventListener('click', () => {
+    ['cap-basis', 'cap-sale', 'cap-rent', 'cap-dtt'].forEach((id) => {
+      const field = document.getElementById(id);
+      if (field) field.value = '';
+    });
+    capStatus.textContent = 'Inputs cleared.';
+  });
+})();

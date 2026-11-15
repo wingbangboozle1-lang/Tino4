@@ -233,3 +233,12 @@ footer a { white-space: nowrap; }
 .calculator input, .review-queue select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
 .calculator button { min-height: 40px; border: 0; border-radius: 8px; padding: 8px 14px; background: var(--teal-dark); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
 #phase-result { grid-column: 1 / -1; }
+
+/* Method illustration for the outcome spread: inline SVG rendered at build time.
+   No script, no remote asset, nothing stored — it inherits the page's ink colour. */
+.chart { max-width: 34rem; margin: 22px 0; padding: 20px 22px; border: 1px solid var(--line);
+  border-radius: 14px; background: var(--panel); box-shadow: var(--shadow); color: var(--ink); }
+.chart svg { display: block; width: 100%; height: auto; }
+.chart figcaption { margin-top: 10px; color: var(--muted); font-size: .8rem; line-height: 1.5; }
+.chart-label { font-size: 11px; fill: currentColor; opacity: .72; }
+.chart-value { font-size: 11px; font-weight: 700; fill: currentColor; }

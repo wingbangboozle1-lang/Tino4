@@ -11,6 +11,7 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools/site-manifest.json"
 OFFICIAL_HOSTS = {
+    "sf.gov",
     "irs.gov", "ca.gov", "leginfo.legislature.ca.gov", "boe.ca.gov", "sco.ca.gov",
     "congress.gov", "uscode.house.gov", "treasurydirect.gov", "treasury.gov",
     "federalreservehistory.org", "bls.gov", "cbo.gov", "fhfa.gov", "sec.gov",
@@ -21,6 +22,87 @@ OFFICIAL_AMOUNTS = {
     "15000000", "15480000", "20000", "1044586", "1022600", "1000000",
     "250000", "500000", "7000",
 }
+# Tree-wide privacy scan patterns. The site policy is "no household figures at
+# all", so a comma-grouped amount, a rounding map or a record identifier anywhere
+# in the tracked tree is a policy violation, not just a style problem.
+GROUPED_AMOUNT = re.compile(r"(?<![\d.])(\d{1,3}(?:,\d{3})+)(?!\d)")
+# A count of repository objects is not money. The noun has to follow the number
+# closely, so a bill or assessment figure never matches.
+COUNT_CONTEXT = re.compile(
+    r"(?i)^\s*(?:unique\s+)?(?:blobs|objects|commits|paths|files|rows|records|links|sources|items|entries|\d)"
+    r"(?:\W|$)"
+)
+ROUNDING_MAP = re.compile(r"^\s*(?:literal:|regex:)?\s*[\d][\d,]*\s*(?:==>|->|\u2192)\s*\$?[\d][\d,]*", re.M)
+SCRUB_RULES_NAME = re.compile(r"(?i)scrub[-_]rules|redaction[-_](?:rules|patterns)|figures?\.map\b")
+TRACKED_SUFFIXES = {".html", ".md", ".py", ".txt", ".yml", ".yaml", ".json", ".css", ".js", ".cjs", ".mjs", ".sh"}
+SKIP_DIRS = {".git", ".venv", "node_modules", "__pycache__", ".cache", ".pytest_cache"}
+
+
+def unrounded_amount_problems(text: str) -> list[str]:
+    """Comma-grouped amounts that are neither $10-rounded nor listed official figures.
+
+    Counts of repository objects (``1,384 unique blobs``) are exempt: they are not
+    money, and no other comma-grouped number in this tree is a count.
+    """
+    problems = []
+    for match in GROUPED_AMOUNT.finditer(text):
+        amount = match.group(1)
+        digits = amount.replace(",", "")
+        if digits in OFFICIAL_AMOUNTS:
+            continue
+        if digits.endswith("0"):
+            continue
+        after = text[match.end():match.end() + 40]
+        if COUNT_CONTEXT.match(after):
+            continue
+        window = text[max(0, match.start() - 60):match.end() + 30]
+        problems.append(f"non-rounded comma-grouped amount {amount} near {window.strip()[:70]!r}")
+    return problems
+
+
+def tracked_text_files():
+    for path in sorted(ROOT.rglob("*")):
+        if path.is_symlink() or not path.is_file():
+            continue
+        if path.suffix.lower() not in TRACKED_SUFFIXES:
+            continue
+        if any(part in SKIP_DIRS for part in path.parts):
+            continue
+        if not path.is_relative_to(ROOT):
+            continue
+        yield path
+
+
+def tree_privacy_problems() -> list[str]:
+    """Scan every tracked text file, not just the manifest pages."""
+    errors = []
+    for path in tracked_text_files():
+        relative = path.relative_to(ROOT).as_posix()
+        try:
+            text = path.read_text(encoding="utf-8")
+        except (OSError, UnicodeDecodeError):
+            continue
+        if SCRUB_RULES_NAME.search(relative):
+            errors.append(f"{relative}: looks like a committed redaction-rules file; keep it outside every clone")
+        scan = text
+        if path.suffix.lower() == ".css":
+            # Colors and alpha triples are not amounts; blank them before scanning.
+            scan = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan)
+            scan = re.sub(r"\b(?:rgba?|hsla?)\([^)]*\)", "<color>", scan)
+        for problem in unrounded_amount_problems(scan):
+            errors.append(f"{relative}: {problem}; a published amount must be $10-rounded")
+        if ROUNDING_MAP.search(scan):
+            errors.append(f"{relative}: contains a rounded/unrounded mapping, which would defeat the rounding policy")
+        if EMAIL.search(scan):
+            errors.append(f"{relative}: contains an email address")
+        if PHONE.search(scan):
+            errors.append(f"{relative}: contains a phone number")
+        if STREET.search(scan):
+            errors.append(f"{relative}: contains a street-address pattern")
+        # No five-digit screen here: raw files legitimately contain statutory
+        # citations and URLs (section 16061.7, LTA 2025/009). Rendered page text is
+        # screened for those above, which is where a ZIP code could leak.
+    return errors
 CURRENCY = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
 POSTAL = re.compile(r"(?<!\d)\d{5}(?!\d)")
 EMAIL = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
@@ -141,6 +223,9 @@ def verify() -> list[str]:
     builder = (ROOT / "tools/sitebuild.py").read_text(encoding="utf-8")
     if ".read_text(" in builder or "open(" in builder or "import models" in builder:
         errors.append("site builder reads external files or imports a model")
+    # A page-level check cannot see a leak in a script, plan or notes file, which is
+    # how the rounded-to-unrounded map survived a review before. Scan the whole tree.
+    errors.extend(tree_privacy_problems())
     if errors:
         return errors
     return []
@@ -150,4 +235,4 @@ if __name__ == "__main__":
     if failures:
         for failure in failures: print(f"FAIL: {failure}")
         raise SystemExit(1)
-    print("OK — 22 pages; every table row has an official source and status; no household model, browser storage, or remote resource.")
+    print("OK — 22 pages; every table row has an official source and status; no household model, browser storage, or remote resource; tree-wide privacy scan clean.")
