@@ -67,3 +67,12 @@ Branch: `arena/fdd082b5-tino4` (platform-fixed; created from `main` at `c9530a3d
 - Status: in progress.
 - File scope (exclusive to this session): `COORDINATION.md` (this section only), `pages/law-watchlist.html`, `pages/phased-investing.html`, `pages/flagged-for-review.html`, `pages/sources.html`, `tools/sitebuild.py`, `tools/site-manifest.json`, `index.html`, `README.md`.
 - Constraints: no personal or property-specific figures on the public site; every table row keeps an official source link; unverified values are blank and flagged; no history rewrite or force-push.
+
+### IH-1 status and findings (2026-11-15)
+
+- **Scope change (logged):** `tools/verify.py` was touched to add four official host suffixes (`sf.gov`, `sftreasurer.org`, `santaclaracounty.gov`, `boj.or.jp`) used by new flagged-review source records. No other allowlist entry changed.
+- **Added:** law-watchlist rows for Props 3 and 40–43 (official ballot titles, marked "Not verified" because the election (Nov 3, 2026) is before today and certified results were not read); SF Rent Board 1.6% row (verified against sf.gov); SF Rent Board 2026 notice row (not verified); flagged-review rows F-09 to F-15 for failed or conflicting retrievals (SF vacancy-tax path, Santa Clara rate, HUD FMR, Japan bubble, CA FTB brackets, SF coverage cutoff, measure outcomes).
+- **Not added:** no dollar figures, property values, rents, or premiums were published. Property-specific calculations remain local-only.
+- **Checks:** `python3 -m unittest discover -s tools -p 'test_*.py'` (4 tests), `python3 tools/build.py`, `python3 tools/verify.py` pass.
+- **Branch sync note:** the first claim push was rebased onto `origin/main` at `7006c79` (PR #80). A stale claim commit on this branch (`44158fa`) was replaced by a claim-only commit via `--force-with-lease` on this session's own branch; no other branch or `main` was modified.
+- **Pending:** PR to `main`, merge result, and GitHub Pages deploy result will be recorded below after the merge.
