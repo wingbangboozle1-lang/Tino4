@@ -1094,6 +1094,7 @@ NAV_GROUPS = [
     ("Decision", [
         ("pages/decision-analysis.html", "Compare paths"),
         ("pages/questions.html", "Questions & missing evidence"),
+        ("pages/requirements-tracker.html", "Requirements tracker"),
         ("pages/suggestions.html", "Suggestions for review"),
     ]),
     ("Properties", [
@@ -1134,6 +1135,7 @@ EXPECTED_PAGES = [
     "pages/decision-analysis.html",
     "pages/property-profiles.html",
     "pages/questions.html",
+    "pages/requirements-tracker.html",
     "pages/suggestions.html",
     "pages/projections.html",
     "pages/property-tax.html",
@@ -2451,6 +2453,66 @@ def svg_bar_chart(title: str, series: list[tuple[str, float, str]], width: int =
     )
 
 
+def build_requirements_tracker() -> str:
+    rows = []
+    items = [
+        ("Executive summary and first-screen answer changers", "The overview page leads with the facts that change the answer, and the computed headlines are derived from the model rather than typed into prose.", "Handled", "pages/executive-summary.html", "Keep the first-screen gates current as private records arrive.", ["irs_estate_faq", "boe_prop19"]),
+        ("Complete list of requirements and missing information", "This page is that register: every requirement the owner listed, mapped to where the site treats it now.", "Handled", "pages/requirements-tracker.html", "Update a row only after the official source or private record has been checked.", ["irs_estate", "boe_prop19"]),
+        ("Privacy: rounded figures, no identifiers", "Owner-supplied figures are published rounded to the nearest ten dollars and badged Owner-supplied (privacy-rounded); names, addresses, parcel and account identifiers are banned by a mechanical check that fails the build.", "Handled", "pages/privacy.html", "Re-read the privacy page after any new figure is added; rounding is not anonymisation.", ["owner_a", "owner_b", "github_history"]),
+        ("Prior public exposure and history scrub", "The exposure audit, the pattern counts and the runbook are published; the scrub itself needs repository-owner authority and cannot be done from a session branch.", "Open — owner action", "pages/flagged-for-review.html", "Owner/admin to run the prepared scrub procedure and open the GitHub Support request.", ["github_history"]),
+        ("Estate and property inventory", "No inventory is stored here; the pages name the documents the estate and both holdings require.", "Open — private step", "pages/questions.html", "Build an encrypted private inventory: trust, deed, debt, prior gifts, basis, bills, leases, liquidity.", ["irs_estate", "irs_basis"]),
+        ("Independent value and condition evidence", "The written date-of-death valuation is specified as an engagement with a stated purpose covering four uses, not an online estimate.", "Handled — method", "pages/sale-timing.html", "Commission the appraisal; record its date and comparable set in the decision log.", ["irs_706", "irs_basis"]),
+        ("Year-by-year value, assessed value, tax and cost projections", "The worksheet publishes 2026-2050 columns for both buildings in both Prop 19 branches, plus a slow/base/fast value distribution and an inline chart.", "Handled", "pages/projections.html", "Re-run annually with the inputs below; do not extend the published baselines as if they were forecasts.", ["fhfa_hpi", "ca_rtc51", "cbo_ltbo"]),
+        ("Property A tax-rate area and published rate", "The lookup method, the 816-area structure and the county's worked example are published; Property A's own area number is deliberately not printed and the residual discrepancy is shown as unresolved.", "Handled — with a flag", "pages/property-tax.html", "Read the rate area off the parcel's own bill and reconcile the residual with the assessor.", ["scc_tax_rates", "scc_assessor_2026", "owner_a"]),
+        ("Estate tax, income-tax basis and property-tax assessment kept separate", "Three separate workstreams with three separate clocks are stated on the estate-thresholds, sale-timing and property-tax pages.", "Handled", "pages/estate-thresholds.html", "Have the CPA and the assessor reconcile them independently; do not let one number answer all three.", ["irs_estate", "irs_basis", "ca_rtc51"]),
+        ("Proposition 19 eligibility and long-term occupancy", "The occupancy rule is stated as a hard rule with its one-year clock, its retroactive removal on stopping occupancy, and a break-even against rent.", "Handled", "pages/sale-timing.html", "Claim only if legal eligibility is confirmed and the household intends to occupy long term; get that intent in writing.", ["boe_prop19", "ca_rtc63", "boe_lta_2026_026"]),
+        ("Carry the Proposition 19 allowance forward", "The value-limit formula is modeled as the binding cap, and the separate replacement-home base-year-value transfer is documented with its two-year and three-transfer conditions.", "Handled — corrected model", "pages/property-tax.html", "Use the BOE amount effective at transfer, and re-read the value-limit indexing rather than the figure published here.", ["boe_prop19", "boe_lta_2026_026"]),
+        ("Sale in the same tax year as the inheritance", "Modeled first, as the owner asked: the transfer-year sale case sits above the four exit-year cases and the site's headline prose derives from it.", "Handled", "pages/sale-timing.html", "Have the CPA apply the actual date-of-death basis, sale date and that year's rules.", ["irs_basis", "irs_1041sd", "irs_409"]),
+        ("Main-home exclusion for a live-then-sell path", "A switch in the local tool and a dedicated row in the exit-case table model the two-out-of-five-year tests and the single-filer exclusion.", "Handled", "pages/sale-timing.html", "Confirm the occupancy timeline before relying on the exclusion.", ["irs_topic701"]),
+        ("Depreciation and recapture", "A rented hold reduces basis by straight-line depreciation over an assumed 27.5-year life, and the recapture is taxed at 25% at sale; both are modeled and exposed as controls.", "Handled", "pages/capital-plan.html", "Have the CPA rebuild depreciation allowed or allowable from the actual returns.", ["irs_rental", "irs_409", "irs_basis"]),
+        ("Like-kind exchange decision before selling", "A dedicated section states what section 1031 now covers, why a stepped-up basis usually makes it pointless, and what it costs; the answer is to be written down before listing.", "Handled", "pages/sale-timing.html", "Ask counsel and the CPA before the property is listed, not at closing.", ["irs_1031"]),
+        ("Leases, lawful units and local rules", "Property B's unit count, registration and covered-increase cap are carried as required verifications, and unverified unit rent is never counted.", "Open — private step", "pages/questions.html", "Reconcile permits, leases, registrations and deposits with counsel before projecting any unit's rent.", ["irs_rental", "ca_rent", "sf_rent_board"]),
+        ("Insurance, utilities, water, electricity and solar", "Owner-supplied bands are published rounded and badged, with the insurance market treated as a stressed input; no regional average is presented as this household's premium.", "Handled — flagged inputs", "pages/operating-costs.html", "Collect written use-specific quotes, current bills, and the signed solar tariff and interconnection documents.", ["cdi", "cdi_sis", "cpuc_solar", "sfpuc_rates"]),
+        ("Imputed rent for living paths", "Ten years of imputed rent, net of the assumed operating load, sits beside the Proposition 19 relief on both the break-even table and the local tool, and is labeled as a modeling convention.", "Handled", "pages/decision-analysis.html", "Replace the band with a written comparable study when one exists.", ["owner_a", "irs_rental"]),
+        ("Five-year maintenance and capital plan for both buildings", "A dated item plan for each building, with class labels, reserve bands sized as a share of value, and an annual reconciliation step.", "Handled", "pages/capital-plan.html", "Replace every band with a licensed bid; keep the plan as the calendar those bids attach to.", ["cslb", "irs_rental"]),
+        ("Market rent on Property A, or letting treated as a floor", "The site states plainly that the only rent evidence available is third-party listing aggregates, publishes it rounded, and treats every rent-driven result as a floor until a written comparable exists.", "Handled — as a floor", "pages/projections.html", "Commission written rent comparables; the ranking is provisional until then.", ["owner_a", "hud_fmr"]),
+        ("Transfer tax and recording fees on a sale", "Priced line by line: the county rate, the city add-on rule, the per-title and PCOR charges, who owes the tax, and the statutory exemption for a death or trust transfer.", "Handled", "pages/sale-timing.html", "Have the preparer state the exemption basis on the face of the deed before recording.", ["rtc_11911", "rtc_11930", "scc_recording_fees"]),
+        ("Same dates, horizons, taxes, debt, occupancy, costs and liquidity", "The comparison rule on the paths page requires identical dates and the full cost stack for every path, pure or mixed.", "Handled", "pages/decision-analysis.html", "Re-run all paths together whenever one input changes; a partial re-run is a biased re-run.", ["irs_estate", "irs_rental", "cdi"]),
+        ("Mixed paths beside pure choices", "Mixed paths (occupy one unit, rent lawful units, sell one asset, short holds) are ranked alongside the pure choices rather than appended as footnotes.", "Handled", "pages/decision-analysis.html", "Only rank a mixed path after leases, eligibility and transition costs are verified.", ["boe_prop19", "irs_rental", "irs_topic701"]),
+        ("Black-swan conditions and 1929/2008 entry risk", "Historical drawdown anchors are distinguished from probabilities, and both crash-timing directions are computed in the local staging tool.", "Handled", "pages/black-swan.html", "Stress lower renewal yields alongside the crash cases; historical anchors are severity, not likelihood.", ["fed_1929", "fed_2008", "treasury_bills"]),
+        ("California tax treatment of a sale gain", "Ordinary-income treatment and the additional 1 percent above one million dollars of taxable income are cited to the FTB page and the statute, and are inside the exit-case math.", "Handled", "pages/sale-timing.html", "Re-read the current Form 540 instructions in the sale year; the full booklet was not retrieved for this build.", ["ftb_cg", "rtc_17043"]),
+        ("Federal estate threshold, portability and prior gifts", "The estate-thresholds page now carries the liquidity plan, the portability question and the adjusted-taxable-gifts question as explicit rows.", "Handled", "pages/estate-thresholds.html", "Ask now about prior gifts and any earlier portability election; do not wait for the transfer.", ["irs_estate", "irs_estate_faq", "irs_706"]),
+        ("Investment policy written before proceeds arrive", "A ten-section policy with staging and renewal rules, rebalance bands, prohibited actions, review cadence and reversal conditions, plus the yield and risk facts it must state honestly.", "Handled", "pages/investment-policy.html", "Sign and date it, then record which version applied when in the decision log.", ["sec_stocks", "treasury_bills", "cbo_rates"]),
+        ("Annual model re-run and law-change watch", "A re-run protocol with cadences and windows is published on the capital plan page, and the watchlist separates enacted changes from proposals.", "Handled", "pages/law-watchlist.html", "Log each re-run date; treat a proposal as a proposal until it is chaptered.", ["boe_pub29", "ca_legislation", "irs_2027"]),
+        ("San Francisco Proposition H", "Modeled as the enacted owner-paid parcel tax it is (approved November 3, 2026), with the SFMTA's published schedule, the pass-through cap and the seniors application window.", "Handled — result uncertified", "pages/property-tax.html", "Confirm the certified canvass and the parcel's area and classification before relying on the amount.", ["sfmta_prop_h", "sf_elections_2026"]),
+        ("Step-by-step inheritance process and deadlines", "The deadline timeline carries the 60-day trust notice, the 150-day change-in-ownership statement, the nine-month return, the one-year occupancy and exemption clocks and the three-year claim window.", "Handled", "pages/inheritance-process.html", "Calendar each clock from its own trigger; a late claim can be prospective only.", ["ca_prob160617", "ca_rtc480", "irs_estate_faq", "boe_prop19"]),
+        ("Printable adviser handoff", "The attorney and CPA brief now carries the new questions: the valuation engagement scope, the exchange decision, the occupancy intent, the exemption recital and the San Francisco compliance items.", "Handled", "pages/attorney-cpa-brief.html", "Print it, and record the answers back into the decision log.", ["irs_estate_faq", "boe_prop19", "rtc_11930"]),
+    ]
+    for requirement, treatment, status, target, next_step, sources in items:
+        rows.append({
+            "cells": [requirement, treatment,
+                      SafeHTML(f'<a class="source" href="{esc(root_href("pages/requirements-tracker.html", target))}">{esc(target.split("/")[-1].replace(".html", "").replace("-", " "))}</a>'),
+                      next_step],
+            "status": status,
+            "sources": list(sources),
+        })
+    body = callout(
+        "Every requirement, one register",
+        "The owner's instruction list is long, and the honest answer to most of it is 'the method is published, the private record is not'. This register keeps both halves visible: what the site now does about each requirement, and the one next action that would close it. "
+        "Rows marked Open are not oversights in the analysis — they are questions that cannot be answered from public sources for a private parcel.",
+        "info",
+    )
+    body += make_table("Requirements register — treatment and next step", ["Requirement", "How this site treats it now", "Where", "Next step"], rows,
+                       "Statuses are evidence statuses, not completion grades: Handled means the method and its sources are published here, not that the household's question is answered. A row is closed only when the named private record exists.")
+    body += cards("Closely related", [
+        ("Questions & missing evidence", "The question-by-question record list for counsel, CPA, assessor and insurer.", "pages/questions.html"),
+        ("Flagged for review", "Everything that could not be verified from an official source, listed rather than smoothed over.", "pages/flagged-for-review.html"),
+        ("Decision log", "The recorded decisions, including the model correction and the reclassification of Proposition H.", "pages/decision-log.html"),
+    ], current="pages/requirements-tracker.html")
+    return render_page("pages/requirements-tracker.html", "Requirements tracker",
+                       "Every requirement from the owner's list mapped to how this workspace treats it now, where it lives, and the next step that would close it.", body, "DECISION")
+
+
 def build_sale_timing() -> str:
     body = callout(
         "Do this first: price a sale in the tax year of the inheritance",
@@ -2776,6 +2838,7 @@ def build_page(path: str) -> str:
         "pages/decision-analysis.html": build_decisions,
         "pages/property-profiles.html": build_property_profiles,
         "pages/questions.html": build_questions,
+        "pages/requirements-tracker.html": build_requirements_tracker,
         "pages/projections.html": build_projections,
         "pages/property-tax.html": build_property_tax,
         "pages/capital-plan.html": build_capital_plan,

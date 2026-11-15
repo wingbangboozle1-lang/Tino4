@@ -15,7 +15,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         subprocess.run([sys.executable, str(ROOT / "tools/build.py")], cwd=ROOT, check=True)
         manifest = json.loads((ROOT / "tools/site-manifest.json").read_text(encoding="utf-8"))
         files = [ROOT / path for path in manifest]
-        self.assertEqual(len(files), 23)
+        self.assertEqual(len(files), 24)
         self.assertTrue(all(path.is_file() for path in files))
         sale = (ROOT / "pages/sale-timing.html").read_text(encoding="utf-8")
         self.assertIn("price a sale in the tax year of the inheritance", sale)
@@ -29,6 +29,8 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("Annual re-run protocol", capex)
         policy = (ROOT / "pages/investment-policy.html").read_text(encoding="utf-8")
         self.assertIn("Write it before the money arrives", policy)
+        tracker = (ROOT / "pages/requirements-tracker.html").read_text(encoding="utf-8")
+        self.assertIn("Requirements register", tracker)
         self.assertIn("Rebalance bands and review triggers", policy)
         self.assertIn("Break-even table", (ROOT / "pages/decision-analysis.html").read_text(encoding="utf-8"))
         tax = (ROOT / "pages/property-tax.html").read_text(encoding="utf-8")
