@@ -31,21 +31,23 @@ identifying records in this repository.
 ## Site contents
 
 - `index.html` — "What would change the answer" triage on the first screen.
-- `pages/` — 18 sections: executive summary (with rounded numbers), path
+- `pages/` — 19 sections: executive summary (with rounded numbers), path
   comparison with cash-flow bands, questions & missing evidence, suggestions
-  review queue, year-by-year projection worksheet with post-transfer
-  assessment branches, property-tax rules and cap history, operating costs and
-  insurance, black-swan historical anchors and an illustrative irregular
-  50-year path, Treasury staging tool with dollar view, estate-tax headroom
-  and projected exclusions, inheritance process with a deadline timeline, law
-  watchlist (with two verification corrections), printable attorney/CPA
-  brief, flagged items, glossary, source register and privacy limits.
+  review queue, decision log, year-by-year projection worksheet with
+  post-transfer assessment branches, property-tax rules and cap history,
+  operating costs and insurance, black-swan historical anchors and an
+  illustrative irregular 50-year path, Treasury staging tool with dollar view,
+  estate-tax headroom and projected exclusions, inheritance process with a
+  deadline timeline, law watchlist (verified current status plus flagged
+  proposals), printable attorney/CPA brief, flagged items, glossary, source
+  register and privacy limits.
 - `assets/` — local-only stylesheet and JavaScript. Review choices stay in
   this browser's local storage; calculator inputs are transient and are never
   transmitted or persisted.
 - `tools/sitebuild.py`, `tools/sections.py`, `tools/models.py` — page builder,
   content sections and the projection engine. `models.py` holds only the
   rounded figures displayed on the site; the build reads no private inputs.
+- `tools/site-manifest.json` — the exact list of public HTML outputs.
 - `tools/verify.py` and `tools/test_case.py` — sourcing, privacy and the $10
   rounding rule (non-statutory currency amounts must be multiples of $10;
   statutory amounts are registered with their source).
@@ -67,6 +69,14 @@ drawdowns to sourced historical endpoints (1929 Dow −89%; 2007–09 S&P −57%
 and includes adjustable yields, drift and inflation plus an optional dollar
 view. It is a stress illustration, not a backtest, forecast or personal
 investment recommendation.
+
+## Ranges, not round numbers
+
+No household amount is published. Where an official figure is quoted it is a published statutory amount (the federal estate and gift exclusions, the $7,000 homeowners' property-tax exemption and the $250,000/$500,000 main-home gain exclusion) and it carries a source link. Everything else is a formula, a blank scenario column or a stated range. If a figure is ever republished in a private or public document, round it to the nearest ten dollars first and then check separately whether the value can still be re-identified from public records; rounding alone is not de-identification.
+
+## Repository history is not scrubbed
+
+A read-only scan of `git rev-list --all --objects` (251 commits, 1,384 unique blobs, 380 distinct paths) found case-derived place identifiers in historical commits: CA-ZIP-shaped patterns in 95 paths, a property city name in 109 paths, a neighbourhood name in 96 distinct files, plus one specific location identifier in 55 files, including `README.md`, `VERIFICATION.md`, `COORDINATION.md`, several `_*/` audit directories and `_research/notes.jsonl`. No matched value is reproduced in this repository's current tree or on the published site. Removing it from history requires a coordinated rewrite, a visibility decision and possibly GitHub Support; neither is performed by a normal commit. Until the repository owner or administrator completes that work, treat the historical material as exposed. See `pages/privacy.html` and `pages/flagged-for-review.html`.
 
 ## Evidence and limitations
 

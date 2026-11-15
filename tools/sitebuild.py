@@ -266,6 +266,102 @@ SOURCES = {
         "scope": "Coordination and side effects of history rewrites; PRs, forks, caches and clones can retain data. GitHub Support or repository-owner action may be needed.",
         "verified": True,
     },
+    "congress_s4196_status": {
+        "label": "Congress.gov — S. 4196 status",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/4196",
+        "scope": "Congress.gov lists S. 4196 as introduced March 25, 2026 and referred to Senate Finance; no enactment is shown as of the check date. Status can change.",
+        "verified": True,
+    },
+    "congress_s4196_text": {
+        "label": "Congress.gov — S. 4196 introduced text",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/4196/text",
+        "scope": "Introduced text proposes a $3,500,000 basic exclusion amount and changes to federal estate, gift and generation-skipping transfer tax rules, with a proposed effective date for deaths and gifts after December 31, 2026. This is not enacted law.",
+        "verified": True,
+    },
+    "congress_hr601_text": {
+        "label": "Congress.gov — H.R. 601 introduced text",
+        "url": "https://www.congress.gov/bill/119th-congress/house-bill/601/text/ih",
+        "scope": "Introduced text proposes a 20% rate for estate, gift and generation-skipping transfer taxes and states a proposed effective date for transfers after December 31, 2024. This is not enacted law.",
+        "verified": True,
+    },
+    "congress_s587_status": {
+        "label": "Congress.gov — S. 587 status",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/587",
+        "scope": "As checked 2026-11-15, Congress.gov lists S. 587 as introduced February 13, 2025 and referred to Senate Finance; no enactment is shown. Status can change.",
+        "verified": True,
+    },
+    "congress_s587_text": {
+        "label": "Congress.gov — S. 587 introduced text",
+        "url": "https://www.congress.gov/bill/119th-congress/senate-bill/587/text/is",
+        "scope": "Introduced text proposes to repeal federal estate and generation-skipping transfer taxes and separately changes gift-tax rules. The proposal is not enacted law.",
+        "verified": True,
+    },
+    "cbo_outlook": {
+        "label": "Congressional Budget Office — The Budget and Economic Outlook: 2026 to 2036",
+        "url": "https://www.cbo.gov/publication/61882",
+        "scope": "Baseline projection to 2036: deficits, debt, real GDP growth, unemployment, PCE inflation returning to roughly 2% in 2030, and 10-year Treasury rates rising gradually in 2027 then staying relatively stable. It is a ten-year baseline, not a 50-year forecast of housing, insurance, rent or equity returns.",
+        "verified": True,
+    },
+    "irs_basis_pub": {
+        "label": "IRS Publication 551 — Basis of Assets",
+        "url": "https://www.irs.gov/publications/p551",
+        "scope": "Explains cost basis, adjusted basis, and increases/decreases to basis (including depreciation and improvements). It does not value a specific property or set a date-of-death appraisal.",
+        "verified": True,
+    },
+    "ca_rtc218": {
+        "label": "California Revenue and Taxation Code §218 — Homeowners' property tax exemption",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=218.&lawCode=RTC",
+        "scope": "Sets the homeowners' property tax exemption at $7,000 of the dwelling's full value and excludes property that is rented, vacant, under construction on the lien date, or a vacation/secondary home. It does not establish an owner's eligibility.",
+        "verified": True,
+    },
+    "ca_rtc51": {
+        "label": "California Revenue and Taxation Code §51 — Base year value",
+        "url": "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC",
+        "scope": "Defines real property's base year value for assessment purposes. It does not value a specific parcel.",
+        "verified": True,
+    },
+    "ca_sb974_status": {
+        "label": "California Legislature — SB 974 status, Chapter 665 (2026)",
+        "url": "https://leginfo.legislature.ca.gov/faces/billStatusClient.xhtml?bill_id=202520260SB974",
+        "scope": "Status page records SB 974 as chaptered September 27, 2026, Chapter 665, Statutes of 2026, and marks it non-urgency. Verify its operative date and the assessor's implementation before applying it to a transfer.",
+        "verified": True,
+    },
+    "ca_sb974_text": {
+        "label": "California SB 974 — chaptered text",
+        "url": "https://leginfo.legislature.ca.gov/faces/billTextClient.xhtml?bill_id=202520260SB974",
+        "scope": "Chaptered amendment to RTC §63.2 expressly treats a special-needs trust established under Probate Code §3604 as an eligible medium for the stated intergenerational property-tax exclusion; eligibility and claim requirements remain. Separate claim-timing relief is limited to qualifying property connected with specified 2025 wildfires.",
+        "verified": True,
+    },
+    "sos_qualified": {
+        "label": "California Secretary of State — Qualified statewide ballot measures",
+        "url": "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures",
+        "scope": "Read 2026-11-15. Lists the November 3, 2026 statewide measures by number and official ballot title, and notes ACA 13 was removed. The page is a list only: it does not state full measure text, fiscal effects or certified results. Those require the linked voter guide or certified results.",
+        "verified": True,
+    },
+    "sf_rent_board": {
+        "label": "San Francisco Rent Board — Department page",
+        "url": "https://sf.gov/departments--rent-board",
+        "scope": "Read 2026-11-15. States the 1.6% allowable annual increase for covered units from March 1, 2026 through February 28, 2027, and lists 2026 Rent Board news items. Item text and ordinance coverage must be read in the linked notice.",
+        "verified": True,
+    },
+    "sf_treasurer_vacancy_404": {
+        "label": "SF Treasurer — vacancy-tax URL retrieval failed",
+        "url": "https://sftreasurer.org/empty-homes-tax",
+        "scope": "Returned 'Page Not Found' on 2026-11-15. No SF vacancy-tax rule, rate or filing duty is based on this URL; the current official path is unconfirmed.",
+        "verified": False,
+    },
+    "scc_assessor_fetch": {
+        "label": "Santa Clara County Assessor homepage — fetch failed",
+        "url": "https://assessor.santaclaracounty.gov/",
+        "scope": "Fetch failed on 2026-11-15. The reachable Assessor page (asr.santaclaracounty.gov) lists contacts and online services only and has no tax-rate table. No Santa Clara property-tax rate is based on these pages.",
+        "verified": False,
+    },
+    "boj_unverified": {
+        "label": "Bank of Japan — official source not confirmed for bubble figures",
+        "url": "https://www.boj.or.jp/en/",
+        "scope": "The official Bank of Japan source for the historical discount-rate and asset-price figures was not retrieved. Secondary sources conflict, so no Japan bubble figure is published here.",
+        "verified": False,
+    },
     "ftb_404": {
         "label": "FTB inheritance-information URL — retrieval failed",
         "url": "https://www.ftb.ca.gov/file/personal/income-types/income-from-gifts-and-inheritances.html",
@@ -301,6 +397,7 @@ NAV_GROUPS = [
         ("pages/decision-analysis.html", "Compare paths"),
         ("pages/questions.html", "Questions & missing evidence"),
         ("pages/suggestions.html", "Suggestions for review"),
+        ("pages/decision-log.html", "Decision log"),
     ]),
     ("Numbers", [
         ("pages/projections.html", "Projection worksheet"),
@@ -340,6 +437,7 @@ EXPECTED_PAGES = [
     "pages/inheritance-process.html",
     "pages/law-watchlist.html",
     "pages/attorney-cpa-brief.html",
+    "pages/decision-log.html",
     "pages/flagged-for-review.html",
     "pages/glossary.html",
     "pages/sources.html",
@@ -497,6 +595,7 @@ def build_page(path: str) -> str:
         "pages/sources.html": sections.build_sources,
         "pages/privacy.html": sections.build_privacy,
         "pages/suggestions.html": sections.build_suggestions,
+        "pages/decision-log.html": sections.build_decision_log,
     }
     return builders[path]()
 

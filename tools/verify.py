@@ -17,7 +17,9 @@ MANIFEST = ROOT / "tools" / "site-manifest.json"
 #  (1) case/cost figures rounded to the nearest $10 (the owner's de-
 #      identification rule — enforced mechanically below); and
 #  (2) published statutory/tariff figures, registered here with their source,
-#      shown exactly as published.
+#      shown exactly as published. Other published agency figures (for example
+#      the $7,000 homeowners' exemption or the $3,500,000 exclusion proposed in
+#      S.4196's introduced text) pass class (1) when they end in $10.
 STATUTORY_CURRENCY = {
     "1044586": "BOE LTA 2025/009 — Prop 19 cap 2/16/2025–2/15/2027",
     "1022600": "BOE LTA 2025/009 — Prop 19 cap 2/16/2023–2/15/2025",
@@ -38,7 +40,7 @@ STATUTORY_CURRENCY = {
 # numeric fragments inside official URLs — not postal codes.
 PUBLIC_STATUTE_IDS = {
     "13301", "16061", "62809",   # CA RTC §13301; Prob. §16061.7; CBO pub 62809
-    "61270",                     # CBO Long-Term Outlook publication id
+    "61270", "61882",            # CBO publication ids
     "25009",                     # BOE LTA 2025/009 filename fragment
     "26138",                     # SOS CC/ROV memo 26138 filename fragment
     "70106",                     # OBBBA §70106 (basic exclusion)
@@ -54,7 +56,8 @@ OFFICIAL_HOST_SUFFIXES = (
     "treasurydirect.gov", "federalreservehistory.org", "bls.gov", "cbo.gov",
     "sfpuc.gov",
     "huduser.gov", "fhfa.gov", "investor.gov", "github.com", "congress.gov",
-    "ftb.ca.gov", "stlouisfed.org",
+    "ftb.ca.gov", "stlouisfed.org", "sf.gov", "sftreasurer.org",
+    "santaclaracounty.gov", "boj.or.jp",
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")

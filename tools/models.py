@@ -43,7 +43,7 @@ STOCK_LOW, STOCK_BASE, STOCK_HIGH = 0.04, 0.06, 0.08     # nominal, scenario
 VALUE_GROWTH_LOW, VALUE_GROWTH_BASE, VALUE_GROWTH_HIGH = 0.020, 0.035, 0.050
 CAP_GROWTH_LOW, CAP_GROWTH_HIGH = 0.020, 0.035           # FHFA CA HPI band
 INFLATION_LOW, INFLATION_BASE, INFLATION_HIGH = 0.020, 0.025, 0.030
-RENT_GROWTH = 0.020
+RENT_GROWTH = 0.016   # SF Rent Board allowable increase for covered units (Mar 2026–Feb 2027); coverage unverified
 AV_FACTOR = 0.02                 # Proposition 13 general annual cap
 PROP19_CAP_2025_2027 = 1_044_586  # statutory (BOE LTA 2025/009), not rounded
 
