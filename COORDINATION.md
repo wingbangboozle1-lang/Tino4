@@ -193,7 +193,6 @@ Branch: `arena/3d3e1c75-tino4` (platform-fixed; created from `main` at `c9530a3d
 | T3D3-8 | Rebuild, verify, tests, PR to main, merge after checks pass, confirm Pages deploy, record result | pending | `arena/3d3e1c75-tino4` | release verification, final board update | 2026-11-15 |
 
 Note on FDD-4: PR #80 is observed merged at `7006c79`; this session rebased onto it. If session `arena/fdd082b5-tino4` is still active, it should rebase onto this session's commits before further sitebuild.py edits, or log a handoff here. `tools/sitebuild.py` content ownership transfers to `arena/3d3e1c75-tino4` from 2026-11-15 for tasks T3D3-2..7; coordinate via this board.
->>>>>>> b90bf74 (Claim T3D3 tasks on coordination board; document owner-directed rounded-figures policy)
 
 
 ### Session `arena/3d3e1c75-tino4` — T3D3 verification record (2026-11-15)
@@ -204,4 +203,3 @@ Note on FDD-4: PR #80 is observed merged at `7006c79`; this session rebased onto
 - **Irregularities / flags:** F-20 owner figures unverifiable externally; F-21 policy change recorded (D07 revised); F-22 FAIR Plan rate unverified; F-23 history pattern audit reconfirmed (256 commits; exact-figure pattern on 13 paths, region ZIPs on 70+ paths each; no values printed; NOT scrubbed — owner/admin cleanup still required). Earlier flags F-01..F-15 retained.
 - **Coordination conflicts handled:** rebased onto main four times as PRs #79-#84 from parallel sessions merged; COORDINATION.md rebase conflict resolved preserving both boards; the cc44 session's F-16/F-17 flag IDs were already taken, so this session's new flags are F-20..F-23; duplicated closing bracket introduced during insertion was fixed; decision-log D07 text revised to record the owner-directed rounded-figures policy rather than contradicting it.
 - **Release (T3D3-8):** PR opened from `arena/3d3e1c75-tino4` to `main`; merged after checks pass; Pages deploy confirmed; result appended below after merge.
->>>>>>> e58e40e (T3D3-1/8: update README privacy policy, record verification in coordination board; tests green)
