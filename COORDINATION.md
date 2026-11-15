@@ -155,6 +155,6 @@ This platform-pinned branch began at PR #78's merge. PR #79 and PRs #80–#84 su
 
 ### Release result (2026-11-15)
 
-- PR #85 (`https://github.com/wingbangboozle1-lang/Tino4/pull/85`) merged with `gh pr merge 85 --merge` at 2026-11-15T03:42:01Z; merge commit `78cc13b2b06057a1f03c02749a7f183379269d12`.
+- PR #85 (`https://github.com/wingbangboozle1-lang/Tino4/pull/85`) merged with `gh pr merge 85 --merge` at 2026-11-15T03:42:01Z; merge commit `78cc13b`.
 - PR verification run `43673498931` passed before merge. Post-merge `verify` run `43673530938` and Pages build/deployment run `43673530315` both completed successfully. GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`.
 - Direct live fetch after deployment confirmed the law-watchlist rows distinguish SB 974's limited chaptered scope from S.4196, H.R.601 and S.587 as introduced, not-enacted proposals; the source register shows the new 2026-11-15 verification dates.
