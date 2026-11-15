@@ -225,3 +225,10 @@ footer a { white-space: nowrap; }
   .timeline { gap: 6px; }
   .timeline-item { break-inside: avoid; padding: 6px 8px; }
 }
+/* Deadline timeline (inheritance process) */
+.timeline { list-style: none; display: flex; gap: 10px; padding: 14px 4px 8px; margin: 4px 0 14px; overflow-x: auto; }
+.timeline li { flex: 1 1 150px; min-width: 150px; border: 1px solid var(--line, #d8d3c8); border-radius: 10px; padding: 10px 12px; background: #fffdf8; position: relative; }
+.timeline .tl-when { display: block; font-weight: 700; font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #7a6a4f; }
+.timeline .tl-what { display: block; margin-top: 4px; font-size: 0.82rem; line-height: 1.35; }
+@media (max-width: 700px) { .timeline { flex-wrap: wrap; } .timeline li { flex: 1 1 45%; } }
+@media print { .timeline { overflow: visible; flex-wrap: wrap; } .timeline li { flex: 1 1 30%; box-shadow: none; } }
