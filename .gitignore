@@ -11,3 +11,15 @@ node_modules/
 # optional local browser/DOM test dependencies (never published)
 /tools/browser/package.json
 /tools/browser/package-lock.json
+
+# Private household workpapers must remain outside the public repository.
+/private-work/
+/private-data/
+*.private.csv
+*.private.xlsx
+*.taxreturn.*
+*.deed.*
+*.trust.*
+*.lease.*
+*.insurance.*
+*.appraisal.*
