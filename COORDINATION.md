@@ -281,7 +281,7 @@ Branch: `arena/a897a17d-tino4` (platform-fixed; branched from `main` `60a054e`, 
 - **Checks:** `python3 tools/build.py`, `python3 tools/verify.py`, `python3 -m unittest discover -s tools -p 'test_*.py'` (11 tests) all pass.
 ## Session `arena-79e0fd5e-tino4` — reverse-map leak closure, tax/depreciation layer, charts and release (2026-11-15)
 
-Branch: `arena/79e0fd5e-tino4` (platform-fixed; branched from `main` at `60a054ef0554e0c0c024cbd4eb09e3b36788e6d8`). No other branch or worktree is created; the `session-<id>/<task>` naming convention is therefore not applied, which is logged here per the board's own rule.
+Branch: `arena/79e0fd5e-tino4` (platform-fixed; branched from `main` at `60a054e`). No other branch or worktree is created; the `session-<id>/<task>` naming convention is therefore not applied, which is logged here per the board's own rule.
 
 | Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |

@@ -1,81 +1,66 @@
 #!/usr/bin/env bash
-# Owner-run helper: rewrite public history to replace pre-rounding case
-# figures with their published rounded values. DESTRUCTIVE. Read
-# tools/history_scrub_runbook.md in full before running. Requires git 2.x,
-# Python 3, and git-filter-repo (pip install git-filter-repo).
+# Owner-run helper: rewrite public history so pre-rounding case figures are
+# replaced by their published rounded values. DESTRUCTIVE.
+#
+# Read tools/history_scrub_runbook.md in full before running this.
+#
+# PRIVACY RULE FOR THIS REPOSITORY: this script deliberately contains NO
+# numbers at all. A file that maps a rounded figure back to its unrounded source
+# value is more sensitive than either value alone, because it re-identifies the
+# record the rounding was meant to hide. The mapping is supplied at run time
+# from a private file that must never be committed, cloned or pasted into an
+# issue, PR or this repository.
+#
+# Usage:
+#   tools/history_scrub.sh <clone-url> <work-dir> <private-rules-file>
+#
+# <private-rules-file> is a git-filter-repo replace-text file kept outside the
+# repository. Each line replaces one exact pre-rounding string with its rounded
+# published form; build it locally from your own private records. It must live
+# outside every clone of this repository (the script refuses to run otherwise).
 set -euo pipefail
 
-REPO_URL="${1:-git@github.com:wingbangboozle1-lang/Tino4.git}"
-WORK="${2:-$HOME/tino4-history-scrub}"
+REPO_URL="${1:-}"
+WORK="${2:-}"
+RULES="${3:-}"
 
-if [[ -e "$WORK" ]]; then
-  echo "Refusing to overwrite existing $WORK — choose a fresh directory." >&2
-  exit 1
+die() { echo "ERROR: $*" >&2; exit 2; }
+
+[[ -n "$REPO_URL" && -n "$WORK" && -n "$RULES" ]] || \
+  die "usage: $0 <clone-url> <work-dir> <private-rules-file> (see the runbook)"
+[[ -e "$WORK" ]] && die "refusing to overwrite existing $WORK — choose a fresh directory"
+[[ -f "$RULES" ]] || die "rules file not found: $RULES (create it privately, outside any clone)"
+command -v git >/dev/null || die "git is required"
+git --version >/dev/null
+command -v git-filter-repo >/dev/null || die "install git-filter-repo first (pip install git-filter-repo)"
+
+# Guard 1: the rules file must not be inside a git working tree of this project.
+if git -C "$(dirname "$RULES")" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  die "the rules file is inside a git working tree — move it somewhere untracked and outside every clone"
 fi
+# Guard 2: refuse a rules file that is itself world-readable or tracked.
+[[ -O "$RULES" ]] || die "the rules file must be owned by you"
+perms="$(stat -c '%a' "$RULES" 2>/dev/null || stat -f '%Lp' "$RULES")"
+[[ "$perms" == "600" || "$perms" == "400" ]] || die "set the rules file to mode 600 first (chmod 600 '$RULES')"
 
 echo "==> Cloning full history to $WORK"
 git clone --mirror "$REPO_URL" "$WORK"
 cd "$WORK"
 
-echo "==> Building replace-text rules from the verified rounding map."
-cat > /tmp/tino4-scrub-rules.txt <<'EOF'
-# Extend this list with EVERY exact pre-rounding figure found in git log -p.
-# Format (git-filter-repo replace-text): literal:OLD==>NEW
-literal:550,537==>550,540
-literal:539,743==>539,740
-literal:529,156==>529,160
-literal:518,785==>518,790
-literal:508,608==>508,610
-literal:498,638==>498,640
-literal:493,526==>493,530
-literal:483,848==>483,850
-literal:474,370==>474,370
-literal:465,066==>465,070
-literal:455,952==>455,950
-literal:449,106==>449,100
-literal:440,305==>440,310
-literal:7,207==>7,210
-literal:6,917==>6,920
-literal:6,758==>6,760
-literal:6,658==>6,660
-literal:6,566==>6,570
-literal:6,378==>6,380
-literal:6,412==>6,410
-literal:6,131==>6,130
-literal:5,965==>5,970
-literal:114,248==>114,250
-literal:112,010==>112,010
-literal:109,810==>109,810
-literal:107,660==>107,660
-literal:105,600==>105,600
-literal:104,510==>104,510
-literal:102,470==>102,470
-literal:100,460==>100,460
-literal:98,490==>98,490
-literal:96,557==>96,560
-literal:2,439==>2,440
-literal:2,315==>2,320
-literal:2,181==>2,180
-literal:2,110==>2,110
-literal:2,066==>2,070
-literal:2,204==>2,200
-literal:2,127==>2,130
-literal:2,056==>2,060
-literal:1,736==>1,740
-literal:1,675==>1,680
-literal:7,150==>7,150
-literal:3,080,000==>3,080,000
-literal:1,780,000==>1,780,000
-EOF
-
-echo "==> Rewriting history (review /tmp/tino4-scrub-rules.txt first!)"
-git filter-repo --replace-text /tmp/tino4-scrub-rules.txt
+echo "==> Rewriting history with the private rules file (this is irreversible)."
+echo "    Review every line of $RULES first: it is the only copy."
+read -r -p "    Type SCRUB to continue: " confirm
+[[ "$confirm" == "SCRUB" ]] || die "aborted by operator; nothing was rewritten"
+git filter-repo --replace-text "$RULES"
 
 cat <<'MSG'
 
 ==> Rewrite complete. NEXT (manual, per the runbook):
-   1. git push --force --all origin && git push --force --tags origin
-   2. Contact GitHub Support to clear PR diffs and cached views.
-   3. Tell fork owners to re-clone; verify raw URLs for old SHAs 404.
-   4. Record the scrub in COORDINATION.md and update the privacy page.
+   1. git push --force --mirror so every ref carries the rewritten history.
+   2. Contact GitHub Support to clear cached PR diffs and run a GC; provide the
+      list of removed commit hashes.
+   3. Tell fork/clone owners to re-clone; confirm old raw URLs return 404.
+   4. Delete stale session branches that still reference pre-rewrite objects.
+   5. Shred or encrypt the private rules file, then update COORDINATION.md and
+      the site's Privacy page with the date the scrub was completed.
 MSG

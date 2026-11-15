@@ -37,7 +37,7 @@ PUBLIC_CURRENCY_AMOUNTS = {
 # are used only for ZIP-specific insurance/utility/rate context.
 REGION_ZIP_CODES = {"95014", "94122"}
 # 17043 = Cal. Rev. & Tax. Code §17043 (1% tax above $1,000,000), read on leginfo 2026-11-15.
-PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "17043"}
+PUBLIC_STATUTE_IDS = {"13301", "16061", "62809", "61882", "61270", "25009", "26138", "70106", "65912", "17043", "27361", "27388", "7995"}
 FIVE_DIGIT_ALLOWED = PUBLIC_STATUTE_IDS | REGION_ZIP_CODES
 LEGACY_PRIVATE_PREFIXES = (
     "_7adb71fc", "_7eff7e24", "_1775f697/review", "_a3de132b/audit",
@@ -57,6 +57,36 @@ OFFICIAL_HOST_SUFFIXES = (
 )
 
 CURRENCY_RE = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
+
+# Tree-wide amount discipline (added 2026-11-15, session arena/79e0fd5e).
+# The $-prefixed check above could not see a comma-grouped amount written
+# without a dollar sign, and a maintenance helper in this repository used
+# exactly that form to publish the pre-rounding values the $10 rounding exists
+# to hide. Any comma-grouped number anywhere in a tracked text file is treated
+# as an amount: it must be a multiple of $10 or an allowlisted official figure.
+GROUPED_AMOUNT_RE = re.compile(r"(?<![0-9.,$])(\d{1,3}(?:,\d{3})+)(?![0-9.,])")
+# A rounded-to-unrounded map is more sensitive than either value, because it
+# re-identifies the record. No such map may exist anywhere in the tree.
+ROUNDING_MAP_RE = re.compile(r"(?m)^\s*(?:literal:|regex:)?\s*[\d][\d,]*\s*(?:==>|->|→)\s*\$?[\d][\d,]*")
+SCRUB_RULES_NAME_RE = re.compile(r"(?i)(replace-?text|scrub-?rules|redact-?rules).*\.(txt|rules|list)$")
+# A comma-grouped number followed by a count noun is a quantity, not an amount
+# ("1,384 unique blobs", "252 historical paths"). Only amount-shaped numbers are
+# held to the $10 rounding rule.
+COUNT_CONTEXT_RE = re.compile(r"\s*(?:unique\s+)?(?:blobs|objects|paths|commits|files|pages|rows|tests|records|items|matches)\b")
+
+
+def grouped_amount_problems(content: str) -> list[str]:
+    """$10 discipline for amounts written without a dollar sign."""
+    problems = []
+    for match in GROUPED_AMOUNT_RE.finditer(content):
+        digits = match.group(1).replace(",", "")
+        if COUNT_CONTEXT_RE.match(content[match.end():match.end() + 40]):
+            continue
+        if int(digits) % 10 == 0 or digits in PUBLIC_CURRENCY_AMOUNTS or digits in FIVE_DIGIT_ALLOWED:
+            continue
+        problems.append(f"comma-grouped amount ${match.group(1)} is not $10-rounded")
+    return problems
+
 POSTAL_RE = re.compile(r"(?<![0-9])([0-9]{5})(?:-[0-9]{4})?(?![0-9])")
 ADDRESS_RE = re.compile(
     r"(?i)(?<![A-Za-z0-9])\d{1,6}\s+(?:[A-Za-z0-9.'-]+\s+){1,4}"
@@ -275,6 +305,12 @@ def verify() -> list[str]:
         relative = path.relative_to(ROOT).as_posix()
         if any(not currency_amount_ok(amount.group(1)) for amount in CURRENCY_RE.finditer(content)):
             errors.append(f"{relative} contains a non-rounded or unapproved currency amount")
+        for problem in grouped_amount_problems(content):
+            errors.append(f"{relative} {problem} — an unrounded amount can be searched back to a public record")
+        if ROUNDING_MAP_RE.search(content):
+            errors.append(f"{relative} contains a rounded/unrounded mapping, which defeats the $10 privacy rounding")
+        if SCRUB_RULES_NAME_RE.search(relative):
+            errors.append(f"{relative} looks like a committed redaction rules file; keep it outside every clone")
         scan_text = content
         if path.suffix.lower() == ".css":
             scan_text = re.sub(r"#[0-9a-fA-F]{3,8}\b", "<color>", scan_text)
@@ -349,6 +385,10 @@ def verify() -> list[str]:
         for match in CURRENCY_RE.finditer(text):
             if not currency_amount_ok(match.group(1)):
                 errors.append(f"{relative} contains a non-rounded or unapproved currency amount")
+        for problem in grouped_amount_problems(text):
+            errors.append(f"{relative} {problem} — a published amount must be $10-rounded")
+        if ROUNDING_MAP_RE.search(text):
+            errors.append(f"{relative} contains a rounded/unrounded mapping")
         for match in POSTAL_RE.finditer(text):
             if not postal_code_ok(match.group(1)):
                 errors.append(f"{relative} contains an unexplained five-digit identifier")

@@ -341,9 +341,9 @@ SOURCES = {
         "verified": False,
     },
     "sjw_rates": {
-        "label": "San Jose Water — utility serving the Cupertino area",
+        "label": "San Jose Water — Peninsula water utility serving the Property A area",
         "url": "https://www.sjwater.com/",
-        "scope": "Investor-owned water utility serving Cupertino and nearby communities; publishes tariffs and rate schedules. Provider context only — the household bill depends on metered usage and current approved rates.",
+        "scope": "Investor-owned water utility serving several Peninsula communities; publishes tariffs and rate schedules. Provider context only — the household bill depends on metered usage and current approved rates.",
         "verified": False,
     },
     "pge_tariffs": {
@@ -481,9 +481,59 @@ SOURCES = {
     "cpuc_water_list": {
         "label": "CPUC — Water Utility List (regulated utilities by service area)",
         "url": "https://docs.cpuc.ca.gov/published/Report/7995.htm",
-        "scope": "Read 2026-11-15. Lists San Jose Water Co. (WTA 168) with service area 'in and about San Jose, Los Gatos, Saratoga, Monte Sereno, Campbell, Cupertino, and Santa Clara'. The file title is dated '5-7-01', so it confirms only the listing, not current tariffs, rates or service boundaries. A current tariff must come from the utility.",
+        "scope": "Read 2026-11-15. Lists the Peninsula supplier named in the private record (WTA 168) with a service area covering several Santa Clara County cities. Place names are omitted here on purpose. The file title is dated '5-7-01', so it confirms only the listing, not current tariffs, rates or service boundaries. A current tariff must come from the utility.",
         "verified": True,
         "checked": "2026-11-15",
+    },
+    # --- added 2026-11-15 by session arena/79e0fd5e (depreciation, recapture,
+    # transaction costs, imputed rent and the San Francisco transfer-tax audit) ---
+    "irs_p551_basis": {
+        "label": "IRS Publication 551 — Basis of Assets (Inherited Property; Like-Kind Exchanges)",
+        "url": "https://www.irs.gov/publications/p551",
+        "scope": "Read 2026-11-15. States that the basis of property inherited from a decedent is generally the fair market value at the date of death (or the alternate/special-use valuation), that a Schedule A (Form 8971) estate-tax value can bind a beneficiary's initial basis, and that property the taxpayer or spouse gave the decedent within one year of death keeps the decedent's adjusted basis instead. It also states that a section 1031 exchange requires holding BOTH the real property given up and the real property received for business or investment purposes, with carryover basis. It gives no household value, basis or exchange advice.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_8824": {
+        "label": "IRS — About Form 8824, Like-Kind Exchanges",
+        "url": "https://www.irs.gov/forms-pubs/about-form-8824",
+        "scope": "Read 2026-11-15. Form 8824 reports each exchange of business or investment property for property of a like kind. The page does not state eligibility for a specific property or any deadline arithmetic.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_topic409": {
+        "label": "IRS Topic 409 — Capital gains and losses",
+        "url": "https://www.irs.gov/taxtopics/tc409",
+        "scope": "Read 2026-11-15. States that a gain is the excess over adjusted basis, that inherited property basis refers to Pub 551, that property acquired from a decedent is an exception to the ordinary holding-period rule (see Pub 544), that the portion of gain from selling section 1250 real property attributable to depreciation (unrecaptured section 1250 gain) is taxed at a maximum 25% rate, and that net short-term gain is ordinary. The rate table shown there is for tax year 2025; the 2026 amounts on this site come from the IRS revenue procedure row.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "irs_p527_depreciation": {
+        "label": "IRS Publication 527 — Depreciation of rental property (MACRS)",
+        "url": "https://www.irs.gov/publications/p527",
+        "scope": "Read 2026-11-15. States the MACRS property class 'residential rental property' (real property where 80% or more of the gross rental income is from dwelling units), that an addition to a rental house is depreciated as residential rental property over 27.5 years, that land cannot be depreciated, that basis for depreciation excludes land, and that if the owner lives in part of the building the gross rental income includes the fair rental value of the part occupied. It provides no property-specific basis, split or deduction amount.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "sf_recording_fees": {
+        "label": "San Francisco Assessor-Recorder — Fees to record a document in San Francisco",
+        "url": "https://www.sf.gov/reports--march-2024--fees-record-document-san-francisco",
+        "scope": "Read 2026-11-15 (schedule effective January 1, 2025). Publishes the city-county real-estate transfer tax per $500 of consideration by tier, the recorder's base first-page fee, the per-additional-page fee, the Building Homes and Jobs Act fee with its exemption list, the survey-monument fee that applies only to deeds subject to documentary transfer tax, and the fee charged in lieu of a Preliminary Change of Ownership Report. Rates and fees change; the schedule governs.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "sf_prop_I": {
+        "label": "San Francisco — Housing Stability Fund Oversight Board (about)",
+        "url": "https://www.sf.gov/departments--housing-stability-fund-oversight-board--about",
+        "scope": "Read 2026-11-15. States that in November 2020 San Francisco voters passed Proposition I, changing the city-county property transfer tax on the two highest consideration tiers — from 2.75% to 5.5% on properties valued between ten million and just under twenty-five million dollars, and from 3% to 6% at twenty-five million dollars or more — with the revenue handled through the Housing Stability Fund and the General Fund. It says nothing about a transfer below those tiers and is not the operative ordinance text.",
+        "verified": True,
+        "checked": "2026-11-15",
+    },
+    "scc_dtt_unverified": {
+        "label": "Santa Clara County transfer-tax and recording schedule — not retrieved",
+        "url": "https://www.santaclaracounty.gov/",
+        "scope": "Attempted 2026-11-15. No county page with the documentary-transfer-tax rate, the recording fee schedule or the exemption list was retrieved in this sandbox, so no Santa Clara County transaction-cost figure is published anywhere on this site and the sell-path row for Property A stays blank.",
+        "verified": False,
     },
     "sos_ballot": {
         "label": "California Secretary of State — Qualified statewide ballot measures",
@@ -543,7 +593,7 @@ def money10(value: float) -> str:
 
 PROPERTY_A = {
     "short": "Property A (anticipated trust transfer)",
-    "region": "Cupertino area, California (ZIP 95014)",
+    "region": "Santa Clara County, California (place anonymised; county named only because the assessor's rule is county-level)",
     "value_2026": 3_100_000,
     "assessed": {2014: 440310, 2015: 449100, 2016: 455950, 2017: 465070,
                  2018: 474370, 2019: 483850, 2020: 493530, 2021: 498640,
@@ -559,7 +609,7 @@ PROPERTY_A = {
 
 PROPERTY_B = {
     "short": "Property B (already owned)",
-    "region": "San Francisco Outer Sunset area (ZIP 94122)",
+    "region": "City and County of San Francisco (place anonymised; the city-county is named only because its transfer-tax and rent rules are the governing ones)",
     "value_2026": 1_800_000,
     "assessed": {2016: 96_560, 2017: 98_490, 2018: 100460, 2019: 102470,
                  2020: 104510, 2021: 105600, 2022: 107660, 2023: 109810,
@@ -594,6 +644,159 @@ B_INS_BAND = (2500, 5000)      # landlord planning band for B insurance
 B_UNIT3_RENT_BAND = (3300, 3800)  # unrented unit scenario band, not a quote
 B_MAINT_BAND = (9000, 18_000)  # older 3-unit building maintenance band
 A_INS_OWNER_FLAG = "owner guess — flagged as likely low"
+
+# ---------------------------------------------------------------------------
+# Privacy dial (owner-facing, added 2026-11-15).
+# A year-by-year assessed-value series is the single most re-identifiable thing
+# this site publishes: the dollar level can be matched against a county roll
+# even after $10 rounding. Setting PUBLISH_ASSESSMENT_LEVELS to False keeps the
+# growth rates the decision actually depends on but publishes them indexed to
+# 2014 = 100, with no dollar levels anywhere. One constant, both modes build and
+# verify clean.
+# ---------------------------------------------------------------------------
+PUBLISH_ASSESSMENT_LEVELS = True
+
+
+def assessed_cell(table: dict[int, float], year: int, base_year: int = 2014) -> str:
+    """Publish an assessed value as a dollar level or, in indexed mode, as an index."""
+    value = table.get(year)
+    if value is None:
+        return "—"
+    if PUBLISH_ASSESSMENT_LEVELS:
+        return money10(value)
+    base = table[base_year]
+    return f"index {value / base * 100:.1f}"
+
+
+# ---------------------------------------------------------------------------
+# Depreciation, recapture and transaction-cost model (session arena/79e0fd5e,
+# 2026-11-15). Every input below is either a published official rule (linked in
+# SOURCES) or a labeled assumption; every output goes through money10().
+# ---------------------------------------------------------------------------
+DEPR_YEARS = 27.5            # MACRS residential-rental recovery period (IRS Pub 527, read 2026-11-15)
+BUILDING_SHARE_LOW = 0.55    # assumption: depreciable building share of basis
+BUILDING_SHARE_HIGH = 0.75   # (land is never depreciable; use the assessor's split)
+UNRECAPPED_1250_RATE = 0.25  # maximum federal rate on unrecaptured section 1250 gain (IRS Topic 409)
+CA_MARGINAL_HIGH = 0.138     # assumption: top-ish California ordinary rate used only to show direction
+FED_LTCG_HIGH = 0.20         # 20% top net capital-gain rate above the 15% band (IRS Topic 409)
+SECTION_121_SINGLE = 250_000   # IRC 121 main-home exclusion, single filer (IRS Topic 701)
+SECTION_121_JOINT = 500_000    # IRC 121 main-home exclusion, qualifying joint return
+SF_TT_TIERS = [                # San Francisco real-estate transfer tax, official per-$500 schedule
+    (250_000, 2.50),
+    (1_000_000, 3.40),
+    (5_000_000, 3.75),
+    (10_000_000, 11.25),
+    (25_000_000, 27.50),
+    (float("inf"), 30.00),
+]
+SF_TT_RATE_TEXT = {2.50: "0.50%", 3.40: "0.68%", 3.75: "0.75%", 11.25: "2.25%", 27.50: "5.50%", 30.00: "6.00%"}
+
+
+def sf_transfer_tax(value: float) -> tuple[float, str]:
+    """San Francisco charges the tier rate on the ENTIRE consideration, not marginally."""
+    for ceiling, per_500 in SF_TT_TIERS:
+        if value <= ceiling or ceiling == float("inf"):
+            return (value / 500.0) * per_500, SF_TT_RATE_TEXT[per_500]
+    raise AssertionError("unreachable")
+
+
+def b_depreciation(share: float) -> dict:
+    """One year of straight-line MACRS on Property B, plus the recapture it creates."""
+    basis = PROPERTY_B["value_2026"] * share
+    annual = basis / DEPR_YEARS
+    ten_year = annual * 10
+    return {
+        "share": share,
+        "basis": basis,
+        "annual": annual,
+        "ten_year": ten_year,
+        "fed_recapture": ten_year * UNRECAPPED_1250_RATE,
+        "ca_tax": ten_year * CA_MARGINAL_HIGH,
+        "shelter_now": annual * (FED_LTCG_HIGH + CA_MARGINAL_HIGH),
+    }
+
+
+def live_then_sell_exclusion(hold_years: int = 10) -> dict:
+    """Gain above the date-of-death basis, and the IRC 121 shield on a lived-in home."""
+    gain = a_value(INHERIT_YEAR + hold_years) - a_value(INHERIT_YEAR)
+    return {
+        "hold_years": hold_years,
+        "gain": gain,
+        "shielded_single": min(gain, SECTION_121_SINGLE),
+        "excess_single": max(gain - SECTION_121_SINGLE, 0.0),
+        "excess_joint": max(gain - SECTION_121_JOINT, 0.0),
+    }
+
+
+def sell_path_costs(value: float) -> dict:
+    """Price the transaction lines a gross-to-net bridge usually forgets."""
+    tt, tt_rate = sf_transfer_tax(value)
+    return {
+        "commission": value * SELL_COST * 0.6,          # assumption: split of the 7% band
+        "other_closing": value * SELL_COST * 0.4,        # assumption: title, escrow, prep
+        "sf_transfer_tax": tt,
+        "sf_transfer_tax_rate": tt_rate,
+        "recording": 20.0 + 14.0 + 3.0,                   # SF Assessor-Recorder schedule, read 2026-11-15
+        "pcor_fee": 20.0,                                  # fee in lieu of a PCOR, RTC 480.3(b)
+    }
+
+
+def outcome_distribution() -> dict:
+    """A 10-year spread for the sale-and-reinvest path across labelled scenario bands.
+
+    Not a forecast: a grid of growth/inflation pairs, each equally weighted, so
+    the reader sees the width of the outcome instead of one point. Values are
+    index numbers (start = 100) and $10-rounded dollars.
+    """
+    proceeds = SELL_NET_2045
+    grid = []
+    for growth in (0.02, 0.04, 0.06, 0.08, 0.10):
+        for inflation in (0.015, 0.025, 0.035):
+            nominal = proceeds * (1 + growth) ** 10
+            real = nominal / (1 + inflation) ** 10
+            grid.append((nominal, real))
+    nominal_sorted = sorted(g[0] for g in grid)
+    real_sorted = sorted(g[1] for g in grid)
+
+    def quantile(values: list[float], q: float) -> float:
+        index = min(len(values) - 1, max(0, int(round(q * (len(values) - 1)))))
+        return values[index]
+
+    return {
+        "count": len(grid),
+        "nominal": {q: quantile(nominal_sorted, q) for q in (0.0, 0.25, 0.5, 0.75, 1.0)},
+        "real": {q: quantile(real_sorted, q) for q in (0.0, 0.25, 0.5, 0.75, 1.0)},
+        "hold_value_10y": a_value(INHERIT_YEAR + 10),
+        "hold_tax_10y": DELTA_10YR,
+    }
+
+
+def svg_distribution(quantiles: dict[float, float], caption: str) -> str:
+    """Render the spread as inline SVG bars — no script, no remote asset, no data file."""
+    low, high = quantiles[0.0], quantiles[1.0]
+    span = max(high - low, 1.0)
+    labels = {0.0: "worst", 0.25: "25th", 0.5: "median", 0.75: "75th", 1.0: "best"}
+    bars = []
+    for i, q in enumerate((0.0, 0.25, 0.5, 0.75, 1.0)):
+        height = max(6.0, (quantiles[q] - low) / span * 92.0 + 6.0)
+        x = 12 + i * 58
+        bars.append(
+            f'<rect x="{x}" y="{110 - height:.1f}" width="40" height="{height:.1f}" rx="3" '
+            f'fill="currentColor" opacity="{0.35 + 0.13 * i:.2f}"/>'
+            f'<text x="{x + 20}" y="126" text-anchor="middle" class="chart-label">{esc(labels[q])}</text>'
+            f'<text x="{x + 20}" y="{max(10, 104 - height):.1f}" text-anchor="middle" class="chart-value">'
+            f'{money10(quantiles[q])}</text>'
+        )
+    summary = ", ".join(f"{labels[q]} {money10(quantiles[q])}" for q in (0.0, 0.5, 1.0))
+    return (
+        f'<figure class="chart" role="img" aria-label="Outcome spread: {esc(summary)}">'
+        f'<svg viewBox="0 0 310 140" preserveAspectRatio="xMidYMid meet" aria-hidden="true" '
+        f'focusable="false">{"".join(bars)}'
+        f'<line x1="6" y1="112" x2="304" y2="112" stroke="currentColor" stroke-width="1" opacity="0.5"/></svg>'
+        f'<figcaption>{esc(caption)}</figcaption></figure>'
+    )
+
+
 
 
 def a_value(year: int) -> float:
@@ -1309,7 +1512,7 @@ def build_costs() -> str:
     ]
     body = callout(
         "Owner-supplied costs are published privacy-rounded; quotes are still required",
-        "Owner-supplied monthly figures appear on the property-profiles page, rounded to the nearest ten dollars and badged Owner-supplied (privacy-rounded). No official source can produce an insurance premium or repair bid for a private home, so those cells stay unverified until written quotes and bids exist. Provider context: the Cupertino-area water utility publishes its own tariffs, and third-party compilations of CPUC data put the mid-2026 PG&E residential average near 33.7 cents per kWh.",
+        "Owner-supplied monthly figures appear on the property-profiles page, rounded to the nearest ten dollars and badged Owner-supplied (privacy-rounded). No official source can produce an insurance premium or repair bid for a private home, so those cells stay unverified until written quotes and bids exist. Provider context: the Property A area water utility publishes its own tariffs, and third-party compilations of CPUC data put the mid-2026 PG&E residential average near 33.7 cents per kWh.",
         "info",
     )
     owner_cost_rows = [
@@ -1773,7 +1976,7 @@ def build_sources() -> str:
 
 def build_privacy() -> str:
     rows = [
-        {"cells": ["Public page content (policy revised 2026-11-15, owner-directed)", "The site publishes owner-supplied figures rounded to the nearest ten dollars, badged Owner-supplied (privacy-rounded), because the owner directed that rounded figures be reported in the decision analysis. Names, street addresses, parcel numbers, account numbers and unrounded amounts are never published, and the verifier fails the build if a currency amount does not end in 0.", "Two region ZIP codes (95014, 94122) appear as region context for insurance/utility/rate research, again per the owner's direction; removing them is a one-constant change if the owner later prefers."], "status": "Guidance", "sources": ["owner_a", "owner_b"]},
+        {"cells": ["Public page content (policy revised 2026-11-15, owner-directed)", "The site publishes owner-supplied figures rounded to the nearest ten dollars, badged Owner-supplied (privacy-rounded), because the owner directed that rounded figures be reported in the decision analysis. Names, street addresses, parcel numbers, account numbers and unrounded amounts are never published, and the verifier fails the build if a currency amount does not end in 0.", "Place identifiers were removed from every public page on 2026-11-15: no ZIP code, city name or neighbourhood name appears on the site. Only the governing jurisdictions are named (Santa Clara County; City and County of San Francisco), because the assessor, transfer-tax and rent rules being applied are those jurisdictions' rules."], "status": "Guidance", "sources": ["owner_a", "owner_b"]},
         {"cells": ["Public hosting", "GitHub Pages is a public static website. Noindex discourages search indexing but does not restrict access or make a page private.", "Never put deeds, trust papers, tax bills, leases, statements or identifiable values here."], "status": "Guidance", "sources": ["github_history"]},
         {"cells": ["Current branch tree", "Identified case-input, projection, and audit files have been removed from this branch's current tree. This does not erase earlier public commits or PR references.", "Do not use this public repository as a secure vault; keep private records outside GitHub."], "status": "Guidance", "sources": ["github_history"]},
         {"cells": ["Git history / copies", "Earlier commits and PR diffs may remain accessible; forks, cached views and clones cannot be erased by a normal cleanup commit.", "Treat historical material as exposed until an owner/admin-coordinated history-removal process and GitHub support review are complete."], "status": "Missing", "sources": ["github_history"]},
@@ -1786,7 +1989,8 @@ def build_privacy() -> str:
         {"cells": ["Published amounts", "Owner amounts are published only rounded to the nearest ten dollars, and only with an Owner-supplied, Projection or Assumption badge. The release check fails the build on any currency amount that does not end in 0, other than a published statutory figure.", "Rounding reduces traceability; it does not anonymise an assessment history, which can still fingerprint a parcel across years."], "status": "Guidance", "sources": ["github_history"]},
         {"cells": ["Statutory amounts", "Only published official figures appear: federal exclusions, the $7,000 homeowners' exemption and the $250,000/$500,000 main-home exclusion.", "These are public law, not household data; they carry a source link on every row."], "status": "Verified", "sources": ["irs_estate", "irs_2027", "ca_rtc218", "irs_121"]},
         {"cells": ["Assessment history", "Year-by-year assessed-value and tax-bill histories are published rounded to the nearest ten dollars, with no parcel or assessor identifier and no street address.", "This is the most re-identifiable element of the published layer. A year-by-year assessment series is effectively a parcel identifier even after rounding, because it can be matched against a county roll."], "status": "Guidance", "sources": ["boe_pub29"]},
-        {"cells": ["Place identifiers", "Two region ZIP codes (95014, 94122) are published as region context for insurance, utility and rate research. Street address, neighbourhood, parcel number and assessor number are suppressed by an automated release check.", "The check fails the build on any other five-digit identifier, a street-address pattern, an email address, a phone number, a county parcel number, an account or trust number, or a date of birth."], "status": "Guidance", "sources": ["github_history"]},
+        {"cells": ["Place identifiers", "ZIP codes, the city name and the neighbourhood name were removed from every published page on 2026-11-15 and replaced with anonymised region text plus the governing jurisdiction. Street address, parcel number and assessor number remain suppressed by an automated release check.", "The check fails the build on any five-digit identifier outside the allowlist, a street-address pattern, an email address, a phone number, a county parcel number, an account or trust number, or a date of birth — and, since 2026-11-15, on any comma-grouped amount that is not $10-rounded and on any rounded-to-unrounded mapping anywhere in the tree."], "status": "Guidance", "sources": ["github_history"]},
+        {"cells": ["Assessment levels are optional", "PUBLISH_ASSESSMENT_LEVELS in tools/sitebuild.py is the owner-facing dial. Set to False and rebuild: the assessed-value history publishes as an index (2014 = 100) with growth rates instead of dollar levels, and every derived projection still computes.", "This exists because a year-by-year dollar assessment series can be matched to a county roll even after rounding. The default remains the owner-directed published figures; flipping the dial is a one-constant change that removes that residual risk."], "status": "Guidance", "sources": ["boe_pub29"]},
         {"cells": ["Projection outputs", "Year-by-year projections are published with rounded figures and clearly labeled assumptions, alongside the blank scenario columns that remain the evidence register.", "A model output with plausible amounts can be re-identified by anyone who knows the property. Recompute with the what-if controls rather than trusting the defaults."], "status": "Guidance", "sources": ["irs_basis"]},
     ]
     body += make_table("Rounding and anonymisation discipline", ["Content type", "Rule applied", "Why it is not enough on its own"], round_rows)

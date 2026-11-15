@@ -47,8 +47,13 @@ The helper `tools/history_scrub.sh` wraps the standard procedure:
 6. Verify from a clean browser/incognito: raw.githubusercontent URLs for old
    commit SHAs must 404 after GC.
 
-Review the replace-text rules in the script and extend them with every exact
-value found by `git log -p` before running. A rule missed is a value that stays.
+Build the replace-text rules yourself, in a private file kept outside every
+clone, from `git log -p` output on your own copy. A rule missed is a value that
+stays. **Never commit that file and never paste its contents into an issue, a
+PR, this repository or the runbook** — a rounded-to-unrounded map defeats the
+rounding policy for the whole published site, which is why
+`tools/history_scrub.sh` contains no numbers at all and `tools/verify.py`
+fails the build if a mapping ever appears in the tree.
 
 ## After the scrub
 
