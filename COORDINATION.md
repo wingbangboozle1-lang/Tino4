@@ -253,3 +253,30 @@ Branch: `arena/666008be-tino4`. Status: active; reset onto `origin/main` `c8cdd5
 - **CI after merge:** `verify` and `pages build and deployment` both report `completed/success` for `9e1dedd`.
 - **Pages:** the GitHub Pages API reports `status: built` at `https://wingbangboozle1-lang.github.io/Tino4/`. The live URL could not be fetched directly from this sandbox because outbound access is limited to GitHub, npm and PyPI hosts, so the deployment is confirmed through the Pages API and the `pages build and deployment` workflow rather than by reading the served HTML.
 - **Rebase record:** two rebases were needed because `main` advanced through PR #94 while this branch was open. The `COORDINATION.md` conflicts were resolved by preserving the incoming board in full and appending this session's section.
+
+---
+
+## Session `arena/a897a17d-tino4` — official-source refresh, California income-tax surcharge and capital-gain treatment (2026-11-15)
+
+Branch: `arena/a897a17d-tino4` (platform-fixed; branched from `main` `60a054e`, PR #96). Status: active. No other session was active on the board at claim time.
+
+| Task ID | Task | Status | Owner | File scope (exclusive) | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| A897-1 | Replace the four retrieval-failed official URLs with verified official replacements where they exist (FTB gifts/inheritance, BOE county-assessor directory, CPUC water list); keep unresolved items flagged | done | `arena/a897a17d-tino4` | `tools/sitebuild.py` (SOURCES + flagged rows F-07/F-18 only) | 2026-11-15 |
+| A897-2 | Add the verified California 1% Behavioral Health Services Tax above $1,000,000 taxable income and the capital-gain treatment to the estate/income-tax page and source register | done | `arena/a897a17d-tino4` | `tools/sitebuild.py` (`build_estate_thresholds`, SOURCES) | 2026-11-15 |
+| A897-3 | Rebuild, verify, test, PR to `main`, merge after checks pass, confirm Pages deploy, record result | pending | `arena/a897a17d-tino4` | release | 2026-11-15 |
+
+### A897 findings and verification (2026-11-15)
+
+- **Sources read directly (official hosts, 2026-11-15):**
+  - FTB gifts and inheritance — https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html (page dated 09/24/2025). Replaces the retired `income-from-gifts-and-inheritances.html` URL, which still returns 404.
+  - Cal. Rev. & Tax. Code §17043 — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC — 1% additional tax on taxable income above $1,000,000.
+  - FTB 2025 Form 540-ES instructions — https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.html — Behavioral Health Services Tax worksheet (formerly Mental Health Services Tax).
+  - FTB capital gains and losses — https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html (updated 01/28/2026) — "All capital gains are taxed as ordinary income."
+  - BOE county contacts listing — https://www.boe.ca.gov/proptaxes/countycontacts.htm — replaces the retired county-assessor directory URL (still 404).
+  - CPUC Water Utility List — https://docs.cpuc.ca.gov/published/Report/7995.htm — San Jose Water Co. (WTA 168), service area includes Cupertino. File is titled "5-7-01", so it confirms the listing only, not current tariffs.
+- **Still failing (flagged, not used):** BOE Publication 801 PDF (404) and the SF Treasurer vacancy-tax page (Page Not Found). The FTB brackets schedule was not fetched, so bracket figures remain unverified.
+- **Verifier change:** added statute §17043 to the published-statute allowlist with a comment (the five-digit check had flagged the statute number, a false positive).
+- **Irregularity noted:** the request describes the 1% as a "Form 540 tax above one million dollars" for inherited-property capital gains. The verified text shows it is a surcharge on taxable income above $1,000,000 in any year, not an estate or inheritance tax. The site now states it that way.
+- **Checks:** `python3 tools/build.py`, `python3 tools/verify.py`, `python3 -m unittest discover -s tools -p 'test_*.py'` (11 tests) all pass.
+
