@@ -1,6 +1,26 @@
 # COORDINATION.md — Shared Task Board
 
-## Current session: quantitative decision layer restored + sourced research (`arena-377ea96a`)
+## Current session: sale/transfer costs, depreciation, Proposition H and private-file worksheets (`arena-98062937`)
+
+- Branch: `arena/98062937-tino4` (platform-fixed; branched from `60a054e` = main tip "Merge pull request #96"); no other branch or worktree was created.
+- Status: **in progress**.
+- Scope (claimed, exclusive): `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `assets/app.js`, `assets/style.css`, `tools/site-manifest.json` (generated), `index.html`, `pages/**`, `README.md`, `COORDINATION.md` (this section only). No other session's rows or files were edited.
+- Tasks:
+  - T9806-1 — Claim the board and register this session's file scope (this section).
+  - T9806-2 — New page `pages/sale-and-transfer.html`: documentary transfer tax and recording fees (official county and city recorder schedules), the California 1% tax above $1,000,000 of taxable income and capital-gain treatment (FTB Form 540 instructions), like-kind-exchange eligibility (IRS Pub 544), main-home exclusion tests, a sale in the transfer tax year, and the updated after-tax sell-path sensitivity.
+  - T9806-3 — New page `pages/rental-economics.html`: depreciation method and conventions (IRS Pub 527), section 1250 recapture (IRS Topic 409), basis when property changes to rental use (IRS Pub 551), imputed rent for living paths, mixed occupancy, and Proposition H (Stronger Muni For All) modelled from its official terms with a local-only parcel-tax estimator.
+  - T9806-4 — New page `pages/private-file.html`: Form 706 schedule-based estate inventory worksheet, written investment policy statement, pre-commitment decision rules agreed before the figures arrive, a five-year maintenance and capital plan for both buildings, and the annual re-run checklist.
+  - T9806-5 — Extend the decision-analysis what-if controls (imputed rent, main-home exclusion toggle, sale-cost and tax inputs) and add a ten-year outcome distribution chart to the projections page.
+  - T9806-6 — Estate liquidity plan on the estate-thresholds page; Proposition H on the law watchlist; new glossary terms; new flagged items; new source-register rows; README update.
+  - T9806-7 — Repair the committed merge-conflict markers in `assets/style.css` and add the styles the new pages need.
+  - T9806-8 — Build, verify, test, open a PR, merge, confirm the Pages deploy, and record the result here.
+- **Irregularity found in the repo review:** `assets/style.css` contains unresolved merge-conflict markers (`<<<<<<< HEAD`, `=======`, `>>>>>>> 5fe1463 …`) committed by merge PR #96. Browsers discard the marked blocks, so the published timeline rules and the print-compaction rules were ambiguous. No other tracked file contains conflict markers. Fixed in this branch (both rule sets kept, markers removed).
+- Verification rule for this session: a value is published only if it was read directly from the official source during this session. Published official tariff rates that do not end in $10 (for example $3.75 per $500 of consideration) are registered one by one in the verifier allowlist with their source; the owner-directed rounding rule continues to apply to every household-derived amount. Sources fetched this session: FTB Form 540 instructions, FTB capital-gains page, IRS Pub 544, Pub 551, Pub 527, IRS Topic 409, IRS Form 706 instructions (Rev. July 2026), Santa Clara County Clerk-Recorder fee schedule, San Francisco Assessor-Recorder fee schedule, the Proposition H legal text, the SFMTA Proposition H FAQ, and the official Nov 3 2026 San Francisco Voter Information Pamphlet.
+- Sources that could not be read this session and are therefore registered as **Not verified**: the text of California Revenue and Taxation Code §1181 (the leginfo page did not render the section body; county-published rates are used instead and the statute is cited only as authority), and the certified results of the Nov 3 2026 San Francisco election (the SFMTA states the measure was approved; certified results were not read).
+
+---
+
+## Previous session: quantitative decision layer restored + sourced research (`arena-377ea96a`)
 
 - Branch: `arena/377ea96a-tino4` (platform-fixed; branched from `c9530a3` = main tip "Merge PR #78"; no other branch/worktree created).
 - Status: **merged.** PR **#88** (https://github.com/wingbangboozle1-lang/Tino4/pull/88) merged to `main` with a merge commit; GitHub Actions `verify` workflow passed on the merge commit (tests → build → verify → reproducibility). GitHub Pages `github-pages` deployment state **success** (deployment 7798215159); site live at https://wingbangboozle1-lang.github.io/Tino4/. A merge with `origin/main` (PRs #83–#87 from parallel sessions) was resolved in this branch before merge: their verified law/utility research (S.4196/H.R.601/S.587 proposal records, SB 974 Chapter 665 special-needs-trust amendment, SF Rent Board 1.6% allowable increase, Nov 3 2026 ballot-measure record, decision-log page, per-source fetch dates, sf.gov/sftreasurer.org/santaclaracounty.gov/boj.or.jp source records) was ported into the quantitative builder; nothing was discarded.
