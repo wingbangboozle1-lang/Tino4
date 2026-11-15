@@ -295,15 +295,15 @@ Branch: `arena/9830a6d0-tino4` (platform-pinned; base `60a054e` = `origin/main` 
 
 ### Sources read directly on 2026-11-15
 
-- **Verified (official host, fetched):** leginfo RTC §17043 (1% additional tax on taxable income above $1,000,000); SF Department of Elections preliminary results, Nov 3, 2026 (Measure H: 74.4% yes, 25.6% no of counted votes, update of Nov 10; certification up to 30 days); Secretary of State list of qualified statewide measures (Props 1–5, 37–45, incl. Prop 40 one-time tax; Prop 3 extends the high-income tax); SF Department of Elections home page (preliminary status).
-- **Registered unverified:** uscode.house.gov §1014 and §1031 (official page returned "Page Not Found" in its temporary format; text read through a public mirror, so the rows say so); FTB 2025 Form 540 booklet (404).
-- **Failed or not fetched:** FTB Form 540 booklet; SOS Prop 40 voter guide and certified results; SF measure text for Measure H (rates per category). These are flags, not published values.
+- **Verified (official host, fetched):** leginfo RTC §17043 (also read by PR #97) (1% additional tax on taxable income above $1,000,000); SF Department of Elections preliminary results, Nov 3, 2026 (Measure H: 74.4% yes, 25.6% no of counted votes, update of Nov 10; certification up to 30 days); Secretary of State list of qualified statewide measures (Props 1–5, 37–45, incl. Prop 40 one-time tax; Prop 3 extends the high-income tax); SF Department of Elections home page (preliminary status).
+- **Registered unverified:** uscode.house.gov §1014 and §1031 (official page returned "Page Not Found" in its temporary format; text read through a public mirror, so the rows say so); FTB 2025 Form 540 booklet URL (404).
+- **Failed or not fetched:** FTB 2025 Form 540 booklet (the FTB 540-ES worksheet and capital-gains page are used instead); SOS Prop 40 voter guide and certified results; SF measure text for Measure H (rates per category). These are flags, not published values.
 
 ### Findings and irregularities (flagged, not resolved)
 
 - **F-24 Prop H (SF Measure H):** preliminary official pass (74.4% yes). Certification pending. The measure title gives rates from $129 per parcel to a $400,000 maximum for 15 years; Property B's category was not determined, so no parcel-tax amount is published.
 - **F-25 Prop 40:** on the Nov 3, 2026 ballot per the SOS list. The one billion dollars net-worth threshold appears in press reports and was not confirmed in the measure text.
-- **F-26 California 1% surcharge:** the statute is read (1% of taxable income above $1,000,000). The FTB form line and the California capital-gain computation were not verified from an official FTB page. The surcharge is kept out of the base case.
+- **F-26 Sale-year application of the California 1% surcharge:** R&TC §17043, the FTB 2025 Form 540-ES worksheet and the FTB capital-gains page (all read by PR #97, merged in this branch) establish the 1% rule and ordinary-rate treatment of capital gains. The household's sale-year computation is not modelled; the Form 540 2025 booklet itself was not retrieved. The surcharge stays out of the base case.
 - **F-27 Federal basis and exchange statutes:** §1014 (date-of-death basis) and §1031 (real-property exchanges) were read through a mirror, not the official House page.
 - **F-28 Imputed rent and depreciation recapture:** not modelled; no official rule supports an imputed-rent figure, and Property B's depreciation history is not public.
 - **Correction to the prior watchlist row:** the Props 3/40–43 row said the official titles were not read; the SOS list now confirms them. Results remain unread.
