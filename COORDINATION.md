@@ -119,3 +119,34 @@ Branch: `arena/4841e117-tino4` (platform-fixed). Status: merged resolution recor
 - **Merge commit:** `caf197b34d6814527a9239fb33a3e97d9b2279ac` on `main`.
 - **Local integration verification:** build, source/row/link verification, 11 unit tests, JS syntax checks, UI smoke test, and whitespace check pass against the merged tree.
 - **Remote CI / Pages status:** the PR's `build-and-verify` action was still `QUEUED` at the last successful status query (observed 2026-11-16 01:19 UTC). GitHub API requests then returned HTTP 403 rate-limit errors, so the post-merge workflow result and Pages deployment for this commit could not be confirmed in this session. Previous Pages deployment is recorded in earlier release notes; it is not proof of deployment of this commit. Do not treat the post-merge deploy as verified until the action reports success.
+
+## Session `arena/c1f5a7d7` — Form 540 verification and transfer-year sale correction
+
+Branch: `arena/c1f5a7d7-tino4` (platform-fixed; active). Status: in progress.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C1F5-1 | Read current official California Form 540 instructions, update the sale-year tax evidence, correct transfer-year gain/loss sensitivity, and regression-test the public model without adding private inputs | done | `arena/c1f5a7d7` | `tools/sitebuild.py`, `assets/app.js`, `tools/test_case.py`, generated `pages/**`, `COORDINATION.md` | 2026-11-16 |
+
+### Rebase coordination note
+
+- While replaying the claim onto current `origin/main`, `COORDINATION.md` overlapped with the just-merged `arena/04e6f1e5` crash-timing release record. Kept the entire 04e6 record and appended this task without replacing it; preserved the entire 04e crash-timing implementation and regression test while reapplying only the Form 540 and sale-year gain/loss changes. The shared generator, script, and generated decision page had overlapping edits; the merged code retains both features.
+
+### C1F5-1 verification and result
+
+- Read the official FTB **2025 Form 540 instructions**, line 62, on 2026-11-16: https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html. It specifies a 1% Behavioral Health Services Tax on the portion of taxable income above $1,000,000, computed in whole dollars. Public generic sensitivity: $100 per $10,000 over that threshold, before other return effects. This is not a household tax estimate or a forecast of future law. Updated the official source register, sale-year analysis, questions and flagged note; actual future-year instructions remain a recheck item.
+- Corrected the transfer-year sale calculator: it no longer forces gain to zero. It uses entered sale price less entered selling costs and basis, displays illustrative gain or loss, and discloses that local transfer tax is shown separately and not incorporated in the simplified gain formula. Regression coverage tests positive and negative examples. No household inputs were added.
+- Rebase preserved `arena/04e6f1e5`'s merged phase-crash timing control and `assets/phase-model.js`. Overlap was resolved by integrating the Form 540 and sale-year updates into the newer shared source, not by taking the older whole-file version. `COORDINATION.md` records the overlap.
+- Verification against the combined tree: `python3 tools/build.py`, `python3 tools/verify.py`, all 13 Python tests, `node --check assets/app.js`, `node --check assets/phase-model.js`, and `git diff --check` pass. The build emits all 22 pages; verifier confirms table-source/evidence rows, official hosts, local links, privacy/CSP checks. A search of active public output/source found none of the provided locations, postal identifiers, or property/rent figures.
+- Limitations: this updates generic California surcharge sensitivity, not a private property sale estimate. It does not calculate a complete federal/state return, loss treatment, transfer-tax effect in amount realized, or future-year rates. Historical Git exposure remains unresolved; this task does not rewrite history, change visibility, or remove prior clones/caches.
+
+### Sources checked for C1F5-1
+
+- FTB, 2025 Form 540 Instructions, line 62: https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html
+- FTB, California capital gains and losses: https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html
+- California Revenue and Taxation Code §17043: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC
+- IRS inherited property basis FAQ: https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances
+
+### Release record
+
+- Initial PR: https://github.com/wingbangboozle1-lang/Tino4/pull/111. Its merge attempt found conflicts because `main` advanced through PR #110 after this branch diverged. Rebased onto that updated `origin/main`, preserving the other session's changes and reran full tests. The PR branch and CI/deployment state must be recorded after the rebase/update is pushed.
