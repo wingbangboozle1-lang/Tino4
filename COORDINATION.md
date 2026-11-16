@@ -13,6 +13,8 @@ Branch: `arena/8ce4e259-tino4` (platform-fixed; active).
 - The landing page now puts a high-visibility, generic warning before the decision-changing-facts table: current-tree cleanup does not prove that prior Git/PR/fork/cache/download/clone copies have been removed. It links to GitHub's official sensitive-data-removal guidance and the site's privacy page; it contains no household identifiers or figures.
 - **Verification:** `python3 tools/build.py`, `python3 tools/verify.py`, and 11 unit tests pass; `node --check assets/app.js` and `git diff --check` pass. The regression test checks the warning precedes the first-screen decision table.
 - **Unresolved limitation:** this task updates only the current working tree. It does not rewrite history, remove PR views, change visibility, or establish that any retained copies are erased. Administrator-led remediation remains necessary.
+- **PR / merge:** https://github.com/wingbangboozle1-lang/Tino4/pull/109 — merged 2026-11-16T01:18:19Z as `f830c4de320bbf646275442797639cb834c693b9`.
+- **Release verification at 2026-11-16T01:18:24Z:** local build/tests passed. The GitHub `verify` run 43784418939 remained queued without starting, and Pages run 43785482982 was queued; Pages API reported `building`. Deployment is therefore **not yet confirmed**; recheck Actions/Pages rather than claiming the update is live.
 - **Source:** https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository — GitHub's official guidance on repository history cleanup and its limitations.
 
 ## Session `arena/b784431e` — public-site privacy containment
