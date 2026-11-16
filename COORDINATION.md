@@ -122,7 +122,7 @@ Branch: `arena/4841e117-tino4` (platform-fixed). Status: merged resolution recor
 
 ## Session `arena/c1f5a7d7` — Form 540 verification and transfer-year sale correction
 
-Branch: `arena/c1f5a7d7-tino4` (platform-fixed; active). Status: in progress.
+Branch: `arena/c1f5a7d7-tino4` (platform-fixed; merged work recorded below). Status: merged.
 
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
@@ -149,4 +149,7 @@ Branch: `arena/c1f5a7d7-tino4` (platform-fixed; active). Status: in progress.
 
 ### Release record
 
-- Initial PR: https://github.com/wingbangboozle1-lang/Tino4/pull/111. Its merge attempt found conflicts because `main` advanced through PR #110 after this branch diverged. Rebased onto that updated `origin/main`, preserving the other session's changes and reran full tests. The PR branch and CI/deployment state must be recorded after the rebase/update is pushed.
+- **PR #111:** https://github.com/wingbangboozle1-lang/Tino4/pull/111 — merged with `gh pr merge 111 --merge` at 2026-11-16T01:45:41Z after rebasing over the intervening merge and preserving the crash-timing work.
+- **Merge commit:** `3df62550e5ccb7c323feb476fb456aa71207a8a5` on `main`.
+- **Local verification:** build and privacy/source verifier passed; all 13 tests, both JavaScript syntax checks, privacy scan, and whitespace check passed against the rebased integrated version before merge.
+- **Remote CI / Pages:** at 2026-11-16 01:45 UTC, PR workflow #163 (`43787780906`) and merge workflow #164 (`43788134497`) were queued; Pages deployment #101 (`43788134444`) was also queued. GitHub's API returned HTTP 403 rate-limit errors when querying run details. A live fetch of the published decision page still showed the pre-update content, so the new site build is **not yet confirmed deployed**. Do not represent deployment as successful until Pages reports completion and the live page shows the updated Form 540 citation and sale-year calculation. Action queue details: https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43788134444.
