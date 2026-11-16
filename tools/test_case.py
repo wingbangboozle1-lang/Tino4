@@ -75,8 +75,41 @@ class PublicSitePrivacyTests(unittest.TestCase):
         page = sitebuild.render("pages/estate-thresholds.html", "Estate-tax thresholds", "Law & process")
         self.assertIn("$1,000,000", page)
         self.assertIn("ordinary income", page)
-        self.assertIn("ca_rtc17043", str(sitebuild.SOURCES))
+        self.assertIn("$100 per $10,000", page)
+        self.assertIn("ftb_540", str(sitebuild.SOURCES))
         self.assertIn("ftb_540es", str(sitebuild.SOURCES))
+        self.assertIn("line 62", str(sitebuild.SOURCES["ftb_540"]))
+
+    def test_transfer_year_sale_uses_entered_proceeds_basis_and_costs(self):
+        script = r'''
+const fs = require('fs');
+const vm = require('vm');
+const values = {
+  'sell-value': '120', 'sell-basis': '100', 'sell-costs': '10',
+  'sell-dtt': '0', 'sell-other': '0', 'sell-timing': 'transfer', 'sell-121': '0'
+};
+const elements = new Map();
+function element(id) {
+  if (!elements.has(id)) elements.set(id, {
+    value: values[id] || '', textContent: '',
+    addEventListener(type, callback) { this[`${type}Handler`] = callback; }
+  });
+  return elements.get(id);
+}
+global.document = { getElementById: element, querySelectorAll: () => [] };
+global.window = { print() {} };
+vm.runInThisContext(fs.readFileSync('assets/app.js', 'utf8'));
+element('sell-run').clickHandler();
+console.log(element('sell-result').textContent);
+element('sell-value').value = '80';
+element('sell-costs').value = '0';
+element('sell-run').clickHandler();
+console.log(element('sell-result').textContent);
+'''
+        output = subprocess.check_output(["node", "-e", script], cwd=ROOT.parent, text=True)
+        self.assertIn("$10 (potential gain", output)
+        self.assertIn("-$20 (potential loss", output)
+        self.assertNotIn("gain is modeled at $0", output)
 
     def test_phase_model_compares_crash_timing_and_rising_market_lag(self):
         script = r'''const model = require(process.argv[1]);

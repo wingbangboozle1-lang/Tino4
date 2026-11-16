@@ -61,6 +61,11 @@
   const sellClear = document.getElementById('sell-clear');
   const sellResult = document.getElementById('sell-result');
   const sellFmt = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.max(0, Math.round(value / 10) * 10));
+  const sellSignedFmt = (value) => {
+    const rounded = Math.round(value / 10) * 10;
+    const formatted = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.abs(rounded));
+    return rounded < 0 ? `-$${formatted}` : `$${formatted}`;
+  };
   if (sellRun && sellResult) {
     sellRun.addEventListener('click', () => {
       const value = Number(document.getElementById('sell-value')?.value);
@@ -85,11 +90,14 @@
       const addOn = excess * 0.01;
       const lines = [
         `Estimated sale transaction costs: $${sellFmt(costs)}.`,
-        `Estimated documentary transfer tax at the entered rate: $${sellFmt(transferTax)} (recording fees are additional; the tax rate and income-tax treatment of costs need adviser verification).`,
+        `Estimated documentary transfer tax at the entered rate: $${sellFmt(transferTax)} (recording fees are additional; use the property's official schedule).`,
+        `Illustrative sale value less entered sale costs and basis: ${sellSignedFmt(realized)} (${realized < 0 ? 'potential loss' : 'potential gain'} before other tax rules).`,
       ];
-      lines.push(`Modeled positive gain before any section 121 exclusion: $${sellFmt(modeledGain)} from sale value less entered transaction costs and basis${timing === 'transfer' ? ' for a transfer-year sale' : ''}. A same-year sale is not automatically tax-free: inherited basis is generally the date-of-death fair market value, subject to exceptions, and sale price/costs can differ.`);
-      lines.push(`Modeled positive gain after the entered section 121 amount: $${sellFmt(gainAfterExclusion)} (eligibility requires ownership and use tests; this tool does not model a deductible loss).`);
-      lines.push(`Illustrative California 1% add-on on taxable income above $1,000,000: $${sellFmt(addOn)} (computed with the entered other income; not a complete tax return).`);
+      if (timing === 'transfer') {
+        lines.push('Transfer-year sale is not forced to zero: the result uses the entered sale value, assumed sale costs, and basis. Confirm date-of-death value, sale timing, deductible costs, exceptions and tax treatment with the CPA.');
+      }
+      lines.push(`Positive modeled gain after the entered section 121 amount: $${sellFmt(gainAfterExclusion)} (eligibility requires ownership and use tests; this simple overlay does not model loss rules).`);
+      lines.push(`Illustrative California 1% add-on on taxable income above $1,000,000: $${sellFmt(addOn)} (uses entered other taxable income plus modeled gain; not a complete tax return).`);
       sellResult.textContent = lines.join(' ');
     });
   }
