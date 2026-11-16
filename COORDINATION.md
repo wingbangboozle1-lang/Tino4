@@ -119,3 +119,15 @@ Branch: `arena/4841e117-tino4` (platform-fixed). Status: merged resolution recor
 - **Merge commit:** `caf197b34d6814527a9239fb33a3e97d9b2279ac` on `main`.
 - **Local integration verification:** build, source/row/link verification, 11 unit tests, JS syntax checks, UI smoke test, and whitespace check pass against the merged tree.
 - **Remote CI / Pages status:** the PR's `build-and-verify` action was still `QUEUED` at the last successful status query (observed 2026-11-16 01:19 UTC). GitHub API requests then returned HTTP 403 rate-limit errors, so the post-merge workflow result and Pages deployment for this commit could not be confirmed in this session. Previous Pages deployment is recorded in earlier release notes; it is not proof of deployment of this commit. Do not treat the post-merge deploy as verified until the action reports success.
+
+## Session `arena/c1f5a7d7` — Form 540 verification and transfer-year sale correction
+
+Branch: `arena/c1f5a7d7-tino4` (platform-fixed; active). Status: in progress.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| C1F5-1 | Read current official California Form 540 instructions, update the sale-year tax evidence, correct transfer-year gain/loss sensitivity, and regression-test the public model without adding private inputs | in progress | `arena/c1f5a7d7` | `tools/sitebuild.py`, `assets/app.js`, `tools/test_case.py`, generated `pages/**`, `COORDINATION.md` | 2026-11-16 |
+
+### Rebase coordination note
+
+- While replaying the claim onto current `origin/main`, `COORDINATION.md` overlapped with the just-merged `arena/04e6f1e5` crash-timing release record. Kept the entire 04e6 record and appended this task without replacing it; implementation will preserve the new crash-timing control and model.
