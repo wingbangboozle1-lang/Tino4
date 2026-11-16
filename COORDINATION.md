@@ -1,5 +1,20 @@
 # COORDINATION.md — Privacy-safe task board
 
+## Session `arena/8ce4e259` — surface historical privacy risk on the landing page
+
+Branch: `arena/8ce4e259-tino4` (platform-fixed; active).
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 8CE4-1 | Put the unresolved historical exposure warning on the first screen and add a regression test | done | `arena/8ce4e259` | `tools/sitebuild.py`, `tools/test_case.py`, generated `index.html`, `COORDINATION.md` | 2026-11-16 |
+
+### 8CE4-1 result
+
+- The landing page now puts a high-visibility, generic warning before the decision-changing-facts table: current-tree cleanup does not prove that prior Git/PR/fork/cache/download/clone copies have been removed. It links to GitHub's official sensitive-data-removal guidance and the site's privacy page; it contains no household identifiers or figures.
+- **Verification:** `python3 tools/build.py`, `python3 tools/verify.py`, and 11 unit tests pass; `node --check assets/app.js` and `git diff --check` pass. The regression test checks the warning precedes the first-screen decision table.
+- **Unresolved limitation:** this task updates only the current working tree. It does not rewrite history, remove PR views, change visibility, or establish that any retained copies are erased. Administrator-led remediation remains necessary.
+- **Source:** https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository — GitHub's official guidance on repository history cleanup and its limitations.
+
 ## Session `arena/b784431e` — public-site privacy containment
 
 Branch: `arena/b784431e-tino4` (platform-fixed; rebased onto the latest `origin/main`). Status: active.

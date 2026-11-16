@@ -26,6 +26,13 @@ class PublicSitePrivacyTests(unittest.TestCase):
         failures = verify.verify()
         self.assertEqual(failures, [])
 
+    def test_homepage_discloses_unresolved_historical_exposure(self):
+        homepage = sitebuild.render("index.html", "Decision overview", "Start")
+        self.assertIn("historical exposure is unresolved", homepage)
+        self.assertIn("prior commits, pull-request views, forks, caches, downloads, or clones", homepage)
+        self.assertIn("https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository", homepage)
+        self.assertLess(homepage.index("historical exposure is unresolved"), homepage.index("What would change the answer?"))
+
     def test_no_owner_supplied_household_figures_or_placeholders_are_baked_into_site(self):
         sitebuild.build()
         for page in json.loads((ROOT / "site-manifest.json").read_text(encoding="utf-8")):
