@@ -78,9 +78,22 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertIn("ca_rtc17043", str(sitebuild.SOURCES))
         self.assertIn("ftb_540es", str(sitebuild.SOURCES))
 
+    def test_phase_model_compares_crash_timing_and_rising_market_lag(self):
+        script = r'''const model = require(process.argv[1]);
+const early = model.simulate({amount: 24000, months: 24, treasuryYieldPct: 0, equityDriftPct: 0, crashPct: 57, crashMonth: 1});
+if (Math.abs(early.immediateShockLoss - 13680) > 1 || early.phasedShockLoss !== 0 || !(early.phasedEnding > early.immediateEnding)) process.exit(1);
+const after = model.simulate({amount: 24000, months: 24, treasuryYieldPct: 0, equityDriftPct: 0, crashPct: 57, crashMonth: 25});
+if (Math.abs(after.immediateShockLoss - after.phasedShockLoss) > 1 || Math.abs(after.phasedEnding - after.immediateEnding) > 1) process.exit(2);
+const rising = model.simulate({amount: 24000, months: 24, treasuryYieldPct: 0, equityDriftPct: 8, crashPct: 0, crashMonth: 13});
+if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
+'''
+        result = subprocess.run(["node", "-e", script, str(ROOT.parent / "assets/phase-model.js")], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
     def test_decision_completeness_rules_are_published_generically(self):
         decision = sitebuild.render("pages/decision-analysis.html", "Compare paths", "Decision")
         self.assertIn("sale in the transfer tax year", decision)
+        self.assertIn("not as a tax-free assumption", decision)
         self.assertIn("Sale proceeds waterfall", decision)
         self.assertIn("unrecaptured section 1250 gain", decision)
         self.assertIn("Like-kind exchange (section 1031)", decision)
