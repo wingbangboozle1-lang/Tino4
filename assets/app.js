@@ -19,44 +19,41 @@
   const result = document.getElementById('phase-result');
   if (run && result) {
     run.addEventListener('click', () => {
-      const amount = Number(document.getElementById('phase-amount')?.value);
-      const months = Number(document.getElementById('phase-months')?.value);
+      const amountRaw = document.getElementById('phase-amount')?.value.trim() ?? '';
+      const monthsRaw = document.getElementById('phase-months')?.value.trim() ?? '';
       const treasuryRaw = document.getElementById('phase-yield')?.value.trim() ?? '';
       const equityRaw = document.getElementById('phase-equity')?.value.trim() ?? '';
-      const treasuryPct = Number(treasuryRaw);
-      const equityPct = Number(equityRaw);
-      const declinePct = Number(document.getElementById('phase-crash')?.value);
-      if (!treasuryRaw || !equityRaw || ![amount, months, treasuryPct, equityPct, declinePct].every(Number.isFinite) || amount <= 0 || months < 24 || months > 36 || declinePct < 0 || declinePct > 90) {
-        result.textContent = 'Enter a positive amount, a staging period from 24 to 36 months, and valid percentage assumptions.';
+      const crashRaw = document.getElementById('phase-crash')?.value.trim() ?? '';
+      const crashMonthRaw = document.getElementById('phase-crash-month')?.value.trim() ?? '';
+      if (!amountRaw || !monthsRaw || !treasuryRaw || !equityRaw || !crashRaw || !crashMonthRaw || !window.PhaseModel) {
+        result.textContent = 'Enter a positive amount and both percentage assumptions; verify the staging controls loaded.';
         return;
       }
-      const treasuryMonthly = Math.pow(1 + treasuryPct / 100, 1 / 12);
-      const unitAt = (month) => {
-        const fraction = month / months;
-        return Math.max(0.0001, 1 + (equityPct / 100) * fraction - (declinePct / 100) * fraction);
+      const inputs = {
+        amount: Number(amountRaw),
+        months: Number(monthsRaw),
+        treasuryYieldPct: Number(treasuryRaw),
+        equityDriftPct: Number(equityRaw),
+        crashPct: Number(crashRaw),
+        crashMonth: Number(crashMonthRaw),
       };
-      const finalPrice = unitAt(months);
-      const immediate = amount * finalPrice;
-      let reserve = amount;
-      let shares = 0;
-      const purchase = amount / months;
-      for (let month = 1; month <= months; month += 1) {
-        reserve *= treasuryMonthly;
-        const buy = Math.min(reserve, purchase);
-        reserve -= buy;
-        shares += buy / unitAt(month);
+      try {
+        const outcomes = window.PhaseModel.simulate(inputs);
+        const fmt = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(value / 10) * 10);
+        const delta = outcomes.phasedEnding - outcomes.immediateEnding;
+        const relation = Math.abs(delta) < 5 ? 'approximately matches' : delta > 0 ? 'is above' : 'is below';
+        const crashWhen = inputs.crashMonth === inputs.months + 1 ? 'immediately after staging' : `at month ${inputs.crashMonth}`;
+        result.textContent = `At the selected shock ${crashWhen}, the illustrative mark-to-market shock loss is about $${fmt(outcomes.immediateShockLoss)} for immediate investment versus $${fmt(outcomes.phasedShockLoss)} for the staged portfolio. Ending values: phased $${fmt(outcomes.phasedEnding)}; immediate $${fmt(outcomes.immediateEnding)}. Phased ${relation} immediate by about $${fmt(Math.abs(delta))} under these assumptions. The reduced early shock exposure trades against delayed market exposure and Treasury reinvestment risk.`;
+      } catch (_error) {
+        result.textContent = 'Check: positive amount; 24–36 staging months; crash month from 1 through staging months + 1; crash from 0–90%; and valid annual yield and equity drift.';
       }
-      const phased = shares * finalPrice + reserve;
-      const fmt = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(value / 10) * 10);
-      const delta = phased - immediate;
-      const relation = Math.abs(delta) < 5 ? 'approximately matches' : delta > 0 ? 'is above' : 'is below';
-      result.textContent = `Illustrative ending values: phased $${fmt(phased)}; immediate $${fmt(immediate)}. Under these assumptions, phased ${relation} immediate by about $${fmt(Math.abs(delta))}. This simplified path is not a forecast or backtest; it excludes taxes, fees, dividends, inflation, changing yields and other market paths.`;
     });
   }
   clear?.addEventListener('click', () => {
-    document.getElementById('phase-amount').value = '';
-    document.getElementById('phase-yield').value = '';
-    document.getElementById('phase-equity').value = '';
+    ['phase-amount', 'phase-yield', 'phase-equity'].forEach((id) => { const input = document.getElementById(id); if (input) input.value = ''; });
+    document.getElementById('phase-months').value = '24';
+    document.getElementById('phase-crash').value = '57';
+    document.getElementById('phase-crash-month').value = '13';
     document.getElementById('phase-result').textContent = 'Inputs cleared.';
   });
 
@@ -81,21 +78,17 @@
       const costs = value * (costsPct / 100);
       const transferTax = value * (dttPct / 100);
       const realized = value - costs - basis;
-      const modeledGain = timing === 'transfer' ? 0 : Math.max(0, realized);
+      const modeledGain = Math.max(0, realized);
       const gainAfterExclusion = Math.max(0, modeledGain - exclusion);
       const taxable = Math.max(0, gainAfterExclusion + other);
       const excess = Math.max(0, taxable - 1000000);
       const addOn = excess * 0.01;
       const lines = [
         `Estimated sale transaction costs: $${sellFmt(costs)}.`,
-        `Estimated documentary transfer tax at the entered rate: $${sellFmt(transferTax)} (recording fees are additional; use the property's official schedule).`,
+        `Estimated documentary transfer tax at the entered rate: $${sellFmt(transferTax)} (recording fees are additional; the tax rate and income-tax treatment of costs need adviser verification).`,
       ];
-      if (timing === 'transfer') {
-        lines.push('Transfer-year sale: gain is modeled at $0 because inherited basis is generally date-of-death value; a later sale adds post-death appreciation.');
-      } else {
-        lines.push(`Modeled gain before exclusion: $${sellFmt(modeledGain)}.`);
-        lines.push(`Modeled gain after the entered section 121 amount: $${sellFmt(gainAfterExclusion)} (eligibility requires ownership and use tests).`);
-      }
+      lines.push(`Modeled positive gain before any section 121 exclusion: $${sellFmt(modeledGain)} from sale value less entered transaction costs and basis${timing === 'transfer' ? ' for a transfer-year sale' : ''}. A same-year sale is not automatically tax-free: inherited basis is generally the date-of-death fair market value, subject to exceptions, and sale price/costs can differ.`);
+      lines.push(`Modeled positive gain after the entered section 121 amount: $${sellFmt(gainAfterExclusion)} (eligibility requires ownership and use tests; this tool does not model a deductible loss).`);
       lines.push(`Illustrative California 1% add-on on taxable income above $1,000,000: $${sellFmt(addOn)} (computed with the entered other income; not a complete tax return).`);
       sellResult.textContent = lines.join(' ');
     });
