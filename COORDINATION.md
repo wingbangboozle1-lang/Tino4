@@ -80,3 +80,9 @@ Branch: `arena/4841e117-tino4` (platform-fixed). Status: merged resolution recor
 - CI: `verify` run 43715608890 (build-and-verify) completed **successfully** (8s job; standard runner-image/Node deprecation warnings only).
 - Pages: `pages build and deployment` run 43715608207 completed **successfully** (build 17s, deploy 9s; artifact `github-pages` published) and https://wingbangboozle1-lang.github.io/Tino4/ was re-checked live at 2026-11-15 ~13:00 UTC showing the merged content (new flagged rows and updated measure-handling rows confirmed).
 - Note for the other active sessions (PRs #104, #107): `main` now contains the generalized decision-completeness rules from this branch; please rebase onto current `main` before merging and keep the privacy-containment boundary (no household figures, locations or derived recommendations).
+
+## Session `arena/04e6f1e5` — crash-timing sensitivity and sale-year wording
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 04e6-1 | Replace smooth staged-loss sensitivity with an explicit one-time crash-month what-if; preserve the local-only privacy boundary and qualify transfer-year sale language | in progress | `arena/04e6f1e5` | `tools/sitebuild.py`, `assets/app.js`, `tools/test_case.py`, generated `pages/phased-investing.html`, `pages/decision-analysis.html`, `COORDINATION.md` | 2026-11-16 |
