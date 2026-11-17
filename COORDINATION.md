@@ -154,37 +154,21 @@ Branch: `arena/c1f5a7d7-tino4` (platform-fixed; merged work recorded below). Sta
 - **Local verification:** build and privacy/source verifier passed; all 13 tests, both JavaScript syntax checks, privacy scan, and whitespace check passed against the rebased integrated version before merge.
 - **Remote CI / Pages:** at 2026-11-16 01:45 UTC, PR workflow #163 (`43787780906`) and merge workflow #164 (`43788134497`) were queued; Pages deployment #101 (`43788134444`) was also queued. GitHub's API returned HTTP 403 rate-limit errors when querying run details. A live fetch of the published decision page still showed the pre-update content, so the new site build is **not yet confirmed deployed**. Do not represent deployment as successful until Pages reports completion and the live page shows the updated Form 540 citation and sale-year calculation. Action queue details: https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43788134444.
 
-## Session `arena/07cbe6c9` — scan non-visible public HTML for privacy leaks
+## Session `arena/b9a46c93` — rounded figure workbook, year-by-year projections, black-swan regime realism
 
-Branch: `arena/07cbe6c9-tino4` (platform-fixed; active).
-
-| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
-| --- | --- | --- | --- | --- | --- |
-| 07CB-1 | Extend the public-site privacy regression audit to metadata, non-visible attributes, and HTML comments | done | `arena/07cbe6c9` | `tools/verify.py`, `tools/test_case.py`, `COORDINATION.md` | 2026-11-17 |
-
-### 07CB-1 result
-
-- Extended the public HTML privacy audit to include all non-link, non-resource attributes (including metadata, labels, alt/title text and `data-*`) and HTML comments, in addition to rendered text. This catches location/contact-pattern leaks hidden from the visible page without scanning source URLs that contain official statutory section identifiers.
-- Added a synthetic regression test proving a location-like five-digit token in metadata and text in an accessibility attribute/comment are included in the audited content. The test uses synthetic strings only and contains no household information.
-- Verification: `python3 tools/build.py`, `python3 tools/verify.py`, all 14 unit tests, `node --check assets/app.js`, `node --check assets/phase-model.js`, and `git diff --check` passed. Build emits 22 pages; verifier passes source/evidence-row, official-host, local-link, CSP/noindex, and no-household-data checks.
-- This code change does not scrub Git history, alter repository visibility, remove prior copies, or add any household inputs. Those historical-remediation tasks remain administrator-only and unresolved as recorded above.
-
-### 07CB-1 release record
-
-- **PR #115:** https://github.com/wingbangboozle1-lang/Tino4/pull/115 — merged 2026-11-17T16:41:28Z.
-- **Merge commit:** `ea1d2d4dcc62cdb170e8f0245967d4fa5b732a06` on `main`.
-- **CI:** PR `build-and-verify` run 44128554687 succeeded; merged-main run 44128632792 succeeded.
-- **Pages:** deployment run 44128631372 completed successfully after the merge. This change is a verifier/test improvement; the generated public content and privacy boundary remain unchanged.
-- **Limits:** history remediation remains unresolved; no assertion that previous Git, PR, fork, cache, download, or clone copies were erased.
-
-## Session `arena/5f1b7997` — decision guidance, source verification, privacy-safe build and Pages publication
-
-Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
+Branch: `arena/b9a46c93-tino4` (platform-fixed). Status: active.
 
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| 5F1B-1 | Verify key official sources (estate tax threshold, FTB 1% surcharge, Prop 19, CA transfer/recording fees) and flag irregularities | done | `arena/5f1b7997` | research; COORDINATION.md sources note | 2026-11-17 |
-| 5F1B-2 | Strengthen questions, missing-evidence discovery suggestions, black-swan baseline, and one-page brief within privacy limits | done | `arena/5f1b7997` | tools/sitebuild.py (reviewed; no household inputs added; privacy boundary intact) | 2026-11-17 |
-| 5F1B-3 | Build, run tests, verify privacy/source checks; commit and push | in progress | `arena/5f1b7997` | tools/sitebuild.py, generated pages, COORDINATION.md | — |
-| 5F1B-4 | Open PR to main, merge after green build/deploy, record PR link and result | in progress | `arena/5f1b7997` | main branch; GitHub Pages | — |
+| B9A4-1 | Publish a rounded-figure policy: de-identified numbers (nearest $10) in the decision analysis, all identifiers withheld; private unrounded workpaper kept outside Git | in progress | `arena/b9a46c93` | `README.md`, `COORDINATION.md`, ignored `private-work/**` | 2026-11-17 |
+| B9A4-2 | Rounded figure workbook: bill history, derived effective rates, anomaly flags, five-year capital plan, insurance/utility evidence | in progress | `arena/b9a46c93` | `tools/sitebuild.py`, generated `pages/property-profiles.html` | 2026-11-17 |
+| B9A4-3 | Year-by-year projections 2026-2050 (market value, assessed value under three transfer branches, property tax, operating cash flow) plus the sale-proceeds distribution chart | in progress | `arena/b9a46c93` | `tools/sitebuild.py`, `assets/style.css`, generated `pages/projections.html` | 2026-11-17 |
+| B9A4-4 | Compare pure and mixed paths at identical transfer year and horizons with taxes, debt, occupancy, capital costs, liquidity and reinvestment risk; add local what-if controls | in progress | `arena/b9a46c93` | `tools/sitebuild.py`, `assets/app.js`, generated `pages/decision-analysis.html` | 2026-11-17 |
+| B9A4-5 | Black-swan realism: verified official baseline anchors and regime sequences over a 50-year horizon, plus the Treasury-staging path (3-month to 2-year, 24-36 months) tested against 1929/2008 crash-entry risk | in progress | `arena/b9a46c93` | `tools/sitebuild.py`, `assets/phase-model.js`, generated `pages/black-swan.html`, `pages/phased-investing.html` | 2026-11-17 |
+| B9A4-6 | Refresh executive summary, questions, suggestions, requirements tracker, decision log, attorney & CPA brief, deadline timeline, estate thresholds, property-tax, glossary, law watchlist, privacy and source register with the verified 2026-11-17 readings | in progress | `arena/b9a46c93` | `tools/sitebuild.py`, generated `index.html` and `pages/**` | 2026-11-17 |
+| B9A4-7 | Model regression tests in a new test module, rebuild, verify, PR, merge, Pages deploy confirmation | in progress | `arena/b9a46c93` | `tools/test_model.py`, `COORDINATION.md` | 2026-11-17 |
 
+### Scope notes for other sessions
+
+- This session does **not** edit `tools/verify.py` or `tools/test_case.py`. PR #115 (`arena/07cbe6c9-tino4`) currently claims both; the page count stays at 22 and `tools/site-manifest.json` is untouched so the two changes do not collide.
+- This session does not rewrite Git history and does not force-push. It publishes only de-identified, $10-rounded figures per the owner's instruction; exact values, localities and rate-area readings go to an ignored `private-work/` file.
