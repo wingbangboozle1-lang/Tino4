@@ -526,6 +526,31 @@ Final state of the exposure counterexample, recorded so it is not repeated: **tw
 1. **Repository visibility and history remediation.** Highest urgency. 81–82 of 87 refs still contain identifying material; the repository is public. Closing five pull requests narrowed what is newly published but removed no commits.
 2. **Repository access review.** 82 branches remain, most from earlier sessions. Branch deletion alone does not remove commits referenced by pull requests or forks.
 3. **Whether the public site should exist at all** in its current relation to the private case. The site is clean; the repository's history is not. Separating them entirely is the only arrangement that does not depend on the current tree staying clean forever.
+## Session `arena/40e65d44` — phased-investing black-swan path, model ranges, rounded analysis reporting
+
+Branch: `arena/40e65d44-tino4` (platform-fixed; branched from `4c1aa93`, rebased onto `origin/main`). Status: active.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 40E6-1 | Claim tasks and record the session's figure-reporting policy decision | done | `arena/40e65d44` | `COORDINATION.md` | 2026-11-17 |
+| 40E6-2 | Re-verify official sources (estate thresholds, Prop 19 indexed limit and deadlines, transfer tax, tax-rate-area method, Form 540 line 62, local measure "Prop H" terms, Treasury yields, rental comparables research) | done | `arena/40e65d44` | research; source scopes | 2026-11-17 |
+| 40E6-3 | Build deterministic low/base/high model (rounded to $10) with transfer-year sale first, mixed paths, imputed rent, Section 121 switch, depreciation/recapture, transfer tax + recording in sell path, staged 3M–2Y Treasury path | done | `arena/40e65d44` | `tools/sitebuild.py` (self-contained model section) | 2026-11-17 |
+| 40E6-4 | Black-swan page: phased-investing path testing 1929/2008 crash entry with reinvestment risk beside the headline; distribution chart on projections | done | `arena/40e65d44` | `tools/sitebuild.py`, `assets/app.js`, generated pages | 2026-11-17 |
+| 40E6-5 | Privacy tooling: enforce $10 rounding, placeholders, banned locality tokens across all pages; keep historical-exposure runbook | done | `arena/40e65d44` | `tools/verify.py`, `tools/test_case.py` | 2026-11-17 |
+| 40E6-6 | Rebuild, verify line by line, tests, PR to main, merge, confirm Pages, record release | done | `arena/40e65d44` | release checks and this board | 2026-11-17 |
+
+### 40E6-6 release record (2026-11-17)
+
+- PR: https://github.com/wingbangboozle1-lang/Tino4/pull/128 (branch `arena/40e65d44-tino4` -> `main`), merged with `gh pr merge 128 --merge`; merge commit on `main`: `826e712` ("Merge pull request #128 from wingbangboozle1-lang/arena/40e65d44-tino4").
+- Integration history inside the PR: two conflict-resolution merges preserved the parallel sessions' work rather than replacing it — `77d5618` merged PRs #124-#127 (case_model quantified model, regime engine, fan chart, encoded-identifier guard) and `c8d8d51` merged PRs #129/#131 (zero-versus-small display fix). The session `arena/020b35d4` note flagging PR #128 as a duplicate-model PR was addressed by exactly the rebase-onto-merged-model it recommends.
+- Gates before each push: `python3 tools/build.py` (26 pages), `python3 tools/verify.py` (clean), `python3 -m unittest discover -s tools -p 'test_*.py'` (63 tests), `node --check` on `app.js`, `phase-model.js`, `staged-vs-lump.js`, `regime-model.js`, `python3 tools/recheck.py` (UNCHANGED), `git diff --check`.
+- GitHub Pages confirmed for this merge: `gh api repos/wingbangboozle1-lang/Tino4/pages` reached status `built` after the merge, and the live site at https://wingbangboozle1-lang.github.io/Tino4/ was re-fetched and serves the merged content (the law-watchlist page shows the Nov. 3, 2026 parcel-tax terms with the SFMTA and election-results source links; the certification/litigation row remains flagged "Not verified").
+- Delivered on the public site from this session's task list: rounded-to-$10 household figures marked "Household-reported (rounded)" with low/base/high bands; executive summary with a conditional best plan, why, and what-would-change-the-answer; transfer-year sale modeled first (2040/2045/2050 tables); family-home claim/no-claim transfer branches; asking-rent comparables ranking the letting paths (floor, unverified); five-year capital plans for both buildings; tax-rate-area lookup method with the number kept in the private workpaper; estate-size scenarios plus portability/prior-gift questions; like-kind-exchange decision gate and date-of-death valuation note; depreciation-recapture and imputed-rent tools; "Prop H" official terms published with official links (jurisdiction mapping private); the phased-investing crash-entry path in the black-swan section with reinvestment risk beside the headline; a seeded distribution chart with percentile table; and dated project decisions on the decision-log page.
+- Remaining flagged items (do not block; tracked on the Flagged page): Property B tax-to-assessment ratio irregularity pending bill reconciliation; insurance premiums unverified; rental comparables are asking rents; Prop H certification/litigation unverified; rounding-granularity trade-off reviewable; historical repository exposure still requires administrator remediation (`tools/history_scrub_runbook.md`).
+
+### 40E6-1 policy note (figures on the public site)
+
+The owner's restated brief (2026-11-17) requires two things at once: (a) personal information is anonymized with placeholders and never published, and (b) costs and numbers are **used and reported** in the decision analysis, rounded to the nearest $10 so they cannot be traced back to a source. This session therefore publishes: rounded-to-$10 household figures marked "Household-reported (rounded)", placeholders only (Property A / Property B / the household / the heir), projections as labeled low/base/high assumption bands, and a gated recommendation. It does **not** publish: names, street addresses, postal codes, parcel or account numbers, lease terms, or locality names for either property (banned-token scan kept). Locality-sensitive law (tax rate area number, local measure mapping) is reported as terms and published rates without naming the locality; the mapping stays in the private workpaper. Rounding granularity is itself a reviewable suggestion on the Suggestions page.
 
 ## Session `arena/020b35d4` — quantified decision model on a rounded, de-identified basis
 
@@ -636,6 +661,26 @@ that merge rather than argued with:
 
 Page count moved 24 → 26 in the same commit as `PAGES`, the manifest and the recheck snapshot.
 
+### Cross-session note: `arena/40e65d44` PR #128 is the same task, landed second
+
+PR #128 (`40E6: rounded-figure decision model integrated with verified-source layer, 24 pages`) is building the
+same quantified model this session built and merged as #125/#126/#127/#129. `main` is now at
+`5bba899` with **26 pages**, `tools/case_model.py`, an encoded-pattern privacy guard and 57 tests, so #128's
+base predates all of it and its page count (24) will conflict with `PAGES`, `tools/site-manifest.json`,
+`tools/verify.py` and `tools/framework-snapshot.json` by construction.
+
+Recommended handling, in this order, by #128's owner: (1) `git rebase origin/main` and read the conflicts in
+`tools/sitebuild.py` before resolving — the quantified addenda are generated by `quantified()` per page path and
+must not be pasted into `base_content_for`; (2) re-read `tools/case_model.py` first, since it already implements
+the transfer-year sale ordering, the Prop 19 §63.2(d) cap with the allowance carried forward, the staging path
+with reinvestment risk beside it, and the proceeds distribution block; (3) if a figure in #128 is an
+assessor-, bill- or lease-derived amount, it cannot be published at all — the seeded-record guard in
+`tools/verify.py` will fail the build, and the fix is to move it to `RECORD_FIELDS` and state it in words, not to
+extend the allowlist; (4) bump the page count only if a genuinely new page is added, and do it in the same
+commit as `PAGES`, the manifest and the recheck snapshot. Anything in #128 that is a *better model choice* rather
+than a duplicate should be re-applied as a small follow-up PR against `main`, with tests first — that is how the
+`fmt()` zero/small defect in #129 was caught.
+
 ## Session `arena/b9a46c93` — prose/model consistency pass and the return-hurdle reading
 
 Branch: `arena/b9a46c93-tino4` (platform-fixed). Status: active.
@@ -664,3 +709,22 @@ Branch: `arena/b9a46c93-tino4` (platform-fixed). Status: active.
 - The privacy finding this session confirmed by computation: rounding to $10 is a traceability step, not
   anonymization (county rolls are public and searchable), so the site's rule stays "modelled amounts published,
   case-record amounts withheld". Do not "fix" the privacy page by promising more than that.
+
+### Reconciliation of this session's duplicate model (2026-11-17, second pass)
+
+- This session had written a full rounded/unit-scaled model into `tools/sitebuild.py`. `main` landed
+  `tools/case_model.py` with a `quantified()` addendum on every page while that work was in flight, so the
+  duplicate was **retired** rather than merged: one site, one model, one set of numbers. The unit-dollar
+  scaling was dropped too, because main's boundary (modelled amounts published, case-record amounts and all
+  identifiers withheld) already answers the re-identification finding, without making the tables opaque.
+- What survived from this session: the prose alignment (thirteen framework statements still claimed the site
+  publishes no figures, no ranking and no amounts while the quantified layer published all three), the
+  return-hurdle reading on `pages/break-even.html` (the flat after-tax return the proceeds must beat, per
+  scenario at 10/20/30 years, computed from the same `cm.path_table` terminals as the ranking), and
+  `tools/test_public_claims.py`, which fails the build if the stale claims or an unlabelled figure returns.
+- Gates run before push: `python3 tools/build.py` (26 pages), `python3 tools/verify.py` (clean),
+  `python3 -m unittest discover -s tools -p 'test_*.py'` (68 tests), `python3 tools/recheck.py --update`
+  accepted in the same commit, `node --check` on the four browser modules.
+- Still open for the owner/administrator, unchanged by this session: the Git-history exposure
+  (`tools/privacy_scan.py`, `tools/history_scrub_runbook.md`), the Property B levy-to-roll ratio awaiting the
+  bill lines, insurance quotes, and written rent comparables.

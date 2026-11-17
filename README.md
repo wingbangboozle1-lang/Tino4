@@ -1,10 +1,6 @@
 # Privacy-first inheritance decision guide
 
-This repository builds a public, source-linked guide to inheritance planning, property-tax rules, rental and sale considerations,
-investment-sequence risk, and adviser questions. It deliberately does **not** publish or store case records: property locations,
-addresses, parcel identifiers, unrounded valuations, tax histories, rent rolls, leases, insurance information, identities, or a
-household-specific recommendation. What it does publish is the model's own output - amounts computed at build time from inputs
-rounded to the nearest ten dollars - so the arithmetic can be checked line by line without the records being exposed.
+This repository builds a public, source-linked guide to inheritance planning, property-tax rules, rental and sale considerations, investment-sequence risk, and adviser questions. It deliberately does **not** publish or store household-specific property locations, valuations, tax histories, rents, leases, insurance information, identities, or recommendations.
 
 ## Privacy boundary — highest priority
 
@@ -26,7 +22,7 @@ rounded to the nearest ten dollars - so the arithmetic can be checked line by li
 The 26 generated pages group the work into executive/decision summaries, the full requirements tracker, private inventory and cost checklists, property-tax and estate law, deadlines, black-swan conditions, Treasury staging, a draft investment policy, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items, a dated verified-lookups register, and a break-even question set.
 Every figure the pages print is regenerated at build time by `tools/case_model.py`, which holds only rounded case inputs, so the site is quantified without being identifiable.
 
-Two pages carry most of the analytical weight, and the break-even page adds the mirror-image test: the flat after-tax return the sale proceeds would have to beat, per scenario and horizon, computed from the same model terminals the ranking uses, so a hurdle that no plausible portfolio assumption clears is visible as a contradiction rather than buried:
+Two pages carry most of the analytical weight:
 
 - **Verified lookups** records every headline figure with the date it was read from the issuing authority and the words that establish it, plus what is deliberately left blank.
 - **Treasury staging tool** tests whether 24-36 months of Treasury staging softens a 1929- or 2008-shaped crash, across nine fixed published scenarios evaluated at the same date, with a distribution chart. It states the trade-off rather than a recommendation: staging protects against an early crash and costs the equity-minus-Treasury spread when markets rise.
