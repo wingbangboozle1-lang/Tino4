@@ -1,14 +1,14 @@
 {
   "badge_counts": {
-    "Assumption": 14,
-    "Guidance": 101,
-    "Historical": 9,
+    "Assumption": 15,
+    "Guidance": 102,
+    "Historical": 10,
     "Missing": 37,
     "Not verified": 7,
-    "Official reference": 55,
+    "Official reference": 57,
     "Verified rule": 59
   },
-  "data_rows": 282,
+  "data_rows": 287,
   "official_hosts": [
     "bls.gov",
     "boe.ca.gov",
@@ -33,7 +33,7 @@
     "uscode.house.gov"
   ],
   "page_count": 23,
-  "site_hash": "5b746a361d92cb96",
+  "site_hash": "65ca7d5b9279e032",
   "source_hash": "dd80fe61ae6b5e02",
   "source_keys": [
     "bls_cpi",
