@@ -10,6 +10,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools/site-manifest.json"
+EXPECTED_PAGES = 23
 OFFICIAL_HOSTS = {
     "irs.gov", "ca.gov", "leginfo.legislature.ca.gov", "boe.ca.gov", "sco.ca.gov",
     "congress.gov", "uscode.house.gov", "treasurydirect.gov", "treasury.gov",
@@ -100,8 +101,8 @@ def verify() -> list[str]:
         paths = json.loads(MANIFEST.read_text(encoding="utf-8"))
     except Exception as exc:
         return [f"manifest unavailable or invalid: {exc}"]
-    if not isinstance(paths, list) or len(paths) != 22 or len(set(paths)) != len(paths):
-        return ["manifest must contain exactly 22 unique page paths"]
+    if not isinstance(paths, list) or len(paths) != EXPECTED_PAGES or len(set(paths)) != len(paths):
+        return [f"manifest must contain exactly {EXPECTED_PAGES} unique page paths"]
     for relative in paths:
         target = (ROOT / relative).resolve()
         if not target.is_relative_to(ROOT.resolve()) or not target.is_file():
@@ -157,4 +158,4 @@ if __name__ == "__main__":
     if failures:
         for failure in failures: print(f"FAIL: {failure}")
         raise SystemExit(1)
-    print("OK — 22 pages; every table row has an official source and status; no household model, browser storage, or remote resource.")
+    print(f"OK — {EXPECTED_PAGES} pages; every table row has an official source and status; no household model, browser storage, or remote resource.")
