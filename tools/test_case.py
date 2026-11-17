@@ -166,14 +166,24 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         src = sitebuild.SOURCES
         self.assertIn("great-recession-of-200709", src["fed_2008"][1])
         self.assertIn("great-recession-and-its-aftermath", src["fed_2008_aftermath"][1])
-        self.assertIn("does not state a 57 percent equity decline", src["fed_2008_aftermath"][2])
+        # Merge note: main's wording was kept for fed_2008_aftermath because it
+        # also records the corrected cbo_long URL review. Both wordings make the
+        # same point, so the assertion is on the substance, not on one phrasing.
+        self.assertTrue(
+            "over a fifth" in src["fed_2008_aftermath"][2]
+            or "does not state a 57 percent equity decline" in src["fed_2008_aftermath"][2],
+            src["fed_2008_aftermath"][2],
+        )
         self.assertNotIn("ca_rtc27388", src)
         flagged = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
         self.assertIn("misattributed historical figures", flagged)
         self.assertIn("dead official link", flagged)
         self.assertIn("unsupported statute section", flagged)
-        # the CBO topic URL that returned 404 must not reappear
-        self.assertNotIn("cbo.gov/topics/budget/long-term-budget-outlook", flagged)
+        # The CBO topic URL that returned 404 must not reappear as a LINK.
+        # It may still appear inside prose that *describes* the correction, so
+        # the assertion is on href, not on the bare string.
+        self.assertNotIn('href="https://www.cbo.gov/topics/budget/long-term-budget-outlook"', flagged)
+        self.assertIn("cbo.gov/recurring-publication/55129", str(sitebuild.SOURCES["cbo_long"]))
 
     def test_break_even_page_states_thresholds_not_forecasts(self):
         page = sitebuild.render("pages/break-even.html", "Break-even questions", "Decision")
@@ -320,6 +330,16 @@ for (const bad of [12, 48]) {
         self.assertIn("depthPct: 57", script)
         self.assertIn("federalreservehistory.org/essays/stock-market-crash-of-1929", script)
         self.assertIn("federalreservehistory.org/essays/great-recession-of-200709", script)
+
+
+    def test_staged_chart_renders_one_bar_per_published_scenario(self):
+        """A chart that silently renders nothing looks fine in a screenshot."""
+        output = subprocess.check_output(
+            ["node", str(ROOT / "smoke" / "chart_smoke.js")], cwd=ROOT.parent, text=True
+        )
+        self.assertIn("bars: 9", output)
+        self.assertIn("labels: 18", output)
+        self.assertIn("Staged ahead in 5 of 9", output)
 
 
 if __name__ == "__main__":

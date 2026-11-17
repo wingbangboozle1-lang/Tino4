@@ -233,3 +233,53 @@ footer a { white-space: nowrap; }
 .calculator input, .review-queue select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
 .calculator button { min-height: 40px; border: 0; border-radius: 8px; padding: 8px 14px; background: var(--teal-dark); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
 #phase-result { grid-column: 1 / -1; }
+
+/* ---- Staged-vs-lump distribution chart ------------------------------ */
+.chart-wrap {
+  background: #fff;
+  border: 1px solid var(--line, #d8dde5);
+  border-radius: 10px;
+  padding: 14px 16px 8px;
+  margin: 12px 0;
+  overflow-x: auto;
+}
+.chart-wrap svg { width: 100%; height: auto; min-width: 520px; display: block; }
+.chart-legend {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #4a5568;
+  margin: 6px 0 8px;
+}
+.chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: end;
+  margin: 10px 0 4px;
+  padding: 12px 14px;
+  background: #f5f7fa;
+  border: 1px solid var(--line, #d8dde5);
+  border-radius: 10px;
+}
+.chart-controls label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+.chart-controls input,
+.chart-controls select {
+  font: inherit;
+  font-weight: 400;
+  padding: 6px 8px;
+  border: 1px solid #c3cbd6;
+  border-radius: 6px;
+  background: #fff;
+  min-width: 120px;
+}
+@media print {
+  .chart-controls { display: none; }
+  .chart-wrap { break-inside: avoid; }
+}
