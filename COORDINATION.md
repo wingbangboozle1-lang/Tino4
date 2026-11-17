@@ -160,7 +160,7 @@ Branch: `arena/07cbe6c9-tino4` (platform-fixed; active).
 
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| 07CB-1 | Extend the public-site privacy regression audit to metadata, non-visible attributes, and HTML comments | in progress | `arena/07cbe6c9` | `tools/verify.py`, `tools/test_case.py`, `COORDINATION.md` | 2026-11-17 |
+| 07CB-1 | Extend the public-site privacy regression audit to metadata, non-visible attributes, and HTML comments | done | `arena/07cbe6c9` | `tools/verify.py`, `tools/test_case.py`, `COORDINATION.md` | 2026-11-17 |
 
 ### 07CB-1 result
 
@@ -168,3 +168,11 @@ Branch: `arena/07cbe6c9-tino4` (platform-fixed; active).
 - Added a synthetic regression test proving a location-like five-digit token in metadata and text in an accessibility attribute/comment are included in the audited content. The test uses synthetic strings only and contains no household information.
 - Verification: `python3 tools/build.py`, `python3 tools/verify.py`, all 14 unit tests, `node --check assets/app.js`, `node --check assets/phase-model.js`, and `git diff --check` passed. Build emits 22 pages; verifier passes source/evidence-row, official-host, local-link, CSP/noindex, and no-household-data checks.
 - This code change does not scrub Git history, alter repository visibility, remove prior copies, or add any household inputs. Those historical-remediation tasks remain administrator-only and unresolved as recorded above.
+
+### 07CB-1 release record
+
+- **PR #115:** https://github.com/wingbangboozle1-lang/Tino4/pull/115 — merged 2026-11-17T16:41:28Z.
+- **Merge commit:** `ea1d2d4dcc62cdb170e8f0245967d4fa5b732a06` on `main`.
+- **CI:** PR `build-and-verify` run 44128554687 succeeded; merged-main run 44128632792 succeeded.
+- **Pages:** deployment run 44128631372 completed successfully after the merge. This change is a verifier/test improvement; the generated public content and privacy boundary remain unchanged.
+- **Limits:** history remediation remains unresolved; no assertion that previous Git, PR, fork, cache, download, or clone copies were erased.
