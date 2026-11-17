@@ -199,3 +199,17 @@ Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
 - **Flagged irregularities (do not block merge; listed on the site's Flagged-for-Review page):** prior public Git/PR/fork/cache exposure is unresolved (administrator-level history remediation only); 'Prop H' jurisdiction/terms and any local transfer-tax/vacancy-tax measure are intentionally withheld and unverified on the public site.
 
 
+
+## Session `arena/91395313` — private-data exposure audit, official-source re-verification, decision layer
+
+Branch: `arena/91395313-tino4` (platform-fixed; active). Rebased onto `main` @ `ea1d2d4` (PR #115), 2026-11-17.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 9139-1 | Audit the public remote for retained household data (all branches, PR refs, tag refs) and record the finding without restating any sensitive value | in progress | `arena/91395313` | read-only mirror audit; `COORDINATION.md`, `tools/history_scrub_runbook.md` | 2026-11-17 |
+| 9139-2 | Build a private, git-ignored estate workbench: anonymised inventory placeholders, rounded figures where the owner supplied them, year-by-year property-tax and value projections, path comparison engine, black-swan and phased-investing runs, distribution chart | in progress | `arena/91395313` | `private-work/**` (git-ignored), `tools/private/**` | 2026-11-17 |
+| 9139-3 | Re-read primary sources and mark each one verified/renamed/moved/dead with the date read | in progress | `arena/91395313` | `tools/sitebuild.py` (SOURCES only), `pages/sources.html`, `COORDINATION.md` | 2026-11-17 |
+| 9139-4 | Publish a source-linked decision layer: evidence-gated decision rule, information-gap discovery plan, black-swan regime engine description, and a suggestions page with a review queue | in progress | `arena/91395313` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css`, generated `pages/**`, `index.html`, `tools/test_case.py` | 2026-11-17 |
+| 9139-5 | Rebuild, run all tests, open PR into `main`, merge, confirm Pages deploy, record result here | unclaimed | — | release checks, `COORDINATION.md` | — |
+
+**Scope note for other active sessions:** this session does not touch `tools/verify.py` (owned by `arena/07cbe6c9`, now merged) or anything outside the file list above. No household value, place name, postal code or identifier is written to any tracked file; the private workbench is git-ignored and excluded from the published site.
