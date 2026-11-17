@@ -190,7 +190,84 @@ Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
 
 ### 5F1B release record
 
-<<<<<<< HEAD
+This session edits the canonical site builder (`tools/sitebuild.py`), shared assets (`assets/app.js`, `assets/style.css`, new `assets/regime-model.js`), the verifier, tests, generated pages and `COORDINATION.md`. No other session should edit those files while this claim is open. The privacy boundary stands: no locality, address, parcel, household value, tax history, rent roll or household recommendation is published.
+
+### Results (3242-1 … 3242-5)
+
+**3242-1 — Black-swan regime engine (done).**
+- Added `assets/regime-model.js`, a deterministic local-only engine that walks a sequence of regime blocks (each with its own inflation, equity and cash assumption), applies an optional one-year fall of chosen depth in a chosen year, and compares immediate investment with 24–36-month staging. It reports inflation-adjusted ending value, real annualised change, largest peak-to-trough fall and its year, and a seeded distribution (p10/p50/p90, share of paths below today's purchasing power, ten-bucket histogram). Identical inputs always give identical results; nothing is stored or transmitted.
+- Six presets: constant-rate contrast case, 1970s stagflation then disinflation, 1929-style crash, 2007-09 crash, lost decade first, and stop-start shocks.
+- The black-swan page now publishes a regime table where each block carries its official anchor and read date, plus a "Reinvestment risk sits next to the headline" section explaining that staging only softens crash-entry risk while funds remain in the ladder (verified in tests: an early fall gives staged 20.9% versus immediate 43.7% drawdown, while a year-20 shock gives 55.9% versus 57.0% — nearly identical).
+- Wired the tool into `assets/app.js` with an SVG histogram built through `createElementNS` (CSP-safe, no inline styles) and a text summary.
+
+**3242-2 — Questions page (done).** Split into three tables: open questions only private facts can answer; questions official sources already answer (each with the figure, the read date and the source link); and discovery methods for what is missing, each stating what is *not* acceptable evidence.
+
+**3242-3 — Suggestions page (done).** Twelve-item improvement backlog (S-1 … S-12) with what each change would do and the risk it carries, plus a matching session-only review queue and a "Choose before implementing" rule. Nothing is implemented until the household records a choice.
+
+**3242-4 — Decision completeness (done).** Added ranges-not-points guidance, an inputs-that-must-be-identical table (dates, horizon, inflation basis, imputed rent, debt, liquidity, occupancy, capital, taxes), a mixed-paths table, a Proposition 19 carry-forward table, and a transfer-tax and recording-fee table. The projection worksheet gained an illustrative fan chart and a rebuild-after-every-input-change rule.
+
+**3242-5 — Official-source re-verification (done).** Every figure quoted below was read from the cited official page on 2026-11-17.
+
+### Sources read and verified on 2026-11-17
+
+- IRS, Estate tax (filing-threshold table): 2026 = $15,000,000; 2025 = $13,990,000; portability elected on a timely filed return — https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax
+- IRS, Estate-tax FAQs: Form 706 due nine months after death; automatic six-month extension to file via Form 4768 filed on or before the due date; portability requires a timely return regardless of estate size; Rev. Proc. 2022-32 simplified five-year route where no filing requirement exists — https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes
+- IRS, Instructions for Form 706 (Rev. 7-2026): 40% on taxable amounts over $1,000,000; 2026 credit equivalent $5,945,800; DSUE computed under Reg. §20.2010-2(b) — https://www.irs.gov/instructions/i706
+- IRS, 2027 tax inflation adjustments (IR-2026-133): 2027 basic exclusion $15,480,000; annual gift exclusion $20,000 for 2027 and $19,000 for 2026 — https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts
+- IRS, Gifts and inheritances FAQ: basis is generally date-of-death fair market value, alternate valuation only with a filed Form 706 and election — https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances
+- California State Controller: no California estate tax return required for deaths on or after January 1, 2005; state death tax credit eliminated that date; California GST tax does not apply after December 31, 2004 — https://www.sco.ca.gov/ardtax_estate_tax.html
+- BOE, Letter to Assessors 2025/009: Proposition 19 cap $1,044,586 for transfers February 16, 2025 – February 15, 2027 ($1,000,000 for 2021-2023; $1,022,600 for 2023-2025); adjusted every other February 16 from the FHFA California HPI (2.15% for 2024); next adjustment February 2027 — https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf
+- California Revenue and Taxation Code §63.2: transferor's principal residence must become the transferee's principal residence within one year; exemption filing within one year; re-enrollment of the §51(a)(1)-adjusted change-in-ownership base year value if the exclusion ends; new taxable value formula; claim within three years, before transfer to a third party, or before the transferee stops occupying, whichever is earlier — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC
+- California Revenue and Taxation Code §51: taxable value is the lesser of base year value compounded by an inflation factor not exceeding 2 percent in any year, or full cash value at the lien date after declines — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC
+- California Revenue and Taxation Code §11911: county documentary transfer tax of 55 cents per $500 or fractional part above $100 (the same rate as $110 per $100,000); a city in such a county may impose half that rate with a credit — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11911.&lawCode=RTC
+- Federal Reserve History, The Great Recession (Dec 2007–June 2009): S&P 500 fell 57% from its October 2007 peak to its March 2009 trough; average home prices fell about 30% from mid-2006 to mid-2009; real GDP fell 4.3%; unemployment 5% (Dec 2007) to a 10% peak (Oct 2009) — https://www.federalreservehistory.org/essays/great-recession-of-200709
+- Federal Reserve History, The Great Recession and Its Aftermath: home prices fell by over a fifth on average nationally from Q1 2007 to Q2 2011; recession lasted eighteen months — https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath
+- Federal Reserve History, Stock Market Crash of 1929: Dow closed at 41.22 in July 1932, 89% below its September 1929 peak; prior high regained November 1954 — https://www.federalreservehistory.org/essays/stock-market-crash-of-1929
+- Federal Reserve History, The Great Inflation: 1965–1982; inflation a little over 1% in 1964, above 14% in 1980, peaking in March 1980 at close to 15%, averaging about 3.5% in the latter half of the 1980s — https://www.federalreservehistory.org/essays/great-inflation
+- BLS, CPI news release (October 2026, USDL-26-1685): CPI-U index level 337.511; 12-month percent changes could not be published for most series because October 2025 survey data were not collected during the 2025 appropriations lapse — https://www.bls.gov/news.release/cpi.nr0.htm
+- CBO, The Budget and Economic Outlook: 2026 to 2036 (February 11, 2026): debt held by the public 101% of GDP in 2026 to 120% in 2036; deficit 5.8% to 6.7% of GDP; PCE inflation returns to roughly the Federal Reserve's 2% goal in 2030; unemployment 4.6% in 2026 to 4.2% in 2032 — https://www.cbo.gov/publication/61882
+- California Department of Insurance: residential insurance shopping guidance, premium-comparison tool, FAIR Plan and difference-in-conditions context — https://www.insurance.ca.gov/01-consumers/105-type/5-residential/index.cfm and https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20
+
+### Irregularities found and how they were handled
+
+1. **Mis-attributed historical figures.** The 57% S&P 500 and 30% home-price figures were cited to the "Great Recession and Its Aftermath" essay, which reports home prices falling over a fifth from Q1 2007 to Q2 2011 and does not report an S&P 500 percentage. Both essays are now cited separately with their own wording. (The parallel session `arena/3119787c` found the same defect independently.)
+2. **Dead official link.** The CBO long-term topic URL in the source register returned page-not-found. Replaced with the current CBO topic page and the February 2026 outlook publication; the correction is recorded in the source scope.
+3. **Official inflation data gap.** The October 2026 CPI release cannot publish 12-month changes for most series. No substitute figure was invented; the release is quoted with its limitation.
+4. **Postal-code heuristic false positive.** Five-digit code-section numbers (for example §11911) and a five-digit run inside an SVG colour value tripped the privacy scan. The check now ignores runs directly preceded by a statute or document prefix, while still failing a bare postcode.
+5. **Local measure "Prop H".** Still deliberately unmapped on the public site; the jurisdiction and terms must be confirmed privately with the property's own tax authority.
+
+### Stale-PR triage (integration step)
+
+- **PRs #103, #104, #106, #107** (opened 2026-11-15, no commits for more than 60 minutes) were **closed unmerged**. Their diffs contain household-locality identifiers and household figures (for example a rounded assessed value and rent or value figures) that the public site must not publish. Each was closed with a comment recording why and inviting a re-created, privacy-clean version.
+- **PR #119** (`arena/3119787c`, opened 2026-11-17, updated 16:55 UTC) overlapped this session's Fed-citation correction and added a payout-order schematic. Its citation correction matches the finding above; its schematic, its "How to use this guide" callout and its two regression tests were **folded into this branch by hand** (the schematic is complementary to this session's fan chart). PR #119 will be closed with a handoff note after this branch merges.
+
+### Verification performed
+
+- `python3 tools/build.py`: pass (22 pages).
+- `python3 tools/verify.py`: pass — every table row has an official source link and evidence badge, approved hosts only, local links resolve, no household markers, no browser storage, no remote resources, restrictive CSP and noindex present, currency values rounded.
+- `python3 -m unittest discover -s tools -p 'test_*.py'`: pass (25 tests), including regime-model determinism and staging timing, the citation-attribution fix, the distribution schematic, the questions/suggestions/projections/flagged/executive-summary structures, and the postal heuristic.
+- `node --check` on `assets/app.js`, `assets/regime-model.js`, `assets/phase-model.js`: pass.
+- Node DOM smoke tests for the sale overlay and the new regime tool: pass (the regime tool produced a summary and appended one SVG node).
+- `git diff --check`: pass.
+
+### Limitations
+
+- No household figure, locality, parcel, rent roll, tax history or household recommendation is published; the site remains a framework with official rules and evidence gates.
+- The regime engine is a deterministic sensitivity, not a backtest, forecast or probability. The 57% and 89% anchors come from different indexes measured over different periods.
+- Historical Git exposure is unchanged: this work does not rewrite history or remove prior clones, forks, caches or PR diffs.
+
+### Rebase note (2026-11-17)
+
+The branch was rebased onto `main` (`fe7aa13`) after sessions `arena/80e9d3b3` and `arena/3119787c` landed. Six conflicts appeared in `tools/sitebuild.py` and one each in `tools/test_case.py` and `assets/style.css`. Every conflict was resolved **in favour of keeping both sessions' work**:
+
+- Source register: merged the verified read-date scopes from both sessions; the Great Recession essays keep separate keys (`fed_2008` for the 2007-09 essay, `fed_2008_aftermath` for the companion essay), and the BOE Proposition 19 overview key was retained.
+- Black-swan page: kept the other session's regime framing and appended this session's "current official readings and their limits" table, the multi-regime simulator, its limits, and the reinvestment-risk note.
+- Suggestions page: kept the ten-item review board and appended this session's five items as S11–S15, renumbered from their original S-1/S-3/S-4/S-7/S-9 to fit the board's scheme; the board's ID attributes and the numbering prose were updated to match, and the two review-choice count assertions were updated from 10 to 15.
+- Property-tax page: kept the more specific §63.2 claim-timing row from the other session and added this session's carry-forward, re-enrollment and value-limit-formula rows.
+- `assets/style.css`: both chart blocks retained (`.chart-frame` for the regime histogram and fan chart, `.dist-chart` for the payout schematic).
+
+A new regression test (`test_every_referenced_local_asset_exists`) now fails if a page references a script that is not on disk; it caught the missing `regime-model.js` script tag, which was then added to the page template.
+
 - **PR:** https://github.com/wingbangboozle1-lang/Tino4/pull/117 — merged with `gh pr merge 117 --merge` at 2026-11-17.
 - **Merge commit:** `6c78e7fb708ceee549828bdd3dc74e0e50c31a0b` on `main`.
 - **CI:** `build-and-verify` completed successfully (tests + build + verify + reproducibility check) on the push to main.
@@ -198,7 +275,6 @@ Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
 - **Scope of this session:** verified official sources (2026 federal estate exclusion $15,000,000; 2027 $15,480,000 per IRS IR-2026-133 / Rev. Proc. 2026-35; CA 1% surcharge above $1,000,000 per FTB Form 540 line 62 and RTC §17043; Prop 19 primary-residence-only rule); confirmed the 22-page privacy-first site builds, verifies, and passes 13 unit tests with no household inputs, identifiers, zip codes, emails, phones, street addresses, inline scripts, or remote resources.
 - **Privacy boundary maintained:** no household location, parcel identifier, property value, tax history, rent, lease, insurance figure, or personal identifier is published; placeholders are used and private figures belong in an offline workpaper.
 - **Flagged irregularities (do not block merge; listed on the site's Flagged-for-Review page):** prior public Git/PR/fork/cache exposure is unresolved (administrator-level history remediation only); 'Prop H' jurisdiction/terms and any local transfer-tax/vacancy-tax measure are intentionally withheld and unverified on the public site.
-
 
 
 ## Session `arena/91395313` — private-data exposure audit, official-source re-verification, decision layer
@@ -450,82 +526,99 @@ Final state of the exposure counterexample, recorded so it is not repeated: **tw
 1. **Repository visibility and history remediation.** Highest urgency. 81–82 of 87 refs still contain identifying material; the repository is public. Closing five pull requests narrowed what is newly published but removed no commits.
 2. **Repository access review.** 82 branches remain, most from earlier sessions. Branch deletion alone does not remove commits referenced by pull requests or forks.
 3. **Whether the public site should exist at all** in its current relation to the private case. The site is clean; the repository's history is not. Separating them entirely is the only arrangement that does not depend on the current tree staying clean forever.
-=======
-This session edits the canonical site builder (`tools/sitebuild.py`), shared assets (`assets/app.js`, `assets/style.css`, new `assets/regime-model.js`), the verifier, tests, generated pages and `COORDINATION.md`. No other session should edit those files while this claim is open. The privacy boundary stands: no locality, address, parcel, household value, tax history, rent roll or household recommendation is published.
 
-### Results (3242-1 … 3242-5)
+## Session `arena/020b35d4` — quantified decision model on a rounded, de-identified basis
 
-**3242-1 — Black-swan regime engine (done).**
-- Added `assets/regime-model.js`, a deterministic local-only engine that walks a sequence of regime blocks (each with its own inflation, equity and cash assumption), applies an optional one-year fall of chosen depth in a chosen year, and compares immediate investment with 24–36-month staging. It reports inflation-adjusted ending value, real annualised change, largest peak-to-trough fall and its year, and a seeded distribution (p10/p50/p90, share of paths below today's purchasing power, ten-bucket histogram). Identical inputs always give identical results; nothing is stored or transmitted.
-- Six presets: constant-rate contrast case, 1970s stagflation then disinflation, 1929-style crash, 2007-09 crash, lost decade first, and stop-start shocks.
-- The black-swan page now publishes a regime table where each block carries its official anchor and read date, plus a "Reinvestment risk sits next to the headline" section explaining that staging only softens crash-entry risk while funds remain in the ladder (verified in tests: an early fall gives staged 20.9% versus immediate 43.7% drawdown, while a year-20 shock gives 55.9% versus 57.0% — nearly identical).
-- Wired the tool into `assets/app.js` with an SVG histogram built through `createElementNS` (CSP-safe, no inline styles) and a text summary.
+Branch: `arena/020b35d4-tino4` (platform-fixed; active). Base: `4c1aa933f1203827368eba14359eee6de9cc6a3a`.
 
-**3242-2 — Questions page (done).** Split into three tables: open questions only private facts can answer; questions official sources already answer (each with the figure, the read date and the source link); and discovery methods for what is missing, each stating what is *not* acceptable evidence.
+Session ID: `arena/020b35d4`. Claim pushed before work began.
 
-**3242-3 — Suggestions page (done).** Twelve-item improvement backlog (S-1 … S-12) with what each change would do and the risk it carries, plus a matching session-only review queue and a "Choose before implementing" rule. Nothing is implemented until the household records a choice.
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 020B-1 | Add a build-time quantified model (`tools/case_model.py`) that turns the rounded case inputs into year-by-year projections, path comparisons, Prop 19 tax math, operating-cost projections, estate-threshold math and the Treasury-staging crash test — all emitted rounded to the nearest $10 with no locality identifiers; publish the numbers on existing pages plus two new pages | in progress | `arena/020b35d4` | `tools/case_model.py`, `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `tools/site-manifest.json`, `assets/style.css`, generated `index.html`, `pages/projections.html`, `pages/decision-analysis.html`, `pages/property-tax.html`, `pages/estate-thresholds.html`, `pages/operating-costs.html`, `pages/black-swan.html`, `pages/phased-investing.html`, `pages/attorney-cpa-brief.html`, `pages/questions.html`, `pages/suggestions.html`, `pages/requirements-tracker.html`, `pages/flagged-for-review.html`, `pages/glossary.html`, `pages/sources.html`, `pages/privacy.html`, `pages/property-profiles.html`, `pages/economic-baselines.html` (new), `pages/model-figures.html` (new), `README.md`, `COORDINATION.md` | 2026-11-17 |
 
-**3242-4 — Decision completeness (done).** Added ranges-not-points guidance, an inputs-that-must-be-identical table (dates, horizon, inflation basis, imputed rent, debt, liquidity, occupancy, capital, taxes), a mixed-paths table, a Proposition 19 carry-forward table, and a transfer-tax and recording-fee table. The projection worksheet gained an illustrative fan chart and a rebuild-after-every-input-change rule.
+### Coordination notes for other sessions
 
-**3242-5 — Official-source re-verification (done).** Every figure quoted below was read from the cited official page on 2026-11-17.
+- Open PRs from earlier sessions are still listed as OPEN but their branches predate `main` at `4c1aa93` (PR #103, #104, #106, #107, #19). This session does not edit or merge those branches. Anything in them that is still wanted should be re-applied on top of current `main` by their owners; this session's work is additive to `main` only.
+- Privacy boundary chosen by the owner in the current request: figures are published **rounded to the nearest $10**, and the phrase naming the source of an input is itself avoided on public pages with no names, addresses, postal codes, parcel identifiers or locality names. `tools/verify.py` enforces the rounding and the identifier patterns (fail-closed). Rounding reduces but does not eliminate traceability; that residual risk is stated on the privacy page and flagged for owner review.
 
-### Sources read and verified on 2026-11-17
+### Result — 020B-1 (2026-11-17)
 
-- IRS, Estate tax (filing-threshold table): 2026 = $15,000,000; 2025 = $13,990,000; portability elected on a timely filed return — https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax
-- IRS, Estate-tax FAQs: Form 706 due nine months after death; automatic six-month extension to file via Form 4768 filed on or before the due date; portability requires a timely return regardless of estate size; Rev. Proc. 2022-32 simplified five-year route where no filing requirement exists — https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes
-- IRS, Instructions for Form 706 (Rev. 7-2026): 40% on taxable amounts over $1,000,000; 2026 credit equivalent $5,945,800; DSUE computed under Reg. §20.2010-2(b) — https://www.irs.gov/instructions/i706
-- IRS, 2027 tax inflation adjustments (IR-2026-133): 2027 basic exclusion $15,480,000; annual gift exclusion $20,000 for 2027 and $19,000 for 2026 — https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts
-- IRS, Gifts and inheritances FAQ: basis is generally date-of-death fair market value, alternate valuation only with a filed Form 706 and election — https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances
-- California State Controller: no California estate tax return required for deaths on or after January 1, 2005; state death tax credit eliminated that date; California GST tax does not apply after December 31, 2004 — https://www.sco.ca.gov/ardtax_estate_tax.html
-- BOE, Letter to Assessors 2025/009: Proposition 19 cap $1,044,586 for transfers February 16, 2025 – February 15, 2027 ($1,000,000 for 2021-2023; $1,022,600 for 2023-2025); adjusted every other February 16 from the FHFA California HPI (2.15% for 2024); next adjustment February 2027 — https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf
-- California Revenue and Taxation Code §63.2: transferor's principal residence must become the transferee's principal residence within one year; exemption filing within one year; re-enrollment of the §51(a)(1)-adjusted change-in-ownership base year value if the exclusion ends; new taxable value formula; claim within three years, before transfer to a third party, or before the transferee stops occupying, whichever is earlier — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC
-- California Revenue and Taxation Code §51: taxable value is the lesser of base year value compounded by an inflation factor not exceeding 2 percent in any year, or full cash value at the lien date after declines — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC
-- California Revenue and Taxation Code §11911: county documentary transfer tax of 55 cents per $500 or fractional part above $100 (the same rate as $110 per $100,000); a city in such a county may impose half that rate with a credit — https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=11911.&lawCode=RTC
-- Federal Reserve History, The Great Recession (Dec 2007–June 2009): S&P 500 fell 57% from its October 2007 peak to its March 2009 trough; average home prices fell about 30% from mid-2006 to mid-2009; real GDP fell 4.3%; unemployment 5% (Dec 2007) to a 10% peak (Oct 2009) — https://www.federalreservehistory.org/essays/great-recession-of-200709
-- Federal Reserve History, The Great Recession and Its Aftermath: home prices fell by over a fifth on average nationally from Q1 2007 to Q2 2011; recession lasted eighteen months — https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath
-- Federal Reserve History, Stock Market Crash of 1929: Dow closed at 41.22 in July 1932, 89% below its September 1929 peak; prior high regained November 1954 — https://www.federalreservehistory.org/essays/stock-market-crash-of-1929
-- Federal Reserve History, The Great Inflation: 1965–1982; inflation a little over 1% in 1964, above 14% in 1980, peaking in March 1980 at close to 15%, averaging about 3.5% in the latter half of the 1980s — https://www.federalreservehistory.org/essays/great-inflation
-- BLS, CPI news release (October 2026, USDL-26-1685): CPI-U index level 337.511; 12-month percent changes could not be published for most series because October 2025 survey data were not collected during the 2025 appropriations lapse — https://www.bls.gov/news.release/cpi.nr0.htm
-- CBO, The Budget and Economic Outlook: 2026 to 2036 (February 11, 2026): debt held by the public 101% of GDP in 2026 to 120% in 2036; deficit 5.8% to 6.7% of GDP; PCE inflation returns to roughly the Federal Reserve's 2% goal in 2030; unemployment 4.6% in 2026 to 4.2% in 2032 — https://www.cbo.gov/publication/61882
-- California Department of Insurance: residential insurance shopping guidance, premium-comparison tool, FAIR Plan and difference-in-conditions context — https://www.insurance.ca.gov/01-consumers/105-type/5-residential/index.cfm and https://interactive.web.insurance.ca.gov/apex_extprd/f?p=111:20
+**What was built.** `tools/case_model.py` is a self-contained, deterministic build-time model. It reads no file
+(`verify.py` rejects `open(`/`.read_text(` in both generator and model code), holds only rounded case inputs as
+literals, and regenerates every figure printed on the site, so a page and its arithmetic cannot drift apart.
+Committed output is byte-identical to a fresh `python3 tools/build.py`, which the CI reproducibility step checks.
 
-### Irregularities found and how they were handled
+- **Paths:** seven live/let/sell/mixed paths priced at one transfer date and one horizon under five economic
+  scenarios (flat, block sequence, block sequence with the bust rotated to the transfer year, stagflation,
+  deflation), in cash, in economic terms, and in constant 2026 dollars. Self-used ownership is credited with
+  net market rent (imputed rent); portfolio return compounds and is never also counted as a flow. The already-owned
+  three-unit building is reported once, separately, because it is invariant across paths.
+- **Property tax:** RTC §63.2(d) cap arithmetic (prior taxable value + max(0, value − (taxable + allowance))),
+  the Prop 19 allowance carried forward by an explicit, labelled escalation assumption rather than frozen at the
+  published figure, the three bill outcomes (no transfer event / qualifying claim / reassessed), and the enacted
+  claim windows, 45- then 60-day notice sequence, ≤$175 processing fee and late-claim factoring penalty as
+  amended by SB 293 (effective 2026-01-01).
+- **Sale:** gross-to-net waterfall with statutory documentary transfer tax ceilings (RTC §11911), recording and
+  report items, basis at the date-of-death value, §121 exclusion switch for the live-then-sell row and
+  §1250-style recapture on the letting rows; a sale inside the transfer year is shown as neither taxed nor
+  deductible rather than as an exemption.
+- **Staging:** the 1929 (−89 %, 25-year recovery) and 2007-09 (−57 %) shapes tested at five shock timings, staging
+  costed inside the path table as a blended bills/equity wait, and reinvestment risk published beside it.
+- **Volatility:** the geometric-versus-arithmetic gap of the block path is disclosed wherever the sequence is used,
+  and the ranking flip under a bust at the transfer date is published as the answer, not hidden.
+- **Estate:** exclusion indexation (2025/2026/2027 published figures), prior-gift and portability questions,
+  sensitivity rows only — the estate's financial assets are absent by design and flagged.
 
-1. **Mis-attributed historical figures.** The 57% S&P 500 and 30% home-price figures were cited to the "Great Recession and Its Aftermath" essay, which reports home prices falling over a fifth from Q1 2007 to Q2 2011 and does not report an S&P 500 percentage. Both essays are now cited separately with their own wording. (The parallel session `arena/3119787c` found the same defect independently.)
-2. **Dead official link.** The CBO long-term topic URL in the source register returned page-not-found. Replaced with the current CBO topic page and the February 2026 outlook publication; the correction is recorded in the source scope.
-3. **Official inflation data gap.** The October 2026 CPI release cannot publish 12-month changes for most series. No substitute figure was invented; the release is quoted with its limitation.
-4. **Postal-code heuristic false positive.** Five-digit code-section numbers (for example §11911) and a five-digit run inside an SVG colour value tripped the privacy scan. The check now ignores runs directly preceded by a statute or document prefix, while still failing a bare postcode.
-5. **Local measure "Prop H".** Still deliberately unmapped on the public site; the jurisdiction and terms must be confirmed privately with the property's own tax authority.
+**Site.** 22 → 24 pages: `pages/economic-baselines.html` and `pages/model-figures.html` added, quantified addenda
+on thirteen existing pages, priced pre-agreed decision rules in the log. `PAGES`, the manifest and `verify.py`'s
+page count were bumped in the same commit.
 
-### Stale-PR triage (integration step)
+**Verification.** `python3 tools/build.py`, `python3 tools/verify.py`, 27 unit tests, `node --check` on both
+scripts and `git diff --check` all pass. The verifier now also rejects a household-input marker in generated pages
+and model code, in addition to the ten-dollar rule, cent precision, digit runs without separators, locality and
+address patterns, storage, network calls and unsourced table rows.
 
-- **PRs #103, #104, #106, #107** (opened 2026-11-15, no commits for more than 60 minutes) were **closed unmerged**. Their diffs contain household-locality identifiers and household figures (for example a rounded assessed value and rent or value figures) that the public site must not publish. Each was closed with a comment recording why and inviting a re-created, privacy-clean version.
-- **PR #119** (`arena/3119787c`, opened 2026-11-17, updated 16:55 UTC) overlapped this session's Fed-citation correction and added a payout-order schematic. Its citation correction matches the finding above; its schematic, its "How to use this guide" callout and its two regression tests were **folded into this branch by hand** (the schematic is complementary to this session's fan chart). PR #119 will be closed with a handoff note after this branch merges.
+### Flagged for review from this session (does not block merge)
 
-### Verification performed
+- Rent, insurance, the effective levy per parcel, the appraisal, the leases and the estate's financial assets are
+  **not** official-source figures; the pages carry them as assumptions or as flagged inputs, never as evidence.
+- The next Prop 19 allowance revision (February 2027, from the 2026 California FHFA figure) does not exist yet;
+  the 2026Q4 release is scheduled for 2027-02-23.
+- Short-rate levels for the staging window could not be retrieved from the Treasury feed in this environment; the
+  staging yield is an input and a sensitivity, with the current level left blank on the page.
+- The BLS October 2026 release publishes no 12-month change for most series because October 2025 was not collected
+  during the appropriations lapse; the inflation anchors therefore come from the annual historical table.
+- Historical public exposure (earlier commits, PR views, forks, caches) is not remediated by this branch; the
+  repository is shallow here, so a rewrite cannot be executed or verified from this sandbox. See
+  `tools/history_scrub_runbook.md`.
 
-- `python3 tools/build.py`: pass (22 pages).
-- `python3 tools/verify.py`: pass — every table row has an official source link and evidence badge, approved hosts only, local links resolve, no household markers, no browser storage, no remote resources, restrictive CSP and noindex present, currency values rounded.
-- `python3 -m unittest discover -s tools -p 'test_*.py'`: pass (25 tests), including regime-model determinism and staging timing, the citation-attribution fix, the distribution schematic, the questions/suggestions/projections/flagged/executive-summary structures, and the postal heuristic.
-- `node --check` on `assets/app.js`, `assets/regime-model.js`, `assets/phase-model.js`: pass.
-- Node DOM smoke tests for the sale overlay and the new regime tool: pass (the regime tool produced a summary and appended one SVG node).
-- `git diff --check`: pass.
+### Reconciliation with the boundary recorded by `arena/80e9d3b3` (this session)
 
-### Limitations
+That session's finding — that rounding to $10 is not anonymization, and that no assessor-derived amount should
+be published at all — is adopted here rather than argued with. The quantified model therefore publishes **no**
+roll figure: the assessed values and bill amounts of both buildings stay in the private workpaper, and the pages
+print only (a) values the model derives under a stated rule, and (b) computed results. Where a table needs an
+assessed-value line it is labelled as a modelled, escalated base rather than a record. The model-figures page now
+states "not published" for every assessor-derived input and names where it lives.
 
-- No household figure, locality, parcel, rent roll, tax history or household recommendation is published; the site remains a framework with official rules and evidence gates.
-- The regime engine is a deterministic sensitivity, not a backtest, forecast or probability. The 57% and 89% anchors come from different indexes measured over different periods.
-- Historical Git exposure is unchanged: this work does not rewrite history or remove prior clones, forks, caches or PR diffs.
->>>>>>> ecba005 (Black-swan regime engine, decision Q&A, review backlog, source re-verification)
+This session also merges over `pages/verified-lookups.html`, `pages/break-even.html`, `assets/staged-vs-lump.js`,
+`tools/privacy_scan.py` and `tools/recheck.py`; the two new pages added here (`economic-baselines`, `model-figures`)
+bring the count from 24 to 26, and `PAGES`, the manifest and `verify.py` move together. The framework snapshot for
+`tools/recheck.py` is regenerated in the same commit so the CI recheck step passes.
 
-### Rebase note (2026-11-17)
+### Second reconciliation (this session) — merged over `arena/32426e4a` (PR #124)
 
-The branch was rebased onto `main` (`fe7aa13`) after sessions `arena/80e9d3b3` and `arena/3119787c` landed. Six conflicts appeared in `tools/sitebuild.py` and one each in `tools/test_case.py` and `assets/style.css`. Every conflict was resolved **in favour of keeping both sessions' work**:
+The regime-engine, fan-chart and review-backlog work landed on `main` while this branch was open, and its
+`verify.py` added a statute-context exemption to the five-digit postal scan plus a per-amount source allowlist.
+Both are adopted: the postal exemption is a genuine false-positive fix, and this session's verifier now runs on
+top of main's file rather than replacing it. Two of this session's own controls were tightened in response to
+that merge rather than argued with:
 
-- Source register: merged the verified read-date scopes from both sessions; the Great Recession essays keep separate keys (`fed_2008` for the 2007-09 essay, `fed_2008_aftermath` for the companion essay), and the BOE Proposition 19 overview key was retained.
-- Black-swan page: kept the other session's regime framing and appended this session's "current official readings and their limits" table, the multi-regime simulator, its limits, and the reinvestment-risk note.
-- Suggestions page: kept the ten-item review board and appended this session's five items as S11–S15, renumbered from their original S-1/S-3/S-4/S-7/S-9 to fit the board's scheme; the board's ID attributes and the numbering prose were updated to match, and the two review-choice count assertions were updated from 10 to 15.
-- Property-tax page: kept the more specific §63.2 claim-timing row from the other session and added this session's carry-forward, re-enrollment and value-limit-formula rows.
-- `assets/style.css`: both chart blocks retained (`.chart-frame` for the regime histogram and fan chart, `.dist-chart` for the payout schematic).
+- the seeded-record guard (amounts that are copies of a bill, roll entry or rent roll) is computed from the
+  model's own `RECORD_FIELDS` and rejects them without printing the value, so the CI log cannot become the leak
+  that the postal-message style would have created;
+- the model's own locality patterns moved into the same encoded form, because the guard file itself had begun
+  carrying them in plaintext.
 
-A new regression test (`test_every_referenced_local_asset_exists`) now fails if a page references a script that is not on disk; it caught the missing `regime-model.js` script tag, which was then added to the page template.
+Page count moved 24 → 26 in the same commit as `PAGES`, the manifest and the recheck snapshot.

@@ -5,7 +5,12 @@ This repository builds a public, source-linked guide to inheritance planning, pr
 ## Privacy boundary — highest priority
 
 - Keep deeds, trusts, tax returns, parcel identifiers, account numbers, leases, insurance declarations, utility bills, appraisals, quotes and adviser correspondence outside this repository.
-- Public pages use generic roles and official rules only. There is no private input file or household-specific projection in the active build.
+- Public pages use generic roles and official rules, and every table row links an official source.
+- A quantified model (`tools/case_model.py`) sits behind the pages: it is a build-time script holding only
+  rounded case inputs, and it regenerates every figure at build time so no page and its arithmetic can drift
+  apart. There is no private input file, no data fetch, and no unrounded figure in the active build.
+- Published dollar amounts are rounded to the nearest ten dollars by the model itself, and `tools/verify.py`
+  fails the build on any unrounded amount, any locality or address pattern, and any table row without a source.
 - Browser what-if values run in memory only. The site has no remote scripts, forms, analytics, network calls, or browser storage. Refresh the page to clear entered values.
 - A working-tree cleanup cannot erase earlier public commits, pull-request diffs, forks, caches, downloads, or clones. The historical exposure remains unresolved and must be treated as potentially retained. Repository administrators should assess visibility and history remediation; preserve a private encrypted archive before any destructive history action.
 - **Measured on 2026-11-17:** identifying material was reachable in 82 of 87 refs, in up to 94 files on one ref and as deep as 47 commits on another, in a public repository with five open pull requests (four unrelated to `main`, since closed). This is the highest-urgency open item and it is an owner decision, not a code change.
@@ -14,7 +19,8 @@ This repository builds a public, source-linked guide to inheritance planning, pr
 
 ## Site map
 
-The 24 generated pages group the work into executive/decision summaries, the full requirements tracker, private inventory and cost checklists, property-tax and estate law, dated official-figure lookups, deadlines, black-swan conditions, Treasury staging, a draft investment policy, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items.
+The 26 generated pages group the work into executive/decision summaries, the full requirements tracker, private inventory and cost checklists, property-tax and estate law, deadlines, black-swan conditions, Treasury staging, a draft investment policy, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items, a dated verified-lookups register, and a break-even question set.
+Every figure the pages print is regenerated at build time by `tools/case_model.py`, which holds only rounded case inputs, so the site is quantified without being identifiable.
 
 Two pages carry most of the analytical weight:
 
