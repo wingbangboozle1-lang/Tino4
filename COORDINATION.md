@@ -517,3 +517,15 @@ This session edits the canonical site builder (`tools/sitebuild.py`), shared ass
 - The regime engine is a deterministic sensitivity, not a backtest, forecast or probability. The 57% and 89% anchors come from different indexes measured over different periods.
 - Historical Git exposure is unchanged: this work does not rewrite history or remove prior clones, forks, caches or PR diffs.
 >>>>>>> ecba005 (Black-swan regime engine, decision Q&A, review backlog, source re-verification)
+
+### Rebase note (2026-11-17)
+
+The branch was rebased onto `main` (`fe7aa13`) after sessions `arena/80e9d3b3` and `arena/3119787c` landed. Six conflicts appeared in `tools/sitebuild.py` and one each in `tools/test_case.py` and `assets/style.css`. Every conflict was resolved **in favour of keeping both sessions' work**:
+
+- Source register: merged the verified read-date scopes from both sessions; the Great Recession essays keep separate keys (`fed_2008` for the 2007-09 essay, `fed_2008_aftermath` for the companion essay), and the BOE Proposition 19 overview key was retained.
+- Black-swan page: kept the other session's regime framing and appended this session's "current official readings and their limits" table, the multi-regime simulator, its limits, and the reinvestment-risk note.
+- Suggestions page: kept the ten-item review board and appended this session's five items as S11–S15, renumbered from their original S-1/S-3/S-4/S-7/S-9 to fit the board's scheme; the board's ID attributes and the numbering prose were updated to match, and the two review-choice count assertions were updated from 10 to 15.
+- Property-tax page: kept the more specific §63.2 claim-timing row from the other session and added this session's carry-forward, re-enrollment and value-limit-formula rows.
+- `assets/style.css`: both chart blocks retained (`.chart-frame` for the regime histogram and fan chart, `.dist-chart` for the payout schematic).
+
+A new regression test (`test_every_referenced_local_asset_exists`) now fails if a page references a script that is not on disk; it caught the missing `regime-model.js` script tag, which was then added to the page template.
