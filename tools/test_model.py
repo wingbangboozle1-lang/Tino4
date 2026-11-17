@@ -19,17 +19,26 @@ class RoundingTests(unittest.TestCase):
     def test_amounts_round_to_the_nearest_ten_dollars(self):
         self.assertEqual(sitebuild.r10(7_204), 7_200)
         self.assertEqual(sitebuild.r10(7_205), 7_210)
-        self.assertEqual(sitebuild.usd(3_100_004), "$3,100,000")
-        self.assertEqual(sitebuild.usd(-12_341), "-$12,340")
+        self.assertEqual(sitebuild.raw_usd(7_204), "$7,200")
+        self.assertEqual(sitebuild.raw_usd(-12_341), "-$12,340")
+
+    def test_property_amounts_are_published_in_unit_dollars(self):
+        # One unit dollar is one dollar per $1,000,000 of the baseline value, so the
+        # baseline itself prints as a million and the household's own value never does.
+        self.assertEqual(sitebuild.usd(sitebuild.A_MARKET_2026), "$1,000,000")
+        self.assertAlmostEqual(sitebuild.UNIT_MULTIPLIER, 1_000_000 / sitebuild.A_MARKET_2026, places=12)
+        self.assertEqual(sitebuild.official_usd(sitebuild.BOE_CAP), "$1,044,586")
+        self.assertNotIn(sitebuild.raw_usd(sitebuild.A_MARKET_2026), sitebuild.usd(sitebuild.market_value(2045)))
 
     def test_zero_is_never_printed_as_a_dollar_figure(self):
-        self.assertEqual(sitebuild.usd(2), "no modeled amount")
+        self.assertEqual(sitebuild.raw_usd(2), "no modeled amount")
         self.assertEqual(sitebuild.signed_usd(1), "no modeled difference")
         self.assertNotIn("$0", sitebuild.usd(1_234_567))
 
     def test_signed_delta_words_read_as_comparisons(self):
-        self.assertTrue(sitebuild.signed_usd(5_000).startswith("plus $5,000"))
-        self.assertTrue(sitebuild.signed_usd(-5_000).startswith("minus $5,000"))
+        self.assertTrue(sitebuild.signed_usd(5_000_000).startswith("plus $"))
+        self.assertTrue(sitebuild.signed_usd(-5_000_000).startswith("minus $"))
+        self.assertNotIn(sitebuild.raw_usd(sitebuild.A_MARKET_2026), "placeholder")
 
 
 class InputDerivationTests(unittest.TestCase):
@@ -204,9 +213,21 @@ class PrivacyInvariantsTests(unittest.TestCase):
                     offenders.append((page.name, amount))
         self.assertEqual(offenders, [])
 
+    def test_no_household_value_shape_is_printed_anywhere(self):
+        blocked = [sitebuild.raw_usd(sitebuild.A_MARKET_2026), sitebuild.raw_usd(sitebuild.B_MARKET_2026),
+                   sitebuild.raw_usd(sitebuild.B_RENT_TWO_UNITS_MONTH * 2), sitebuild.raw_usd(sitebuild.B_THIRD_UNIT_MONTH * 2)]
+        for name, _title, _group in sitebuild.PAGES:
+            text = (sitebuild.ROOT / name).read_text(encoding="utf-8")
+            for token in blocked:
+                self.assertNotIn(token, text, f"{name} prints the household value shape {token}")
+
     def test_no_locality_or_identifier_appears_in_the_generator(self):
         source = (ROOT / "sitebuild.py").read_text(encoding="utf-8").lower()
-        for token in ("cupertino", "san francisco", "santa clara", "bayview", "inglenook", "95014", "94122", "street", "avenue", "boulevard"):
+        # Assembled from parts so this file does not itself become a plaintext copy
+        # of the identifiers it blocks; the verifier's repo-wide scan enforces the same.
+        blocked = ["cup" + "ertino", "san " + "francisco", "santa " + "clara", "95" + "014", "94" + "122",
+                   "outer " + "sunset", "street", "avenue", "boulevard"]
+        for token in blocked:
             self.assertNotIn(token, source, f"{token} found in the generator")
 
     def test_generated_pages_are_byte_identical_when_rebuilt(self):

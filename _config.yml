@@ -6,3 +6,4 @@ exclude:
   - COORDINATION.md
   - README.md
   - .gitignore
+  - private-work
