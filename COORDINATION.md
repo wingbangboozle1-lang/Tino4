@@ -680,3 +680,51 @@ extend the allowlist; (4) bump the page count only if a genuinely new page is ad
 commit as `PAGES`, the manifest and the recheck snapshot. Anything in #128 that is a *better model choice* rather
 than a duplicate should be re-applied as a small follow-up PR against `main`, with tests first — that is how the
 `fmt()` zero/small defect in #129 was caught.
+
+## Session `arena/b9a46c93` — prose/model consistency pass and the return-hurdle reading
+
+Branch: `arena/b9a46c93-tino4` (platform-fixed). Status: active.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| B9A4-1 | Reconcile this session's rounded-figure model with `main` landing `tools/case_model.py`: retire the duplicate so the site publishes one model, not two | done | `arena/b9a46c93` | `tools/sitebuild.py`, `README.md`, ignored `private-work/**` | 2026-11-17 |
+| B9A4-2 | Fix the framework prose that still said no figures are published, on every page where the quantified layer now publishes them | done | `arena/b9a46c93` | `tools/sitebuild.py`, generated `index.html`, `pages/**` | 2026-11-17 |
+| B9A4-3 | Guard test so the prose cannot drift from the model again | done | `arena/b9a46c93` | `tools/test_public_claims.py` | 2026-11-17 |
+| B9A4-4 | Return-hurdle reading on the break-even page: the flat after-tax return the proceeds must beat, per scenario and horizon, computed from the model's own terminals | done | `arena/b9a46c93` | `tools/sitebuild.py` (`_q_return_hurdle`), generated `pages/break-even.html` | 2026-11-17 |
+| B9A4-5 | Re-accept the recheck baseline for the changed layer | done | `arena/b9a46c93` | `tools/framework-snapshot.json` | 2026-11-17 |
+
+### Scope notes for other sessions
+
+- **`tools/sitebuild.py` line 1800 region (`_q_*` break-even section) is the only place this session touched in
+  the model-facing code.** `tools/case_model.py` was deliberately **not** modified: the published model stays
+  single-sourced. Anyone adding a second model or a second set of figures should extend `case_model.py` instead
+  of writing figures into a page.
+- This session's private workpaper (`private-work/model-workpaper.md`, git-ignored) records the owner's exact
+  figures, the derived levy ratios, and the evidence queue. Nothing personal is in the repository, and this
+  session did not rewrite Git history.
+- The earlier claim on this board that PR #115 "currently claims" `tools/verify.py` and `tools/test_case.py` is
+  obsolete: #115 merged into `main` at 2026-11-17T16:41:28Z, so those files are free for whoever needs them.
+- `python3 tools/recheck.py` reports whether the published evidence layer moved; accept a new baseline only in
+  the same commit as the change that caused it. `python3 tools/privacy_scan.py` is read-only and reports counts.
+- The privacy finding this session confirmed by computation: rounding to $10 is a traceability step, not
+  anonymization (county rolls are public and searchable), so the site's rule stays "modelled amounts published,
+  case-record amounts withheld". Do not "fix" the privacy page by promising more than that.
+
+### Reconciliation of this session's duplicate model (2026-11-17, second pass)
+
+- This session had written a full rounded/unit-scaled model into `tools/sitebuild.py`. `main` landed
+  `tools/case_model.py` with a `quantified()` addendum on every page while that work was in flight, so the
+  duplicate was **retired** rather than merged: one site, one model, one set of numbers. The unit-dollar
+  scaling was dropped too, because main's boundary (modelled amounts published, case-record amounts and all
+  identifiers withheld) already answers the re-identification finding, without making the tables opaque.
+- What survived from this session: the prose alignment (thirteen framework statements still claimed the site
+  publishes no figures, no ranking and no amounts while the quantified layer published all three), the
+  return-hurdle reading on `pages/break-even.html` (the flat after-tax return the proceeds must beat, per
+  scenario at 10/20/30 years, computed from the same `cm.path_table` terminals as the ranking), and
+  `tools/test_public_claims.py`, which fails the build if the stale claims or an unlabelled figure returns.
+- Gates run before push: `python3 tools/build.py` (26 pages), `python3 tools/verify.py` (clean),
+  `python3 -m unittest discover -s tools -p 'test_*.py'` (68 tests), `python3 tools/recheck.py --update`
+  accepted in the same commit, `node --check` on the four browser modules.
+- Still open for the owner/administrator, unchanged by this session: the Git-history exposure
+  (`tools/privacy_scan.py`, `tools/history_scrub_runbook.md`), the Property B levy-to-roll ratio awaiting the
+  bill lines, insurance quotes, and written rent comparables.

@@ -1,6 +1,6 @@
 {
   "badge_counts": {
-    "Assumption": 160,
+    "Assumption": 175,
     "Derived in-model": 4,
     "Guidance": 167,
     "Historical": 27,
@@ -11,7 +11,7 @@
     "Official reference": 90,
     "Verified rule": 185
   },
-  "data_rows": 764,
+  "data_rows": 779,
   "official_hosts": [
     "bls.gov",
     "boe.ca.gov",
@@ -48,7 +48,7 @@
     "uscode.house.gov"
   ],
   "page_count": 26,
-  "site_hash": "2bce56e57da54df1",
+  "site_hash": "85ecd53bb9e5b54e",
   "source_hash": "44a2f3cb775fa4c9",
   "source_keys": [
     "bls_cpi",

@@ -236,9 +236,9 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         body += prose("Safe decision order", "Set the family's written decision rules before seeing a forecast. Confirm trust and title, get independent values, establish tax basis and assessed-value treatment, validate use and leases, price recurring costs, then compare every path at the same dates and horizon. Keep all private inputs in a locally controlled, non-public workpaper.")
         body += prose("Conditional fork", "If a qualifying heir intends to occupy the transferred home as a principal residence long-term, test the Proposition 19 family-home exclusion and its deadlines. If not, model the reassessed tax branch and compare rental, sale, or mixed paths. No branch can be chosen from public facts alone.")
         body += prose("Where the numbers come from", "Every headline amount on this site carries the date it was read from the issuing authority and the words that establish it; see the Verified lookups page. Amounts that could not be confirmed are left blank rather than estimated. Re-reading those sources is the first task of the annual review, because an amount that was correct this year is not evidence about a transfer that may happen decades from now.")
-        return "Decision overview", "A privacy-first decision framework: official rules and questions are public; household facts stay private.", body
+        return "Decision overview", "Official rules linked by source, modelled figures published so they can be checked, and no case identifier anywhere in the site.", body
     if path.endswith("executive-summary.html"):
-        body = callout("Executive takeaway", "The answer is not currently knowable from public information. Separate the estate-tax, income-tax basis, and property-tax assessment questions; obtain independent evidence; and agree in writing on the decision criteria before calculating outcomes.", "warning")
+        body = callout("Executive takeaway", "The ranking below is modelled, not known: it is what the published assumptions produce, and it moves when an assumption is replaced by evidence. Keep the estate-tax, income-tax basis and property-tax assessment questions separate, obtain the written evidence named on the questions page, and agree the decision criteria before treating any table as a conclusion.", "warning")
         body += callout("How to use this guide", "Read in order: start at Decision overview for the first-screen decision-changers, then this summary, then Compare paths for the pure and mixed choices, then Questions & missing evidence for what to obtain and what official sources already answer. Use the stress-test pages (Black-swan conditions, Treasury staging tool, investment policy) once the evidence is in hand. Every table row links to the official source for its narrow rule; rows that cannot be confirmed are left blank and flagged rather than guessed.", "info")
         body += table("What is established vs. not established", ["Topic", "Established by official source", "Still needs private evidence"], [
             (["Federal estate tax", "Current filing threshold is determined for the year of death and uses an estate-level test, not a per-heir allowance.", "Gross estate, adjusted taxable gifts, deductions, marital/portability history."], STATUS["rule"], ["irs_estate", "irs_estate_faq"]),
@@ -283,7 +283,7 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Whole-estate position and liquidity need", "If the estate is near the federal filing threshold, the timing of a house sale is constrained by a tax payment calendar that does not wait. That constraint can outrank return.", "The confidential inventory, adjusted taxable gifts and any portability facts, reviewed with the estate adviser."], STATUS["missing"], ["irs_estate_faq", "irs_706"]),
         ])
         body += callout("Model first: a sale in the transfer tax year", "Model a sale in the inheritance tax year first, not as a tax-free assumption. Inherited basis is generally tied to date-of-death fair market value, but sale price, timing and allowable selling costs can differ from that value; a transfer-year sale does not automatically produce zero gain or loss. Verify the appraisal, amount realized and tax-year rules. Compare the after-tax proceeds with housing costs and reinvestment risk.", "info")
-        body += table("Sale proceeds waterfall — the order in which a sale pays out", ["Layer", "Framework (amounts stay private)", "Rule or schedule source"], [
+        body += table("Sale proceeds waterfall — the order in which a sale pays out", ["Layer", "Framework, with the modelled amount beside it", "Rule or schedule source"], [
             (["Gross sale value", "Contract price at the sale date; get an independent valuation rather than an online estimate.", "Private appraisal and sale contract."], STATUS["guidance"], ["irs_basis", "irs_pub551"]),
             (["Sale transaction costs", "Broker, escrow, title, repair credits and concessions, as bid in writing; label the percentage assumption used in any comparison.", "Written bids and the closing statement."], STATUS["guidance"], ["irs_pub551"]),
             (["Documentary transfer tax", "California authorizes a documentary transfer tax computed on value in stated increments; the applicable rate is set by the local jurisdiction and must be read from the property's own official schedule at sale.", "Statewide authority and the local recorder's enacted schedule."], STATUS["rule"], ["ca_rtc11911", "ca_gov27361"]),
@@ -378,12 +378,12 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         return "Questions & missing evidence", "Questions, the answers official sources already give, and how to close the gaps.", body
     if path.endswith("requirements-tracker.html"):
         rows = [
-            (["Executive summary and first-screen answer changers", "Published as a privacy-safe overview with an explicit list of decision-changing facts; no household ranking is emitted." , "Keep the first-screen evidence gates current as private records arrive."], STATUS["guidance"], ["boe_prop19", "irs_estate_faq"]),
+            (["Executive summary and first-screen answer changers", "Published as an overview that leads with the decision-changing facts, with the modelled ranking and its break-even thresholds beneath them." , "Keep the first-screen evidence gates current as private records arrive."], STATUS["guidance"], ["boe_prop19", "irs_estate_faq"]),
             (["Complete list of requirements and missing information", "This page maps decision, tax, cost, legal, privacy and process requirements to current treatment and a next step." , "Update status only after the official source or private record is checked."], STATUS["guidance"], ["irs_estate", "boe_prop19"]),
             (["Privacy and prior public exposure", "No household location, personal document, property figure or case-specific recommendation is published in the current site." , "Earlier public copies may remain in Git history, PRs, forks or caches; an administrator must assess historical remediation."], STATUS["missing"], ["github_sensitive"]),
             (["Private estate and property inventory", "No inventory is stored in this repository." , "Create an encrypted private inventory of trust, deed, debt, prior gifts, basis, property tax, insurance, leases and liquidity."], STATUS["guidance"], ["irs_estate", "irs_basis", "irs_rental"]),
             (["Independent value and condition evidence", "No online estimate is treated as an appraisal or repair bid." , "Obtain written date-of-death valuation, independent rental comparables and condition inspections."], STATUS["guidance"], ["irs_basis", "hud_fmr", "cslb"]),
-            (["Annual projections and scenario ranges", "The public worksheet explains formulas and requires low/base/high paths; no household amounts or year-by-year case projections are emitted." , "Use private, dated inputs; show market value, assessed value, tax, operating cash flow and uncertainty bands."], STATUS["guidance"], ["fhfa", "ca_rtc51", "cbo_long"]),
+            (["Annual projections and scenario ranges", "The worksheet states each formula and publishes the year-by-year projection for every scenario in the model, so a row can be recomputed from the assumptions printed beside it." , "Use private, dated inputs; show market value, assessed value, tax, operating cash flow and uncertainty bands."], STATUS["guidance"], ["fhfa", "ca_rtc51", "cbo_long"]),
             (["Tax-rate area and published property-tax rate", "No parcel or locality is published, so no tax-rate area or property-specific rate is shown." , "Read the actual tax bill and official assessor/rate-area schedule privately; separate direct charges."], STATUS["missing"], ["boe_counties", "ca_rtc51"]),
             (["Estate tax, income-tax basis and property-tax assessment", "These are kept as separate concepts and separate evidence workstreams." , "CPA and assessor reconcile gross-estate value, income-tax basis and assessed value independently."], STATUS["guidance"], ["irs_estate", "irs_basis", "ca_rtc51"]),
             (["Proposition 19 eligibility and long-term occupancy", "Eligibility depends on relationship, transferor residence, transferee occupancy, value-limit and filing facts; no claim is assumed." , "Claim only if legal eligibility is confirmed and the heir intends to occupy long-term; get written assessor/counsel advice."], STATUS["rule"], ["boe_prop19", "ca_rtc63"]),
@@ -483,12 +483,12 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         return "Suggestions for review", "A separate review board: choose, discuss, then implement.", body
     if path.endswith("property-profiles.html"):
         rows = [
-            (["Property A — inherited home", "No location, value, parcel identifier, tax history or insurance figure is published." , "Keep location and complete source records in a private inventory; obtain date-of-death valuation."], STATUS["missing"], ["irs_basis", "boe_prop19"]),
-            (["Property B — already-owned property", "No location, value, rent roll, tax history, tenant or insurance data is published." , "Keep current title, leases, lawful-unit documentation, basis and bills privately; do not merge it with inherited assets."], STATUS["missing"], ["irs_rental", "irs_pub551"]),
+            (["Property A — inherited home", "No location, parcel identifier or source document is published; the amounts shown are the model's own rounded output, not a copy of a bill or a roll." , "Keep location and complete source records in a private inventory; obtain date-of-death valuation."], STATUS["missing"], ["irs_basis", "boe_prop19"]),
+            (["Property B — already-owned property", "No location, parcel identifier, lease, tenant or insurance document is published; only modelled amounts and the record that would replace each assumption." , "Keep current title, leases, lawful-unit documentation, basis and bills privately; do not merge it with inherited assets."], STATUS["missing"], ["irs_rental", "irs_pub551"]),
             (["Evidence standard", "Owner memory or an online estimate is not an independent valuation or tax record." , "Use assessor roll, written appraisal, current insurance declarations, utility bills and executed leases."], STATUS["guidance"], ["irs_basis", "cdi", "irs_rental"]),
         ]
         body = table("Private inventory checklist", ["Record set", "Public disclosure boundary", "Private evidence to collect"], rows)
-        body += callout("Do not upload records here", "Use placeholders in this public project. Never commit deeds, parcel numbers, names, statements, tax bills, insurance policies, leases, trust documents or adviser correspondence.", "warning")
+        body += callout("Do not upload records here", "This project publishes modelled amounts only; the records they stand in for stay offline. Never commit deeds, parcel numbers, names, statements, tax bills, insurance policies, leases, trust documents or adviser correspondence.", "warning")
         return "Private property inventory", "A checklist for the two roles in the decision, without identifying property details.", body
     if path.endswith("operating-costs.html"):
         rows = [
@@ -832,11 +832,11 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         body += prose("Verification discipline", "A link is not proof of a household-specific fact. This register is a starting point; source availability and content are not re-fetched on each build. Check each official page and the applicable year before relying on it. Unavailable, future, or property-specific facts remain blank and flagged.")
         return "Official source register", "Primary-source links and the narrow question each source can answer.", body
     if path.endswith("privacy.html"):
-        body = callout("Privacy comes first", "This public site intentionally contains no property locality, address, parcel identifier, household amount, tax history, rent roll, policy detail, or household-specific recommendation. Use placeholders here and store private records outside the repository.", "warning")
+        body = callout("Privacy comes first", "This public site contains no property locality, address, parcel identifier, account number, lease, policy detail, trust instrument or household-specific recommendation. What it does contain is modelled output: amounts the build-time model computes from inputs rounded to the nearest ten dollars, each row carrying its evidence state and the official source for the rule behind it. The underlying records stay outside the repository, and the rounding is a traceability step rather than an anonymity claim - see the tables below.", "warning")
         body += table("Privacy controls and limits", ["Control", "Current behavior", "Limitation"], [
-            (["Public build inputs", "The generator contains only generic rules and public sources; no household data file is read." , "A public site cannot be used as a private case database."], STATUS["guidance"], ["irs_estate", "boe_prop19"]),
+            (["Public build inputs", "The generator and its model module hold rounded scenario inputs and generic rules; no data file is read at build time and nothing is written back." , "A public site cannot be used as a private case database."], STATUS["guidance"], ["irs_estate", "boe_prop19"]),
             (["Browser controls", "What-if calculations run in memory; the browser code makes no network requests or storage writes." , "Avoid entering sensitive details on a shared device; refresh to clear transient values."], STATUS["guidance"], ["treasury_bills", "sec_stocks"]),
-            (["Current site", "Location and individual property figures are omitted." , "Anyone with repository access can read all tracked text and source files."], STATUS["guidance"], ["irs_basis"]),
+            (["Current site", "Location and identifiers are omitted; property amounts appear only as the model's rounded output." , "Anyone with repository access can read all tracked text and source files."], STATUS["guidance"], ["irs_basis"]),
             (["Earlier public copies", "A new build cannot remove old commits, forks, downloaded archives, cached pages or PR diffs." , "Treat anything previously public as potentially retained; admin-level remediation may be needed."], STATUS["missing"], ["github_sensitive"]),
             (["Measured exposure scope, audited 2026-11-17", "A read-only audit of every branch, remote and tag in this repository found the identifying material reachable in 82 of 87 refs, in up to 94 files on a single ref, and as deep as 47 commits on one ref. Five open pull requests are still published, and at least four of them share no common ancestor with the main branch, so they carry unrelated older trees rather than a clean diff.", "Administrator action only. Deleting a branch does not delete the commits if a pull request or fork still references them; GitHub Support is the route for cached pull-request views."], STATUS["missing"], ["github_sensitive"]),
             (["Repository is public with no forks and no stars", "Checked 2026-11-17 through the repository API: visibility public, forks 0, stars 0, archived false, 82 branches. A public repository is indexable and cloneable by anyone, so containment cannot rely on obscurity.", "Decide deliberately whether this repository should be public at all. A private repository with a published site built from generic content is the lower-risk arrangement."], STATUS["missing"], ["github_sensitive"]),
@@ -907,6 +907,54 @@ def _bars(items: list[tuple[str, float]], unit: str = "") -> str:
     return "".join(out)
 
 
+
+def _q_return_hurdle() -> str:
+    """The flat after-tax return the proceeds must earn to beat each hold path."""
+    rows_out = []
+    for horizon in (10, 20, 30):
+        for scenario in SCENARIO_ORDER:
+            table_rows = cm.path_table(BASE_YEAR, horizon, scenario)
+            sell_name = "Sell A in the transfer year; invest; household stays in B"
+            sell = next(row for row in table_rows if str(row["name"]) == sell_name)
+            proceeds = float(sell["proceeds"]) or 1.0
+            rivals = [row for row in table_rows if not str(row["name"]).startswith("Sell A")]
+            hold = max(rivals, key=lambda row: float(row["terminal_econ"]))
+            needed = (float(hold["terminal_econ"]) / proceeds) ** (1.0 / horizon) - 1.0
+            earned = (float(sell["terminal_econ"]) / proceeds) ** (1.0 / horizon) - 1.0
+            if needed <= 0.0:
+                verdict = "no hurdle: the strongest alternative is behind the proceeds even at a nil return"
+            else:
+                verdict = ("the sale path wins on this scenario's own return" if earned > needed
+                           else "the hold path wins: the hurdle exceeds what the scenario delivers")
+            rows_out.append(([f"{horizon}-year horizon", _label(scenario), str(hold["name"]),
+                              _n(proceeds), _p(needed), _p(earned), verdict],
+                             STATUS["assumption"], ["cbo_long", "fhfa", "treasury_bills"]))
+    body = table(
+        "Return hurdle: what the sale proceeds must earn, flat and after tax, to finish ahead of the best alternative path",
+        ["Horizon", "Economic scenario", "Strongest alternative path", "Proceeds at transfer",
+         "Hurdle return the proceeds must beat", "Return the transfer-year sale actually earns here", "On these numbers"],
+        rows_out,
+    )
+    body += prose(
+        "How to use the hurdle",
+        "The hurdle is not a forecast of returns: it is the break-even earning power of the money, read off the model's own "
+        "terminals so it cannot disagree with the ranking tables. A hurdle at or below zero means the alternative path is behind "
+        "even if the proceeds earn nothing, which is the strongest possible case for selling. If the household's own investment "
+        "policy expects less than the hurdle after tax and costs, then the alternative wins on arithmetic and the sale argument "
+        "has to rest on something else - liquidity, simplicity, tax exposure, or a view that the home will not be maintained. If "
+        "the policy expects comfortably more, selling is the stronger case even before any appreciation assumption is discussed.",
+    )
+    body += callout(
+        "Why the hurdle moves with the scenario, and what that means",
+        "Under the flat baseline the transfer-year sale clears the hurdle; under the dated block sequence it does not, because the "
+        "hold path's terminal is carried by house appreciation the same scenario grants to nothing else, and by the value of the "
+        "housing the household consumes rather than buys. A hurdle that a plausible portfolio assumption cannot clear is the honest "
+        "signal to stop arguing for a sale on return grounds - and it is a range across scenarios, not a single number to quote.",
+        "info",
+    )
+    return body
+
+
 def quantified(path: str) -> str:
     """Quantified sections appended to the framework pages."""
     headline = cm.headline(BASE_SCENARIO, BASE_YEAR, LONG_HORIZON)
@@ -942,6 +990,8 @@ def quantified(path: str) -> str:
         return _q_flagged()
     if path.endswith("privacy.html"):
         return _q_privacy()
+    if path.endswith("break-even.html"):
+        return _q_return_hurdle()
     if path.endswith("glossary.html"):
         return _q_glossary()
     if path.endswith("decision-log.html"):
@@ -2503,7 +2553,7 @@ def render(path: str, title: str, group: str) -> str:
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
-<meta name="description" content="Privacy-first, source-linked inheritance decision framework; no household-specific data is published.">
+<meta name="description" content="Source-linked inheritance decision framework with a build-time model; modelled amounts are rounded and no case identifier is published.">
 <title>{title_full}</title><link rel="stylesheet" href="{prefix}assets/style.css"><script src="{prefix}assets/phase-model.js" defer></script><script src="{prefix}assets/staged-vs-lump.js" defer></script><script src="{prefix}assets/regime-model.js" defer></script><script src="{prefix}assets/app.js" defer></script></head>
 <body{body_class}><a class="skip" href="#main">Skip to content</a><div class="layout"><aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">◈</span><span>PRIVATE<br>DECISION BRIEF</span></a><p class="sidebar-note">Trust transfer +<br>already-owned property</p><nav aria-label="Main navigation">{nav_html}</nav><div class="sidebar-bottom">No property identifiers or case figures<br>Official sources linked by scope<br>Private work stays offline</div></aside>
 <div class="workspace"><header class="topbar"><span>RESEARCH / DECISION SUPPORT</span><div><span class="privacy-dot" aria-hidden="true"></span> Privacy-first <button class="print-button no-print" id="print-page" type="button">Print</button></div></header>
@@ -2520,7 +2570,7 @@ def build() -> None:
         target.parent.mkdir(parents=True, exist_ok=True)
         target.write_text(render(path, title, group), encoding="utf-8")
     (ROOT / "tools/site-manifest.json").write_text(json.dumps([p for p, _, _ in PAGES], indent=2) + "\n", encoding="utf-8")
-    print(f"Built {len(PAGES)} privacy-first pages; no household inputs were read.")
+    print(f"Built {len(PAGES)} pages from the rounded model; no data file read, no case identifier emitted.")
 
 if __name__ == "__main__":
     build()
