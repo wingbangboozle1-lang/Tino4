@@ -682,6 +682,15 @@ class CaseModelTests(unittest.TestCase):
         for row in cm.path_table(2045, 30, "sequence"):
             self.assertEqual(cm.r10(float(row["terminal_econ"])) % 10, 0)
 
+    def test_an_absent_amount_is_words_and_a_small_one_is_an_order_of_magnitude(self):
+        # A zero is an absent quantity, not a small one: it must fall through to
+        # the "none" wording so the page can relabel it. A non-zero amount below
+        # the descriptive threshold is stated as a magnitude instead.
+        self.assertEqual(cm.fmt(0.0), "none")
+        self.assertEqual(cm.fmt(12.5), "under twenty-five dollars")
+        self.assertEqual(cm.fmt(5_400), "$5,400")
+        self.assertEqual(cm.magnitude(1_500), "under two thousand dollars")
+
     def test_prop_19_cap_adds_the_excess_over_the_prior_base_plus_allowance(self):
         # section 63.2(d): new value = prior taxable value + max(0, value - (prior + allowance))
         taxable, addition, met = cm.prop19_taxable_value(1_000_000, 2_600_000, 1_044_586)
