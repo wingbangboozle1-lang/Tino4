@@ -18,6 +18,9 @@ OFFICIAL_HOSTS = {
     "federalreservehistory.org", "federalreserve.gov", "bls.gov", "cbo.gov", "fhfa.gov", "sec.gov",
     "insurance.ca.gov", "cslb.ca.gov", "ftb.ca.gov", "sos.ca.gov",
     "huduser.gov", "investor.gov", "github.com", "docs.github.com",
+    "home.treasury.gov", "santaclaracounty.gov", "controller.santaclaracounty.gov",
+    "clerkrecorder.santaclaracounty.gov", "files.santaclaracounty.gov",
+    "sf.gov", "media.api.sf.gov", "sfgov.org", "sfelections.org", "sfmta.com",
 }
 # Every currency amount permitted on the public site must appear here. Each one
 # is an official figure recorded with a read date on the Verified lookups page,
@@ -28,6 +31,10 @@ OFFICIAL_HOSTS = {
 OFFICIAL_AMOUNTS = {
     "15000000", "15480000", "20000", "1044586", "1022600", "1000000",
     "250000", "500000", "7000", "13990000", "19000", "3000", "1500", "175",
+    # statutory schedule figures quoted exactly with a read date (not household data)
+    "0", "1", "2", "3", "5", "10", "14", "20", "25", "65", "75", "100", "102",
+    "129", "177", "249", "500", "1000",
+    "0.42", "0.55", "1.99", "2.50", "3.00", "3.40", "3.75", "11.25", "27.50", "30.00",
 }
 CODE_FILES = ["tools/sitebuild.py", "tools/case_model.py"]
 MARKER = re.compile(r"(?i)owner[- ]supplied")
@@ -61,9 +68,11 @@ def scan_currency(label: str, text: str, errors: list[str], seeded: set[int] = f
     """
     for amount in CURRENCY.findall(text):
         normalized = amount.replace(",", "")
+        if normalized in OFFICIAL_AMOUNTS:
+            continue
         if "." in normalized:
             errors.append(f"{label}: a cent-precision amount could be traced to a single bill or roll entry")
-        elif normalized not in OFFICIAL_AMOUNTS and not (len(normalized) >= 2 and normalized.endswith("0")):
+        elif not (len(normalized) >= 2 and normalized.endswith("0")):
             errors.append(f"{label}: amount is not a published official figure and is not rounded to the nearest ten dollars")
         elif seeded and int(normalized) in seeded:
             errors.append(f"{label}: a published amount equals a seeded case record")

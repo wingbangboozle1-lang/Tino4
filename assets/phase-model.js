@@ -2,13 +2,17 @@
 (function (root) {
   'use strict';
 
-  function simulate({ amount, months, treasuryYieldPct, equityDriftPct, crashPct, crashMonth }) {
+  function simulate({ amount, months, treasuryYieldPct, equityDriftPct, crashPct, crashMonth, renewalYieldPct }) {
     const values = [amount, months, treasuryYieldPct, equityDriftPct, crashPct, crashMonth];
-    if (!values.every(Number.isFinite) || amount <= 0 || !Number.isInteger(months) || months < 24 || months > 36 || crashPct < 0 || crashPct > 90 || !Number.isInteger(crashMonth) || crashMonth < 1 || crashMonth > months + 1 || treasuryYieldPct <= -100 || equityDriftPct <= -100) {
+    const renewalValid = renewalYieldPct === undefined || Number.isFinite(renewalYieldPct);
+    if (!renewalValid || !values.every(Number.isFinite) || amount <= 0 || !Number.isInteger(months) || months < 24 || months > 36 || crashPct < 0 || crashPct > 90 || !Number.isInteger(crashMonth) || crashMonth < 1 || crashMonth > months + 1 || treasuryYieldPct <= -100 || equityDriftPct <= -100) {
       throw new RangeError('Invalid phased-investing inputs.');
     }
 
     const monthlyTreasury = Math.pow(1 + treasuryYieldPct / 100, 1 / 12);
+    // Reinvestment risk: when a rung matures later in the schedule it may be
+    // renewed at a different yield than the entry yield.
+    const monthlyRenewal = Math.pow(1 + (Number.isFinite(renewalYieldPct) ? renewalYieldPct : treasuryYieldPct) / 100, 1 / 12);
     const monthlyEquity = Math.pow(1 + equityDriftPct / 100, 1 / 12);
     const shock = 1 - crashPct / 100;
     const installment = amount / months;
@@ -20,7 +24,7 @@
     let shockApplied = false;
 
     for (let month = 1; month <= months; month += 1) {
-      reserve *= monthlyTreasury;
+      reserve *= (month <= months / 2 ? monthlyTreasury : monthlyRenewal);
       if (crashMonth === month) {
         immediateShockLoss = amount * index * (1 - shock);
         phasedShockLoss = shares * index * (1 - shock);

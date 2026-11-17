@@ -526,6 +526,22 @@ Final state of the exposure counterexample, recorded so it is not repeated: **tw
 1. **Repository visibility and history remediation.** Highest urgency. 81–82 of 87 refs still contain identifying material; the repository is public. Closing five pull requests narrowed what is newly published but removed no commits.
 2. **Repository access review.** 82 branches remain, most from earlier sessions. Branch deletion alone does not remove commits referenced by pull requests or forks.
 3. **Whether the public site should exist at all** in its current relation to the private case. The site is clean; the repository's history is not. Separating them entirely is the only arrangement that does not depend on the current tree staying clean forever.
+## Session `arena/40e65d44` — phased-investing black-swan path, model ranges, rounded analysis reporting
+
+Branch: `arena/40e65d44-tino4` (platform-fixed; branched from `4c1aa93`, rebased onto `origin/main`). Status: active.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 40E6-1 | Claim tasks and record the session's figure-reporting policy decision | done | `arena/40e65d44` | `COORDINATION.md` | 2026-11-17 |
+| 40E6-2 | Re-verify official sources (estate thresholds, Prop 19 indexed limit and deadlines, transfer tax, tax-rate-area method, Form 540 line 62, local measure "Prop H" terms, Treasury yields, rental comparables research) | done | `arena/40e65d44` | research; source scopes | 2026-11-17 |
+| 40E6-3 | Build deterministic low/base/high model (rounded to $10) with transfer-year sale first, mixed paths, imputed rent, Section 121 switch, depreciation/recapture, transfer tax + recording in sell path, staged 3M–2Y Treasury path | done | `arena/40e65d44` | `tools/sitebuild.py` (self-contained model section) | 2026-11-17 |
+| 40E6-4 | Black-swan page: phased-investing path testing 1929/2008 crash entry with reinvestment risk beside the headline; distribution chart on projections | done | `arena/40e65d44` | `tools/sitebuild.py`, `assets/app.js`, generated pages | 2026-11-17 |
+| 40E6-5 | Privacy tooling: enforce $10 rounding, placeholders, banned locality tokens across all pages; keep historical-exposure runbook | done | `arena/40e65d44` | `tools/verify.py`, `tools/test_case.py` | 2026-11-17 |
+| 40E6-6 | Rebuild, verify line by line, tests, PR to main, merge, confirm Pages, record release | done | `arena/40e65d44` | release checks and this board | 2026-11-17 |
+
+### 40E6-1 policy note (figures on the public site)
+
+The owner's restated brief (2026-11-17) requires two things at once: (a) personal information is anonymized with placeholders and never published, and (b) costs and numbers are **used and reported** in the decision analysis, rounded to the nearest $10 so they cannot be traced back to a source. This session therefore publishes: rounded-to-$10 household figures marked "Household-reported (rounded)", placeholders only (Property A / Property B / the household / the heir), projections as labeled low/base/high assumption bands, and a gated recommendation. It does **not** publish: names, street addresses, postal codes, parcel or account numbers, lease terms, or locality names for either property (banned-token scan kept). Locality-sensitive law (tax rate area number, local measure mapping) is reported as terms and published rates without naming the locality; the mapping stays in the private workpaper. Rounding granularity is itself a reviewable suggestion on the Suggestions page.
 
 ## Session `arena/020b35d4` — quantified decision model on a rounded, de-identified basis
 
