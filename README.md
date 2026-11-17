@@ -5,14 +5,19 @@ This repository builds a public, source-linked guide to inheritance planning, pr
 ## Privacy boundary — highest priority
 
 - Keep deeds, trusts, tax returns, parcel identifiers, account numbers, leases, insurance declarations, utility bills, appraisals, quotes and adviser correspondence outside this repository.
-- Public pages use generic roles and official rules only. There is no private input file or household-specific projection in the active build.
+- Public pages use generic roles and official rules, and every table row links an official source.
+- A quantified model (`tools/case_model.py`) sits behind the pages: it is a build-time script holding only
+  rounded case inputs, and it regenerates every figure at build time so no page and its arithmetic can drift
+  apart. There is no private input file, no data fetch, and no unrounded figure in the active build.
+- Published dollar amounts are rounded to the nearest ten dollars by the model itself, and `tools/verify.py`
+  fails the build on any unrounded amount, any locality or address pattern, and any table row without a source.
 - Browser what-if values run in memory only. The site has no remote scripts, forms, analytics, network calls, or browser storage. Refresh the page to clear entered values.
 - A working-tree cleanup cannot erase earlier public commits, pull-request diffs, forks, caches, downloads, or clones. The historical exposure remains unresolved and must be treated as potentially retained. Repository administrators should assess visibility and history remediation; preserve a private encrypted archive before any destructive history action.
 - Public GitHub Pages and a private family case file are different products. Do not place confidential case records in the public site or repository.
 
 ## Site map
 
-The 22 generated pages group the work into executive/decision summaries, the full requirements tracker, private inventory and cost checklists, property-tax and estate law, deadlines, black-swan conditions, Treasury staging, a draft investment policy, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items.
+The 24 generated pages group the work into executive/decision summaries, the full requirements tracker, private inventory and cost checklists, property-tax and estate law, deadlines, black-swan conditions, Treasury staging, a draft investment policy, adviser handoff, questions, suggestions, a decision log, a glossary, source register, privacy limits and flagged items.
 
 The homepage puts **what would change the answer** on the first screen. The project does not choose a household path from absent or unverified evidence. The comparison framework covers live, rent, sell in the transfer year, live-then-sell, mixed paths, and sell-and-reinvest; it requires identical transfer dates and horizons, with taxes, debt, occupancy, costs, liquidity and reinvestment risk treated explicitly.
 
