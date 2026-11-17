@@ -185,6 +185,17 @@ Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
 | --- | --- | --- | --- | --- | --- |
 | 5F1B-1 | Verify key official sources (estate tax threshold, FTB 1% surcharge, Prop 19, CA transfer/recording fees) and flag irregularities | done | `arena/5f1b7997` | research; COORDINATION.md sources note | 2026-11-17 |
 | 5F1B-2 | Strengthen questions, missing-evidence discovery suggestions, black-swan baseline, and one-page brief within privacy limits | done | `arena/5f1b7997` | tools/sitebuild.py (reviewed; no household inputs added; privacy boundary intact) | 2026-11-17 |
-| 5F1B-3 | Build, run tests, verify privacy/source checks; commit and push | in progress | `arena/5f1b7997` | tools/sitebuild.py, generated pages, COORDINATION.md | — |
-| 5F1B-4 | Open PR to main, merge after green build/deploy, record PR link and result | in progress | `arena/5f1b7997` | main branch; GitHub Pages | — |
+| 5F1B-3 | Build, run tests, verify privacy/source checks; commit and push | done | `arena/5f1b7997` | tools/sitebuild.py, generated pages, COORDINATION.md | 2026-11-17 |
+| 5F1B-4 | Open PR to main, merge after green build/deploy, record PR link and result | done | `arena/5f1b7997` | main branch; GitHub Pages | 2026-11-17 |
+
+### 5F1B release record
+
+- **PR:** https://github.com/wingbangboozle1-lang/Tino4/pull/117 — merged with `gh pr merge 117 --merge` at 2026-11-17.
+- **Merge commit:** `6c78e7fb708ceee549828bdd3dc74e0e50c31a0b` on `main`.
+- **CI:** `build-and-verify` completed successfully (tests + build + verify + reproducibility check) on the push to main.
+- **Pages:** `pages build and deployment` completed successfully after the merge; site published at https://wingbangboozle1-lang.github.io/Tino4/ (confirmed via GitHub Actions run conclusion success).
+- **Scope of this session:** verified official sources (2026 federal estate exclusion $15,000,000; 2027 $15,480,000 per IRS IR-2026-133 / Rev. Proc. 2026-35; CA 1% surcharge above $1,000,000 per FTB Form 540 line 62 and RTC §17043; Prop 19 primary-residence-only rule); confirmed the 22-page privacy-first site builds, verifies, and passes 13 unit tests with no household inputs, identifiers, zip codes, emails, phones, street addresses, inline scripts, or remote resources.
+- **Privacy boundary maintained:** no household location, parcel identifier, property value, tax history, rent, lease, insurance figure, or personal identifier is published; placeholders are used and private figures belong in an offline workpaper.
+- **Flagged irregularities (do not block merge; listed on the site's Flagged-for-Review page):** prior public Git/PR/fork/cache exposure is unresolved (administrator-level history remediation only); 'Prop H' jurisdiction/terms and any local transfer-tax/vacancy-tax measure are intentionally withheld and unverified on the public site.
+
 
