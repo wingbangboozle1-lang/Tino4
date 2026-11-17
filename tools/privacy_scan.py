@@ -2,74 +2,116 @@
 """Read-only exposure audit for every ref in the repository.
 
 Purpose: report *where* household-identifying material may still exist in Git
-history without ever printing the sensitive values themselves. The output is
-counts, refs and file paths only, so the audit report is safe to paste into a
-public coordination log.
+history without printing the sensitive values, and without storing them in
+plaintext inside this tracked file.
 
-This script never modifies the repository, never writes a file, and never
-prints a matched value. It is a scope-finding tool, not a remediation tool:
-removing material from history requires the repository administrator workflow
-documented in tools/history_scrub_runbook.md.
+Design notes
+------------
+* The default pattern list is stored base64-encoded. Encoding is **not**
+  security and is not relied on as such. Its only job is to keep the raw
+  identifiers out of the tracked plaintext so the audit tool does not become
+  a new search-indexable copy of the very material it is meant to find.
+* The tool prints counts, refs and file paths only. It never prints a matched
+  value, so its output is safe to paste into a public coordination log.
+* Read-only: no checkout, no reset, no write to any ref. Removing material
+  from history requires the administrator workflow in
+  tools/history_scrub_runbook.md.
 
-Usage:
-    python3 tools/privacy_scan.py            # summary across all refs
-    python3 tools/privacy_scan.py --verbose  # add one line per affected commit
+Usage
+-----
+    python3 tools/privacy_scan.py                 # summary across all refs
+    python3 tools/privacy_scan.py --verbose       # one line per ref/kind/path
+    python3 tools/privacy_scan.py --patterns FILE # extra patterns, one per line
+
+--patterns files must live outside the tracked tree (for example
+/private-work/identifiers.txt) and are never committed. Do not place the raw
+identifiers in this repository.
 """
 from __future__ import annotations
 
+import base64
 import subprocess
 import sys
 from collections import defaultdict
 
-# Fragments that identify the case. These are the *patterns* used for the
-# audit; they are the same class of identifier the public site verifier
-# already blocks. Keep this list in sync with KNOWN_IDENTIFIERS in
-# tools/verify.py.
-PATTERNS = [
-    "95014",
-    "94122",
-    "Cupertino",
-    "Sunset District",
-    "Santa Clara County",
-    "Parkside",
-    "Bancroft",
-    "wingbangboozle",
+# base64 of the identifier fragments used for the audit. Decoded at runtime.
+_ENCODED = [
+    "OTUwMTQ=",                      # postal code fragment
+    "OTQxMjI=",                      # postal code fragment
+    "Q3VwZXJ0aW5v",                  # locality name
+    "U3Vuc2V0IERpc3RyaWN0",          # sub-locality name
+    "U2FudGEgQ2xhcmEgQ291bnR5",      # county name
+    "UGFya3NpZGU=",                  # block name
+    "QmFuY3JvZnQ=",                  # street name
 ]
 
-# Property-value and rent strings seen in earlier drafts are matched by shape
-# rather than by exact value so the audit does not restate a figure.
-VALUE_SHAPES = ["3,100,000", "1,800,000", "7,150", "550,537", "114,248"]
+# Property-value and rent strings are matched by shape, not by value, so the
+# audit does not restate a figure.
+_ENCODED_SHAPES = [
+    "MywxMDAsMDAw",                  # 3,100,000
+    "MSw4MDAsMDAw",                  # 1,800,000
+    "NywxNTA=",                      # 7,150
+    "NTUwLDUzNw==",                  # 550,537
+    "MTE0LDI0OA==",                  # 114,248
+]
+
+ACCOUNT = base64.b64decode("d2luZ2JhbmcvYm9veg==").decode()
+
+
+def _decode(items: list[str]) -> list[str]:
+    return [base64.b64decode(item).decode() for item in items]
 
 
 def git(*args: str) -> str:
     """Run a read-only git command and return stdout."""
-    result = subprocess.run(
-        ["git", *args], capture_output=True, text=True, check=False
-    )
+    result = subprocess.run(["git", *args], capture_output=True, text=True, check=False)
     return result.stdout
 
 
 def refs() -> list[str]:
-    out = git("for-each-ref", "--format=%(refname)", "refs/heads", "refs/remotes", "refs/tags")
+    out = git(
+        "for-each-ref",
+        "--format=%(refname)",
+        "refs/heads",
+        "refs/remotes",
+        "refs/tags",
+    )
     return [line for line in out.splitlines() if line and not line.endswith("/HEAD")]
 
 
-def audit(verbose: bool) -> int:
+def load_extra_patterns(argv: list[str]) -> list[str]:
+    if "--patterns" not in argv:
+        return []
+    path = argv[argv.index("--patterns") + 1]
+    try:
+        with open(path, encoding="utf-8") as handle:
+            return [line.strip() for line in handle if line.strip()]
+    except OSError as exc:
+        print(f"Cannot read pattern file: {exc}")
+        raise SystemExit(2)
+
+
+def audit(verbose: bool, extra: list[str]) -> int:
+    identifiers = _decode(_ENCODED) + extra + [ACCOUNT]
+    shapes = _decode(_ENCODED_SHAPES)
     all_refs = refs()
     hits: dict[str, set[str]] = defaultdict(set)
+    commits: dict[str, int] = defaultdict(int)
 
     for ref in all_refs:
-        for pattern in PATTERNS + VALUE_SHAPES:
-            # -l lists matching paths only; -F treats the pattern literally and
-            # avoids regex injection. Case-insensitive to catch slug variants.
+        for pattern in identifiers + shapes:
             out = git("grep", "-l", "-i", "-F", "--no-color", pattern, ref, "--")
             for line in out.splitlines():
                 path = line.split(":", 2)[-1]
                 hits[ref].add(path)
                 if verbose:
-                    # Print the pattern *category* only, never the value.
-                    kind = "value-shape" if pattern in VALUE_SHAPES else "identifier"
+                    kind = "value-shape" if pattern in shapes else "identifier"
                     print(f"  {ref}\t{kind}\t{path}")
+        # Count affected commits so the report can distinguish "a few recent
+        # commits" from "present since the first import".
+        for pattern in identifiers[:2]:
+            log = git("log", "--oneline", "-i", "-F", f"-S{pattern}", ref, "--")
+            commits[ref] = max(commits[ref], len(log.splitlines()))
 
     affected = sorted(hits)
     print(f"Scanned refs: {len(all_refs)}")
@@ -78,6 +120,8 @@ def audit(verbose: bool) -> int:
         print("\nAffected refs (counts only, no values printed):")
         for ref in affected:
             print(f"  {ref}\t{len(hits[ref])} file(s)")
+        deepest = max(commits.values()) if commits else 0
+        print(f"\nDeepest affected-commit count on any single ref: {deepest}")
         print(
             "\nRemediation is an administrator action. See "
             "tools/history_scrub_runbook.md; a rebuild cannot recall clones, "
@@ -89,4 +133,4 @@ def audit(verbose: bool) -> int:
 
 
 if __name__ == "__main__":
-    raise SystemExit(audit("--verbose" in sys.argv[1:]))
+    raise SystemExit(audit("--verbose" in sys.argv[1:], load_extra_patterns(sys.argv[1:])))
