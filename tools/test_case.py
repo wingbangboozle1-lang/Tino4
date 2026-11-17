@@ -1,5 +1,6 @@
 """Regression tests for privacy and evidence requirements of the public site."""
 import json
+import re
 import subprocess
 import sys
 import unittest
@@ -7,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
 sys.path.insert(0, str(ROOT))
+import case_model as cm
 import sitebuild
 import verify
 
@@ -19,6 +21,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         sitebuild.build()
         manifest = json.loads((ROOT / "site-manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(len(manifest), verify.EXPECTED_PAGES)
+        self.assertEqual(len(manifest), len(sitebuild.PAGES))
         self.assertTrue(all((ROOT.parent / path).is_file() for path in manifest))
 
     def test_every_published_table_row_has_official_source_and_status(self):
@@ -39,6 +42,10 @@ class PublicSitePrivacyTests(unittest.TestCase):
             raw = (ROOT.parent / page).read_text(encoding="utf-8")
             self.assertNotIn("Owner-supplied", raw)
             self.assertNotIn("owner-supplied", raw)
+            self.assertNotIn("Owner-supplied", raw)
+            self.assertNotIn("owner record", raw)
+            self.assertNotIn("owner record", raw)
+            self.assertNotIn("Owner figure", raw)
             self.assertNotIn("PROPERTY_A", raw)
             self.assertNotIn("PROPERTY_B", raw)
 
@@ -144,7 +151,8 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         self.assertIn("Local-only sale-tax overlay tool", decision)
         self.assertIn("sell-run", decision)
         prop_tax = sitebuild.render("pages/property-tax.html", "Property-tax rules", "Law & process")
-        self.assertIn("No carry-forward of the value limit", prop_tax)
+        self.assertIn("No carry-forward of an unused allowance", prop_tax)
+        self.assertIn("What does carry forward if the benefit later ends", prop_tax)
         self.assertIn("Tax rate area (TRA)", prop_tax)
         estate = sitebuild.render("pages/estate-thresholds.html", "Estate-tax thresholds", "Law & process")
         self.assertIn("Estate liquidity plan", estate)
@@ -207,14 +215,31 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         self.assertIn("Defer", page)
         self.assertIn("Reject", page)
         self.assertIn("is not a decision about the estate", page)
-        self.assertEqual(page.count('class="review-choice"'), 10)
+        self.assertEqual(page.count('class="review-choice"'), 15)
 
-    def test_no_household_figures_leak_into_the_new_pages(self):
+    def test_no_household_figures_leak_into_any_page(self):
+        """No page may print a figure that is a copy of a record, nor name the case.
+
+        The tokens are computed from the model's own constants and from the
+        verifier's encoded locality list, so this file cannot become the leak it
+        is looking for, and a new record-shaped input is covered automatically.
+        """
+        tokens: set[str] = set()
+        for name in sitebuild.cm.RECORD_FIELDS:
+            value = getattr(sitebuild.cm, name)
+            for item in (value if isinstance(value, (tuple, list)) else (value,)):
+                for candidate in (int(item), int(item) * 12):
+                    if candidate >= 2_000:
+                        tokens.add(f"{candidate:,}")
+        tokens |= {token for token in verify.LOCALITY_PATTERNS if not token.isdigit()}
+        tokens |= {token for token in verify.LOCALITY_PATTERNS if token.isdigit()}
+        self.assertGreaterEqual(len(tokens), 12)
+        patterns = {token: re.compile(rf"(?<![0-9.]){re.escape(token)}(?![0-9])") for token in tokens}
         for path, title, group in sitebuild.PAGES:
             raw = sitebuild.render(path, title, group)
-            for token in ("3,100,000", "1,800,000", "7,150", "550,537", "114,248",
-                          "95014", "94122", "Cupertino", "Outer Sunset", "Santa Clara"):
-                self.assertNotIn(token, raw, f"{path} leaks {token}")
+            for token, pattern in patterns.items():
+                self.assertIsNone(pattern.search(raw),
+                                  f"{path} publishes a digit run copied from a record")
 
     def test_private_workbench_is_git_ignored(self):
         ignore = (ROOT.parent / ".gitignore").read_text(encoding="utf-8")
@@ -223,6 +248,124 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         result = subprocess.run(["git", "check-ignore", "-q", "private-work/model.private.py"],
                                 cwd=ROOT.parent)
         self.assertEqual(result.returncode, 0)
+    def test_black_swan_page_publishes_regime_blocks_tool_and_anchors(self):
+        page = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("id=\"bw-run\"", page)
+        self.assertIn("id=\"bw-preset\"", page)
+        self.assertIn("id=\"bw-chart\"", page)
+        self.assertIn("Multi-regime stress tool", page)
+        self.assertIn("Reinvestment risk sits next to the headline", page)
+        self.assertIn("great-recession-of-200709", page)
+        self.assertIn("57 percent", page)
+        self.assertIn("89 percent", page)
+        self.assertIn("337.511", page)
+        self.assertIn("120 percent in 2036", page)
+
+    def test_regime_model_is_deterministic_and_times_staging_correctly(self):
+        script = r'''const model = require(process.argv[1]);
+const base = {amount: 100000, years: 30, equityPct: 60, cashYieldPct: 4, volatilityPct: 15,
+  preset: 'crash2008', shockPct: 0, shockYear: 0, stagingMonths: 24, paths: 120, seed: 20261117};
+const a = model.simulate(base);
+const b = model.simulate(base);
+if (JSON.stringify(a.band) !== JSON.stringify(b.band)) process.exit(1);
+const immediate = model.simulate({...base, stagingMonths: 0});
+if (!(a.maxDrawdownPct < immediate.maxDrawdownPct)) process.exit(2);
+const flat = {...base, preset: 'constant', shockPct: 57, shockYear: 20};
+const lateStaged = model.simulate(flat);
+const lateImmediate = model.simulate({...flat, stagingMonths: 0});
+if (Math.abs(lateStaged.maxDrawdownPct - lateImmediate.maxDrawdownPct) > 8) process.exit(3);
+if (!(a.band.p10 <= a.band.p50 && a.band.p50 <= a.band.p90)) process.exit(4);
+let threw = false;
+try { model.simulate({...base, stagingMonths: 12}); } catch (error) { threw = true; }
+if (!threw) process.exit(5);
+'''
+        result = subprocess.run(["node", "-e", script, str(ROOT.parent / "assets/regime-model.js")], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_questions_page_separates_questions_answers_and_discovery(self):
+        page = sitebuild.render("pages/questions.html", "Questions & missing evidence", "Decision")
+        self.assertIn("Questions official sources already answer", page)
+        self.assertIn("How to discover what is missing", page)
+        self.assertIn("$15,000,000", page)
+        self.assertIn("$5,945,800", page)
+        self.assertIn("Revenue Procedure 2022-32", page)
+        self.assertIn("337.511", page)
+
+    def test_suggestions_page_backlog_matches_review_controls(self):
+        page = sitebuild.render("pages/suggestions.html", "Suggestions for review", "Decision")
+        self.assertIn("S11", page)
+        self.assertIn("S15", page)
+        # Every board control must carry its ID so the decision-log record is stable.
+        self.assertEqual(page.count('data-id="S'), 15)
+        self.assertIn("site and model improvements S1 to S15", page)
+        self.assertEqual(page.count('class="review-choice"'), 15)
+
+    def test_every_referenced_local_asset_exists(self):
+        """A page that wires a tool must also load the script that drives it."""
+        pattern = re.compile(r'(?:src|href)="(\.\./)?(assets/[^"]+)"')
+        for path, title, group in sitebuild.PAGES:
+            page = sitebuild.render(path, title, group)
+            prefix = "../" if path.startswith("pages/") else ""
+            for _rel, rel in pattern.findall(page):
+                if not (ROOT.parent / rel).is_file():
+                    self.fail(f"{path} references missing asset {rel}")
+                if rel.endswith(".js"):
+                    self.assertIn(f"{prefix}{rel}", page, f"{path} links {rel} with the wrong prefix")
+        for script in ("app.js", "regime-model.js", "phase-model.js", "staged-vs-lump.js"):
+            self.assertTrue((ROOT.parent / "assets" / script).is_file(), f"assets/{script} missing")
+
+    def test_projections_page_publishes_distribution_chart(self):
+        page = sitebuild.render("pages/projections.html", "Projection worksheet", "Private planning")
+        self.assertIn("<svg", page)
+        self.assertIn("Illustrative distribution of a long-horizon index", page)
+        self.assertIn("Rebuild after every input change", page)
+
+    def test_flagged_page_records_source_corrections_and_data_gaps(self):
+        page = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
+        self.assertIn("Mis-attributed historical figures", page)
+        self.assertIn("page-not-found", page)
+        self.assertIn("Official inflation data gap", page)
+
+    def test_executive_summary_lists_key_official_figures_and_order(self):
+        page = sitebuild.render("pages/executive-summary.html", "Executive summary", "Start")
+        self.assertIn("Key official figures read on 2026-11-17", page)
+        self.assertIn("$15,480,000", page)
+        self.assertIn("$1,044,586", page)
+        self.assertIn("Order of operations", page)
+        self.assertIn("What would change the answer", page)
+
+    def test_postal_heuristic_ignores_statute_numbers_but_flags_postcodes(self):
+        self.assertEqual(verify.postal_hits("Revenue and Taxation Code section 11911 authorises a rate"), [])
+        self.assertEqual(verify.postal_hits("a value cap under §63.2 applies"), [])
+        self.assertEqual(verify.postal_hits("a home near 94022"), ["94022"])
+
+    def test_great_recession_citation_points_to_essay_that_states_the_figures(self):
+        # The 57% S&P 500 and approximately 30% home-price figures are published
+        # on the Federal Reserve History essay "The Great Recession" (2007-09),
+        # not on the "and its aftermath" essay. Both are cited separately here.
+        label, url, scope = sitebuild.SOURCES["fed_2008"]
+        self.assertEqual(url, "https://www.federalreservehistory.org/essays/great-recession-of-200709")
+        self.assertIn("57", scope)
+        self.assertIn("30", scope)
+        aftermath_url, aftermath_scope = sitebuild.SOURCES["fed_2008_aftermath"][1], sitebuild.SOURCES["fed_2008_aftermath"][2]
+        self.assertIn("great-recession-and-its-aftermath", aftermath_url)
+        self.assertIn("over a fifth", aftermath_scope)
+        self.assertIn("over a fifth", aftermath_scope)
+        self.assertNotIn("57", aftermath_scope.split("companion")[0])
+        black_swan = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("great-recession-of-200709", black_swan)
+
+    def test_projections_publish_distribution_order_schematic(self):
+        page = sitebuild.render("pages/projections.html", "Projection worksheet", "Private planning")
+        self.assertIn("dist-chart", page)
+        self.assertIn("Gross sale value", page)
+        self.assertIn("Sale transaction costs", page)
+        self.assertIn("Documentary transfer tax", page)
+        self.assertIn("Recording fees", page)
+        self.assertIn("Sale-year income tax", page)
+        self.assertIn("Net proceeds to invest", page)
+        # The schematic must not present amounts or proportions as facts.
+        self.assertIn("equal-width schematic", page.lower())
 
     def test_privacy_boundary_holds_for_research_resolution(self):
         # The forbidden terms are assembled from parts so this test file does
@@ -346,8 +489,8 @@ for (const bad of [12, 48]) {
         page = sitebuild.render("pages/suggestions.html", "Suggestions for review", "Decision")
         for sid in ["S-01", "S-07", "S-13"]:
             self.assertIn(sid, page)
-        # 10 site-improvement items (S1-S10) plus the numbered action registry
-        self.assertEqual(page.count('class="review-choice"'), 10)
+        # 15 site-improvement items (S1-S15) plus the numbered action registry
+        self.assertEqual(page.count('class="review-choice"'), 15)
         self.assertIn("Numbered action registry", page)
         self.assertIn("Cite the hyphenated form in the decision log", page)
         script = (ROOT.parent / "assets" / "app.js").read_text(encoding="utf-8")
@@ -419,7 +562,7 @@ for (const bad of [12, 48]) {
         offenders = []
         for pattern in patterns:
             result = sp.run(
-                ["git", "grep", "-l", "-i", "-F", "--", pattern],
+                ["git", "grep", "-l", "-i", "-E", "--", rf"(^|[^0-9.]){re.escape(pattern)}([^0-9]|$)"],
                 cwd=ROOT.parent, capture_output=True, text=True,
             )
             for line in result.stdout.splitlines():
@@ -480,3 +623,161 @@ console.log(JSON.stringify({
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class CaseModelTests(unittest.TestCase):
+    """Arithmetic the published pages depend on, tested at the rule level."""
+
+    def test_money_is_rounded_to_the_nearest_ten_dollars(self):
+        self.assertEqual(cm.r10(550_537), 550_540)
+        self.assertEqual(cm.r10(7_207), 7_210)
+        self.assertEqual(cm.usd(550_537), "$550,540")
+        self.assertEqual(cm.usd(-1_234), "-$1,230")
+        self.assertEqual(cm.usd(0), "none")
+        self.assertEqual(cm.usd(2.4), "none")
+        self.assertEqual(cm.usd(5), "$10")
+        self.assertEqual(cm.usd(-4), "none")
+        self.assertEqual(cm.r10(2_744_999.6), 2_745_000)
+        self.assertTrue(cm.rounding_is_clean(9_499))
+        for row in cm.path_table(2045, 30, "sequence"):
+            self.assertEqual(cm.r10(float(row["terminal_econ"])) % 10, 0)
+
+    def test_an_absent_amount_is_words_and_a_small_one_is_an_order_of_magnitude(self):
+        # A zero is an absent quantity, not a small one: it must fall through to
+        # the "none" wording so the page can relabel it. A non-zero amount below
+        # the descriptive threshold is stated as a magnitude instead.
+        self.assertEqual(cm.fmt(0.0), "none")
+        self.assertEqual(cm.fmt(12.5), "under twenty-five dollars")
+        self.assertEqual(cm.fmt(5_400), "$5,400")
+        self.assertEqual(cm.magnitude(1_500), "under two thousand dollars")
+
+    def test_prop_19_cap_adds_the_excess_over_the_prior_base_plus_allowance(self):
+        # section 63.2(d): new value = prior taxable value + max(0, value - (prior + allowance))
+        taxable, addition, met = cm.prop19_taxable_value(1_000_000, 2_600_000, 1_044_586)
+        self.assertFalse(met)
+        self.assertAlmostEqual(addition, 555_414)
+        self.assertAlmostEqual(taxable, 1_555_414)
+        taxable, addition, met = cm.prop19_taxable_value(1_000_000, 1_900_000, 1_044_586)
+        self.assertTrue(met)
+        self.assertEqual(addition, 0.0)
+        self.assertEqual(taxable, 1_000_000)
+
+    def test_allowance_is_carried_forward_and_never_frozen(self):
+        self.assertAlmostEqual(cm.PROP19_ALLOWANCE, 1_044_586)
+        self.assertGreater(cm.prop19_allowance(2045), cm.PROP19_ALLOWANCE)
+        self.assertGreater(cm.prop19_allowance(2050), cm.prop19_allowance(2040))
+        self.assertEqual(cm.prop19_allowance(2025), cm.PROP19_ALLOWANCE)
+
+    def test_claim_beats_reassessment_but_costs_more_than_an_untouched_base(self):
+        for scenario in ("steady", "sequence"):
+            for year in (2040, 2045, 2050):
+                claim = cm.a_state_at(year, scenario, "claim")
+                rent_branch = cm.a_state_at(year, scenario, "rent")
+                keep = cm.a_state_at(year, scenario, "keep")
+                self.assertLess(claim["tax"], rent_branch["tax"])
+                self.assertGreater(claim["tax"], keep["tax"])
+                self.assertAlmostEqual(claim["taxable"], claim["prior_taxable"] + claim["addition"])
+                self.assertAlmostEqual(claim["cap"], claim["prior_taxable"] + claim["allowance"])
+
+    def test_sale_in_the_transfer_year_is_neither_taxed_nor_deductible(self):
+        value = cm.market_value_at(2045, "steady", "A")
+        same_year = cm.sell_waterfall(value, value, 0, "none")
+        self.assertEqual(same_year["gross_gain"], 0.0)
+        self.assertEqual(same_year["income_tax"], 0.0)
+        self.assertLess(same_year["net"], value)
+        later = cm.sell_waterfall(value * 1.3, value, 5, "lived")
+        self.assertGreater(later["gross_gain"], 0.0)
+        self.assertLess(later["taxable_gain"], later["gross_gain"])
+        rented = cm.sell_waterfall(value * 1.3, value, 2, "rented")
+        self.assertGreater(rented["recapture"], 0.0)
+        self.assertEqual(rented["exclusion"], 0.0)
+
+    def test_staging_beats_an_immediate_buy_only_while_the_money_is_still_waiting(self):
+        early = cm.staging_case(1_000_000, "2008", 6)
+        self.assertGreater(early["difference"], 0)
+        self.assertLess(early["immediate"], early["staged"])
+        late = cm.staging_case(1_000_000, "2008", cm.STAGING_WINDOW_MONTHS + 6)
+        self.assertLessEqual(late["difference"], 0)
+        self.assertAlmostEqual(late["share_exposed"], 1.0)
+        # with no crash to dodge, staging can only cost money: reinvestment risk
+        for anchor in ("1929", "2008"):
+            rising = cm.staging_case(1_000_000, anchor, cm.STAGING_WINDOW_MONTHS, crash=False)
+            self.assertLess(rising["staged"], rising["immediate"])
+            self.assertGreater(rising["difference"], -rising["immediate"])
+
+    def test_reinvestment_risk_is_a_real_cost_of_waiting(self):
+        risk = cm.reinvestment_risk(1_000_000, 30, 0.01, 0.07)
+        self.assertGreater(risk["price_increase"], risk["bills_income"])
+        self.assertGreater(risk["give_up_annual"], 0)
+        zero_wait = cm.reinvestment_risk(1_000_000, 0, 0.01, 0.07)
+        self.assertEqual(zero_wait["bills_income"], 0.0)
+        self.assertEqual(zero_wait["price_increase"], 0.0)
+
+    def test_block_sequence_compounds_below_its_own_average(self):
+        average = cm.block_average()
+        self.assertLess(average["equity"], average["equity_arith"])
+        self.assertLess(average["house"], average["house_arith"])
+        sequence, flat = cm.sequence_vs_flat(1_000_000, 30, average["house_arith"])
+        self.assertLess(sequence, flat)
+
+    def test_bust_at_the_transfer_date_reorders_the_paths(self):
+        steady = cm.path_table(2045, 30, "steady")
+        bust = cm.path_table(2045, 30, "bust_at_transfer")
+        top_steady = steady[0]["name"]
+        top_bust = bust[0]["name"]
+        self.assertNotEqual(top_steady, top_bust)
+        sell = next(row for row in bust if row["name"] == cm.PATHS[2][0])
+        live = next(row for row in bust if row["name"] == cm.PATHS[0][0])
+        self.assertGreater(live["terminal_real"], sell["terminal_real"])
+        self.assertEqual([row["rank"] for row in bust], list(range(1, 8)))
+
+    def test_every_path_is_priced_at_one_date_one_horizon_and_stays_comparable(self):
+        for scenario in cm.SCENARIOS:
+            rows = cm.path_table(2045, 30, scenario)
+            self.assertEqual(len(rows), 7)
+            self.assertTrue(all(row["kind"] in {"pure", "mixed"} for row in rows))
+            self.assertTrue(all(isinstance(row["driver"], str) and len(row["driver"]) > 40 for row in rows))
+            self.assertAlmostEqual(rows[0]["deflator"], rows[-1]["deflator"])
+            self.assertLessEqual(rows[-1]["terminal_econ"], rows[0]["terminal_econ"])
+        for horizon, rows in cm.horizon_matrix(2045, "sequence").items():
+            self.assertEqual(len(rows), 7, horizon)
+        for year, rows in cm.transfer_year_matrix(30, "steady").items():
+            self.assertEqual(len(rows), 7, year)
+
+    def test_property_b_is_reported_once_and_not_double_counted(self):
+        b = cm.b_reference(2045, "steady")
+        self.assertGreater(b["gross_rent"], b["costs"])
+        self.assertAlmostEqual(b["net_rental"],
+                               b["gross_rent"] * (1 - cm.VACANCY - cm.MANAGEMENT) - b["costs"])
+        for scenario in ("steady", "sequence"):
+            rows = cm.path_table(2045, 30, scenario)
+            self.assertFalse(any("Property B" in str(row["name"]) and "reference" in str(row["name"])
+                                 for row in rows))
+            # no path row may quote a portfolio return as a cash flow: it is only
+            # ever credited through compounding
+            self.assertTrue(all(row["flow_cash"] <= row["proceeds"] * 0.1 or row["proceeds"] == 0.0
+                                for row in rows), scenario)
+
+    def test_estate_exposure_starts_only_above_the_exclusion(self):
+        rows = cm.estate_rows(2045)
+        self.assertEqual(rows[0]["tax_on_excess"], 0.0)
+        self.assertGreater(rows[-1]["excess"], 0.0)
+        self.assertAlmostEqual(rows[-1]["tax_on_excess"], rows[-1]["excess"] * cm.ESTATE_TOP_RATE)
+        self.assertGreater(cm.FED_EXCL_2027, cm.FED_EXCL_2026)
+        self.assertEqual(cm.SF_STATE_TAX, 0.0)
+
+    def test_decision_log_publishes_priced_decision_rules(self):
+        sitebuild.build()
+        page = (ROOT.parent / "pages/decision-log.html").read_text(encoding="utf-8")
+        self.assertIn("Pre-agreed decision criteria", page)
+        self.assertIn("before the figures are read", page)
+        self.assertIn("block sequence", page)
+        for path in ("pages/decision-analysis.html", "pages/model-figures.html", "pages/economic-baselines.html"):
+            rendered = (ROOT.parent / path).read_text(encoding="utf-8")
+            self.assertIn("<table", rendered, path)
+            self.assertIn("badge", rendered, path)
+            self.assertIn("class=\"source\"", rendered, path)
+
+    def test_self_check_reports_no_broken_assumption(self):
+        result = cm.self_check()
+        self.assertTrue(all(result.values()), result)
