@@ -215,12 +215,112 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         self.assertEqual(result.returncode, 0)
 
     def test_privacy_boundary_holds_for_research_resolution(self):
+        # The forbidden terms are assembled from parts so this test file does
+        # not itself become a plaintext copy of the identifiers it blocks. This
+        # is hygiene, not security: a determined reader can reassemble them.
+        locality = "Cup" + "ertino"
+        sublocality = "Sun" + "set"
+        county = "Santa " + "Clara"
+        postal_a = "95" + "014"
+        postal_b = "94" + "122"
+        place_terms = [locality, sublocality, county]
+        postals = [postal_a, postal_b]
+
         decision = sitebuild.render("pages/decision-analysis.html", "Compare paths", "Decision")
-        self.assertNotIn("Cupertino", decision)
-        self.assertNotIn("Sunset", decision)
-        self.assertNotIn("Santa Clara", decision)
+        homepage = sitebuild.render("index.html", "Decision overview", "Start")
         flagged = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
+        for page in (decision, homepage, flagged):
+            for term in place_terms:
+                self.assertNotIn(term, page)
+            for postal in postals:
+                self.assertNotIn(postal, page)
         self.assertIn("withheld from this public site", flagged)
+
+    def test_staged_model_arithmetic_identities(self):
+        """The staged model must pass identities that a plausible-looking but
+        wrong implementation would fail."""
+        script = r'''const model = require(process.argv[1]);
+
+// 1. With a flat price index and a zero reserve yield, tranching cannot change
+//    anything: every purchase is at the same price, so both paths must end at
+//    exactly the lump sum. This is the identity a wrong implementation breaks.
+const zero = model.run({months: 24, treasuryYieldPct: 0, equityDriftPct: 0, scenarioId: "flat"});
+if (Math.abs(zero.stagedEnding - 1) > 1e-9 || Math.abs(zero.immediateEnding - 1) > 1e-9) process.exit(11);
+
+// 1b. Staging must NOT be a free lunch: with a crash but a zero reserve yield,
+//     the staged path differs from the immediate path only because of purchase
+//     timing, and it must still lose money in the deep crash.
+const crashZero = model.run({months: 24, treasuryYieldPct: 0, equityDriftPct: 7, scenarioId: "early-1929"});
+if (!(crashZero.stagedEnding < 1 && crashZero.immediateEnding < 1)) process.exit(21);
+
+// 2. Against a flat price index the staged path must gain exactly the reserve
+//    yield applied to the average uninvested balance, and the immediate path
+//    must not move at all.
+const flat = model.run({months: 24, treasuryYieldPct: 4, equityDriftPct: 7, scenarioId: "flat"});
+if (!(flat.stagedEnding > 1 && Math.abs(flat.immediateEnding - 1) < 1e-9)) process.exit(12);
+
+// 3. Once the window closes, the staged path holds 100% equity and no reserve,
+//    so its value must track the immediate path at a CONSTANT ratio for the
+//    rest of the horizon. (Peak-to-trough percentages legitimately differ,
+//    because the staged path was partly in cash earlier and so has a different
+//    peak; that is a real feature, not an identity.)
+const after = model.run({months: 24, treasuryYieldPct: 4, equityDriftPct: 7, scenarioId: "after-2008"});
+if (after.uninvestedReserve > 1e-9) process.exit(13);
+const ratios = [];
+for (let i = 24; i < after.immediateCurve.length; i += 1) {
+  ratios.push(after.stagedCurve[i] / after.immediateCurve[i]);
+}
+const spread = Math.max(...ratios) - Math.min(...ratios);
+if (spread > 1e-9) process.exit(31);
+// and that constant ratio must be below 1, because staging bought in later at
+// higher prices during a rising market before the crash
+if (!(ratios[0] < 1)) process.exit(32);
+
+// 4. A crash inside the window must hurt the immediate path more.
+const early = model.run({months: 24, treasuryYieldPct: 4, equityDriftPct: 7, scenarioId: "early-2008"});
+if (!(early.immediateWorstDrawdownPct > early.stagedWorstDrawdownPct)) process.exit(14);
+if (!(early.stagedEnding > early.immediateEnding)) process.exit(15);
+
+// 5. A longer window must protect more when the crash is inside it, and one
+//    published scenario must lose to the lump sum - otherwise the model is a
+//    sales pitch rather than a test.
+const long = model.run({months: 36, treasuryYieldPct: 4, equityDriftPct: 7, scenarioId: "early-2008"});
+if (!(long.stagedEnding > early.stagedEnding)) process.exit(16);
+const all = model.runAll({months: 24, treasuryYieldPct: 4, equityDriftPct: 7});
+if (all.losses < 1) process.exit(17);
+if (!(all.results.length === model.SCENARIOS.length)) process.exit(18);
+
+// 6. The flat and rising scenario pair must actually differ.
+const rising = model.run({months: 24, treasuryYieldPct: 4, equityDriftPct: 7, scenarioId: "rising"});
+if (Math.abs(rising.immediateEnding - flat.immediateEnding) < 1e-6) process.exit(19);
+
+// 7. Out-of-range windows must be rejected.
+for (const bad of [12, 48]) {
+  let threw = false;
+  try { model.run({months: bad, treasuryYieldPct: 4, equityDriftPct: 7, scenarioId: "flat"}); }
+  catch (_e) { threw = true; }
+  if (!threw) process.exit(20);
+}
+'''
+        result = subprocess.run(
+            ["node", "-e", script, str(ROOT.parent / "assets/staged-vs-lump.js")],
+            capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 0, f"staged model identity failed: {result.returncode} {result.stderr}")
+
+    def test_staged_model_is_local_only_and_prints_no_household_figures(self):
+        script = (ROOT.parent / "assets/staged-vs-lump.js").read_text(encoding="utf-8")
+        for banned in ("localStorage", "sessionStorage", "fetch(", "XMLHttpRequest", "sendBeacon", "document.cookie"):
+            self.assertNotIn(banned, script)
+
+    def test_historical_anchors_match_the_official_essays(self):
+        """Guard against a future edit silently changing a verified number."""
+        script = (ROOT.parent / "assets/staged-vs-lump.js").read_text(encoding="utf-8")
+        self.assertIn("depthPct: 89", script)
+        self.assertIn("depthPct: 57", script)
+        self.assertIn("federalreservehistory.org/essays/stock-market-crash-of-1929", script)
+        self.assertIn("federalreservehistory.org/essays/great-recession-of-200709", script)
+
 
 if __name__ == "__main__":
     unittest.main()

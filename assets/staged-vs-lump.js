@@ -148,7 +148,6 @@
     const index = buildIndex(scenario, totalMonths, drift);
     const startYield = monthlyRate(treasuryYieldPct);
     const laterYield = monthlyRate(scenario.renewalYieldPct);
-    const installment = 1 / months; // the lump sum is normalized to 1
 
     // Immediate: the whole lump sum buys equity in month 1.
     const immediateShares = 1 / index[0];
@@ -165,7 +164,13 @@
       const rate = scenario.crashAtMonth && month > scenario.crashAtMonth ? laterYield : startYield;
       reserve *= rate;
       if (month <= months) {
-        const buy = Math.min(reserve, installment);
+        // Deploy an EQUAL FRACTION of whatever is left, not a fixed dollar
+        // slice. A fixed slice would leave the interest earned during the
+        // window permanently undeployed, so the staged path would silently
+        // keep a cash allocation the household never chose, and the two paths
+        // would no longer be measurable at the same asset mix.
+        const remaining = months - month + 1;
+        const buy = reserve / remaining;
         reserve -= buy;
         stagedShares += buy / index[month - 1];
       }
