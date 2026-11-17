@@ -407,11 +407,19 @@ Closing a pull request **does not** remove its commits from the repository. Unde
 
 **Privacy finding that contradicts a stated requirement.** Rounding figures to the nearest $10 was requested as a de-identification control. It is not one. County assessment rolls are public and searchable, so an assessed value rounded to the nearest $10 still narrows a county's parcels to a handful and the roll supplies the address. A postal code plus a rounded assessed value plus a unit count plus an inherited-versus-owned status plus a monthly rent is a fingerprint even when every field is coarsened. The privacy page now states this in four rows, each with the failure mode and the control that actually works: publish no assessor-derived amount at all, and keep the amount in the offline workpaper. This is recorded as a disagreement with the brief rather than silently complied with.
 
+**Additional work (80E9, part 2).** Three further items were completed after the first record:
+
+- **Black-swan page now argues about method.** The brief's own premise — that growth and inflation are never consistent over 50 years — is a critique of the modelling method, not a request for a different constant. The page now carries a table of what official sources do and do not establish (CBO bounds its horizon; FHFA's index is not an appraisal; a CPI index measures the past; no official body publishes a 50-year property projection), the specific regimes a smooth average deletes (Great Inflation, Great Depression, 2007-09 with housing and equities falling together), and the one line that is genuinely bounded rather than forecast: the statutory 2% ceiling on the annual inflation adjustment under RTC 51. The decision rule implied is stated: run each regime, and if the answer changes, report a hedge or a delay rather than a point forecast.
+- **The audit tool's own comments were restating the values.** The encoded pattern list was correct, but two trailing comments spelled out what each fragment decoded to, so the file still published the exact figures it was auditing for — the same fault one layer down. Comments removed. Added a regression test that greps every tracked file for all twelve patterns; the test states its own limit, that a finite pattern list cannot establish containment. The working tree now greps clean for every identifier and value shape.
+- **`recheck.py` accepted a moved baseline.** After the black-swan and privacy tables were added, the tool reported MOVED with the specific changed aspects (page count, badge counts, site hash). The pages were re-read and the baseline accepted, which is the intended workflow rather than a rubber stamp.
+
+Final state of the exposure counterexample, recorded so it is not repeated: **two files in this repository carried the identifiers in plaintext while claiming to protect them**, and a third version carried them in comments. Every one was caught by a scan, not by review. That is the argument for the executable check over a promise.
+
 ### Verification (80E9)
 
 - `python3 tools/build.py`: pass, **23** pages (was 22; the Verified lookups page is new).
 - `python3 tools/verify.py`: pass. Every table row has an official source and an evidence badge, source hosts are on the allowlist, all local links resolve (**576** checked), each page has one `h1`, noindex, a restrictive CSP, no inline script, no remote resource, no browser storage. New fail-closed checks: any currency amount not on the reviewed list fails the build, and the lookups page must keep its read dates, the 2027 exclusion and the indexed cap.
-- `python3 -m unittest discover -s tools -p 'test_*.py'`: **22** tests pass.
+- `python3 -m unittest discover -s tools -p 'test_*.py'`: **23** tests pass.
 - `node --check` on `assets/app.js`, `assets/staged-vs-lump.js`, `assets/phase-model.js`: pass.
 - Chart smoke test (`tools/smoke/chart_smoke.js`, no npm dependency): renders **9 bars, 18 labels** and the expected summary line. Run under the same `node` CI already uses.
 - `python3 tools/recheck.py`: reports UNCHANGED against the committed snapshot.
