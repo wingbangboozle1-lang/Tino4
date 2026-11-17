@@ -331,3 +331,21 @@ footer a { white-space: nowrap; }
 @media (max-width: 620px) {
   .review-queue label { grid-template-columns: 1fr; }
 }
+#bw-result { grid-column: 1 / -1; }
+.chart-frame { margin: 4px 0 6px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fbfdfc; }
+.chart-frame:empty { display: none; }
+.chart-frame svg { display: block; max-width: 100%; height: auto; }
+@media print {
+  .chart-frame { break-inside: avoid; }
+}
+.dist-chart { width: 100%; max-width: 720px; height: auto; display: block; margin: 6px 0 0; }
+
+/* Quantified blocks: bars, provenance, and the derived evidence badge. */
+.bars { display: grid; gap: 8px; margin: 18px 0 8px; }
+.bar-row { display: grid; grid-template-columns: minmax(140px, 30%) 1fr auto; gap: 10px; align-items: center; }
+.bar-label { font-size: 12.5px; line-height: 1.35; }
+.bar-track { background: #eceff5; border-radius: 3px; height: 15px; overflow: hidden; }
+.bar-fill { display: block; height: 100%; background: #2f5d8c; }
+.bar-value { font-variant-numeric: tabular-nums; font-size: 12.5px; font-weight: 600; }
+.badge.derived { background: #efe4c8; color: #4a3a11; border-color: #cbb27a; }
+figure.model, .model-note { font-size: 12.5px; color: #4b5563; }
