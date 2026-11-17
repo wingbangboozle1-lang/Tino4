@@ -428,5 +428,48 @@ for (const bad of [12, 48]) {
         self.assertEqual(sorted(set(offenders)), [], f"identifier republished in: {sorted(set(offenders))}")
 
 
+    def test_published_staging_table_matches_live_model_output(self):
+        """The page quotes figures; the model produces them. If an edit changes
+        the model or the page without the other, this fails. Numbers that drift
+        away from their source are how a projection stops being reproducible."""
+        import json as _json
+        script = r'''const m = require(process.argv[1]);
+const r24 = m.runAll({months:24, treasuryYieldPct:4, equityDriftPct:7});
+const r36 = m.runAll({months:36, treasuryYieldPct:4, equityDriftPct:7});
+console.log(JSON.stringify({
+  w24: Object.fromEntries(r24.results.map(r=>[r.scenarioId, +(r.difference*100).toFixed(1)])),
+  w36: Object.fromEntries(r36.results.map(r=>[r.scenarioId, +(r.difference*100).toFixed(1)])),
+  s24: {wins: r24.wins, median: +(r24.medianDifference*100).toFixed(1), worst: +(r24.worstDifference*100).toFixed(1)},
+  s36: {wins: r36.wins, median: +(r36.medianDifference*100).toFixed(1), worst: +(r36.worstDifference*100).toFixed(1)}
+}));
+'''
+        live = _json.loads(subprocess.check_output(
+            ["node", "-e", script, str(ROOT.parent / "assets/staged-vs-lump.js")], text=True
+        ))
+        page = sitebuild.render("pages/phased-investing.html", "Treasury staging tool", "Stress tests")
+
+        def fmt(value):
+            return f"{value:+.1f}".replace("+", "")
+
+        # Every scenario's 24-month result must appear as a stated figure.
+        for scenario_id, diff in live["w24"].items():
+            magnitude = abs(diff)
+            if magnitude < 0.05:
+                continue
+            self.assertIn(f"{magnitude:.1f}%", page, f"{scenario_id} result {diff}% not published")
+
+        # The two summary sentences must agree with the model.
+        self.assertIn(f"ahead of a lump sum in {live['s24']['wins']} of 9", page)
+        self.assertIn(f"median advantage of {live['s24']['median']:.1f}%", page)
+        self.assertIn(f"worst case of {live['s24']['worst']:.1f}%", page)
+        self.assertIn(f"ahead in {live['s36']['wins']} of 9", page)
+        self.assertIn(f"median of {live['s36']['median']:.1f}%", page)
+        self.assertIn(f"worst case of {live['s36']['worst']:.1f}%", page)
+
+        # And the scenario count must match the model, so adding a scenario
+        # without re-running the published prose fails here.
+        self.assertEqual(len(live["w24"]), 9)
+
+
 if __name__ == "__main__":
     unittest.main()
