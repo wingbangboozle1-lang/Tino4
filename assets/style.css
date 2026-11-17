@@ -233,3 +233,29 @@ footer a { white-space: nowrap; }
 .calculator input, .review-queue select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
 .calculator button { min-height: 40px; border: 0; border-radius: 8px; padding: 8px 14px; background: var(--teal-dark); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
 #phase-result { grid-column: 1 / -1; }
+
+/* Local, build-time charts: inline SVG only, styled here, no remote image */
+.chart { margin: 18px 0; padding: 12px 14px 10px; border: 1px solid var(--line); border-radius: 12px; background: #fbfdfc; overflow-x: auto; }
+.chart svg { display: block; min-width: 560px; width: 100%; height: auto; }
+.chart figcaption { margin-top: 6px; color: #4d6467; font-size: .8rem; }
+text.chart-label { fill: #23443f; font-size: 12.5px; font-weight: 650; }
+text.chart-value { fill: #146269; font-size: 12.5px; font-weight: 800; }
+text.chart-note { fill: #4d6467; font-size: 11.5px; }
+.prose .calculator { margin-top: 4px; }
+#cmp-result, #phase-result, #sell-result { font-size: .92rem; line-height: 1.6; }
+.print-note { color: #4d6467; font-size: .8rem; font-style: italic; }
+@media print {
+  .chart { break-inside: avoid; border: 1px solid #bbb; background: #fff; }
+  .chart svg { min-width: 0; }
+  .calculator, .print-note { break-inside: avoid; }
+  .brief-page main { font-size: 7.6pt; }
+  .brief-page .page-heading { margin-bottom: 3px; }
+  .brief-page .prose h2, .brief-page aside strong { font-size: 8pt; }
+  .brief-page .prose p, .brief-page .callout p { font-size: 6.5pt; line-height: 1.28; }
+  .brief-page table { font-size: 6.0pt; line-height: 1.22; }
+  .brief-page td, .brief-page th { padding: 1.5px 2.5px; }
+  .brief-page caption { font-size: 6.8pt; padding: 2px 0; }
+  .brief-page .source { font-size: 5.4pt; }
+  .brief-page .badge { font-size: 5.0pt; }
+  .brief-page table { break-inside: auto; }
+}

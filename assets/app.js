@@ -107,4 +107,61 @@
     if (sel) sel.value = '0';
     if (sellResult) sellResult.textContent = 'Inputs cleared.';
   });
+
+  const cmpRun = document.getElementById('cmp-run');
+  const cmpClear = document.getElementById('cmp-clear');
+  const cmpResult = document.getElementById('cmp-result');
+  const cmpMoney = (value) => '$' + new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(value / 10) * 10);
+  const cmpDelta = (value) => {
+    const rounded = Math.round(value / 10) * 10;
+    if (rounded === 0) return 'level with';
+    return `about ${cmpMoney(Math.abs(rounded))} ${rounded > 0 ? 'above' : 'below'}`;
+  };
+  if (cmpRun && cmpResult) {
+    cmpRun.addEventListener('click', () => {
+      const field = (id, fallback) => {
+        const raw = document.getElementById(id)?.value.trim() ?? '';
+        if (raw === '') return fallback;
+        const parsed = Number(raw);
+        return Number.isFinite(parsed) ? parsed : NaN;
+      };
+      const value = field('cmp-value', NaN);
+      const rate = field('cmp-rate', NaN);
+      const rentYield = field('cmp-yield', NaN);
+      const costs = field('cmp-costs', 0);
+      const portfolio = field('cmp-portfolio', NaN);
+      const reserve = field('cmp-reserve', 0);
+      const growth = field('cmp-growth', 3);
+      const months = field('cmp-window', 30);
+      const years = field('cmp-years', 25);
+      if (!(value > 0) || !(rate >= 0) || rate > 10 || !(rentYield > 0) || rentYield > 20 || !Number.isFinite(portfolio) || !Number.isFinite(costs) || costs < 0 || !Number.isFinite(growth) || !(years >= 1) || years > 60 || !(months >= 0) || months > years * 12) {
+        cmpResult.textContent = 'Enter a positive transfer-year value, a tax rate and rent yield within their ranges, a numeric portfolio return, and 1 to 60 years; the parking window must fit inside the horizon.';
+        return;
+      }
+      const netRate = portfolio / 100;
+      const saleCosts = 0.060 + 0.0011;
+      const proceeds = value * (1 - saleCosts) - 220;
+      const immediate = proceeds * (1 + netRate) ** years;
+      const parked = proceeds * (1 + reserve / 100 / 12) ** months * (1 + netRate) ** Math.max(0, years - months / 12);
+      let rentCash = 0;
+      for (let year = 1; year <= years; year += 1) {
+        const gross = value * (1 + growth / 100) ** year * (rentYield / 100);
+        const carrying = value * (rate / 100) * 1.02 ** year + costs * 1.03 ** year + gross * 0.04;
+        const operating = gross * 0.96 - carrying;
+        rentCash += operating * (1 + netRate) ** (years - year);
+      }
+      const horizonValue = value * (1 + growth / 100) ** years;
+      const horizonGain = Math.max(0, horizonValue * (1 - saleCosts) - value);
+      const holding = horizonValue * (1 - saleCosts) - 220 - horizonGain * 0.371 + rentCash;
+      const best = Math.max(immediate, parked, holding);
+      const named = best === immediate ? 'selling in the transfer year and investing at once' : (best === parked ? 'parking before a single purchase' : 'holding and letting to the horizon');
+      cmpResult.textContent = `Modeled position at the horizon: sell and invest ${cmpMoney(immediate)}; park ${Math.round(months)} months then invest ${cmpMoney(parked)}; hold and let ${cmpMoney(holding)}. The ranking on these inputs favors ${named}. Relative to investing at once, parking sits ${cmpDelta(parked - immediate)} and holding and letting sits ${cmpDelta(holding - immediate)}. Rounded figures on the assumptions typed in, computed in this tab and never sent anywhere: re-run the site tables and the private model with written records before treating any ranking as a decision.`;
+    });
+    cmpClear?.addEventListener('click', () => {
+      ['cmp-value', 'cmp-rate', 'cmp-yield', 'cmp-costs', 'cmp-portfolio', 'cmp-reserve'].forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
+      const defaults = { 'cmp-growth': '3', 'cmp-window': '30', 'cmp-years': '25' };
+      Object.entries(defaults).forEach(([id, val]) => { const el = document.getElementById(id); if (el) el.value = val; });
+      if (cmpResult) cmpResult.textContent = 'Inputs cleared; nothing was stored.';
+    });
+  }
 })();
