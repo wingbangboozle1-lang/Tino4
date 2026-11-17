@@ -433,3 +433,19 @@ Final state of the exposure counterexample, recorded so it is not repeated: **tw
 - `tools/privacy_scan.py` reports fragment matches. A match is not proof that a full address or figure is present, and no match is not proof of containment, because the pattern list is finite.
 - The nine staging scenarios are assumption sets chosen to stress the decision, **not** a sample of market outcomes. "Staged ahead in 5 of 9" describes the scenario set, not a probability. Dividends, fees, taxes, inflation and withdrawals are omitted.
 - No household figure, location, postal code, rent, assessment history or derived recommendation is published. This branch adds no private input and reads no private file.
+
+### 80E9 release record — PR #120 merged, Pages verified live
+
+- **PR:** [#120](https://github.com/wingbangboozle1-lang/Tino4/pull/120) — merged with `gh pr merge 120 --merge` at 2026-11-17T16:58:45Z.
+- **Merge commit:** `b002bd1ac3cddfd909fb6d512c56352efce6f979` on `main`.
+- **CI:** `verify` run on the merge commit `b002bd1` completed **success**. `pages-build-deployment` on `b002bd1` completed **success**. Pages API reports `built` at https://wingbangboozle1-lang.github.io/Tino4/.
+- **Live verification:** the published pages were fetched after deployment and carry the merged content. `pages/verified-lookups.html` serves the dated lookup table with the read dates and both Proposition 19 figures. `pages/phased-investing.html` serves the corrected scenario table (59.3%, 15.6%, 13.1%, 3.4%, -2.0%, -0.4%, -1.6%, 4.2%, -4.7%), the summary line "5 of 9, median 3.4%, worst -4.7%", and a rendered 9-bar chart with the legend "Staged ahead in 5 of 9 scenarios". The chart is confirmed drawn in the live page, not merely present as markup.
+- **Six rebases were required.** `main` advanced six times during this session (PRs #117, #118, #119, #121, #122 and the auto-generated version bump runs), each time on overlapping files. Every conflict was resolved without discarding the other session's work, and every resolution is recorded in the commit messages. Notable resolutions: main's black-swan page absorbed and superseded this session's version (kept main's, dropped mine deliberately); the suggestions page kept **both** numbering schemes (main's S1-S10 review board and this session's S-01..S-13 action registry) and now explains why two schemes coexist; main's corrected `cbo_long` URL was restored rather than regressing to the version with the 404.
+- **Duplicate work, recorded honestly:** session `arena/3119787c` independently found and corrected the same Federal Reserve citation on the same day. The correction is not claimed as this session's discovery. Two sessions also independently added a "dead CBO link" flag.
+- **CI failure found and fixed twice, both real:** the `recheck` step failed on the first push because the committed fingerprint did not match a fresh build after the rebase, and again after the final rebase. Both times the fix was to re-read the affected pages and accept the new baseline, not to weaken the check.
+
+### Still open after 80E9 (owner decisions, not code)
+
+1. **Repository visibility and history remediation.** Highest urgency. 81–82 of 87 refs still contain identifying material; the repository is public. Closing five pull requests narrowed what is newly published but removed no commits.
+2. **Repository access review.** 82 branches remain, most from earlier sessions. Branch deletion alone does not remove commits referenced by pull requests or forks.
+3. **Whether the public site should exist at all** in its current relation to the private case. The site is clean; the repository's history is not. Separating them entirely is the only arrangement that does not depend on the current tree staying clean forever.
