@@ -334,3 +334,17 @@ the scanner was deliberately **not** weakened, since it is a privacy control.
 2. **Local "Prop H" terms** — deliberately withheld from the public site and still unverified publicly; the private workpaper holds the identification.
 3. **Every property-specific fact remains missing**: date-of-death appraisal, tax-rate-area levy, local transfer-tax and recorder schedules, insurance quotes for both uses, written rent comparables, leases, and the whole-estate inventory including prior taxable gifts and portability. The site marks each as missing; the private model marks each path BLOCKED until its gate clears.
 4. The private workbench is intentionally **not** in this repository. It exists only in the session workspace, is git-ignored, and must be moved to encrypted private storage by the owner; it is not recoverable from GitHub.
+## Session `arena/80e9d3b3` — crash-entry staging evidence, verified lookups, privacy exposure scope
+
+Branch: `arena/80e9d3b3-tino4` (platform-fixed; active). Claimed 2026-11-17.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 80E9-1 | Expose the real GitHub exposure surface (public repo, 82 branches, 5 open PRs) with a read-only, non-printing audit tool | in progress | `arena/80e9d3b3` | `tools/privacy_scan.py`, `tools/history_scrub_runbook.md`, `COORDINATION.md` | 2026-11-17 |
+| 80E9-2 | Verify headline official figures against primary sources and publish a dated lookup table | in progress | `arena/80e9d3b3` | `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `pages/**` | 2026-11-17 |
+| 80E9-3 | Test whether 24–36-month Treasury staging softens 1929- and 2008-shaped crash entry, with a local-only distribution chart | in progress | `arena/80e9d3b3` | `assets/staged-vs-lump.js`, `assets/app.js`, `assets/style.css`, `tools/test_case.py`, `tools/sitebuild.py` | 2026-11-17 |
+| 80E9-4 | Give each suggestion a stable ID and record an auditable adopt/defer/reject decision | in progress | `arena/80e9d3b3` | `tools/sitebuild.py`, `assets/app.js`, `tools/test_case.py` | 2026-11-17 |
+
+Scope boundary: this session does **not** touch the other sessions' open branches and does not
+rewrite shared history. Anything that needs a force-push or a visibility change is logged, not
+performed. Rebase onto current `origin/main` before each push.
