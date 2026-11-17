@@ -342,5 +342,18 @@ for (const bad of [12, 48]) {
         self.assertIn("Staged ahead in 5 of 9", output)
 
 
+    def test_suggestions_have_stable_ids_and_a_copyable_decision_record(self):
+        page = sitebuild.render("pages/suggestions.html", "Suggestions for review", "Decision")
+        for sid in ["S-01", "S-07", "S-13"]:
+            self.assertIn(sid, page)
+        # 10 site-improvement items (S1-S10) plus the numbered action registry
+        self.assertEqual(page.count('class="review-choice"'), 10)
+        self.assertIn("Numbered action registry", page)
+        self.assertIn("Cite the hyphenated form in the decision log", page)
+        script = (ROOT.parent / "assets" / "app.js").read_text(encoding="utf-8")
+        self.assertIn("Suggested decision-log lines", script)
+        self.assertIn("dataset.id", script)
+
+
 if __name__ == "__main__":
     unittest.main()

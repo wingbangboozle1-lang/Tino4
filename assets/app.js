@@ -5,11 +5,27 @@
 
   const reviews = [...document.querySelectorAll('.review-choice')];
   const summary = document.getElementById('review-summary');
+  const copyBox = document.getElementById('review-copy');
   const updateReviewSummary = () => {
     if (!summary) return;
     const counts = { Adopt: 0, Defer: 0, Reject: 0 };
     reviews.forEach((item) => { if (Object.hasOwn(counts, item.value)) counts[item.value] += 1; });
-    summary.textContent = `Session-only review: ${counts.Adopt} adopt, ${counts.Defer} defer, ${counts.Reject} reject. Choices clear on refresh.`;
+    summary.textContent = `Session-only review: ${counts.Adopt} adopt, ${counts.Defer} defer, ${counts.Reject} reject, ${reviews.length - counts.Adopt - counts.Defer - counts.Reject} not reviewed. Choices clear on refresh.`;
+    // Produce a dated, copyable record against each suggestion ID. The ID is
+    // what belongs in the decision log; a reworded title is not an identifier.
+    if (copyBox) {
+      const decided = reviews.filter((item) => item.value !== 'Not reviewed');
+      if (!decided.length) {
+        copyBox.textContent = '';
+        return;
+      }
+      const today = new Date().toISOString().slice(0, 10);
+      const lines = decided.map((item) => {
+        const id = item.dataset.id || 'unknown';
+        return `${id}: ${item.value} (recorded in this browser session on ${today})`;
+      });
+      copyBox.textContent = `Suggested decision-log lines:\n${lines.join('\n')}\nReason and sign-off are required before this becomes a decision.`;
+    }
   };
   reviews.forEach((item) => item.addEventListener('change', updateReviewSummary));
   updateReviewSummary();

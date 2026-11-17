@@ -283,3 +283,51 @@ footer a { white-space: nowrap; }
   .chart-controls { display: none; }
   .chart-wrap { break-inside: avoid; }
 }
+
+/* ---- Suggestion review queue --------------------------------------- */
+.review-queue {
+  display: grid;
+  gap: 8px;
+  margin: 12px 0;
+}
+.review-queue label {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  padding: 9px 12px;
+  background: #fff;
+  border: 1px solid var(--line, #d8dde5);
+  border-radius: 8px;
+  font-size: 0.88rem;
+}
+.review-id {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #2f5d8a;
+  letter-spacing: 0.02em;
+}
+.review-title { color: #2d3748; }
+.review-queue select {
+  font: inherit;
+  padding: 5px 8px;
+  border: 1px solid #c3cbd6;
+  border-radius: 6px;
+  background: #fff;
+}
+.review-copy {
+  white-space: pre-wrap;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.78rem;
+  line-height: 1.55;
+  background: #f5f7fa;
+  border: 1px solid var(--line, #d8dde5);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #2d3748;
+  margin: 0;
+}
+.review-copy:empty { display: none; }
+@media (max-width: 620px) {
+  .review-queue label { grid-template-columns: 1fr; }
+}
