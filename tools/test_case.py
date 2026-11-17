@@ -18,7 +18,7 @@ class PublicSitePrivacyTests(unittest.TestCase):
         self.assertFalse((ROOT / "models.py").exists())
         sitebuild.build()
         manifest = json.loads((ROOT / "site-manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(len(manifest), 22)
+        self.assertEqual(len(manifest), verify.EXPECTED_PAGES)
         self.assertTrue(all((ROOT.parent / path).is_file() for path in manifest))
 
     def test_every_published_table_row_has_official_source_and_status(self):
@@ -160,6 +160,59 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         watchlist = sitebuild.render("pages/law-watchlist.html", "Law watchlist", "Law & process")
         self.assertIn("Residential vacancy taxes", watchlist)
         self.assertIn("Local transfer-tax restructuring proposals", watchlist)
+
+    def test_corrected_citations_are_published_and_old_claim_is_gone(self):
+        """The 57%/30% figures must not be attributed to the essay that lacks them."""
+        src = sitebuild.SOURCES
+        self.assertIn("great-recession-of-200709", src["fed_2008"][1])
+        self.assertIn("great-recession-and-its-aftermath", src["fed_2008_aftermath"][1])
+        self.assertIn("does not state a 57 percent equity decline", src["fed_2008_aftermath"][2])
+        self.assertNotIn("ca_rtc27388", src)
+        flagged = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
+        self.assertIn("misattributed historical figures", flagged)
+        self.assertIn("dead official link", flagged)
+        self.assertIn("unsupported statute section", flagged)
+        # the CBO topic URL that returned 404 must not reappear
+        self.assertNotIn("cbo.gov/topics/budget/long-term-budget-outlook", flagged)
+
+    def test_break_even_page_states_thresholds_not_forecasts(self):
+        page = sitebuild.render("pages/break-even.html", "Break-even questions", "Decision")
+        self.assertIn("break-even", page.lower())
+        self.assertIn("imputed rent", page)
+        self.assertIn("cannot decide whether a family should live somewhere", page)
+        self.assertNotIn("recommendation:", page.lower())
+
+    def test_black_swan_page_uses_regimes_and_correct_attribution(self):
+        page = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("Regime", page)
+        self.assertIn("different indexes", page)
+        self.assertIn("not a probability", page)
+        # inflation history anchors quoted from the Federal Reserve essay
+        self.assertIn("14 percent", page)
+        self.assertIn("1954", page)
+
+    def test_suggestions_page_offers_decisions_before_implementation(self):
+        page = sitebuild.render("pages/suggestions.html", "Suggestions for review", "Decision")
+        self.assertIn("Adopt", page)
+        self.assertIn("Defer", page)
+        self.assertIn("Reject", page)
+        self.assertIn("is not a decision about the estate", page)
+        self.assertEqual(page.count('class="review-choice"'), 10)
+
+    def test_no_household_figures_leak_into_the_new_pages(self):
+        for path, title, group in sitebuild.PAGES:
+            raw = sitebuild.render(path, title, group)
+            for token in ("3,100,000", "1,800,000", "7,150", "550,537", "114,248",
+                          "95014", "94122", "Cupertino", "Outer Sunset", "Santa Clara"):
+                self.assertNotIn(token, raw, f"{path} leaks {token}")
+
+    def test_private_workbench_is_git_ignored(self):
+        ignore = (ROOT.parent / ".gitignore").read_text(encoding="utf-8")
+        self.assertIn("/private-work/", ignore)
+        import subprocess
+        result = subprocess.run(["git", "check-ignore", "-q", "private-work/model.private.py"],
+                                cwd=ROOT.parent)
+        self.assertEqual(result.returncode, 0)
 
     def test_privacy_boundary_holds_for_research_resolution(self):
         decision = sitebuild.render("pages/decision-analysis.html", "Compare paths", "Decision")

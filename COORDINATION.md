@@ -199,3 +199,120 @@ Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
 - **Flagged irregularities (do not block merge; listed on the site's Flagged-for-Review page):** prior public Git/PR/fork/cache exposure is unresolved (administrator-level history remediation only); 'Prop H' jurisdiction/terms and any local transfer-tax/vacancy-tax measure are intentionally withheld and unverified on the public site.
 
 
+
+## Session `arena/91395313` — private-data exposure audit, official-source re-verification, decision layer
+
+Branch: `arena/91395313-tino4` (platform-fixed; active). Rebased onto `main` @ `ea1d2d4` (PR #115), 2026-11-17.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 9139-1 | Audit the public remote for retained household data (all branches, PR refs, tag refs) and record the finding without restating any sensitive value | done | `arena/91395313` | read-only mirror audit; `COORDINATION.md`, `tools/history_scrub_runbook.md` | 2026-11-17 |
+| 9139-2 | Build a private, git-ignored estate workbench: anonymised inventory placeholders, rounded figures where the owner supplied them, year-by-year property-tax and value projections, path comparison engine, black-swan and phased-investing runs, distribution chart | done | `arena/91395313` | `private-work/**` (git-ignored), `tools/private/**` | 2026-11-17 |
+| 9139-3 | Re-read primary sources and mark each one verified/renamed/moved/dead with the date read | done | `arena/91395313` | `tools/sitebuild.py` (SOURCES only), `pages/sources.html`, `COORDINATION.md` | 2026-11-17 |
+| 9139-4 | Publish a source-linked decision layer: evidence-gated decision rule, information-gap discovery plan, black-swan regime engine description, and a suggestions page with a review queue | in progress | `arena/91395313` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css`, generated `pages/**`, `index.html`, `tools/test_case.py` | 2026-11-17 |
+| 9139-5 | Rebuild, run all tests, open PR into `main`, merge, confirm Pages deploy, record result here | unclaimed | — | release checks, `COORDINATION.md` | — |
+
+**Scope note for other active sessions:** this session does not touch `tools/verify.py` (owned by `arena/07cbe6c9`, now merged) or anything outside the file list above. No household value, place name, postal code or identifier is written to any tracked file; the private workbench is git-ignored and excluded from the published site.
+
+### 9139-1 result — repository exposure audit
+
+- Cloned the **public** remote to a scratch mirror outside the repository and searched every ref it
+  exposes. The mirror carried 455 commits across 85 branch refs and 120 pull-request refs.
+- **The current `main` tree is clean.** Scanning every published `.html`, `.js` and `.css` file on
+  `main` produced no hit for any withheld value, and `tools/` (which contains one incidental string
+  match inside a test assertion) is excluded from the published site by `_config.yml`.
+- **The history is not clean.** Distinctive owner-supplied tokens from the first request were found
+  in the trees of most branch refs and most PR refs. Reporting per-token counts, ref names or match
+  text would repeat the exposure, so this board records only that the exposure is broad, spans
+  many refs, and includes refs that are still reachable through the public GitHub API.
+- Consequence, stated without overstating it: making `main` private would hide the default branch
+  view but would not be a complete remedy, because the tokens also exist in history reachable from
+  other refs and in PR refs. A complete remedy is administrator work: preserve an encrypted archive,
+  then rewrite or delete the affected refs and coordinate with GitHub Support about PR views and
+  caches, following GitHub's own sensitive-data guidance already linked from the site.
+- This session performed **no** rewrite, no force-push, no visibility change and no branch deletion.
+  That remains an owner/admin decision with a recovery plan, exactly as the runbook already states.
+- Verified: local `git status` is clean and the private workbench is fully git-ignored.
+
+### 9139-2 result — private workbench (git-ignored, never published)
+
+Created `private-work/`, matched by the existing `.gitignore` rule, containing:
+
+- `inputs.private.py` — role-based inputs only (`A` = inherited home, `B` = already-owned dwelling),
+  owner figures rounded to the nearest 10 dollars on entry, and `None` for everything not
+  established. No city, county, street, postal code, parcel number, name or date of death.
+- `model.private.py` — engine plus a single local HTML report.
+- `assumptions.private.md` — the pre-commitment rule sheet to sign before any result is read.
+
+Defects found and fixed **in my own model** before trusting any output, each of which had produced a
+confident-looking wrong answer:
+
+1. Cash flows were compounded for the entire horizon instead of from the year received, inflating
+   terminal values by roughly an order of magnitude.
+2. A double-counted tax term in the live-then-sell path.
+3. Insurance defaulted to zero when unknown, silently understating every cost. It now uses the
+   owner's own unlabelled recollection *as a labelled assumption* and reports it as unverified.
+4. The staging experiment applied a permanent crash and compounded it for 31 years, which made
+   "wait and see" look better by construction. It now scores a fixed window, assumes the index
+   returns to trend over 36 months, and prints a no-shock baseline beside every shock.
+5. Two of the six paths were the same arithmetic under different names.
+
+Results available privately (not reproduced here, because they are household figures):
+
+- Derived effective property-tax rates differ sharply between the two buildings, which matters
+  because a generic 1% assumption is wrong for both.
+- Over a 50-year horizon the sell-and-invest structure leads under every tested scenario and every
+  tested house-price growth rate **when occupancy is not valuable**; the ranking is driven by the
+  assumed gap between house-price growth and the equity return, and the report says so explicitly.
+- The decisive output is a **break-even imputed rent**: the monthly housing value at which occupying
+  and selling are equal. That single figure, compared with written market comparables, settles the
+  occupancy question without relying on a 50-year projection.
+- Staging in Treasuries before equity entry wins when a fall lands inside the parking or deployment
+  window and loses when it lands before or after, or when the market rises through the window. The
+  sign flips on timing nobody can know, so it is a trade-off, not an expected-return improvement.
+
+**Verification:** the engine runs end to end, writes a 7-table report with a chart, produces no
+`nan`, `None` or `inf`, and `git status --untracked-files=all` is empty, confirming the workbench is
+invisible to Git. Every printed amount is rounded to the nearest 10 dollars.
+
+### 9139-3 result — primary-source re-read (2026-11-17)
+
+Three defects were found in the published source register and fixed:
+
+1. **Misattributed historical figures.** The 57% S&P 500 and approximately 30% home-price figures
+   were cited to "The Great Recession and Its Aftermath". That essay does not contain them; it says
+   home prices fell "by over a fifth" from 2007Q1 to 2011Q2. The figures appear in the companion
+   essay "The Great Recession". The register now cites the correct essay and keeps the aftermath
+   essay as a separate record, with the discrepancy written down.
+2. **Dead link.** The CBO long-term budget outlook topic URL returned HTTP 404. Replaced with the
+   recurring-publication index, which resolves and links each edition.
+3. **Unsupported statute.** `RTC §27388` renders no code text at the official URL (the section is
+   repealed), so it did not support the claim deadlines attributed to it. Those deadlines are stated
+   verbatim in `RTC §63.2(f)-(g)`, which was read in full, and the row now quotes that section. The
+   same reading confirms the section was amended by Stats. 2025, Ch. 539 (SB 293), effective
+   2026-01-01, and that subdivision (g) caps a late-claim processing fee at 175 dollars.
+
+Re-read and confirmed against the official text on 2026-11-17: IRS estate-tax filing threshold table
+(2026: $15,000,000) and the estate-tax filing FAQ; the 2027 inflation release (basic exclusion
+$15,480,000; annual gift exclusion $20,000); IRS inherited-basis FAQ, Form 706, Publication 551,
+Topic 409 (25% maximum on unrecaptured section 1250 gain), Topic 701 and the like-kind exchange
+guidance (real property only; not a principal residence); California State Controller estate-tax
+page (no return required for deaths on or after 2005-01-01); RTC §13301 (no state gift, inheritance
+or estate tax); RTC §63.2, §51 (2% cap), §218 ($7,000 homeowners' exemption), §480 (150-day
+change-in-ownership statement), §11911 (county 55 cents per $500 and city half of that); GOV §27361;
+CIV §1947.12; BOE Proposition 19 page, LTA 2025/009 ($1,044,586 for transfers 2025-02-16 through
+2027-02-15) and BOE county-contact directory; FTB 2025 Form 540 instructions (line 62: 1% on taxable
+income above $1,000,000, whole dollars) and the FTB capital-gains page (no lower rate for capital
+gains); TreasuryDirect bills (4 to 52 weeks) and notes (2, 3, 5, 7, 10 years, semi-annual interest);
+FHFA HPI; BLS CPI; CBO; SEC; CDI; Congress.gov H.R.1 → Public Law 119-21 (enacted 2025-07-04);
+California Secretary of State qualified-measures list.
+
+Two claims were narrowed because the sources did not support the wider version:
+
+- The `TreasuryDirect` note comparison now reflects the published maturities rather than implying a
+  continuous range.
+- The `RTC §27388` citation was removed rather than paraphrased.
+
+One measurement note: the site's own privacy scanner produced a false positive on the phrase
+"2 and not a way", which its street-address pattern read as a house number. The prose was reworded;
+the scanner was deliberately **not** weakened, since it is a privacy control.
