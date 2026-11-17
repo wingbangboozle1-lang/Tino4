@@ -1,5 +1,6 @@
 """Regression tests for privacy and evidence requirements of the public site."""
 import json
+import re
 import subprocess
 import sys
 import unittest
@@ -144,7 +145,8 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         self.assertIn("Local-only sale-tax overlay tool", decision)
         self.assertIn("sell-run", decision)
         prop_tax = sitebuild.render("pages/property-tax.html", "Property-tax rules", "Law & process")
-        self.assertIn("No carry-forward of the value limit", prop_tax)
+        self.assertIn("No carry-forward of an unused allowance", prop_tax)
+        self.assertIn("What does carry forward if the benefit later ends", prop_tax)
         self.assertIn("Tax rate area (TRA)", prop_tax)
         estate = sitebuild.render("pages/estate-thresholds.html", "Estate-tax thresholds", "Law & process")
         self.assertIn("Estate liquidity plan", estate)
@@ -207,7 +209,7 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         self.assertIn("Defer", page)
         self.assertIn("Reject", page)
         self.assertIn("is not a decision about the estate", page)
-        self.assertEqual(page.count('class="review-choice"'), 10)
+        self.assertEqual(page.count('class="review-choice"'), 15)
 
     def test_no_household_figures_leak_into_the_new_pages(self):
         for path, title, group in sitebuild.PAGES:
@@ -223,6 +225,124 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         result = subprocess.run(["git", "check-ignore", "-q", "private-work/model.private.py"],
                                 cwd=ROOT.parent)
         self.assertEqual(result.returncode, 0)
+    def test_black_swan_page_publishes_regime_blocks_tool_and_anchors(self):
+        page = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("id=\"bw-run\"", page)
+        self.assertIn("id=\"bw-preset\"", page)
+        self.assertIn("id=\"bw-chart\"", page)
+        self.assertIn("Multi-regime stress tool", page)
+        self.assertIn("Reinvestment risk sits next to the headline", page)
+        self.assertIn("great-recession-of-200709", page)
+        self.assertIn("57 percent", page)
+        self.assertIn("89 percent", page)
+        self.assertIn("337.511", page)
+        self.assertIn("120 percent in 2036", page)
+
+    def test_regime_model_is_deterministic_and_times_staging_correctly(self):
+        script = r'''const model = require(process.argv[1]);
+const base = {amount: 100000, years: 30, equityPct: 60, cashYieldPct: 4, volatilityPct: 15,
+  preset: 'crash2008', shockPct: 0, shockYear: 0, stagingMonths: 24, paths: 120, seed: 20261117};
+const a = model.simulate(base);
+const b = model.simulate(base);
+if (JSON.stringify(a.band) !== JSON.stringify(b.band)) process.exit(1);
+const immediate = model.simulate({...base, stagingMonths: 0});
+if (!(a.maxDrawdownPct < immediate.maxDrawdownPct)) process.exit(2);
+const flat = {...base, preset: 'constant', shockPct: 57, shockYear: 20};
+const lateStaged = model.simulate(flat);
+const lateImmediate = model.simulate({...flat, stagingMonths: 0});
+if (Math.abs(lateStaged.maxDrawdownPct - lateImmediate.maxDrawdownPct) > 8) process.exit(3);
+if (!(a.band.p10 <= a.band.p50 && a.band.p50 <= a.band.p90)) process.exit(4);
+let threw = false;
+try { model.simulate({...base, stagingMonths: 12}); } catch (error) { threw = true; }
+if (!threw) process.exit(5);
+'''
+        result = subprocess.run(["node", "-e", script, str(ROOT.parent / "assets/regime-model.js")], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
+
+    def test_questions_page_separates_questions_answers_and_discovery(self):
+        page = sitebuild.render("pages/questions.html", "Questions & missing evidence", "Decision")
+        self.assertIn("Questions official sources already answer", page)
+        self.assertIn("How to discover what is missing", page)
+        self.assertIn("$15,000,000", page)
+        self.assertIn("$5,945,800", page)
+        self.assertIn("Revenue Procedure 2022-32", page)
+        self.assertIn("337.511", page)
+
+    def test_suggestions_page_backlog_matches_review_controls(self):
+        page = sitebuild.render("pages/suggestions.html", "Suggestions for review", "Decision")
+        self.assertIn("S11", page)
+        self.assertIn("S15", page)
+        # Every board control must carry its ID so the decision-log record is stable.
+        self.assertEqual(page.count('data-id="S'), 15)
+        self.assertIn("site and model improvements S1 to S15", page)
+        self.assertEqual(page.count('class="review-choice"'), 15)
+
+    def test_every_referenced_local_asset_exists(self):
+        """A page that wires a tool must also load the script that drives it."""
+        pattern = re.compile(r'(?:src|href)="(\.\./)?(assets/[^"]+)"')
+        for path, title, group in sitebuild.PAGES:
+            page = sitebuild.render(path, title, group)
+            prefix = "../" if path.startswith("pages/") else ""
+            for _rel, rel in pattern.findall(page):
+                if not (ROOT.parent / rel).is_file():
+                    self.fail(f"{path} references missing asset {rel}")
+                if rel.endswith(".js"):
+                    self.assertIn(f"{prefix}{rel}", page, f"{path} links {rel} with the wrong prefix")
+        for script in ("app.js", "regime-model.js", "phase-model.js", "staged-vs-lump.js"):
+            self.assertTrue((ROOT.parent / "assets" / script).is_file(), f"assets/{script} missing")
+
+    def test_projections_page_publishes_distribution_chart(self):
+        page = sitebuild.render("pages/projections.html", "Projection worksheet", "Private planning")
+        self.assertIn("<svg", page)
+        self.assertIn("Illustrative distribution of a long-horizon index", page)
+        self.assertIn("Rebuild after every input change", page)
+
+    def test_flagged_page_records_source_corrections_and_data_gaps(self):
+        page = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
+        self.assertIn("Mis-attributed historical figures", page)
+        self.assertIn("page-not-found", page)
+        self.assertIn("Official inflation data gap", page)
+
+    def test_executive_summary_lists_key_official_figures_and_order(self):
+        page = sitebuild.render("pages/executive-summary.html", "Executive summary", "Start")
+        self.assertIn("Key official figures read on 2026-11-17", page)
+        self.assertIn("$15,480,000", page)
+        self.assertIn("$1,044,586", page)
+        self.assertIn("Order of operations", page)
+        self.assertIn("What would change the answer", page)
+
+    def test_postal_heuristic_ignores_statute_numbers_but_flags_postcodes(self):
+        self.assertEqual(verify.postal_hits("Revenue and Taxation Code section 11911 authorises a rate"), [])
+        self.assertEqual(verify.postal_hits("a value cap under §63.2 applies"), [])
+        self.assertEqual(verify.postal_hits("a home near 94022"), ["94022"])
+
+    def test_great_recession_citation_points_to_essay_that_states_the_figures(self):
+        # The 57% S&P 500 and approximately 30% home-price figures are published
+        # on the Federal Reserve History essay "The Great Recession" (2007-09),
+        # not on the "and its aftermath" essay. Both are cited separately here.
+        label, url, scope = sitebuild.SOURCES["fed_2008"]
+        self.assertEqual(url, "https://www.federalreservehistory.org/essays/great-recession-of-200709")
+        self.assertIn("57", scope)
+        self.assertIn("30", scope)
+        aftermath_url, aftermath_scope = sitebuild.SOURCES["fed_2008_aftermath"][1], sitebuild.SOURCES["fed_2008_aftermath"][2]
+        self.assertIn("great-recession-and-its-aftermath", aftermath_url)
+        self.assertIn("over a fifth", aftermath_scope)
+        self.assertIn("over a fifth", aftermath_scope)
+        self.assertNotIn("57", aftermath_scope.split("companion")[0])
+        black_swan = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("great-recession-of-200709", black_swan)
+
+    def test_projections_publish_distribution_order_schematic(self):
+        page = sitebuild.render("pages/projections.html", "Projection worksheet", "Private planning")
+        self.assertIn("dist-chart", page)
+        self.assertIn("Gross sale value", page)
+        self.assertIn("Sale transaction costs", page)
+        self.assertIn("Documentary transfer tax", page)
+        self.assertIn("Recording fees", page)
+        self.assertIn("Sale-year income tax", page)
+        self.assertIn("Net proceeds to invest", page)
+        # The schematic must not present amounts or proportions as facts.
+        self.assertIn("equal-width schematic", page.lower())
 
     def test_privacy_boundary_holds_for_research_resolution(self):
         # The forbidden terms are assembled from parts so this test file does
@@ -346,8 +466,8 @@ for (const bad of [12, 48]) {
         page = sitebuild.render("pages/suggestions.html", "Suggestions for review", "Decision")
         for sid in ["S-01", "S-07", "S-13"]:
             self.assertIn(sid, page)
-        # 10 site-improvement items (S1-S10) plus the numbered action registry
-        self.assertEqual(page.count('class="review-choice"'), 10)
+        # 15 site-improvement items (S1-S15) plus the numbered action registry
+        self.assertEqual(page.count('class="review-choice"'), 15)
         self.assertIn("Numbered action registry", page)
         self.assertIn("Cite the hyphenated form in the decision log", page)
         script = (ROOT.parent / "assets" / "app.js").read_text(encoding="utf-8")
