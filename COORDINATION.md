@@ -162,9 +162,60 @@ Session ID: `arena/020b35d4`. Claim pushed before work began.
 
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| 020B-1 | Add a build-time quantified model (`tools/case_model.py`) that turns the owner-supplied inputs into year-by-year projections, path comparisons, Prop 19 tax math, operating-cost projections, estate-threshold math and the Treasury-staging crash test — all emitted rounded to the nearest $10 with no locality identifiers; publish the numbers on existing pages plus two new pages | in progress | `arena/020b35d4` | `tools/case_model.py`, `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `tools/site-manifest.json`, `assets/style.css`, generated `index.html`, `pages/projections.html`, `pages/decision-analysis.html`, `pages/property-tax.html`, `pages/estate-thresholds.html`, `pages/operating-costs.html`, `pages/black-swan.html`, `pages/phased-investing.html`, `pages/attorney-cpa-brief.html`, `pages/questions.html`, `pages/suggestions.html`, `pages/requirements-tracker.html`, `pages/flagged-for-review.html`, `pages/glossary.html`, `pages/sources.html`, `pages/privacy.html`, `pages/property-profiles.html`, `pages/economic-baselines.html` (new), `pages/model-figures.html` (new), `README.md`, `COORDINATION.md` | 2026-11-17 |
+| 020B-1 | Add a build-time quantified model (`tools/case_model.py`) that turns the rounded case inputs into year-by-year projections, path comparisons, Prop 19 tax math, operating-cost projections, estate-threshold math and the Treasury-staging crash test — all emitted rounded to the nearest $10 with no locality identifiers; publish the numbers on existing pages plus two new pages | in progress | `arena/020b35d4` | `tools/case_model.py`, `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `tools/site-manifest.json`, `assets/style.css`, generated `index.html`, `pages/projections.html`, `pages/decision-analysis.html`, `pages/property-tax.html`, `pages/estate-thresholds.html`, `pages/operating-costs.html`, `pages/black-swan.html`, `pages/phased-investing.html`, `pages/attorney-cpa-brief.html`, `pages/questions.html`, `pages/suggestions.html`, `pages/requirements-tracker.html`, `pages/flagged-for-review.html`, `pages/glossary.html`, `pages/sources.html`, `pages/privacy.html`, `pages/property-profiles.html`, `pages/economic-baselines.html` (new), `pages/model-figures.html` (new), `README.md`, `COORDINATION.md` | 2026-11-17 |
 
 ### Coordination notes for other sessions
 
 - Open PRs from earlier sessions are still listed as OPEN but their branches predate `main` at `4c1aa93` (PR #103, #104, #106, #107, #19). This session does not edit or merge those branches. Anything in them that is still wanted should be re-applied on top of current `main` by their owners; this session's work is additive to `main` only.
-- Privacy boundary chosen by the owner in the current request: figures are published **rounded to the nearest $10** with no names, addresses, postal codes, parcel identifiers or locality names. `tools/verify.py` enforces the rounding and the identifier patterns (fail-closed). Rounding reduces but does not eliminate traceability; that residual risk is stated on the privacy page and flagged for owner review.
+- Privacy boundary chosen by the owner in the current request: figures are published **rounded to the nearest $10**, and the phrase naming the source of an input is itself avoided on public pages with no names, addresses, postal codes, parcel identifiers or locality names. `tools/verify.py` enforces the rounding and the identifier patterns (fail-closed). Rounding reduces but does not eliminate traceability; that residual risk is stated on the privacy page and flagged for owner review.
+
+### Result — 020B-1 (2026-11-17)
+
+**What was built.** `tools/case_model.py` is a self-contained, deterministic build-time model. It reads no file
+(`verify.py` rejects `open(`/`.read_text(` in both generator and model code), holds only rounded case inputs as
+literals, and regenerates every figure printed on the site, so a page and its arithmetic cannot drift apart.
+Committed output is byte-identical to a fresh `python3 tools/build.py`, which the CI reproducibility step checks.
+
+- **Paths:** seven live/let/sell/mixed paths priced at one transfer date and one horizon under five economic
+  scenarios (flat, block sequence, block sequence with the bust rotated to the transfer year, stagflation,
+  deflation), in cash, in economic terms, and in constant 2026 dollars. Self-used ownership is credited with
+  net market rent (imputed rent); portfolio return compounds and is never also counted as a flow. The already-owned
+  three-unit building is reported once, separately, because it is invariant across paths.
+- **Property tax:** RTC §63.2(d) cap arithmetic (prior taxable value + max(0, value − (taxable + allowance))),
+  the Prop 19 allowance carried forward by an explicit, labelled escalation assumption rather than frozen at the
+  published figure, the three bill outcomes (no transfer event / qualifying claim / reassessed), and the enacted
+  claim windows, 45- then 60-day notice sequence, ≤$175 processing fee and late-claim factoring penalty as
+  amended by SB 293 (effective 2026-01-01).
+- **Sale:** gross-to-net waterfall with statutory documentary transfer tax ceilings (RTC §11911), recording and
+  report items, basis at the date-of-death value, §121 exclusion switch for the live-then-sell row and
+  §1250-style recapture on the letting rows; a sale inside the transfer year is shown as neither taxed nor
+  deductible rather than as an exemption.
+- **Staging:** the 1929 (−89 %, 25-year recovery) and 2007-09 (−57 %) shapes tested at five shock timings, staging
+  costed inside the path table as a blended bills/equity wait, and reinvestment risk published beside it.
+- **Volatility:** the geometric-versus-arithmetic gap of the block path is disclosed wherever the sequence is used,
+  and the ranking flip under a bust at the transfer date is published as the answer, not hidden.
+- **Estate:** exclusion indexation (2025/2026/2027 published figures), prior-gift and portability questions,
+  sensitivity rows only — the estate's financial assets are absent by design and flagged.
+
+**Site.** 22 → 24 pages: `pages/economic-baselines.html` and `pages/model-figures.html` added, quantified addenda
+on thirteen existing pages, priced pre-agreed decision rules in the log. `PAGES`, the manifest and `verify.py`'s
+page count were bumped in the same commit.
+
+**Verification.** `python3 tools/build.py`, `python3 tools/verify.py`, 27 unit tests, `node --check` on both
+scripts and `git diff --check` all pass. The verifier now also rejects a household-input marker in generated pages
+and model code, in addition to the ten-dollar rule, cent precision, digit runs without separators, locality and
+address patterns, storage, network calls and unsourced table rows.
+
+### Flagged for review from this session (does not block merge)
+
+- Rent, insurance, the effective levy per parcel, the appraisal, the leases and the estate's financial assets are
+  **not** official-source figures; the pages carry them as assumptions or as flagged inputs, never as evidence.
+- The next Prop 19 allowance revision (February 2027, from the 2026 California FHFA figure) does not exist yet;
+  the 2026Q4 release is scheduled for 2027-02-23.
+- Short-rate levels for the staging window could not be retrieved from the Treasury feed in this environment; the
+  staging yield is an input and a sensitivity, with the current level left blank on the page.
+- The BLS October 2026 release publishes no 12-month change for most series because October 2025 was not collected
+  during the appropriations lapse; the inflation anchors therefore come from the annual historical table.
+- Historical public exposure (earlier commits, PR views, forks, caches) is not remediated by this branch; the
+  repository is shallow here, so a rewrite cannot be executed or verified from this sandbox. See
+  `tools/history_scrub_runbook.md`.
