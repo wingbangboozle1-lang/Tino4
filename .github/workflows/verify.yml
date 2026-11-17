@@ -23,6 +23,8 @@ jobs:
         run: python tools/build.py
       - name: Verify the built site
         run: python tools/verify.py
+      - name: Report whether the evidence layer moved
+        run: python tools/recheck.py
       - name: Confirm the build is reproducible
         run: |
           git add -A

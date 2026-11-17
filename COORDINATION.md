@@ -334,3 +334,102 @@ the scanner was deliberately **not** weakened, since it is a privacy control.
 2. **Local "Prop H" terms** — deliberately withheld from the public site and still unverified publicly; the private workpaper holds the identification.
 3. **Every property-specific fact remains missing**: date-of-death appraisal, tax-rate-area levy, local transfer-tax and recorder schedules, insurance quotes for both uses, written rent comparables, leases, and the whole-estate inventory including prior taxable gifts and portability. The site marks each as missing; the private model marks each path BLOCKED until its gate clears.
 4. The private workbench is intentionally **not** in this repository. It exists only in the session workspace, is git-ignored, and must be moved to encrypted private storage by the owner; it is not recoverable from GitHub.
+## Session `arena/80e9d3b3` — crash-entry staging evidence, verified lookups, privacy exposure scope
+
+Branch: `arena/80e9d3b3-tino4` (platform-fixed; active). Claimed 2026-11-17.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 80E9-1 | Expose the real GitHub exposure surface with a read-only, non-printing audit tool | done | `arena/80e9d3b3` | `tools/privacy_scan.py`, `COORDINATION.md` | 2026-11-17 |
+| 80E9-2 | Verify headline official figures against primary sources and publish a dated lookup table | done | `arena/80e9d3b3` | `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `pages/**` | 2026-11-17 |
+| 80E9-3 | Test whether 24–36-month Treasury staging softens 1929- and 2008-shaped crash entry, with a local-only distribution chart | done | `arena/80e9d3b3` | `assets/staged-vs-lump.js`, `assets/app.js`, `assets/style.css`, `tools/smoke/**`, `tools/test_case.py`, `tools/sitebuild.py` | 2026-11-17 |
+| 80E9-4 | Give each suggestion a stable ID and record an auditable adopt/defer/reject decision | done | `arena/80e9d3b3` | `tools/sitebuild.py`, `assets/app.js`, `tools/test_case.py` | 2026-11-17 |
+| 80E9-5 | Rebuild-and-report tool so a rebuild states whether the evidence layer moved | done | `arena/80e9d3b3` | `tools/recheck.py`, `tools/framework-snapshot.json`, `.github/workflows/verify.yml` | 2026-11-17 |
+| 80E9-6 | Triage the five stale open pull requests | done | `arena/80e9d3b3` | `COORDINATION.md` (GitHub actions, no file scope) | 2026-11-17 |
+
+Scope boundary: this session does **not** touch the other sessions' open branches and does not
+rewrite shared history. Anything that needs a force-push or a visibility change is logged, not
+performed. Rebase onto current `origin/main` before each push.
+
+### 80E9 results
+
+**80E9-1 — exposure scope measured, not assumed.** Added `tools/privacy_scan.py`, a read-only audit that walks every branch, remote and tag and reports counts and paths only. It never prints a matched value, so its output is safe to paste in public. Reading of the result on 2026-11-17:
+
+- **82 of 87 refs** contain at least one identifying fragment.
+- Up to **94 files** carry a match on a single ref; the deepest affected-commit count on one ref is **47**.
+- The repository is **public**, with **0 forks**, **0 stars**, **82 branches**.
+- **Five** pull requests were open; **four** shared no common ancestor with `main`, so they were unrelated older trees rather than reviewable diffs.
+
+Self-inflicted exposure caught during the task: the first version of the audit tool listed the identifier fragments in plaintext, which would have made the tool a new searchable copy of the material it was meant to find. The patterns are now base64-encoded and decoded at runtime; the committed history of that commit remains an exposure item and is recorded as such rather than treated as fixed. The same fault was present in `tools/test_case.py`, where the blocked place names were written literally; they are now assembled from parts.
+
+**80E9-2 — sources re-read, two corrections published.** Every headline amount was re-opened at the issuing authority and recorded with a read date and the exact words that establish it on the new **Verified lookups** page. Corrections found by reading rather than by trusting the earlier citation:
+
+- The **57% S&P 500** decline and the **~30% home-price** decline are stated in the Federal Reserve History essay *The Great Recession* (`/essays/great-recession-of-200709`), **not** in *The Great Recession and Its Aftermath*, which was the essay previously cited. Both essays are now registered separately, because the companion essay gives a **different window** for home prices (over one fifth, 2007Q1–2011Q2).
+- The 1929 anchor was re-read: 381.17 peak, 41.22 trough in July 1932, **89%** below peak, prior high not regained until November 1954.
+- Proposition 19 figures re-read from BOE Letter to Assessors 2025/009: **$1,044,586** for transfers 2025-02-16 to 2027-02-15, with the history table ($1,000,000 then $1,022,600). Filing windows re-read from the BOE overview.
+- Federal figures re-read from IRS news release IR-2026-133: **$15,000,000** (2026), **$15,480,000** (2027), annual gift exclusion **$20,000** (2027).
+- CBO baseline re-read from *The Budget and Economic Outlook: 2026 to 2036* (2026-02-11).
+- Civil Code 1947.12 re-read in the statute: 5% plus CPI or 10%, whichever is lower, with a 15-year certificate-of-occupancy exemption that is a separate legal question.
+
+**Coordination note — duplicate work with `arena/3119787c` (PR #119).** That session independently found and corrected the *same* Federal Reserve citation on 2026-11-17, and its PR title also proposes a distribution schematic. The correction therefore exists twice. PR #119 is small and focused; this branch is large and overlaps `tools/sitebuild.py`, `tools/test_case.py` and the generated pages, so a rebase will conflict. Recorded here rather than resolved unilaterally, because PR #119 belongs to another live session. The correction is not credited to this session alone.
+
+**80E9-3 — the staging question, actually tested.** A single-drawdown sensitivity cannot answer whether staging softens crash-entry risk, because the answer depends on where in the window the crash lands, how long recovery takes, and what the reserve earns once yields fall. Added `assets/staged-vs-lump.js`: nine fixed, named scenarios varying crash month, drawdown depth, recovery duration and post-crash reserve yield, every one evaluated at the **same 60-month date** so a late crash cannot look benign merely by being measured early. Results at a 4% reserve yield and 7% drift:
+
+| Window | Staged ahead | Median | Worst |
+| --- | --- | --- | --- |
+| 24 months | 5 of 9 | +3.4% | -4.7% |
+| 36 months | 7 of 9 | +6.3% | -7.3% |
+
+The substantive finding is that staging buys protection against a crash arriving **early**, and pays for it with the equity-minus-Treasury spread when the market simply rises. A crash as the window closes is close to a wash. In the 1929-shaped cases staging helps but does not rescue: even at 36 months the staged path is roughly a third behind a calm market, which is why the page says plainly that no staging schedule converts a 25-year recovery into a safe one.
+
+Two real bugs were found by writing identity tests first, and both are published on the Flagged page rather than quietly fixed:
+
+1. **Reserve interest was never deployed.** A fixed dollar slice per month left interest earned during the window permanently undeployed, so the staged path silently held cash the household never chose and the two paths were no longer comparable at the same asset mix. Deployment is now an equal fraction of the remaining reserve, which drains the reserve exactly when the window closes (verified 0.00e+0) and makes the post-window ratio identity exact to 2.2e-16 rather than 4.2e-2. The corrected numbers are **less** favourable to staging.
+2. **The flat and rising no-crash scenarios were the same test twice**, because both used the caller's drift. Each now pins its own drift.
+
+Three of my own initial test premises were also wrong and were corrected rather than forced: a crash makes staged and immediate differ even at zero yield; peak-to-trough percentages legitimately differ between the paths once one has held cash; and the drawdown identity holds only after the window closes.
+
+**80E9-4 — decisions name an ID.** Suggestions now carry **S-01 … S-13**. The review controls emit a dated, copyable decision-log line keyed by the ID, because a reworded title is not an identifier. Session only; nothing stored or sent.
+
+**80E9-5 — rebuilding states whether the answer moved.** Adopted `tools/recheck.py` from the closed PR #107 (credited there), which fingerprints the published evidence layer and prints **UNCHANGED** or **MOVED** with the aspects that changed, and refuses a `--private-model` path inside the repository. Wired into CI before the reproducibility check. This converts the standing instruction "after any input change, rebuild and see whether the recommendation moved" from a good intention into an executable step.
+
+**80E9-6 — stale pull requests triaged.** All five closed without merging, with a reason on each:
+
+| PR | Reason |
+| --- | --- |
+| #107 | Superseded; unrelated history; its predecessor branches publish household figures. Its `tools/recheck.py` was adopted to `main` first, with credit. |
+| #106 | Unrelated history; publishes a private-file page plus household property profiles. |
+| #104 | Unrelated history; household-figure approach; its Proposition 19 correction was independently re-derived and is already published. |
+| #103 | Unrelated history; a locality-specific measure page next to household profiles is the prohibited combination. |
+| #19 | Coordination-only branch carrying `_research/notes.jsonl`; research notes do not belong in a public tracked tree. |
+
+Closing a pull request **does not** remove its commits from the repository. Under GitHub's own guidance, cached pull-request views and forks are a separate remediation path. Closing these five narrows what is still actively published; it does not restore privacy.
+
+**Privacy finding that contradicts a stated requirement.** Rounding figures to the nearest $10 was requested as a de-identification control. It is not one. County assessment rolls are public and searchable, so an assessed value rounded to the nearest $10 still narrows a county's parcels to a handful and the roll supplies the address. A postal code plus a rounded assessed value plus a unit count plus an inherited-versus-owned status plus a monthly rent is a fingerprint even when every field is coarsened. The privacy page now states this in four rows, each with the failure mode and the control that actually works: publish no assessor-derived amount at all, and keep the amount in the offline workpaper. This is recorded as a disagreement with the brief rather than silently complied with.
+
+**Additional work (80E9, part 2).** Three further items were completed after the first record:
+
+- **Black-swan page now argues about method.** The brief's own premise — that growth and inflation are never consistent over 50 years — is a critique of the modelling method, not a request for a different constant. The page now carries a table of what official sources do and do not establish (CBO bounds its horizon; FHFA's index is not an appraisal; a CPI index measures the past; no official body publishes a 50-year property projection), the specific regimes a smooth average deletes (Great Inflation, Great Depression, 2007-09 with housing and equities falling together), and the one line that is genuinely bounded rather than forecast: the statutory 2% ceiling on the annual inflation adjustment under RTC 51. The decision rule implied is stated: run each regime, and if the answer changes, report a hedge or a delay rather than a point forecast.
+- **The audit tool's own comments were restating the values.** The encoded pattern list was correct, but two trailing comments spelled out what each fragment decoded to, so the file still published the exact figures it was auditing for — the same fault one layer down. Comments removed. Added a regression test that greps every tracked file for all twelve patterns; the test states its own limit, that a finite pattern list cannot establish containment. The working tree now greps clean for every identifier and value shape.
+- **`recheck.py` accepted a moved baseline.** After the black-swan and privacy tables were added, the tool reported MOVED with the specific changed aspects (page count, badge counts, site hash). The pages were re-read and the baseline accepted, which is the intended workflow rather than a rubber stamp.
+
+Final state of the exposure counterexample, recorded so it is not repeated: **two files in this repository carried the identifiers in plaintext while claiming to protect them**, and a third version carried them in comments. Every one was caught by a scan, not by review. That is the argument for the executable check over a promise.
+
+### Verification (80E9)
+
+- `python3 tools/build.py`: pass, **23** pages (was 22; the Verified lookups page is new).
+- `python3 tools/verify.py`: pass. Every table row has an official source and an evidence badge, source hosts are on the allowlist, all local links resolve (**576** checked), each page has one `h1`, noindex, a restrictive CSP, no inline script, no remote resource, no browser storage. New fail-closed checks: any currency amount not on the reviewed list fails the build, and the lookups page must keep its read dates, the 2027 exclusion and the indexed cap.
+- `python3 -m unittest discover -s tools -p 'test_*.py'`: **23** tests pass.
+- `node --check` on `assets/app.js`, `assets/staged-vs-lump.js`, `assets/phase-model.js`: pass.
+- Chart smoke test (`tools/smoke/chart_smoke.js`, no npm dependency): renders **9 bars, 18 labels** and the expected summary line. Run under the same `node` CI already uses.
+- `python3 tools/recheck.py`: reports UNCHANGED against the committed snapshot.
+- `git diff --check`: pass.
+- Local static server: all **23** pages and all **4** assets return 200; **0** broken internal links.
+
+### Limits and open items (80E9)
+
+- **Historical exposure is still unresolved and is the highest-urgency item.** This session narrowed what is newly published and stopped the audit and test files from republishing identifiers. It did **not** rewrite history, change repository visibility, or reach forks and caches. No amount of site work substitutes for an owner decision on visibility followed by administrator-led history remediation with a private encrypted archive preserved first.
+- Outbound network access from the sandbox is limited, so external source URLs could not be polled directly with `curl`. The **substantive** pages cited here were opened with the fetch tool and quoted from (Federal Reserve History ×3, BOE Proposition 19 and LTA 2025/009, IRS IR-2026-133, IRS Topic 701, CBO, FHFA, TreasuryDirect bills, Civil Code 1947.12, Revenue and Taxation Code 51 and 63.2). The remaining allowlisted sources were re-registered but not individually re-opened in this session and are marked as requiring recheck at use.
+- `tools/privacy_scan.py` reports fragment matches. A match is not proof that a full address or figure is present, and no match is not proof of containment, because the pattern list is finite.
+- The nine staging scenarios are assumption sets chosen to stress the decision, **not** a sample of market outcomes. "Staged ahead in 5 of 9" describes the scenario set, not a probability. Dividends, fees, taxes, inflation and withdrawals are omitted.
+- No household figure, location, postal code, rent, assessment history or derived recommendation is published. This branch adds no private input and reads no private file.

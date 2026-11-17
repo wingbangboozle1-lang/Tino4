@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools/site-manifest.json"
-EXPECTED_PAGES = 23
+EXPECTED_PAGES = 24
 OFFICIAL_HOSTS = {
     "irs.gov", "ca.gov", "leginfo.legislature.ca.gov", "boe.ca.gov", "sco.ca.gov",
     "congress.gov", "uscode.house.gov", "treasurydirect.gov", "treasury.gov",
@@ -18,9 +18,15 @@ OFFICIAL_HOSTS = {
     "insurance.ca.gov", "cslb.ca.gov", "ftb.ca.gov", "sos.ca.gov",
     "huduser.gov", "investor.gov", "github.com",
 }
+# Every currency amount permitted on the public site must appear here. Each one
+# is an official figure recorded with a read date on the Verified lookups page,
+# or a round threshold that is stated by an official source (the California
+# 1% add-on threshold and the section 121 exclusion amounts). A new amount that
+# is not on this list fails the build, which is deliberate: it forces the author
+# to add a source and a read date before a figure can reach the site.
 OFFICIAL_AMOUNTS = {
     "15000000", "15480000", "20000", "1044586", "1022600", "1000000",
-    "250000", "500000", "7000",
+    "250000", "500000", "7000", "19000",
 }
 CURRENCY = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
 POSTAL = re.compile(r"(?<!\d)\d{5}(?!\d)")
@@ -144,6 +150,19 @@ def verify() -> list[str]:
             dest = (target.parent / parsed.path).resolve()
             if not dest.is_file() or not dest.is_relative_to(ROOT.resolve()):
                 errors.append(f"{label}: broken local link {href}")
+    # Every verified figure must carry a read date, so a stale number cannot
+    # quietly survive an annual review.
+    lookups = ROOT / "pages/verified-lookups.html"
+    if lookups.is_file():
+        text = lookups.read_text(encoding="utf-8")
+        for required in ["2026-11-17", "Read", "deliberately blank", "How to re-verify"]:
+            if required not in text:
+                errors.append(f"verified-lookups.html: missing required element {required!r}")
+        if text.count("15,480,000") < 1:
+            errors.append("verified-lookups.html: 2027 estate exclusion figure missing")
+        if "1,044,586" not in text:
+            errors.append("verified-lookups.html: Proposition 19 indexed cap missing")
+
     # The generator is intentionally self-contained; it must not import or read
     # an external household-data file.
     builder = (ROOT / "tools/sitebuild.py").read_text(encoding="utf-8")
