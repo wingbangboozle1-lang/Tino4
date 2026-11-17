@@ -529,3 +529,20 @@ The branch was rebased onto `main` (`fe7aa13`) after sessions `arena/80e9d3b3` a
 - `assets/style.css`: both chart blocks retained (`.chart-frame` for the regime histogram and fan chart, `.dist-chart` for the payout schematic).
 
 A new regression test (`test_every_referenced_local_asset_exists`) now fails if a page references a script that is not on disk; it caught the missing `regime-model.js` script tag, which was then added to the page template.
+
+## Release record — session `arena/32426e4a` (2026-11-17)
+
+- **PR [#124](https://github.com/wingbangboozle1-lang/Tino4/pull/124) merged into `main`** at 2026-11-17T17:25:24Z (merge commit `04ec0e9`). It contained 3242-1 through 3242-5.
+- **CI**: `verify` workflow run [44136727268](https://github.com/wingbangboozle1-lang/Tino4/actions/runs/44136727268) passed on the PR branch (14s), and post-merge run [44136816077](https://github.com/wingbangboozle1-lang/Tino4/actions/runs/44136816077) passed on `main`.
+- **Pages deployment**: GitHub Pages build 1378503015 completed at 2026-11-17T17:26:03Z, status `built`. Verified live by fetching the deployed pages:
+  - `pages/black-swan.html` — regime table, current-official-readings table, the multi-regime simulator with all 14 `bw-*` controls, the limits section and the reinvestment-risk section are all present.
+  - `pages/questions.html` — the three-table split (open questions, official answers, discovery methods) renders.
+  - `pages/suggestions.html` — the S1–S10 board with the appended S11–S15 items renders.
+- **Stale-PR triage**: #103, #104, #106 and #107 closed unmerged (they carried household-locality identifiers and household figures). #119 closed after handoff; its Fed-citation correction, payout schematic, callout and two tests were folded into #124 by hand.
+- **Open PRs after this release**: none from this session. The branch `arena/32426e4a-tino4` may be taken over by any session now that the work is merged.
+
+### Tasks still open (for a later session)
+
+- 3242-5 residual: no insurance premium, utility, maintenance or rent-comparable figure is published, because none was verified from a quote, bill or bid. These remain blank-and-flagged by design.
+- The Proposition 19 February 2027 index adjustment is not published in advance; whoever reads the site after that date must re-read the state board's letter.
+- Historical Git exposure: unchanged and unremediated by this work. `python3 tools/privacy_scan.py` shows one affected file on every ref. Remediation is an administrator action per `tools/history_scrub_runbook.md`.
