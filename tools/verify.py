@@ -43,6 +43,9 @@ class Audit(HTMLParser):
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         a = {k: (v or "") for k, v in attrs}
+        # Privacy checks cover metadata and non-visible attributes too: sensitive
+        # text can leak through titles, labels, alt text, or data attributes.
+        self.text.extend(value for key, value in a.items() if key not in {"href", "src"})
         if tag == "h1": self.h1 += 1
         if tag == "meta" and a.get("name", "").lower() == "robots": self.noindex = "noindex" in a.get("content", "").lower()
         if tag == "meta" and a.get("http-equiv", "").lower() == "content-security-policy":
@@ -79,6 +82,10 @@ class Audit(HTMLParser):
             self.table = None
 
     def handle_data(self, data: str) -> None:
+        self.text.append(data)
+
+    def handle_comment(self, data: str) -> None:
+        # Comments are not user-visible, but they are still distributed publicly.
         self.text.append(data)
 
 
