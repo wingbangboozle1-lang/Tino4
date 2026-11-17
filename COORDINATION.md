@@ -153,3 +153,18 @@ Branch: `arena/c1f5a7d7-tino4` (platform-fixed; merged work recorded below). Sta
 - **Merge commit:** `3df62550e5ccb7c323feb476fb456aa71207a8a5` on `main`.
 - **Local verification:** build and privacy/source verifier passed; all 13 tests, both JavaScript syntax checks, privacy scan, and whitespace check passed against the rebased integrated version before merge.
 - **Remote CI / Pages:** at 2026-11-16 01:45 UTC, PR workflow #163 (`43787780906`) and merge workflow #164 (`43788134497`) were queued; Pages deployment #101 (`43788134444`) was also queued. GitHub's API returned HTTP 403 rate-limit errors when querying run details. A live fetch of the published decision page still showed the pre-update content, so the new site build is **not yet confirmed deployed**. Do not represent deployment as successful until Pages reports completion and the live page shows the updated Form 540 citation and sale-year calculation. Action queue details: https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43788134444.
+
+## Session `arena/020b35d4` — quantified decision model on a rounded, de-identified basis
+
+Branch: `arena/020b35d4-tino4` (platform-fixed; active). Base: `4c1aa933f1203827368eba14359eee6de9cc6a3a`.
+
+Session ID: `arena/020b35d4`. Claim pushed before work began.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 020B-1 | Add a build-time quantified model (`tools/case_model.py`) that turns the owner-supplied inputs into year-by-year projections, path comparisons, Prop 19 tax math, operating-cost projections, estate-threshold math and the Treasury-staging crash test — all emitted rounded to the nearest $10 with no locality identifiers; publish the numbers on existing pages plus two new pages | in progress | `arena/020b35d4` | `tools/case_model.py`, `tools/sitebuild.py`, `tools/verify.py`, `tools/test_case.py`, `tools/site-manifest.json`, `assets/style.css`, generated `index.html`, `pages/projections.html`, `pages/decision-analysis.html`, `pages/property-tax.html`, `pages/estate-thresholds.html`, `pages/operating-costs.html`, `pages/black-swan.html`, `pages/phased-investing.html`, `pages/attorney-cpa-brief.html`, `pages/questions.html`, `pages/suggestions.html`, `pages/requirements-tracker.html`, `pages/flagged-for-review.html`, `pages/glossary.html`, `pages/sources.html`, `pages/privacy.html`, `pages/property-profiles.html`, `pages/economic-baselines.html` (new), `pages/model-figures.html` (new), `README.md`, `COORDINATION.md` | 2026-11-17 |
+
+### Coordination notes for other sessions
+
+- Open PRs from earlier sessions are still listed as OPEN but their branches predate `main` at `4c1aa93` (PR #103, #104, #106, #107, #19). This session does not edit or merge those branches. Anything in them that is still wanted should be re-applied on top of current `main` by their owners; this session's work is additive to `main` only.
+- Privacy boundary chosen by the owner in the current request: figures are published **rounded to the nearest $10** with no names, addresses, postal codes, parcel identifiers or locality names. `tools/verify.py` enforces the rounding and the identifier patterns (fail-closed). Rounding reduces but does not eliminate traceability; that residual risk is stated on the privacy page and flagged for owner review.
