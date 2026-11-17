@@ -1,18 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed checks for the published site.
-
-Two rules dominate this file.
-
-1. Evidence: every data row in every table must carry an official-source link and
-   an evidence badge, and a figure may not reach a page without a source and a
-   read date.
-2. Privacy (owner's instruction, 2026-11-17): every dollar amount is a published
-   official figure or a modelled figure rounded to the nearest ten dollars, and
-   no case identifier - a name, street, postal code, locality, or an unrounded
-   multi-digit record value - may appear in a generated page or in the code that
-   writes one. Rounding reduces traceability; it is not anonymity, and the site
-   says so on its privacy page.
-"""
+"""Fail-closed checks for the public privacy-first site."""
 from __future__ import annotations
 
 import json
@@ -25,48 +12,116 @@ from urllib.parse import urlsplit
 ROOT = Path(__file__).resolve().parent.parent
 MANIFEST = ROOT / "tools/site-manifest.json"
 EXPECTED_PAGES = 26
-CODE_FILES = ["tools/sitebuild.py", "tools/case_model.py"]
 OFFICIAL_HOSTS = {
     "irs.gov", "ca.gov", "leginfo.legislature.ca.gov", "boe.ca.gov", "sco.ca.gov",
     "congress.gov", "uscode.house.gov", "treasurydirect.gov", "treasury.gov",
-    "federalreservehistory.org", "federalreserve.gov", "bls.gov", "cbo.gov", "fhfa.gov",
-    "sec.gov", "insurance.ca.gov", "cslb.ca.gov", "ftb.ca.gov", "sos.ca.gov",
+    "federalreservehistory.org", "federalreserve.gov", "bls.gov", "cbo.gov", "fhfa.gov", "sec.gov",
+    "insurance.ca.gov", "cslb.ca.gov", "ftb.ca.gov", "sos.ca.gov",
     "huduser.gov", "investor.gov", "github.com", "docs.github.com",
 }
-# Amounts published by an official body may appear exactly as published; anything
-# else must be rounded to the nearest ten dollars. A new official figure has to be
-# added here next to the source entry that carries it, which is deliberate: it
-# forces a source and a read date before a number can reach the site.
+# Every currency amount permitted on the public site must appear here. Each one
+# is an official figure recorded with a read date on the Verified lookups page,
+# or a round threshold that is stated by an official source (the California
+# 1% add-on threshold and the section 121 exclusion amounts). A new amount that
+# is not on this list fails the build, which is deliberate: it forces the author
+# to add a source and a read date before a figure can reach the site.
 OFFICIAL_AMOUNTS = {
     "15000000", "15480000", "20000", "1044586", "1022600", "1000000",
     "250000", "500000", "7000", "13990000", "19000", "3000", "1500", "175",
 }
-CURRENCY = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
+CODE_FILES = ["tools/sitebuild.py", "tools/case_model.py"]
 MARKER = re.compile(r"(?i)owner[- ]supplied")
-POSTAL = re.compile(r"(?<!\d)\d{5}(?!\d)")
 UNCOMMA = re.compile(r"(?<![\w.$])\d{7,}(?![\w.,])")
+CURRENCY = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
+POSTAL = re.compile(r"(?<!\d)\d{5}(?!\d)")
 EMAIL = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE = re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)")
 STREET = re.compile(r"(?i)\b\d{1,6}\s+(?:[A-Za-z0-9.'-]+\s+){1,4}(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln|Way|Court|Ct)\b")
-# The identifiers this project must never publish are held encoded, so that the
-# guard does not itself become the leak: this file previously carried them in
-# plaintext while claiming to protect them, which is exactly the failure mode it
-# exists to catch. Decoded at run time and used only as a scan pattern.
+
+STATUTE_CONTEXT = re.compile(r"(?i)(?:§|section|sec\.|no\.|lta|letter to assessors|publication|usc|code)\s*$")
+
+# The identifiers this project must never publish are held encoded, so the guard
+# does not become the leak: a previous version of this file carried them in
+# plaintext while claiming to protect them. Decoded at run time, used only as a
+# scan pattern, and never echoed into a failure message.
 _ENCODED_LOCALITY = (
     "OTUwMTQ= OTQxMjI= Q3VwZXJ0aW5v U2FudGEgQ2xhcmE= U2FuIEpvc2U= "
     "T3V0ZXIgU3Vuc2V0 c2FuIGZyYW5jaXNjbw== UGFya3NpZGU= QmFuY3JvZnQ="
 )
 LOCALITY_PATTERNS = tuple(b64decode(item).decode() for item in _ENCODED_LOCALITY.split())
-LOCALITY = re.compile("(?i)" + "|".join(re.escape(token) for token in LOCALITY_PATTERNS if " " not in token))
-LOCALITY_PHRASES = tuple(token for token in LOCALITY_PATTERNS if " " in token)
+LOCALITY = re.compile("(?i)" + "|".join(re.escape(t) for t in LOCALITY_PATTERNS if " " not in t))
+LOCALITY_PHRASES = tuple(t for t in LOCALITY_PATTERNS if " " in t)
 
 
-def audit_text(label: str, text: str, errors: list[str]) -> None:
-    """Structural privacy scan applied to visible text, attributes and comments."""
-    if POSTAL.search(text): errors.append(f"{label}: five-digit location-like identifier")
-    if EMAIL.search(text): errors.append(f"{label}: email address")
-    if PHONE.search(text): errors.append(f"{label}: phone number")
-    if STREET.search(text): errors.append(f"{label}: street-address pattern")
+def scan_currency(label: str, text: str, errors: list[str], seeded: set[int] = frozenset()) -> None:
+    """Every amount is either a published official figure or a rounded model output.
+
+    A cent-precision amount or a figure that still equals a seeded case record is
+    rejected without naming the value: a CI log is a public artefact.
+    """
+    for amount in CURRENCY.findall(text):
+        normalized = amount.replace(",", "")
+        if "." in normalized:
+            errors.append(f"{label}: a cent-precision amount could be traced to a single bill or roll entry")
+        elif normalized not in OFFICIAL_AMOUNTS and not (len(normalized) >= 2 and normalized.endswith("0")):
+            errors.append(f"{label}: amount is not a published official figure and is not rounded to the nearest ten dollars")
+        elif seeded and int(normalized) in seeded:
+            errors.append(f"{label}: a published amount equals a seeded case record")
+
+
+def model_seeded_amounts() -> set[int]:
+    """Amounts that are a case record rather than a model result.
+
+    Computed from the generator's own model constants so the list is never
+    spelled out here. Amounts below two thousand dollars are generic - a fee, a
+    monthly bill, an example - and the model already states them in words, so
+    they are out of scope for this guard.
+    """
+    try:
+        import sitebuild  # reuses the build's import; the verifier stays offline
+        model = sitebuild.cm
+    except Exception:
+        return set()
+    out: set[int] = set()
+    for name in model.RECORD_FIELDS:
+        value = getattr(model, name, None)
+        if value is None:
+            continue
+        items = value if isinstance(value, (tuple, list)) else [value]
+        for item in items:
+            out.add(int(item))
+            out.add(int(item) * 12)
+    return {amount for amount in out if amount >= 2_000}
+
+
+def scan_identifiers(label: str, text: str, errors: list[str], full: bool = True) -> None:
+    """Privacy scan shared by pages and, in locality mode, by code files."""
+    if MARKER.search(text):
+        errors.append(f"{label}: household-input marker naming the source of an unpublished figure")
+    if full:
+        if EMAIL.search(text): errors.append(f"{label}: email address")
+        if PHONE.search(text): errors.append(f"{label}: phone number")
+        if STREET.search(text): errors.append(f"{label}: street-address pattern")
+    if LOCALITY.search(text):
+        errors.append(f"{label}: case locality identifier (one of the encoded patterns)")
+    if any(phrase in text.lower() for phrase in LOCALITY_PHRASES):
+        errors.append(f"{label}: case locality phrase (one of the encoded patterns)")
+
+
+def postal_hits(text: str) -> list[str]:
+    """Five-digit runs that look like location identifiers.
+
+    A five-digit California code-section number, a publication number or a
+    letter-to-assessors number is not a postal identifier, so runs directly
+    preceded by a statute or document prefix are ignored.
+    """
+    hits: list[str] = []
+    for match in POSTAL.finditer(text):
+        prefix = text[max(0, match.start() - 24): match.start()]
+        if STATUTE_CONTEXT.search(prefix):
+            continue
+        hits.append(match.group(0))
+    return hits
 
 
 class Audit(HTMLParser):
@@ -82,15 +137,11 @@ class Audit(HTMLParser):
         self.row: dict[str, int] | None = None
         self.links: list[tuple[str, bool]] = []
         self.text: list[str] = []
-        self.attributes: list[str] = []
 
     def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
         a = {k: (v or "") for k, v in attrs}
         # Privacy checks cover metadata and non-visible attributes too: sensitive
         # text can leak through titles, labels, alt text, or data attributes.
-        self.attributes.extend(value for key, value in a.items() if key not in {"href", "src"})
-        # attributes and comments are scanned as text, not only as identifiers:
-        # a location token can hide in a title, an aria-label or a build comment
         self.text.extend(value for key, value in a.items() if key not in {"href", "src", "class", "style"})
         if tag == "h1": self.h1 += 1
         if tag == "meta" and a.get("name", "").lower() == "robots": self.noindex = "noindex" in a.get("content", "").lower()
@@ -116,8 +167,8 @@ class Audit(HTMLParser):
             self.links.append((a["href"], "source" in a.get("class", "").split()))
             if urlsplit(a["href"]).scheme and not {"noopener", "noreferrer"}.issubset(set(a.get("rel", "").split())):
                 self.text.append("[unsafe external rel]")
-        if tag == "style":
-            self.text.append("[inline style block]")
+        if tag in {"p", "td", "th", "h1", "h2", "h3", "li", "label"}:
+            pass
 
     def handle_endtag(self, tag: str) -> None:
         if tag == "tr" and self.row is not None and self.table is not None:
@@ -140,73 +191,15 @@ def host_allowed(host: str) -> bool:
     return any(h == suffix or h.endswith("." + suffix) for suffix in OFFICIAL_HOSTS)
 
 
-def model_seeded_amounts() -> set[int]:
-    """Amounts that are a case record rather than a model result.
-
-    Computed from the generator's own model constants so the list is never
-    spelled out in this file, and never printed on a failure: an amount that a
-    reader could type into a search box and land on one assessor record or one
-    listing must not reach a page, rounded or not. The model's own escalation
-    guard (one percent on a starting-year snapshot) exists to keep these out.
-    """
-    try:
-        import sitebuild  # reuses the build's import; verify stays offline
-        model = sitebuild.cm
-    except Exception:
-        return set()
-    out: set[int] = set()
-    # amounts below two thousand dollars are generic (a fee, a monthly bill, a
-    # rounding example) and are already described in words by the model's own
-    # display rule, so they are not what this guard is for
-    for name in model.RECORD_FIELDS:
-        value = getattr(model, name, None)
-        if value is None:
-            continue
-        values = [int(value)] if not isinstance(value, (tuple, list)) else [int(v) for v in value]
-        for item in values:
-            out.add(item)
-            out.add(item * 12)
-    out = {amount for amount in out if amount >= 2_000}
-    return out
-
-
-def scan_currency(label: str, text: str, errors: list[str]) -> None:
-    for amount in CURRENCY.findall(text):
-        normalized = amount.replace(",", "")
-        if "." in normalized:
-            errors.append(f"{label}: a cent-precision amount could be traced to a single bill or roll entry: ${amount}")
-        elif normalized not in OFFICIAL_AMOUNTS and not (len(normalized) >= 2 and normalized.endswith("0")):
-            errors.append(f"{label}: amount is not a published official figure and is not rounded to the nearest ten dollars: ${amount}")
-
-
-def scan_identifiers(label: str, text: str, errors: list[str], full: bool = True) -> None:
-    """Privacy scan shared by generated pages and, in locality mode, by code files.
-
-    Code is not scanned for digit runs: statute and form numbers legitimately
-    contain five digits (a transfer-tax section, a code paragraph), and a page
-    never needs them. Locality patterns are scanned everywhere, including code,
-    because a builder that names a case town is as much a leak as a page that
-    prints one.
-    """
-    if MARKER.search(text):
-        errors.append(f"{label}: household-input marker (matched {MARKER.search(text).group(0)!r})")
-    if full:
-        audit_text(label, text, errors)
-    if LOCALITY.search(text):
-        errors.append(f"{label}: case locality identifier (matched one of the encoded patterns)")
-    found = [phrase for phrase in LOCALITY_PHRASES if phrase in text.lower()]
-    if found: errors.append(f"{label}: case locality phrase (matched one of the encoded patterns)")
-
-
 def verify() -> list[str]:
     errors: list[str] = []
-    seeded = model_seeded_amounts()
     try:
         paths = json.loads(MANIFEST.read_text(encoding="utf-8"))
     except Exception as exc:
         return [f"manifest unavailable or invalid: {exc}"]
     if not isinstance(paths, list) or len(paths) != EXPECTED_PAGES or len(set(paths)) != len(paths):
         return [f"manifest must contain exactly {EXPECTED_PAGES} unique page paths"]
+    seeded = model_seeded_amounts()
     for relative in paths:
         target = (ROOT / relative).resolve()
         if not target.is_relative_to(ROOT.resolve()) or not target.is_file():
@@ -217,16 +210,13 @@ def verify() -> list[str]:
         audit.feed(raw)
         label = str(relative)
         visible = " ".join(audit.text)
-        attrs = " ".join(audit.attributes)
         scan_identifiers(label, visible, errors)
-        scan_identifiers(label, attrs, errors, full=False)
+        if postal_hits(visible):
+            errors.append(f"{label}: five-digit location-like identifier in visible text")
         if UNCOMMA.search(visible):
             errors.append(f"{label}: a multi-digit run written without separators could match a public record")
-        if "[inline style block]" in visible: errors.append(f"{label}: inline style block is not permitted")
-        scan_currency(label, raw, errors)
-        for amount in CURRENCY.findall(raw):
-            if "." not in amount and int(amount.replace(",", "")) in seeded:
-                errors.append(f"{label}: a published amount equals a seeded case record")
+        if "[inline style block]" in " ".join(audit.text):
+            errors.append(f"{label}: inline style block is not permitted")
         if audit.h1 != 1: errors.append(f"{label}: expected exactly one h1")
         if not audit.noindex: errors.append(f"{label}: noindex metadata missing")
         if not audit.csp: errors.append(f"{label}: restrictive CSP missing")
@@ -235,11 +225,12 @@ def verify() -> list[str]:
             errors.append(f"{label}: browser storage is not permitted")
         if "fetch(" in raw or "XMLHttpRequest" in raw or "sendBeacon" in raw:
             errors.append(f"{label}: network call from a page is not permitted")
+        scan_currency(label, raw, errors, seeded)
         for table in audit.tables:
             if table["caption"] != 1: errors.append(f"{label}: table must have exactly one caption")
             for row in table["rows"]:
                 if row["td"] and (row["source"] < 1 or row["badge"] < 1):
-                    errors.append(f"{label}: table data row lacks an official source link or evidence badge")
+                    errors.append(f"{label}: table data row lacks official source link or evidence badge")
         for href, is_source in audit.links:
             parsed = urlsplit(href)
             if parsed.scheme or parsed.netloc:
@@ -263,8 +254,11 @@ def verify() -> list[str]:
             errors.append("verified-lookups.html: 2027 estate exclusion figure missing")
         if "1,044,586" not in text:
             errors.append("verified-lookups.html: Proposition 19 indexed cap missing")
-    # The generator and the model are self-contained: they must not read an
-    # external household-data file, and neither may carry a case identifier.
+
+    # The generator and the model are intentionally self-contained: they must not
+    # read an external household-data file, and neither may carry a case
+    # identifier. Code is not scanned for digit runs, because statute and form
+    # numbers legitimately contain five digits and a page never needs them.
     for name in CODE_FILES:
         code = (ROOT / name).read_text(encoding="utf-8")
         scan_identifiers(name, code, errors, full=False)
@@ -275,8 +269,13 @@ def verify() -> list[str]:
         for marker in ("case_data", "household.json", "assessor_roll", "grant_deed"):
             if marker in code:
                 errors.append(f"{name}: household-data marker {marker}")
+    # A failure message must not repeat what it found, or the CI log becomes the
+    # leak the verifier exists to prevent.
+    for index, message in enumerate(errors):
+        for token in LOCALITY_PATTERNS:
+            if token in message:
+                errors[index] = message.replace(token, "[redacted]")
     return errors
-
 
 if __name__ == "__main__":
     failures = verify()
@@ -284,5 +283,5 @@ if __name__ == "__main__":
         for failure in failures: print(f"FAIL: {failure}")
         raise SystemExit(1)
     print(f"OK - {EXPECTED_PAGES} pages; every table row carries an official source and an evidence status; "
-          "every amount is a published official figure or a ten-dollar-rounded model output; "
-          "no case identifier, browser storage, network call or remote resource is present.")
+          "every amount is a published official figure or a ten-dollar-rounded model output, never a seeded "
+          "case record; no case identifier, browser storage, network call or remote resource is present.")

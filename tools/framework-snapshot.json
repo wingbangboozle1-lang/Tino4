@@ -1,15 +1,15 @@
 {
   "badge_counts": {
-    "Assumption": 150,
+    "Assumption": 151,
     "Derived in-model": 4,
-    "Guidance": 132,
+    "Guidance": 165,
     "Historical": 26,
-    "Missing": 75,
-    "Not verified": 43,
-    "Official reference": 79,
-    "Verified rule": 131
+    "Missing": 86,
+    "Not verified": 44,
+    "Official reference": 83,
+    "Verified rule": 182
   },
-  "data_rows": 640,
+  "data_rows": 741,
   "official_hosts": [
     "bls.gov",
     "boe.ca.gov",
@@ -36,10 +36,11 @@
     "uscode.house.gov"
   ],
   "page_count": 26,
-  "site_hash": "66ac787527ab53aa",
-  "source_hash": "ba7c75d158582f39",
+  "site_hash": "04e4d940cb5b4938",
+  "source_hash": "6d950052437937e1",
   "source_keys": [
     "bls_cpi",
+    "bls_cpi_release",
     "bls_hist",
     "bls_latest",
     "boe_counties",
@@ -62,9 +63,11 @@
     "ca_rtc63",
     "ca_rtc69_6",
     "ca_sco",
+    "cbo_2026",
     "cbo_long",
     "cbo_outlook",
     "cdi",
+    "cdi_compare",
     "congress_law",
     "cpuc_solar",
     "cslb",
@@ -90,6 +93,7 @@
     "irs_121",
     "irs_2027",
     "irs_706",
+    "irs_706_inst",
     "irs_8960",
     "irs_basis",
     "irs_estate",

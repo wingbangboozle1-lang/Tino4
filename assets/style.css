@@ -331,6 +331,14 @@ footer a { white-space: nowrap; }
 @media (max-width: 620px) {
   .review-queue label { grid-template-columns: 1fr; }
 }
+#bw-result { grid-column: 1 / -1; }
+.chart-frame { margin: 4px 0 6px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: #fbfdfc; }
+.chart-frame:empty { display: none; }
+.chart-frame svg { display: block; max-width: 100%; height: auto; }
+@media print {
+  .chart-frame { break-inside: avoid; }
+}
+.dist-chart { width: 100%; max-width: 720px; height: auto; display: block; margin: 6px 0 0; }
 
 /* Quantified blocks: bars, provenance, and the derived evidence badge. */
 .bars { display: grid; gap: 8px; margin: 18px 0 8px; }
