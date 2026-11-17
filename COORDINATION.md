@@ -176,3 +176,15 @@ Branch: `arena/07cbe6c9-tino4` (platform-fixed; active).
 - **CI:** PR `build-and-verify` run 44128554687 succeeded; merged-main run 44128632792 succeeded.
 - **Pages:** deployment run 44128631372 completed successfully after the merge. This change is a verifier/test improvement; the generated public content and privacy boundary remain unchanged.
 - **Limits:** history remediation remains unresolved; no assertion that previous Git, PR, fork, cache, download, or clone copies were erased.
+
+## Session `arena/5f1b7997` — decision guidance, source verification, privacy-safe build and Pages publication
+
+Branch: `arena/5f1b7997-tino4` (created from `main` at 4c1aa93). Status: active.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 5F1B-1 | Verify key official sources (estate tax threshold, FTB 1% surcharge, Prop 19, CA transfer/recording fees) and flag irregularities | done | `arena/5f1b7997` | research; COORDINATION.md sources note | 2026-11-17 |
+| 5F1B-2 | Strengthen questions, missing-evidence discovery suggestions, black-swan baseline, and one-page brief within privacy limits | done | `arena/5f1b7997` | tools/sitebuild.py (reviewed; no household inputs added; privacy boundary intact) | 2026-11-17 |
+| 5F1B-3 | Build, run tests, verify privacy/source checks; commit and push | in progress | `arena/5f1b7997` | tools/sitebuild.py, generated pages, COORDINATION.md | — |
+| 5F1B-4 | Open PR to main, merge after green build/deploy, record PR link and result | in progress | `arena/5f1b7997` | main branch; GitHub Pages | — |
+
