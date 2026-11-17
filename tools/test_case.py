@@ -158,5 +158,28 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         flagged = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
         self.assertIn("withheld from this public site", flagged)
 
+    def test_great_recession_citation_points_to_essay_that_states_the_figures(self):
+        # The 57% S&P 500 and ~30% home-price figures must be attributed to the
+        # Federal Reserve History essay that actually contains them.
+        label, url, scope = sitebuild.SOURCES["fed_2008"]
+        self.assertEqual(url, "https://www.federalreservehistory.org/essays/great-recession-of-200709")
+        self.assertNotIn("great-recession-and-its-aftermath", url)
+        self.assertIn("57", scope)
+        self.assertIn("30", scope)
+        black_swan = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("great-recession-of-200709", black_swan)
+
+    def test_projections_publish_distribution_order_schematic(self):
+        page = sitebuild.render("pages/projections.html", "Projection worksheet", "Private planning")
+        self.assertIn("dist-chart", page)
+        self.assertIn("Gross sale value", page)
+        self.assertIn("Sale transaction costs", page)
+        self.assertIn("Documentary transfer tax", page)
+        self.assertIn("Recording fees", page)
+        self.assertIn("Sale-year income tax", page)
+        self.assertIn("Net proceeds to invest", page)
+        # The schematic must not present amounts or proportions as facts.
+        self.assertIn("equal-width schematic", page.lower())
+
 if __name__ == "__main__":
     unittest.main()

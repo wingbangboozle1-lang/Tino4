@@ -233,3 +233,4 @@ footer a { white-space: nowrap; }
 .calculator input, .review-queue select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
 .calculator button { min-height: 40px; border: 0; border-radius: 8px; padding: 8px 14px; background: var(--teal-dark); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
 #phase-result { grid-column: 1 / -1; }
+.dist-chart { width: 100%; max-width: 720px; height: auto; display: block; margin: 6px 0 0; }

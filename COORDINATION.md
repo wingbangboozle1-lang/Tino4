@@ -1,5 +1,44 @@
 # COORDINATION.md — Privacy-safe task board
 
+## Session `arena/3119787c` — official-source line-by-line verification, citation correction, distribution schematic
+
+Branch: `arena/3119787c-tino4` (platform-fixed; active).
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 3119-1 | Verify published tax/legal/market claims line by line against official sources; correct the misattributed Federal Reserve citation; add a privacy-safe distribution schematic; regression-test; rebuild, verify, and release | done | `arena/3119787c` | `tools/sitebuild.py`, `assets/style.css`, `tools/test_case.py`, generated `pages/**`, `COORDINATION.md` | 2026-11-17 |
+
+### 3119-1 verification record (checked 2026-11-17)
+
+Verified against the linked official source (re-read, not assumed):
+
+- **Federal estate exclusion** — 2026 basic exclusion $15,000,000; 2027 $15,480,000 (IRS IR-2026-133, Rev. Proc. 2026-35): https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts — matches the site. Enacted base set by Public Law 119-21 (One Big Beautiful Bill Act), H.R. 1 (119th Congress): https://www.congress.gov/bill/119th-congress/house-bill/1 (direct fetch was blocked by the host; figure confirmed via the IRS release).
+- **Proposition 19 indexed amount** — $1,044,586 for transfers February 16, 2025 through February 15, 2027 (BOE Letter to Assessors 2025/009): https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf — matches the site.
+- **California estate tax** — no California estate tax return required for deaths on or after January 1, 2005 (State Controller's Office): https://www.sco.ca.gov/ardtax_estate_tax.html — matches the site.
+- **California 1% additional tax** — Revenue & Taxation Code §17043: 1% on the portion of taxable income above $1,000,000; threshold not indexed; renamed the Behavioral Health Services Tax. Site scope and the estate-thresholds/questions pages match: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC
+- **California capital gains** — "California does not have a lower rate for capital gains. All capital gains are taxed as ordinary income." (FTB, page updated 2026-01-28): https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html — matches the site.
+- **Unrecaptured section 1250 gain** — IRS Topic 409: taxed at a maximum 25% rate: https://www.irs.gov/taxtopics/tc409 — matches the site.
+- **Section 121 home-sale exclusion** — IRS Topic 701: up to $250,000 single / $500,000 joint, ownership-and-use tests: https://www.irs.gov/taxtopics/tc701 — matches the site.
+- **Trustee notice** — Probate Code §16061.7: written notice to beneficiaries and heirs within 60 days after the death that makes the trust irrevocable: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=16061.7.&lawCode=PROB — matches the site.
+- **Change-in-ownership statement** — Revenue & Taxation Code §480(b): within 150 days after death for a death-transfer through a trust: https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=480.&lawCode=RTC — matches the site.
+- **Proposition 19 deadlines** — BOE Prop 19 page: file the homeowners' exemption within 1 year of transfer; file the exclusion claim within 3 years or before transfer to a third party; effective February 16, 2021; implemented by RTC §63.2: https://www.boe.ca.gov/prop19/ — matches the inheritance-process page.
+- **1929 anchor** — Federal Reserve History, Stock Market Crash of 1929: the Dow fell 89% from its September 1929 peak to its 1932 low and did not regain its prior high until November 1954: https://www.federalreservehistory.org/essays/stock-market-crash-of-1929 — matches the site.
+
+### 3119-1 irregularity found and corrected
+
+- **Misattributed Federal Reserve citation (corrected).** The `fed_2008` source pointed to *"The Great Recession and Its Aftermath"* (`.../essays/great-recession-and-its-aftermath`). That essay states home prices fell "over a fifth" (about 20%) and does **not** state the S&P 500 57% figure, yet the source scope claimed both a ~57% S&P 500 decline and a ~30% average home-price decline from that page. The 57% S&P 500 (Oct 2007 peak to Mar 2009 trough) and ~30% average home-price (mid-2006 peak to mid-2009) figures are stated verbatim on the Federal Reserve History essay *"The Great Recession"* (`.../essays/great-recession-of-200709`). The URL was corrected to the essay that actually contains the figures; the numbers themselves were already accurate. No other source attribution required correction.
+
+### 3119-1 added feature
+
+- **Distribution of sale proceeds schematic.** Added a privacy-safe inline-SVG order schematic to the Projection worksheet page showing the fixed payout order (gross value → sale transaction costs → documentary transfer tax → recording fees → sale-year income tax → net to invest). The segments are equal-width and explicitly labeled as an order schematic, not amounts or proportions, preserving the no-household-figures boundary. Added a `.dist-chart` stylesheet rule.
+
+### 3119-1 verification of the change
+
+- `python3 tools/build.py`: pass (22 pages).
+- `python3 tools/verify.py`: pass; every table row retains an official source and evidence badge; no household marker, browser storage, remote resource, or unrounded currency amount introduced.
+- `python3 -m unittest discover -s tools -p 'test_*.py'`: pass (15 tests), including new regression tests for the corrected Fed citation URL and the distribution schematic.
+- `node --check assets/app.js`, `node --check assets/phase-model.js`, `git diff --check`: pass.
+
 ## Session `arena/8ce4e259` — surface historical privacy risk on the landing page
 
 Branch: `arena/8ce4e259-tino4` (platform-fixed; active).

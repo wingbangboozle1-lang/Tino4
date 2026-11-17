@@ -44,7 +44,7 @@ SOURCES = {
     "fed_1929": ("Federal Reserve History — Stock Market Crash of 1929", "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929", "Reports an 89% Dow Jones Industrial Average peak-to-trough decline and that the prior high was not regained until 1954. This price-index episode is not a portfolio forecast or probability."),
     "fed_depression": ("Federal Reserve History — The Great Depression", "https://www.federalreservehistory.org/essays/great-depression", "Historical account of financial and economic stress in the 1930s; not a forecast."),
     "fed_inflation": ("Federal Reserve History — The Great Inflation", "https://www.federalreservehistory.org/essays/great-inflation", "Historical account of inflation and policy in the 1960s–1980s; not a probability estimate."),
-    "fed_2008": ("Federal Reserve History — The Great Recession", "https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath", "Reports an approximately 57% S&P 500 peak-to-trough decline and an approximately 30% average U.S. home-price decline from prior peaks. These historical observations do not forecast an individual portfolio or property."),
+    "fed_2008": ("Federal Reserve History — The Great Recession", "https://www.federalreservehistory.org/essays/great-recession-of-200709", "Read 2026-11-17: reports that home prices fell approximately 30 percent on average from their mid-2006 peak to mid-2009, and that the S&P 500 index fell 57 percent from its October 2007 peak to its March 2009 trough. These historical observations do not forecast an individual portfolio or property."),
     "bls_cpi": ("U.S. Bureau of Labor Statistics — CPI", "https://www.bls.gov/cpi/", "Consumer Price Index data and methodology; historical inflation is not a future path."),
     "cbo_long": ("Congressional Budget Office — Long-Term Budget Outlook", "https://www.cbo.gov/topics/budget/long-term-budget-outlook", "Long-run fiscal and economic baseline publications; not a 50-year property or portfolio forecast."),
     "cbo_outlook": ("Congressional Budget Office — Economic Outlook", "https://www.cbo.gov/topics/economy", "Near-term economic baseline publications; verify the latest edition before use."),
@@ -300,7 +300,33 @@ def content_for(path: str) -> tuple[str, str, str]:
         ]
         body = table("Projection worksheet design (no household inputs stored)", ["Output", "Method", "Verification"], rows)
         body += prose("Avoid false precision", "Publish ranges or dated official figures only. For every modeled amount, preserve the input source, observation date, formula, tax treatment, scenario range, and whether it is measured, assumed, or missing. Rebuild after any input change and record whether the ranking moved.")
-        body += prose("Distribution of sale proceeds", "Model the payout in the fixed order published on the Compare paths page: gross value, sale transaction costs, documentary transfer tax, recording fees, sale-year income tax, then net to invest. A distribution chart belongs in the private model built on that order; this public page publishes the framework and the labels, not household amounts.")
+        body += prose("Distribution of sale proceeds", "Model the payout in the fixed order published on the Compare paths page: gross value, sale transaction costs, documentary transfer tax, recording fees, sale-year income tax, then net to invest. The schematic below shows that order; actual proportions and amounts belong in the private model, not this public page.")
+        dist_svg = (
+            '<section class="prose"><h2>Distribution of sale proceeds — order schematic</h2>'
+            '<p>The chart shows the fixed payout order, top to bottom. It is an order schematic only: the segments are equal-width and do not represent amounts, proportions, or probabilities. Actual proportions depend on private inputs and are computed in the private model.</p>'
+            '<div class="table-scroll"><svg class="dist-chart" role="img" aria-label="Schematic of the sale-proceeds payout order: gross value, sale transaction costs, documentary transfer tax, recording fees, sale-year income tax, then net to invest." viewBox="0 0 720 250" xmlns="http://www.w3.org/2000/svg">'
+            '<title>Sale-proceeds payout order schematic</title>'
+            '<rect x="40" y="30" width="70" height="190" fill="#eef2f6" stroke="#c9d3dc" stroke-width="1"/>'
+            '<g font-family="Arial, Helvetica, sans-serif" font-size="13" fill="#ffffff" text-anchor="middle" font-weight="bold">'
+            '<rect x="40" y="30" width="70" height="31.66" fill="#2b4a6f"/><text x="75" y="51">1</text>'
+            '<rect x="40" y="61.66" width="70" height="31.66" fill="#3a5f8a"/><text x="75" y="82.7">2</text>'
+            '<rect x="40" y="93.32" width="70" height="31.66" fill="#4a75a3"/><text x="75" y="114.3">3</text>'
+            '<rect x="40" y="124.98" width="70" height="31.66" fill="#6a93b8"/><text x="75" y="145.9">4</text>'
+            '<rect x="40" y="156.64" width="70" height="31.66" fill="#8aa9c9"/><text x="75" y="177.6">5</text>'
+            '<rect x="40" y="188.3" width="70" height="31.7" fill="#c2d2e0"/><text x="75" y="209.3" fill="#22323f">6</text>'
+            '</g>'
+            '<g font-family="Arial, Helvetica, sans-serif" font-size="14" fill="#1f2a33">'
+            '<text x="150" y="51">1 · Gross sale value</text>'
+            '<text x="150" y="82.7">2 · Sale transaction costs</text>'
+            '<text x="150" y="114.3">3 · Documentary transfer tax</text>'
+            '<text x="150" y="145.9">4 · Recording fees</text>'
+            '<text x="150" y="177.6">5 · Sale-year income tax</text>'
+            '<text x="150" y="209.3">6 · Net proceeds to invest</text>'
+            '</g>'
+            '<text x="40" y="240" font-family="Arial, Helvetica, sans-serif" font-size="12" fill="#5a6b78">Equal-width schematic; not a proportion, forecast, or household figure.</text>'
+            '</svg></div></section>'
+        )
+        body += dist_svg
         return "Projection worksheet", "A reproducible approach for a private offline model; no property-specific projections are published.", body
     if path.endswith("property-tax.html"):
         rows = [
