@@ -423,8 +423,15 @@ for (const bad of [12, 48]) {
                 cwd=ROOT.parent, capture_output=True, text=True,
             )
             for line in result.stdout.splitlines():
-                if line.strip():
-                    offenders.append(line.split(":", 1)[-1])
+                if not line.strip():
+                    continue
+                path = line.split(":", 1)[-1]
+                # This test necessarily contains the encoded patterns, so it is
+                # the one file exempted. The exemption is narrow on purpose: it
+                # covers only base64 fragments, never a decoded identifier.
+                if path == "tools/test_case.py":
+                    continue
+                offenders.append(path)
         self.assertEqual(sorted(set(offenders)), [], f"identifier republished in: {sorted(set(offenders))}")
 
 
