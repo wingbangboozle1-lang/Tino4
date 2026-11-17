@@ -209,8 +209,8 @@ Branch: `arena/91395313-tino4` (platform-fixed; active). Rebased onto `main` @ `
 | 9139-1 | Audit the public remote for retained household data (all branches, PR refs, tag refs) and record the finding without restating any sensitive value | done | `arena/91395313` | read-only mirror audit; `COORDINATION.md`, `tools/history_scrub_runbook.md` | 2026-11-17 |
 | 9139-2 | Build a private, git-ignored estate workbench: anonymised inventory placeholders, rounded figures where the owner supplied them, year-by-year property-tax and value projections, path comparison engine, black-swan and phased-investing runs, distribution chart | done | `arena/91395313` | `private-work/**` (git-ignored), `tools/private/**` | 2026-11-17 |
 | 9139-3 | Re-read primary sources and mark each one verified/renamed/moved/dead with the date read | done | `arena/91395313` | `tools/sitebuild.py` (SOURCES only), `pages/sources.html`, `COORDINATION.md` | 2026-11-17 |
-| 9139-4 | Publish a source-linked decision layer: evidence-gated decision rule, information-gap discovery plan, black-swan regime engine description, and a suggestions page with a review queue | in progress | `arena/91395313` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css`, generated `pages/**`, `index.html`, `tools/test_case.py` | 2026-11-17 |
-| 9139-5 | Rebuild, run all tests, open PR into `main`, merge, confirm Pages deploy, record result here | unclaimed | — | release checks, `COORDINATION.md` | — |
+| 9139-4 | Publish a source-linked decision layer: evidence-gated decision rule, information-gap discovery plan, black-swan regime engine description, and a suggestions page with a review queue | done | `arena/91395313` | `tools/sitebuild.py`, `assets/app.js`, `assets/style.css`, generated `pages/**`, `index.html`, `tools/test_case.py` | 2026-11-17 |
+| 9139-5 | Rebuild, run all tests, open PR into `main`, merge, confirm Pages deploy, record result here | done | `arena/91395313` | release checks, `COORDINATION.md` | — |
 
 **Scope note for other active sessions:** this session does not touch `tools/verify.py` (owned by `arena/07cbe6c9`, now merged) or anything outside the file list above. No household value, place name, postal code or identifier is written to any tracked file; the private workbench is git-ignored and excluded from the published site.
 
@@ -316,3 +316,21 @@ Two claims were narrowed because the sources did not support the wider version:
 One measurement note: the site's own privacy scanner produced a false positive on the phrase
 "2 and not a way", which its street-address pattern read as a house number. The prose was reworded;
 the scanner was deliberately **not** weakened, since it is a privacy control.
+
+### 9139-5 release record
+
+- **PR:** [#121](https://github.com/wingbangboozle1-lang/Tino4/pull/121) — "Correct three source defects and add a break-even decision layer", opened against `main` from `arena/91395313-tino4`.
+- **CI:** `build-and-verify` **passed** (run 44130799989, job 134206997816, 16s); merge state was `CLEAN`/`MERGEABLE` before the merge.
+- **Merge:** `gh pr merge 121 --merge` at 2026-11-17T16:53:51Z; merge commit `819cad97a16abcfb2ff6e8171df9d46814707027` on `main`.
+- **Post-merge CI:** `verify` run 44130960336 on `main` completed **success**.
+- **Pages:** `pages build and deployment` run 44130959356 completed **success**; the Pages API reported `built`. **Deploy verified by fetching the live page**, not inferred from the run status: `pages/break-even.html` returned the new content and the corrected `Federal Reserve History — The Great Recession` citation with its read-date note.
+- **Rebase coordination:** `main` advanced twice during this session (PR #115, then PR #117/#118 from `arena/5f1b7997`). A `COORDINATION.md` conflict was resolved by keeping the other session's complete release record and appending this session's claim below it — no other session's work was discarded. Verified afterwards that their content (portability, "Prop H", distribution-chart and imputed-rent rows) is still present and that the combined tree builds and passes all tests.
+- **Branch publication:** the remote session branch held one stale claim commit whose content was fully contained in the rebased history. It was repointed with `--force-with-lease` pinned to the exact prior SHA, so no work could be lost by a concurrent update. No branch other than this session's own was rewritten, and no branch was deleted.
+- **Final verification on the merged tree:** build 23 pages; `tools/verify.py` pass; **20 unit tests** pass (6 added this session); `node --check` pass on both scripts; `git diff --check` clean; static crawl of every local link across all 23 pages found **0 broken links**; `git check-ignore` confirms all four private-workbench files are ignored and `git ls-files private-work` returns nothing.
+
+### Open items this session did not close
+
+1. **Historical repository exposure** — broad, spans many branch and PR refs, and is not fixed by this merge. Making only the default branch private would be an incomplete remedy. Administrator work with a preserved encrypted archive, following GitHub's sensitive-data guidance already linked from the site.
+2. **Local "Prop H" terms** — deliberately withheld from the public site and still unverified publicly; the private workpaper holds the identification.
+3. **Every property-specific fact remains missing**: date-of-death appraisal, tax-rate-area levy, local transfer-tax and recorder schedules, insurance quotes for both uses, written rent comparables, leases, and the whole-estate inventory including prior taxable gifts and portability. The site marks each as missing; the private model marks each path BLOCKED until its gate clears.
+4. The private workbench is intentionally **not** in this repository. It exists only in the session workspace, is git-ignored, and must be moved to encrypted private storage by the owner; it is not recoverable from GitHub.
