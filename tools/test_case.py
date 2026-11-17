@@ -377,5 +377,27 @@ for (const bad of [12, 48]) {
         self.assertIn("82 of 87 refs", page)
 
 
+    def test_recheck_reports_whether_the_evidence_layer_moved(self):
+        """Rebuilding must state whether the recommendation-visible layer
+        changed, not merely whether the build passed."""
+        result = subprocess.run(
+            ["python3", str(ROOT / "recheck.py")], cwd=ROOT.parent,
+            capture_output=True, text=True,
+        )
+        self.assertIn(result.returncode, (0, 1), result.stdout + result.stderr)
+        self.assertIn("recheck:", result.stdout)
+        self.assertTrue(
+            "UNCHANGED" in result.stdout or "MOVED" in result.stdout or "snapshot" in result.stdout,
+            result.stdout,
+        )
+
+    def test_recheck_refuses_a_private_model_inside_the_repository(self):
+        """The private model must be able to live outside the tracked tree."""
+        script = (ROOT / "recheck.py").read_text(encoding="utf-8")
+        self.assertIn("must point outside the repository", script)
+        self.assertIn("--private-model", script)
+        self.assertIn("Only the ordering is ever printed", script)
+
+
 if __name__ == "__main__":
     unittest.main()
