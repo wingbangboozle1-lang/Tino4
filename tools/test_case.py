@@ -399,5 +399,34 @@ for (const bad of [12, 48]) {
         self.assertIn("Only the ordering is ever printed", script)
 
 
+    def test_no_tracked_source_republishes_an_identifier(self):
+        """Scan every tracked file for the case identifiers and value shapes.
+
+        This is a regression guard, not proof of containment: the pattern list
+        is finite and a clean result does not show that history is clean. It
+        exists because two files in this repository previously carried the
+        identifiers in plaintext while claiming to protect them.
+        """
+        import base64
+        import subprocess as sp
+
+        encoded = [
+            "OTUwMTQ=", "OTQxMjI=", "Q3VwZXJ0aW5v", "U3Vuc2V0IERpc3RyaWN0",
+            "U2FudGEgQ2xhcmEgQ291bnR5", "UGFya3NpZGU=", "QmFuY3JvZnQ=",
+            "MywxMDAsMDAw", "MSw4MDAsMDAw", "NywxNTA=", "NTUwLDUzNw==", "MTE0LDI0OA==",
+        ]
+        patterns = [base64.b64decode(item).decode() for item in encoded]
+        offenders = []
+        for pattern in patterns:
+            result = sp.run(
+                ["git", "grep", "-l", "-i", "-F", "--", pattern],
+                cwd=ROOT.parent, capture_output=True, text=True,
+            )
+            for line in result.stdout.splitlines():
+                if line.strip():
+                    offenders.append(line.split(":", 1)[-1])
+        self.assertEqual(sorted(set(offenders)), [], f"identifier republished in: {sorted(set(offenders))}")
+
+
 if __name__ == "__main__":
     unittest.main()

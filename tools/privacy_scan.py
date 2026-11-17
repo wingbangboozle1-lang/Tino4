@@ -36,23 +36,25 @@ from collections import defaultdict
 
 # base64 of the identifier fragments used for the audit. Decoded at runtime.
 _ENCODED = [
-    "OTUwMTQ=",                      # postal code fragment
-    "OTQxMjI=",                      # postal code fragment
-    "Q3VwZXJ0aW5v",                  # locality name
-    "U3Vuc2V0IERpc3RyaWN0",          # sub-locality name
-    "U2FudGEgQ2xhcmEgQ291bnR5",      # county name
-    "UGFya3NpZGU=",                  # block name
-    "QmFuY3JvZnQ=",                  # street name
+    "OTUwMTQ=",
+    "OTQxMjI=",
+    "Q3VwZXJ0aW5v",
+    "U3Vuc2V0IERpc3RyaWN0",
+    "U2FudGEgQ2xhcmEgQ291bnR5",
+    "UGFya3NpZGU=",
+    "QmFuY3JvZnQ=",
 ]
 
-# Property-value and rent strings are matched by shape, not by value, so the
-# audit does not restate a figure.
+# Property-value and rent strings seen in earlier drafts. Encoded for the same
+# reason as the identifiers above, and deliberately NOT annotated with the
+# decoded value: an earlier version carried the plain numbers in these trailing
+# comments, which defeated the encoding entirely.
 _ENCODED_SHAPES = [
-    "MywxMDAsMDAw",                  # 3,100,000
-    "MSw4MDAsMDAw",                  # 1,800,000
-    "NywxNTA=",                      # 7,150
-    "NTUwLDUzNw==",                  # 550,537
-    "MTE0LDI0OA==",                  # 114,248
+    "MywxMDAsMDAw",
+    "MSw4MDAsMDAw",
+    "NywxNTA=",
+    "NTUwLDUzNw==",
+    "MTE0LDI0OA==",
 ]
 
 ACCOUNT = base64.b64decode("d2luZ2JhbmcvYm9veg==").decode()
