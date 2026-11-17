@@ -973,8 +973,8 @@ def _q_index(headline: dict) -> str:
              ], STATUS["rule"], ["irs_estate", "irs_estate_faq", "irs_2027"]),
             ([
                 "Cost base: are insurance, maintenance and the capital plan real numbers?",
-                "Modelled insurance " + _n(cm.midpoint(*cm.A_INSURANCE_YR)) + " and maintenance "
-                + _n(cm.A_MARKET_2026 * cm.midpoint(*cm.MAINT_PCT_A)) + " a year, both flagged",
+                "Modelled insurance " + cm.band(*cm.A_INSURANCE_YR) + " a year and maintenance at "
+                + _p(cm.MAINT_PCT_A[0], 2) + " to " + _p(cm.MAINT_PCT_A[1], 2) + " of value, both flagged",
                 "Whether the keep-and-let rows survive their own expense column",
                 "Written quotes and three licensed bids replace both; the site marks them unverified until "
                 "they exist",
@@ -1400,10 +1400,10 @@ def _q_costs() -> str:
     body += callout(
         "The insurance line is the one to fix first",
         "Premiums follow the dwelling-coverage limit, and the limit has to follow rebuilding cost, not market "
-        "value or an estimate taken from a typical house. The owner's working figure is plausible for an average "
-        "home in this state and is not a number to plan a high-value house on: two written quotes with the "
-        "declarations page attached replace it, and the model reruns. Nothing in this project claims to know a "
-        "carrier's rate.",
+        "value or an estimate taken from a typical house. The owner's working figures are plausible for an "
+        "average home in this state and are not numbers to plan a high-value house or a three-unit let building "
+        "on: two written quotes with the declarations page attached replace the band, and the model reruns. "
+        "Nothing in this project claims to know a carrier's rate.",
         "warning",
     )
     rows = []
@@ -1828,10 +1828,10 @@ def _q_figures() -> str:
         (["Electric, Property A", "a small credit, " + cm.magnitude(cm.midpoint(*cm.A_SOLAR_CREDIT_MONTH)) + " a month", "Case figure, rounded range",
           "Read the interconnection date and the export tariff; the credit is a rate-plan artifact and can be "
           "reduced for a new owner", "cpuc_solar"], STATUS["unverified"]),
-        (["Insurance, both buildings", _n(cm.midpoint(*cm.A_INSURANCE_YR)) + " and "
-          + _n(cm.midpoint(*cm.B_INSURANCE_YR)) + " a year", "Model assumption band, no quote on file",
-          "The owner's estimates are " + _n(cm.A_INSURANCE_GUESS_YR) + " and " + _n(cm.B_INSURANCE_GUESS_YR)
-          + " a year; both are flagged as likely low for the coverage limits these buildings need", "cdi"],
+        (["Insurance, both buildings", "band of " + cm.band(*cm.A_INSURANCE_YR) + " and "
+          + cm.band(*cm.B_INSURANCE_YR) + " a year", "Model assumption band, no quote on file",
+          "The owner's working figures are materially below this band and are flagged as likely low for the "
+          "coverage limits these buildings need; two quotes with declarations pages replace the band", "cdi"],
          STATUS["unverified"]),
         (["Maintenance, as a share of value", _p(cm.MAINT_PCT_A[0], 2) + " to " + _p(cm.MAINT_PCT_A[1], 2),
           "Model assumption band", "Replace with the five-year capital plan and the last three years of invoices",
@@ -2024,8 +2024,8 @@ def _q_questions(headline: dict) -> str:
          "liquidity column", "ca_gov27361", STATUS["missing"]),
         ("What are the real insurance and maintenance numbers?", "Two agents and three licensed contractors",
          "Quotes with declarations pages, an inspection report, a costed five-year plan",
-         "Replaces the flagged bands of " + _n(cm.midpoint(*cm.A_INSURANCE_YR)) + " and "
-         + _n(cm.A_MARKET_2026 * cm.midpoint(*cm.MAINT_PCT_A)) + " a year", "cdi", STATUS["missing"]),
+         "Replaces the flagged insurance band and the maintenance percentage with priced numbers",
+         "cdi", STATUS["missing"]),
         ("Has the trust been reviewed for how this specific distribution is authorised?", "Estate attorney",
          "Amendment or a written confirmation, plus the trustee's powers list",
          "Determines whether occupancy, a lease or a sale is even permitted without a court process, and whether "
@@ -2081,8 +2081,7 @@ def _q_suggestions(headline: dict) -> str:
     )
     rows = [
         ("Now, before any decision", "Get two insurance quotes and one inspection with a costed five-year plan",
-         "Replaces " + _n(cm.midpoint(*cm.A_INSURANCE_YR)) + " and "
-         + _n(cm.A_MARKET_2026 * cm.midpoint(*cm.MAINT_PCT_A)) + " a year of assumption in every cost row",
+         "Replaces the insurance band and the maintenance percentage that currently sit in every cost row",
          "Two days of calls; the fees are the only cost", "The cost column is currently the second largest block "
          "in the comparison and the least evidenced", "cdi", STATUS["missing"]),
         ("Now", "Write the household's decision rules and sign them, dated, before any new figure is read",

@@ -570,14 +570,23 @@ Committed output is byte-identical to a fresh `python3 tools/build.py`, which th
 - **Estate:** exclusion indexation (2025/2026/2027 published figures), prior-gift and portability questions,
   sensitivity rows only — the estate's financial assets are absent by design and flagged.
 
-**Site.** 22 → 24 pages: `pages/economic-baselines.html` and `pages/model-figures.html` added, quantified addenda
-on thirteen existing pages, priced pre-agreed decision rules in the log. `PAGES`, the manifest and `verify.py`'s
-page count were bumped in the same commit.
+**Site.** 22 → 26 pages: `pages/economic-baselines.html` and `pages/model-figures.html` added by this session,
+quantified addenda on thirteen existing pages, priced pre-agreed decision rules in the log, and two further merges
+over `arena/80e9d3b3` (verified lookups, break-even page, staging chart, `recheck.py`) and `arena/32426e4a`
+(regime engine, fan chart, review backlog) resolved by keeping both sides. `PAGES`, the manifest, `verify.py`'s
+page count and the recheck snapshot moved in the same commit each time.
 
-**Verification.** `python3 tools/build.py`, `python3 tools/verify.py`, 27 unit tests, `node --check` on both
-scripts and `git diff --check` all pass. The verifier now also rejects a household-input marker in generated pages
-and model code, in addition to the ten-dollar rule, cent precision, digit runs without separators, locality and
-address patterns, storage, network calls and unsourced table rows.
+**Verification.** `python3 tools/build.py`, `python3 tools/verify.py`, **56 unit tests**, `node --check` on all
+four scripts, the chart smoke test, `python3 tools/recheck.py` and `git diff --check` all pass; the committed tree
+is byte-identical to a fresh build. The verifier additionally rejects a household-input marker, a seeded
+record amount, digit runs without separators, locality and address patterns, storage, network calls and
+unsourced table rows.
+
+**Release record.** **PR #125** — merged with `gh pr merge 125 --merge`; merge commit `cc70bb5` on `main`;
+`verify` run 44137412400 success; `pages-build-deployment` run 44137410743 success; the published
+`pages/model-figures.html` was fetched afterwards and serves the quantified provenance table, so the deploy is
+confirmed live rather than queued. A follow-up prose commit (#126) removed the one place an assumption midpoint
+was printed as if it were a measurement.
 
 ### Flagged for review from this session (does not block merge)
 
