@@ -835,8 +835,8 @@ def path_table(transfer_year: int, horizon: int, scenario: str) -> list[dict[str
         "from income tax, and that shelter turns into recapture on the eventual sale.")
 
     add(PATHS[2][0], PATHS[2][1], PATHS[2][2], 0.0, 0.0, 0, 0.0, proceeds, proceeds,
-        "Gain over the date-of-death value is about " + usd(sale_now["gross_gain"]) + " at this transfer "
-        "date, so the sale is close to income-tax-free and the full " + usd(proceeds) + " compounds from "
+        "Gain over the date-of-death value is the price drift over the few months between transfer and "
+        "closing, not the whole historical appreciation, so the sale is close to income-tax-free and the full " + usd(proceeds) + " compounds from "
         "day one at " + pct(rates["equity_net"][0], 1) + " after tax.")
 
     stage_years = 3

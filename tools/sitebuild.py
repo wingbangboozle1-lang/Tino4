@@ -1031,7 +1031,7 @@ def _q_paths(headline: dict) -> str:
     for row in cm.path_table(BASE_YEAR, LONG_HORIZON, BASE_SCENARIO):
         rows.append(([
             str(row["rank"]), str(row["name"]), str(row["kind"]).capitalize(),
-            _n(row["flow_cash"]) + " / " + _n(row["flow_econ"]),
+            _n(row["flow_cash"], "no property cash flow") + " / " + _n(row["flow_econ"], "no credit"),
             _n(row["proceeds"]), _n(row["liquidity"]),
             _n(row["terminal_econ"]), _n(row["terminal_real"]),
             str(row["driver"]),
