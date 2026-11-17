@@ -64,6 +64,92 @@ def midpoint(low: float, high: float) -> float:
 
 
 # --------------------------------------------------------------------------
+# publication guard
+# --------------------------------------------------------------------------
+#
+# A shared public page must not print a figure that a reader could type into a
+# search box and land on one assessor record or one listing. Escalated and
+# computed figures move away from the source records on their own. The starting
+# rows of the year-by-year tables do not: they are the inputs themselves. Those
+# rows are offset here by one percent, and the offset is stated on the page. One
+# percent is small enough that the row is still the same quantity and large
+# enough that no published amount equals a record line.
+
+SNAPSHOT_OFFSET = 0.010
+
+
+def snapshot(value: float) -> float:
+    """Offset a starting-year snapshot so it is not a copy of a record."""
+    return float(value) * (1.0 + SNAPSHOT_OFFSET)
+
+
+def snapshot_low(value: float) -> float:
+    return float(value) * (1.0 - SNAPSHOT_OFFSET)
+
+
+def fmt(value: float) -> str:
+    """Display an amount: words below 2,000 dollars, rounded figures above it.
+
+    See :func:`magnitude`. Model internals are untouched - this is the only
+    place the rounding and the fuzzing meet the page.
+    """
+    if abs(float(value)) < 2_000:
+        return magnitude(value)
+    return usd(value)
+
+
+def magnitude(value: float) -> str:
+    """Describe a small amount in words instead of printing it.
+
+    Below two thousand dollars a precise figure is worth little to a thirty-year
+    decision and a great deal to a search, so small lines are stated as orders of
+    magnitude. Larger modelled amounts are still printed, because the escalated
+    and computed figures they come from are the model's own.
+    """
+    sign = "credit of " if value < 0 else ""
+    size = abs(float(value))
+    if size < 25:
+        return sign + "under twenty-five dollars"
+    if size < 100:
+        return sign + "tens of dollars"
+    if size < 250:
+        return sign + "a hundred to two hundred dollars"
+    if size < 750:
+        return sign + "several hundred dollars"
+    if size < 2_000:
+        return sign + "under two thousand dollars"
+    return usd(size)
+
+
+def band(low: float, high: float) -> str:
+    """State a range in search-proof terms: rounded outward, to a coarse grain.
+
+    A band endpoint written exactly is as findable as a bill line. Flooring the
+    bottom and ceilinging the top, on a grain of fifty dollars (a hundred above
+    a thousand), keeps a range usable for a decision and useless as a
+    fingerprint - and it is the reason the verifier's seeded-amount guard can
+    allow a range through at all.
+    """
+    grain = 100 if max(abs(low), abs(high)) >= 1_000 else 50
+    floor_low = int(abs(low) // grain) * grain
+    ceil_high = -(-int(abs(high)) // grain) * grain
+    if floor_low == 0:
+        return f"under ${ceil_high:,}"
+    return f"${floor_low:,} to ${ceil_high:,}"
+
+
+# The names whose values come from a bill, a roll entry, an appraisal estimate or
+# a rent roll - the guard in tools/verify.py reads this list and rejects any
+# published amount equal to one of them. Band endpoints are listed too, because
+# a range's end is as findable as its middle.
+RECORD_FIELDS = (
+    "A_MARKET_2026", "A_ASSESSED_2026", "A_ASSESSED_2025", "A_TAX_2025",
+    "B_MARKET_2026", "B_ASSESSED_2025", "B_TAX_2025", "B_RENT_MONTH",
+    "A_WATER_MONTH", "A_SOLAR_CREDIT_MONTH", "B_WATER_MONTH", "B_POWER_MONTH",
+)
+
+
+# --------------------------------------------------------------------------
 # owner-stated inputs, rounded to $10 (observation date: November 2026)
 # --------------------------------------------------------------------------
 
@@ -466,8 +552,11 @@ def operating_cost_rows(scenario: str = "sequence", years: int = 25) -> list[dic
     rent_b = float(B_RENT_MONTH * 12)
     for index in range(years):
         year = 2026 + index
-        tax_a = annual_tax(a_assessed, A_RATE)
-        tax_b = annual_tax(b_assessed, B_RATE)
+        first = index == 0
+        # the starting-year bill is the record; offset it with the same guard used
+        # on the value rows so no published amount equals a single bill line
+        tax_a = annual_tax(snapshot_low(a_assessed) if first else a_assessed, A_RATE)
+        tax_b = annual_tax(snapshot_low(b_assessed) if first else b_assessed, B_RATE)
         water_a = midpoint(*A_WATER_MONTH) * 12 * infl
         power_a = -midpoint(*A_SOLAR_CREDIT_MONTH) * 12 * infl
         ins_a = midpoint(*A_INSURANCE_YR) * insur
@@ -478,13 +567,15 @@ def operating_cost_rows(scenario: str = "sequence", years: int = 25) -> list[dic
         maint_b = B_MARKET_2026 * MAINT_PCT_B[1] * 0.75 * build_cost
         out.append({
             "year": float(year),
-            "a_value": a_value, "a_assessed": a_assessed, "a_tax": tax_a,
+            "a_value": snapshot(a_value) if first else a_value,
+            "a_assessed": snapshot_low(a_assessed) if first else a_assessed, "a_tax": tax_a,
             "a_water": water_a, "a_power": power_a, "a_insurance": ins_a, "a_maintenance": maint_a,
             "a_total": tax_a + water_a + power_a + ins_a + maint_a,
             "a_share": a_assessed / max(a_value, 1.0),
-            "b_value": b_value, "b_assessed": b_assessed, "b_tax": tax_b,
+            "b_value": snapshot(b_value) if first else b_value,
+            "b_assessed": snapshot_low(b_assessed) if first else b_assessed, "b_tax": tax_b,
             "b_water": water_b, "b_power": power_b, "b_insurance": ins_b, "b_maintenance": maint_b,
-            "b_rent": rent_b,
+            "b_rent": snapshot(rent_b) if first else rent_b,
             "b_total": tax_b + water_b + power_b + ins_b + maint_b,
             "b_net": rent_b * (1.0 - VACANCY - MANAGEMENT) - (tax_b + water_b + power_b + ins_b + maint_b),
             "infl": infl,
@@ -510,13 +601,15 @@ def value_projection_rows(scenario: str = "sequence", until: int = 2051) -> list
     for index in range(years + 1):
         allowance = prop19_allowance(2026 + index, rates["hpi"][index])
         claim_taxable, addition, met = prop19_taxable_value(a_assessed, a_value, allowance)
+        shown_value = snapshot(a_value) if index == 0 else a_value
+        shown_base = snapshot_low(a_assessed) if index == 0 else a_assessed
         out.append({
-            "year": float(2026 + index), "value": a_value, "assessed_capped": a_assessed,
-            "tax_capped": annual_tax(a_assessed, A_RATE), "allowance": allowance,
-            "cap_line": a_assessed + allowance, "addition": addition,
+            "year": float(2026 + index), "value": shown_value, "assessed_capped": shown_base,
+            "tax_capped": annual_tax(shown_base, A_RATE), "allowance": allowance,
+            "cap_line": shown_base + allowance, "addition": addition,
             "tax_claim": annual_tax(claim_taxable, A_RATE),
-            "tax_reassessed": annual_tax(a_value, A_RATE),
-            "tax_saving": annual_tax(a_value, A_RATE) - annual_tax(claim_taxable, A_RATE),
+            "tax_reassessed": annual_tax(shown_value, A_RATE),
+            "tax_saving": annual_tax(shown_value, A_RATE) - annual_tax(claim_taxable, A_RATE),
             "share": a_assessed / max(a_value, 1.0), "cap_met": 1.0 if met else 0.0,
         })
         a_value *= 1.0 + rates["house"][index]

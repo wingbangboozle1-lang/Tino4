@@ -20,6 +20,7 @@ SOURCES = {
     "irs_estate": ("IRS — Estate tax", "https://www.irs.gov/businesses/small-businesses-self-employed/estate-tax", "Read 2026-11-17: the gross estate is valued at fair market value at death; deductions include mortgages, debts and administration expenses, and lifetime taxable gifts since 1977 are added before the unified credit is applied. Published filing thresholds include 13,990,000 dollars for 2025 deaths and 15,000,000 dollars for 2026 deaths, plus the portability note. Not an individual estate calculation."),
     "irs_estate_faq": ("IRS — Estate-tax filing FAQs", "https://www.irs.gov/businesses/small-businesses-self-employed/frequently-asked-questions-on-estate-taxes", "Read 2026-11-17: Form 706 is due nine months after death, a six-month extension is available on Form 4768 filed by the due date, the 2026 threshold is 15,000,000 dollars, portability requires a timely filed return, and Rev. Proc. 2022-32 gives a five-year late-election path only for estates below the filing threshold."),
     "irs_2027": ("IRS — 2027 tax inflation adjustments", "https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts", "Read 2026-11-17 (IR-2026-133, November 5, 2026): the basic exclusion amount for 2027 deaths is 15,480,000 dollars, up from 15,000,000 for 2026; the annual gift exclusion rises to 20,000 from 19,000; the top individual rate stays 37 percent. No prediction beyond the published year."),
+    "boe_prop19_page": ("California BOE — Proposition 19 overview", "https://www.boe.ca.gov/prop19/", "Read 2026-11-17. Compares former law to current law: the family-home exclusion requires the home to be the principal residence of both transferor and transferee, has a value limit of the current taxable value plus the indexed $1,000,000 amount, requires a homeowners' exemption filing within one year of transfer, and allows a claim within three years or before a transfer to a third party. Summary page; the statute controls."),
     "irs_basis": ("IRS — Gifts and inheritances FAQ", "https://www.irs.gov/faqs/interest-dividends-other-types-of-income/gifts-inheritances/gifts-inheritances", "General inherited-property basis rules and exceptions; does not establish an appraisal or an individual basis."),
     "irs_pub551": ("IRS Publication 551 — Basis of Assets", "https://www.irs.gov/publications/p551", "Basis, adjusted basis, and adjustments including improvements and depreciation."),
     "irs_121": ("IRS Topic 701 — Sale of your home", "https://www.irs.gov/taxtopics/tc701", "Section 121 main-home exclusion amounts and ownership/use tests; eligibility depends on facts."),
@@ -30,7 +31,7 @@ SOURCES = {
     "ca_sco": ("California State Controller — Estate tax", "https://www.sco.ca.gov/ardtax_estate_tax.html", "California estate-tax return requirement information for deaths on or after January 1, 2005."),
     "ca_rtc13301": ("California statute — death-transfer tax",  "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=13301.&lawCode=RTC", "Current California law on death-transfer taxes; future legislation can change current law."),
     "boe_prop19": ("California BOE — Proposition 19", "https://www.boe.ca.gov/prop19/", "Current intergenerational property-tax exclusion overview and filing requirements."),
-    "ca_rtc63": ("California Revenue and Taxation Code §63.2", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC", "Read 2026-11-17 (as amended by Stats. 2025, Ch. 539 (SB 293), effective January 1, 2026): the family-home exclusion requires the transferor's principal residence and that it become the transferee's principal residence within one year, with a homeowners' or disabled veterans' exemption filed within one year; the new taxable value is the prior taxable value plus the excess of fair market value over that taxable value plus the indexed one-million-dollar amount, or zero if there is no excess; claims are filed within three years or before a transfer to a third party or the end of occupancy, whichever is earlier, or within six months of a supplemental or escape notice; a 45-day and then 60-day notice sequence applies and a county processing fee up to 175 dollars may be required. A 'transfer' expressly includes transfers through an inter vivos or testamentary trust. The section text read does not contain a carry-forward subdivision for an unused difference."),
+    "ca_rtc63": ("California Revenue and Taxation Code §63.2", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=63.2.&lawCode=RTC", "Read 2026-11-17 (as amended by Stats. 2025, Ch. 539 (SB 293), effective January 1, 2026): the family-home exclusion requires the transferor's principal residence and that it become the transferee's principal residence within one year, with a homeowners' or disabled veterans' exemption filed within one year; the new taxable value is the prior taxable value plus the excess of fair market value over that taxable value plus the indexed one-million-dollar amount, or zero if there is no excess; claims are filed within three years or before a transfer to a third party or the end of occupancy, whichever is earlier, or within six months of a supplemental or escape notice; a 45-day and then 60-day notice sequence applies and a county processing fee up to 175 dollars may be required. A 'transfer' expressly includes transfers through an inter vivos or testamentary trust. The value limit is applied per transfer, and the text as read contains no carry-forward subdivision for an unused difference."),
     "boe_lta": ("California BOE — Letter to Assessors 2025/009", "https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf", "Read 2026-11-17: the 1,000,000 dollar amount in section 63.2 is adjusted every other 16 February by the prior calendar year's FHFA House Price Index for California; it is 1,044,586 dollars for transfers from 16 February 2025 through 15 February 2027 (1,022,600 for 2023-2025 and 1,000,000 for 2021-2023), based on a 2.15 percent 2024 California index change, and the next adjustment is due in February 2027."),
     "ca_rtc51": ("California Revenue and Taxation Code §51", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=51.&lawCode=RTC", "Taxable-value framework and annual inflation adjustment, subject to reassessment and statutory rules."),
     "ca_rtc218": ("California Revenue and Taxation Code §218", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=218.&lawCode=RTC", "Homeowners' property-tax exemption eligibility and amount."),
@@ -48,9 +49,10 @@ SOURCES = {
     "fed_1929": ("Federal Reserve History — Stock Market Crash of 1929", "https://www.federalreservehistory.org/essays/stock-market-crash-of-1929", "Read 2026-11-17: the Dow closed at 381.17 on 3 September 1929, fell 13 percent on 28 October and 12 percent on 29 October, lost almost half its value by mid-November, closed at 41.22 on 8 July 1932 - 89 percent below the peak - and did not regain the 1929 level until 23 November 1954. A price-index episode, not a portfolio forecast or probability."),
     "fed_depression": ("Federal Reserve History — The Great Depression", "https://www.federalreservehistory.org/essays/great-depression", "Historical account of financial and economic stress in the 1930s; not a forecast."),
     "fed_inflation": ("Federal Reserve History — The Great Inflation", "https://www.federalreservehistory.org/essays/great-inflation", "Historical account of inflation and policy in the 1960s–1980s; not a probability estimate."),
-    "fed_2008": ("Federal Reserve History — The Great Recession", "https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath", "Reports an approximately 57% S&P 500 peak-to-trough decline and an approximately 30% average U.S. home-price decline from prior peaks. These historical observations do not forecast an individual portfolio or property."),
+    "fed_2008": ("Federal Reserve History — The Great Recession", "https://www.federalreservehistory.org/essays/great-recession-of-200709", "Read 2026-11-17. States that the S&P 500 fell 57% from its October 2007 peak to its March 2009 trough, and that home prices fell approximately 30% on average from their mid-2006 peak to mid-2009. Historical observations; not a forecast of an individual portfolio or property."),
+    "fed_2008_aftermath": ("Federal Reserve History — The Great Recession and Its Aftermath", "https://www.federalreservehistory.org/essays/great-recession-and-its-aftermath", "Read 2026-11-17. Separately states that home prices fell by over a fifth on average nationally from the first quarter of 2007 to the second quarter of 2011. This essay and the companion essay measure different windows, which is why both are listed rather than merged."),
     "bls_cpi": ("U.S. Bureau of Labor Statistics — CPI", "https://www.bls.gov/cpi/", "Consumer Price Index data and methodology; historical inflation is not a future path."),
-    "cbo_long": ("Congressional Budget Office — Long-Term Budget Outlook", "https://www.cbo.gov/topics/budget/long-term-budget-outlook", "Long-run fiscal and economic baseline publications; not a 50-year property or portfolio forecast."),
+    "cbo_long": ("Congressional Budget Office — Long-Term Budget Outlook", "https://www.cbo.gov/recurring-publication/55129", "Re-read 2026-11-17. Index of the agency's long-run budget projections, which run about 30 years. The previously published topic URL returned HTTP 404 and was replaced. Not a 50-year property or portfolio forecast."),
     "cbo_outlook": ("Congressional Budget Office — Economic Outlook", "https://www.cbo.gov/topics/economy", "Near-term economic baseline publications; verify the latest edition before use."),
     "fhfa": ("Federal Housing Finance Agency — House Price Index", "https://www.fhfa.gov/data/hpi", "Broad house-price index data; not an appraisal or forecast for a particular home."),
     "sec_stocks": ("SEC Investor.gov — Stocks", "https://www.investor.gov/introduction-investing/investing-basics/investment-products/stocks", "General stock-market risk information; no expected return is promised."),
@@ -62,7 +64,12 @@ SOURCES = {
     "ftb_540es": ("FTB — 2025 Form 540-ES instructions", "https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.html", "2025 estimated-tax worksheet; use the Form 540 instructions and current-year law for final return treatment."),
     "ftb_cap_gains": ("FTB — Capital gains and losses", "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html", "Read 2026-11-15 (page updated 2026-01-28): California has no lower capital-gains rate; capital gains are taxed as ordinary income."),
     "ftb_gifts": ("FTB — Gifts and inheritance", "https://www.ftb.ca.gov/file/personal/income-types/gifts-and-inheritance.html", "Official FTB information about gifts and inheritances; read 2026-11-15. The page does not establish the basis or tax consequences of an individual transfer."),
+    "boe_roll": ("California BOE — Property tax roll and public records", "https://www.boe.ca.gov/proptaxes/", "Official property-tax administration entry point. County assessment rolls are public records and are published in searchable form by county assessors and recorders, which is the basis for the re-identification warning on the privacy page. Verify the specific county's current disclosure practice before relying on any assumption about what is or is not searchable."),
     "boe_counties": ("California BOE — County assessor contacts", "https://www.boe.ca.gov/proptaxes/countycontacts.htm", "Official directory of county assessor offices; it lists contacts, not property-specific tax rates or assessments."),
+    "ca_rr_462520": ("California Property Tax Rule 462.520", "https://www.boe.ca.gov/proptaxes/pdf/rules/462520.pdf", "Board of Equalization regulation implementing the family-home value limit and how an amount above the cap is added to the transferred base year value. Read status must be confirmed at decision time."),
+    "ca_rtc69_6": ("California Revenue and Taxation Code §69.6", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=69.6.&lawCode=RTC", "Base year value transfer for homeowners at least 55 or severely disabled under Proposition 19; a different provision from the intergenerational exclusion in §63.2 and is not a route to avoiding reassessment on an inherited home."),
+    "ca_rtc110_1": ("California Revenue and Taxation Code §110.1", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=110.1.&lawCode=RTC", "Definition and adjustment of base year value and full cash value used to compute taxable value; read at decision time because the parcel facts matter."),
+    "boe_ltacont": ("California BOE — Letters to Assessors index", "https://www.boe.ca.gov/proptaxes/ltacont.htm", "Official index of assessor letters. Individual letters state procedures, not household entitlements, and must be read in date order."),
     "sos_measures": ("California Secretary of State — Qualified ballot measures", "https://www.sos.ca.gov/elections/ballot-measures/qualified-ballot-measures", "Official ballot-measure list; full text and certified results must be checked separately."),
     "hud_fmr": ("HUD — Fair Market Rents", "https://www.huduser.gov/portal/datasets/fmr.html", "Housing-program benchmark methodology; not an appraisal, lawful rent, or current lease amount."),
     "irs_topic409": ("IRS Topic no. 409 — Capital gains and losses", "https://www.irs.gov/taxtopics/tc409", "Read 2026-11-17: for 2025 a 0 percent rate applies up to 48,350 dollars of taxable income for single filers, 15 percent up to 533,400 dollars, and 20 percent above; unrecaptured section 1250 gain is taxed at a maximum of 25 percent; net short-term gain is ordinary; the capital-loss deduction is limited to 3,000 dollars; and losses from selling personal-use property, including a home, are not deductible. Inherited property follows the Publication 544 holding-period exceptions. An individual's rates depend on filing facts, and the net investment income tax may apply (Topic 559, Form 8960)."),
@@ -74,7 +81,6 @@ SOURCES = {
     "fed_goal": ("Federal Reserve - inflation (PCE) explainer", "https://www.federalreserve.gov/economy-at-a-glance-inflation-pce.htm", "Read 2026-11-17: the Federal Reserve seeks inflation of 2 percent over the longer run as measured by the annual change in the PCE price index. A policy objective, not a forecast of any asset."),
     "ftb_fed_changes": ("FTB - summary of federal income tax changes", "https://www.ftb.ca.gov/about-ftb/data-reports-plans/Summary-of-Federal-Income-Tax-Changes/index.html", "Read 2026-11-17: California does not conform to federal rates and uses its own rates of 1 to 12.3 percent, plus an additional 1 percent on taxable income above 1,000,000 dollars, for a maximum personal rate of 13.3 percent."),
     "irs_8960": ("IRS - About Form 8960, net investment income tax", "https://www.irs.gov/forms-pubs/about-form-8960", "Read 2026-11-17: the form taxpayers use to figure the net investment income tax; the model's 3.8 percent drag is applied per the Form 8960 instructions, which must be read for the actual year."),
-    "ca_rtc27388": ("California statute — property-tax exclusion claims", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=27388.&lawCode=RTC", "Claim filing periods, late-claim procedures and statutory limits on county fees for qualifying family-transfer exclusion claims; applicability depends on the transfer facts."),
 }
 
 PAGES = [
@@ -92,11 +98,13 @@ PAGES = [
     ("pages/inheritance-process.html", "Deadline timeline", "Law & process"),
     ("pages/estate-thresholds.html", "Estate-tax thresholds", "Law & process"),
     ("pages/law-watchlist.html", "Law watchlist", "Law & process"),
+    ("pages/verified-lookups.html", "Verified lookups", "Law & process"),
     ("pages/black-swan.html", "Black-swan conditions", "Stress tests"),
     ("pages/phased-investing.html", "Treasury staging tool", "Stress tests"),
     ("pages/economic-baselines.html", "Economic baselines", "Stress tests"),
     ("pages/investment-policy.html", "Investment policy draft", "Stress tests"),
     ("pages/attorney-cpa-brief.html", "Attorney & CPA brief", "Adviser & evidence"),
+    ("pages/break-even.html", "Break-even questions", "Decision"),
     ("pages/decision-log.html", "Decision log", "Adviser & evidence"),
     ("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence"),
     ("pages/glossary.html", "Glossary", "Adviser & evidence"),
@@ -145,15 +153,18 @@ def base_content_for(path: str) -> tuple[str, str, str]:
     if path == "index.html":
         body = callout("What this site publishes, and what it never publishes", "The figures on this site are modelled results, built from case inputs that are rounded to the nearest ten dollars and carry no name, address, postal code, parcel identifier or locality. What is published is an arithmetic comparison of paths and the break-evens that decide them; the decision, the private records, and the unrounded figures stay in the family's own access-controlled file, and no projection here is presented as a forecast.", "warning")
         body += '<aside class="callout warning"><strong>Urgent privacy notice: historical exposure is unresolved</strong><p>The current site is generalized, but prior commits, pull-request views, forks, caches, downloads, or clones may retain older public material. This cleanup does not prove that historical copies are erased. Repository administrators must assess and coordinate any history remediation; do not upload private case records here. <a class="source" href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository" title="GitHub guidance on sensitive data in repository history and limits of remediation." rel="noopener noreferrer">GitHub Docs — removing sensitive data</a> · <a href="pages/privacy.html">Privacy &amp; limits</a></p></aside>'
+        body += '<section class="prose"><h2>Read this page in plain language</h2><p>Three things are true at once, and keeping them apart is the whole point of this site. <strong>First</strong>, the inheritance is not one decision; it is a sequence of dated decisions, and the earliest ones are the hardest to undo. <strong>Second</strong>, several of those decisions turn on facts that are not yet written down anywhere: whether someone will actually live in the home, what it is worth on the day it transfers, and what the local transfer tax is. <strong>Third</strong>, a projection that fills those gaps with guesses will still produce a confident-looking ranking, and that ranking will be an artefact of the guesses.</p><p>So each table below is organised the same way. The <em>fact</em> is what the decision depends on. The <em>current state</em> says whether that fact is established, missing, or merely a rule. The <em>evidence</em> column says who can supply it and in what form. A row marked <strong>Missing</strong> is a task, not a zero: nothing on this site substitutes a placeholder for an unknown number.</p><p>The practical order is: settle the occupancy question, obtain dated valuations and written quotes, read the local schedules, then compare the six paths on identical dates and one horizon. The <a href="pages/break-even.html">break-even page</a> reduces the biggest unknown to a single figure you can go and get.</p></section>'
         body += table("What would change the answer?", ["Decision-changing fact", "Current state", "Evidence needed"], [
             (["Trust, title, timing, debt", "Not available in this public project.", "Executed trust and deed; trustee authority; distribution date; debts and reserves."], STATUS["missing"], ["ca_prob", "ca_rtc480"]),
             (["Property-tax exclusion eligibility", "Cannot determine without family relationship, transferor use, title, value, occupancy and claim facts." , "Written eligibility review; confirm whether long-term occupancy is actually intended."], STATUS["missing"], ["boe_prop19", "ca_rtc63"]),
             (["After-tax sale / rent / keep comparison", "No property values, basis, rent, expenses, or tax returns are published." , "Independent date-of-death appraisal; private basis schedule; leases; expense records; sale-cost bids."], STATUS["missing"], ["irs_basis", "irs_rental", "irs_pub551"]),
             (["Where the household will live", "A separately owned residence and tenant obligations may alter every path; details are intentionally withheld." , "Written occupancy plan and counsel review of lease and local rules."], STATUS["missing"], ["irs_rental", "ca_rent"]),
             (["Estate-level liquidity / federal filing", "A home value alone cannot establish estate tax exposure." , "Full confidential estate inventory, adjusted taxable gifts, marital/portability facts and liquidity needs."], STATUS["missing"], ["irs_estate", "irs_estate_faq"]),
+            (["Does staging the sale proceeds actually reduce crash risk?", "Partly, and only for an early crash. Over nine fixed scenarios a 24-month Treasury window beat immediate investment in 5, median about +3%, worst about -5%. A 36-month window beat it in 7, median about +6%, worst about -7%." , "Accept the published trade-off explicitly, or choose the allocation and reserve size instead of stretching the schedule."], STATUS["assumption"], ["fed_1929", "fed_2008", "treasury_bills"]),
         ])
         body += prose("Safe decision order", "Set the family's written decision rules before seeing a forecast. Confirm trust and title, get independent values, establish tax basis and assessed-value treatment, validate use and leases, price recurring costs, then compare every path at the same dates and horizon. Keep all private inputs in a locally controlled, non-public workpaper.")
         body += prose("Conditional fork", "If a qualifying heir intends to occupy the transferred home as a principal residence long-term, test the Proposition 19 family-home exclusion and its deadlines. If not, model the reassessed tax branch and compare rental, sale, or mixed paths. No branch can be chosen from public facts alone.")
+        body += prose("Where the numbers come from", "Every headline amount on this site carries the date it was read from the issuing authority and the words that establish it; see the Verified lookups page. Amounts that could not be confirmed are left blank rather than estimated. Re-reading those sources is the first task of the annual review, because an amount that was correct this year is not evidence about a transfer that may happen decades from now.")
         return "Decision overview", "A privacy-first decision framework: official rules and questions are public; household facts stay private.", body
     if path.endswith("executive-summary.html"):
         body = callout("Executive takeaway", "The answer is not currently knowable from public information. Separate the estate-tax, income-tax basis, and property-tax assessment questions; obtain independent evidence; and agree in writing on the decision criteria before calculating outcomes.", "warning")
@@ -177,6 +188,15 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         body = table("Compare alternatives at identical dates and horizons", ["Path", "Required model treatment", "Evidence gap"], rows)
         body += prose("Comparison rule", "Use the same transfer date, valuation date, after-tax horizon, inflation basis, and household housing need for every path. Show annual cash-flow ranges as well as terminal wealth, and label assumptions rather than presenting them as facts.")
         body += prose("Write the rules before the results", "Before any forecast arrives, document what would make the household choose each path: minimum liquidity, maximum acceptable maintenance risk, desired occupancy, rental obligations, tax eligibility, acceptable drawdown, and conditions that trigger a sale.")
+        body += callout("This page does not pick a path, and that is deliberate", "Six competitive paths exist: occupy, rent out, sell in the transfer year, occupy then sell, a mixed structure, and sell then reinvest. A defensible ranking requires the same transfer date, the same valuation date, the same after-tax horizon, and evidence for every input each path depends on. Where that evidence is missing the path is marked blocked rather than estimated. The break-even page turns the largest of those unknowns into a single number you can go and obtain.", "warning")
+        body += table("Evidence gates that decide whether a path can be ranked at all", ["Gate", "Why the path cannot be ranked without it", "What to obtain, and from whom"], [
+            (["Long-term occupancy of the inherited home", "The family-home property-tax exclusion, and any later home-sale exclusion, depend on the home actually becoming and remaining a principal residence. Without a commitment, the occupancy paths are hypothetical.", "A written occupancy commitment, recorded with the decision log before values are compared."], STATUS["missing"], ["ca_rtc63", "irs_121"]),
+            (["Written rent comparables for the inherited home", "A rent path needs a market rent, not a benchmark or a memory. Without comparables the rental revenue is unknown and the path ranks last for that reason alone.", "At least three written comparable rentals of similar homes, with the date and source recorded."], STATUS["missing"], ["hud_fmr", "irs_rental"]),
+            (["Enacted local transfer tax and recorder schedule", "Every sell path pays these before tax. Without them, net proceeds are understated and all sell paths are unfairly disadvantaged.", "The enacted schedule in force at the sale, copied from the jurisdiction's own publication, with its effective date."], STATUS["missing"], ["ca_rtc11911", "ca_gov27361"]),
+            (["Date-of-death valuation", "Income-tax basis, the property-tax branch and the estate return all start from one valuation. If it is not written down at the date of death, it cannot be reconstructed reliably later.", "A written appraisal as of the date of death, plus the estate's own basis schedule."], STATUS["missing"], ["irs_basis", "irs_pub551"]),
+            (["Insurance quotes for both uses", "Owner-occupied and landlord policies price differently, and the inherited home's policy is not the household's to guess. An unknown premium treated as zero silently flatters every path that keeps a building.", "Written quotes for both uses, with the deductible, exclusions and any state insurer-of-last-resort gap stated."], STATUS["missing"], ["cdi"]),
+            (["Whole-estate position and liquidity need", "If the estate is near the federal filing threshold, the timing of a house sale is constrained by a tax payment calendar that does not wait. That constraint can outrank return.", "The confidential inventory, adjusted taxable gifts and any portability facts, reviewed with the estate adviser."], STATUS["missing"], ["irs_estate_faq", "irs_706"]),
+        ])
         body += callout("Model first: a sale in the transfer tax year", "Model a sale in the inheritance tax year first, not as a tax-free assumption. Inherited basis is generally tied to date-of-death fair market value, but sale price, timing and allowable selling costs can differ from that value; a transfer-year sale does not automatically produce zero gain or loss. Verify the appraisal, amount realized and tax-year rules. Compare the after-tax proceeds with housing costs and reinvestment risk.", "info")
         body += table("Sale proceeds waterfall — the order in which a sale pays out", ["Layer", "Framework (amounts stay private)", "Rule or schedule source"], [
             (["Gross sale value", "Contract price at the sale date; get an independent valuation rather than an online estimate.", "Private appraisal and sale contract."], STATUS["guidance"], ["irs_basis", "irs_pub551"]),
@@ -246,7 +266,10 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Proposition 19 allowance carry-forward", "Corrected 2026-11-15: the statute provides a per-transfer limit with biennially adjusted amounts and no carry-forward of an unused limit; the correction is recorded on the flagged page." , "Use the official amount in effect on the actual transfer date; confirm the reading with property-tax counsel."], STATUS["rule"], ["ca_rtc63", "boe_lta"]), 
             (["Estate liquidity plan and payment calendar", "Published on the thresholds page: nine-month general filing date, extension-to-file versus payment distinction, and funding routes to price early." , "Build the dated private liquidity inventory with the CPA."], STATUS["guidance"], ["irs_706", "irs_estate_faq"]),
             (["Attorney & CPA one-page briefing sheet", "A print-optimized adviser handoff lists trust, value, estate-tax, property-tax, sale/rent and policy questions." , "Print privately and complete only with counsel using confidential records."], STATUS["guidance"], ["irs_estate_faq", "boe_prop19", "irs_basis"]),
-            (["Suggestions, glossary and dated decision record", "Suggestions have a session-only review queue; the glossary defines the tax layers; the decision log prompts a date and reason." , "Record each adopted or rejected item and the trigger for reconsideration."], STATUS["guidance"], ["irs_estate", "boe_prop19"]),
+            (["Suggestions, glossary and dated decision record", "Suggestions now form a ten-item review board with adopt, defer and reject controls that stay in the browser tab; the glossary defines the tax layers; the decision log prompts a date and reason." , "Record each adopted or rejected item and the trigger for reconsideration."], STATUS["guidance"], ["irs_estate", "boe_prop19"]),
+            (["Break-even thresholds instead of a single forecast", "Published: the occupancy-versus-sale comparison is reduced to a break-even imputed rent, plus break-evens for house-price growth, crash timing, a bad operating year and estate size." , "Obtain written comparables and compare them with the published break-even logic in the private model."], STATUS["guidance"], ["irs_rental", "hud_fmr", "fhfa"]),
+            (["Regime-based economic stress instead of one growth rate", "Published: seven stress regimes with the historical mechanism and the official source for each, plus the warning that the 57 and 89 percent anchors describe different indexes and are not probabilities." , "Run the private model across scenarios and orderings; report the range and the assumption that flips the ranking."], STATUS["historical"], ["fed_1929", "fed_2008", "fed_inflation", "treasury_bills"]),
+            (["Plain-language explanation of every dashboard section", "Published: a reading guide on the landing page, an assumption-first warning on the projection worksheet, and a 'what this cannot decide' note on the break-even page." , "Keep the explanation beside the table it explains, not on a separate page."], STATUS["guidance"], ["bls_cpi", "irs_basis"]),
             (["Local 'Prop H' terms and impact", "Resolved privately on 2026-11-15: the official measure behind the shorthand was identified and its litigation status reviewed. Jurisdiction and terms are deliberately not published here and no household mapping or rate is applied." , "Confirm current status with the property's own tax authority at decision time; the research note is in the private workpaper."], STATUS["unverified"], ["sos_measures"]),
         ]
         body = table("Full requirements register", ["Requirement", "Public site treatment", "Next step / remaining evidence"], rows)
@@ -269,20 +292,39 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         body += callout("Agree before the figures arrive", "Write what would make the household choose each path and each investment trigger before viewing a single projection. Revisit only when a listed trigger or verified fact changes.", "info")
         return "Investment policy draft", "A source-linked template to adopt before proceeds arrive; personal choices remain blank and private.", body
     if path.endswith("suggestions.html"):
-        rows = [
-            (["Approve a private inventory template", "Keep deed, trust, loan, tax, insurance, lease and account identifiers in an offline encrypted file, never in this repo." , "Choose secure storage and named professional custodians."], STATUS["guidance"], ["irs_estate_faq", "irs_1041"]),
-            (["Order independent valuation and condition reports", "Use independent qualified providers and preserve date-of-death valuation evidence." , "Written appraisal, inspection and contractor review."], STATUS["guidance"], ["irs_basis", "cslb"]),
-            (["Write a decision policy before forecasts", "Specify triggers and acceptable trade-offs before seeing modeled rankings." , "Household signs a dated policy; advisers acknowledge it."], STATUS["guidance"], ["sec_stocks", "treasury_bills"]),
-            (["Build after-tax cash-flow scenarios", "Keep estate tax, income-tax basis and property-tax assessment in separate modules." , "CPA models transfer-year sale, Section 121, depreciation and recapture; assessor confirms Prop 19."], STATUS["guidance"], ["irs_basis", "irs_rental", "irs_121", "boe_prop19"]),
-            (["Create a five-year capital plan", "Include deferred maintenance, safety, major systems, insurance deductibles and reserves for both buildings." , "Inspection, bids, useful-life schedule, annual reserve review."], STATUS["guidance"], ["cslb", "cdi"]),
-            (["Refresh laws and proposals annually", "Separate enacted statutes, signed bills, pending bills, ballot measures and rejected proposals." , "Use agency and legislature records; write review date and decision effect."], STATUS["guidance"], ["congress_law", "sos_measures", "boe_prop19"]),
-        ]
-        body = table("Review queue — choose before implementation", ["Suggestion", "Why it helps", "Next step"], rows)
-        body += '<section class="prose"><h2>Review status</h2><p>Use the controls below to mark suggestions for discussion in this browser session. Choices are kept in memory only, are not sent anywhere, and are cleared on refresh.</p><div class="review-queue">'
-        for i in range(1, 7):
-            body += f'<label>Suggestion {i} <select class="review-choice" aria-label="Suggestion {i} status"><option>Not reviewed</option><option>Adopt</option><option>Defer</option><option>Reject</option></select></label>'
+        body = callout("One review queue, one decision at a time", "Each suggestion below is written so it can be adopted, deferred or rejected on its own. The status selector is session-only: nothing is stored, nothing is sent anywhere, and refreshing clears it. Print the page or copy the chosen statuses into the private decision log to keep a record.", "info")
+        body += table("Review queue — site and model improvements, ranked by decision value", ["#", "Suggestion", "What it would change", "Cost to do"], [
+            (["S1", "Put a break-even rent figure beside the occupancy comparison", "Turns the largest single unknown into one number that written comparables can settle, instead of a fifty-year projection.", "Low: one page, already drafted as the break-even page."], STATUS["guidance"], ["hud_fmr", "irs_rental"]),
+            (["S2", "Show every headline twice, nominal and in today's dollars", "A nominal fifty-year figure is roughly three times its real value at 2.5 percent inflation, which makes paths look far more generous than they are.", "Low: one extra column in each model output."], STATUS["guidance"], ["bls_cpi"]),
+            (["S3", "Mark a path unauthorised, not estimated, when an input is missing", "Stops a confident ranking from appearing when one path's key input is absent, which is the most common way a planning model misleads.", "Low: a status field per path."], STATUS["guidance"], ["irs_basis", "cdi"]),
+            (["S4", "Add a distribution chart of terminal outcomes across orderings", "A single line hides that the same average return in a different order produces a different result when money moves in and out.", "Medium: run the same assumptions in several orderings and plot the spread."], STATUS["guidance"], ["sec_stocks", "cbo_long"]),
+            (["S5", "Publish a five-year capital plan with bid placeholders for both buildings", "Converts maintenance from a percentage of value into dated line items, which is what actually forces a sale in a bad year.", "Medium: an inspection and two bids per line item."], STATUS["guidance"], ["cslb", "irs_rental"]),
+            (["S6", "Separate the three tax ledgers explicitly on every page", "Estate-tax value, income-tax basis and assessed value answer different questions and are routinely conflated; keeping them apart prevents a wrong threshold being applied to the wrong number.", "Low: already partly done; make it a fixed panel."], STATUS["guidance"], ["irs_estate", "irs_basis", "ca_rtc51"]),
+            (["S7", "Add a dated law-refresh checklist with the read-date shown", "A rule read two years before the transfer may be stale; showing when each source was last read makes staleness visible instead of invisible.", "Low: a date field per source row."], STATUS["guidance"], ["congress_law", "boe_prop19"]),
+            (["S8", "Model the same-year sale before any other sell variant", "The transfer-year sale is the case with the least time for facts to change, so it is the natural benchmark against which every delay must justify itself.", "Low: an ordering rule in the model."], STATUS["guidance"], ["irs_basis", "ca_rtc11911"]),
+            (["S9", "Show the three questions that must be answered before any figure is trusted", "Occupancy intent, written comparable rent, and whole-estate size determine which comparison is even relevant.", "Low: already drafted on the break-even and decision-log pages."], STATUS["guidance"], ["ca_rtc63", "irs_estate_faq"]),
+            (["S10", "Keep the private model and the public site permanently separate", "Every commit to a public repository is permanent; a household model and a public website cannot share one safely.", "Already implemented: the published site contains no household figures."], STATUS["rule"], ["github_sensitive"]),
+        ])
+        body += '<section class="prose"><h2>Record a review decision</h2><p>Choose a status for each item. Choices stay in this browser tab and clear on refresh.</p><div class="review-queue">'
+        for i in range(1, 11):
+            body += (f'<label>S{i} <select class="review-choice" aria-label="Suggestion {i} status">'
+                     '<option>Not reviewed</option><option>Adopt</option><option>Defer</option>'
+                     '<option>Reject</option></select></label>')
         body += '</div><p id="review-summary" role="status" aria-live="polite">No review choices yet.</p></section>'
-        return "Suggestions for review", "A separate review queue: select, discuss, and decide before implementation.", body
+        body += prose("What adopting one of these is not", "Adopting a presentation change is not a decision about the estate. A clearer site makes the missing facts obvious; it cannot supply them. No suggestion on this page should be read as an instruction to sell, rent, occupy or retain any property.")
+        body += table("Numbered action registry — cite one of these in the decision log", ["ID", "Action", "Why it improves the decision", "Next step"], [
+            (["S-01", "Approve a private inventory template", "Keeps deed, trust, loan, tax, insurance, lease and account identifiers in an offline encrypted file, never in this repository.", "Choose secure storage and name who may open it."], STATUS["guidance"], ["irs_estate_faq", "irs_1041"]),
+            (["S-02", "Order independent valuation and condition reports", "A date-of-death value supported by a qualified appraisal anchors basis, estate reporting and every later comparison.", "Written appraisal, inspection and two licensed contractor reviews."], STATUS["guidance"], ["irs_basis", "cslb"]),
+            (["S-03", "Write the decision policy before any forecast is shown", "A rule written before the figures arrive cannot be reverse-engineered from them.", "Sign and date the pre-commitment table on the Decision log page."], STATUS["guidance"], ["sec_stocks", "treasury_bills"]),
+            (["S-04", "Keep the three tax systems in separate columns", "Estate-tax value, income-tax basis and assessed value move on different clocks; merging them is how a comparison becomes quietly wrong.", "CPA models the transfer-year sale, Section 121, depreciation and recapture."], STATUS["guidance"], ["irs_basis", "irs_rental", "irs_121", "boe_prop19"]),
+            (["S-07", "Model the mixed paths, not only live / rent / sell", "The pure choices are not the real options. Occupying one property while renting the other is where the household's actual constraints live.", "Private model with per-asset basis, leases and cost allocation kept separate."], STATUS["guidance"], ["irs_rental", "irs_1041"]),
+            (["S-08", "Put reinvestment risk beside the staging headline", "A staged plan carries a second risk: the yield at which each rung is renewed. Falling yields make the reserve earn least when it holds most cash.", "Use the fixed-scenario chart on the Treasury staging page; copy the worst case into the policy."], STATUS["guidance"], ["treasury_bills", "treasury_notes"]),
+            (["S-09", "Decide the like-kind exchange question before listing anything", "An exchange must be arranged before closing and never applies to a principal residence. After the sale is too late.", "Dated CPA or tax counsel memo before any listing agreement."], STATUS["rule"], ["irs_1031", "irs_1031_tips"]),
+            (["S-10", "Get written rent-comparable evidence, not a program benchmark", "HUD Fair Market Rent is a housing-program benchmark, not evidence of lawful rent. Ranking a rent path on it is a category error that survives review because the number looks authoritative.", "Two or three written comparables from the actual submarket; counsel confirms lawful units and rent limits."], STATUS["guidance"], ["hud_fmr", "ca_rent"]),
+            (["S-13", "Treat the historical privacy exposure as an open task, not a closed one", "A rebuilt site does not recall earlier commits, pull-request diffs, branches, forks or clones. The read-only audit tool shows the material is still reachable in this repository's own refs.", "Repository administrator actions per tools/history_scrub_runbook.md. An owner decision, not a site change."], STATUS["missing"], ["github_sensitive"]),
+        ])
+        body += prose("Two numbering schemes on one page, on purpose", "The review board above numbers site and model improvements S1 to S10. The registry below numbers household actions S-01 upward. They are kept separate because they answer different questions: one is about improving this site, the other is about evidence the household must obtain. Cite the hyphenated form in the decision log so the two never collide.")
+        return "Suggestions for review", "A separate review board: choose, discuss, then implement.", body
     if path.endswith("property-profiles.html"):
         rows = [
             (["Property A — inherited home", "No location, value, parcel identifier, tax history or insurance figure is published." , "Keep location and complete source records in a private inventory; obtain date-of-death valuation."], STATUS["missing"], ["irs_basis", "boe_prop19"]),
@@ -313,6 +355,7 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Inflation and investment", "Use distinct inflation, interest, equity, recession and recovery regimes rather than one 50-year rate." , "CBO is a bounded baseline; BLS and Federal Reserve sources describe history, not probabilities."], STATUS["guidance"], ["cbo_long", "bls_cpi", "fed_inflation", "sec_stocks"]),
         ]
         body = table("Projection worksheet design (no household inputs stored)", ["Output", "Method", "Verification"], rows)
+        body += callout("A projection is a sentence about its assumptions", "Before reading any year-by-year figure, read the assumption list that produced it. If a projection shows a single number for 2076, the honest reading is that it shows one path through a set of guesses. Two runs of the same model with different, equally plausible growth assumptions can reverse the ranking, and the useful output is the range and the assumption that flips it, not the centre line.", "info")
         body += prose("Avoid false precision", "Publish ranges or dated official figures only. For every modeled amount, preserve the input source, observation date, formula, tax treatment, scenario range, and whether it is measured, assumed, or missing. Rebuild after any input change and record whether the ranking moved.")
         body += prose("Distribution of sale proceeds", "Model the payout in the fixed order published on the Compare paths page: gross value, sale transaction costs, documentary transfer tax, recording fees, sale-year income tax, then net to invest. A distribution chart belongs in the private model built on that order; this public page publishes the framework and the labels, not household amounts.")
         return "Projection worksheet", "A reproducible approach for a private offline model; no property-specific projections are published.", body
@@ -324,7 +367,7 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Current indexed cap", "The official cap is $1,044,586 for qualifying transfers through February 15, 2027; the amount is periodically adjusted." , "Use the BOE amount applicable on the transfer date, not a forward projection."], STATUS["rule"], ["boe_lta"]),
             (["Property tax on an inherited home", "A qualifying claim may preserve the factored base value subject to the statutory value-limit calculation; failure to qualify can lead to reassessment." , "Obtain an assessor determination; do not treat a public model as eligibility advice."], STATUS["guidance"], ["boe_prop19", "ca_rtc63"]),
             (["No carry-forward of the value limit", "The family-home value limit read in the statute on 2026-11-15 (as amended through 2025) applies per qualifying transfer: each transfer is limited to the then-current adjusted amount. The statute contains no carry-forward of an unused limit to a later transfer, and the biennial adjustment is published by the state board rather than projected here." , "Do not budget a transfer around an assumed stockpiled allowance; use the official amount in effect on the actual transfer date."], STATUS["rule"], ["ca_rtc63", "boe_lta"]),
-            (["Claim timing and corrective relief", "Claim periods, late-claim procedures, notice-based extensions and statutory limits on county claim fees are set by statute; a missed claim can change the assessment." , "Calendar the claim immediately after transfer; counsel confirms the applicable period and any late-claim route in writing."], STATUS["rule"], ["ca_rtc63", "ca_rtc27388"]),
+            (["Claim timing and corrective relief", "Read in §63.2(f)-(g) on 2026-11-17: the claim is ordinarily due within three years of the transfer, or earlier if the property is transferred to a third party or the transferee stops occupying it; a claim can be treated as timely within six months of a supplemental or escape assessment notice, and a late claim on property still held is allowed with the exclusion applied from the lien date of the assessment year in which it is filed. The assessor may charge a late-claim processing fee capped at the lesser of actual reassessment cost or 175 dollars." , "Calendar every date immediately at transfer; counsel confirms the applicable period and any late-claim route in writing. A previous build cited a separate statute section that no longer renders code text and did not support these deadlines."], STATUS["rule"], ["ca_rtc63"]),
             (["Tax rate area (TRA)", "Property-tax rates are set by geographic tax rate areas published in the county's official rate compilation; the parcel's tax rate area line appears on the tax bill." , "Read the tax rate area from the actual bill and its published total rate from the county compilation; do not infer a rate from a generic statewide levy."], STATUS["guidance"], ["ca_rtc51", "boe_counties"]),
         ]
         return "Property-tax rules", "Current California rules are conditional; verify future law and property-specific facts.", table("Property-tax decision gates", ["Rule", "Officially established", "Action"], rows)
@@ -371,16 +414,46 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Local transfer-tax restructuring proposals", "Jurisdictions periodically propose tiered transfer-tax changes (for example, reducing top tiers at high values or adding parallel special taxes). A controller's digest of a proposal is not the enacted schedule." , "At sale, read the enacted local transfer-tax schedule actually in force and record its enactment date; keep proposal digests labeled as proposals."], STATUS["guidance"], ["sos_measures", "ca_rtc11911"]),
         ]
         return "Law watchlist", "A proposal is not enacted law. Track official status, effective dates and source-check dates.", table("Legislation and rules to refresh", ["Item", "Status distinction", "Verification routine"], rows)
+    if path.endswith("verified-lookups.html"):
+        body = callout("What this page is", "Every headline figure this project relies on, with the date it was read from the issuing authority and the exact words that establish it. A figure that could not be confirmed is left blank and marked, rather than estimated. Re-reading these is the first task of the annual review, because an amount that was right in 2026 is not evidence about 2045.", "info")
+        body += table("Dated first-hand lookups", ["Figure", "Value used here", "Exact basis, as read from the official page"], [
+            (["Federal estate basic exclusion, 2026", "$15,000,000", "IRS news release IR-2026-133 (Nov. 5, 2026) gives $15,000,000 for decedents dying in 2026. Estate-level, not a per-heir allowance."], STATUS["rule"], ["irs_2027"]),
+            (["Federal estate basic exclusion, 2027", "$15,480,000", "The same release gives $15,480,000 for decedents dying in 2027. Published one year ahead only; there is no official multi-decade figure."], STATUS["rule"], ["irs_2027"]),
+            (["Federal annual gift exclusion, 2027", "$20,000", "The same release gives $20,000 per donee for calendar year 2027, up from $19,000 for 2026. Not an inheritance allowance."], STATUS["rule"], ["irs_2027"]),
+            (["Proposition 19 indexed value cap", "$1,044,586", "BOE Letter to Assessors 2025/009 sets the cap at the factored base-year value plus $1,044,586 for transfers from February 16, 2025 through February 15, 2027, and schedules the next adjustment for February 2027."], STATUS["rule"], ["boe_lta"]),
+            (["Proposition 19 value-cap history", "$1,000,000 then $1,022,600", "The same letter's table gives $1,000,000 for Feb. 16, 2021 - Feb. 15, 2023 and $1,022,600 for Feb. 16, 2023 - Feb. 15, 2025."], STATUS["rule"], ["boe_lta"]),
+            (["Proposition 19 filing windows", "Homeowners' exemption within 1 year; claim within 3 years", "The BOE overview states the exclusion requires the home to become the transferee's principal residence, a homeowners' exemption filing within one year of transfer, and a claim within three years or before transfer to a third party."], STATUS["rule"], ["boe_prop19_page", "ca_rtc63"]),
+            (["Federal long-term capital gain rate on unrecaptured section 1250 gain", "Maximum 25%", "IRS Topic 409 states the maximum rate on unrecaptured section 1250 gain; the applicable rate depends on the individual's bracket."], STATUS["rule"], ["irs_topic409"]),
+            (["Main-home exclusion", "Up to $250,000 / $500,000", "IRS Topic 701 states the exclusion, the ownership test (24 of the last 60 months) and the use test (24 of the last 60 months), and notes the sale must be reported even when the gain is excludable."], STATUS["rule"], ["irs_121"]),
+            (["California additional 1% on high taxable income", "1% above $1,000,000", "The 2025 Form 540 line 62 instruction computes a 1% Behaviorial Health Services Tax on the excess of taxable income over $1,000,000 in whole dollars. This is an income tax, not an inheritance tax."], STATUS["rule"], ["ftb_540", "ca_rtc17043"]),
+            (["California capital-gain treatment", "Ordinary income rates", "FTB states California has no lower capital-gains rate; gains are taxed as ordinary income. No preferential state rate exists to model."], STATUS["rule"], ["ftb_cap_gains"]),
+            (["Treasury bill terms", "4 to 52 weeks", "TreasuryDirect lists 4, 6, 8, 13, 17, 26 and 52-week bills, a $100 minimum, interest fixed at auction, federal tax due on interest and no state or local tax. Short-term interest is therefore not a state-tax shelter in this analysis; it is only a federal-taxed return."], STATUS["rule"], ["treasury_bills"]),
+            (["1929 drawdown and recovery", "89% decline; peak regained 1954", "The Federal Reserve History essay states the Dow closed at 41.22 in July 1932, 89% below its September 1929 peak, and did not reach the 1929 high again until November 1954."], STATUS["historical"], ["fed_1929"]),
+            (["2007-09 drawdown", "57% S&P 500 decline", "The Federal Reserve History essay states the S&P 500 fell 57% from its October 2007 peak to its March 2009 trough, and home prices fell about 30% on average from mid-2006 to mid-2009."], STATUS["historical"], ["fed_2008"]),
+            (["2007-09 home-price decline, alternate window", "Over one fifth, 2007Q1 to 2011Q2", "The companion essay states home prices fell by over a fifth nationally from the first quarter of 2007 to the second quarter of 2011. The two essays measure different windows, so both figures are shown rather than one being chosen silently."], STATUS["historical"], ["fed_2008_aftermath"]),
+            (["CBO near-term baseline", "2.2% real GDP, 2.7% PCE inflation", "The CBO economy page shows these as its current near-term projections, from The Budget and Economic Outlook published February 11, 2026. CBO publishes these for a bounded horizon; it does not publish a 50-year single-path forecast."], STATUS["reference"], ["cbo_outlook"]),
+            (["California statewide rent cap", "5% plus CPI, or 10%, whichever is lower", "Civil Code 1947.12 limits annual increases over a 12-month period to the lower of 5% plus the change in cost of living or 10%. Exemptions in the section include housing with a certificate of occupancy issued within the previous 15 years. Whether a particular unit is covered is a separate legal question."], STATUS["rule"], ["ca_rent"]),
+            (["Property-tax inflation factor", "2% annual cap on factored base year value", "Revenue and Taxation Code 51 supplies the annual adjustment framework that the Proposition 19 cap and the base-year system both build on. The actual factor for a given year is published by the assessor."], STATUS["rule"], ["ca_rtc51"]),
+        ])
+        body += prose("What is deliberately blank", "No figure is published for a specific parcel's assessed value, tax-rate area, levy, insurance premium, utility bill, rent, repair cost or sale price. Those are obtainable only from the property's own records and the issuing agency, and publishing them would breach the privacy boundary. The Projection worksheet lists exactly how each one is obtained and what it is cross-checked against.")
+        body += prose("How to re-verify", "Open each link, confirm the amount is still current for the relevant year, and record the date. If an amount has been superseded, update the row and the date rather than keeping a stale figure that a later reader would take as current. Numbers published for a future year by an agency are recorded as published for that year only and are never extrapolated.")
+        body += callout("A correction made on 2026-11-17", "Two citations on this site were corrected after reading the sources. The 57% S&P 500 figure is in the 'Great Recession' essay, not the 'Great Recession and Its Aftermath' essay, and the two give different home-price windows (about 30% from mid-2006 to mid-2009, versus over one fifth from 2007Q1 to 2011Q2). Both are now cited to the essay that actually contains them. Separately, a formula error that left reserve interest permanently undeployed in the staging model was found and fixed by a new test.", "warning")
+        return "Verified lookups", "Every headline figure, the date it was read, and the words that establish it.", body
     if path.endswith("black-swan.html"):
-        rows = [
-            (["1929 crash anchor", "Federal Reserve History reports the Dow fell 89% peak-to-trough and did not regain its prior high until 1954; that is a historical price-index path, not a diversified portfolio return." , "Use an 89% stress anchor only as an explicitly labeled scenario; test crash during and after staging, not as a probability."], STATUS["historical"], ["fed_1929"]),
-            (["2007–09 Great Recession anchor", "Federal Reserve History reports an approximately 57% S&P 500 peak-to-trough decline and approximately 30% average U.S. home-price decline from prior peaks." , "Compare an early-staging and post-staging stress; do not treat national indexes as a property or portfolio forecast."], STATUS["historical"], ["fed_2008", "sec_stocks"]),
-            (["Deflation and income stress", "The Great Depression history describes deflation and severe economic contraction." , "Stress falling nominal rents or income, vacancies, debt service, and fixed costs together."], STATUS["historical"], ["fed_depression", "bls_cpi"]),
-            (["Inflation / stagflation", "Federal Reserve history documents a high-inflation period and policy response; historical inflation can be uneven." , "Stress simultaneous high inflation, high financing/insurance cost, weak real returns and delayed maintenance."], STATUS["historical"], ["fed_inflation", "bls_cpi"]),
-            (["Housing and equities fall together", "National indices cannot describe a specific property or household balance sheet." , "Test lower home value and lower equities at once; include sale liquidity, debt and rent interruption."], STATUS["guidance"], ["fhfa", "fed_2008", "sec_stocks"]),
-            (["Long-horizon baseline", "CBO and historical series are bounded; no official institution forecasts an individual home or portfolio over a 50-year horizon." , "Use irregular sequences of regimes rather than a single annual growth rate; label all future paths as assumptions."], STATUS["guidance"], ["cbo_long", "cbo_outlook", "bls_cpi"]),
-        ]
-        return "Black-swan conditions", "Stress regimes should mimic historical mechanisms, not claim to predict their timing or probability.", table("Stress scenarios to run", ["Regime", "Evidence", "Household stress design"], rows)
+        body = callout("Why one constant growth rate is the real error", "A fifty-year projection built on one inflation rate and one return rate makes an unstable century look tidy. The published history contains inflation near 1 percent in 1964, more than 14 percent in 1980, and about 3.5 percent by the late 1980s; a 57 percent equity fall from 2007 to 2009; and an 89 percent index fall from 1929 that was not recovered until 1954. A model that averages those episodes into a single number cannot show the risk the household is actually exposed to.", "warning")
+        body += table("Stress regimes to run, and the historical mechanism behind each", ["Regime", "What actually happened, from the official record", "What the model must do to the household"], [
+            (["Disinflationary crash", "The S&P 500 fell 57 percent from its October 2007 peak to its March 2009 trough, and home prices fell about 30 percent on average from mid-2006 to mid-2009.", "Fall equities and home value at once; raise vacancy; cut rent; keep taxes and insurance rising."], STATUS["historical"], ["fed_2008", "fhfa"]),
+            (["Depression-type deflation", "The 1929 index fell 89 percent to its 1932 low and did not regain its prior high until November 1954, an interval of about 25 years.", "Hold cash flows flat or falling for a decade; test whether a reserve survives a multi-year recovery delay."], STATUS["historical"], ["fed_1929", "fed_depression"]),
+            (["High-inflation regime", "Inflation rose from a little over 1 percent in 1964 to more than 14 percent in 1980, with four recessions and two energy shortages over the period.", "Raise insurance, utilities and repairs faster than rent if rent is capped; test real, not nominal, outcomes."], STATUS["historical"], ["fed_inflation", "bls_cpi"]),
+            (["Stagflation with rate caps", "The same period combined high inflation with weak growth, and a cap on assessed-value growth does not cap the cost of rebuilding or insuring.", "Raise operating costs at inflation while assessed value is capped at 2 percent; the gap is a cash-flow squeeze, not a saving."], STATUS["historical"], ["fed_inflation", "ca_rtc51"]),
+            (["Housing and equity correlation", "The 2007 to 2009 episode moved both at once, which a portfolio of one house plus equities cannot diversify away by rebalancing.", "Value the household balance sheet as one exposure, not two separate pots."], STATUS["guidance"], ["fed_2008", "fhfa", "sec_stocks"]),
+            (["Rate reset on short Treasuries", "Bills are sold at 4 to 52 weeks and notes pay a fixed coupon; a ladder that matures must be reinvested at whatever the market then offers.", "Reprice the ladder annually at a lower yield and show the shortfall, instead of assuming the first yield persists."], STATUS["rule"], ["treasury_bills", "treasury_notes"]),
+            (["Sequence of returns, not average return", "The same average return delivered in a different order produces different outcomes when money is added or withdrawn over time.", "Run the same assumptions in several orderings; report the spread, not a single path."], STATUS["guidance"], ["sec_stocks", "cbo_long"]),
+        ])
+        body += prose("How to build a fifty-year path honestly", "Do not draw one smooth curve. Draw a sequence of regimes with explicit start years, and label each transition as an assumption. The published sources describe what happened and when; none of them forecasts this household, and the historical ranges are wider than most planning models assume. A defensible presentation shows the median path, the range across orderings, and the worst ordering, and it states which decisions stay sensible in all three.")
+        body += prose("Property-specific shocks that matter more than the macro path", "A local rent ordinance, a special assessment, a seismic retrofit requirement, an insurer withdrawing from the area, a long vacancy, or a single large repair can move the household's outcome more than the difference between a 5 and 6 percent equity return. These are not tail events in a fifty-year window; they are ordinary operating risks that a macro stress test can hide.")
+        body += callout("Read the anchors correctly", "The 57 percent figure describes the S&P 500 and the 89 percent figure describes the Dow Jones Industrial Average. They are different indexes measured over different periods, they are price indexes that exclude dividends, and neither is a probability. Using them as stress inputs is defensible; quoting them as expected losses is not.", "info")
+        return "Black-swan conditions", "Regime changes, not one smooth trend: what the official record shows and how to stress it.", body
     if path.endswith("phased-investing.html"):
         body = callout("Headline and risk", "Phasing sale proceeds into equities can reduce immediate exposure to an early fall, but can lag a rising market. Treasury interest resets at reinvestment; lower renewal yields, taxes, inflation, and delayed equity exposure can change the result.", "warning")
         body += table("Mechanics and evidence", ["Feature", "What is known", "What to test"], [
@@ -392,7 +465,21 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         ])
         body += '<section class="prose"><h2>Historical stress anchors</h2><p>The calculator starts with the 57% S&amp;P 500 2007–09 drawdown anchor. A 1929 stress run may use 89%, but that figure describes the Dow Jones Industrial Average, a different price index. These are not comparable portfolio estimates. Source: ' + source_link("fed_2008") + ' and ' + source_link("fed_1929") + '.</p></section>'
         body += '<section class="prose"><h2>Local-only sensitivity tool</h2><p>Enter generic scenario assumptions. This is an illustration, not a forecast, advice, or a historical backtest. No values are stored or transmitted. Crash timing is a one-time shock in an otherwise smooth annual-drift path.</p><div class="calculator"><label>Starting amount <input id="phase-amount" type="number" min="0" step="10" inputmode="decimal" placeholder="Enter privately"></label><label>Staging months <input id="phase-months" type="number" min="24" max="36" step="1" value="24"></label><label>Annual Treasury yield (%) <input id="phase-yield" type="number" min="-5" max="30" step="0.1" placeholder="Enter assumption"></label><label>Annual equity price drift (%) <input id="phase-equity" type="number" min="-50" max="50" step="0.1" placeholder="Enter assumption"></label><label>One-time equity decline (%) <input id="phase-crash" type="number" min="0" max="90" step="1" value="57"></label><label>Crash month (staging months + 1 = just after staging) <input id="phase-crash-month" type="number" min="1" max="37" step="1" value="13"></label><button id="phase-run" type="button">Run illustration</button><button id="phase-clear" type="button">Clear</button><p id="phase-result" role="status" aria-live="polite">No calculation run.</p></div></section>'
-        body += prose("Limits", "This simplified path applies one instantaneous drawdown at the selected month, with a constant annual equity-price drift and Treasury yield otherwise. It does not model a historical sequence or recovery, dividends, fees, taxes, withdrawals, asset correlations, property costs, or changing Treasury yields. A 57% or 89% shock compresses a multi-year index decline into one event and is a stress input only, not a forecast or probability.")
+        body += table("Does 24-36 months of staging actually soften crash entry? Fixed scenario results", ["Scenario (fixed, not chosen by the visitor)", "Staged minus lump sum at month 60 (24-month window, 4% reserve yield, 7% drift)", "Depth of the worst fall each path experiences"], [
+            (["Crash in month 3, 2008-shaped, reserve yield falls to 0.5%", "Staged ahead by 59.3%", "The lump-sum path falls 52.7% peak to trough; the staged path 28.3%."], STATUS["assumption"], ["fed_2008", "treasury_bills"]),
+            (["Crash in month 3, 1929-shaped, reserve yield falls to 0.5%", "Staged ahead by 15.6%", "Both paths are devastated: the lump-sum path falls 86.8% peak to trough, the staged path 75.3%. Most of the money still has to be invested into a falling market, which is why staging helps here without rescuing the household."], STATUS["assumption"], ["fed_1929", "treasury_bills"]),
+            (["Crash in month 12, 2008-shaped", "Staged ahead by 13.1%", "Roughly half the scheduled purchases are already done, so the protection is smaller than in the month-3 case. The lump-sum drawdown is unchanged at 52.7%; the staged path falls 45.6%."], STATUS["assumption"], ["fed_2008"]),
+            (["Crash in month 12, 1929-shaped", "Staged ahead by 3.4%", "The reserve is being spent into a market that keeps falling for another two years. Both paths fall almost the whole 1929 depth: 86.8% versus 83.8%."], STATUS["assumption"], ["fed_1929"]),
+            (["Crash in month 24, 2008-shaped, 24-month window", "Staged BEHIND by 2.0%", "The window is already closed, so the crash hits both paths identically at 52.7% and staging has only paid a small opportunity cost."], STATUS["assumption"], ["fed_2008"]),
+            (["Crash in month 24, 1929-shaped, 24-month window", "Staged behind by 0.4%", "Same mechanism, with both paths falling 86.8%. A 36-month window still has a third of the money waiting and does better, at +1.7%."], STATUS["assumption"], ["fed_1929"]),
+            (["Crash in month 37, after a 36-month window closes", "Staged behind by 1.6%", "Both paths are fully invested when the crash lands, so both fall 52.7% and staging has only cost the earlier, lower purchase price."], STATUS["assumption"], ["fed_2008"]),
+            (["No crash, flat price index, 2% reserve yield", "Staged ahead by 4.2%", "Staging is paid the reserve yield on money not yet invested. This is the one case where waiting is free, and it is small relative to the crash scenarios."], STATUS["assumption"], ["treasury_bills"]),
+            (["No crash, steady 8% rise, 2% reserve yield", "Staged BEHIND by 4.7%", "The cost of staging is the equity-minus-Treasury spread on the waiting balance, not the whole equity return. This is the price paid for the crash protection above."], STATUS["assumption"], ["treasury_bills", "sec_stocks"]),
+        ])
+        body += prose("What the fixed scenarios show", "Across the published set, at a 4% reserve yield and 7% drift, a 24-month window is ahead of a lump sum in 5 of 9 scenarios with a median advantage of 3.4% and a worst case of -4.7%. A 36-month window is ahead in 7 of 9 with a median of 6.3% and a worst case of -7.3%. The pattern is not 'staging wins'. It is that staging buys protection against a crash that arrives EARLY, and pays for it with the spread between equity and Treasury returns when the market simply rises. A crash that arrives as the window closes is close to a wash, and a crash after the window closes hits both paths almost equally. Reserved per the decision-log rule: these are assumption-driven outcomes at a single 60-month date, not probabilities, and they say nothing about any household's amounts.")
+        body += callout("The uncomfortable result worth keeping", "In the 1929-shaped cases, staging helps but does not rescue the household. Even with a 36-month window, a 1929-shaped path leaves the staged portfolio roughly a third behind where a calm market would have put it. If the household cannot tolerate that, the answer is not a longer staging window; it is a smaller allocation to equities, a larger reserve, or a different decision about the property. No staging schedule converts a 25-year recovery into a safe one.", "warning")
+        body += '<section class="prose"><h2>Distribution of outcomes across all nine scenarios</h2><p>The chart below is drawn from the fixed scenario set, not from visitor input. Each bar is one scenario; the bar shows how far the staged path finished above or below the lump-sum path at the same 60-month date. Green is ahead, red is behind. Nothing is stored and nothing is sent.</p><div class="chart-wrap"><svg id="staged-chart" viewBox="0 0 720 300" role="img" aria-labelledby="staged-chart-title"><title id="staged-chart-title">Staged minus lump-sum outcome by scenario</title></svg><p id="staged-chart-legend" class="chart-legend">Loading the fixed scenario set…</p></div><div class="chart-controls no-print"><label>Staging window <select id="staged-window"><option value="24">24 months</option><option value="36">36 months</option></select></label><label>Starting reserve yield (%) <input id="staged-yield" type="number" min="0" max="10" step="0.5" value="4"></label><label>Equity price drift (%) <input id="staged-drift" type="number" min="-10" max="20" step="0.5" value="7"></label></div></section>'
+        body += prose("Limits of both tools on this page", "The single-shock calculator above applies one instantaneous drawdown at a selected month with constant drift and yield otherwise. The scenario table and chart use a different, more realistic construction: the decline unfolds from the crash month to the anchor's trough over its recorded duration, then recovers to the prior peak over its recorded recovery period, and the reserve yield drops after the crash. Neither tool models dividends, fees, taxes, inflation, withdrawals, asset correlations, property cash flows, or price risk from selling a Treasury before maturity. In both, a 57% or 89% figure is a stress input taken from a named index, not a probability and not a forecast for any portfolio. The scenario results are assumption-driven and evaluated at a single 60-month date.")
         return "Treasury staging tool", "Model 24–36 months of 3-month to 2-year Treasuries beside equity entry and renewal risk.", body
     if path.endswith("attorney-cpa-brief.html"):
         body = callout("Print-ready adviser handoff", "Bring this generic checklist to counsel and the tax adviser. Keep all names, property identifiers, documents and household figures out of the public site.", "info")
@@ -407,6 +494,18 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         ])
         body += '<p class="no-print"><button class="print-button" id="print-page" type="button">Print this one-page brief</button></p>'
         return "Attorney & CPA briefing sheet", "One-page print-ready checklist for counsel and the tax adviser.", body
+    if path.endswith("break-even.html"):
+        body = callout("Ask for one number, not a fifty-year forecast", "Most of this decision turns on a handful of quantities that can be obtained in writing. Until they arrive, a long projection is an elaborate restatement of the assumptions typed into it. This page separates the quantities that would settle the choice from the ones that only look precise.", "info")
+        body += table("Break-even questions — the threshold that flips the answer", ["Question", "What the threshold looks like", "Why it settles the choice"], [
+            (["How much housing value does occupying the inherited home have to deliver?", "A monthly imputed rent at which occupying and selling come out equal over a stated horizon. Above it, occupying is worth more than the net sale proceeds; below it, selling and investing wins.", "It converts an emotional comparison into one figure that written market comparables can be tested against."], STATUS["guidance"], ["irs_rental", "hud_fmr"]),
+            (["How fast does the home have to appreciate to beat selling?", "A break-even annual appreciation rate. If the assumed rate must be higher than the area's long-run published index, the case for holding rests on an assumption, not on evidence.", "It exposes whether the answer depends on a growth guess rather than on the property."], STATUS["guidance"], ["fhfa", "cbo_long"]),
+            (["How much must equities fall, and when, for Treasury staging to pay?", "A dollar gain from staging appears only if the decline lands inside the parking or deployment window; if the market rises through the window, staging loses by the amount of the delay.", "It shows that staging is a trade-off on timing, not a free reduction in risk."], STATUS["guidance"], ["treasury_bills", "fed_2008"]),
+            (["How large can one bad operating year be before the house forces a sale?", "Annual carrying cost plus one major repair, compared with the reserve set aside. If the reserve is smaller, the plan depends on selling at a bad moment.", "It ties the liquidity rule to the physical condition of the building instead of to optimism."], STATUS["guidance"], ["cslb", "cdi"]),
+            (["At what estate size does the tax calendar start to dictate the property decision?", "The year-of-death federal filing threshold, tested on the whole estate including adjusted taxable gifts, not on one house or one heir's share.", "It can outrank return: tax and administration costs fall due whether or not a house has sold."], STATUS["rule"], ["irs_estate", "irs_estate_faq"]),
+        ])
+        body += prose("How to use a break-even figure", "Obtain the threshold first, then obtain the market evidence. If written comparables sit comfortably above the break-even rent, occupying survives the test; if they sit below it, the honest conclusion is that the area's rental value does not justify living in the home, and the comparison moves to selling versus leasing out. Either way the conclusion rests on an observed number rather than on a projection.")
+        body += callout("What a break-even figure cannot do", "It cannot decide whether a family should live somewhere. It prices the housing, and the housing is only one part of the decision. Health, work, schools, distance from the household's support network and the wishes attached to the property are not modelled here and should not be dressed up as financial outputs.", "warning")
+        return "Break-even questions", "The handful of thresholds that actually decide between occupying, renting, selling and staging.", body
     if path.endswith("decision-log.html"):
         rows = [
             (["Decision rule", "What choice would be made under each eligible path, before figures are revealed?", "Write dated criteria, including liquidity, occupancy, tax eligibility and risk limits."], STATUS["guidance"], ["sec_stocks", "boe_prop19"]),
@@ -431,7 +530,13 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Prop H", "The identifier alone does not establish jurisdiction, election year or measure text. Private research on 2026-11-15 identified the official measure behind the shorthand and reviewed its litigation status; jurisdiction and terms are withheld from this public site by policy, and no impact is modeled." , "Confirm the measure's current status with the property's own tax authority; the identification is recorded in the private workpaper."], STATUS["unverified"], ["sos_measures"]), 
             (["Proposition 19 value-limit carry-forward premise", "A carry-forward of an unused family-home value limit was requested. The full text of the governing statute read on 2026-11-15 (as amended through 2025) provides no such carry-forward: each qualifying transfer is limited to the then-current adjusted amount. The correction is recorded here so the premise is not modeled silently." , "Confirm with the property-tax adviser; if biennial indexing of the limit was meant, use the official amount published for the actual transfer date."], STATUS["rule"], ["ca_rtc63", "boe_lta"]), 
             (["Proposal digests are not enacted schedules", "Digests and fiscal analyses describing proposed local tax changes are not enacted law, and lower tiers of tiered local transfer taxes were not read from enacted codes in this project." , "Before pricing any sale, read the enacted transfer-tax schedule in force and record its enactment date and source."], STATUS["unverified"], ["sos_measures", "ca_rtc11911"]),
-            (["History / repository exposure", "Earlier public Git objects and copies may retain content no longer shown on the site. A site rebuild cannot recall prior clones, PR diffs or caches." , "Repository administrator should assess visibility, history remediation and GitHub Support options; preserve a private archive before a rewrite."], STATUS["missing"], ["github_sensitive"]),
+            (["History / repository exposure", "Earlier public Git objects and copies may retain content no longer shown on the site. A site rebuild cannot recall prior clones, PR diffs or caches. An audit of the public remote on 2026-11-17 found the current published tree clean but broad retention in earlier commits reachable from other branch and pull-request refs." , "Repository administrator should assess visibility, history remediation and GitHub Support options; preserve a private archive before a rewrite. Making only the default branch private would not be a complete remedy."], STATUS["missing"], ["github_sensitive"]),
+            (["Exposure is still live in the repository's own refs", "Audited read-only on 2026-11-17 across every branch, remote and tag: identifying material was reachable in 82 of 87 refs. This is not only a historical concern about external caches; the material is in the repository's refs today.", "Owner decision on repository visibility, then administrator history remediation with a private archive preserved first. Deleting a branch alone does not remove commits still referenced by a pull request."], STATUS["missing"], ["github_sensitive"]),
+            (["Formula correction: staged-investment reserve interest", "The first version of the staged-versus-lump model deployed a fixed dollar slice each month, which left interest earned during the staging window permanently undeployed. The staged path therefore kept a cash allocation the household never chose, and the two paths were no longer comparable at the same asset mix. Deployment is now an equal fraction of the remaining reserve, which drains it exactly when the window closes.", "Fixed 2026-11-17 and pinned by a regression identity. The corrected results are less favourable to staging than the first version, which is why the bug is recorded rather than quietly fixed."], STATUS["rule"], ["treasury_bills"]),
+            (["Interpretation limit: the staging results are not probabilities", "The nine fixed scenarios are assumption sets chosen to stress the decision, not a sample of what markets do. Reporting 'staged ahead in 5 of 9' describes the scenario set, not a probability of the future. Dividends, fees, taxes, inflation and withdrawals are omitted.", "Treat the results as a structured argument about which conditions favour staging, and set policy on the worst case rather than the win count."], STATUS["assumption"], ["fed_1929", "fed_2008"]),
+            (["Corrected on 2026-11-17: misattributed historical figures", "The 57 percent equity decline and the approximately 30 percent home-price decline had been cited to the essay 'The Great Recession and Its Aftermath', which does not contain either figure; it reports home prices falling 'by over a fifth' across the period from 2007 to 2011. The figures appear in the companion essay 'The Great Recession'." , "The register now cites the correct essay and keeps the aftermath essay as a separate record. Anyone relying on an earlier version should re-read the corrected source note."], STATUS["rule"], ["fed_2008", "fed_2008_aftermath"]),
+            (["Corrected on 2026-11-17: dead official link", "The Congressional Budget Office long-term budget outlook topic URL returned HTTP 404 when read. A dead link in a source register is worse than a missing one, because it implies a citation that cannot be checked." , "Replaced with the recurring-publication index, which resolves and links each edition. The source register should be link-checked before each release."], STATUS["rule"], ["cbo_long"]),
+            (["Corrected on 2026-11-17: unsupported statute section", "One previously cited Revenue and Taxation Code section renders no code text at the official source, so the claim deadlines attributed to it were not supported there. Those deadlines appear in section 63.2(f) and (g). The offending section number is recorded in the coordination board rather than repeated here, because it resembles a postal identifier to this site's privacy scanner." , "The row now quotes section 63.2 directly. Any future citation should be read from the rendered statute text, not from a section number alone."], STATUS["rule"], ["ca_rtc63"]),
         ]
         return "Flagged for review", "Unverified or missing information is visible here; no unresolved item is presented as fact.", table("Open items", ["Flag", "What is not established", "Next verification step"], rows)
     if path.endswith("glossary.html"):
@@ -454,6 +559,7 @@ def base_content_for(path: str) -> tuple[str, str, str]:
         for key, (label, url, scope) in SOURCES.items():
             rows.append(([label, scope, "Reference link; recheck before use"], STATUS["unverified"] if key == "ftb_forms" else STATUS["reference"], [key]))
         body = table("Official source register", ["Source", "Scope and limits", "Review note"], rows)
+        body += prose("Read-date discipline", "Each scope note that begins 'Re-read' was opened and checked against the live official page on the date stated. A scope note without a date was last confirmed earlier and must be re-opened before it is relied on. The register is not re-fetched on every build, so an undated entry is a candidate for staleness rather than a guarantee.")
         body += prose("Verification discipline", "A link is not proof of a household-specific fact. This register is a starting point; source availability and content are not re-fetched on each build. Check each official page and the applicable year before relying on it. Unavailable, future, or property-specific facts remain blank and flagged.")
         return "Official source register", "Primary-source links and the narrow question each source can answer.", body
     if path.endswith("privacy.html"):
@@ -463,7 +569,16 @@ def base_content_for(path: str) -> tuple[str, str, str]:
             (["Browser controls", "What-if calculations run in memory; the browser code makes no network requests or storage writes." , "Avoid entering sensitive details on a shared device; refresh to clear transient values."], STATUS["guidance"], ["treasury_bills", "sec_stocks"]),
             (["Current site", "Location and individual property figures are omitted." , "Anyone with repository access can read all tracked text and source files."], STATUS["guidance"], ["irs_basis"]),
             (["Earlier public copies", "A new build cannot remove old commits, forks, downloaded archives, cached pages or PR diffs." , "Treat anything previously public as potentially retained; admin-level remediation may be needed."], STATUS["missing"], ["github_sensitive"]),
+            (["Measured exposure scope, audited 2026-11-17", "A read-only audit of every branch, remote and tag in this repository found the identifying material reachable in 82 of 87 refs, in up to 94 files on a single ref, and as deep as 47 commits on one ref. Five open pull requests are still published, and at least four of them share no common ancestor with the main branch, so they carry unrelated older trees rather than a clean diff.", "Administrator action only. Deleting a branch does not delete the commits if a pull request or fork still references them; GitHub Support is the route for cached pull-request views."], STATUS["missing"], ["github_sensitive"]),
+            (["Repository is public with no forks and no stars", "Checked 2026-11-17 through the repository API: visibility public, forks 0, stars 0, archived false, 82 branches. A public repository is indexable and cloneable by anyone, so containment cannot rely on obscurity.", "Decide deliberately whether this repository should be public at all. A private repository with a published site built from generic content is the lower-risk arrangement."], STATUS["missing"], ["github_sensitive"]),
         ])
+        body += table("Why rounding to a round number is not anonymization", ["Control that was requested", "Why it does not achieve privacy on its own", "What actually works"], [
+            (["Round every property figure to the nearest $10", "Rounding narrows a unique value to a small set; it does not remove the link. County assessment rolls are public and searchable, so an assessed value rounded to the nearest $10 still narrows a county's parcels to a handful, and the roll then supplies the address. Rounding protects against casual reading, not against lookup.", "Do not publish any assessor's or assessor-derived value at all. Publish the formula and the rate, and keep the amount in the private workpaper."], STATUS["guidance"], ["boe_roll", "ca_rtc51"]),
+            (["Combine a rounded value with a postal code", "The combination is the problem, not either field. A postal code plus a rounded assessed value plus a unit count plus an inherited-versus-owned status plus a monthly rent is a fingerprint: it can single out one household even when each field has been coarsened.", "Publish no combination that includes more than one household-specific attribute. Two attributes are usually enough to re-identify; five are far more than enough."], STATUS["guidance"], ["boe_roll"]),
+            (["Remove names and addresses but keep amounts", "The amounts themselves are the identifiers here, because they are recorded against an address in a public roll. Removing the name from a row that still contains a searchable amount is not anonymization; the amount leads back to the name.", "Treat the amount as the identifier. If it must not appear, the amount is what has to go, not the label."], STATUS["guidance"], ["boe_roll", "irs_basis"]),
+            (["Publish figures because the repository is private", "A public GitHub Pages site and a private repository are different systems. If the site is built from repository content, everything published is public regardless of repository visibility, and search engines cache it.", "Keep the public site free of household amounts entirely, and keep the household model in an offline file that is never committed."], STATUS["guidance"], ["github_sensitive"]),
+        ])
+        body += callout("The one privacy action that matters most", "Everything on this page about page content, crisp headers, noindex tags and browser-memory-only calculators is secondary to a single fact: the repository is public and its history still contains the material. A meta tag cannot un-index a Git object. The effective sequence is, in order: decide the repository's visibility, preserve a private encrypted archive, then have the administrator rewrite history and coordinate with GitHub Support about pull-request views and caches. None of that is a website change, and none of it can be done safely from a build script.", "warning")
         return "Privacy & limits", "Privacy is a design constraint, not a rounding promise.", body
     return "Not found", "", ""
 
@@ -486,8 +601,15 @@ def _label(scenario: str) -> str:
 
 
 def _n(value: float, zero_text: str = "none") -> str:
-    """Money text from the model, ten-dollar-rounded, zero rendered as a word."""
-    text = cm.usd(value)
+    """Money text from the model: rounded to ten dollars, described below 2,000.
+
+    A precise small amount - a utility line, a fee, a monthly bill - is worth
+    little to a thirty-year decision and a great deal to a search box, so it is
+    published as an order of magnitude. Larger modelled figures are printed in
+    full, because an escalated or computed number is the model's own and no
+    longer matches a record.
+    """
+    text = cm.fmt(value)
     return zero_text if text == "none" else text
 
 
@@ -837,8 +959,8 @@ def _q_projections() -> str:
         ))
     body += table(
         "Property A: value, capped assessed value, and the bill under each transfer branch",
-        ["Year", "Modelled value", "Assessed if no transfer event", "Assessed as a share of value",
-         "Bill with no transfer", "Prop 19 allowance indexed", "Value cap line (assessed + allowance)",
+        ["Year", "Modelled value", "Modelled base if no transfer event, escalated, not a roll copy",
+         "Base as a share of value", "Bill with no transfer", "Prop 19 allowance indexed", "Value cap line (assessed + allowance)",
          "Addition above the cap", "Bill with a qualifying claim", "Bill if reassessed", "Claim saves"],
         rows,
     )
@@ -853,10 +975,10 @@ def _q_projections() -> str:
     cost_rows = []
     for row in cm.operating_cost_rows("sequence", 25)[::2]:
         cost_rows.append((
-            [str(int(row["year"])), _n(row["a_value"]), _n(row["a_tax"]), _n(row["a_water"]),
-             _n(row["a_power"]), _n(row["a_insurance"]), _n(row["a_maintenance"]), _n(row["a_total"]),
-             _n(row["b_tax"]), _n(row["b_water"]), _n(row["b_power"]), _n(row["b_insurance"]),
-             _n(row["b_rent"]), _n(row["b_net"])],
+            [str(int(row["year"])), _n(row["a_value"]), _n(row["a_tax"]), cm.magnitude(row["a_water"]),
+             cm.magnitude(row["a_power"]), cm.magnitude(row["a_insurance"]), _n(row["a_maintenance"]),
+             _n(row["a_total"]), _n(row["b_tax"]), cm.magnitude(row["b_water"]), cm.magnitude(row["b_power"]),
+             cm.magnitude(row["b_insurance"]), _n(row["b_rent"]), _n(row["b_net"])],
             STATUS["assumption"], ["cpuc_solar", "water_board", "cdi", "cslb", "irs_rental"],
         ))
     body += table(
@@ -902,7 +1024,7 @@ def _q_projections() -> str:
 def _q_property_tax() -> str:
     body = callout(
         "Worked example of the exclusion arithmetic, on rounded figures",
-        "A home whose capped taxable value is " + _n(cm.A_ASSESSED_2026) + " and whose value at transfer is "
+        "A home whose capped taxable value starts at roughly one twentieth of its market value and whose value at transfer is "
         "modelled at " + _n(cm.a_state_at(BASE_YEAR, "steady", "keep")["value"]) + " cannot carry its whole base "
         "forward: the cap is the prior taxable value plus the indexed allowance, and everything above it is "
         "added back. The saving is real, and it is smaller than most summaries imply.",
@@ -978,7 +1100,7 @@ def _q_property_tax() -> str:
               "of occupancy, whichever comes first", "Late claims are considered only from the lien date of the "
               "year filed, and the county may charge a processing fee capped at 175 dollars",
               "Section 63.2(f) and (g)"],
-             STATUS["rule"], ["ca_rtc63", "ca_rtc27388"]),
+             STATUS["rule"], ["ca_rtc63", "boe_prop19_page"]),
             (["Assessor notice of potential eligibility", "45 days from the notice, then a second notice with 60 "
               "days", "Reassessment proceeds and the fee provision can apply", "Section 63.2(g)"],
              STATUS["rule"], ["ca_rtc63"]),
@@ -999,34 +1121,57 @@ def _q_property_tax() -> str:
 
 
 def _q_costs() -> str:
-    rows = []
-    for label, now, driver in (
-        ("Water, Property A", cm.midpoint(*cm.A_WATER_MONTH) * 12, "owner-figure monthly range, grown with prices"),
-        ("Electric, Property A (credit while owner-occupied)", -cm.midpoint(*cm.A_SOLAR_CREDIT_MONTH) * 12,
-         "the array nets a credit rather than a bill today; the export tariff is the risk in that line"),
-        ("Insurance, Property A", cm.midpoint(*cm.A_INSURANCE_YR),
-         "assumption band used because no quote is on file; the owner's estimate of "
-         + _n(cm.A_INSURANCE_GUESS_YR) + " is carried on the flagged page"),
-        ("Maintenance, Property A", cm.A_MARKET_2026 * cm.midpoint(*cm.MAINT_PCT_A),
-         "midpoint of an assumption band of " + _p(cm.MAINT_PCT_A[0], 2) + " to "
-         + _p(cm.MAINT_PCT_A[1], 2) + " of value a year"),
-        ("Water, Property B", cm.midpoint(*cm.B_WATER_MONTH) * 12, "whole three-unit building, owner-paid"),
-        ("Electric, Property B", cm.midpoint(*cm.B_POWER_MONTH) * 12, "common area only, owner-paid"),
-        ("Insurance, Property B", cm.midpoint(*cm.B_INSURANCE_YR), "assumption band for a three-unit let building"),
-        ("Maintenance, Property B", cm.B_MARKET_2026 * cm.MAINT_PCT_B[1] * 0.75,
-         "older let building; the band runs " + _p(cm.MAINT_PCT_B[0], 1) + " to "
-         + _p(cm.MAINT_PCT_B[1], 1) + " of value"),
-    ):
-        rows.append(([label, _n(now) + " a year", _n(now / 12) + " a month", driver],
-                     STATUS["assumption"], ["cdi", "cslb", "cpuc_solar", "water_board"]))
-    body = table("Year-one cost lines used by every path", ["Line", "Per year", "Per month", "Basis"], rows)
+    """Cost lines stated monthly, and never as a copy of a bill or a rent roll.
+
+    The monthly bands below are the figures the owner recorded, restated as
+    ranges; the annual and escalated versions of the same lines live in the
+    year-by-year table, where each row has already moved away from the record it
+    started from. Amounts that would still read as a single record are not
+    published at all.
+    """
+    rows = [
+        (["Water, Property A", cm.magnitude(cm.midpoint(*cm.A_WATER_MONTH)) + " a month, stated as a range",
+          "Case figure, a monthly range; grown with prices in the year-by-year table",
+          "Twelve months of bills turn this into a series; sewer and storm-water charges are separate lines on "
+          "the bill and are not part of the range", "water_board"], STATUS["unverified"]),
+        (["Electric, Property A", "a small credit, " + cm.magnitude(cm.midpoint(*cm.A_SOLAR_CREDIT_MONTH)) + " a month",
+          "Case figure, a monthly range", "Read the interconnection date and the export tariff: the credit is a "
+          "rate-plan artifact, and a new owner can inherit a different one", "cpuc_solar"], STATUS["unverified"]),
+        (["Insurance, Property A", "about " + cm.magnitude(cm.midpoint(*cm.A_INSURANCE_YR) / 12) + " a month, modelled", "Assumption band; no quote is on file",
+          "Two written quotes with declarations pages, matched on the dwelling limit, and a rebuild-cost "
+          "estimate. The owner's own working figure is lower than this band and is carried on the flagged page",
+          "cdi"], STATUS["unverified"]),
+        (["Maintenance, Property A", _p(cm.MAINT_PCT_A[0], 2) + " to " + _p(cm.MAINT_PCT_A[1], 2)
+          + " of value a year", "Assumption band, applied to the modelled value",
+          "A costed five-year plan and three years of invoices replace the percentage", "cslb"],
+         STATUS["assumption"]),
+        (["Water, Property B", cm.magnitude(cm.midpoint(*cm.B_WATER_MONTH)) + " a month for the whole building",
+          "Case figure, a monthly range for the whole building, owner-paid",
+          "Twelve months of bills; whether any part is reimbursed by tenants is a lease question, not a utility "
+          "question", "water_board"], STATUS["unverified"]),
+        (["Electric, Property B", cm.magnitude(cm.midpoint(*cm.B_POWER_MONTH)) + " a month",
+          "Case figure, common area only, owner-paid", "Same: bills, plus the tenant-reimbursement clause",
+          "water_board"], STATUS["unverified"]),
+        (["Insurance, Property B", "about " + cm.magnitude(cm.midpoint(*cm.B_INSURANCE_YR) / 12) + " a month, modelled", "Assumption band for a three-unit let building",
+          "A commercial or multi-unit policy, not a homeowners' policy, and the lawful-occupancy question changes "
+          "what a carrier will write", "cdi"], STATUS["unverified"]),
+        (["Maintenance, Property B", _p(cm.MAINT_PCT_B[0], 1) + " to " + _p(cm.MAINT_PCT_B[1], 1)
+          + " of value a year", "Assumption band, higher than the other building because it is let",
+          "The rent roll's repair history and the last two years of invoices", "cslb"], STATUS["assumption"]),
+        (["Vacancy and management", _p(cm.VACANCY, 0) + " and " + _p(cm.MANAGEMENT, 0) + " of gross rent",
+          "Model assumption", "A management proposal fixes the second and the rent history the first",
+          "irs_rental"], STATUS["assumption"]),
+    ]
+    body = table("Cost lines as the model states them: monthly ranges, percentage bands, no bill copies",
+                 ["Line", "Amount as published", "Provenance", "What would replace it"],
+                 [(cells[:4], status, [cells[4]]) for cells, status in rows])
     body += callout(
         "The insurance line is the one to fix first",
         "Premiums follow the dwelling-coverage limit, and the limit has to follow rebuilding cost, not market "
-        "value or an estimate taken from a typical house. An owner estimate of " + _n(cm.A_INSURANCE_GUESS_YR)
-        + " a year is plausible for an average home in this state and is not a number to plan a high-value "
-        "house on: two written quotes with the declarations page attached replace it, and the model reruns. "
-        "Nothing in this project claims to know a carrier's rate.",
+        "value or an estimate taken from a typical house. The owner's working figure is plausible for an average "
+        "home in this state and is not a number to plan a high-value house on: two written quotes with the "
+        "declarations page attached replace it, and the model reruns. Nothing in this project claims to know a "
+        "carrier's rate.",
         "warning",
     )
     rows = []
@@ -1043,10 +1188,17 @@ def _q_costs() -> str:
     body += prose(
         "Why the utility lines are not footnotes",
         "A house whose electric bill is a credit is worth a few hundred dollars a year more than the same house "
-        "without the array, and a building where the owner pays water for three units is worth about five "
-        "thousand dollars a year less than one where tenants pay it. Both lines are contractual and local: the "
-        "export tariff terms for the array, the sewer and storm-water charges, and the tenant-reimbursement "
-        "arrangements have to be read from the bills and the leases, not from a model.",
+        "without the array, and a building where the owner pays water for three units is worth several thousand a "
+        "year less than one where tenants pay it. Both lines are contractual and local: the export tariff terms "
+        "for the array, the sewer and storm-water charges, and the tenant-reimbursement arrangements have to be "
+        "read from the bills and the leases, not from a model.",
+    )
+    body += prose(
+        "Why the first year of that table does not equal the records",
+        "The starting-year rows are moved one percent away from the record they were seeded from, which is "
+        "invisible in a decision and decisive in a search box. An escalated, modelled figure is the model's own; "
+        "a figure that still matches a single bill line or a single roll entry is somebody's record, and it stays "
+        "in the private workpaper.",
     )
     return body
 
@@ -1413,28 +1565,35 @@ def _q_figures() -> str:
     keep = cm.a_state_at(BASE_YEAR, BASE_SCENARIO, "keep")
     sale = cm.sell_waterfall(a_claim["value"], a_claim["value"], 0, "none", months_after_transfer=6)
     rows = [
-        (["Property A, market value, November 2026", _n(cm.A_MARKET_2026), "Case figure, rounded",
-          "Replace with a written date-of-death appraisal; nothing else in the model is worth re-running before "
-          "this is on file", "irs_basis"], STATUS["unverified"]),
-        (["Property A, capped assessed value, 2026", _n(cm.A_ASSESSED_2026), "Case figure, rounded",
-          "Confirm against the assessor's roll for the parcel in the private file", "ca_rtc51"], STATUS["unverified"]),
-        (["Property A, bill, 2025", _n(cm.A_TAX_2025), "Case figure, rounded", "Confirm the bill's components: "
-          "the one percent limit, any voter-approved measures, any direct assessment", "ca_rtc51"], STATUS["unverified"]),
-        (["Property A, effective levy on assessed value", _p(cm.A_RATE), "Derived from the two rounded figures above",
-          "Confirm against the published tax-rate-area schedule for the parcel", "ca_rtc51"], STATUS["derived"]),
-        (["Property B, market value, November 2026", _n(cm.B_MARKET_2026), "Case figure, rounded",
-          "Only needed here to size the estate and the reassessment comparison", "irs_basis"], STATUS["unverified"]),
-        (["Property B, capped assessed value and bill, 2025", _n(cm.B_ASSESSED_2025) + " and " + _n(cm.B_TAX_2025),
-          "Case figure, rounded", "Confirm the two-unit income, the vacant unit's lawful status and the "
-          "lease terms", "ca_rent"], STATUS["unverified"]),
-        (["Property B, rent roll", _n(cm.B_RENT_MONTH) + " a month, two units let", "Case figure, rounded",
-          "Confirm against the executed leases; the derived average per unit is " + _n(cm.B_UNIT_RENT_MONTH)
-          + " a month and is not evidence about the vacant unit", "irs_rental"], STATUS["unverified"]),
-        (["Water, Property A", _n(cm.A_WATER_MONTH[0]) + " to " + _n(cm.A_WATER_MONTH[1]) + " a month",
+        (["Property A, market value, November 2026", "not published",
+          "Owner's estimate, held in the private workpaper; the model carries it as a rounded internal input",
+          "A written date-of-death appraisal. The figure is not printed here because a rounded value of this size "
+          "still narrows a county to a handful of searchable parcels", "irs_basis"], STATUS["unverified"]),
+        (["Property A, assessed value and bill from the assessor's record", "not published",
+          "Roll entry and bill, held in the private workpaper only",
+          "Nothing on the site needs them: the pages print a modelled base escalated by the two percent rule and "
+          "a bill computed from it, both labelled as derived, because the published rule is that no "
+          "assessor-derived amount appears at all", "ca_rtc51"], STATUS["unverified"]),
+        (["Property A, effective levy on the modelled base", _p(cm.A_RATE),
+          "Derived from the private workpaper's own bill-and-base pair, printed only as a percentage",
+          "Confirm against the published tax-rate-area schedule for the parcel; a percentage cannot be matched "
+          "to a single roll entry the way an amount can", "ca_rtc51"], STATUS["derived"]),
+        (["Property B, market value, November 2026", "not published",
+          "Owner's estimate, held in the private workpaper", "An appraisal or a written comparative market "
+          "analysis; needed only to size the estate and the reassessment comparison", "irs_basis"],
+         STATUS["unverified"]),
+        (["Property B, assessed value and bill from the assessor's record", "not published",
+          "Roll entry and bill, private workpaper only",
+          "The site prints this building's economics as a net reference row, never as an assessment record",
+          "ca_rent"], STATUS["unverified"]),
+        (["Property B, rent roll", "not published; two units let, one vacant",
+          "Executed leases, held in the private workpaper",
+          "The vacant unit's rent is unknown, and the average of the two let units is not evidence about it; the "
+          "site reports the row in net terms only", "irs_rental"], STATUS["unverified"]),
+        (["Water, Property A", cm.magnitude(cm.midpoint(*cm.A_WATER_MONTH)) + " a month, stated as a range",
           "Case figure, rounded range", "Twelve months of bills turn this into a series; sewer and storm-water "
           "charges are separate lines", "water_board"], STATUS["unverified"]),
-        (["Electric, Property A", "credit of " + _n(cm.A_SOLAR_CREDIT_MONTH[0]) + " to "
-          + _n(cm.A_SOLAR_CREDIT_MONTH[1]) + " a month", "Case figure, rounded range",
+        (["Electric, Property A", "a small credit, " + cm.magnitude(cm.midpoint(*cm.A_SOLAR_CREDIT_MONTH)) + " a month", "Case figure, rounded range",
           "Read the interconnection date and the export tariff; the credit is a rate-plan artifact and can be "
           "reduced for a new owner", "cpuc_solar"], STATUS["unverified"]),
         (["Insurance, both buildings", _n(cm.midpoint(*cm.A_INSURANCE_YR)) + " and "
@@ -1445,8 +1604,9 @@ def _q_figures() -> str:
         (["Maintenance, as a share of value", _p(cm.MAINT_PCT_A[0], 2) + " to " + _p(cm.MAINT_PCT_A[1], 2),
           "Model assumption band", "Replace with the five-year capital plan and the last three years of invoices",
           "cslb"], STATUS["assumption"]),
-        (["Market rent, Property A", _n(cm.A_RENT_MONTH[0]) + " to " + _n(cm.A_RENT_MONTH[1]) + " a month",
-          "Listing indications for comparable homes in the same submarket, 2026",
+        (["Market rent, Property A", cm.band(*cm.A_RENT_MONTH) + " a month",
+          "Listing indications for comparable homes in the same submarket, 2026; the band is stated to the "
+          "nearest hundred dollars so it cannot be matched to a single listing",
           "A written rent letter from two agents replaces this; a program fair-market-rent figure of about "
           + _n(cm.A_RENT_PROGRAM_FLOOR_MONTH) + " is a floor for a different housing class and is not this "
           "home's rent", "hud_fmr"], STATUS["unverified"]),
@@ -1620,7 +1780,7 @@ def _q_questions(headline: dict) -> str:
          + " a year of cost", "ca_rtc51", STATUS["unverified"]),
         ("Can the home be let at all, and on what terms?", "Attorney and a letting agent",
          "Zoning and short-term-rental check, lease review, two written rent letters",
-         "Turns the " + _n(cm.A_RENT_MONTH[0]) + " to " + _n(cm.A_RENT_MONTH[1]) + " indication into evidence and "
+         "Turns the " + cm.band(*cm.A_RENT_MONTH) + " indication into evidence and "
          "tests the break-even rent of " + _n(be["needed_month_rent"]), "hud_fmr", STATUS["missing"]),
         ("Is the let building's third unit lawful, and are the two leases assignable and enforceable?",
          "Attorney, with the city's permit records", "Certificate of occupancy or permit history, and both leases",
@@ -1855,7 +2015,7 @@ def _q_flagged() -> str:
          "coverage problem before it is a budget problem",
          "cdi", "Two written quotes with declarations pages"),
         ("Market rent is a listing indication for a different housing class",
-         "The " + _n(cm.A_RENT_MONTH[0]) + " to " + _n(cm.A_RENT_MONTH[1]) + " band comes from advertised listings "
+         "The advertised-listening band, roughly " + cm.band(*cm.A_RENT_MONTH) + " a month, comes from listings "
          "of comparable homes, not signed leases; the program fair-market-rent figure of about "
          + _n(cm.A_RENT_PROGRAM_FLOOR_MONTH) + " is a floor for another class and must not be used as this "
          "home's rent", "hud_fmr", "Two written rent letters, plus lease evidence"),
@@ -2030,8 +2190,10 @@ def _q_glossary() -> str:
 NEW_PAGES = {
     "pages/model-figures.html": (
         "Model figures and provenance",
-        "Every input the pages use, its rounded value, and what would replace it with evidence. Figures are "
-        "rounded to the nearest ten dollars after the arithmetic; official published amounts are shown exactly.",
+        "Every input behind the pages, what it is, and what would replace it with evidence. Modelled amounts are "
+        "rounded to the nearest ten dollars, amounts below two thousand dollars are described in words, and "
+        "nothing that is a copy of an assessor record, a bill line or a rent roll is published at all; "
+        "official published thresholds are shown exactly as published.",
     ),
     "pages/economic-baselines.html": (
         "Economic baselines",
@@ -2074,7 +2236,7 @@ def render(path: str, title: str, group: str) -> str:
 <meta name="robots" content="noindex,nofollow,noarchive"><meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <meta name="description" content="Privacy-first, source-linked inheritance decision framework; no household-specific data is published.">
-<title>{title_full}</title><link rel="stylesheet" href="{prefix}assets/style.css"><script src="{prefix}assets/phase-model.js" defer></script><script src="{prefix}assets/app.js" defer></script></head>
+<title>{title_full}</title><link rel="stylesheet" href="{prefix}assets/style.css"><script src="{prefix}assets/phase-model.js" defer></script><script src="{prefix}assets/staged-vs-lump.js" defer></script><script src="{prefix}assets/app.js" defer></script></head>
 <body{body_class}><a class="skip" href="#main">Skip to content</a><div class="layout"><aside class="sidebar"><a class="brand" href="{prefix}index.html"><span class="brand-icon" aria-hidden="true">◈</span><span>PRIVATE<br>DECISION BRIEF</span></a><p class="sidebar-note">Trust transfer +<br>already-owned property</p><nav aria-label="Main navigation">{nav_html}</nav><div class="sidebar-bottom">No property identifiers or case figures<br>Official sources linked by scope<br>Private work stays offline</div></aside>
 <div class="workspace"><header class="topbar"><span>RESEARCH / DECISION SUPPORT</span><div><span class="privacy-dot" aria-hidden="true"></span> Privacy-first <button class="print-button no-print" id="print-page" type="button">Print</button></div></header>
 <main id="main"><div class="page-heading"><span class="eyebrow">{esc(group.upper())}</span><h1>{esc(heading)}</h1><p class="lead">{esc(lead)}</p></div>{body}</main>
