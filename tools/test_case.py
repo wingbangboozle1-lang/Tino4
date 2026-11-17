@@ -42,6 +42,17 @@ class PublicSitePrivacyTests(unittest.TestCase):
             self.assertNotIn("PROPERTY_A", raw)
             self.assertNotIn("PROPERTY_B", raw)
 
+    def test_privacy_scanner_checks_metadata_attributes_and_comments(self):
+        audit = verify.Audit()
+        audit.feed('<meta name="description" content="12345">')
+        audit.feed('<span aria-label="hidden location marker">safe</span>')
+        audit.feed('<!-- comment marker -->')
+        checked_text = " ".join(audit.text)
+        self.assertIn("12345", checked_text)
+        self.assertIn("hidden location marker", checked_text)
+        self.assertIn("comment marker", checked_text)
+        self.assertTrue(verify.POSTAL.search(checked_text))
+
     def test_browser_script_never_stores_or_sends_inputs(self):
         script = (ROOT.parent / "assets/app.js").read_text(encoding="utf-8")
         self.assertNotIn("localStorage", script)

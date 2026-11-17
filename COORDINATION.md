@@ -153,3 +153,18 @@ Branch: `arena/c1f5a7d7-tino4` (platform-fixed; merged work recorded below). Sta
 - **Merge commit:** `3df62550e5ccb7c323feb476fb456aa71207a8a5` on `main`.
 - **Local verification:** build and privacy/source verifier passed; all 13 tests, both JavaScript syntax checks, privacy scan, and whitespace check passed against the rebased integrated version before merge.
 - **Remote CI / Pages:** at 2026-11-16 01:45 UTC, PR workflow #163 (`43787780906`) and merge workflow #164 (`43788134497`) were queued; Pages deployment #101 (`43788134444`) was also queued. GitHub's API returned HTTP 403 rate-limit errors when querying run details. A live fetch of the published decision page still showed the pre-update content, so the new site build is **not yet confirmed deployed**. Do not represent deployment as successful until Pages reports completion and the live page shows the updated Form 540 citation and sale-year calculation. Action queue details: https://github.com/wingbangboozle1-lang/Tino4/actions/runs/43788134444.
+
+## Session `arena/07cbe6c9` — scan non-visible public HTML for privacy leaks
+
+Branch: `arena/07cbe6c9-tino4` (platform-fixed; active).
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 07CB-1 | Extend the public-site privacy regression audit to metadata, non-visible attributes, and HTML comments | in progress | `arena/07cbe6c9` | `tools/verify.py`, `tools/test_case.py`, `COORDINATION.md` | 2026-11-17 |
+
+### 07CB-1 result
+
+- Extended the public HTML privacy audit to include all non-link, non-resource attributes (including metadata, labels, alt/title text and `data-*`) and HTML comments, in addition to rendered text. This catches location/contact-pattern leaks hidden from the visible page without scanning source URLs that contain official statutory section identifiers.
+- Added a synthetic regression test proving a location-like five-digit token in metadata and text in an accessibility attribute/comment are included in the audited content. The test uses synthetic strings only and contains no household information.
+- Verification: `python3 tools/build.py`, `python3 tools/verify.py`, all 14 unit tests, `node --check assets/app.js`, `node --check assets/phase-model.js`, and `git diff --check` passed. Build emits 22 pages; verifier passes source/evidence-row, official-host, local-link, CSP/noindex, and no-household-data checks.
+- This code change does not scrub Git history, alter repository visibility, remove prior copies, or add any household inputs. Those historical-remediation tasks remain administrator-only and unresolved as recorded above.
