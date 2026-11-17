@@ -451,7 +451,21 @@ Final state of the exposure counterexample, recorded so it is not repeated: **tw
 2. **Repository access review.** 82 branches remain, most from earlier sessions. Branch deletion alone does not remove commits referenced by pull requests or forks.
 3. **Whether the public site should exist at all** in its current relation to the private case. The site is clean; the repository's history is not. Separating them entirely is the only arrangement that does not depend on the current tree staying clean forever.
 =======
-This session edits the canonical site builder (`tools/sitebuild.py`), shared assets (`assets/app.js`, `assets/style.css`, new `assets/regime-model.js`), the verifier, tests, generated pages and `COORDINATION.md`. No other session should edit those files while this claim is open. The privacy boundary stands: no locality, address, parcel, household value, tax history, rent roll or household recommendation is published.
+## Session `arena/32426e4a` — 2026-11-17 (branch `arena/32426e4a-tino4`, integration session)
+
+This session edits the canonical site builder (`tools/sitebuild.py`), shared assets (`assets/app.js`, `assets/style.css`, new `assets/regime-model.js`), the verifier, tests, generated pages and `COORDINATION.md`. No other session should edit those while this claim is open.
+
+| ID | Task | Status | Session | Files | Date |
+| --- | --- | --- | --- | --- | --- |
+| 3242-1 | Black-swan: regime-based (non-constant growth/inflation) scenarios with official anchors and a client-side simulator | done | `arena/32426e4a` | `tools/sitebuild.py`, `assets/regime-model.js`, `assets/app.js`, `pages/black-swan.html`, `pages/phased-investing.html` | 2026-11-17 |
+| 3242-2 | Questions page: questions / what is known / what is missing / how to discover it | done | `arena/32426e4a` | `tools/sitebuild.py`, `pages/questions.html` | 2026-11-17 |
+| 3242-3 | Suggestions page: ranked improvement backlog with a choose-before-implementing workflow | done | `arena/32426e4a` | `tools/sitebuild.py`, `pages/suggestions.html` | 2026-11-17 |
+| 3242-4 | Decision completeness: ranges, mixed paths, distribution chart, capital plan, transfer tax and recording fees, Prop 19 carry-forward | done | `arena/32426e4a` | `tools/sitebuild.py`, `pages/decision-analysis.html`, `pages/projections.html`, `pages/operating-costs.html`, `pages/property-tax.html` | 2026-11-17 |
+| 3242-5 | Official-source re-verification of every published figure | done | `arena/32426e4a` | `tools/sitebuild.py`, `pages/estate-thresholds.html`, `pages/sources.html`, `pages/flagged-for-review.html`, `COORDINATION.md` | 2026-11-17 |
+| 3242-6 | Integration: stale-PR triage, rebuild, verify, tests, PR to main, merge, Pages confirmation | done | `arena/32426e4a` | `COORDINATION.md`, generated `index.html`, `pages/**`, `tools/verify.py`, `tools/test_case.py` | 2026-11-17 |
+
+Note: the claim block was lost when the branch was rebased onto `main` (the COORDINATION.md conflict was taken from the upstream side). It is restored here with the final statuses rather than the opening ones.
+
 
 ### Results (3242-1 … 3242-5)
 
@@ -463,7 +477,7 @@ This session edits the canonical site builder (`tools/sitebuild.py`), shared ass
 
 **3242-2 — Questions page (done).** Split into three tables: open questions only private facts can answer; questions official sources already answer (each with the figure, the read date and the source link); and discovery methods for what is missing, each stating what is *not* acceptable evidence.
 
-**3242-3 — Suggestions page (done).** Twelve-item improvement backlog (S-1 … S-12) with what each change would do and the risk it carries, plus a matching session-only review queue and a "Choose before implementing" rule. Nothing is implemented until the household records a choice.
+**3242-3 — Suggestions page (done).** Five items (deadline countdown, ranges-only mode, mixed-path builder, insurance quote log, transfer-tax and recording-fee fields) were appended to the existing S1–S10 board as S11–S15, each with what it would change and the risk it carries. The board keeps its adopt/defer/reject controls and its "choose before implementing" rule; nothing is implemented until the household records a choice. The two review-choice count assertions in `tools/test_case.py` were updated from 10 to 15 to match.
 
 **3242-4 — Decision completeness (done).** Added ranges-not-points guidance, an inputs-that-must-be-identical table (dates, horizon, inflation basis, imputed rent, debt, liquidity, occupancy, capital, taxes), a mixed-paths table, a Proposition 19 carry-forward table, and a transfer-tax and recording-fee table. The projection worksheet gained an illustrative fan chart and a rebuild-after-every-input-change rule.
 
