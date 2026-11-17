@@ -197,4 +197,153 @@
     if (sel) sel.value = '0';
     if (sellResult) sellResult.textContent = 'Inputs cleared.';
   });
+
+  // Multi-regime (uneven growth and inflation) stress tool. Local only.
+  const bwRun = document.getElementById('bw-run');
+  const bwClear = document.getElementById('bw-clear');
+  const bwResult = document.getElementById('bw-result');
+  const bwChart = document.getElementById('bw-chart');
+  const bwFmt = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(value / 10) * 10);
+  const bwPct = (value) => `${(Math.round(value * 10) / 10).toFixed(1)}%`;
+
+  const bwRenderChart = (band, startValue) => {
+    if (!bwChart) return;
+    while (bwChart.firstChild) bwChart.removeChild(bwChart.firstChild);
+    const ns = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(ns, 'svg');
+    svg.setAttribute('viewBox', '0 0 660 300');
+    svg.setAttribute('role', 'img');
+    svg.setAttribute('width', '100%');
+    svg.setAttribute('height', '300');
+    svg.setAttribute('aria-label', 'Distribution of illustrative inflation-adjusted ending values across the entered number of paths.');
+    const title = document.createElementNS(ns, 'title');
+    title.textContent = 'Illustrative distribution of inflation-adjusted ending values';
+    svg.appendChild(title);
+
+    const left = 8;
+    const base = 250;
+    const plotWidth = 644;
+    const maxCount = Math.max(...band.histogram.map((bucket) => bucket.count), 1);
+    const slot = plotWidth / band.histogram.length;
+
+    band.histogram.forEach((bucket, i) => {
+      const height = Math.round((bucket.count / maxCount) * 190);
+      const rect = document.createElementNS(ns, 'rect');
+      rect.setAttribute('x', String(left + i * slot + 3));
+      rect.setAttribute('y', String(base - height));
+      rect.setAttribute('width', String(slot - 6));
+      rect.setAttribute('height', String(Math.max(height, 1)));
+      rect.setAttribute('fill', '#0f8a76');
+      svg.appendChild(rect);
+      const label = document.createElementNS(ns, 'text');
+      label.setAttribute('x', String(left + i * slot + slot / 2));
+      label.setAttribute('y', String(base + 16));
+      label.setAttribute('text-anchor', 'middle');
+      label.setAttribute('font-size', '9');
+      label.setAttribute('fill', '#5d6f6d');
+      label.textContent = String(Math.round(bucket.to / 1000));
+      svg.appendChild(label);
+      const count = document.createElementNS(ns, 'text');
+      count.setAttribute('x', String(left + i * slot + slot / 2));
+      count.setAttribute('y', String(base - height - 4));
+      count.setAttribute('text-anchor', 'middle');
+      count.setAttribute('font-size', '9');
+      count.setAttribute('fill', '#37504c');
+      count.textContent = String(bucket.count);
+      svg.appendChild(count);
+    });
+
+    const axis = document.createElementNS(ns, 'line');
+    axis.setAttribute('x1', String(left));
+    axis.setAttribute('y1', String(base));
+    axis.setAttribute('x2', String(left + plotWidth));
+    axis.setAttribute('y2', String(base));
+    axis.setAttribute('stroke', '#c5d8d4');
+    svg.appendChild(axis);
+
+    const startSlot = Math.min(band.histogram.length - 1, Math.max(0, Math.round(((startValue - band.low) / ((band.high - band.low) || 1)) * band.histogram.length)));
+    const marker = document.createElementNS(ns, 'line');
+    const markerX = left + startSlot * slot + slot / 2;
+    marker.setAttribute('x1', String(markerX));
+    marker.setAttribute('y1', '20');
+    marker.setAttribute('x2', String(markerX));
+    marker.setAttribute('y2', String(base));
+    marker.setAttribute('stroke', '#d98026');
+    marker.setAttribute('stroke-dasharray', '4 3');
+    svg.appendChild(marker);
+    const markerText = document.createElementNS(ns, 'text');
+    markerText.setAttribute('x', String(markerX + 4));
+    markerText.setAttribute('y', '16');
+    markerText.setAttribute('font-size', '10');
+    markerText.setAttribute('fill', '#8a5410');
+    markerText.textContent = 'start (today\'s purchasing power)';
+    svg.appendChild(markerText);
+
+    const caption = document.createElementNS(ns, 'text');
+    caption.setAttribute('x', String(left));
+    caption.setAttribute('y', '285');
+    caption.setAttribute('font-size', '10');
+    caption.setAttribute('fill', '#5d6f6d');
+    caption.textContent = 'Bar height = number of illustrative paths. Horizontal axis = inflation-adjusted ending value, in thousands of the entered currency units.';
+    svg.appendChild(caption);
+
+    bwChart.appendChild(svg);
+  };
+
+  if (bwRun && bwResult) {
+    bwRun.addEventListener('click', () => {
+      const read = (id) => document.getElementById(id)?.value.trim() ?? '';
+      const amount = Number(read('bw-amount'));
+      const years = Number(read('bw-years'));
+      const equityPct = Number(read('bw-equity'));
+      const cashYieldPct = Number(read('bw-cash'));
+      const volatilityPct = Number(read('bw-vol'));
+      const preset = read('bw-preset');
+      const shockPct = Number(read('bw-shock'));
+      const shockYear = Number(read('bw-shock-year'));
+      const stagingMonths = Number(read('bw-staging'));
+      const paths = Number(read('bw-paths'));
+      if (!window.RegimeModel) {
+        bwResult.textContent = 'The regime model did not load; reload the page and try again.';
+        return;
+      }
+      const base = {
+        amount, years, equityPct, cashYieldPct, volatilityPct,
+        preset, shockPct, shockYear, stagingMonths, paths, seed: 20261117,
+      };
+      try {
+        const staged = window.RegimeModel.simulate(base);
+        const immediate = stagingMonths === 0 ? staged : window.RegimeModel.simulate({ ...base, stagingMonths: 0 });
+        const lines = [
+          `Scenario: ${staged.presetLabel}. ${staged.presetNote}`,
+          `Regime walk over ${years} years: ${staged.blocks.map((b) => `${b.years}y ${b.label}`).join(' → ')}.`,
+          `Inflation-adjusted ending value: staged entry $${bwFmt(staged.endingReal)} versus immediate entry $${bwFmt(immediate.endingReal)} (nominal staged $${bwFmt(staged.endingNominal)}).`,
+          `Real annualised change: staged ${bwPct(staged.realCagrPct)} versus immediate ${bwPct(immediate.realCagrPct)}.`,
+          `Largest peak-to-trough fall: staged ${bwPct(staged.maxDrawdownPct)} (around year ${staged.drawdownYear}) versus immediate ${bwPct(immediate.maxDrawdownPct)} (around year ${immediate.drawdownYear}).`,
+          `Illustrative band over ${staged.band.paths} seeded paths: 10th percentile $${bwFmt(staged.band.p10)}, median $${bwFmt(staged.band.p50)}, 90th percentile $${bwFmt(staged.band.p90)}; ${bwPct(staged.band.shareBelowStartPct)} of paths finish below today's purchasing power.`,
+        ];
+        if (stagingMonths > 0) {
+          const difference = staged.endingReal - immediate.endingReal;
+          const softer = staged.maxDrawdownPct < immediate.maxDrawdownPct;
+          lines.push(`Staging result is ${difference >= 0 ? 'above' : 'below'} immediate entry by about $${bwFmt(Math.abs(difference))} in inflation-adjusted terms here; the largest fall is ${softer ? 'smaller' : 'not smaller'} with staging. Staging trades early-market exposure for Treasury reinvestment risk and delayed participation, so it softens crash-entry risk only when the fall arrives while funds are still in the ladder.`);
+        }
+        lines.push('Deterministic illustration: the same inputs always produce the same result. It is not a forecast, a probability, a historical backtest, or advice. It excludes taxes, fees, dividends, contributions, withdrawals, property cash flows, changing Treasury yields beyond the entered rate, and recovery effects after the one-year shock.');
+        bwResult.textContent = lines.join(' ');
+        bwRenderChart(staged.band, amount);
+      } catch (_error) {
+        bwResult.textContent = 'Check: positive amount; horizon 5-50 years; equity share 0-100%; cash yield 0-25%; volatility 0-60%; shock 0-95%; shock year 0 (none) or within the horizon; staging 0 or 24-36 months; paths 1-500.';
+      }
+    });
+  }
+  bwClear?.addEventListener('click', () => {
+    ['bw-amount', 'bw-equity', 'bw-cash', 'bw-vol', 'bw-shock'].forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
+    const set = (id, value) => { const el = document.getElementById(id); if (el) el.value = value; };
+    set('bw-years', '30');
+    set('bw-preset', 'crash2008');
+    set('bw-shock-year', '0');
+    set('bw-staging', '24');
+    set('bw-paths', '240');
+    if (bwResult) bwResult.textContent = 'Inputs cleared.';
+    if (bwChart) while (bwChart.firstChild) bwChart.removeChild(bwChart.firstChild);
+  });
 })();

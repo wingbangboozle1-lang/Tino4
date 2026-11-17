@@ -34,6 +34,24 @@ EMAIL = re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b")
 PHONE = re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)")
 STREET = re.compile(r"(?i)\b\d{1,6}\s+(?:[A-Za-z0-9.'-]+\s+){1,4}(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln|Way|Court|Ct)\b")
 
+STATUTE_CONTEXT = re.compile(r"(?i)(?:§|section|sec\.|no\.|lta|letter to assessors|publication|usc|code)\s*$")
+
+def postal_hits(text: str) -> list[str]:
+    """Five-digit runs that look like location identifiers.
+
+    A five-digit California code-section number, a publication number or a
+    letter-to-assessors number is not a postal identifier, so runs directly
+    preceded by a statute or document prefix are ignored.
+    """
+    hits: list[str] = []
+    for match in POSTAL.finditer(text):
+        prefix = text[max(0, match.start() - 24): match.start()]
+        if STATUTE_CONTEXT.search(prefix):
+            continue
+        hits.append(match.group(0))
+    return hits
+
+
 class Audit(HTMLParser):
     def __init__(self) -> None:
         super().__init__(convert_charrefs=True)
@@ -119,7 +137,8 @@ def verify() -> list[str]:
         audit.feed(raw)
         label = str(relative)
         visible = " ".join(audit.text)
-        if POSTAL.search(visible): errors.append(f"{label}: five-digit location-like identifier in visible text")
+        found = postal_hits(visible)
+        if found: errors.append(f"{label}: five-digit location-like identifier in visible text ({', '.join(sorted(set(found))[:5])})")
         if EMAIL.search(visible): errors.append(f"{label}: email address in visible text")
         if PHONE.search(visible): errors.append(f"{label}: phone number in visible text")
         if STREET.search(visible): errors.append(f"{label}: street-address pattern in visible text")
