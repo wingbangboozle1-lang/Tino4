@@ -576,7 +576,7 @@ over `arena/80e9d3b3` (verified lookups, break-even page, staging chart, `rechec
 (regime engine, fan chart, review backlog) resolved by keeping both sides. `PAGES`, the manifest, `verify.py`'s
 page count and the recheck snapshot moved in the same commit each time.
 
-**Verification.** `python3 tools/build.py`, `python3 tools/verify.py`, **56 unit tests**, `node --check` on all
+**Verification.** `python3 tools/build.py`, `python3 tools/verify.py`, **57 unit tests**, `node --check` on all
 four scripts, the chart smoke test, `python3 tools/recheck.py` and `git diff --check` all pass; the committed tree
 is byte-identical to a fresh build. The verifier additionally rejects a household-input marker, a seeded
 record amount, digit runs without separators, locality and address patterns, storage, network calls and
@@ -585,8 +585,12 @@ unsourced table rows.
 **Release record.** **PR #125** — merged with `gh pr merge 125 --merge`; merge commit `cc70bb5` on `main`;
 `verify` run 44137412400 success; `pages-build-deployment` run 44137410743 success; the published
 `pages/model-figures.html` was fetched afterwards and serves the quantified provenance table, so the deploy is
-confirmed live rather than queued. A follow-up prose commit (#126) removed the one place an assumption midpoint
-was printed as if it were a measurement.
+confirmed live rather than queued. Three follow-ups followed, each merged the same way: #126 stopped printing an
+assumption band midpoint as if it were a measurement, #127 restated the near-zero sale-year gain as the
+transfer-to-closing drift rather than an amount, and the last commit fixed a real defect #127 exposed - the
+display layer fuzzed every figure under 2,000 dollars into an order of magnitude, so a true zero (a sold home's
+property cash flow) read as "under twenty-five dollars", a small measured amount, instead of an absent one. A test
+now pins that distinction.
 
 ### Flagged for review from this session (does not block merge)
 

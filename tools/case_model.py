@@ -93,6 +93,8 @@ def fmt(value: float) -> str:
     See :func:`magnitude`. Model internals are untouched - this is the only
     place the rounding and the fuzzing meet the page.
     """
+    if float(value) == 0.0:
+        return usd(value)
     if abs(float(value)) < 2_000:
         return magnitude(value)
     return usd(value)
