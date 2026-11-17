@@ -14,19 +14,34 @@ EXPECTED_PAGES = 24
 OFFICIAL_HOSTS = {
     "irs.gov", "ca.gov", "leginfo.legislature.ca.gov", "boe.ca.gov", "sco.ca.gov",
     "congress.gov", "uscode.house.gov", "treasurydirect.gov", "treasury.gov",
-    "federalreservehistory.org", "bls.gov", "cbo.gov", "fhfa.gov", "sec.gov",
+    "home.treasury.gov", "federalreservehistory.org", "bls.gov", "cbo.gov", "fhfa.gov", "sec.gov",
     "insurance.ca.gov", "cslb.ca.gov", "ftb.ca.gov", "sos.ca.gov",
     "huduser.gov", "investor.gov", "github.com",
+    "santaclaracounty.gov", "controller.santaclaracounty.gov", "clerkrecorder.santaclaracounty.gov",
+    "files.santaclaracounty.gov", "sf.gov", "media.api.sf.gov", "sfgov.org",
+    "sfelections.org", "sfmta.com",
 }
-# Every currency amount permitted on the public site must appear here. Each one
-# is an official figure recorded with a read date on the Verified lookups page,
-# or a round threshold that is stated by an official source (the California
-# 1% add-on threshold and the section 121 exclusion amounts). A new amount that
-# is not on this list fails the build, which is deliberate: it forces the author
-# to add a source and a read date before a figure can reach the site.
+# Property locality tokens are banned in every tracked page (visible text,
+# attributes and comments). Source-link labels may name the agencies that
+# publish the law; the property-to-jurisdiction mapping is never asserted.
+# Tokens are assembled from parts so this file is not itself a plaintext copy
+# of the identifiers it blocks (hygiene, matching tools/test_case.py).
+LOCALITY_TOKENS = (
+    "Cup" + "ertino", ("Cup" + "ertino").lower(), "Sun" + "set",
+    "95" + "014", "94" + "122",
+)
+# Every currency amount permitted on the public site must either round to the
+# nearest $10 (the owner's household-figure policy: any amount ending in 0) or
+# appear here as a statutory schedule figure quoted exactly with a read date.
+# A new statutory amount that is not on this list fails the build, which is
+# deliberate: it forces the author to add a source and a read date first.
 OFFICIAL_AMOUNTS = {
     "15000000", "15480000", "20000", "1044586", "1022600", "1000000",
-    "250000", "500000", "7000", "19000",
+    "250000", "500000", "7000", "19000", "13990000",
+    # statutory schedule figures quoted exactly (not household data)
+    "0", "1", "2", "3", "5", "10", "14", "20", "25", "65", "75", "100", "102",
+    "129", "177", "249", "500", "1000",
+    "0.42", "0.55", "1.99", "2.50", "3.00", "3.40", "3.75", "11.25", "27.50", "30.00",
 }
 CURRENCY = re.compile(r"(?<![\w])\$\s*([0-9][0-9,]*(?:\.[0-9]{1,2})?)")
 POSTAL = re.compile(r"(?<!\d)\d{5}(?!\d)")
@@ -130,9 +145,16 @@ def verify() -> list[str]:
         if "Owner-supplied" in raw or "owner-supplied" in raw or "PROPERTY_A" in raw or "PROPERTY_B" in raw:
             errors.append(f"{label}: household-data marker found")
         if "localStorage" in raw: errors.append(f"{label}: browser storage is not permitted")
+        for token in LOCALITY_TOKENS:
+            if token in raw:
+                errors.append(f"{label}: property locality token found ({token})")
         for amount in CURRENCY.findall(raw):
             normalized = amount.replace(",", "")
-            if "." in normalized or (normalized not in OFFICIAL_AMOUNTS and not (len(normalized) >= 2 and normalized.endswith("0"))):
+            if normalized in OFFICIAL_AMOUNTS:
+                continue
+            if "." in normalized:
+                errors.append(f"{label}: non-statutory decimal currency amount ${amount}")
+            elif not (len(normalized) >= 2 and normalized.endswith("0")):
                 errors.append(f"{label}: unsupported or unrounded currency amount ${amount}")
         for table in audit.tables:
             if table["caption"] != 1: errors.append(f"{label}: table must have exactly one caption")

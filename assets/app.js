@@ -2,6 +2,7 @@
   'use strict';
 
   document.getElementById('print-page')?.addEventListener('click', () => window.print());
+  document.getElementById('print-brief')?.addEventListener('click', () => window.print());
 
   const reviews = [...document.querySelectorAll('.review-choice')];
   const summary = document.getElementById('review-summary');
@@ -41,6 +42,7 @@
       const equityRaw = document.getElementById('phase-equity')?.value.trim() ?? '';
       const crashRaw = document.getElementById('phase-crash')?.value.trim() ?? '';
       const crashMonthRaw = document.getElementById('phase-crash-month')?.value.trim() ?? '';
+      const renewalRaw = document.getElementById('phase-renewal')?.value.trim() ?? '';
       if (!amountRaw || !monthsRaw || !treasuryRaw || !equityRaw || !crashRaw || !crashMonthRaw || !window.PhaseModel) {
         result.textContent = 'Enter a positive amount and both percentage assumptions; verify the staging controls loaded.';
         return;
@@ -53,20 +55,21 @@
         crashPct: Number(crashRaw),
         crashMonth: Number(crashMonthRaw),
       };
+      if (renewalRaw !== '') inputs.renewalYieldPct = Number(renewalRaw);
       try {
         const outcomes = window.PhaseModel.simulate(inputs);
         const fmt = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(value / 10) * 10);
         const delta = outcomes.phasedEnding - outcomes.immediateEnding;
         const relation = Math.abs(delta) < 5 ? 'approximately matches' : delta > 0 ? 'is above' : 'is below';
         const crashWhen = inputs.crashMonth === inputs.months + 1 ? 'immediately after staging' : `at month ${inputs.crashMonth}`;
-        result.textContent = `At the selected shock ${crashWhen}, the illustrative mark-to-market shock loss is about $${fmt(outcomes.immediateShockLoss)} for immediate investment versus $${fmt(outcomes.phasedShockLoss)} for the staged portfolio. Ending values: phased $${fmt(outcomes.phasedEnding)}; immediate $${fmt(outcomes.immediateEnding)}. Phased ${relation} immediate by about $${fmt(Math.abs(delta))} under these assumptions. The reduced early shock exposure trades against delayed market exposure and Treasury reinvestment risk.`;
+        result.textContent = `At the selected shock ${crashWhen}, the illustrative mark-to-market shock loss is about $${fmt(outcomes.immediateShockLoss)} for immediate investment versus $${fmt(outcomes.phasedShockLoss)} for the staged portfolio. Ending values: phased $${fmt(outcomes.phasedEnding)}; immediate $${fmt(outcomes.immediateEnding)}. Phased ${relation} immediate by about $${fmt(Math.abs(delta))} under these assumptions. The reduced early shock exposure trades against delayed market exposure and Treasury reinvestment risk.${inputs.renewalYieldPct === undefined ? '' : ` Reinvestment risk: rungs after month ${Math.ceil(inputs.months / 2)} were reinvested at the entered renewal yield of ${inputs.renewalYieldPct}% instead of ${inputs.treasuryYieldPct}%.`}`;
       } catch (_error) {
         result.textContent = 'Check: positive amount; 24–36 staging months; crash month from 1 through staging months + 1; crash from 0–90%; and valid annual yield and equity drift.';
       }
     });
   }
   clear?.addEventListener('click', () => {
-    ['phase-amount', 'phase-yield', 'phase-equity'].forEach((id) => { const input = document.getElementById(id); if (input) input.value = ''; });
+    ['phase-amount', 'phase-yield', 'phase-renewal', 'phase-equity'].forEach((id) => { const input = document.getElementById(id); if (input) input.value = ''; });
     document.getElementById('phase-months').value = '24';
     document.getElementById('phase-crash').value = '57';
     document.getElementById('phase-crash-month').value = '13';
@@ -160,13 +163,15 @@
     sellRun.addEventListener('click', () => {
       const value = Number(document.getElementById('sell-value')?.value);
       const basis = Number(document.getElementById('sell-basis')?.value);
+      const depRaw = document.getElementById('sell-dep')?.value.trim() ?? '';
+      const depreciation = depRaw === '' ? 0 : Number(depRaw);
       const costsPct = Number(document.getElementById('sell-costs')?.value);
       const dttPct = Number(document.getElementById('sell-dtt')?.value);
       const otherRaw = document.getElementById('sell-other')?.value.trim() ?? '';
       const other = otherRaw === '' ? 0 : Number(otherRaw);
       const timing = document.getElementById('sell-timing')?.value ?? 'later';
       const exclusion = Number(document.getElementById('sell-121')?.value);
-      if (!(value > 0) || !Number.isFinite(basis) || basis < 0 || !Number.isFinite(costsPct) || costsPct < 0 || costsPct > 30 || !Number.isFinite(dttPct) || dttPct < 0 || dttPct > 10 || !Number.isFinite(other) || other < 0) {
+      if (!(value > 0) || !Number.isFinite(basis) || basis < 0 || !Number.isFinite(depreciation) || depreciation < 0 || !Number.isFinite(costsPct) || costsPct < 0 || costsPct > 30 || !Number.isFinite(dttPct) || dttPct < 0 || dttPct > 10 || !Number.isFinite(other) || other < 0) {
         sellResult.textContent = 'Enter a positive sale value, a non-negative basis, and valid percentage assumptions.';
         return;
       }
@@ -187,14 +192,146 @@
         lines.push('Transfer-year sale is not forced to zero: the result uses the entered sale value, assumed sale costs, and basis. Confirm date-of-death value, sale timing, deductible costs, exceptions and tax treatment with the CPA.');
       }
       lines.push(`Positive modeled gain after the entered section 121 amount: $${sellFmt(gainAfterExclusion)} (eligibility requires ownership and use tests; this simple overlay does not model loss rules).`);
+      const recaptureTaxable = Math.min(depreciation, gainAfterExclusion);
+      if (depreciation > 0) {
+        lines.push(`Depreciation recapture overlay: up to $${sellFmt(recaptureTaxable)} of prior depreciation may be taxed as unrecaptured section 1250 gain at a maximum 25% federal rate — about $${sellFmt(recaptureTaxable * 0.25)} at that rate — and California taxes the gain as ordinary income. Confirm the depreciation schedule with the CPA.`);
+      }
       lines.push(`Illustrative California 1% add-on on taxable income above $1,000,000: $${sellFmt(addOn)} (uses entered other taxable income plus modeled gain; not a complete tax return).`);
       sellResult.textContent = lines.join(' ');
     });
   }
   sellClear?.addEventListener('click', () => {
-    ['sell-value', 'sell-basis', 'sell-costs', 'sell-dtt', 'sell-other'].forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
+    ['sell-value', 'sell-basis', 'sell-dep', 'sell-costs', 'sell-dtt', 'sell-other'].forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
     const sel = document.getElementById('sell-121');
     if (sel) sel.value = '0';
     if (sellResult) sellResult.textContent = 'Inputs cleared.';
+  });
+
+  // ---- Live-path imputed-rent comparison ----
+  const liveRun = document.getElementById('live-run');
+  const liveClear = document.getElementById('live-clear');
+  const liveResult = document.getElementById('live-result');
+  const fmtR = (value) => new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.round(value / 10) * 10);
+  const signedR = (value) => {
+    const rounded = Math.round(value / 10) * 10;
+    const formatted = new Intl.NumberFormat('en-US', { maximumFractionDigits: 0 }).format(Math.abs(rounded));
+    return rounded < 0 ? `-$${formatted}` : `$${formatted}`;
+  };
+  if (liveRun && liveResult) {
+    liveRun.addEventListener('click', () => {
+      const rent = Number(document.getElementById('live-rent')?.value);
+      const cost = Number(document.getElementById('live-cost')?.value);
+      const proceedsRaw = document.getElementById('live-proceeds')?.value.trim() ?? '';
+      const proceeds = proceedsRaw === '' ? 0 : Number(proceedsRaw);
+      if (!(rent > 0) || !Number.isFinite(cost) || cost < 0 || !Number.isFinite(proceeds) || proceeds < 0) {
+        liveResult.textContent = 'Enter a positive monthly market rent and non-negative cost and proceeds figures.';
+        return;
+      }
+      const imputedYear = rent * 12;
+      const netPosition = imputedYear - cost;
+      const investIncome = proceeds * 0.04;
+      liveResult.textContent = `Living path: imputed rent about $${fmtR(imputedYear)} per year for a carrying cost of $${fmtR(cost)} — net lifestyle position about ${signedR(netPosition)} per year (positive means housing value exceeds carrying cost). Selling instead and investing $${fmtR(proceeds)} at an illustrative 4% would generate about $${fmtR(investIncome)} per year before taxes. Illustration only; 4% is an assumption, not a promised return.`;
+    });
+  }
+  liveClear?.addEventListener('click', () => {
+    ['live-rent', 'live-cost', 'live-proceeds'].forEach((id) => { const el = document.getElementById(id); if (el) el.value = ''; });
+    if (liveResult) liveResult.textContent = 'Inputs cleared.';
+  });
+
+  // ---- Distribution chart (seeded regime-mixture illustration) ----
+  const distRun = document.getElementById('dist-run');
+  const distClear = document.getElementById('dist-clear');
+  const distResult = document.getElementById('dist-result');
+  const distChart = document.getElementById('dist-chart');
+  const simulatePath = (pathKey, horizon, rnd) => {
+    const net = 5157840; // 2045 base-case net proceeds, rounded per policy
+    const normal = () => {
+      const u1 = Math.max(1e-9, rnd());
+      const u2 = rnd();
+      return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+    };
+    const drawYear = () => {
+      const u = rnd();
+      let mu; let sd;
+      if (u < 0.05) { mu = -0.28; sd = 0.20; } else if (u < 0.15) { mu = -0.02; sd = 0.15; } else if (u < 0.32) { mu = 0.03; sd = 0.18; } else { mu = 0.085; sd = 0.13; }
+      return Math.max(-0.60, Math.min(0.45, mu + sd * normal()));
+    };
+    if (pathKey === 'rent') {
+      const flows = 27000 * Math.pow(1.025, horizon / 2) * horizon * 1.25;
+      const homeEnd = 3100000 * Math.pow(1.03, horizon + 19) * 0.939;
+      return flows + homeEnd;
+    }
+    const months = pathKey === 'stage24' ? 24 : pathKey === 'stage36' ? 36 : 0;
+    if (months === 0) {
+      let f = 1;
+      for (let y = 0; y < horizon; y += 1) f *= 1 + drawYear();
+      return net * f;
+    }
+    const ty = Math.max(0, 0.04 + 0.01 * normal());
+    const ry = Math.max(0, 0.03 + 0.01 * normal());
+    const m0 = Math.pow(1 + ty, 1 / 12) - 1;
+    const m1 = Math.pow(1 + ry, 1 / 12) - 1;
+    const me = Math.pow(1.07, 1 / 12) - 1;
+    let reserve = net;
+    let shares = 0;
+    let index = 1;
+    for (let month = 1; month <= months; month += 1) {
+      reserve *= 1 + (month <= months / 2 ? m0 : m1);
+      const purchase = Math.min(reserve, net / months);
+      reserve -= purchase;
+      shares += purchase / index;
+      index *= 1 + me;
+    }
+    const remaining = Math.max(0, horizon - months / 12);
+    let f2 = 1;
+    for (let y = 0; y < remaining; y += 1) f2 *= 1 + drawYear();
+    return (shares * index + reserve) * f2;
+  };
+  if (distRun && distChart) {
+    distRun.addEventListener('click', () => {
+      const horizon = Number(document.getElementById('dist-horizon')?.value ?? 20);
+      const pathKey = document.getElementById('dist-path')?.value ?? 'immediate';
+      let state = 20261117;
+      const rnd = () => {
+        state = (1103515245 * state + 12345) % 2147483648;
+        return state / 2147483648;
+      };
+      const draws = [];
+      for (let i = 0; i < 2000; i += 1) draws.push(simulatePath(pathKey, horizon, rnd));
+      draws.sort((a, b) => a - b);
+      const q = (p) => draws[Math.min(draws.length - 1, Math.max(0, Math.floor(p * draws.length)))];
+      const ctx = distChart.getContext('2d');
+      const w = distChart.width; const h = distChart.height;
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = '#f4f1ea';
+      ctx.fillRect(0, 0, w, h);
+      const bins = 22;
+      const lo = draws[0]; const hi = draws[draws.length - 1];
+      const counts = new Array(bins).fill(0);
+      draws.forEach((v) => {
+        const b = Math.min(bins - 1, Math.floor(((v - lo) / Math.max(1, hi - lo)) * bins));
+        counts[b] += 1;
+      });
+      const maxCount = Math.max(...counts);
+      ctx.fillStyle = '#2f5d50';
+      counts.forEach((c, i) => {
+        const barH = (c / maxCount) * (h - 30);
+        ctx.fillRect(10 + i * ((w - 20) / bins), h - 10 - barH, (w - 20) / bins - 2, barH);
+      });
+      ctx.fillStyle = '#1c1c1c';
+      ctx.font = '12px sans-serif';
+      ctx.fillText(`$${fmtR(lo)}`, 10, h - 0);
+      ctx.fillText(`$${fmtR(hi)}`, w - 120, h - 0);
+      if (distResult) {
+        distResult.textContent = `Seeded illustration, ${horizon} years, 2,000 draws (not a probability forecast): P5 $${fmtR(q(0.05))}; P25 $${fmtR(q(0.25))}; median $${fmtR(q(0.5))}; P75 $${fmtR(q(0.75))}; P95 $${fmtR(q(0.95))}. Inputs run in browser memory only.`;
+      }
+    });
+  }
+  distClear?.addEventListener('click', () => {
+    if (distChart) {
+      const ctx = distChart.getContext('2d');
+      ctx.clearRect(0, 0, distChart.width, distChart.height);
+    }
+    if (distResult) distResult.textContent = 'Inputs cleared.';
   });
 })();

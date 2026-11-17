@@ -210,11 +210,23 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         self.assertEqual(page.count('class="review-choice"'), 10)
 
     def test_no_household_figures_leak_into_the_new_pages(self):
+        # Owner directive 2026-11-17: rounded-to-$10 household figures ARE
+        # published deliberately (marked "Household-reported (rounded)").
+        # The ban below covers unrounded assessor-record values and every
+        # locality identifier; those must never appear anywhere.
         for path, title, group in sitebuild.PAGES:
             raw = sitebuild.render(path, title, group)
-            for token in ("3,100,000", "1,800,000", "7,150", "550,537", "114,248",
+            for token in ("550,537", "114,248",
                           "95014", "94122", "Cupertino", "Outer Sunset", "Santa Clara"):
                 self.assertNotIn(token, raw, f"{path} leaks {token}")
+
+    def test_rounded_household_figures_are_published_and_marked(self):
+        profiles = sitebuild.render("pages/property-profiles.html", "Property profiles (rounded)", "Private planning")
+        self.assertIn("Household-reported (rounded)", profiles)
+        self.assertIn("$3,100,000", profiles)
+        self.assertIn("$7,210", profiles)
+        self.assertIn("$7,150", profiles)
+        self.assertIn("$1,500", profiles)
 
     def test_private_workbench_is_git_ignored(self):
         ignore = (ROOT.parent / ".gitignore").read_text(encoding="utf-8")
@@ -413,8 +425,11 @@ for (const bad of [12, 48]) {
         encoded = [
             "OTUwMTQ=", "OTQxMjI=", "Q3VwZXJ0aW5v", "U3Vuc2V0IERpc3RyaWN0",
             "U2FudGEgQ2xhcmEgQ291bnR5", "UGFya3NpZGU=", "QmFuY3JvZnQ=",
-            "MywxMDAsMDAw", "MSw4MDAsMDAw", "NywxNTA=", "NTUwLDUzNw==", "MTE0LDI0OA==",
+            "NTUwLDUzNw==", "MTE0LDI0OA==",
         ]
+        # Note (2026-11-17 owner directive): the rounded-to-$10 household
+        # figures are published deliberately on the site; only the unrounded
+        # assessor-record values and the locality identifiers remain banned.
         patterns = [base64.b64decode(item).decode() for item in encoded]
         offenders = []
         for pattern in patterns:
@@ -476,6 +491,45 @@ console.log(JSON.stringify({
         # And the scenario count must match the model, so adding a scenario
         # without re-running the published prose fails here.
         self.assertEqual(len(live["w24"]), 9)
+
+    def test_black_swan_contains_phased_path_and_reinvestment_risk(self):
+        page = sitebuild.render("pages/black-swan.html", "Black-swan conditions", "Stress tests")
+        self.assertIn("Phased-investing path", page)
+        self.assertIn("Reinvestment risk", page)
+        self.assertIn("1929", page)
+        self.assertIn("2008", page)
+
+    def test_distribution_chart_and_percentiles_are_published(self):
+        page = sitebuild.render("pages/projections.html", "Projections & distribution", "Private planning")
+        self.assertIn("dist-chart", page)
+        self.assertIn("P50 (median)", page)
+
+    def test_prop_h_is_modeled_with_official_terms(self):
+        page = sitebuild.render("pages/law-watchlist.html", "Law watchlist", "Law & process")
+        self.assertIn("parcel tax", page)
+        self.assertIn("$129", page)
+        self.assertIn("June 1, 2027", page)
+        self.assertIn("sfmta.com", page)
+
+    def test_transfer_year_sale_is_modeled_first(self):
+        decision = sitebuild.render("pages/decision-analysis.html", "Compare paths", "Decision")
+        self.assertIn("Model first: a sale in the transfer tax year", decision)
+        self.assertLess(decision.index("Model first: a sale in the transfer tax year"), decision.index("Compare alternatives"))
+
+    def test_decision_log_records_dated_decisions(self):
+        log = sitebuild.render("pages/decision-log.html", "Decision log", "Adviser & evidence")
+        self.assertIn("Dated project decisions", log)
+        self.assertIn("2026-11-17", log)
+
+    def test_phase_model_supports_renewal_yield_reinvestment_risk(self):
+        script = r'''const model = require(process.argv[1]);
+const flat = model.simulate({amount: 24000, months: 24, treasuryYieldPct: 5, equityDriftPct: 0, crashPct: 0, crashMonth: 13});
+const risky = model.simulate({amount: 24000, months: 24, treasuryYieldPct: 5, equityDriftPct: 0, crashPct: 0, crashMonth: 13, renewalYieldPct: 1});
+if (!(flat.phasedEnding > risky.phasedEnding)) process.exit(1);
+if (!(risky.uninvestedReserve >= 0)) process.exit(2);
+'''
+        result = subprocess.run(["node", "-e", script, str(ROOT.parent / "assets/phase-model.js")], capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stderr)
 
 
 if __name__ == "__main__":
