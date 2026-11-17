@@ -355,5 +355,27 @@ for (const bad of [12, 48]) {
         self.assertIn("dataset.id", script)
 
 
+    def test_first_screen_leads_with_decision_changing_facts(self):
+        """The homepage must put 'what would change the answer' above the fold,
+        and must offer the staging trade-off as a decision-changer rather than
+        burying it in a stress-test page."""
+        homepage = sitebuild.render("index.html", "Decision overview", "Start")
+        position_table = homepage.index("What would change the answer?")
+        self.assertLess(position_table, homepage.index("Safe decision order"))
+        self.assertIn("Does staging the sale proceeds actually reduce crash risk?", homepage)
+        self.assertIn("beat immediate investment in 5", homepage)
+        # the staged-investing result must not be a promise
+        self.assertIn("worst about -5%", homepage)
+
+    def test_privacy_page_publishes_the_rounding_caveat(self):
+        """Rounding to $10 was requested as a privacy control. It is not one,
+        and the site must say so rather than imply the figures are anonymous."""
+        page = sitebuild.render("pages/privacy.html", "Privacy & limits", "Adviser & evidence")
+        self.assertIn("Why rounding to a round number is not anonymization", page)
+        self.assertIn("County assessment rolls are public and searchable", page)
+        self.assertIn("Measured exposure scope, audited 2026-11-17", page)
+        self.assertIn("82 of 87 refs", page)
+
+
 if __name__ == "__main__":
     unittest.main()
