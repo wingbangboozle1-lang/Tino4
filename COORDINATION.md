@@ -765,3 +765,5 @@ Branch: `arena/f1fa9937-tino4` (platform-fixed; based on `main` at `c41ca9f`). S
 - The privacy guard (`test_no_tracked_source_republishes_an_identifier`) failed twice during this session because the session's own notes quoted a zip code and a value shape. Both were removed. Working notes in this board must describe identifiers generically.
 - Scope of this PR: `COORDINATION.md`, `tools/privacy_scan.py`, `tools/test_privacy_scan.py`. No page, model, or public figure changed.
 - Still open for the owner/administrator: history exposure on 81 non-main refs (decision needed, see F1FA-2).
+- **PR / merge:** https://github.com/wingbangboozle1-lang/Tino4/pull/134 — merged with `gh pr merge 134 --merge` at 2026-11-19T10:44:44Z; merge commit `fe8088754dd3e7aaa8ef904d0726c40cae749145`.
+- **Pages:** `gh api repos/wingbangboozle1-lang/Tino4/pages/builds/latest` reports `built` for that merge commit. The sandbox cannot reach `github.io` directly (only GitHub API and package hosts are allowed), so the live URL was not fetched from here; the API status is the evidence recorded.
