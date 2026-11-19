@@ -235,11 +235,15 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         tokens |= {token for token in verify.LOCALITY_PATTERNS if token.isdigit()}
         self.assertGreaterEqual(len(tokens), 12)
         patterns = {token: re.compile(rf"(?<![0-9.]){re.escape(token)}(?![0-9])") for token in tokens}
+        import privacy_scan
+        private_shapes = privacy_scan._decode(privacy_scan._ENCODED_SHAPES)
         for path, title, group in sitebuild.PAGES:
             raw = sitebuild.render(path, title, group)
             for token, pattern in patterns.items():
                 self.assertIsNone(pattern.search(raw),
                                   f"{path} publishes a digit run copied from a record")
+            for shape in private_shapes:
+                self.assertNotIn(shape, raw, f"{path} publishes a previously exposed private value shape")
 
     def test_private_workbench_is_git_ignored(self):
         ignore = (ROOT.parent / ".gitignore").read_text(encoding="utf-8")

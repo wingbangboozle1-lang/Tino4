@@ -888,6 +888,21 @@ def _exact(value: float) -> str:
     return f"${int(value):,}"
 
 
+def _n_projection(value: float) -> str:
+    """Coarsen private-model projection costs to reduce record matching.
+
+    Small annual lines are reported as magnitudes, not searchable exact dollars;
+    larger model outputs are rounded to $100. This is still not anonymization,
+    so the page must not contain locality or record identifiers.
+    """
+    amount = float(value)
+    if amount == 0:
+        return "none"
+    if abs(amount) < 10_000:
+        return ("credit of " if amount < 0 else "") + "several thousand dollars"
+    return _n(round(amount / 100.0) * 100.0)
+
+
 def _p(value: float, places: int = 2) -> str:
     return cm.pct(value, places)
 
@@ -1263,18 +1278,19 @@ def _q_paths(headline: dict) -> str:
 def _q_projections() -> str:
     body = callout(
         "What these tables are",
-        "They are arithmetic on the rounded owner-figure inputs, grown by the block sequence, so a reader can "
-        "see how a value, an assessed value and a bill move together over time. They are not appraisals and not "
-        "assessor records: the assessed-value line follows the two percent statutory adjustment that applies "
-        "while no change in ownership is recorded.",
+        "They are arithmetic on broad scenario assumptions, grown by the block sequence, so a reader can see "
+        "how a value, assessed-value path and bill move together over time. They are not appraisals or assessor "
+        "records. To reduce record matching, projection dollars are coarsened to $100 and small annual lines are "
+        "shown as magnitudes; this is not anonymization. The assessed-value path follows the two-percent statutory "
+        "adjustment only while no change in ownership is recorded.",
         "warning",
     )
     rows = []
     for row in cm.value_projection_rows("sequence", 25):
         rows.append((
-            [str(int(row["year"])), _n(row["value"]), _n(row["assessed_capped"]), _p(row["share"], 0),
-             _n(row["tax_capped"]), _n(row["allowance"]), _n(row["cap_line"]), _n(row["addition"]),
-             _n(row["tax_claim"]), _n(row["tax_reassessed"]), _n(row["tax_saving"])],
+            [str(int(row["year"])), _n_projection(row["value"]), _n_projection(row["assessed_capped"]), _p(row["share"], 0),
+             _n_projection(row["tax_capped"]), _n_projection(row["allowance"]), _n_projection(row["cap_line"]), _n_projection(row["addition"]),
+             _n_projection(row["tax_claim"]), _n_projection(row["tax_reassessed"]), _n_projection(row["tax_saving"])],
             STATUS["assumption"], ["ca_rtc51", "ca_rtc63", "boe_lta"],
         ))
     body += table(
@@ -1295,10 +1311,10 @@ def _q_projections() -> str:
     cost_rows = []
     for row in cm.operating_cost_rows("sequence", 25)[::2]:
         cost_rows.append((
-            [str(int(row["year"])), _n(row["a_value"]), _n(row["a_tax"]), cm.magnitude(row["a_water"]),
-             cm.magnitude(row["a_power"]), cm.magnitude(row["a_insurance"]), _n(row["a_maintenance"]),
-             _n(row["a_total"]), _n(row["b_tax"]), cm.magnitude(row["b_water"]), cm.magnitude(row["b_power"]),
-             cm.magnitude(row["b_insurance"]), _n(row["b_rent"]), _n(row["b_net"])],
+            [str(int(row["year"])), _n_projection(row["a_value"]), _n_projection(row["a_tax"]), cm.magnitude(row["a_water"]),
+             cm.magnitude(row["a_power"]), cm.magnitude(row["a_insurance"]), _n_projection(row["a_maintenance"]),
+             _n_projection(row["a_total"]), _n_projection(row["b_tax"]), cm.magnitude(row["b_water"]), cm.magnitude(row["b_power"]),
+             cm.magnitude(row["b_insurance"]), _n_projection(row["b_rent"]), _n_projection(row["b_net"])],
             STATUS["assumption"], ["cpuc_solar", "water_board", "cdi", "cslb", "irs_rental"],
         ))
     body += table(
