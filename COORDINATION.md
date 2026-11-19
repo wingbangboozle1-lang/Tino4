@@ -6,12 +6,13 @@ Branch: `arena/6e0ed674-tino4` (platform-fixed; active).
 
 | Task ID | Task | Status | Owner | File scope |
 | --- | --- | --- | --- | --- |
-| 6E0E-1 | Remove household-specific figures from the active public build and integrate the privacy-first site with current main | implementation rebased and verified; updated PR publication pending | `arena/6e0ed674` | public builder, verifier, scanner/tests, generated site, README, coordination board |
+| 6E0E-1 | Remove household-specific figures from the active public build and integrate the privacy-first site with current main | rebased and locally verified; PR #140 updated, CI pending | `arena/6e0ed674` | public builder, verifier, scanner/tests, generated site, README, coordination board |
 
-- The generic site removes the household case model and derived outputs; the inherited trust transfer versus already-owned rental asset distinction remains generic. No personal identifiers or assessment-derived values are published. The source-linked tax guidance, including the 2025 Form 540 line 62 and California additional 1% sensitivity, has been retained.
-- Rebase conflict resolution used the privacy-first builder and regenerated pages, kept current-main official-source research and shallow-history caveats, and removed `tools/case_model.py`. `origin/main` advanced again during rebase; its coordination-board update is preserved below and integration with that newer tip is still in progress.
-- Verification after the resolved tree: build and verifier passed (26 generic pages); 16 Python tests passed; JavaScript syntax checks and normalized chart smoke passed (9 scenarios); `git diff --check` passed; framework snapshot refreshed.
-- Historical exposure remains unresolved. This clone is shallow; no history rewrite, external-copy cleanup, deployment, merge, or updated PR push is claimed.
+- Removed the household case model and derived outputs; retained the inherited trust transfer versus already-owned rental asset distinction generically. No personal identifiers or assessment-derived values are published. Kept source-linked Form 540 line 62 and California additional 1% guidance.
+- Rebase conflict resolution uses the latest `origin/main` privacy-first builder, verifier, identifier scanner, and source/test updates; the removed `tools/case_model.py` remains absent. Main's current 26-page build and coordination updates are preserved. The chart-smoke script from the rebased patch targeted an asset removed by current main, so it was not carried forward.
+- Final verification after resolving against current `main`: `python3 tools/build.py` and `python3 tools/verify.py` passed (26 generic pages); 14 Python tests passed; syntax checks passed for `assets/app.js`, `assets/phase-model.js`, and `assets/regime-model.js`; `git diff --check` passed; `python3 tools/recheck.py --update` refreshed the framework snapshot. A separate nine-scenario chart smoke test passed against the earlier resolved privacy builder, but is not claimed for the final current-main chart code.
+- PR #140 was updated on the current branch against current `main`. The latest GitHub query (2026-11-19) reported no checks and unknown mergeability; recheck both before any merge. No CI pass is claimed.
+- Historical exposure remains unresolved. This clone is shallow; no history rewrite, external-copy cleanup, deployment, or merge is claimed.
 
 
 ## Current session `arena/4e566e41`

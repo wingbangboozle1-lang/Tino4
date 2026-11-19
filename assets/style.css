@@ -210,7 +210,9 @@ footer a { white-space: nowrap; }
 .badge.missing, .badge.unverified, .badge.not-verified { color: var(--red); background: var(--red-bg); }
 
 /* Compact one-page print for the attorney & CPA brief */
+.print-only { display: none; }
 @media print {
+  .print-only { display: block; }
   .brief-page main { font-size: 8.2pt; }
   .brief-page h1 { font-size: 17pt; margin-bottom: 4px; }
   .brief-page .lead { font-size: 8.5pt; margin-bottom: 5px; }
@@ -230,7 +232,12 @@ footer a { white-space: nowrap; }
 
 .calculator, .review-queue { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); align-items: end; margin: 14px 0; }
 .calculator label, .review-queue label { display: grid; gap: 5px; font-weight: 650; }
-.calculator input, .review-queue select { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
+.calculator input, .calculator select, .review-queue select, .review-choice { min-height: 40px; border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; background: #fff; color: var(--ink); font: inherit; }
+.review-row { display: grid; grid-template-columns: minmax(200px, 1fr) minmax(150px, 220px); gap: 12px; align-items: center; margin: 8px 0; }
+.distribution-chart { width: 100%; min-width: 600px; height: auto; overflow: visible; }
+#staged-chart { grid-column: 1 / -1; }
+#staged-chart text { fill: #334b48; font-family: inherit; }
+#staged-chart-legend { grid-column: 1 / -1; }
 .calculator button { min-height: 40px; border: 0; border-radius: 8px; padding: 8px 14px; background: var(--teal-dark); color: #fff; font: inherit; font-weight: 750; cursor: pointer; }
 #phase-result { grid-column: 1 / -1; }
 
