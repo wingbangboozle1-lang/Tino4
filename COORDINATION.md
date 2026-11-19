@@ -1,5 +1,19 @@
 # COORDINATION.md — privacy-safe task board
 
+## Session `arena/6e0ed674` — privacy containment and main integration
+
+Branch: `arena/6e0ed674-tino4` (platform-fixed; active).
+
+| Task ID | Task | Status | Owner | File scope |
+| --- | --- | --- | --- | --- |
+| 6E0E-1 | Remove household-specific figures from the active public build and integrate the privacy-first site with current main | implementation rebased and verified; updated PR publication pending | `arena/6e0ed674` | public builder, verifier, scanner/tests, generated site, README, coordination board |
+
+- The generic site removes the household case model and derived outputs; the inherited trust transfer versus already-owned rental asset distinction remains generic. No personal identifiers or assessment-derived values are published. The source-linked tax guidance, including the 2025 Form 540 line 62 and California additional 1% sensitivity, has been retained.
+- Rebase conflict resolution used the privacy-first builder and regenerated pages, kept current-main official-source research and shallow-history caveats, and removed `tools/case_model.py`. `origin/main` advanced again during rebase; its coordination-board update is preserved below and integration with that newer tip is still in progress.
+- Verification after the resolved tree: build and verifier passed (26 generic pages); 16 Python tests passed; JavaScript syntax checks and normalized chart smoke passed (9 scenarios); `git diff --check` passed; framework snapshot refreshed.
+- Historical exposure remains unresolved. This clone is shallow; no history rewrite, external-copy cleanup, deployment, merge, or updated PR push is claimed.
+
+
 ## Current session `arena/4e566e41`
 
 Branch: `arena/4e566e41-tino4` (platform-fixed; active).
