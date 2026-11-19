@@ -818,3 +818,11 @@ Branch: `arena/0d21d66a-tino4` (platform-fixed; active).
 - **Limitation:** the current checkout is shallow; the local scan cannot establish the contents of earlier commits. The full-history results recorded under F1FA-2 remain the broader audit record; prior history exposure, PRs, forks, caches and clones still require administrator-led remediation per `tools/history_scrub_runbook.md` and GitHub's official guide: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository.
 - **PR / merge:** https://github.com/wingbangboozle1-lang/Tino4/pull/136 — merged 2026-11-19T10:49:56Z; merge commit `e597a90801edde19db16ebe9be992db5f5f080a4`. The `verify` run 44509279476 completed successfully.
 - **Pages:** deployment run 44509278558 completed successfully; Pages API reports build 1383761355 as `built` for merge commit `e597a90801edde19db16ebe9be992db5f5f080a4`. A non-blocking Node.js 20 action-runtime deprecation annotation was emitted by the deploy action.
+
+## Session `arena/5d659161` — re-verify Form 540 source coverage
+
+Branch: `arena/5d659161-tino4` (platform-fixed; active). Base: `c41ca9f628d2909c2a693f956e2237a6cebd986f`.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 5D65-1 | Review the official 2025 Form 540 booklet, correct the stale “not fully retrieved” flag, and pin the source/status with a regression test | in progress | `arena/5d659161` | `tools/sitebuild.py`, `tools/test_case.py`, `tools/framework-snapshot.json`, generated `pages/sources.html`, `pages/flagged-for-review.html`, `COORDINATION.md` | 2026-11-19 |
