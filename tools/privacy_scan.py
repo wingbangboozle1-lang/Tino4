@@ -1,71 +1,28 @@
 #!/usr/bin/env python3
-"""Read-only exposure audit for every ref in the repository.
+"""Read-only scan of accessible Git history for common direct identifiers.
 
-Purpose: report *where* household-identifying material may still exist in Git
-history without printing the sensitive values, and without storing them in
-plaintext inside this tracked file.
-
-Design notes
-------------
-* The default pattern list is stored base64-encoded. Encoding is **not**
-  security and is not relied on as such. Its only job is to keep the raw
-  identifiers out of the tracked plaintext so the audit tool does not become
-  a new search-indexable copy of the very material it is meant to find.
-* The tool prints counts, refs and file paths only. It never prints a matched
-  value, so its output is safe to paste into a public coordination log.
-* Read-only: no checkout, no reset, no write to any ref. Removing material
-  from history requires the administrator workflow in
-  tools/history_scrub_runbook.md.
-
-Usage
------
-    python3 tools/privacy_scan.py                 # summary across all refs
-    python3 tools/privacy_scan.py --verbose       # one line per ref/kind/path
-    python3 tools/privacy_scan.py --patterns FILE # extra patterns, one per line
-
---patterns files must live outside the tracked tree (for example
-/private-work/identifiers.txt) and are never committed. Do not place the raw
-identifiers in this repository.
+This generic scan contains no household-specific values or identifiers. It checks
+reachable commits for email, phone and street-address-shaped text, and prints
+only ref/path counts. It is deliberately incomplete: it cannot find every form
+of personal or property data, and a shallow checkout cannot inspect missing
+history. It cannot establish that copies outside the scanned Git objects were
+erased. Use the administrator runbook for a complete history-remediation plan.
 """
 from __future__ import annotations
 
-import base64
+import re
 import subprocess
 import sys
 from collections import defaultdict
 
-# base64 of the identifier fragments used for the audit. Decoded at runtime.
-_ENCODED = [
-    "OTUwMTQ=",
-    "OTQxMjI=",
-    "Q3VwZXJ0aW5v",
-    "U3Vuc2V0IERpc3RyaWN0",
-    "U2FudGEgQ2xhcmEgQ291bnR5",
-    "UGFya3NpZGU=",
-    "QmFuY3JvZnQ=",
-]
-
-# Property-value and rent strings seen in earlier drafts. Encoded for the same
-# reason as the identifiers above, and deliberately NOT annotated with the
-# decoded value: an earlier version carried the plain numbers in these trailing
-# comments, which defeated the encoding entirely.
-_ENCODED_SHAPES = [
-    "MywxMDAsMDAw",
-    "MSw4MDAsMDAw",
-    "NywxNTA=",
-    "NTUwLDUzNw==",
-    "MTE0LDI0OA==",
-]
-
-ACCOUNT = base64.b64decode("d2luZ2JhbmcvYm9veg==").decode()
-
-
-def _decode(items: list[str]) -> list[str]:
-    return [base64.b64decode(item).decode() for item in items]
+PATTERNS = {
+    "email": re.compile(r"(?i)\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b"),
+    "phone": re.compile(r"(?<!\d)(?:\+?1[ .-]?)?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}(?!\d)"),
+    "street-address": re.compile(r"(?i)\b\d{1,6}\s+(?:[A-Za-z0-9.'-]+\s+){1,4}(?:Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Boulevard|Blvd|Lane|Ln|Way|Court|Ct)\b"),
+}
 
 
 def git(*args: str) -> str:
-    """Run a read-only git command and return stdout."""
     result = subprocess.run(["git", *args], capture_output=True, text=True, check=False)
     return result.stdout
 
@@ -76,81 +33,46 @@ def is_shallow_repository() -> bool:
 
 
 def refs() -> list[str]:
-    out = git(
-        "for-each-ref",
-        "--format=%(refname)",
-        "refs/heads",
-        "refs/remotes",
-        "refs/tags",
-    )
+    out = git("for-each-ref", "--format=%(refname)", "refs/heads", "refs/remotes", "refs/tags")
     return [line for line in out.splitlines() if line and not line.endswith("/HEAD")]
 
 
-def load_extra_patterns(argv: list[str]) -> list[str]:
-    if "--patterns" not in argv:
-        return []
-    path = argv[argv.index("--patterns") + 1]
-    try:
-        with open(path, encoding="utf-8") as handle:
-            return [line.strip() for line in handle if line.strip()]
-    except OSError as exc:
-        print(f"Cannot read pattern file: {exc}")
-        raise SystemExit(2)
-
-
-def audit(verbose: bool, extra: list[str]) -> int:
-    identifiers = _decode(_ENCODED) + extra + [ACCOUNT]
-    shapes = _decode(_ENCODED_SHAPES)
-    all_refs = refs()
-    hits: dict[str, set[str]] = defaultdict(set)
-    commits: dict[str, int] = defaultdict(int)
+def audit(verbose: bool = False, _extra: list[str] | None = None) -> int:
+    """Scan available commits. `_extra` is accepted for compatibility, not decoded or used."""
+    matches: dict[str, set[str]] = defaultdict(set)
+    scanned_refs = refs()
+    accessible_commits = 0
     shallow = is_shallow_repository()
-
-    for ref in all_refs:
-        for pattern in identifiers + shapes:
-            # Value shapes are word-bounded so a shape cannot match inside a
-            # longer, unrelated model figure (a shape can be a substring of another figure).
-            # Identifiers keep plain substring matching: a missed identifier
-            # is the costlier error.
-            bounded = ["-w"] if pattern in shapes else []
-            out = git("grep", "-l", "-i", "-F", *bounded, "--no-color", pattern, ref, "--")
-            for line in out.splitlines():
-                path = line.split(":", 2)[-1]
-                hits[ref].add(path)
-                if verbose:
-                    kind = "value-shape" if pattern in shapes else "identifier"
-                    print(f"  {ref}\t{kind}\t{path}")
-        # Count affected commits only when the local history is complete.
-        if not shallow:
-            for pattern in identifiers[:2]:
-                log = git("log", "--oneline", "-i", "-F", f"-S{pattern}", ref, "--")
-                commits[ref] = max(commits[ref], len(log.splitlines()))
-
-    affected = sorted(hits)
-    print(f"Scanned refs: {len(all_refs)}")
-    print(f"Refs containing at least one match: {len(affected)}")
+    for ref in scanned_refs:
+        commits = git("rev-list", ref).splitlines()
+        accessible_commits += len(commits)
+        for commit in commits:
+            paths = git("ls-tree", "-r", "--name-only", commit).splitlines()
+            for path in paths:
+                content = git("show", f"{commit}:{path}").encode("utf-8", errors="ignore").decode("utf-8", errors="ignore")
+                for kind, pattern in PATTERNS.items():
+                    if pattern.search(content):
+                        matches[ref].add(path)
+                        if verbose:
+                            print(f"{ref}\t{kind}\t{path}")
+    affected = sorted(matches)
+    print(f"Scanned refs: {len(scanned_refs)}")
+    print(f"Accessible ref/commit pairs checked: {accessible_commits}")
+    print(f"Refs with common direct-identifier-shaped matches: {len(affected)}")
     if affected:
-        print("\nAffected refs (counts only, no values printed):")
+        print("Affected refs (counts and paths only; no matched values printed):")
         for ref in affected:
-            print(f"  {ref}\t{len(hits[ref])} file(s)")
-        if not shallow:
-            deepest = max(commits.values()) if commits else 0
-            print(f"\nDeepest affected-commit count on any single ref: {deepest}")
-        print(
-            "\nRemediation is an administrator action. See "
-            "tools/history_scrub_runbook.md; a rebuild cannot recall clones, "
-            "forks, caches or pull-request views."
-        )
-        if shallow:
-            print("History completeness: shallow clone; earlier commits are not audited.")
-        return 1
-    print("No known identifier or value shape found in any scanned ref.")
+            print(f"  {ref}\t{len(matches[ref])} file(s)")
     if shallow:
         print("History completeness: shallow clone; earlier commits are not audited.")
     else:
         print("History completeness: full local history for the scanned refs was available.")
+    if affected:
+        print("This generic scan is incomplete and cannot verify external copies. See the administrator runbook.")
+        return 1
+    print("No common direct-identifier pattern found in the accessible commits; this is not proof that all data is safe or erased.")
     return 0
 
 
 if __name__ == "__main__":
-    raise SystemExit(audit("--verbose" in sys.argv[1:], load_extra_patterns(sys.argv[1:])))
+    raise SystemExit(audit("--verbose" in sys.argv[1:]))
