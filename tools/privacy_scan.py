@@ -70,6 +70,11 @@ def git(*args: str) -> str:
     return result.stdout
 
 
+def is_shallow_repository() -> bool:
+    """Whether this checkout omits commits before the fetched boundary."""
+    return git("rev-parse", "--is-shallow-repository").strip() == "true"
+
+
 def refs() -> list[str]:
     out = git(
         "for-each-ref",
@@ -99,6 +104,7 @@ def audit(verbose: bool, extra: list[str]) -> int:
     all_refs = refs()
     hits: dict[str, set[str]] = defaultdict(set)
     commits: dict[str, int] = defaultdict(int)
+    shallow = is_shallow_repository()
 
     for ref in all_refs:
         for pattern in identifiers + shapes:
@@ -114,11 +120,11 @@ def audit(verbose: bool, extra: list[str]) -> int:
                 if verbose:
                     kind = "value-shape" if pattern in shapes else "identifier"
                     print(f"  {ref}\t{kind}\t{path}")
-        # Count affected commits so the report can distinguish "a few recent
-        # commits" from "present since the first import".
-        for pattern in identifiers[:2]:
-            log = git("log", "--oneline", "-i", "-F", f"-S{pattern}", ref, "--")
-            commits[ref] = max(commits[ref], len(log.splitlines()))
+        # Count affected commits only when the local history is complete.
+        if not shallow:
+            for pattern in identifiers[:2]:
+                log = git("log", "--oneline", "-i", "-F", f"-S{pattern}", ref, "--")
+                commits[ref] = max(commits[ref], len(log.splitlines()))
 
     affected = sorted(hits)
     print(f"Scanned refs: {len(all_refs)}")
@@ -127,8 +133,9 @@ def audit(verbose: bool, extra: list[str]) -> int:
         print("\nAffected refs (counts only, no values printed):")
         for ref in affected:
             print(f"  {ref}\t{len(hits[ref])} file(s)")
-        deepest = max(commits.values()) if commits else 0
-        print(f"\nDeepest affected-commit count on any single ref: {deepest}")
+        if not shallow:
+            deepest = max(commits.values()) if commits else 0
+            print(f"\nDeepest affected-commit count on any single ref: {deepest}")
         print(
             "\nRemediation is an administrator action. See "
             "tools/history_scrub_runbook.md; a rebuild cannot recall clones, "

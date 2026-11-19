@@ -3,7 +3,10 @@ import importlib.util
 import subprocess
 import tempfile
 import unittest
+from contextlib import redirect_stdout
+from io import StringIO
 from pathlib import Path
+from unittest.mock import patch
 
 SPEC = importlib.util.spec_from_file_location(
     "privacy_scan", Path(__file__).with_name("privacy_scan.py")
@@ -40,6 +43,24 @@ class ValueShapeMatchingTests(unittest.TestCase):
         source = Path(SPEC.origin).read_text(encoding="utf-8")
         self.assertIn('bounded = ["-w"] if pattern in shapes else []', source)
         self.assertIn("*bounded", source)
+
+
+class ShallowHistoryNoticeTests(unittest.TestCase):
+    def test_shallow_scan_labels_history_as_incomplete(self):
+        output = StringIO()
+        with patch.object(privacy_scan, "refs", return_value=[]), \\
+             patch.object(privacy_scan, "is_shallow_repository", return_value=True), \\
+             redirect_stdout(output):
+            self.assertEqual(privacy_scan.audit(False, []), 0)
+        self.assertIn("shallow clone; earlier commits are not audited", output.getvalue())
+
+    def test_complete_scan_states_its_local_history_scope(self):
+        output = StringIO()
+        with patch.object(privacy_scan, "refs", return_value=[]), \\
+             patch.object(privacy_scan, "is_shallow_repository", return_value=False), \\
+             redirect_stdout(output):
+            self.assertEqual(privacy_scan.audit(False, []), 0)
+        self.assertIn("full local history for the scanned refs was available", output.getvalue())
 
 
 if __name__ == "__main__":
