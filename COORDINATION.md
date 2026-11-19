@@ -728,3 +728,13 @@ Branch: `arena/b9a46c93-tino4` (platform-fixed). Status: active.
 - Still open for the owner/administrator, unchanged by this session: the Git-history exposure
   (`tools/privacy_scan.py`, `tools/history_scrub_runbook.md`), the Property B levy-to-roll ratio awaiting the
   bill lines, insurance quotes, and written rent comparables.
+
+## Session `arena/f1fa9937` — headline-rule spot-check, privacy-scan precision, owner-brief intake
+
+Branch: `arena/f1fa9937-tino4` (platform-fixed; based on `main` at `c41ca9f`). Status: active.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| F1FA-1 | Re-read the two headline official figures (IRS 2026/2027 estate exclusion; BOE Letter 2025/009 Prop 19 $1 million amount) directly from source; record the result | in progress | `arena/f1fa9937` | `COORDINATION.md` | 2026-11-19 |
+| F1FA-2 | Triage the `tools/privacy_scan.py` value-shape hits on `main` (`pages/operating-costs.html`, `pages/projections.html`); make value-shape matching word-bounded so a shape cannot match inside a longer model figure; add a regression test | in progress | `arena/f1fa9937` | `tools/privacy_scan.py`, `tools/test_case.py` | 2026-11-19 |
+| F1FA-3 | Owner brief intake (2026-11-19): household property-tax, assessment, rent, utility and insurance figures supplied in chat are **not** published or committed; the public site keeps the existing rule (rounded modelled outputs only, no assessor-derived amounts) | in progress | `arena/f1fa9937` | `COORDINATION.md` | 2026-11-19 |
