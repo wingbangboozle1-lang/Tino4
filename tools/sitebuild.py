@@ -63,7 +63,8 @@ SOURCES = {
     "congress_law": ("Congress.gov — Public Law 119-21", "https://www.congress.gov/bill/119th-congress/house-bill/1", "Enacted federal legislation; check statutory text and current IRS guidance for application."),
     "github_sensitive": ("GitHub Docs — Removing sensitive data from a repository", "https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository", "Official guidance on sensitive data in Git history; prior clones, forks and copies may remain outside a repository cleanup."),
     "ftb_forms": ("California Franchise Tax Board — Forms and publications", "https://www.ftb.ca.gov/forms/", "Official entry point for current-year forms and instructions; the applicable year must be selected at the decision date."),
-    "ftb_540": ("FTB — 2025 Form 540 instructions", "https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html", "Read 2026-11-16: 2025 Form 540 instructions for line 62 state that if taxable income exceeds $1,000,000, compute the Behavioral Health Services Tax as 1% of the excess, using whole dollars. This establishes the published 2025 return instruction, not a future-year rule or private tax liability."),
+    "ftb_540": ("FTB — 2025 Form 540 instructions", "https://www.ftb.ca.gov/forms/2025/2025-540-instructions.html", "Re-read 2026-11-19: the official 2025 Form 540 instructions for line 62 say to compute the Behavioral Health Services Tax as 1% of taxable income above $1,000,000, using whole dollars. This establishes the published 2025 return instruction, not a future-year rule or private tax liability."),
+    "ftb_540_booklet": ("FTB — 2025 Personal Income Tax Booklet", "https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html", "Opened and reviewed 2026-11-19. The official complete 2025 Personal Income Tax Booklet includes the Form 540 instructions; line 62 applies 1% to taxable income above $1,000,000. It is a 2025 instruction, not a future-year rule or private tax liability."),
     "ca_rtc17043": ("California statute — additional tax on high taxable income", "https://leginfo.legislature.ca.gov/faces/codes_displaySection.xhtml?sectionNum=17043.&lawCode=RTC", "Read 2026-11-15 in the official statute: additional 1% tax applies to taxable income above $1,000,000 for taxable years beginning on or after January 1, 2005; the statutory threshold is not indexed in the section text."),
     "ftb_540es": ("FTB — 2025 Form 540-ES instructions", "https://www.ftb.ca.gov/forms/2025/2025-540-es-instructions.html", "2025 estimated-tax worksheet; use the Form 540 instructions and current-year law for final return treatment."),
     "ftb_cap_gains": ("FTB — Capital gains and losses", "https://www.ftb.ca.gov/file/personal/income-types/capital-gains-and-losses.html", "Read 2026-11-15 (page updated 2026-01-28): California has no lower capital-gains rate; capital gains are taxed as ordinary income."),
@@ -2363,9 +2364,9 @@ def _q_flagged() -> str:
         ("The estate's financial assets, all debt, and any prior gift history are absent",
          "Estate-tax rows are therefore sensitivity rows, and the sell-versus-keep comparison assumes no loan on "
          "either building", "irs_estate", "The confidential inventory, the title reports, and Forms 709 and 706"),
-        ("The 2025 California Form 540 instruction booklet was not fully retrieved",
-         "The surcharge line and the capital-gain treatment are read from the instructions page and the statute; a "
-         "future-year return needs the booklet for that year", "ftb_540", "The instruction booklet for the sale year"),
+        ("Future-year Form 540 instructions are not yet available for the inheritance or sale year",
+         "The complete 2025 Personal Income Tax Booklet was opened and reviewed on 2026-11-19. Line 62 computes a 1% Behavioral Health Services Tax on taxable income above $1,000,000, using whole dollars; FTB states California has no lower capital-gains rate. These sources verify 2025 rules only, not a future-year liability.",
+         "ftb_540_booklet", "Recheck the complete Form 540 instructions for the actual tax year and have the CPA calculate taxable income, including other income and any capital gain"),
         ("Four pull requests from earlier sessions remain open against an older main",
          "They predate the current privacy boundary and may reintroduce figures; nothing in them is merged or "
          "assumed here", "github_sensitive", "Owners rebase or close them against current main"),

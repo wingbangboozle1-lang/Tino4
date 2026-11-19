@@ -146,7 +146,7 @@ def band(low: float, high: float) -> str:
 # a range's end is as findable as its middle.
 RECORD_FIELDS = (
     "A_MARKET_2026", "A_ASSESSED_2026", "A_ASSESSED_2025", "A_TAX_2025",
-    "B_MARKET_2026", "B_ASSESSED_2025", "B_TAX_2025", "B_RENT_MONTH",
+    "B_MARKET_2026", "B_ASSESSED_2025", "B_TAX_2025",
     "A_WATER_MONTH", "A_SOLAR_CREDIT_MONTH", "B_WATER_MONTH", "B_POWER_MONTH",
 )
 
@@ -171,12 +171,12 @@ A_LAND_SHARE = 0.30                 # assumption for depreciation basis split
 B_MARKET_2026 = 1_800_000
 B_ASSESSED_2025 = 114_250
 B_TAX_2025 = 2_440
-B_RENT_MONTH = 7_150                # two units combined
+B_RENT_MONTH = (6_000, 9_000)       # broad public scenario band; not a lease or household-reported figure
 B_UNITS = 3
 B_WATER_MONTH = (330, 400)          # whole building, owner-paid
 B_POWER_MONTH = (30, 70)            # common area, owner-paid
 B_INSURANCE_GUESS_YR = 1_500
-B_UNIT_RENT_MONTH = B_RENT_MONTH / 2.0   # derived average of the two let units
+B_UNIT_RENT_MONTH = midpoint(*B_RENT_MONTH) / 2.0   # midpoint scenario only; not lease evidence
 
 # Derived levies: the bill and the assessed value are the owner's own record,
 # so the ratio is arithmetic, not an assumption. It still has to be confirmed
@@ -551,7 +551,7 @@ def operating_cost_rows(scenario: str = "sequence", years: int = 25) -> list[dic
     infl = 1.0
     insur = 1.0
     build_cost = 1.0
-    rent_b = float(B_RENT_MONTH * 12)
+    rent_b = midpoint(*B_RENT_MONTH) * 12
     for index in range(years):
         year = 2026 + index
         first = index == 0
@@ -728,7 +728,7 @@ def b_reference(transfer_year: int, scenario: str) -> dict[str, float]:
     rates = scenario_rates(scenario, span + 1)
     state = b_state_at(transfer_year, scenario)
     costs = owner_costs("B", transfer_year, scenario, state["assessed"], False)
-    gross_rent = B_RENT_MONTH * 12 * cumulative_factor(rates["rent"], span)
+    gross_rent = midpoint(*B_RENT_MONTH) * 12 * cumulative_factor(rates["rent"], span)
     unit_rent = B_UNIT_RENT_MONTH * 12 * cumulative_factor(rates["rent"], span)
     return {
         "assessed": state["assessed"], "value": state["value"], "tax": state["tax"],
