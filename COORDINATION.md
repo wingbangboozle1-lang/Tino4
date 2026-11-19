@@ -809,8 +809,11 @@ Branch: `arena/0d21d66a-tino4` (platform-fixed; active).
 
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| 0D21-1 | After upstream's word-bounded value-shape fix, make shallow-checkout limitations explicit in the audit output and add regression coverage | in progress | `arena/0d21d66a` | `tools/privacy_scan.py`, `tools/test_privacy_scan.py`, `COORDINATION.md` | 2026-11-19 |
+| 0D21-1 | After upstream's word-bounded value-shape fix, make shallow-checkout limitations explicit in the audit output and add regression coverage | done | `arena/0d21d66a` | `tools/privacy_scan.py`, `tools/test_privacy_scan.py`, `COORDINATION.md` | 2026-11-19 |
 
-### Rebase coordination note
+### 0D21-1 result and rebase coordination note
 
-While this branch was being rebased, session `arena/f1fa9937` landed the word-bounded precision correction and full-history audit on `main`. I retain that implementation and board record; this follow-up only ensures future shallow-checkout scans do not imply full-history coverage.
+- While this branch was being rebased, session `arena/f1fa9937` landed the word-bounded precision correction and full-history audit on `main`. I retained that implementation and its board record; this follow-up only ensures future shallow-checkout scans do not imply full-history coverage. No other session's work was removed.
+- The scanner now omits commit-depth claims on shallow repositories and states that earlier commits were not audited. A full checkout reports that its local ref history was available; this wording does not imply external copies or server-side caches were checked.
+- **Verification:** all five privacy-scanner tests pass; site build and verifier pass (26 pages); all 73 unit tests pass; all four JavaScript syntax checks, `tools/recheck.py` (UNCHANGED), `git diff --check`, and the available-ref privacy scan pass. The scan correctly reports that this checkout is shallow and earlier commits are not audited.
+- **Limitation:** the current checkout is shallow; the local scan cannot establish the contents of earlier commits. The full-history results recorded under F1FA-2 remain the broader audit record; prior history exposure, PRs, forks, caches and clones still require administrator-led remediation per `tools/history_scrub_runbook.md` and GitHub's official guide: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository.

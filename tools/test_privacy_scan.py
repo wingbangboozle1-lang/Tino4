@@ -1,4 +1,4 @@
-"""Precision tests for the read-only exposure audit's value-shape matching."""
+"""Precision and history-completeness tests for the read-only exposure audit."""
 import importlib.util
 import subprocess
 import tempfile
@@ -31,7 +31,6 @@ class ValueShapeMatchingTests(unittest.TestCase):
             return bool(out.strip())
 
     def test_shape_inside_longer_figure_is_not_a_hit_when_bounded(self):
-        # Regression: a synthetic longer figure must not match a shorter shape inside it.
         self.assertFalse(self._grep("<td>$91,234</td>", "1,234", bounded=True))
         self.assertTrue(self._grep("<td>$91,234</td>", "1,234", bounded=False))
 
@@ -48,17 +47,21 @@ class ValueShapeMatchingTests(unittest.TestCase):
 class ShallowHistoryNoticeTests(unittest.TestCase):
     def test_shallow_scan_labels_history_as_incomplete(self):
         output = StringIO()
-        with patch.object(privacy_scan, "refs", return_value=[]), \\
-             patch.object(privacy_scan, "is_shallow_repository", return_value=True), \\
-             redirect_stdout(output):
+        with (
+            patch.object(privacy_scan, "refs", return_value=[]),
+            patch.object(privacy_scan, "is_shallow_repository", return_value=True),
+            redirect_stdout(output),
+        ):
             self.assertEqual(privacy_scan.audit(False, []), 0)
         self.assertIn("shallow clone; earlier commits are not audited", output.getvalue())
 
     def test_complete_scan_states_its_local_history_scope(self):
         output = StringIO()
-        with patch.object(privacy_scan, "refs", return_value=[]), \\
-             patch.object(privacy_scan, "is_shallow_repository", return_value=False), \\
-             redirect_stdout(output):
+        with (
+            patch.object(privacy_scan, "refs", return_value=[]),
+            patch.object(privacy_scan, "is_shallow_repository", return_value=False),
+            redirect_stdout(output),
+        ):
             self.assertEqual(privacy_scan.audit(False, []), 0)
         self.assertIn("full local history for the scanned refs was available", output.getvalue())
 

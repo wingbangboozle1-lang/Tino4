@@ -141,8 +141,14 @@ def audit(verbose: bool, extra: list[str]) -> int:
             "tools/history_scrub_runbook.md; a rebuild cannot recall clones, "
             "forks, caches or pull-request views."
         )
+        if shallow:
+            print("History completeness: shallow clone; earlier commits are not audited.")
         return 1
     print("No known identifier or value shape found in any scanned ref.")
+    if shallow:
+        print("History completeness: shallow clone; earlier commits are not audited.")
+    else:
+        print("History completeness: full local history for the scanned refs was available.")
     return 0
 
 
