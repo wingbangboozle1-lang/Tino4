@@ -802,3 +802,15 @@ branch and `main` pointed at the same commit.
 2. **Local "Prop H" terms** are deliberately withheld from the public site and unverified publicly; jurisdiction and terms must be confirmed privately with the property's own tax authority.
 3. **Every property-specific fact remains missing**: date-of-death appraisal, tax-rate-area levy, local transfer-tax and recorder schedules, insurance quotes, written rent comparables, leases, and the full estate inventory including prior taxable gifts and portability. Each is marked missing on the site; none is published.
 4. The private estate inventory and workpaper remain outside this repository (git-ignored `private-work/`) and must be held in encrypted private storage by the owner.
+
+## Session `arena/0d21d66a` — make shallow privacy-scan limits explicit
+
+Branch: `arena/0d21d66a-tino4` (platform-fixed; active).
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 0D21-1 | After upstream's word-bounded value-shape fix, make shallow-checkout limitations explicit in the audit output and add regression coverage | in progress | `arena/0d21d66a` | `tools/privacy_scan.py`, `tools/test_privacy_scan.py`, `COORDINATION.md` | 2026-11-19 |
+
+### Rebase coordination note
+
+While this branch was being rebased, session `arena/f1fa9937` landed the word-bounded precision correction and full-history audit on `main`. I retain that implementation and board record; this follow-up only ensures future shallow-checkout scans do not imply full-history coverage.
