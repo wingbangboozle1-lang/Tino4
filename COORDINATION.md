@@ -801,3 +801,18 @@ branch and `main` pointed at the same commit.
 2. **Local "Prop H" terms** are deliberately withheld from the public site and unverified publicly; jurisdiction and terms must be confirmed privately with the property's own tax authority.
 3. **Every property-specific fact remains missing**: date-of-death appraisal, tax-rate-area levy, local transfer-tax and recorder schedules, insurance quotes, written rent comparables, leases, and the full estate inventory including prior taxable gifts and portability. Each is marked missing on the site; none is published.
 4. The private estate inventory and workpaper remain outside this repository (git-ignored `private-work/`) and must be held in encrypted private storage by the owner.
+
+## Session `arena/0d21d66a` — make shallow privacy-scan limits explicit
+
+Branch: `arena/0d21d66a-tino4` (platform-fixed; active).
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 0D21-1 | After upstream's word-bounded value-shape fix, make shallow-checkout limitations explicit in the audit output and add regression coverage | done | `arena/0d21d66a` | `tools/privacy_scan.py`, `tools/test_privacy_scan.py`, `COORDINATION.md` | 2026-11-19 |
+
+### 0D21-1 result and rebase coordination note
+
+- While this branch was being rebased, session `arena/f1fa9937` landed the word-bounded precision correction and full-history audit on `main`. I retained that implementation and its board record; this follow-up only ensures future shallow-checkout scans do not imply full-history coverage. No other session's work was removed.
+- The scanner now omits commit-depth claims on shallow repositories and states that earlier commits were not audited. A full checkout reports that its local ref history was available; this wording does not imply external copies or server-side caches were checked.
+- **Verification:** all five privacy-scanner tests pass; site build and verifier pass (26 pages); all 73 unit tests pass; all four JavaScript syntax checks, `tools/recheck.py` (UNCHANGED), `git diff --check`, and the available-ref privacy scan pass. The scan correctly reports that this checkout is shallow and earlier commits are not audited.
+- **Limitation:** the current checkout is shallow; the local scan cannot establish the contents of earlier commits. The full-history results recorded under F1FA-2 remain the broader audit record; prior history exposure, PRs, forks, caches and clones still require administrator-led remediation per `tools/history_scrub_runbook.md` and GitHub's official guide: https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/removing-sensitive-data-from-a-repository.
