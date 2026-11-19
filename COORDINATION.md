@@ -809,6 +809,11 @@ Branch: `arena/0d21d66a-tino4` (platform-fixed; active).
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
 | 0D21-1 | After upstream's word-bounded value-shape fix, make shallow-checkout limitations explicit in the audit output and add regression coverage | done | `arena/0d21d66a` | `tools/privacy_scan.py`, `tools/test_privacy_scan.py`, `COORDINATION.md` | 2026-11-19 |
+| 0D21-2 | Remove household-derived inputs from tracked public model/code and ensure public model outputs are visibly synthetic only; audit and test privacy claims | in progress | `arena/0d21d66a` | `tools/case_model.py`, `tools/sitebuild.py`, `tools/test_case.py`, `tools/verify.py`, `README.md`, generated `index.html`, `pages/**`, `tools/framework-snapshot.json`, `COORDINATION.md` | 2026-11-19 |
+
+### 0D21-2 scope and handoff
+
+Post-merge review found that the tracked build-time model still contains rounded household-derived inputs and that published calculations are generated from them, contrary to the public privacy boundary. No raw personal figures are repeated in this board. The prior quantified-model task (020B-1) already landed; its old in-progress row is stale. This follow-up takes over only the privacy-boundary correction, with the public model restricted to clearly labelled synthetic examples. Historical commits and old public copies remain a separate administrator-level remediation item; this code change cannot recall them.
 
 ### 0D21-1 result and rebase coordination note
 
