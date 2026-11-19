@@ -836,3 +836,10 @@ Branch: `arena/5d659161-tino4` (platform-fixed; active). Original base: `c41ca9f
 - **Verification after rebase:** `python3 tools/build.py`, `python3 tools/verify.py`, all 76 unit/regression tests, `python3 tools/recheck.py` (UNCHANGED), `node --check` for all four browser scripts, and `git diff --check` pass. `python3 tools/privacy_scan.py` reports no known identifier or value-shape matches on the four available refs; it also correctly warns this checkout is shallow, so earlier commits are not audited. Projection-specific regression coverage rejects previously exposed value-shape strings in rendered pages.
 - **Rebase coordination:** rebased onto `origin/main` at `3be9e79` after PR #137 advanced `main`. The append conflict in `COORDINATION.md` was resolved by retaining the newer main records (F1FA, 7650 and 0D21) and adding this task record after them. No other session's work was dropped.
 - **Unresolved privacy limitation:** this changes the current rendered tree only. It does not scrub old Git commits, PR diffs, forks, caches, downloads or clones. The repository is a shallow checkout; use `tools/history_scrub_runbook.md` and administrator-led remediation, and do not claim prior public copies are erased.
+
+### 5D65 release record (2026-11-19)
+
+- **PR #138:** https://github.com/wingbangboozle1-lang/Tino4/pull/138 — merged at 2026-11-19T10:54:07Z; merge commit `0c3626fe32a117701317446b0fbf98438111d3fb`.
+- **Checks:** PR `verify` run 44509848145 passed. Main `verify` run 44509919524 passed after merge.
+- **Pages:** deployment run 44509918348 completed successfully; the GitHub Pages API reported status `built` for merge commit `0c3626fe32a117701317446b0fbf98438111d3fb`. The live `pages/flagged-for-review.html` page was fetched and the new FTB 2025 booklet row was present.
+- **Privacy:** the available-ref scanner found no known identifier or value-shape matches after merge. This checkout remains shallow; no claim is made that earlier commits, PR views, forks, caches, downloads or clones are scrubbed.
