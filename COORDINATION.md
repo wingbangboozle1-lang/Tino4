@@ -735,6 +735,33 @@ Branch: `arena/f1fa9937-tino4` (platform-fixed; based on `main` at `c41ca9f`). S
 
 | Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
 | --- | --- | --- | --- | --- | --- |
-| F1FA-1 | Re-read the two headline official figures (IRS 2026/2027 estate exclusion; BOE Letter 2025/009 Prop 19 $1 million amount) directly from source; record the result | in progress | `arena/f1fa9937` | `COORDINATION.md` | 2026-11-19 |
-| F1FA-2 | Triage the `tools/privacy_scan.py` value-shape hits on `main` (`pages/operating-costs.html`, `pages/projections.html`); make value-shape matching word-bounded so a shape cannot match inside a longer model figure; add a regression test | in progress | `arena/f1fa9937` | `tools/privacy_scan.py`, `tools/test_case.py` | 2026-11-19 |
-| F1FA-3 | Owner brief intake (2026-11-19): household property-tax, assessment, rent, utility and insurance figures supplied in chat are **not** published or committed; the public site keeps the existing rule (rounded modelled outputs only, no assessor-derived amounts) | in progress | `arena/f1fa9937` | `COORDINATION.md` | 2026-11-19 |
+| F1FA-1 | Re-read the two headline official figures (IRS 2026/2027 estate exclusion; BOE Letter 2025/009 Prop 19 $1 million amount) directly from source; record the result | done | `arena/f1fa9937` | `COORDINATION.md` | 2026-11-19 |
+| F1FA-2 | Triage the `tools/privacy_scan.py` value-shape hits on `main` (`pages/operating-costs.html`, `pages/projections.html`); make value-shape matching word-bounded so a shape cannot match inside a longer model figure; add a regression test | done | `arena/f1fa9937` | `tools/privacy_scan.py`, `tools/test_privacy_scan.py` | 2026-11-19 |
+| F1FA-3 | Owner brief intake (2026-11-19): household property-tax, assessment, rent, utility and insurance figures supplied in chat are **not** published or committed; the public site keeps the existing rule (rounded modelled outputs only, no assessor-derived amounts) | done | `arena/f1fa9937` | `COORDINATION.md` | 2026-11-19 |
+
+### F1FA-1 result (2026-11-19) — headline figures re-read from source
+
+- IRS news release IR-2026-133 (Nov. 5, 2026), https://www.irs.gov/newsroom/irs-releases-tax-inflation-adjustments-for-tax-year-2027-taxpayers-continue-to-benefit-from-the-working-families-tax-cuts : estate basic exclusion **$15,480,000** for decedents dying in 2027, "up from a total of $15,000,000" for 2026; annual gift exclusion **$20,000** for 2027, up from $19,000 for 2026. Matches `pages/verified-lookups.html` and `pages/estate-thresholds.html`.
+- BOE Letter to Assessors No. 2025/009 (Mar. 7, 2025), https://www.boe.ca.gov/proptaxes/pdf/lta25009.pdf : the Prop 19 / R&T §63.2 "$1 million amount" is **$1,044,586** for transfers Feb. 16, 2025 – Feb. 15, 2027; next adjustment Feb. 2027. Its enclosed table gives $1,000,000 (2021–23) and $1,022,600 (2023–25). Matches the site.
+- Irregularity (not a site error): the first attempted fetch used a mistyped filename and returned 404; the site links the correct `lta25009.pdf`. Recorded so a reviewer does not treat the 404 as a broken source.
+- Not re-verified in this session: the Form 706 unified-rate and credit-equivalent figures and the Form 540 1% rule (prior sessions' rows; left as recorded).
+
+### F1FA-2 result (2026-11-19) — privacy-scan precision and a corrected full-history audit
+
+- **Precision fix:** the two `main` hits were false positives. `pages/operating-costs.html` and `pages/projections.html` contain model figures whose digits contain a published value-shape string as a substring. Value-shape patterns are now word-bounded (`git grep -w`); identifier patterns keep substring matching deliberately. Regression tests: `tools/test_privacy_scan.py` (3 tests pass). No household figure appears on `main`.
+- **Correction to my own first run:** the clone was shallow, so the first scan (4 refs) reported "clean". That was not a real result. After `git fetch --unshallow` and fetching all 92 remote branches, the full audit ran on 93 refs: **81 refs contain identifying material; the deepest affected ref has 52 commits.** `main` itself is not in the affected list. This matches the README's 2026-11-17 measurement (82 of 87 refs; the ref count has since changed).
+- **Decision not taken here:** a history rewrite would force-push over about 90 other sessions' branches and any open PR. `tools/history_scrub_runbook.md` requires an encrypted archive, collaborator coordination and administrator approval first. **Owner decision needed:** (a) approve an archive plus rewrite or branch-pruning plan, or (b) accept the exposure and keep the public site limited to the current rules. Until then, the audit result stays "exposure present on non-main refs".
+- Stale board entry noted, not edited: `020B-1` still reads "in progress" although its work landed through PR #124 and later merges; the owning session should close it.
+
+### F1FA-3 result (2026-11-19) — owner brief intake
+
+- The owner's new household figures (property-tax and assessment tables for both properties, rents, utilities, insurance estimates, the two property valuations) were received in chat. They are **not** written to the repository, the public site, or a tracked file. The current rule is unchanged: rounded modelled outputs may be published; assessor-derived amounts and case-record values are withheld.
+- Verified on `main`: none of the owner's assessment or tax-history amounts appear in the published pages (the value-shape audit above).
+- Owner items that remain outside the public repository: the full assessment and tax tables, the valuation and comparables, and the insurance and utility bills. These are needed for the private workpaper (`private-work/`, git-ignored) and for independent property and rent estimates.
+
+### F1FA release record (2026-11-19)
+
+- Gates before push: `python3 tools/build.py` (26 pages, no generated diff), `python3 tools/verify.py` (clean), `python3 -m unittest discover -s tools -p 'test_*.py'` (71 tests pass, including the new `tools/test_privacy_scan.py`), `python3 tools/recheck.py` (UNCHANGED), `node --check assets/app.js`, `git diff --check`.
+- The privacy guard (`test_no_tracked_source_republishes_an_identifier`) failed twice during this session because the session's own notes quoted a zip code and a value shape. Both were removed. Working notes in this board must describe identifiers generically.
+- Scope of this PR: `COORDINATION.md`, `tools/privacy_scan.py`, `tools/test_privacy_scan.py`. No page, model, or public figure changed.
+- Still open for the owner/administrator: history exposure on 81 non-main refs (decision needed, see F1FA-2).
