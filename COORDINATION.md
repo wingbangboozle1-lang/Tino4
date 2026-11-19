@@ -767,3 +767,21 @@ Branch: `arena/f1fa9937-tino4` (platform-fixed; based on `main` at `c41ca9f`). S
 - Still open for the owner/administrator: history exposure on 81 non-main refs (decision needed, see F1FA-2).
 - **PR / merge:** https://github.com/wingbangboozle1-lang/Tino4/pull/134 — merged with `gh pr merge 134 --merge` at 2026-11-19T10:44:44Z; merge commit `fe8088754dd3e7aaa8ef904d0726c40cae749145`.
 - **Pages:** `gh api repos/wingbangboozle1-lang/Tino4/pages/builds/latest` reports `built` for that merge commit. The sandbox cannot reach `github.io` directly (only GitHub API and package hosts are allowed), so the live URL was not fetched from here; the API status is the evidence recorded.
+## Session `arena/52e88727` — privacy-boundary audit and public-data containment
+
+Branch: `arena/52e88727-tino4` (platform-fixed, active; base `c41ca9f628d2909c2a693f956e2237a6cebd986f`).
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 52E8-1 | Audit the current public build for household-specific source inputs and derived outputs; remove case-specific material from the public build while preserving the generic official-source guide, and publish accurate limits on what current-tree cleanup can and cannot contain | in progress | `arena/52e88727` | `tools/sitebuild.py`, `tools/case_model.py`, `tools/verify.py`, `tools/privacy_scan.py`, `tools/test_case.py`, `tools/test_public_claims.py`, `tools/site-manifest.json`, generated `index.html`, `pages/**`, `README.md`, `COORDINATION.md`, ignored `private-work/**` | 2026-11-19 |
+
+### Coordination / handoff
+
+- Before claiming this task, the shared board and repository were reviewed. GitHub currently reports no open pull requests. The board's `020B-1` row was last recorded as in progress on 2026-11-17; its quantified output is already present in the current merged tree, and this checkout is more than 60 minutes past that claim. This session takes over only the privacy-boundary review of that published output; it does not start a second model or change the scope of completed PRs.
+- The platform-fixed branch is `arena/52e88727-tino4`; no other branch or worktree will be created or used.
+- Initial local checks: the 68 existing unit/regression tests pass; `tools/build.py`, `tools/verify.py`, and `tools/recheck.py` pass. The read-only history scan reports matching material in the current shallow checkout; its result is not a complete remote-history or GitHub-PR audit.
+- Current GitHub API metadata at claim time: repository visibility is public, 90 branches and 30 pull requests exist in the repository (no pull requests open), and Pages reports `built`. These counts describe repository state only, not the scope of any retained copies.
+
+### Initial finding (do not copy case inputs into this board)
+
+The tracked build-time model contains owner-provided scenario inputs and emits derived case-specific tables. A nearest-ten-dollar rule and removal of direct identifiers do not establish anonymity. This conflicts with the user's higher-priority instruction that personal information remain internal and with public-page wording that suggests the underlying data are not in the repository. This task will remove household-specific inputs and their derivative outputs from the public source/build; it will not claim that earlier commits, pull-request views, forks, clones, or caches have been erased.
