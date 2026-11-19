@@ -102,7 +102,12 @@ def audit(verbose: bool, extra: list[str]) -> int:
 
     for ref in all_refs:
         for pattern in identifiers + shapes:
-            out = git("grep", "-l", "-i", "-F", "--no-color", pattern, ref, "--")
+            # Value shapes are word-bounded so a shape cannot match inside a
+            # longer, unrelated model figure (a shape can be a substring of another figure).
+            # Identifiers keep plain substring matching: a missed identifier
+            # is the costlier error.
+            bounded = ["-w"] if pattern in shapes else []
+            out = git("grep", "-l", "-i", "-F", *bounded, "--no-color", pattern, ref, "--")
             for line in out.splitlines():
                 path = line.split(":", 2)[-1]
                 hits[ref].add(path)
