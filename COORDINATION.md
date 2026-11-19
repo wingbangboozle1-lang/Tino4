@@ -791,10 +791,9 @@ branch and `main` pointed at the same commit.
 
 ### 7650-2 result — PR, merge and Pages deployment
 
-- PR: to be recorded after merge (integration branch `arena/765022d5-tino4` -> `main`).
-- Merge method: `gh pr merge <number> --merge`.
-- Pages: source is the `main` branch at path `/`; live at https://wingbangboozle1-lang.github.io/Tino4/; status reported `built` at claim time and re-confirmed after the merge.
-- PR link and merge result: recorded below once the merge completes.
+- PR: https://github.com/wingbangboozle1-lang/Tino4/pull/133 — merged with `gh pr merge 133 --merge` at 2026-11-19; merge commit `d870cf3b7d2a667e3f359bf55e127efa18be4214`.
+- CI: `verify` run 44508972486 (build-and-verify on the pull request) concluded `success` before the merge.
+- Pages: source is the `main` branch at path `/`; live at https://wingbangboozle1-lang.github.io/Tino4/; the merge commit `d870cf3` deployed as Pages build 1383758278 with status `built` (confirmed via the GitHub Pages API; the sandbox cannot fetch github.io directly, only the GitHub API and package hosts).
 
 ### Open items carried forward (owner/administrator decisions, not code)
 
