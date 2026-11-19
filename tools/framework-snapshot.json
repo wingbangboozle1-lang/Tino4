@@ -8,10 +8,10 @@
     "Market observation (unverified)": 1,
     "Missing": 86,
     "Not verified": 44,
-    "Official reference": 90,
+    "Official reference": 91,
     "Verified rule": 185
   },
-  "data_rows": 779,
+  "data_rows": 780,
   "official_hosts": [
     "bls.gov",
     "boe.ca.gov",
@@ -48,8 +48,8 @@
     "uscode.house.gov"
   ],
   "page_count": 26,
-  "site_hash": "85ecd53bb9e5b54e",
-  "source_hash": "44a2f3cb775fa4c9",
+  "site_hash": "79a337d624d80136",
+  "source_hash": "f92a04ef13ab561d",
   "source_keys": [
     "bls_cpi",
     "bls_cpi_release",
@@ -92,6 +92,7 @@
     "fed_inflation",
     "fhfa",
     "ftb_540",
+    "ftb_540_booklet",
     "ftb_540es",
     "ftb_cap_gains",
     "ftb_fed_changes",

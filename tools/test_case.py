@@ -235,11 +235,15 @@ if (!(rising.immediateEnding > rising.phasedEnding)) process.exit(3);
         tokens |= {token for token in verify.LOCALITY_PATTERNS if token.isdigit()}
         self.assertGreaterEqual(len(tokens), 12)
         patterns = {token: re.compile(rf"(?<![0-9.]){re.escape(token)}(?![0-9])") for token in tokens}
+        import privacy_scan
+        private_shapes = privacy_scan._decode(privacy_scan._ENCODED_SHAPES)
         for path, title, group in sitebuild.PAGES:
             raw = sitebuild.render(path, title, group)
             for token, pattern in patterns.items():
                 self.assertIsNone(pattern.search(raw),
                                   f"{path} publishes a digit run copied from a record")
+            for shape in private_shapes:
+                self.assertNotIn(shape, raw, f"{path} publishes a previously exposed private value shape")
 
     def test_private_workbench_is_git_ignored(self):
         ignore = (ROOT.parent / ".gitignore").read_text(encoding="utf-8")
@@ -300,6 +304,35 @@ if (!threw) process.exit(5);
         self.assertIn("site and model improvements S1 to S15", page)
         self.assertEqual(page.count('class="review-choice"'), 15)
 
+    def test_california_addon_applies_only_to_income_above_threshold(self):
+        script = r'''
+const fs = require('fs');
+const vm = require('vm');
+const values = {
+  'sell-value': '1010000', 'sell-basis': '1000000', 'sell-costs': '0',
+  'sell-dtt': '0', 'sell-other': '1000000', 'sell-timing': 'later', 'sell-121': '0'
+};
+const elements = new Map();
+function element(id) {
+  if (!elements.has(id)) elements.set(id, {
+    value: values[id] || '', textContent: '',
+    addEventListener(type, callback) { this[`${type}Handler`] = callback; }
+  });
+  return elements.get(id);
+}
+global.document = { getElementById: element, querySelectorAll: () => [] };
+global.window = { print() {} };
+vm.runInThisContext(fs.readFileSync('assets/app.js', 'utf8'));
+element('sell-run').clickHandler();
+console.log(element('sell-result').textContent);
+element('sell-other').value = '990000';
+element('sell-run').clickHandler();
+console.log(element('sell-result').textContent);
+'''
+        output = subprocess.check_output(["node", "-e", script], cwd=ROOT.parent, text=True)
+        self.assertIn("Illustrative California 1% add-on on taxable income above $1,000,000: $100", output)
+        self.assertIn("Illustrative California 1% add-on on taxable income above $1,000,000: $0", output)
+
     def test_every_referenced_local_asset_exists(self):
         """A page that wires a tool must also load the script that drives it."""
         pattern = re.compile(r'(?:src|href)="(\.\./)?(assets/[^"]+)"')
@@ -325,6 +358,14 @@ if (!threw) process.exit(5);
         self.assertIn("Mis-attributed historical figures", page)
         self.assertIn("page-not-found", page)
         self.assertIn("Official inflation data gap", page)
+
+    def test_form_540_booklet_is_verified_and_future_year_limitation_is_clear(self):
+        page = sitebuild.render("pages/flagged-for-review.html", "Flagged for review", "Adviser & evidence")
+        self.assertIn("Future-year Form 540 instructions are not yet available", page)
+        self.assertIn("opened and reviewed on 2026-11-19", page)
+        self.assertNotIn("instruction booklet was not fully retrieved", page)
+        self.assertIn("https://www.ftb.ca.gov/forms/2025/2025-540-booklet.html", page)
+        self.assertIn("$100 per $10,000", sitebuild.render("pages/estate-thresholds.html", "Estate-tax thresholds", "Law & process"))
 
     def test_executive_summary_lists_key_official_figures_and_order(self):
         page = sitebuild.render("pages/executive-summary.html", "Executive summary", "Start")
@@ -783,6 +824,12 @@ class CaseModelTests(unittest.TestCase):
             self.assertEqual(len(rows), 7, horizon)
         for year, rows in cm.transfer_year_matrix(30, "steady").items():
             self.assertEqual(len(rows), 7, year)
+
+    def test_property_b_rent_uses_a_broad_scenario_range(self):
+        self.assertIsInstance(cm.B_RENT_MONTH, tuple)
+        self.assertLess(cm.B_RENT_MONTH[0], cm.B_RENT_MONTH[1])
+        self.assertGreater(cm.B_RENT_MONTH[1] - cm.B_RENT_MONTH[0], cm.B_RENT_MONTH[0] * 0.25)
+        self.assertEqual(cm.B_UNIT_RENT_MONTH, sum(cm.B_RENT_MONTH) / 4.0)
 
     def test_property_b_is_reported_once_and_not_double_counted(self):
         b = cm.b_reference(2045, "steady")
