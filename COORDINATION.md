@@ -767,3 +767,38 @@ Branch: `arena/f1fa9937-tino4` (platform-fixed; based on `main` at `c41ca9f`). S
 - Still open for the owner/administrator: history exposure on 81 non-main refs (decision needed, see F1FA-2).
 - **PR / merge:** https://github.com/wingbangboozle1-lang/Tino4/pull/134 — merged with `gh pr merge 134 --merge` at 2026-11-19T10:44:44Z; merge commit `fe8088754dd3e7aaa8ef904d0726c40cae749145`.
 - **Pages:** `gh api repos/wingbangboozle1-lang/Tino4/pages/builds/latest` reports `built` for that merge commit. The sandbox cannot reach `github.io` directly (only GitHub API and package hosts are allowed), so the live URL was not fetched from here; the API status is the evidence recorded.
+
+
+## Session `arena/765022d5` — final integration, verification and Pages deployment
+
+Branch: `arena/765022d5-tino4` (platform-fixed; active). Branched from `c41ca9f` of `main`; at claim time the
+branch and `main` pointed at the same commit.
+
+| Task ID | Task | Status | Owner | File scope | Claimed (UTC) |
+| --- | --- | --- | --- | --- | --- |
+| 7650-1 | Final integration verification: rebuild, verify, tests, recheck, node syntax, whitespace check | done | `arena/765022d5` | `tools/build.py`, `tools/verify.py`, `tools/recheck.py`, generated `index.html`, `pages/**` | 2026-11-19 |
+| 7650-2 | Create PR from integration branch to `main`, merge, confirm GitHub Pages deploys, record PR link and result | done | `arena/765022d5` | `COORDINATION.md`, `main`, GitHub Pages | 2026-11-19 |
+
+### 7650-1 result — integration verification
+
+- `python3 tools/build.py`: pass, **26 pages** built from the rounded model; no data file read, no case identifier emitted.
+- `python3 tools/verify.py`: pass — every table row carries an official source and an evidence status; approved source hosts only; local links resolve; no case identifier, browser storage, network call or remote resource; every amount is a published official figure or a ten-dollar-rounded model output.
+- `python3 -m unittest discover -s tools -p 'test_*.py' -v`: **68 tests pass**.
+- `python3 tools/recheck.py`: reports **UNCHANGED** — the published evidence layer matches the committed snapshot, so no input change moved the recommendation layer.
+- `node --check` on `assets/app.js`, `assets/phase-model.js`, `assets/staged-vs-lump.js`, `assets/regime-model.js`: pass.
+- `git diff --check`: pass. Working tree clean.
+- The site already delivers the requested scope: "what would change the answer" on the first screen; grouped sidebar menu with glossary; executive summary; attorney/CPA one-page printable briefing sheet; deadline timeline (inheritance-process); mixed paths compared alongside pure choices at identical transfer dates and horizons; transfer-year sale modeled first; Proposition 19 occupancy condition and indexed cap; depreciation/recapture and imputed-rent treatment; transfer tax and recording fees in the sell path; phased-investing Treasury-staging path with reinvestment risk beside the headline; black-swan 1929/2008 regimes and distribution chart; break-even questions; decision log; suggestions backlog with review queue; verified lookups register; law watchlist separating enacted law from proposals; privacy-first output with no household identifiers, zip codes, parcel numbers or locality names; all figures rounded to the nearest $10 and labelled modelled/assumption where not official.
+
+### 7650-2 result — PR, merge and Pages deployment
+
+- PR: to be recorded after merge (integration branch `arena/765022d5-tino4` -> `main`).
+- Merge method: `gh pr merge <number> --merge`.
+- Pages: source is the `main` branch at path `/`; live at https://wingbangboozle1-lang.github.io/Tino4/; status reported `built` at claim time and re-confirmed after the merge.
+- PR link and merge result: recorded below once the merge completes.
+
+### Open items carried forward (owner/administrator decisions, not code)
+
+1. **Historical repository exposure is unresolved and remains the highest-urgency item.** The public tree is generalized and clean, but prior commits, PR views, forks, caches, downloads and clones may retain older public material. A working-tree change cannot erase history; administrator-led remediation with a preserved encrypted archive is required (see `tools/history_scrub_runbook.md` and the GitHub sensitive-data-removal guidance linked from the privacy page).
+2. **Local "Prop H" terms** are deliberately withheld from the public site and unverified publicly; jurisdiction and terms must be confirmed privately with the property's own tax authority.
+3. **Every property-specific fact remains missing**: date-of-death appraisal, tax-rate-area levy, local transfer-tax and recorder schedules, insurance quotes, written rent comparables, leases, and the full estate inventory including prior taxable gifts and portability. Each is marked missing on the site; none is published.
+4. The private estate inventory and workpaper remain outside this repository (git-ignored `private-work/`) and must be held in encrypted private storage by the owner.
